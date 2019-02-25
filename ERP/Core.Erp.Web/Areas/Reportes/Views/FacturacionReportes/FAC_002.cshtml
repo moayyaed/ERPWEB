@@ -39,9 +39,10 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label for="IdCliente">Cliente</label>
-                            @Html.Partial("_CmbCliente_Facturacion", Model.IdCliente)
-                            @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger", @id = "IdCliente" })
+                            <label for="IdTipo_Persona">Tipo de cliente:*</label>
+                            @Html.DropDownListFor(q => q.Idtipo_cliente, new SelectList(ViewBag.lst_cliente_tipo, "Key", "Value"), new { @class = "form-control", @id = "Idtipo_cliente" })
+                            @Html.ValidationMessageFor(q => q.Idtipo_cliente, "", new { @class = "text-danger" })
+                            
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -52,14 +53,14 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
-                           {
-                               settings.Name = "fecha_fin";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
+                               {
+                                   settings.Name = "fecha_fin";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -67,8 +68,25 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <div class="checkbox">
-                                <label for="Check1">@Html.CheckBoxFor(q => q.Check1) Solo cartera vencida</label>
+                                @Html.DevExpress().CheckBoxFor(q => q.Check1, settings =>
+                                {
+                                    settings.Name = "Check1";
+                                    settings.Text = "Solo cartera vencida";
+
+                                }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.Check1, "", new { @class = "text-danger" })
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="IdCliente">Cliente</label>
+                            @Html.Partial("_CmbClientePorTipo", Model.IdCliente)
+                            @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger", @id = "IdCliente" })
                         </div>
                     </div>
                 </div>
@@ -77,30 +95,42 @@
         </div>
     </div>
 
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">@ViewBag.Title</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-        </div>
-        <div class="box-body">
-            @Html.DevExpress().WebDocumentViewer(settings =>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@ViewBag.Title</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @Html.DevExpress().WebDocumentViewer(settings =>
                           {
                               settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
                               settings.MobileMode = false;
                               settings.Name = "webDocumentViewer";
                           }).Bind(ViewBag.Report).GetHtml()
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            [@Session["IdEmpresa"]] @Session["nom_empresa"]
-        </div>
-        <!-- /.box-footer-->
-    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    [@Session["IdEmpresa"]] @Session["nom_empresa"]
+                </div>
+                <!-- /.box-footer-->
+            </div>
+            }
+
+<script type="text/javascript">
+$(function () {
+    $("#Idtipo_cliente").change(function () {
+        IdCliente.SetValue(null);
+    });
+});
+
+function OnBeginCallback(s, e) {
+    e.customArgs["Idtipo_cliente"] = $("#Idtipo_cliente").val();
 }
+</script>

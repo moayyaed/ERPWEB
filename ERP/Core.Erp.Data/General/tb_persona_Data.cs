@@ -25,7 +25,24 @@ namespace Core.Erp.Data.General
             decimal id;
             if (args.Value == null || !decimal.TryParse(args.Value.ToString(), out id))
                 return null;
-            return get_info(IdEmpresa,IdTipoPersona,(decimal)args.Value);
+            return get_info(IdEmpresa, IdTipoPersona, (decimal)args.Value);
+        }
+
+        public List<tb_persona_Info> get_list_bajo_demanda_cliente_x_tipo(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, int Idtipo_cliente)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<tb_persona_Info> Lista = new List<tb_persona_Info>();
+            Lista = get_list_cliente_x_tipo(IdEmpresa, Idtipo_cliente, skip, take, args.Filter);
+            return Lista;
+        }
+
+        public tb_persona_Info get_info_bajo_demanda_cliente_x_tipo(ListEditItemRequestedByValueEventArgs args, int IdEmpresa, int Idtipo_cliente)
+        {
+            decimal id;
+            if (args.Value == null || !decimal.TryParse(args.Value.ToString(), out id))
+                return null;
+            return get_info_cliente_x_tipo(IdEmpresa, Idtipo_cliente, (decimal)args.Value);
         }
 
         public List<tb_persona_Info> get_list(bool mostrar_anulados)
@@ -36,18 +53,18 @@ namespace Core.Erp.Data.General
 
                 using (Entities_general Context = new Entities_general())
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.tb_persona
-                             select new tb_persona_Info
-                             {
-                                 IdPersona = q.IdPersona,
-                                 pe_nombreCompleto = q.pe_nombreCompleto,
-                                 IdTipoDocumento = q.IdTipoDocumento,
-                                 pe_cedulaRuc = q.pe_cedulaRuc,
-                                 pe_estado = q.pe_estado,
+                    if (mostrar_anulados)
+                        Lista = (from q in Context.tb_persona
+                                 select new tb_persona_Info
+                                 {
+                                     IdPersona = q.IdPersona,
+                                     pe_nombreCompleto = q.pe_nombreCompleto,
+                                     IdTipoDocumento = q.IdTipoDocumento,
+                                     pe_cedulaRuc = q.pe_cedulaRuc,
+                                     pe_estado = q.pe_estado,
 
-                                 EstadoBool = q.pe_estado == "A" ? true : false
-                             }).ToList();
+                                     EstadoBool = q.pe_estado == "A" ? true : false
+                                 }).ToList();
                     else
                         Lista = (from q in Context.tb_persona
                                  where q.pe_estado == "A"
@@ -78,11 +95,11 @@ namespace Core.Erp.Data.General
             {
                 List<tb_persona_Info> Lista = new List<tb_persona_Info>();
 
-                Entities_general context_g = new Entities_general();                
+                Entities_general context_g = new Entities_general();
                 switch (IdTipo_persona)
                 {
                     case "PERSONA":
-                        var lstg = context_g.tb_persona.Where(q=>q.pe_estado == "A" && (q.IdPersona.ToString() +" "+q.pe_cedulaRuc+" "+ q.pe_nombreCompleto).Contains(filter)).OrderBy(q=>q.IdPersona).Skip(skip).Take(take);
+                        var lstg = context_g.tb_persona.Where(q => q.pe_estado == "A" && (q.IdPersona.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdPersona).Skip(skip).Take(take);
                         foreach (var q in lstg)
                         {
                             Lista.Add(new tb_persona_Info
@@ -127,7 +144,7 @@ namespace Core.Erp.Data.General
                         break;
                     case "PROVEE":
                         Entities_cuentas_por_pagar context_p = new Entities_cuentas_por_pagar();
-                        var lstp = context_p.vwcp_proveedor_consulta.Where(q=>q.IdEmpresa == IdEmpresa && q.pr_estado == "A" && (q.IdProveedor.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdProveedor).Skip(skip).Take(take);
+                        var lstp = context_p.vwcp_proveedor_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.pr_estado == "A" && (q.IdProveedor.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdProveedor).Skip(skip).Take(take);
                         foreach (var q in lstp)
                         {
                             Lista.Add(new tb_persona_Info
@@ -184,7 +201,7 @@ namespace Core.Erp.Data.General
                               select q;
 
                     if (lst.Count() > 0)
-                        ID = lst.Max(q => q.IdPersona)+1;
+                        ID = lst.Max(q => q.IdPersona) + 1;
                 }
 
                 return ID;
@@ -217,46 +234,46 @@ namespace Core.Erp.Data.General
                 case "CLIENTE":
                     Entities_facturacion context_f = new Entities_facturacion();
                     info = (from q in context_f.vwfa_cliente_consulta
-                             where q.Estado == "A"
-                             && q.IdEmpresa == IdEmpresa
-                             && q.IdCliente == IdEntidad
-                             select new tb_persona_Info
-                             {
-                                 IdPersona = q.IdPersona,
-                                 pe_nombreCompleto = q.pe_nombreCompleto,
-                                 pe_cedulaRuc = q.pe_cedulaRuc,
-                                 IdEntidad = q.IdCliente
-                             }).FirstOrDefault();
+                            where q.Estado == "A"
+                            && q.IdEmpresa == IdEmpresa
+                            && q.IdCliente == IdEntidad
+                            select new tb_persona_Info
+                            {
+                                IdPersona = q.IdPersona,
+                                pe_nombreCompleto = q.pe_nombreCompleto,
+                                pe_cedulaRuc = q.pe_cedulaRuc,
+                                IdEntidad = q.IdCliente
+                            }).FirstOrDefault();
                     context_f.Dispose();
                     break;
                 case "EMPLEA":
                     Entities_rrhh context_e = new Entities_rrhh();
                     info = (from q in context_e.vwro_empleados_consulta
-                             where q.em_estado == "A"
-                             && q.IdEmpresa == IdEmpresa
-                             && q.IdEmpleado == IdEntidad
-                             select new tb_persona_Info
-                             {
-                                 IdPersona = q.IdPersona,
-                                 pe_nombreCompleto = q.Empleado,
-                                 pe_cedulaRuc = q.pe_cedulaRuc,
-                                 IdEntidad = q.IdEmpleado
-                             }).FirstOrDefault();
+                            where q.em_estado == "A"
+                            && q.IdEmpresa == IdEmpresa
+                            && q.IdEmpleado == IdEntidad
+                            select new tb_persona_Info
+                            {
+                                IdPersona = q.IdPersona,
+                                pe_nombreCompleto = q.Empleado,
+                                pe_cedulaRuc = q.pe_cedulaRuc,
+                                IdEntidad = q.IdEmpleado
+                            }).FirstOrDefault();
                     context_e.Dispose();
                     break;
                 case "PROVEE":
                     Entities_cuentas_por_pagar context_p = new Entities_cuentas_por_pagar();
                     info = (from q in context_p.vwcp_proveedor_consulta
-                             where q.pr_estado == "A"
-                             && q.IdEmpresa == IdEmpresa
-                             && q.IdProveedor == IdEntidad
-                             select new tb_persona_Info
-                             {
-                                 IdPersona = q.IdPersona,
-                                 pe_nombreCompleto = q.pe_nombreCompleto,
-                                 pe_cedulaRuc = q.pe_cedulaRuc,
-                                 IdEntidad = q.IdProveedor
-                             }).FirstOrDefault();
+                            where q.pr_estado == "A"
+                            && q.IdEmpresa == IdEmpresa
+                            && q.IdProveedor == IdEntidad
+                            select new tb_persona_Info
+                            {
+                                IdPersona = q.IdPersona,
+                                pe_nombreCompleto = q.pe_nombreCompleto,
+                                pe_cedulaRuc = q.pe_cedulaRuc,
+                                IdEntidad = q.IdProveedor
+                            }).FirstOrDefault();
                     context_p.Dispose();
                     break;
             }
@@ -436,6 +453,61 @@ namespace Core.Erp.Data.General
                 pe_sexo = string.IsNullOrEmpty(info.pe_sexo) ? "SEXO_MAS" : info.pe_sexo,
             };
             return info_retorno;
+        }
+
+        public List<tb_persona_Info> get_list_cliente_x_tipo(int IdEmpresa, int Idtipo_cliente, int skip, int take, string filter)
+        {
+            try
+            {
+                List<tb_persona_Info> Lista = new List<tb_persona_Info>();
+
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    var lstf = Context.vwfa_cliente_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.Idtipo_cliente == Idtipo_cliente && q.Estado == "A" && (q.IdCliente.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdCliente).Skip(skip).Take(take);
+
+                    foreach (var q in lstf)
+                    {
+                        Lista.Add(new tb_persona_Info
+                        {
+                            IdPersona = q.IdPersona,
+                            pe_nombreCompleto = q.pe_nombreCompleto,
+                            pe_cedulaRuc = q.pe_cedulaRuc,
+                            IdEntidad = q.IdCliente,
+                            CodPersona = q.Descripcion_tip_cliente
+                        });
+                    }
+                }
+                                   
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public tb_persona_Info get_info_cliente_x_tipo(int IdEmpresa, int Idtipo_cliente, decimal IdEntidad)
+        {
+            tb_persona_Info info = new tb_persona_Info();
+
+            using (Entities_facturacion Context = new Entities_facturacion())
+            {
+                vwfa_cliente_consulta Entity = Context.vwfa_cliente_consulta.FirstOrDefault(q => q.Estado == "A" && q.Idtipo_cliente == Idtipo_cliente 
+                                                && q.IdEmpresa == IdEmpresa && q.IdCliente == IdEntidad);
+                if (Entity == null) return null;
+                info = new tb_persona_Info
+                {
+                    IdPersona = Entity.IdPersona,
+                    pe_nombreCompleto = Entity.pe_nombreCompleto,
+                    pe_cedulaRuc = Entity.pe_cedulaRuc,
+                    IdEntidad = Entity.IdCliente,
+                    CodPersona = Entity.Descripcion_tip_cliente
+                };
+            }
+
+            return info;
+
         }
     }
 }

@@ -7,22 +7,25 @@ namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_002_Data
     {
-        public List<FAC_002_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCliente, DateTime fechaCorte, bool MostrarSoloCarteraVencida)
+        public List<FAC_002_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCliente, int Idtipo_cliente, DateTime fechaCorte, bool MostrarSoloCarteraVencida)
         {
             try
             {
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 999999 : IdSucursal;
 
-                decimal IdClienteIni = IdCliente;
-                decimal IdClienteFin = IdCliente == 0 ? 9999999 : IdCliente;
+                int IdClienteIni = Convert.ToInt32(IdCliente);
+                int IdClienteFin = IdCliente == 0 ? 9999999 : Convert.ToInt32(IdCliente);
+
+                decimal Idtipo_clienteIni = Idtipo_cliente;
+                decimal Idtipo_clienteFin = Idtipo_cliente == 0 ? 9999999 : Idtipo_cliente;
 
                 fechaCorte = fechaCorte.Date;
 
                 List<FAC_002_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPFAC_002(IdEmpresa, IdSucursalIni, IdSucursalFin, IdClienteIni, IdClienteFin, fechaCorte,MostrarSoloCarteraVencida)
+                    Lista = (from q in Context.SPFAC_002(IdEmpresa, IdSucursalIni, IdSucursalFin, IdClienteIni, IdClienteFin, Idtipo_clienteIni, Idtipo_clienteFin, fechaCorte, MostrarSoloCarteraVencida)
                              select new FAC_002_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

@@ -54,6 +54,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
+
+        public ActionResult CmbClientePorTipo()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info();
+            SessionFixed.Idtipo_cliente = Request.Params["Idtipo_cliente"] != null ? Request.Params["Idtipo_cliente"].ToString() : SessionFixed.Idtipo_cliente;
+            return PartialView("_CmbClientePorTipo", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda_cliente_x_tipo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda_cliente_x_tipo(args, Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.Idtipo_cliente));
+        }
+        public tb_persona_Info get_info_bajo_demanda_cliente_x_tipo(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda_cliente_x_tipo(args, Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.Idtipo_cliente));
+        }
         #endregion
 
         #region Json
@@ -166,6 +181,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 pf_codigo = "Todos"
             });
             ViewBag.lst_proforma = lst_proforma;
+
+            fa_cliente_tipo_Bus bus_cliente_tipo = new fa_cliente_tipo_Bus();
+            var lst_cliente_tipo = bus_cliente_tipo.get_list(IdEmpresa, false);
+            lst_cliente_tipo.Add(new Info.Facturacion.fa_cliente_tipo_Info
+            {
+                Idtipo_cliente = 0,
+                Descripcion_tip_cliente = "Todos"
+            });
+            ViewBag.lst_cliente_tipo = lst_cliente_tipo;
         }
 
 
@@ -220,7 +244,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal= Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal= Convert.ToInt32(SessionFixed.IdSucursal),
+                Idtipo_cliente = Convert.ToInt32(SessionFixed.Idtipo_cliente)
             };
             
             cargar_combos(model);

@@ -20,6 +20,16 @@ namespace Core.Erp.Bus.General
             return odata.get_info_bajo_demanda(args,IdEmpresa,IdTipoPersona);
         }
 
+        public List<tb_persona_Info> get_list_bajo_demanda_cliente_x_tipo(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, int Idtipo_cliente)
+        {
+            return odata.get_list_bajo_demanda_cliente_x_tipo(args, IdEmpresa, Idtipo_cliente);
+        }
+
+        public tb_persona_Info get_info_bajo_demanda_cliente_x_tipo(ListEditItemRequestedByValueEventArgs args, int IdEmpresa, int Idtipo_cliente)
+        {
+            return odata.get_info_bajo_demanda_cliente_x_tipo(args, IdEmpresa, Idtipo_cliente);
+        }
+
         public tb_persona_Info get_info(int IdEmpresa, string IdTipoPersona, decimal IdEntidad)
         {
             return odata.get_info(IdEmpresa, IdTipoPersona, IdEntidad);
