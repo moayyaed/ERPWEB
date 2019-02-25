@@ -151,7 +151,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)
