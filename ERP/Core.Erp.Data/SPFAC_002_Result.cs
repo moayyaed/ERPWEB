@@ -47,6 +47,5 @@ namespace Core.Erp.Data
         public string NomContacto { get; set; }
         public string TelefonoContacto { get; set; }
         public string Descripcion_tip_cliente { get; set; }
-        public int Idtipo_cliente1 { get; set; }
     }
 }

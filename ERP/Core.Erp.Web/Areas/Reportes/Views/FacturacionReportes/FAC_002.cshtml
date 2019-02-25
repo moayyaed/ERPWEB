@@ -37,10 +37,10 @@
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdTipo_Persona">Tipo de cliente:*</label>
-                            @Html.DropDownListFor(q => q.Idtipo_cliente, new SelectList(ViewBag.lst_cliente_tipo, "Key", "Value"), new { @class = "form-control", @id = "Idtipo_cliente" })
+                            @Html.DropDownListFor(q => q.Idtipo_cliente, new SelectList(ViewBag.lst_cliente_tipo, "Idtipo_cliente", "Descripcion_tip_cliente"), new { @class = "form-control", @id = "Idtipo_cliente" })
                             @Html.ValidationMessageFor(q => q.Idtipo_cliente, "", new { @class = "text-danger" })
                             
                         </div>

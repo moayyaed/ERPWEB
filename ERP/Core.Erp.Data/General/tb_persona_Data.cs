@@ -463,19 +463,38 @@ namespace Core.Erp.Data.General
 
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    var lstf = Context.vwfa_cliente_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.Idtipo_cliente == Idtipo_cliente && q.Estado == "A" && (q.IdCliente.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdCliente).Skip(skip).Take(take);
-
-                    foreach (var q in lstf)
+                    if (Idtipo_cliente == 0)
                     {
-                        Lista.Add(new tb_persona_Info
+                        var lstf = Context.vwfa_cliente_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == "A" && (q.IdCliente.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdCliente).Skip(skip).Take(take);
+
+                        foreach (var q in lstf)
                         {
-                            IdPersona = q.IdPersona,
-                            pe_nombreCompleto = q.pe_nombreCompleto,
-                            pe_cedulaRuc = q.pe_cedulaRuc,
-                            IdEntidad = q.IdCliente,
-                            CodPersona = q.Descripcion_tip_cliente
-                        });
+                            Lista.Add(new tb_persona_Info
+                            {
+                                IdPersona = q.IdPersona,
+                                pe_nombreCompleto = q.pe_nombreCompleto,
+                                pe_cedulaRuc = q.pe_cedulaRuc,
+                                IdEntidad = q.IdCliente,
+                                CodPersona = q.Descripcion_tip_cliente
+                            });
+                        }
                     }
+                    else
+                    {
+                        var lstf = Context.vwfa_cliente_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.Idtipo_cliente == Idtipo_cliente && q.Estado == "A" && (q.IdCliente.ToString() + " " + q.pe_cedulaRuc + " " + q.pe_nombreCompleto).Contains(filter)).OrderBy(q => q.IdCliente).Skip(skip).Take(take);
+
+                        foreach (var q in lstf)
+                        {
+                            Lista.Add(new tb_persona_Info
+                            {
+                                IdPersona = q.IdPersona,
+                                pe_nombreCompleto = q.pe_nombreCompleto,
+                                pe_cedulaRuc = q.pe_cedulaRuc,
+                                IdEntidad = q.IdCliente,
+                                CodPersona = q.Descripcion_tip_cliente
+                            });
+                        }
+                    }                    
                 }
                                    
                 return Lista;
@@ -493,17 +512,36 @@ namespace Core.Erp.Data.General
 
             using (Entities_facturacion Context = new Entities_facturacion())
             {
-                vwfa_cliente_consulta Entity = Context.vwfa_cliente_consulta.FirstOrDefault(q => q.Estado == "A" && q.Idtipo_cliente == Idtipo_cliente 
-                                                && q.IdEmpresa == IdEmpresa && q.IdCliente == IdEntidad);
-                if (Entity == null) return null;
-                info = new tb_persona_Info
+                if (Idtipo_cliente == 0)
                 {
-                    IdPersona = Entity.IdPersona,
-                    pe_nombreCompleto = Entity.pe_nombreCompleto,
-                    pe_cedulaRuc = Entity.pe_cedulaRuc,
-                    IdEntidad = Entity.IdCliente,
-                    CodPersona = Entity.Descripcion_tip_cliente
-                };
+                    vwfa_cliente_consulta Entity = Context.vwfa_cliente_consulta.FirstOrDefault(q => q.Estado == "A" && q.IdEmpresa == IdEmpresa && q.IdCliente == IdEntidad);
+
+                    if (Entity == null) return null;
+                    info = new tb_persona_Info
+                    {
+                        IdPersona = Entity.IdPersona,
+                        pe_nombreCompleto = Entity.pe_nombreCompleto,
+                        pe_cedulaRuc = Entity.pe_cedulaRuc,
+                        IdEntidad = Entity.IdCliente,
+                        CodPersona = Entity.Descripcion_tip_cliente
+                    };
+                }
+                else
+                {
+                    vwfa_cliente_consulta Entity = Context.vwfa_cliente_consulta.FirstOrDefault(q => q.Estado == "A" && q.Idtipo_cliente == Idtipo_cliente
+                                                                                                && q.IdEmpresa == IdEmpresa && q.IdCliente == IdEntidad);
+
+                    if (Entity == null) return null;
+                    info = new tb_persona_Info
+                    {
+                        IdPersona = Entity.IdPersona,
+                        pe_nombreCompleto = Entity.pe_nombreCompleto,
+                        pe_cedulaRuc = Entity.pe_cedulaRuc,
+                        IdEntidad = Entity.IdCliente,
+                        CodPersona = Entity.Descripcion_tip_cliente
+                    };
+                }
+                                
             }
 
             return info;
