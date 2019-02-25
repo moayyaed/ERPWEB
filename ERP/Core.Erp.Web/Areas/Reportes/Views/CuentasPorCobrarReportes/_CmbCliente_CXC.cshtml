@@ -14,8 +14,6 @@
         settings.Properties.TextFormatString = "[{0}] {1} {2}";
         settings.Properties.ValueField = "IdEntidad";
         settings.Properties.ValueType = typeof(decimal);
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){cargar_cliente()}";
-
         settings.Properties.Columns.Add("IdEntidad", "ID", 10);
         settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 20);
         settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 70);

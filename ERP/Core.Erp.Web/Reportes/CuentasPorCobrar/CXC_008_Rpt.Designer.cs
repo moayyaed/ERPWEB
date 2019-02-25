@@ -33,7 +33,6 @@
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
@@ -86,13 +85,14 @@
             this.xrTableRow5 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
@@ -102,6 +102,8 @@
             this.Detail.HeightF = 20.00002F;
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
+            this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("cr_fecha", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // TopMargin
@@ -117,11 +119,6 @@
             this.BottomMargin.Name = "BottomMargin";
             this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
-            // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.CuentasPorCobrar.CXC_008_Info);
-            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // PageHeader
             // 
@@ -259,7 +256,7 @@
             this.lbl_usuario.StylePriority.UsePadding = false;
             this.lbl_usuario.StylePriority.UseTextAlignment = false;
             this.lbl_usuario.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.lbl_usuario.Weight = 1.8666669921875005D;
+            this.lbl_usuario.Weight = 2.666666666666667D;
             // 
             // xrTableCell29
             // 
@@ -272,8 +269,8 @@
             this.xrTableCell29.StylePriority.UsePadding = false;
             this.xrTableCell29.StylePriority.UseTextAlignment = false;
             this.xrTableCell29.Text = "Fecha de impresión:";
-            this.xrTableCell29.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell29.Weight = 1.8666661783854164D;
+            this.xrTableCell29.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.xrTableCell29.Weight = 1.1839999999999997D;
             // 
             // lbl_fecha
             // 
@@ -286,7 +283,7 @@
             this.lbl_fecha.StylePriority.UsePadding = false;
             this.lbl_fecha.StylePriority.UseTextAlignment = false;
             this.lbl_fecha.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.lbl_fecha.Weight = 2.66666552734375D;
+            this.lbl_fecha.Weight = 2.54933203125D;
             // 
             // xrTableCell10
             // 
@@ -388,7 +385,7 @@
             this.xrTableCell19.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_IdCliente]=0,\'TODOS\' ,[pe_nombreCompleto] )")});
             this.xrTableCell19.Name = "xrTableCell19";
-            this.xrTableCell19.Weight = 1.8641814544472612D;
+            this.xrTableCell19.Weight = 1.9227700135276995D;
             // 
             // xrTableCell20
             // 
@@ -396,7 +393,7 @@
             this.xrTableCell20.Name = "xrTableCell20";
             this.xrTableCell20.StylePriority.UseFont = false;
             this.xrTableCell20.Text = "Desde:";
-            this.xrTableCell20.Weight = 0.39946746613467876D;
+            this.xrTableCell20.Weight = 0.34087890705424057D;
             // 
             // xrTableCell21
             // 
@@ -477,20 +474,20 @@
             // 
             this.xrTableCell28.Name = "xrTableCell28";
             this.xrTableCell28.Text = "Fecha cobro";
-            this.xrTableCell28.Weight = 0.95872186908764379D;
+            this.xrTableCell28.Weight = 1.2782956989984975D;
             // 
             // xrTableCell33
             // 
             this.xrTableCell33.Name = "xrTableCell33";
             this.xrTableCell33.Text = "Tipo cobro";
-            this.xrTableCell33.Weight = 1.2782957097483072D;
+            this.xrTableCell33.Weight = 1.9174435646224606D;
             // 
             // xrTableCell34
             // 
             this.xrTableCell34.Multiline = true;
             this.xrTableCell34.Name = "xrTableCell34";
             this.xrTableCell34.Text = "Cliente";
-            this.xrTableCell34.Weight = 5.4327552060107358D;
+            this.xrTableCell34.Weight = 4.4740335212257287D;
             // 
             // xrTableCell6
             // 
@@ -539,7 +536,7 @@
             this.xrTableCell8.Name = "xrTableCell8";
             this.xrTableCell8.Text = "Fecha cobro";
             this.xrTableCell8.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell8.Weight = 0.95872186908764379D;
+            this.xrTableCell8.Weight = 1.2782956989984975D;
             // 
             // xrTableCell9
             // 
@@ -547,7 +544,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[tc_descripcion]")});
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.Text = "Tipo cobro";
-            this.xrTableCell9.Weight = 1.2782957097483072D;
+            this.xrTableCell9.Weight = 1.9174435646224606D;
             // 
             // xrTableCell11
             // 
@@ -556,7 +553,7 @@
             this.xrTableCell11.Multiline = true;
             this.xrTableCell11.Name = "xrTableCell11";
             this.xrTableCell11.Text = "Cliente";
-            this.xrTableCell11.Weight = 5.4327552060107358D;
+            this.xrTableCell11.Weight = 4.4740335212257287D;
             // 
             // xrTableCell12
             // 
@@ -623,6 +620,11 @@
             this.xrTableCell17.TextFormatString = "{0:n2}";
             this.xrTableCell17.Weight = 0.97150356909403712D;
             // 
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.CuentasPorCobrar.CXC_008_Info);
+            this.objectDataSource1.Name = "objectDataSource1";
+            // 
             // CXC_008_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -649,13 +651,13 @@
             this.p_mostrar_anulados});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXC_008_Rpt_BeforePrint);
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }

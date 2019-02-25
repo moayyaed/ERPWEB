@@ -1,13 +1,13 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_facturacion_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "CXC_005";
+    ViewBag.Title = "CXC_008";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
 }
-@using (Html.BeginForm("CXC_005", "CuentasPorCobrarReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("CXC_008", "CuentasPorCobrarReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id = "IdEmpresa"})
 <div class="box">
@@ -30,7 +30,21 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-4">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="IdSucursal">Sucursal</label>
+                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="IdCobro_tipo">Tipo de cobro</label>
+                        @Html.DropDownListFor(q => q.IdCobro_tipo, new SelectList(ViewBag.lst_cobro, "IdCobro_tipo", "tc_descripcion"), new { @class = "form-control"})
+                        @Html.ValidationMessageFor(q => q.IdCobro_tipo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="IdCliente">Cliente</label>
                         @Html.Partial("_CmbCliente_CXC", Model.IdCliente)
@@ -38,38 +52,58 @@
 
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="IdClienteContacto">Contacto</label>
-                        @Html.DropDownListFor(q => q.IdClienteContacto, new SelectList(ViewBag.lst_contacto, "IdContacto", "Nombres", Model.IdClienteContacto), new { @class = "form-control", @id = "IdClienteContacto" })
-                        @Html.ValidationMessageFor(q => q.IdClienteContacto, "", new { @class = "text-danger" })
-                    </div>
-                </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="">Fecha corte</label>
+                        <label for="">Fecha inicio</label>
                         <div class="input-group date">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            @Html.DevExpress().DateEditFor(q=> q.fecha_corte, settings =>
+                            @Html.DevExpress().DateEditFor(q=> q.fecha_ini, settings =>
                         {
-                            settings.Name = "fecha_corte";
+                            settings.Name = "fecha_ini";
                             settings.Properties.UseMaskBehavior = true;
                             settings.Properties.EditFormat = EditFormat.Date;
                             settings.Properties.EditFormatString = "dd/MM/yyyy";
                             settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                         }).GetHtml()
-                            @Html.ValidationMessageFor(q => q.fecha_corte, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <div class="checkbox">
-                            <label for="mostrarSaldo0">@Html.CheckBoxFor(q => q.mostrarSaldo0) Mostrar saldo 0</label>
+                        <label for="">Fecha fin</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                       {
+                           settings.Name = "fecha_fin";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                         </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="mostrar_detallado"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados, settings =>
+                           {
+                               settings.Name = "mostrarAnulados";
+                               settings.Text = "Mostrar anulados";
+
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.mostrarAnulados, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

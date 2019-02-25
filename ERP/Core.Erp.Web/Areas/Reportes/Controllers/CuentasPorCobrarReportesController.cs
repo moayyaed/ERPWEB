@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.Facturacion;
+﻿using Core.Erp.Bus.CuentasPorCobrar;
+using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
@@ -72,6 +73,19 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
             var lst_cliente = bus_cliente.get_list(IdEmpresa, false);
             ViewBag.lst_cliente = lst_cliente;
+
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            ViewBag.lst_sucursal = lst_sucursal;
+
+            cxc_cobro_tipo_Bus bus_cobro = new cxc_cobro_tipo_Bus();
+            var lst_cobro = bus_cobro.get_list(false);
+            lst_cobro.Add(new Info.CuentasPorCobrar.cxc_cobro_tipo_Info
+            {
+                IdCobro_tipo = "",
+                tc_descripcion = "TODOS"
+            });
+            ViewBag.lst_cobro = lst_cobro;
         }
         public ActionResult CXC_001(int IdSucursal = 0, decimal IdCobro = 0)
         {
@@ -233,13 +247,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdCliente = 0
+                IdCliente = 0,
+                IdCobro_tipo = ""
 
             };
+            cargar_combos(model.IdEmpresa);
             CXC_008_Rpt report = new CXC_008_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdCliente.Value = model.IdCliente; ;
+            report.p_IdCliente.Value = model.IdCliente ?? 0;
             report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
@@ -256,13 +272,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             CXC_008_Rpt report = new CXC_008_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdCliente.Value = model.IdCliente; ;
+            report.p_IdCliente.Value = model.IdCliente ?? 0;
             report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa;
+            cargar_combos(model.IdEmpresa);
             ViewBag.Report = report;
 
             return View(model);

@@ -9903,6 +9903,7 @@
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Modificar.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\_CmbClientePorTipo.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_008.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

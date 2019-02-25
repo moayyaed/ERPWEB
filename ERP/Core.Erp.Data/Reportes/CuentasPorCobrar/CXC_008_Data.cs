@@ -32,9 +32,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     && q.IdSucursal <= IdSucursalFin
                     && IdClienteIni <= q.IdCliente
                     && q.IdCliente <= IdClienteFin
-                    && q.IdCobro_tipo == q.IdCobro_tipo
-                    && fecha_ini <= q.vt_fecha
-                    && q.vt_fecha <= fecha_fin
+                    && fecha_ini <= q.cr_fecha
+                    && q.cr_fecha <= fecha_fin
                     && q.cr_estado == "I").Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
@@ -63,9 +62,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     && q.IdSucursal <= IdSucursalFin
                     && IdClienteIni <= q.IdCliente
                     && q.IdCliente <= IdClienteFin
-                    && q.IdCobro_tipo == q.IdCobro_tipo
-                    && fecha_ini <= q.vt_fecha
-                    && q.vt_fecha <= fecha_fin
+                    && fecha_ini <= q.cr_fecha
+                    && q.cr_fecha <= fecha_fin
                     && q.cr_estado == "A").Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
@@ -89,7 +87,10 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     }).ToList();
                     }
                 }
+                if (!string.IsNullOrEmpty(IdCobro_tipo))
+                    Lista = Lista.Where(q => q.IdCobro_tipo == IdCobro_tipo).ToList();
                 return Lista;
+                
             }
             catch (Exception)
             {
