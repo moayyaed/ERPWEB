@@ -4941,6 +4941,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="observacion" Type="varchar" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalInicio" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
         </Function>
         <Function Name="spROL_DecimoTercero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -4949,6 +4951,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="observacion" Type="varchar" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalInicio" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
         </Function>
         <Function Name="spROL_DecimosCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EntidadRegulatoria">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -8080,22 +8084,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ro_rol_detalle_x_rubro_acumulado" EntityType="Model_rrhh.ro_rol_detalle_x_rubro_acumulado" />
-          <FunctionImport Name="spROL_DecimoCuarto">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
-            <Parameter Name="Region" Mode="In" Type="String" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="observacion" Mode="In" Type="String" />
-            <Parameter Name="IdRol" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spROL_DecimoTercero">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
-            <Parameter Name="Region" Mode="In" Type="String" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="observacion" Mode="In" Type="String" />
-            <Parameter Name="IdRol" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="ro_EmpleadoNovedadCargaMasiva" EntityType="Model_rrhh.ro_EmpleadoNovedadCargaMasiva" />
           <EntitySet Name="ro_EmpleadoNovedadCargaMasiva_det" EntityType="Model_rrhh.ro_EmpleadoNovedadCargaMasiva_det" />
           <AssociationSet Name="FK_ro_EmpleadoNovedadCargaMasiva_det_ro_EmpleadoNovedadCargaMasiva" Association="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_det_ro_EmpleadoNovedadCargaMasiva">
@@ -8124,11 +8112,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Parameter Name="IdRol" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spROL_DecimosCSV" ReturnType="Collection(Model_rrhh.spROL_DecimosCSV_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdRol" Mode="In" Type="Int32" />
-            <Parameter Name="IdRubro" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ro_archivos_bancos_generacion_x_empleado" EntityType="Model_rrhh.ro_archivos_bancos_generacion_x_empleado" />
           <EntitySet Name="vwro_archivos_bancos_generacion_x_empleado" EntityType="Model_rrhh.vwro_archivos_bancos_generacion_x_empleado" />
@@ -8605,6 +8588,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
           </AssociationSet>
+          <FunctionImport Name="spROL_DecimoCuarto">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
+            <Parameter Name="Region" Mode="In" Type="String" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="observacion" Mode="In" Type="String" />
+            <Parameter Name="IdRol" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spROL_DecimoTercero">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
+            <Parameter Name="Region" Mode="In" Type="String" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="observacion" Mode="In" Type="String" />
+            <Parameter Name="IdRol" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spROL_DecimosCSV" ReturnType="Collection(Model_rrhh.spROL_DecimosCSV_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdRol" Mode="In" Type="Int32" />
+            <Parameter Name="IdRubro" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -9186,21 +9194,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="spROL_DecimosCSV_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="pe_apellido" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="pe_nombre" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CodigoSectorial" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="ca_descripcion" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="Valor" Nullable="true" />
-          <Property Type="String" Name="pe_sexo" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Estado" Nullable="false" MaxLength="250" />
-          <Property Type="DateTime" Name="em_fechaIngaRol" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="Dias_Decimo" Nullable="true" />
-          <Property Type="Int32" Name="DiasA_considerar_Decimo" Nullable="true" />
-        </ComplexType>
         <EntityType Name="ro_archivos_bancos_generacion_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12272,6 +12265,21 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spROL_DecimosCSV_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="pe_apellido" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pe_nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CodigoSectorial" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="ca_descripcion" Nullable="false" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+          <Property Type="String" Name="pe_sexo" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Estado" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="em_fechaIngaRol" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Dias_Decimo" Nullable="true" />
+          <Property Type="Int32" Name="DiasA_considerar_Decimo" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13390,8 +13398,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spROL_DecimoCuarto" FunctionName="Model_rrhh.Store.spROL_DecimoCuarto" />
-          <FunctionImportMapping FunctionImportName="spROL_DecimoTercero" FunctionName="Model_rrhh.Store.spROL_DecimoTercero" />
           <EntitySetMapping Name="ro_EmpleadoNovedadCargaMasiva">
             <EntityTypeMapping TypeName="Model_rrhh.ro_EmpleadoNovedadCargaMasiva">
               <MappingFragment StoreEntitySet="ro_EmpleadoNovedadCargaMasiva">
@@ -13512,25 +13518,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spRo_procesa_Rol" FunctionName="Model_rrhh.Store.spRo_procesa_Rol" />
-          <FunctionImportMapping FunctionImportName="spROL_DecimosCSV" FunctionName="Model_rrhh.Store.spROL_DecimosCSV">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_rrhh.spROL_DecimosCSV_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
-                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="CodigoSectorial" ColumnName="CodigoSectorial" />
-                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="pe_sexo" ColumnName="pe_sexo" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
-                <ScalarProperty Name="Dias_Decimo" ColumnName="Dias_Decimo" />
-                <ScalarProperty Name="DiasA_considerar_Decimo" ColumnName="DiasA_considerar_Decimo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="ro_archivos_bancos_generacion_x_empleado">
             <EntityTypeMapping TypeName="Model_rrhh.ro_archivos_bancos_generacion_x_empleado">
               <MappingFragment StoreEntitySet="ro_archivos_bancos_generacion_x_empleado">
@@ -14802,6 +14789,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spROL_DecimoCuarto" FunctionName="Model_rrhh.Store.spROL_DecimoCuarto" />
+          <FunctionImportMapping FunctionImportName="spROL_DecimoTercero" FunctionName="Model_rrhh.Store.spROL_DecimoTercero" />
+          <FunctionImportMapping FunctionImportName="spROL_DecimosCSV" FunctionName="Model_rrhh.Store.spROL_DecimosCSV">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_rrhh.spROL_DecimosCSV_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
+                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="CodigoSectorial" ColumnName="CodigoSectorial" />
+                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="pe_sexo" ColumnName="pe_sexo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
+                <ScalarProperty Name="Dias_Decimo" ColumnName="Dias_Decimo" />
+                <ScalarProperty Name="DiasA_considerar_Decimo" ColumnName="DiasA_considerar_Decimo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

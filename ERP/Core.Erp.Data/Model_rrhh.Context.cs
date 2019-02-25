@@ -15,7 +15,6 @@ namespace Core.Erp.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
-
     public partial class Entities_rrhh : DbContext
     {
         public Entities_rrhh()
@@ -251,64 +250,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Reverso_Rol", idEmpresaParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idPeriodoParameter);
         }
     
-        public virtual int spROL_DecimoCuarto(Nullable<int> idEmpresa, Nullable<int> idPeriodo, string region, string idUsuario, string observacion, Nullable<int> idRol)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idPeriodoParameter = idPeriodo.HasValue ?
-                new ObjectParameter("IdPeriodo", idPeriodo) :
-                new ObjectParameter("IdPeriodo", typeof(int));
-    
-            var regionParameter = region != null ?
-                new ObjectParameter("Region", region) :
-                new ObjectParameter("Region", typeof(string));
-    
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var observacionParameter = observacion != null ?
-                new ObjectParameter("observacion", observacion) :
-                new ObjectParameter("observacion", typeof(string));
-    
-            var idRolParameter = idRol.HasValue ?
-                new ObjectParameter("IdRol", idRol) :
-                new ObjectParameter("IdRol", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spROL_DecimoCuarto", idEmpresaParameter, idPeriodoParameter, regionParameter, idUsuarioParameter, observacionParameter, idRolParameter);
-        }
-    
-        public virtual int spROL_DecimoTercero(Nullable<int> idEmpresa, Nullable<int> idPeriodo, string region, string idUsuario, string observacion, Nullable<int> idRol)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idPeriodoParameter = idPeriodo.HasValue ?
-                new ObjectParameter("IdPeriodo", idPeriodo) :
-                new ObjectParameter("IdPeriodo", typeof(int));
-    
-            var regionParameter = region != null ?
-                new ObjectParameter("Region", region) :
-                new ObjectParameter("Region", typeof(string));
-    
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var observacionParameter = observacion != null ?
-                new ObjectParameter("observacion", observacion) :
-                new ObjectParameter("observacion", typeof(string));
-    
-            var idRolParameter = idRol.HasValue ?
-                new ObjectParameter("IdRol", idRol) :
-                new ObjectParameter("IdRol", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spROL_DecimoTercero", idEmpresaParameter, idPeriodoParameter, regionParameter, idUsuarioParameter, observacionParameter, idRolParameter);
-        }
-    
         public virtual int spRo_procesa_Rol(Nullable<int> idEmpresa, Nullable<decimal> idNomina, Nullable<decimal> idNominaTipo, Nullable<decimal> idPEriodo, string idUsuario, string observacion, Nullable<int> idRol, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -348,23 +289,6 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdSucursalFin", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_procesa_Rol", idEmpresaParameter, idNominaParameter, idNominaTipoParameter, idPEriodoParameter, idUsuarioParameter, observacionParameter, idRolParameter, idSucursalInicioParameter, idSucursalFinParameter);
-        }
-    
-        public virtual ObjectResult<spROL_DecimosCSV_Result> spROL_DecimosCSV(Nullable<int> idEmpresa, Nullable<int> idRol, Nullable<int> idRubro)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idRolParameter = idRol.HasValue ?
-                new ObjectParameter("IdRol", idRol) :
-                new ObjectParameter("IdRol", typeof(int));
-    
-            var idRubroParameter = idRubro.HasValue ?
-                new ObjectParameter("IdRubro", idRubro) :
-                new ObjectParameter("IdRubro", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spROL_DecimosCSV_Result>("spROL_DecimosCSV", idEmpresaParameter, idRolParameter, idRubroParameter);
         }
     
         public virtual int spRo_procesa_Rol_bono(Nullable<int> idEmpresa, Nullable<decimal> idNomina, Nullable<decimal> idNominaTipo, Nullable<decimal> idPEriodo, string idUsuario, string observacion, Nullable<int> idRol)
@@ -468,6 +392,97 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdRol", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sprol_CancelarNovedades_Prestamos", idEmpresaParameter, idNominaParameter, idNominaTipoParameter, idPeriodoParameter, idSucursalParameter, idRolParameter);
+        }
+    
+        public virtual int spROL_DecimoCuarto(Nullable<int> idEmpresa, Nullable<int> idPeriodo, string region, string idUsuario, string observacion, Nullable<int> idRol, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idPeriodoParameter = idPeriodo.HasValue ?
+                new ObjectParameter("IdPeriodo", idPeriodo) :
+                new ObjectParameter("IdPeriodo", typeof(int));
+    
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("observacion", observacion) :
+                new ObjectParameter("observacion", typeof(string));
+    
+            var idRolParameter = idRol.HasValue ?
+                new ObjectParameter("IdRol", idRol) :
+                new ObjectParameter("IdRol", typeof(int));
+    
+            var idSucursalInicioParameter = idSucursalInicio.HasValue ?
+                new ObjectParameter("IdSucursalInicio", idSucursalInicio) :
+                new ObjectParameter("IdSucursalInicio", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spROL_DecimoCuarto", idEmpresaParameter, idPeriodoParameter, regionParameter, idUsuarioParameter, observacionParameter, idRolParameter, idSucursalInicioParameter, idSucursalFinParameter);
+        }
+    
+        public virtual int spROL_DecimoTercero(Nullable<int> idEmpresa, Nullable<int> idPeriodo, string region, string idUsuario, string observacion, Nullable<int> idRol, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idPeriodoParameter = idPeriodo.HasValue ?
+                new ObjectParameter("IdPeriodo", idPeriodo) :
+                new ObjectParameter("IdPeriodo", typeof(int));
+    
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("observacion", observacion) :
+                new ObjectParameter("observacion", typeof(string));
+    
+            var idRolParameter = idRol.HasValue ?
+                new ObjectParameter("IdRol", idRol) :
+                new ObjectParameter("IdRol", typeof(int));
+    
+            var idSucursalInicioParameter = idSucursalInicio.HasValue ?
+                new ObjectParameter("IdSucursalInicio", idSucursalInicio) :
+                new ObjectParameter("IdSucursalInicio", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spROL_DecimoTercero", idEmpresaParameter, idPeriodoParameter, regionParameter, idUsuarioParameter, observacionParameter, idRolParameter, idSucursalInicioParameter, idSucursalFinParameter);
+        }
+    
+        public virtual ObjectResult<spROL_DecimosCSV_Result> spROL_DecimosCSV(Nullable<int> idEmpresa, Nullable<int> idRol, Nullable<int> idRubro)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idRolParameter = idRol.HasValue ?
+                new ObjectParameter("IdRol", idRol) :
+                new ObjectParameter("IdRol", typeof(int));
+    
+            var idRubroParameter = idRubro.HasValue ?
+                new ObjectParameter("IdRubro", idRubro) :
+                new ObjectParameter("IdRubro", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spROL_DecimosCSV_Result>("spROL_DecimosCSV", idEmpresaParameter, idRolParameter, idRubroParameter);
         }
     }
 }
