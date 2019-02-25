@@ -44,14 +44,7 @@
                         @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="IdProductoPadre">Producto padre</label>
-                        @Html.Partial("_CmbProductoPadre_Inventario", Model)
-                        @Html.ValidationMessageFor(q => q.IdProductoPadre, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <div class="form-group">
                         <label for="IdProducto">Producto </label>
                         @Html.Partial("_CmbProducto_Inventario", Model)
@@ -102,16 +95,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-2">
                     <div class="form-group">
-                        <div class="checkbox">
-                            <label for="mostrar_detallado">@Html.CheckBoxFor(q => q.mostrar_detallado) Mostrar detallado</label>
-                        </div>
-                        <div class="checkbox">
-                            <label for="no_mostrar_valores_en_0">@Html.CheckBoxFor(q => q.no_mostrar_valores_en_0) No mostrar saldo 0</label>
-                        </div>
+                        <label for="mostrar_detallado"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.mostrar_detallado, settings =>
+                           {
+                               settings.Name = "mostrar_detallado";
+                               settings.Text = "Mostrar detallado";
+
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.mostrar_detallado, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="no_mostrar_valores_en_0"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.no_mostrar_valores_en_0, settings =>
+                           {
+                               settings.Name = "no_mostrar_valores_en_0";
+                               settings.Text = "No mostrar valores en 0";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.no_mostrar_valores_en_0, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
             </div>
         </div>
         <!-- /.box-body -->

@@ -13,7 +13,6 @@
         settings.Properties.TextFormatString = "{0} {1}";
         settings.Properties.ValueField = "IdProducto";
         settings.Properties.ValueType = typeof(decimal);
-        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdProductoPadre'] = IdProductoPadre.GetValue(); }";
         settings.Properties.Columns.Add("IdProducto", "ID", 5);
         settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
         settings.Properties.FilterMinLength = 3;
