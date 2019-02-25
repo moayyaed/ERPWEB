@@ -258,79 +258,82 @@ namespace Core.Erp.Data.Caja
                     #region Ingreso por reposicion
                     if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
                     {
-                        IdCbteCble_IN = data_ct.get_id(info.IdEmpresa, IdTipoCbte_IN);
-                        ct_cbtecble repo = new ct_cbtecble
+                        if (info.IdCbteCble_mov_caj == null)
                         {
-                            IdEmpresa = info.IdEmpresa,
-                            IdTipoCbte = IdTipoCbte_IN,
-                            IdCbteCble = IdCbteCble_IN,
-                            cb_Fecha = info.FechaOP,
-                            cb_Observacion = "Caja # " + info.IdConciliacion_Caja + " Reposición",
-                            IdPeriodo = Convert.ToInt32(info.FechaOP.ToString("yyyyMM")),
-                            IdSucursal = IdSucursal,
-                            cb_FechaTransac = DateTime.Now,
-                            cb_Estado = "A",
-                            cb_Valor = info.lst_det_ct.Sum(q => q.dc_Valor_debe),
-                            IdUsuario = info.IdUsuario
-                        };
-                        Context_ct.ct_cbtecble.Add(repo);
+                            IdCbteCble_IN = data_ct.get_id(info.IdEmpresa, IdTipoCbte_IN);
+                            ct_cbtecble repo = new ct_cbtecble
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdTipoCbte = IdTipoCbte_IN,
+                                IdCbteCble = IdCbteCble_IN,
+                                cb_Fecha = info.FechaOP.Date,
+                                cb_Observacion = "Caja # " + info.IdConciliacion_Caja + " Reposición",
+                                IdPeriodo = Convert.ToInt32(info.FechaOP.ToString("yyyyMM")),
+                                IdSucursal = IdSucursal,
+                                cb_FechaTransac = DateTime.Now,
+                                cb_Estado = "A",
+                                cb_Valor = info.lst_det_ct.Sum(q => q.dc_Valor_debe),
+                                IdUsuario = info.IdUsuario
+                            };
+                            Context_ct.ct_cbtecble.Add(repo);
 
-                        ct_cbtecble_det Debe = new ct_cbtecble_det
-                        {
-                            IdEmpresa = repo.IdEmpresa,
-                            IdTipoCbte = repo.IdTipoCbte,
-                            IdCbteCble = repo.IdCbteCble,
-                            secuencia = 1,
-                            IdCtaCble = info.IdCtaCble,
-                            dc_Valor = Math.Round(Convert.ToDouble(repo.cb_Valor), 2, MidpointRounding.AwayFromZero),
-                        };
+                            ct_cbtecble_det Debe = new ct_cbtecble_det
+                            {
+                                IdEmpresa = repo.IdEmpresa,
+                                IdTipoCbte = repo.IdTipoCbte,
+                                IdCbteCble = repo.IdCbteCble,
+                                secuencia = 1,
+                                IdCtaCble = info.IdCtaCble,
+                                dc_Valor = Math.Round(Convert.ToDouble(repo.cb_Valor), 2, MidpointRounding.AwayFromZero),
+                            };
 
-                        ct_cbtecble_det Haber = new ct_cbtecble_det
-                        {
-                            IdEmpresa = repo.IdEmpresa,
-                            IdTipoCbte = repo.IdTipoCbte,
-                            IdCbteCble = repo.IdCbteCble,
-                            secuencia = 2,
-                            IdCtaCble = info.IdCtaCble,
-                            dc_Valor = Math.Round(Convert.ToDouble(repo.cb_Valor), 2, MidpointRounding.AwayFromZero) * -1,
-                        };
-                        Context_ct.ct_cbtecble_det.Add(Debe);
-                        Context_ct.ct_cbtecble_det.Add(Haber);
+                            ct_cbtecble_det Haber = new ct_cbtecble_det
+                            {
+                                IdEmpresa = repo.IdEmpresa,
+                                IdTipoCbte = repo.IdTipoCbte,
+                                IdCbteCble = repo.IdCbteCble,
+                                secuencia = 2,
+                                IdCtaCble = info.IdCtaCble,
+                                dc_Valor = Math.Round(Convert.ToDouble(repo.cb_Valor), 2, MidpointRounding.AwayFromZero) * -1,
+                            };
+                            Context_ct.ct_cbtecble_det.Add(Debe);
+                            Context_ct.ct_cbtecble_det.Add(Haber);
 
-                        caj_Caja_Movimiento Entity_caj = new caj_Caja_Movimiento
-                        {
-                            IdEmpresa = repo.IdEmpresa,
-                            IdTipocbte = repo.IdTipoCbte,
-                            IdCbteCble = repo.IdCbteCble,
-                            CodMoviCaja = "Caja # " + info.IdConciliacion_Caja,
-                            cm_Signo = "+",
-                            cm_valor = repo.cb_Valor,
-                            IdTipoMovi = Convert.ToInt32(Entity_pc.IdTipo_movi_ing_x_reposicion),
-                            cm_observacion = repo.cb_Observacion,
-                            IdCaja = info.IdCaja,
-                            IdPeriodo = Convert.ToInt32(repo.cb_Fecha.ToString("yyyyMM")),
-                            cm_fecha = repo.cb_Fecha,
-                            IdTipo_Persona = info.IdTipoPersona,
-                            IdEntidad = (decimal)info.IdEntidad,
-                            IdPersona = info.IdPersona,
-                            Estado = "A",
-                            IdUsuario = info.IdUsuario,
-                            Fecha_Transac = DateTime.Now
-                        };
-                        Context.caj_Caja_Movimiento.Add(Entity_caj);
-                        caj_Caja_Movimiento_det Entity_caj_det = new caj_Caja_Movimiento_det
-                        {
-                            IdEmpresa = repo.IdEmpresa,
-                            IdTipocbte = repo.IdTipoCbte,
-                            IdCbteCble = repo.IdCbteCble,
-                            Secuencia = 1,
-                            IdCobro_tipo = "EFEC",
-                            cr_Valor = repo.cb_Valor
-                        };
-                        Context.caj_Caja_Movimiento_det.Add(Entity_caj_det);
-                        Entity_c.IdEmpresa_mov_caj = repo.IdEmpresa;
-                        Entity_c.IdTipoCbte_mov_caj = repo.IdTipoCbte;
-                        Entity_c.IdCbteCble_mov_caj = repo.IdCbteCble;
+                            caj_Caja_Movimiento Entity_caj = new caj_Caja_Movimiento
+                            {
+                                IdEmpresa = repo.IdEmpresa,
+                                IdTipocbte = repo.IdTipoCbte,
+                                IdCbteCble = repo.IdCbteCble,
+                                CodMoviCaja = "Caja # " + info.IdConciliacion_Caja,
+                                cm_Signo = "+",
+                                cm_valor = repo.cb_Valor,
+                                IdTipoMovi = Convert.ToInt32(Entity_pc.IdTipo_movi_ing_x_reposicion),
+                                cm_observacion = repo.cb_Observacion,
+                                IdCaja = info.IdCaja,
+                                IdPeriodo = Convert.ToInt32(repo.cb_Fecha.ToString("yyyyMM")),
+                                cm_fecha = repo.cb_Fecha.Date,
+                                IdTipo_Persona = info.IdTipoPersona,
+                                IdEntidad = (decimal)info.IdEntidad,
+                                IdPersona = info.IdPersona,
+                                Estado = "A",
+                                IdUsuario = info.IdUsuario,
+                                Fecha_Transac = DateTime.Now
+                            };
+                            Context.caj_Caja_Movimiento.Add(Entity_caj);
+                            caj_Caja_Movimiento_det Entity_caj_det = new caj_Caja_Movimiento_det
+                            {
+                                IdEmpresa = repo.IdEmpresa,
+                                IdTipocbte = repo.IdTipoCbte,
+                                IdCbteCble = repo.IdCbteCble,
+                                Secuencia = 1,
+                                IdCobro_tipo = "EFEC",
+                                cr_Valor = repo.cb_Valor
+                            };
+                            Context.caj_Caja_Movimiento_det.Add(Entity_caj_det);
+                            Entity_c.IdEmpresa_mov_caj = repo.IdEmpresa;
+                            Entity_c.IdTipoCbte_mov_caj = repo.IdTipoCbte;
+                            Entity_c.IdCbteCble_mov_caj = repo.IdCbteCble;
+                        }                        
                     }
                     #endregion
                 }                
