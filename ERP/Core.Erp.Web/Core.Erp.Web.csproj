@@ -10093,6 +10093,9 @@
     <EmbeddedResource Include="Reportes\Caja\CAJ_002_Rpt.resx">
       <DependentUpon>CAJ_002_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Rpt.resx">
+      <DependentUpon>CAJ_002_ValesNoConciliados_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Compra\COMP_001_Rpt.resx">
       <DependentUpon>COMP_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
