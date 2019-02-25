@@ -88,9 +88,9 @@
                 if (data.GiradoA.length > 0) {
 
                     var ob = $("#cb_Cheque").val();
-
-                    $("#cb_giradoA").val(data.GiradoA);                    
-                    $("#cb_Observacion").val("CH# " + ob + " - " + data.Observacion);
+                    $("#cb_giradoA").val(data.GiradoA);
+                    var nombre = $("#cb_giradoA").val();
+                    $("#cb_Observacion").val("CH# " + ob +" - "+nombre+ " " + data.Observacion);
                 }
             },
             error: function (error) {
@@ -145,9 +145,9 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 var ob = $("#cb_Cheque").val();
-
                 $("#cb_giradoA").val(data.GiradoA);
-                $("#cb_Observacion").val("CH# " + ob + " - " + data.Observacion);
+                var nombre = $("#cb_giradoA").val();
+                $("#cb_Observacion").val("CH# " + ob + " - " + nombre + " " + data.Observacion);
             },
             error: function (error) {
             }

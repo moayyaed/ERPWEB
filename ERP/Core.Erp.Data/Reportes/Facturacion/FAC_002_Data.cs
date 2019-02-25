@@ -65,7 +65,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
