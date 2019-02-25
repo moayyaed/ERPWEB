@@ -149,7 +149,7 @@ namespace Core.Erp.Web.Helps
         private const string _Ruc = "Fx_Ruc";
         private const string _IdDivision = "Fx_IdDivision";
         private const string _IdDivision_IC = "Fx_IdDivision_IC";
-        private const string _TipoCliente = "Fx_TipoCliente";
+        private const string _Idtipo_cliente = "Fx_Idtipo_cliente";
 
         public string TipoPersona
         {
@@ -240,7 +240,7 @@ namespace Core.Erp.Web.Helps
             set { HttpContext.Current.Session[_IdDivision_IC] = value; }
         }
 
-        public string TipoCliente
+        public string Idtipo_cliente
         {
             get { return (string)HttpContext.Current.Session[_Idtipo_cliente]; }
             set { HttpContext.Current.Session[_Idtipo_cliente] = value; }
