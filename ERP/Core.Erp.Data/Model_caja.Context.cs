@@ -25,7 +25,6 @@ namespace Core.Erp.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<caj_Caja_Movimiento> caj_Caja_Movimiento { get; set; }
         public DbSet<caj_Caja_Movimiento_det> caj_Caja_Movimiento_det { get; set; }
         public DbSet<cp_conciliacion_Caja_det> cp_conciliacion_Caja_det { get; set; }
         public DbSet<cp_conciliacion_Caja_det_Ing_Caja> cp_conciliacion_Caja_det_Ing_Caja { get; set; }
@@ -41,5 +40,6 @@ namespace Core.Erp.Data
         public DbSet<cp_conciliacion_Caja> cp_conciliacion_Caja { get; set; }
         public DbSet<cp_conciliacion_Caja_ValesNoConciliados> cp_conciliacion_Caja_ValesNoConciliados { get; set; }
         public DbSet<vwcaj_Caja_Movimiento_ValesNoConciliados> vwcaj_Caja_Movimiento_ValesNoConciliados { get; set; }
+        public DbSet<caj_Caja_Movimiento> caj_Caja_Movimiento { get; set; }
     }
 }
