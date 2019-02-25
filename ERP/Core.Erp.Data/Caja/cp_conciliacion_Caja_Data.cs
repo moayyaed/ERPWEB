@@ -14,6 +14,7 @@ namespace Core.Erp.Data.Caja
         ct_cbtecble_Data data_ct = new ct_cbtecble_Data();
         cp_orden_pago_cancelaciones_Data data_can = new cp_orden_pago_cancelaciones_Data();        
         public List<cp_conciliacion_Caja_Info> get_list(int IdEmpresa, int IdCaja, DateTime Fecha_ini, DateTime Fecha_fin)
+
         {
             try
             {
@@ -625,6 +626,21 @@ namespace Core.Erp.Data.Caja
                 
                 if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
                 {
+                    int secuencia = 1;
+                    var lst_vales = Context.vwcaj_Caja_Movimiento_ValesNoConciliados.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCaja == info.IdCaja).ToList();
+                    foreach (var item in lst_vales)
+                    {
+                        Context.cp_conciliacion_Caja_ValesNoConciliados.Add(new cp_conciliacion_Caja_ValesNoConciliados
+                        {
+                            IdEmpresa = info.IdEmpresa, 
+                            IdConciliacion_Caja = info.IdConciliacion_Caja,
+                            Secuencia = secuencia++,
+                            IdCbteCble_movcaja = item.IdCbteCble,
+                            IdEmpresa_movcaja = item.IdEmpresa,
+                            IdTipocbte_movcaja = item.IdTipocbte,
+                            Valor = item.cm_valor
+                        });
+                    }
                     //AQUI PONES LO DE LOS VALES :*
                     Context.SaveChanges();
                 }
@@ -1227,10 +1243,25 @@ namespace Core.Erp.Data.Caja
 
                 if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
                 {
+                    int secuencia = 1;
+                    var lstvales = Context.vwcaj_Caja_Movimiento_ValesNoConciliados.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCaja == info.IdCaja).ToList();
+                    foreach (var item in lstvales)
+                    {
+                        Context.cp_conciliacion_Caja_ValesNoConciliados.Add(new cp_conciliacion_Caja_ValesNoConciliados
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdConciliacion_Caja = info.IdConciliacion_Caja,
+                            Secuencia = secuencia++,
+                            IdCbteCble_movcaja = item.IdCbteCble,
+                            IdEmpresa_movcaja = item.IdEmpresa,
+                            IdTipocbte_movcaja = item.IdTipocbte,
+                            Valor = item.cm_valor
+                        });
+                    }
                     //AQUI PONES LO DE LOS VALES :*
                     Context.SaveChanges();
                 }
-                
+
                 Context_ct.Dispose();
                 Context.Dispose();
                 Context_cxp.Dispose();

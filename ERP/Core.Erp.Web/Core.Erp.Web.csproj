@@ -643,6 +643,12 @@
     <Compile Include="Reportes\Caja\CAJ_002_Rpt.Designer.cs">
       <DependentUpon>CAJ_002_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Rpt.Designer.cs">
+      <DependentUpon>CAJ_002_ValesNoConciliados_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Compra\COMP_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
