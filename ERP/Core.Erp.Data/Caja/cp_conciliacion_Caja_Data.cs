@@ -626,8 +626,9 @@ namespace Core.Erp.Data.Caja
                 if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
                 {
                     //AQUI PONES LO DE LOS VALES :*
+                    Context.SaveChanges();
                 }
-                Context.SaveChanges();
+                
 
                 Context_ct.Dispose();
                 Context.Dispose();
@@ -1224,6 +1225,12 @@ namespace Core.Erp.Data.Caja
                 Context_cxp.SaveChanges();
                 Context.SaveChanges();
 
+                if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
+                {
+                    //AQUI PONES LO DE LOS VALES :*
+                    Context.SaveChanges();
+                }
+                
                 Context_ct.Dispose();
                 Context.Dispose();
                 Context_cxp.Dispose();
