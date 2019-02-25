@@ -98,6 +98,29 @@ namespace Core.Erp.Data.Caja
             }
         }
 
+        public decimal get_Secuencia(int IdEmpresa, int IdCaja)
+        {
+
+            try
+            {
+                decimal SecuenciaCaja = 1;
+                using (Entities_caja db = new Entities_caja())
+                {
+                    var Lista = db.cp_conciliacion_Caja.Where(q => q.IdEmpresa == IdEmpresa && q.IdCaja == IdCaja).Select(q => q.SecuenciaCaja);
+
+                    if (Lista.Count() > 0)
+                        SecuenciaCaja = Convert.ToDecimal(Lista.Max() + 1);
+                }
+                return SecuenciaCaja;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         public decimal get_id(int IdEmpresa)
         {
             try
@@ -171,6 +194,8 @@ namespace Core.Erp.Data.Caja
                     Total_fact_vale = info.Total_fact_vale,
                     Dif_x_pagar_o_cobrar = info.Dif_x_pagar_o_cobrar,
                     Total_Ing = info.Total_Ing,
+
+                    SecuenciaCaja =  info.SecuenciaCaja= get_Secuencia(info.IdEmpresa, info.IdCaja),
 
                     IdEmpresa_op = info.IdEmpresa_op,
                     IdOrdenPago_op = info.IdOrdenPago_op,

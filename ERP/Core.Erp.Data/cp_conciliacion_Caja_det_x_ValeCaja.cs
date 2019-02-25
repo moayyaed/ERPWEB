@@ -26,7 +26,7 @@ namespace Core.Erp.Data
         public string IdCentroCosto { get; set; }
         public string IdCentroCosto_sub_centro_costo { get; set; }
     
-        public virtual cp_conciliacion_Caja cp_conciliacion_Caja { get; set; }
         public virtual caj_Caja_Movimiento caj_Caja_Movimiento { get; set; }
+        public virtual cp_conciliacion_Caja cp_conciliacion_Caja { get; set; }
     }
 }
