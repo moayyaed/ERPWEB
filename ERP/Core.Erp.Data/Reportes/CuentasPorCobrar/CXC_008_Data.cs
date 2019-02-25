@@ -9,19 +9,32 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 {
    public class CXC_008_Data
     {
-        public List<CXC_008_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdCliente, DateTime fecha_ini, DateTime fecha_fin, bool mostrar_anulados)
+        public List<CXC_008_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdCliente, String IdCobro_tipo, DateTime fecha_ini, DateTime fecha_fin, bool mostrar_anulados)
         {
             try
             {
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
+                decimal IdClienteIni = IdCliente;
+                decimal IdClienteFin = IdCliente == 0 ? 9999 : IdCliente;
+
+                string IdCobro_tipoIni = IdCobro_tipo;
+                string IdCobro_tipoFin = IdCobro_tipo == null ? "9999" : IdCobro_tipo;
+
                 List<CXC_008_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
                     if(mostrar_anulados==true)
                     {
                         Lista = Context.VWCXC_008.Where(q => q.IdEmpresa == IdEmpresa
-                    && q.IdSucursal == IdSucursal
-                    && q.IdCliente == IdCliente
-                    && q.vt_fecha == fecha_fin
+                    && IdSucursalIni <= q.IdSucursal
+                    && q.IdSucursal <= IdSucursalFin
+                    && IdClienteIni <= q.IdCliente
+                    && q.IdCliente <= IdClienteFin
+                    && q.IdCobro_tipo == q.IdCobro_tipo
+                    && fecha_ini <= q.vt_fecha
+                    && q.vt_fecha <= fecha_fin
                     && q.cr_estado == "I").Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
@@ -46,9 +59,13 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     else
                     {
                         Lista = Context.VWCXC_008.Where(q => q.IdEmpresa == IdEmpresa
-                    && q.IdSucursal == IdSucursal
-                    && q.IdCliente == IdCliente
-                    && q.vt_fecha == fecha_fin
+                    && IdSucursalIni <= q.IdSucursal
+                    && q.IdSucursal <= IdSucursalFin
+                    && IdClienteIni <= q.IdCliente
+                    && q.IdCliente <= IdClienteFin
+                    && q.IdCobro_tipo == q.IdCobro_tipo
+                    && fecha_ini <= q.vt_fecha
+                    && q.vt_fecha <= fecha_fin
                     && q.cr_estado == "A").Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,

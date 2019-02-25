@@ -227,5 +227,45 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(report);
         }
 
+        public ActionResult CXC_008()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCliente = 0
+
+            };
+            CXC_008_Rpt report = new CXC_008_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente; ;
+            report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_mostrar_anulados.Value = model.mostrarAnulados;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CXC_008(cl_filtros_facturacion_Info model)
+        {
+            CXC_008_Rpt report = new CXC_008_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente; ;
+            report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_mostrar_anulados.Value = model.mostrarAnulados;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+
+            return View(model);
+        }
     }
 }
