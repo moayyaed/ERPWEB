@@ -41,7 +41,6 @@
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.signo)
-    @Html.HiddenFor(q => q.IdMovi_inven_tipo)
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -109,7 +108,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdMovi_inven_tipo">Tipo movimiento*</label>
-                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_tipo, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo", @disabled = "disabled" })
+                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_tipo, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo" })
                     @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
                 </div>
             </div>
