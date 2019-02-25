@@ -75,6 +75,7 @@
             this.xrTableCell35 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
+            this.subreport_vales_no_conciliados = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTable3 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell40 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -90,7 +91,6 @@
             this.xrTableCell22 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
-            this.subreport_vales_no_conciliados = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTable7 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow11 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell43 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -521,7 +521,7 @@
             this.xrTableCell48.StylePriority.UseTextAlignment = false;
             this.xrTableCell48.Text = "xrTableCell48";
             this.xrTableCell48.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell48.Weight = 1.4031016004860588D;
+            this.xrTableCell48.Weight = 2.2502560376235321D;
             // 
             // xrTableCell33
             // 
@@ -533,7 +533,7 @@
             this.xrTableCell33.StylePriority.UseTextAlignment = false;
             this.xrTableCell33.Text = "Desde:";
             this.xrTableCell33.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell33.Weight = 0.84715424906448211D;
+            this.xrTableCell33.Weight = 0.5824202850595579D;
             // 
             // xrTableCell7
             // 
@@ -547,7 +547,7 @@
             this.xrTableCell7.StylePriority.UseTextAlignment = false;
             this.xrTableCell7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             this.xrTableCell7.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell7.Weight = 0.58242032677334965D;
+            this.xrTableCell7.Weight = 0.79420837052047066D;
             // 
             // xrTableCell35
             // 
@@ -559,7 +559,7 @@
             this.xrTableCell35.StylePriority.UseTextAlignment = false;
             this.xrTableCell35.Text = "Hasta:";
             this.xrTableCell35.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell35.Weight = 0.79420820893839972D;
+            this.xrTableCell35.Weight = 0.74126067285988984D;
             // 
             // xrTableCell10
             // 
@@ -573,7 +573,7 @@
             this.xrTableCell10.StylePriority.UseTextAlignment = false;
             this.xrTableCell10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             this.xrTableCell10.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell10.Weight = 1.5513529695582438D;
+            this.xrTableCell10.Weight = 0.81009198875708366D;
             // 
             // PageHeader
             // 
@@ -585,6 +585,14 @@
             this.xrTable3});
             this.PageHeader.HeightF = 251.75F;
             this.PageHeader.Name = "PageHeader";
+            // 
+            // subreport_vales_no_conciliados
+            // 
+            this.subreport_vales_no_conciliados.LocationFloat = new DevExpress.Utils.PointFloat(0F, 166.0417F);
+            this.subreport_vales_no_conciliados.Name = "subreport_vales_no_conciliados";
+            this.subreport_vales_no_conciliados.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ValesNoConciliados_Rpt();
+            this.subreport_vales_no_conciliados.SizeF = new System.Drawing.SizeF(1093F, 23F);
+            this.subreport_vales_no_conciliados.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.subreport_vales_no_conciliados_BeforePrint);
             // 
             // xrTable3
             // 
@@ -709,14 +717,6 @@
             this.xrTable5});
             this.ReportFooter.HeightF = 88.50003F;
             this.ReportFooter.Name = "ReportFooter";
-            // 
-            // subreport_vales_no_conciliados
-            // 
-            this.subreport_vales_no_conciliados.LocationFloat = new DevExpress.Utils.PointFloat(0F, 166.0417F);
-            this.subreport_vales_no_conciliados.Name = "subreport_vales_no_conciliados";
-            this.subreport_vales_no_conciliados.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ValesNoConciliados_Rpt();
-            this.subreport_vales_no_conciliados.SizeF = new System.Drawing.SizeF(1093F, 23F);
-            this.subreport_vales_no_conciliados.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.subreport_vales_no_conciliados_BeforePrint);
             // 
             // xrTable7
             // 
