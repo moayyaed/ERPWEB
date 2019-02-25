@@ -74,8 +74,10 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 if (data.GiradoA.length > 0) {
+                    var ob = $("#cb_Cheque").val();
                     $("#cb_giradoA").val(data.GiradoA);
-                    $("#cb_Observacion").val(data.Observacion);
+                    var nombre = $("#cb_giradoA").val();
+                    $("#cb_Observacion").val("CH# " + ob + " - " + nombre + " " + data.Observacion);
                 }
             },
             error: function (error) {
@@ -125,8 +127,10 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                var ob = $("#cb_Cheque").val();
                 $("#cb_giradoA").val(data.GiradoA);
-                $("#cb_Observacion").val(data.Observacion);
+                var nombre = $("#cb_giradoA").val();
+                $("#cb_Observacion").val("CH# " + ob + " - " + nombre + " " + data.Observacion);
             },
             error: function (error) {
             }
