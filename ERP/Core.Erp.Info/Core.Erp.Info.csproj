@@ -327,6 +327,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Info.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_detalle_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_002_diario_Info.cs" />

@@ -11,9 +11,15 @@
 @using (Html.BeginForm("Nuevo", "PagoBenediciosSociales", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
-
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="FechaInicio">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Anio">Año*</label>

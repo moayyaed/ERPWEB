@@ -45,12 +45,13 @@ namespace Core.Erp.Data
         public string IdTipo_Persona { get; set; }
         public decimal IdEntidad { get; set; }
         public decimal IdPersona { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
     
+        public virtual caj_Caja caj_Caja { get; set; }
+        public virtual caj_Caja_Movimiento_Tipo caj_Caja_Movimiento_Tipo { get; set; }
         public virtual ICollection<caj_Caja_Movimiento_det> caj_Caja_Movimiento_det { get; set; }
         public virtual ICollection<cp_conciliacion_Caja_det_Ing_Caja> cp_conciliacion_Caja_det_Ing_Caja { get; set; }
         public virtual ICollection<cp_conciliacion_Caja_det_x_ValeCaja> cp_conciliacion_Caja_det_x_ValeCaja { get; set; }
-        public virtual caj_Caja caj_Caja { get; set; }
-        public virtual caj_Caja_Movimiento_Tipo caj_Caja_Movimiento_Tipo { get; set; }
         public virtual ICollection<cp_conciliacion_Caja> cp_conciliacion_Caja { get; set; }
     }
 }

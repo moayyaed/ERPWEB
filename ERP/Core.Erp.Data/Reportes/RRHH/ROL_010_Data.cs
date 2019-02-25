@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_010_Data
     {
-        public List<ROL_010_Info> get_list(int IdEmpresa, int IdSucursal, int IdDivision, int IdArea, string em_status, string Ubicacion)
+        public List<ROL_010_Info> get_list(int IdEmpresa, int IdSucursal, int IdDivision, int IdArea, int IdTipoNomina, string em_status, string Ubicacion)
         {
             try
             {
@@ -21,7 +21,9 @@ namespace Core.Erp.Data.Reportes.RRHH
 
                 int IdAreaInicio = IdArea;
                 int IdAreaFin = IdArea == 0 ? 9999 : IdArea;
-                
+
+                int IdTipoNominaInicio = IdTipoNomina;
+                int IdTipoNominaFin = IdTipoNomina == 0 ? 9999 : IdTipoNomina;
 
                 List<ROL_010_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
@@ -36,6 +38,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                 && q.IdDivision <= IdDivisionFin
                                 && q.IdArea >= IdAreaInicio
                                 && q.IdArea <= IdAreaFin
+                                && q.IdTipoNomina >= IdTipoNominaInicio
+                                && q.IdTipoNomina <= IdTipoNominaFin
                                  select new ROL_010_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -58,7 +62,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                      EstadoCivil = q.EstadoCivil,
                                      edad = q.edad,
                                      CodCatalogo_Ubicacion = q.CodCatalogo_Ubicacion,
-                                     UbicacionGeneral = q.UbicacionGeneral
+                                     UbicacionGeneral = q.UbicacionGeneral,
+                                     TipoNomina = q.TipoNomina
                                  }).ToList();
                     }
                     else
@@ -71,6 +76,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                 && q.IdDivision <= IdDivisionFin
                                 && q.IdArea >= IdAreaInicio
                                 && q.IdArea <= IdAreaFin
+                                && q.IdTipoNomina >= IdTipoNominaInicio
+                                && q.IdTipoNomina <= IdTipoNominaFin
                                 && em_status.Contains(q.em_status)
                                  select new ROL_010_Info
                                  {
@@ -94,7 +101,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                      EstadoCivil = q.EstadoCivil,
                                      edad = q.edad,
                                      CodCatalogo_Ubicacion = q.CodCatalogo_Ubicacion,
-                                     UbicacionGeneral = q.UbicacionGeneral
+                                     UbicacionGeneral = q.UbicacionGeneral,
+                                     TipoNomina = q.TipoNomina
                                  }).ToList();
                     }                    
                 }

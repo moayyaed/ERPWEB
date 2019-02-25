@@ -44,6 +44,7 @@ namespace Core.Erp.Data
         public Nullable<int> IdEmpresa_mov_caj { get; set; }
         public Nullable<int> IdTipoCbte_mov_caj { get; set; }
         public Nullable<decimal> IdCbteCble_mov_caj { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
         public string IdUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public string IdUsuarioModificacion { get; set; }

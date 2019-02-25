@@ -30,13 +30,20 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal</label>
                             @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
                         </div>
                     </div>
                     <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdTipoNomina">Nómina*</label>
+                            @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                            @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdDivision">División</label>
                             @Html.Partial("_CmbDivision_reportes", Model.IdDivision)
@@ -48,7 +55,11 @@
                             @Html.Partial("_CmbArea_reportes", Model.IdArea)
                         </div>
                     </div>
-                    <div class="col-md-2">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdCatalogo">Estado</label>
                             @Html.DropDownListFor(q => q.em_status, new SelectList(ViewBag.lst_EstadoEmpleado, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "CodCatalogo" })

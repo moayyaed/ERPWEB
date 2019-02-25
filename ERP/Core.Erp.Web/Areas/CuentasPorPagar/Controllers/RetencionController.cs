@@ -536,6 +536,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             try
             {
                 var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                lst_sucursal.Add(new Info.General.tb_sucursal_Info
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = 0,
+                    Su_Descripcion = "TODOS"
+                });
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)

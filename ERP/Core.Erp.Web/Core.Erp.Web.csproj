@@ -757,6 +757,12 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Rpt.Designer.cs">
       <DependentUpon>CXC_007_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Rpt.Designer.cs">
+      <DependentUpon>CXC_008_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_detalle_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -9897,6 +9903,7 @@
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Modificar.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\_CmbClientePorTipo.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_008.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10149,6 +10156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_007_Rpt.resx">
       <DependentUpon>CXC_007_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_008_Rpt.resx">
+      <DependentUpon>CXC_008_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_001_detalle_Rpt.resx">
       <DependentUpon>CXP_001_detalle_Rpt.cs</DependentUpon>

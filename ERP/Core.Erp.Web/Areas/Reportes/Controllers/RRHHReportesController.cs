@@ -303,6 +303,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 ca_descripcion = "Todos"
             });
             ViewBag.lst_EstadoEmpleado = lst_EstadoEmpleado;
+
             var lst_ubi = bus_catalogo.get_list_x_tipo(44);
             lst_ubi.Add(new ro_catalogo_Info
             {
@@ -310,6 +311,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 ca_descripcion = "Todos"
             });
             ViewBag.lst_ubi = lst_ubi;
+
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_nomina_tipo = bus_tiponomina.get_list(IdEmpresa, false);
+            lst_nomina_tipo.Add(new ro_nomina_tipo_Info
+            {
+                IdEmpresa =IdEmpresa,
+                IdNomina_Tipo = 0,
+                Descripcion = "TODAS"
+            });
+
+            ViewBag.lst_nomina_tipo = lst_nomina_tipo;
         }
 
         public ActionResult ROL_010()
@@ -318,6 +330,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTipoNomina = 0,
                 em_status = "",
                 IdDivision = 0,
                 IdArea = 0,
@@ -346,6 +359,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_010_Rpt report = new ROL_010_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdTipoNomina.Value = model.IdTipoNomina;
             report.p_IdDivision.Value = model.IdDivision;
             report.p_IdArea.Value = model.IdArea;
             report.p_em_status.Value = model.em_status;

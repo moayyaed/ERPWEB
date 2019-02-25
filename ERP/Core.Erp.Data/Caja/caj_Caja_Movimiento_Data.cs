@@ -81,6 +81,28 @@ namespace Core.Erp.Data.Caja
             }
         }
 
+        public decimal get_Secuencia(int IdEmpresa, int IdCaja, string cm_Signo)
+        {
+
+            try
+            {
+                decimal SecuenciaCaja = 1;
+                using (Entities_caja db = new Entities_caja())
+                {
+                    var Lista = db.caj_Caja_Movimiento.Where(q => q.IdEmpresa == IdEmpresa && q.IdCaja == IdCaja && q.cm_Signo == cm_Signo).Select(q => q.SecuenciaCaja);
+
+                    if (Lista.Count() > 0)
+                        SecuenciaCaja = Convert.ToDecimal(Lista.Max() + 1);
+                }
+                return SecuenciaCaja;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public caj_Caja_Movimiento_Info get_info(int IdEmpresa, int IdTipocbte, decimal IdCbteCble)
         {
             try
@@ -143,6 +165,7 @@ namespace Core.Erp.Data.Caja
                         cm_valor = info.cm_valor,
                         CodMoviCaja = info.CodMoviCaja,
                         Estado = info.Estado="A",
+                        SecuenciaCaja =  info.SecuenciaCaja= get_Secuencia(info.IdEmpresa, info.IdCaja, info.cm_Signo),
 
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
@@ -224,6 +247,7 @@ namespace Core.Erp.Data.Caja
                     Entity.IdEntidad = info.IdEntidad;
                     Entity.IdCaja = info.IdCaja;
                     Entity.IdTipoMovi = info.IdTipoMovi;
+
                     caj_Caja_Movimiento_det Entity_det = Context.caj_Caja_Movimiento_det.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTipocbte == info.IdTipocbte && q.IdCbteCble == info.IdCbteCble);
                     if(Entity_det == null) return false;
 

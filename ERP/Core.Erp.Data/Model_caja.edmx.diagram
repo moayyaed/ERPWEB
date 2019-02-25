@@ -5,32 +5,32 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8228aeacd81d47abbc1ae16e2ba5978d" Name="Diagram1">
-        <EntityTypeShape EntityType="Model_caja.caj_Caja_Movimiento" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.caj_Caja_Movimiento_det" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_det" Width="1.5" PointX="10.5" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_det_Ing_Caja" Width="1.5" PointX="13.5" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_det_x_ValeCaja" Width="1.5" PointX="13.5" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_x_Conciliar" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="Model_caja.FK_caj_Caja_Movimiento_det_caj_Caja_Movimiento" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_Ing_Caja_caj_Caja_Movimiento" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_caj_Caja_Movimiento" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model_caja.vwcp_conciliacion_Caja_det_x_ValeCaja" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_caja.vwcp_conciliacion_Caja_det" Width="1.5" PointX="5.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_caja.caj_parametro" Width="1.5" PointX="10.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_caja.caj_Caja" Width="1.5" PointX="0.75" PointY="7.25" />
         <EntityTypeShape EntityType="Model_caja.caj_Caja_Movimiento_Tipo" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_ValesNoConciliados" Width="1.5" PointX="15.5" PointY="14.125" />
+        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" Width="1.5" PointX="7.375" PointY="5.75" />
+        <EntityTypeShape EntityType="Model_caja.caj_Caja_Movimiento" Width="1.5" PointX="3" PointY="8.625" />
         <AssociationConnector Association="Model_caja.FK_caj_Caja_Movimiento_caj_Caja" />
         <AssociationConnector Association="Model_caja.FK_caj_Caja_Movimiento_caj_Caja_Movimiento_Tipo" />
-        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja" Width="1.5" PointX="13.25" PointY="11.875" />
+        <AssociationConnector Association="Model_caja.FK_caj_Caja_Movimiento_det_caj_Caja_Movimiento" />
+        <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_Ing_Caja_caj_Caja_Movimiento" />
+        <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_caj_Caja_Movimiento" />
+        <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja" Width="1.5" PointX="13.25" PointY="11.625" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_caj_Caja" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_caj_Caja_Movimiento" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_cp_conciliacion_Caja" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_Ing_Caja_cp_conciliacion_Caja" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_cp_conciliacion_Caja" />
-        <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_ValesNoConciliados" Width="1.5" PointX="15.5" PointY="14.125" />
-        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" Width="1.5" PointX="7.375" PointY="5.75" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja" />
       </Diagram>
     </edmx:Diagrams>

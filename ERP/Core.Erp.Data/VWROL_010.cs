@@ -38,5 +38,6 @@ namespace Core.Erp.Data
         public string antiguedad_string { get; set; }
         public string CodCatalogo_Ubicacion { get; set; }
         public string UbicacionGeneral { get; set; }
+        public string TipoNomina { get; set; }
     }
 }

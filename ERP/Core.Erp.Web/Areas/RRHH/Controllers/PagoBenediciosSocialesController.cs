@@ -24,9 +24,20 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+            cargar_combo_consulta(model.IdEmpresa);
+            return View(model);
         }
-
+        [HttpPost]
+        public ActionResult Index(cl_filtros_Info model)
+        {
+            cargar_combo_consulta(model.IdEmpresa);
+            return View(model);
+        }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_pago_beneficios(int IdEmpresa=0, int IdSucursal=0)
         {
@@ -151,7 +162,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+                ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
                 var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+                ViewBag.lst_sucursal = lst_sucursal;
+
+              var  lista_nomina = bus_nomina.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+                ViewBag.lst_nomina = lista_nomina;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private void cargar_combo_consulta(int IdEmpresa)
+        {
+            try
+            {
+                tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)
@@ -161,7 +191,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        
+
         public FileResult GetCSV(int IdRol=0,int IdNomina_TipoLiqui = 0)
         {
             ro_archivosCSV_Bus bus_archivos = new ro_archivosCSV_Bus();

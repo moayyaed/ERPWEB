@@ -27,11 +27,12 @@ namespace Core.Erp.Info.Reportes.RRHH
         public Nullable<System.DateTime> em_fechaSalida { get; set; }
         public string ca_descripcion { get; set; }
         public string EstadoEmpleado { get; set; }
+        public string em_status { get; set; }
         public Nullable<System.DateTime> em_fechaIngaRol { get; set; }
         public string antiguedad_string { get; set; }
-        public string em_status { get; set; }
         public string CodCatalogo_Ubicacion { get; set; }
         public string UbicacionGeneral { get; set; }
+        public string TipoNomina { get; set; }
 
         public int CantidadEmpleados { get; set; }
     }
