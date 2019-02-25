@@ -316,5 +316,45 @@ namespace Core.Erp.Data.Caja
             }
         }
 
+        public bool ValidarMovimientoModificar(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble, string signo)
+        {
+            try
+            {
+                int cont = 0;
+                Entities_caja db = new Entities_caja();
+                Entities_banco dbb = new Entities_banco();
+                if (signo == "+")
+                {
+                    cont = db.cp_conciliacion_Caja_det_Ing_Caja.Where(q => q.IdEmpresa_movcaj == IdEmpresa
+                    && q.IdTipocbte_movcaj == IdTipoCbte && q.IdCbteCble_movcaj == IdCbteCble).Count();
+
+                    if (cont != 0)
+                        return false;
+
+                    cont = dbb.ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito.Where(q => q.mcj_IdEmpresa == IdEmpresa
+                    && q.mcj_IdTipocbte == IdTipoCbte && q.mcj_IdCbteCble == IdCbteCble).Count();
+
+                    if (cont != 0)
+                        return false;
+
+                    return true;
+                }
+                else
+                {
+                    cont = db.cp_conciliacion_Caja_det_x_ValeCaja.Where(q => q.IdEmpresa_movcaja == IdEmpresa
+                    && q.IdTipocbte_movcaja == IdTipoCbte && q.IdCbteCble_movcaja == IdCbteCble).Count();
+
+                    if (cont != 0)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

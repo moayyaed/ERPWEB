@@ -86,6 +86,19 @@ namespace Core.Erp.Bus.Caja
             }
         }
 
+        public bool ValidarMovimientoModificar(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble, string signo)
+        {
+            try
+            {
+                return odata.ValidarMovimientoModificar(IdEmpresa, IdTipoCbte, IdCbteCble, signo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool anularDB(caj_Caja_Movimiento_Info info)
         {
             try

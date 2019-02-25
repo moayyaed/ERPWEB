@@ -37,5 +37,13 @@ namespace Core.Erp.Web.Reportes.Caja
             ((XRSubreport)sender).ReportSource.Parameters["p_IdConciliacionCaja"].Value = p_IdConciliacionCaja.Value == null ? 0 : Convert.ToInt32(p_IdConciliacionCaja.Value);
             ((XRSubreport)sender).ReportSource.RequestParameters = false;
         }
+
+        private void subreport_vales_no_conciliados_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdEmpresa"].Value = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdConciliacion_Caja"].Value = p_IdConciliacionCaja.Value == null ? 0 : Convert.ToInt32(p_IdConciliacionCaja.Value);
+            ((XRSubreport)sender).ReportSource.RequestParameters = false;
+        }
     }
 }

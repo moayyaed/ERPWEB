@@ -10,6 +10,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.General;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -148,8 +150,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                
-
+                tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)
             {

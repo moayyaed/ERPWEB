@@ -173,6 +173,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos_detalle();
             cargar_combos(IdEmpresa);
+
             return View(model);
         }
 
@@ -230,6 +231,15 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
 
             cargar_combos(IdEmpresa);
+
+            if (!bus_caja_mov.ValidarMovimientoModificar(IdEmpresa, IdTipocbte, IdCbteCble, "+"))
+            {
+                ViewBag.mensaje = "El movimiento de caja no puede ser modificado";
+                ViewBag.NoMostrarBotones = true;
+            }
+            else
+                ViewBag.NoMostrarBotones = false;
+
             return View(model);
         }
 
@@ -271,6 +281,15 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, IdTipocbte, IdCbteCble);
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+
+            if (!bus_caja_mov.ValidarMovimientoModificar(IdEmpresa, IdTipocbte, IdCbteCble, "+"))
+            {
+                ViewBag.mensaje = "El movimiento de caja no puede ser anulado";
+                ViewBag.NoMostrarBotones = true;
+            }
+            else
+                ViewBag.NoMostrarBotones = false;
+
             return View(model);
         }
 
