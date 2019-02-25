@@ -12,18 +12,12 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class cp_conciliacion_Caja_det_Ing_Caja
+    public partial class vwcaj_Caja_Movimiento_ValesNoConciliados
     {
         public int IdEmpresa { get; set; }
-        public decimal IdConciliacion_Caja { get; set; }
-        public int secuencia { get; set; }
-        public int IdEmpresa_movcaj { get; set; }
-        public decimal IdCbteCble_movcaj { get; set; }
-        public int IdTipocbte_movcaj { get; set; }
-        public double valor_aplicado { get; set; }
-        public double valor_disponible { get; set; }
-    
-        public virtual caj_Caja_Movimiento caj_Caja_Movimiento { get; set; }
-        public virtual cp_conciliacion_Caja cp_conciliacion_Caja { get; set; }
+        public int IdTipocbte { get; set; }
+        public decimal IdCbteCble { get; set; }
+        public int IdCaja { get; set; }
+        public double cm_valor { get; set; }
     }
 }

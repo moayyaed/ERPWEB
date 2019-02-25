@@ -298,6 +298,9 @@
     <Compile Include="cp_conciliacion_Caja_det_x_ValeCaja.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
+    <Compile Include="cp_conciliacion_Caja_ValesNoConciliados.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
     <Compile Include="cp_cuotas_x_doc.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
@@ -1928,6 +1931,9 @@
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcaj_Caja_Movimiento_por_conciliar.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcaj_Caja_Movimiento_ValesNoConciliados.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcaj_Caja_Movimiento_x_Conciliar.cs">

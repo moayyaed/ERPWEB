@@ -29,6 +29,9 @@
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_cp_conciliacion_Caja" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_Ing_Caja_cp_conciliacion_Caja" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_cp_conciliacion_Caja" />
+        <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_ValesNoConciliados" Width="1.5" PointX="15.5" PointY="14.125" />
+        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" Width="1.5" PointX="7.375" PointY="5.75" />
+        <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

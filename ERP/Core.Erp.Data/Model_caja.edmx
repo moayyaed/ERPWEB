@@ -195,6 +195,20 @@
           <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" />
           <Property Name="IdCentroCosto_sub_centro_costo" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="cp_conciliacion_Caja_ValesNoConciliados">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion_Caja" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdConciliacion_Caja" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdEmpresa_movcaja" Type="int" Nullable="false" />
+          <Property Name="IdCbteCble_movcaja" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTipocbte_movcaja" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_por_conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcaj_Caja_Movimiento_por_conciliar">
@@ -225,6 +239,22 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_por_concilia
           <Property Name="IdTipo_Persona" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IdEntidad" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_ValesNoConciliados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcaj_Caja_Movimiento_ValesNoConciliados">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipocbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="cm_valor" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTipocbte" Type="int" Nullable="false" />
+          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCaja" Type="int" Nullable="false" />
+          <Property Name="cm_valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_x_Conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -514,6 +544,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja">
+          <End Role="cp_conciliacion_Caja" Type="Self.cp_conciliacion_Caja" Multiplicity="1" />
+          <End Role="cp_conciliacion_Caja_ValesNoConciliados" Type="Self.cp_conciliacion_Caja_ValesNoConciliados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_conciliacion_Caja">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion_Caja" />
+            </Principal>
+            <Dependent Role="cp_conciliacion_Caja_ValesNoConciliados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion_Caja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Model_cajaStoreContainer">
           <EntitySet Name="caj_Caja" EntityType="Self.caj_Caja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="caj_Caja_Movimiento" EntityType="Self.caj_Caja_Movimiento" Schema="dbo" store:Type="Tables" />
@@ -524,6 +568,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <EntitySet Name="cp_conciliacion_Caja_det" EntityType="Self.cp_conciliacion_Caja_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_conciliacion_Caja_det_Ing_Caja" EntityType="Self.cp_conciliacion_Caja_det_Ing_Caja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_conciliacion_Caja_det_x_ValeCaja" EntityType="Self.cp_conciliacion_Caja_det_x_ValeCaja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cp_conciliacion_Caja_ValesNoConciliados" EntityType="Self.cp_conciliacion_Caja_ValesNoConciliados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwcaj_Caja_Movimiento_por_conciliar" EntityType="Self.vwcaj_Caja_Movimiento_por_conciliar" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwcaj_Caja_Movimiento_por_conciliar].[IdEmpresa] AS [IdEmpresa], 
@@ -540,6 +585,15 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
     [vwcaj_Caja_Movimiento_por_conciliar].[IdEntidad] AS [IdEntidad], 
     [vwcaj_Caja_Movimiento_por_conciliar].[IdPersona] AS [IdPersona]
     FROM [dbo].[vwcaj_Caja_Movimiento_por_conciliar] AS [vwcaj_Caja_Movimiento_por_conciliar]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcaj_Caja_Movimiento_ValesNoConciliados" EntityType="Self.vwcaj_Caja_Movimiento_ValesNoConciliados" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcaj_Caja_Movimiento_ValesNoConciliados].[IdEmpresa] AS [IdEmpresa], 
+    [vwcaj_Caja_Movimiento_ValesNoConciliados].[IdTipocbte] AS [IdTipocbte], 
+    [vwcaj_Caja_Movimiento_ValesNoConciliados].[IdCbteCble] AS [IdCbteCble], 
+    [vwcaj_Caja_Movimiento_ValesNoConciliados].[IdCaja] AS [IdCaja], 
+    [vwcaj_Caja_Movimiento_ValesNoConciliados].[cm_valor] AS [cm_valor]
+    FROM [dbo].[vwcaj_Caja_Movimiento_ValesNoConciliados] AS [vwcaj_Caja_Movimiento_ValesNoConciliados]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcaj_Caja_Movimiento_x_Conciliar" EntityType="Self.vwcaj_Caja_Movimiento_x_Conciliar" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -657,6 +711,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <AssociationSet Name="FK_cp_conciliacion_Caja_det_x_ValeCaja_cp_conciliacion_Caja" Association="Self.FK_cp_conciliacion_Caja_det_x_ValeCaja_cp_conciliacion_Caja">
             <End Role="cp_conciliacion_Caja" EntitySet="cp_conciliacion_Caja" />
             <End Role="cp_conciliacion_Caja_det_x_ValeCaja" EntitySet="cp_conciliacion_Caja_det_x_ValeCaja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja" Association="Self.FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja">
+            <End Role="cp_conciliacion_Caja" EntitySet="cp_conciliacion_Caja" />
+            <End Role="cp_conciliacion_Caja_ValesNoConciliados" EntitySet="cp_conciliacion_Caja_ValesNoConciliados" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -933,6 +991,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
             <End Role="cp_conciliacion_Caja" EntitySet="cp_conciliacion_Caja" />
             <End Role="cp_conciliacion_Caja_det_x_ValeCaja" EntitySet="cp_conciliacion_Caja_det_x_ValeCaja" />
           </AssociationSet>
+          <EntitySet Name="cp_conciliacion_Caja_ValesNoConciliados" EntityType="Model_caja.cp_conciliacion_Caja_ValesNoConciliados" />
+          <EntitySet Name="vwcaj_Caja_Movimiento_ValesNoConciliados" EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" />
+          <AssociationSet Name="FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja" Association="Model_caja.FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja">
+            <End Role="cp_conciliacion_Caja" EntitySet="cp_conciliacion_Caja" />
+            <End Role="cp_conciliacion_Caja_ValesNoConciliados" EntitySet="cp_conciliacion_Caja_ValesNoConciliados" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="vwcp_conciliacion_Caja_det_x_ValeCaja">
           <Key>
@@ -1164,6 +1228,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <NavigationProperty Name="cp_conciliacion_Caja_det" Relationship="Model_caja.FK_cp_conciliacion_Caja_det_cp_conciliacion_Caja" FromRole="cp_conciliacion_Caja" ToRole="cp_conciliacion_Caja_det" />
           <NavigationProperty Name="cp_conciliacion_Caja_det_Ing_Caja" Relationship="Model_caja.FK_cp_conciliacion_Caja_det_Ing_Caja_cp_conciliacion_Caja" FromRole="cp_conciliacion_Caja" ToRole="cp_conciliacion_Caja_det_Ing_Caja" />
           <NavigationProperty Name="cp_conciliacion_Caja_det_x_ValeCaja" Relationship="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_cp_conciliacion_Caja" FromRole="cp_conciliacion_Caja" ToRole="cp_conciliacion_Caja_det_x_ValeCaja" />
+          <NavigationProperty Name="cp_conciliacion_Caja_ValesNoConciliados" Relationship="Model_caja.FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja" FromRole="cp_conciliacion_Caja" ToRole="cp_conciliacion_Caja_ValesNoConciliados" />
         </EntityType>
         <Association Name="FK_cp_conciliacion_Caja_caj_Caja">
           <End Type="Model_caja.caj_Caja" Role="caj_Caja" Multiplicity="1" />
@@ -1232,6 +1297,49 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
               <PropertyRef Name="IdConciliacion_Caja" />
             </Principal>
             <Dependent Role="cp_conciliacion_Caja_det_x_ValeCaja">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion_Caja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="cp_conciliacion_Caja_ValesNoConciliados">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion_Caja" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdConciliacion_Caja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa_movcaja" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_movcaja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdTipocbte_movcaja" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="cp_conciliacion_Caja" Relationship="Model_caja.FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja" FromRole="cp_conciliacion_Caja_ValesNoConciliados" ToRole="cp_conciliacion_Caja" />
+        </EntityType>
+        <EntityType Name="vwcaj_Caja_Movimiento_ValesNoConciliados">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipocbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="cm_valor" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipocbte" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdCaja" Type="Int32" Nullable="false" />
+          <Property Name="cm_valor" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_cp_conciliacion_Caja_ValesNoConciliados_cp_conciliacion_Caja">
+          <End Type="Model_caja.cp_conciliacion_Caja" Role="cp_conciliacion_Caja" Multiplicity="1" />
+          <End Type="Model_caja.cp_conciliacion_Caja_ValesNoConciliados" Role="cp_conciliacion_Caja_ValesNoConciliados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_conciliacion_Caja">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion_Caja" />
+            </Principal>
+            <Dependent Role="cp_conciliacion_Caja_ValesNoConciliados">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdConciliacion_Caja" />
             </Dependent>
@@ -1528,6 +1636,30 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
                 <ScalarProperty Name="Fecha_ini" ColumnName="Fecha_ini" />
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cp_conciliacion_Caja_ValesNoConciliados">
+            <EntityTypeMapping TypeName="Model_caja.cp_conciliacion_Caja_ValesNoConciliados">
+              <MappingFragment StoreEntitySet="cp_conciliacion_Caja_ValesNoConciliados">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="IdTipocbte_movcaja" ColumnName="IdTipocbte_movcaja" />
+                <ScalarProperty Name="IdCbteCble_movcaja" ColumnName="IdCbteCble_movcaja" />
+                <ScalarProperty Name="IdEmpresa_movcaja" ColumnName="IdEmpresa_movcaja" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcaj_Caja_Movimiento_ValesNoConciliados">
+            <EntityTypeMapping TypeName="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados">
+              <MappingFragment StoreEntitySet="vwcaj_Caja_Movimiento_ValesNoConciliados">
+                <ScalarProperty Name="cm_valor" ColumnName="cm_valor" />
+                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipocbte" ColumnName="IdTipocbte" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
