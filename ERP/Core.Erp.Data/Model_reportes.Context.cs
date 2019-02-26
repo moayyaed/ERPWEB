@@ -14,6 +14,7 @@ namespace Core.Erp.Data
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
+
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
@@ -33,7 +34,6 @@ namespace Core.Erp.Data
         public DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
         public DbSet<VWBAN_002_cancelaciones> VWBAN_002_cancelaciones { get; set; }
         public DbSet<VWBAN_007> VWBAN_007 { get; set; }
-        public DbSet<VWCAJ_002_ingresos> VWCAJ_002_ingresos { get; set; }
         public DbSet<VWCXC_001> VWCXC_001 { get; set; }
         public DbSet<VWCXC_001_diario> VWCXC_001_diario { get; set; }
         public DbSet<VWCXC_002_diario> VWCXC_002_diario { get; set; }
@@ -83,7 +83,6 @@ namespace Core.Erp.Data
         public DbSet<VWBAN_001> VWBAN_001 { get; set; }
         public DbSet<VWBAN_002> VWBAN_002 { get; set; }
         public DbSet<VWBAN_003> VWBAN_003 { get; set; }
-        public DbSet<VWCAJ_001> VWCAJ_001 { get; set; }
         public DbSet<VWCXP_012> VWCXP_012 { get; set; }
         public DbSet<VWCXP_004> VWCXP_004 { get; set; }
         public DbSet<VWCXP_013> VWCXP_013 { get; set; }
@@ -92,7 +91,6 @@ namespace Core.Erp.Data
         public DbSet<VWCXC_002> VWCXC_002 { get; set; }
         public DbSet<VWCXP_001> VWCXP_001 { get; set; }
         public DbSet<VWROL_009> VWROL_009 { get; set; }
-        public DbSet<VWCAJ_002> VWCAJ_002 { get; set; }
         public DbSet<VWCONTA_001> VWCONTA_001 { get; set; }
         public DbSet<VWROL_019> VWROL_019 { get; set; }
         public DbSet<VWCXC_007> VWCXC_007 { get; set; }
@@ -105,8 +103,6 @@ namespace Core.Erp.Data
         public DbSet<VWROL_022> VWROL_022 { get; set; }
         public DbSet<VWINV_015> VWINV_015 { get; set; }
         public DbSet<VWFAC_014> VWFAC_014 { get; set; }
-        public DbSet<VWROL_021> VWROL_021 { get; set; }
-        public DbSet<VWROL_002> VWROL_002 { get; set; }
         public DbSet<VWROL_024> VWROL_024 { get; set; }
         public DbSet<VWCXP_003> VWCXP_003 { get; set; }
         public DbSet<VWROL_014> VWROL_014 { get; set; }
@@ -114,9 +110,14 @@ namespace Core.Erp.Data
         public DbSet<VWCXP_009> VWCXP_009 { get; set; }
         public DbSet<VWFAC_005> VWFAC_005 { get; set; }
         public DbSet<VWROL_002_detallle_prestamos> VWROL_002_detallle_prestamos { get; set; }
-        public DbSet<VWCAJ_002_ValesNoConciliados> VWCAJ_002_ValesNoConciliados { get; set; }
         public DbSet<VWROL_010> VWROL_010 { get; set; }
         public DbSet<VWCXC_008> VWCXC_008 { get; set; }
+        public DbSet<VWROL_002> VWROL_002 { get; set; }
+        public DbSet<VWCAJ_001> VWCAJ_001 { get; set; }
+        public DbSet<VWCAJ_002> VWCAJ_002 { get; set; }
+        public DbSet<VWCAJ_002_ingresos> VWCAJ_002_ingresos { get; set; }
+        public DbSet<VWCAJ_002_ValesNoConciliados> VWCAJ_002_ValesNoConciliados { get; set; }
+        public DbSet<VWROL_021> VWROL_021 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

@@ -27,5 +27,6 @@ namespace Core.Erp.Data
         public string tm_descripcion { get; set; }
         public int IdCaja { get; set; }
         public string ca_Descripcion { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
     }
 }

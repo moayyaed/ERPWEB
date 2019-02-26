@@ -30,7 +30,8 @@ namespace Core.Erp.Data.Reportes.Caja
                                  valor_aplicado = q.valor_aplicado,
                                  cr_Valor = q.cr_Valor,
                                  cm_fecha = q.cm_fecha,
-                                 cm_observacion = q.cm_observacion
+                                 cm_observacion = q.cm_observacion,
+                                 SecuenciaCaja = q.SecuenciaCaja
                              }).ToList();
                 }
                 return Lista;

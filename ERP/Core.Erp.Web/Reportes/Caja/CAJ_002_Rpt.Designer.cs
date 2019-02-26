@@ -479,7 +479,7 @@
             // xrTableCell1
             // 
             this.xrTableCell1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "CONCAT(\'CONCILIACIÓN DE CAJA # \',[IdConciliacion_Caja])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "CONCAT(\'CONCILIACIÓN DE CAJA # \',[SecuenciaCaja])")});
             this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
             this.xrTableCell1.Name = "xrTableCell1";
             this.xrTableCell1.StylePriority.UseFont = false;

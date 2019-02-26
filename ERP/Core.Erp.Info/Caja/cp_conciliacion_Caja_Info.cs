@@ -43,7 +43,7 @@ namespace Core.Erp.Info.Caja
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public string IdUsuarioModificacion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
-        public decimal SecuenciaCaja { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
 
         public List<cp_conciliacion_Caja_det_Info> lst_det_fact { get; set; }
         public List<cp_conciliacion_Caja_det_x_ValeCaja_Info> lst_det_vale { get; set; }

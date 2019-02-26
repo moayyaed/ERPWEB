@@ -48,12 +48,13 @@ namespace Core.Erp.Data.Reportes.Caja
                                  tm_descripcion = q.tm_descripcion,
                                  IdUsuarioCreacion = q.IdUsuarioCreacion,
                                  NombreUsuario = q.NombreUsuario,
-                                 Su_Descripcion =  q.Su_Descripcion
+                                 Su_Descripcion =  q.Su_Descripcion,
+                                 SecuenciaCaja = q.SecuenciaCaja
                              }).ToList();
                 }
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

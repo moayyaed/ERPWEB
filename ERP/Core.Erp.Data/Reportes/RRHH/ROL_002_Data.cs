@@ -41,6 +41,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  IdPeriodo = q.IdPeriodo,
                                  Ruc = q.Ruc,
                                  em_ruc = "RUC #"+q.em_ruc,
+                                 ca_orden = q.ca_orden,
                                  ru_orden = q.ru_orden,
                                  NombreCompleto = q.pe_apellido + " " + q.pe_nombre,
                                  RubroDescripcion = q.RubroDescripcion,

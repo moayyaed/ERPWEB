@@ -78,6 +78,7 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
+        settings.Columns.Add("SecuenciaCaja", "Secuencia").Width = System.Web.UI.WebControls.Unit.Percentage(6);
         settings.Columns.Add("IdCbteCble", "#Cbte").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("ca_Descripcion", "Caja").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>

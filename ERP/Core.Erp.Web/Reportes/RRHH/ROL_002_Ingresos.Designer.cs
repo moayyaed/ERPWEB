@@ -213,7 +213,7 @@
             this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrLabel1});
             this.GroupHeader1.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
-            new DevExpress.XtraReports.UI.GroupField("Grupo", DevExpress.XtraReports.UI.XRColumnSortOrder.Descending)});
+            new DevExpress.XtraReports.UI.GroupField("ca_orden", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupHeader1.GroupUnion = DevExpress.XtraReports.UI.GroupUnion.WithFirstDetail;
             this.GroupHeader1.HeightF = 15F;
             this.GroupHeader1.Name = "GroupHeader1";
@@ -277,7 +277,6 @@
             this.xrTableCell6.StylePriority.UseTextAlignment = false;
             xrSummary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Page;
             this.xrTableCell6.Summary = xrSummary2;
-            this.xrTableCell6.Text = "xrTableCell1";
             this.xrTableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell6.TextFormatString = "{0:n2}";
             this.xrTableCell6.Weight = 0.67558235477238393D;
