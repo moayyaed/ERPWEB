@@ -91,8 +91,11 @@ namespace Core.Erp.Data.Caja
                 {
                     var Lista = db.caj_Caja_Movimiento.Where(q => q.IdEmpresa == IdEmpresa && q.IdCaja == IdCaja && q.cm_Signo == cm_Signo).Select(q => q.SecuenciaCaja);
 
-                    if (Lista.Count() > 0)
-                        SecuenciaCaja = Convert.ToDecimal(Lista.Max() + 1);
+                    if (Lista.Where(q=> q != null).Count() > 0)
+                    {
+                        SecuenciaCaja = Convert.ToDecimal(Lista.Where(q => q != null).Max() + 1);
+                    }
+                        
                 }
                 return SecuenciaCaja;
             }
