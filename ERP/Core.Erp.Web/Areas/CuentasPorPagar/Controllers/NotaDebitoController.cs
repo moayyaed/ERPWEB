@@ -230,11 +230,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 mensaje = "La suma de los detalles debe ser 0";
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cn_fecha, cl_enumeradores.eModulo.CXP, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cn_fecha, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cn_fecha, cl_enumeradores.eModulo.CONTA, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cn_fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

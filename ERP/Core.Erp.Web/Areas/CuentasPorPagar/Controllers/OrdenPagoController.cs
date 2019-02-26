@@ -144,11 +144,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         private bool validar(cp_orden_pago_Info i_validar, ref string msg)
         {
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.CXP, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.CONTA, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

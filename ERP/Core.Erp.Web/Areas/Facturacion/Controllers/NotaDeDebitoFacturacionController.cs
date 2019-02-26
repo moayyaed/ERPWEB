@@ -350,7 +350,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             i_validar.lst_det = List_det.get_list(i_validar.IdTransaccionSession);
             i_validar.lst_cruce = List_cruce.get_list(i_validar.IdTransaccionSession).Where(q => q.seleccionado == true).ToList();
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.no_fecha, cl_enumeradores.eModulo.FAC, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.no_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

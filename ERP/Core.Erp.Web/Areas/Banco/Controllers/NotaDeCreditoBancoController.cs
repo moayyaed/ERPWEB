@@ -282,11 +282,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         private bool validar(ba_Cbte_Ban_Info i_validar, ref string msg)
         {
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.BANCO, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.BANCO, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.CONTA, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

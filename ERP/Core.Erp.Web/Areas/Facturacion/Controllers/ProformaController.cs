@@ -131,7 +131,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 msg = "Existen registros sin producto en el detalle de la proforma";
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.pf_fecha, cl_enumeradores.eModulo.FAC, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.pf_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

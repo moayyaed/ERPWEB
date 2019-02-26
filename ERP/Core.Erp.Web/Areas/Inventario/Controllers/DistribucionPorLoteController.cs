@@ -65,7 +65,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         private bool validar(in_Ing_Egr_Inven_distribucion_Info i_validar, ref string msg)
         {
 
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cm_fecha, cl_enumeradores.eModulo.INV, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cm_fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
