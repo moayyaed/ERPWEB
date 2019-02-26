@@ -681,6 +681,7 @@
     <Compile Include="General\tb_sis_reporte_x_seg_usuario_Data.cs" />
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Data.cs" />
     <Compile Include="General\tb_sucursal_Data.cs" />
+    <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Data.cs" />
     <Compile Include="General\tb_TarjetaCredito_Data.cs" />
     <Compile Include="General\tb_TarjetaCredito_x_cp_proveedor_Data.cs" />
     <Compile Include="General\tb_transportista_Data.cs" />
@@ -1838,6 +1839,9 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sucursal.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sucursal_FormaPago_x_fa_NivelDescuento.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_TarjetaCredito.cs">

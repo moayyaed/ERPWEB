@@ -12,16 +12,14 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tb_sis_Impuesto_Tipo
+    public partial class tb_sucursal_FormaPago_x_fa_NivelDescuento
     {
-        public tb_sis_Impuesto_Tipo()
-        {
-            this.tb_sis_Impuesto = new HashSet<tb_sis_Impuesto>();
-        }
+        public int IdEmpresa { get; set; }
+        public int IdSucursal { get; set; }
+        public int Secuencia { get; set; }
+        public string IdCatalogo { get; set; }
+        public int IdNivel { get; set; }
     
-        public string IdTipoImpuesto { get; set; }
-        public string nom_tipoImpuesto { get; set; }
-    
-        public virtual ICollection<tb_sis_Impuesto> tb_sis_Impuesto { get; set; }
+        public virtual tb_sucursal tb_sucursal { get; set; }
     }
 }

@@ -82,6 +82,8 @@
         <AssociationConnector Association="Model_general.FK_tb_sucursal_tb_empresa" />
         <EntityTypeShape EntityType="Model_general.vwtb_comprobantes_no_autorizados" Width="1.5" PointX="19.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_general.tb_ColaImpresionDirecta" Width="1.5" PointX="8.375" PointY="20.75" />
+        <EntityTypeShape EntityType="Model_general.tb_sucursal_FormaPago_x_fa_NivelDescuento" Width="1.5" PointX="15.25" PointY="28.875" />
+        <AssociationConnector Association="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

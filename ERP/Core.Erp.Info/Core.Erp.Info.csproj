@@ -252,6 +252,7 @@
     <Compile Include="General\tb_sis_reporte_Info.cs" />
     <Compile Include="General\tb_sis_reporte_x_seg_usuario_Info.cs" />
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Info.cs" />
+    <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Info.cs" />
     <Compile Include="General\tb_sucursal_Info.cs" />
     <Compile Include="General\tb_TarjetaCredito_Info.cs" />
     <Compile Include="General\tb_TarjetaCredito_x_cp_proveedor_Info.cs" />

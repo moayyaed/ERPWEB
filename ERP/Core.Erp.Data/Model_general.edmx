@@ -452,6 +452,18 @@
           <Property Name="IdCtaCble_vtaIVA0" Type="varchar" MaxLength="20" />
           <Property Name="IdCtaCble_vtaIVA" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="tb_sucursal_FormaPago_x_fa_NivelDescuento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdCatalogo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="IdNivel" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tb_TarjetaCredito">
           <Key>
             <PropertyRef Name="IdTarjeta" />
@@ -1078,6 +1090,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal">
+          <End Role="tb_sucursal" Type="Self.tb_sucursal" Multiplicity="1" />
+          <End Role="tb_sucursal_FormaPago_x_fa_NivelDescuento" Type="Self.tb_sucursal_FormaPago_x_fa_NivelDescuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sucursal">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+            </Principal>
+            <Dependent Role="tb_sucursal_FormaPago_x_fa_NivelDescuento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tb_sucursal_tb_empresa">
           <End Role="tb_empresa" Type="Self.tb_empresa" Multiplicity="1" />
           <End Role="tb_sucursal" Type="Self.tb_sucursal" Multiplicity="*" />
@@ -1132,6 +1158,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_sis_Impuesto_x_ctacble" EntityType="Self.tb_sis_Impuesto_x_ctacble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_log_error" EntityType="Self.tb_sis_log_error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sucursal" EntityType="Self.tb_sucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_sucursal_FormaPago_x_fa_NivelDescuento" EntityType="Self.tb_sucursal_FormaPago_x_fa_NivelDescuento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_TarjetaCredito" EntityType="Self.tb_TarjetaCredito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_TarjetaCredito_x_cp_proveedor" EntityType="Self.tb_TarjetaCredito_x_cp_proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_transportista" EntityType="Self.tb_transportista" Schema="dbo" store:Type="Tables" />
@@ -1348,6 +1375,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_sis_reporte" EntitySet="tb_sis_reporte" />
             <End Role="tb_sis_reporte_x_tb_empresa" EntitySet="tb_sis_reporte_x_tb_empresa" />
           </AssociationSet>
+          <AssociationSet Name="FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" Association="Self.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal">
+            <End Role="tb_sucursal" EntitySet="tb_sucursal" />
+            <End Role="tb_sucursal_FormaPago_x_fa_NivelDescuento" EntitySet="tb_sucursal_FormaPago_x_fa_NivelDescuento" />
+          </AssociationSet>
           <AssociationSet Name="FK_tb_sucursal_tb_empresa" Association="Self.FK_tb_sucursal_tb_empresa">
             <End Role="tb_empresa" EntitySet="tb_empresa" />
             <End Role="tb_sucursal" EntitySet="tb_sucursal" />
@@ -1533,6 +1564,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           </AssociationSet>
           <EntitySet Name="vwtb_comprobantes_no_autorizados" EntityType="Model_general.vwtb_comprobantes_no_autorizados" />
           <EntitySet Name="tb_ColaImpresionDirecta" EntityType="Model_general.tb_ColaImpresionDirecta" />
+          <EntitySet Name="tb_sucursal_FormaPago_x_fa_NivelDescuento" EntityType="Model_general.tb_sucursal_FormaPago_x_fa_NivelDescuento" />
+          <AssociationSet Name="FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" Association="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal">
+            <End Role="tb_sucursal" EntitySet="tb_sucursal" />
+            <End Role="tb_sucursal_FormaPago_x_fa_NivelDescuento" EntitySet="tb_sucursal_FormaPago_x_fa_NivelDescuento" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -2609,6 +2645,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="IdCtaCble_vtaIVA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tb_bodega" Relationship="Model_general.FK_tb_bodega_tb_sucursal" FromRole="tb_sucursal" ToRole="tb_bodega" />
           <NavigationProperty Name="tb_empresa" Relationship="Model_general.FK_tb_sucursal_tb_empresa" FromRole="tb_sucursal" ToRole="tb_empresa" />
+          <NavigationProperty Name="tb_sucursal_FormaPago_x_fa_NivelDescuento" Relationship="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" FromRole="tb_sucursal" ToRole="tb_sucursal_FormaPago_x_fa_NivelDescuento" />
         </EntityType>
         <Association Name="FK_tb_bodega_tb_sucursal">
           <End Type="Model_general.tb_sucursal" Role="tb_sucursal" Multiplicity="1" />
@@ -2675,6 +2712,33 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="Comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="NumCopias" Type="Int32" />
         </EntityType>
+        <EntityType Name="tb_sucursal_FormaPago_x_fa_NivelDescuento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdCatalogo" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_sucursal" Relationship="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" FromRole="tb_sucursal_FormaPago_x_fa_NivelDescuento" ToRole="tb_sucursal" />
+        </EntityType>
+        <Association Name="FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal">
+          <End Type="Model_general.tb_sucursal" Role="tb_sucursal" Multiplicity="1" />
+          <End Type="Model_general.tb_sucursal_FormaPago_x_fa_NivelDescuento" Role="tb_sucursal_FormaPago_x_fa_NivelDescuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sucursal">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+            </Principal>
+            <Dependent Role="tb_sucursal_FormaPago_x_fa_NivelDescuento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3379,6 +3443,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="IPUsuario" ColumnName="IPUsuario" />
                 <ScalarProperty Name="CodReporte" ColumnName="CodReporte" />
                 <ScalarProperty Name="IdImpresion" ColumnName="IdImpresion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_sucursal_FormaPago_x_fa_NivelDescuento">
+            <EntityTypeMapping TypeName="Model_general.tb_sucursal_FormaPago_x_fa_NivelDescuento">
+              <MappingFragment StoreEntitySet="tb_sucursal_FormaPago_x_fa_NivelDescuento">
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="IdCatalogo" ColumnName="IdCatalogo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
