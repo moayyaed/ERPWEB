@@ -9,7 +9,7 @@ namespace Core.Erp.Data.General
 {
     public class tb_sucursal_FormaPago_x_fa_NivelDescuento_Data
     {
-        public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> get_list(int IdEmpresa, bool MostrarAnulados)
+        public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> get_list(int IdEmpresa, int IdSucursal)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace Core.Erp.Data.General
 
                 using (Entities_general db = new Entities_general())
                 {
-                    Lista = db.tb_sucursal_FormaPago_x_fa_NivelDescuento.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info
+                    Lista = db.tb_sucursal_FormaPago_x_fa_NivelDescuento.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal).Select(q => new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
@@ -36,14 +36,14 @@ namespace Core.Erp.Data.General
             }
         }
 
-        public tb_sucursal_FormaPago_x_fa_NivelDescuento_Info get_info(int IdEmpresa, int IdSucursal, int Secuencia)
+        public tb_sucursal_FormaPago_x_fa_NivelDescuento_Info get_info(int IdEmpresa, int IdSucursal, string IdCatalogo)
         {
             try
             {
                 tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info();
                 using (Entities_general Context = new Entities_general())
                 {
-                    tb_sucursal_FormaPago_x_fa_NivelDescuento Entity = Context.tb_sucursal_FormaPago_x_fa_NivelDescuento.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.Secuencia == Secuencia).FirstOrDefault();
+                    tb_sucursal_FormaPago_x_fa_NivelDescuento Entity = Context.tb_sucursal_FormaPago_x_fa_NivelDescuento.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdCatalogo == IdCatalogo).FirstOrDefault();
 
                     if (Entity == null) return null;
                     info = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info
@@ -64,73 +64,6 @@ namespace Core.Erp.Data.General
             }
         }
 
-        public bool GuardarBD(tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info)
-        {
-            try
-            {
-                using (Entities_general db = new Entities_general())
-                {
-                    if (info.ListaNivelDescuento != null)
-                    {
-                        int Secuencia = 1;
-                        foreach (var item in info.ListaNivelDescuento)
-                        {
-                            db.tb_sucursal_FormaPago_x_fa_NivelDescuento.Add(new tb_sucursal_FormaPago_x_fa_NivelDescuento
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdSucursal = info.IdSucursal,
-                                Secuencia = Secuencia++,
-                                IdCatalogo = item.IdCatalogo,
-                                IdNivel = item.IdNivel
-                            });
 
-                        }
-                    }
-                    db.SaveChanges();
-                }
-
-                return true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public bool ModificarBD(tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info)
-        {
-            try
-            {
-                using (Entities_general db = new Entities_general())
-                {
-                    var lst_det_grupo = db.tb_sucursal_FormaPago_x_fa_NivelDescuento.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal).ToList();
-                    db.tb_sucursal_FormaPago_x_fa_NivelDescuento.RemoveRange(lst_det_grupo);
-
-                    if (info.ListaNivelDescuento != null)
-                    {
-                        int Secuencia = 1;
-
-                        foreach (var item in info.ListaNivelDescuento)
-                        {
-                            db.tb_sucursal_FormaPago_x_fa_NivelDescuento.Add(new tb_sucursal_FormaPago_x_fa_NivelDescuento
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdSucursal = info.IdSucursal,
-                                Secuencia = Secuencia++,
-                                IdCatalogo = item.IdCatalogo,
-                                IdNivel = item.IdNivel
-                            });
-                        }
-                    }
-                    db.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

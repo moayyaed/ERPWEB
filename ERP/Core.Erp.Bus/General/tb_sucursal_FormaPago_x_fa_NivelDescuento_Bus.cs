@@ -13,11 +13,11 @@ namespace Core.Erp.Bus.General
     {
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Data odata_detalle = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Data();
 
-        public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> GetList(int IdEmpresa, bool MostrarAnulado)
+        public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> GetList(int IdEmpresa, int IdSucursal)
         {
             try
             {
-                return odata_detalle.get_list(IdEmpresa, MostrarAnulado);
+                return odata_detalle.get_list(IdEmpresa, IdSucursal);
             }
             catch (Exception)
             {
@@ -25,13 +25,13 @@ namespace Core.Erp.Bus.General
             }
         }
 
-        public tb_sucursal_FormaPago_x_fa_NivelDescuento_Info GetInfo(int IdEmpresa, int IdSucursal, int Secuencia)
+        public tb_sucursal_FormaPago_x_fa_NivelDescuento_Info GetInfo(int IdEmpresa, int IdSucursal, string IdCatalogo)
         {
             try
             {
                 tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info();
 
-                info = odata_detalle.get_info(IdEmpresa, IdSucursal, Secuencia);
+                info = odata_detalle.get_info(IdEmpresa, IdSucursal, IdCatalogo);
 
                 return info;
             }
@@ -41,30 +41,5 @@ namespace Core.Erp.Bus.General
             }
         }
 
-        public bool GuardarBD(tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info)
-        {
-            try
-            {
-                return odata_detalle.GuardarBD(info);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public bool ModificarBD(tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info)
-        {
-            try
-            {
-                return odata_detalle.ModificarBD(info);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

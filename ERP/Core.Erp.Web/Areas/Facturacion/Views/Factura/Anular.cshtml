@@ -309,6 +309,8 @@
 <script>
     $(function () {
         ValidarGrid();
+        Set_NivelDescuento_x_FormaPago();
+
         //Date picker
         $('#vt_fecha').datepicker({
             autoclose: true
@@ -331,6 +333,10 @@
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
             GetUltimoDocumento();
+            Set_NivelDescuento_x_FormaPago();
+        });
+        $("#IdCatalogo_FormaPago").change(function () {
+            Set_NivelDescuento_x_FormaPago();
         });
         $("#IdPuntoVta").change(function () {
             GetUltimoDocumento();
@@ -575,6 +581,33 @@ function ValidarGrid() {
                     $("#divMensaje").hide();
                 }
                 CalcularCambio();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+
+    function Set_NivelDescuento_x_FormaPago() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdCatalogo_FormaPago: $("#IdCatalogo_FormaPago").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Get_NivelDescuento_x_FormaPago", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data > 0) {
+                    $('#IdNivel').val(data);
+                }
             },
             error: function (error) {
             }

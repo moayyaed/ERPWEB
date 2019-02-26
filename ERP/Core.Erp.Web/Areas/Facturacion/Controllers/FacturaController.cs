@@ -58,6 +58,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         cxc_cobro_tipo_Bus bus_tipo_cobro = new cxc_cobro_tipo_Bus();
         fa_NivelDescuento_Bus bus_nivelDescuento = new fa_NivelDescuento_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
+        tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
         #endregion
 
         #region Index
@@ -686,6 +687,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
           var valor=  bus_factura.modificarEstadoAutorizacion(IdEmpresa, IdSucursal, IdBodega, IdCbteVta);
 
             return Json(valor, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Get_NivelDescuento_x_FormaPago(int IdEmpresa = 0, int IdSucursal=0, string IdCatalogo_FormaPago = "")
+        {
+            tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info_NivelDescuento_x_FormaPago = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info();
+
+            info_NivelDescuento_x_FormaPago = bus_formapago_x_niveldescuento.GetInfo(IdEmpresa, IdSucursal, IdCatalogo_FormaPago);
+            var IdNivel = info_NivelDescuento_x_FormaPago == null ? 0 : info_NivelDescuento_x_FormaPago.IdNivel;
+
+            return Json(IdNivel, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

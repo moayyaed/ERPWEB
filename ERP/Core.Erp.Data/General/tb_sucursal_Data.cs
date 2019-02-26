@@ -210,6 +210,24 @@ namespace Core.Erp.Data.General
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now
                     };
                     Context.tb_sucursal.Add(Entity);
+
+                    if (info.ListaNivelDescuento != null)
+                    {
+                        int Secuencia = 1;
+                        foreach (var item in info.ListaNivelDescuento)
+                        {
+                            Context.tb_sucursal_FormaPago_x_fa_NivelDescuento.Add(new tb_sucursal_FormaPago_x_fa_NivelDescuento
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdSucursal = info.IdSucursal,
+                                Secuencia = Secuencia++,
+                                IdCatalogo = item.IdCatalogo,
+                                IdNivel = item.IdNivel
+                            });
+
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -244,6 +262,27 @@ namespace Core.Erp.Data.General
 
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = info.Fecha_UltMod = DateTime.Now;
+
+                    var lst_det_grupo = Context.tb_sucursal_FormaPago_x_fa_NivelDescuento.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal).ToList();
+                    Context.tb_sucursal_FormaPago_x_fa_NivelDescuento.RemoveRange(lst_det_grupo);
+
+                    if (info.ListaNivelDescuento != null)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.ListaNivelDescuento)
+                        {
+                            Context.tb_sucursal_FormaPago_x_fa_NivelDescuento.Add(new tb_sucursal_FormaPago_x_fa_NivelDescuento
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdSucursal = info.IdSucursal,
+                                Secuencia = Secuencia++,
+                                IdCatalogo = item.IdCatalogo,
+                                IdNivel = item.IdNivel
+                            });
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
 

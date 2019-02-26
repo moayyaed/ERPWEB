@@ -40,6 +40,8 @@ namespace Core.Erp.Info.General
         public bool Es_establecimiento { get; set; }
         public string IdCtaCble_cxp { get; set; }
         public string IdCtaCble_vtaIVA0 { get; set; }
-        public string IdCtaCble_vtaIVA { get; set; }        
+        public string IdCtaCble_vtaIVA { get; set; }
+
+        public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> ListaNivelDescuento { get; set; }
     }
 }

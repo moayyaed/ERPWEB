@@ -14,11 +14,11 @@ namespace Core.Erp.Info.General
         public string IdCatalogo { get; set; }
         public int IdNivel { get; set; }
 
-        #region Campos que no existen en la tabla
-        public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> ListaNivelDescuento { get; set; }
+        //#region Campos que no existen en la tabla
+        //public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> ListaNivelDescuento { get; set; }
 
-        public string Su_Descripcion { get; set; }
-        public string Nombre { get; set; }
-        #endregion
+        //public string Su_Descripcion { get; set; }
+        //public string Nombre { get; set; }
+        //#endregion
     }
 }
