@@ -37,6 +37,6 @@ namespace Core.Erp.Data
         public string pe_nombreCompleto { get; set; }
         public string Nombre { get; set; }
         public string Su_Descripcion { get; set; }
-        public Nullable<decimal> SecuenciaCaja { get; set; }
+        public decimal SecuenciaCaja { get; set; }
     }
 }

@@ -508,6 +508,7 @@
     <Compile Include="Factura.cs">
       <DependentUpon>Model_migraciones.tt</DependentUpon>
     </Compile>
+    <Compile Include="FacturacionElectronica\TipoComprobante_Data.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Data.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Data.cs" />
     <Compile Include="Facturacion\fa_catalogo_Data.cs" />
@@ -2937,8 +2938,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FacturacionElectronica\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

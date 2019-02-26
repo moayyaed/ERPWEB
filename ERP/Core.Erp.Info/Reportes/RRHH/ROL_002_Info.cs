@@ -44,6 +44,7 @@ namespace Core.Erp.Info.Reportes.RRHH
         public string NomNominaTipo { get; set; }
 
         public Nullable<int> ca_orden { get; set; }
+        public string CodCatalogo { get; set; }
 
         #region DetallePrestamo
         public decimal IdPrestamo { get; set; }
