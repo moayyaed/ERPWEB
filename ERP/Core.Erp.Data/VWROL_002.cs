@@ -41,5 +41,6 @@ namespace Core.Erp.Data
         public string NomNomina { get; set; }
         public string NomNominaTipo { get; set; }
         public Nullable<int> ca_orden { get; set; }
+        public string CodCatalogo { get; set; }
     }
 }
