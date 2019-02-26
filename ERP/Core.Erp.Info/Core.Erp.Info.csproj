@@ -189,6 +189,7 @@
     <Compile Include="FacturacionElectronica\NotaCredito\notaCredito.cs" />
     <Compile Include="FacturacionElectronica\NotaDebito\notaDebito.cs" />
     <Compile Include="FacturacionElectronica\Retencion\comprobanteRetencion.cs" />
+    <Compile Include="FacturacionElectronica\TipoComprobante_Info.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Info.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Info.cs" />
     <Compile Include="Facturacion\fa_catalogo_Info.cs" />
