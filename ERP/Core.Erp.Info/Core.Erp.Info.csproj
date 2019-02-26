@@ -171,6 +171,22 @@
     <Compile Include="CuentasPorPagar\cp_SolicitudPagoDet_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_SolicitudPago_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_TipoDocumento_Info.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\destino.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\detalleImpuestosDetalleImpuesto.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\factura.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\facturaCampoAdicional.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\facturaDetalle.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\facturaDetalleDetAdicional.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\facturaInfoFactura.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\facturaInfoFacturaTotalImpuesto.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\facturaInfoSustitutivaGuiaRemision.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\impuesto.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\infoTributaria.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\pagosPago.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\reembolsosReembolsoDetalle.cs" />
+    <Compile Include="FacturacionElectronica\Factura_V2\rubro.cs" />
+    <Compile Include="FacturacionElectronica\GuiaRemision\guiaRemision.cs" />
+    <Compile Include="FacturacionElectronica\NotaCredito\notaCredito.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Info.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Info.cs" />
     <Compile Include="Facturacion\fa_catalogo_Info.cs" />
@@ -502,6 +518,10 @@
     <None Include="..\Core.Erp.Web\Areas\Banco\Views\BancoCuenta\Index.cshtml">
       <Link>Index.cshtml</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FacturacionElectronica\NotaDebito\" />
+    <Folder Include="FacturacionElectronica\Retencion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

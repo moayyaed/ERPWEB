@@ -107,7 +107,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  || q.IdRubro == info_rub_calculados.IdRubro_DIII
                                  || q.IdRubro == info_rub_calculados.IdRubro_DIV
                                  || q.IdRubro == info_rub_calculados.IdRubro_fondo_reserva)
-                                 && (q.IdRubro == info_rub_calculados.IdRubro_tot_ing || q.ru_tipo == "I" )
+                                 && ( q.ru_tipo == "I" )
                                  select new ROL_021_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -165,7 +165,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  || q.IdRubro == info_rub_calculados.IdRubro_DIV
                                  || q.IdRubro == info_rub_calculados.IdRubro_fondo_reserva)
                                  && (
-                                 (q.IdRubro == info_rub_calculados.IdRubro_tot_pagar 
+                                 (
+                                 q.IdRubro == info_rub_calculados.IdRubro_tot_pagar 
                                  || q.IdRubro == info_rub_calculados.IdRubro_tot_ing 
                                  || q.IdRubro == info_rub_calculados.IdRubro_tot_egr
                                  )
