@@ -418,7 +418,7 @@
             // xrLabel23
             // 
             this.xrLabel23.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrLabel23.LocationFloat = new DevExpress.Utils.PointFloat(711.4585F, 3.750118F);
+            this.xrLabel23.LocationFloat = new DevExpress.Utils.PointFloat(704.581F, 30.83347F);
             this.xrLabel23.Name = "xrLabel23";
             this.xrLabel23.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel23.SizeF = new System.Drawing.SizeF(206.6666F, 19.375F);
@@ -430,7 +430,7 @@
             // xrLabel21
             // 
             this.xrLabel21.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrLabel21.LocationFloat = new DevExpress.Utils.PointFloat(455.3753F, 3.750118F);
+            this.xrLabel21.LocationFloat = new DevExpress.Utils.PointFloat(448.4978F, 30.83347F);
             this.xrLabel21.Name = "xrLabel21";
             this.xrLabel21.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel21.SizeF = new System.Drawing.SizeF(206.6665F, 19.375F);
@@ -442,7 +442,7 @@
             // xrLabel20
             // 
             this.xrLabel20.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(188.5419F, 3.750118F);
+            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(181.6644F, 30.83347F);
             this.xrLabel20.Name = "xrLabel20";
             this.xrLabel20.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel20.SizeF = new System.Drawing.SizeF(196.2498F, 19.375F);
