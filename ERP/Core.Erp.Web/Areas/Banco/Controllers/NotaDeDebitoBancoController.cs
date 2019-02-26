@@ -111,11 +111,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             i_validar.lst_det_canc_op = List_op.get_list(i_validar.IdTransaccionSession);
             i_validar.lst_det_ct = List_ct.get_list(i_validar.IdTransaccionSession);
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.BANCO, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.BANCO, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.CONTA, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

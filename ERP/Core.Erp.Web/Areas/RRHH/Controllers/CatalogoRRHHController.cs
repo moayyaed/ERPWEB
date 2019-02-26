@@ -96,17 +96,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 info.IdUsuarioUltMod = SessionFixed.IdUsuario;
-                if (ModelState.IsValid)
-                {
-                    info.Fecha_UltMod = DateTime.Now;
-                    info.IdUsuarioUltMod = Session["IdUsuario"].ToString();
-                    if (!bus_cargo.modificarDB(info))
-                        return View(info);
-                    else
-                        return RedirectToAction("Index", new { IdTipoCatalogo = info.IdTipoCatalogo });
-                }
-                else
+                info.Fecha_UltMod = DateTime.Now;
+                info.IdUsuarioUltMod = Session["IdUsuario"].ToString();
+                if (!bus_cargo.modificarDB(info))
                     return View(info);
+                else
+                    return RedirectToAction("Index", new { IdTipoCatalogo = info.IdTipoCatalogo });
 
             }
             catch (Exception)

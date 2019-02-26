@@ -160,15 +160,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             string MsgValidaciones = string.Empty;
             i_validar.PedirDesbloqueo = false;
 
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa,i_validar.vt_fecha,cl_enumeradores.eModulo.FAC,ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa,i_validar.vt_fecha,cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.INV, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.CONTA, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

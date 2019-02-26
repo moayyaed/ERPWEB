@@ -228,12 +228,12 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     return mensaje;
 
                 }
-                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.cn_fecha, cl_enumeradores.eModulo.CONTA, ref mensaje))
+                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.cn_fecha, cl_enumeradores.eModulo.CONTA, info.IdSucursal, ref mensaje))
                 {
                     return mensaje;
                 }
 
-                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.cn_fecha, cl_enumeradores.eModulo.CXP, ref mensaje))
+                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.cn_fecha, cl_enumeradores.eModulo.CXP, info.IdSucursal, ref mensaje))
                 {
                     return mensaje;
                 }

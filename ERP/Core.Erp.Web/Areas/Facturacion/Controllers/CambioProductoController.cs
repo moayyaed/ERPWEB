@@ -237,10 +237,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         private bool Validar(fa_CambioProducto_Info i_validar, ref string msg)
         {
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.FAC, ref mensaje))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref mensaje))
                 return false;
 
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.INV, ref mensaje))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref mensaje))
                 return false;
 
             i_validar.LstDet = List_det.get_list(i_validar.IdTransaccionSession);

@@ -225,7 +225,7 @@ namespace Core.Erp.Data.Contabilidad
             }
         }
 
-        public bool ValidarFechaTransaccion(int IdEmpresa, DateTime Fecha, cl_enumeradores.eModulo Modulo, ref string mensaje)
+        public bool ValidarFechaTransaccion(int IdEmpresa, DateTime Fecha, cl_enumeradores.eModulo Modulo, int IdSucursal, ref string mensaje)
         {
             Entities_contabilidad db_conta = new Entities_contabilidad();
             Entities_general db_general = new Entities_general();
@@ -233,7 +233,8 @@ namespace Core.Erp.Data.Contabilidad
             {
                 Fecha = Fecha.Date;
                 int Periodo = Convert.ToInt32(Fecha.ToString("yyyyMM"));
-
+                string sModulo = Modulo.ToString();
+                ct_CierrePorModuloPorSucursal CierreModulo = new ct_CierrePorModuloPorSucursal();
                 var empresa = db_general.tb_empresa.Where(q => q.IdEmpresa == IdEmpresa).FirstOrDefault();
                 if(empresa != null)
                 {
@@ -276,6 +277,16 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                             */
+
+                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "INV").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                            if(CierreModulo != null)
+                            {
+                                if (Fecha.Date <= CierreModulo.FechaFin)
+                                {
+                                    mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de inventario";
+                                    return false;
+                                }
+                            }
                         }
                         break;
                     case cl_enumeradores.eModulo.FAC:
@@ -292,6 +303,15 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de facturación";
                                 return false;
                             }
+                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "FAC").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                            if (CierreModulo != null)
+                            {
+                                if (Fecha.Date <= CierreModulo.FechaFin)
+                                {
+                                    mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de facturación";
+                                    return false;
+                                }
+                            }
                         }
                         break;
                     case cl_enumeradores.eModulo.COM:
@@ -306,6 +326,15 @@ namespace Core.Erp.Data.Contabilidad
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de compras";
+                                return false;
+                            }
+                        }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "COMP").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de compras";
                                 return false;
                             }
                         }
@@ -325,11 +354,29 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ACTF").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de activo fijo";
+                                return false;
+                            }
+                        }
                         break;
                     case cl_enumeradores.eModulo.RRHH:
                         using (Entities_rrhh db = new Entities_rrhh())
                         {
 
+                        }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ROL").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de recursos humanos";
+                                return false;
+                            }
                         }
                         break;
                     case cl_enumeradores.eModulo.IMP:
@@ -365,6 +412,15 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CONTA").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de contabilidad";
+                                return false;
+                            }
+                        }
                         break;
                     case cl_enumeradores.eModulo.CAJA:
                         using (Entities_caja db = new Entities_caja())
@@ -378,6 +434,15 @@ namespace Core.Erp.Data.Contabilidad
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de caja";
+                                return false;
+                            }
+                        }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CAJ").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de caja";
                                 return false;
                             }
                         }
@@ -397,6 +462,15 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "BAN").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de bancos";
+                                return false;
+                            }
+                        }
                         break;
                     case cl_enumeradores.eModulo.CXC:
                         using (Entities_cuentas_por_cobrar db = new Entities_cuentas_por_cobrar())
@@ -413,6 +487,15 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXC").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de cuentas por cobrar";
+                                return false;
+                            }
+                        }
                         break;
                     case cl_enumeradores.eModulo.CXP:
                         using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
@@ -426,6 +509,15 @@ namespace Core.Erp.Data.Contabilidad
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de cuentas por pagar";
+                                return false;
+                            }
+                        }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXP").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de cuentas por pagar";
                                 return false;
                             }
                         }

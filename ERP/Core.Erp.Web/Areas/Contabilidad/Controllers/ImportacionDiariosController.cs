@@ -116,7 +116,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         private bool validar(ct_cbtecble_Info i_validar, ref string msg)
         {
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.CONTA, ref mensaje))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref mensaje))
             {
                 return false;
             }

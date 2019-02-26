@@ -78,11 +78,11 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public bool ValidarFechaTransaccion(int IdEmpresa, DateTime Fecha, cl_enumeradores.eModulo Modulo, ref string mensaje)
+        public bool ValidarFechaTransaccion(int IdEmpresa, DateTime Fecha, cl_enumeradores.eModulo Modulo, int IdSucursal, ref string mensaje)
         {
             try
             {
-                return odata.ValidarFechaTransaccion(IdEmpresa,Fecha, Modulo, ref mensaje);
+                return odata.ValidarFechaTransaccion(IdEmpresa,Fecha, Modulo, IdSucursal, ref mensaje);
             }
             catch (Exception)
             {
