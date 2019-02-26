@@ -4870,6 +4870,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Parameter Name="IdPeriodo" Type="int" Mode="In" />
           <Parameter Name="IdNomina_Tipo" Type="int" Mode="In" />
           <Parameter Name="IdNomina_TipoLiqui" Type="int" Mode="In" />
+          <Parameter Name="IdRol" Type="int" Mode="In" />
         </Function>
         <Function Name="spRo_LiquidarEmpleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -8073,12 +8074,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_tipo_gastos_personales_tabla_valores_x_anio" EntitySet="ro_tipo_gastos_personales_tabla_valores_x_anio" />
           </AssociationSet>
           <EntitySet Name="ro_rol_detalle" EntityType="Model_rrhh.ro_rol_detalle" />
-          <FunctionImport Name="spRo_Cierre_Rol">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
-            <Parameter Name="IdNomina_Tipo" Mode="In" Type="Int32" />
-            <Parameter Name="IdNomina_TipoLiqui" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="spRo_Reverso_Rol">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdNomina_Tipo" Mode="In" Type="Int32" />
@@ -8616,6 +8611,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
             <Parameter Name="IdNomina" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spRo_Cierre_Rol">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina_Tipo" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina_TipoLiqui" Mode="In" Type="Int32" />
+            <Parameter Name="IdRol" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
@@ -13387,7 +13389,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spRo_Cierre_Rol" FunctionName="Model_rrhh.Store.spRo_Cierre_Rol" />
           <FunctionImportMapping FunctionImportName="spRo_Reverso_Rol" FunctionName="Model_rrhh.Store.spRo_Reverso_Rol" />
           <EntitySetMapping Name="ro_rol_detalle_x_rubro_acumulado">
             <EntityTypeMapping TypeName="Model_rrhh.ro_rol_detalle_x_rubro_acumulado">
@@ -14814,6 +14815,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spROL_DecimoCuarto" FunctionName="Model_rrhh.Store.spROL_DecimoCuarto" />
           <FunctionImportMapping FunctionImportName="spROL_DecimoTercero" FunctionName="Model_rrhh.Store.spROL_DecimoTercero" />
+          <FunctionImportMapping FunctionImportName="spRo_Cierre_Rol" FunctionName="Model_rrhh.Store.spRo_Cierre_Rol" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -237,7 +237,7 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.spRo_Cierre_Rol(info.IdEmpresa, info.IdPeriodo, info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
+                    Context.spRo_Cierre_Rol(info.IdEmpresa, info.IdPeriodo, info.IdNomina_Tipo, info.IdNomina_TipoLiqui,Convert.ToInt32( info.IdRol));
                 }
                 return true;
             }

@@ -208,27 +208,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spro_nomina_x_pago_utilidad_Result>("spro_nomina_x_pago_utilidad", idempresaParameter, idNominaParameter, fechaInicioParameter, fechaFinParameter);
         }
     
-        public virtual int spRo_Cierre_Rol(Nullable<int> idEmpresa, Nullable<int> idPeriodo, Nullable<int> idNomina_Tipo, Nullable<int> idNomina_TipoLiqui)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idPeriodoParameter = idPeriodo.HasValue ?
-                new ObjectParameter("IdPeriodo", idPeriodo) :
-                new ObjectParameter("IdPeriodo", typeof(int));
-    
-            var idNomina_TipoParameter = idNomina_Tipo.HasValue ?
-                new ObjectParameter("IdNomina_Tipo", idNomina_Tipo) :
-                new ObjectParameter("IdNomina_Tipo", typeof(int));
-    
-            var idNomina_TipoLiquiParameter = idNomina_TipoLiqui.HasValue ?
-                new ObjectParameter("IdNomina_TipoLiqui", idNomina_TipoLiqui) :
-                new ObjectParameter("IdNomina_TipoLiqui", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Cierre_Rol", idEmpresaParameter, idPeriodoParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter);
-        }
-    
         public virtual int spRo_Reverso_Rol(Nullable<int> idEmpresa, Nullable<int> idNomina_Tipo, Nullable<int> idNomina_TipoLiqui, Nullable<int> idPeriodo)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -491,6 +470,31 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdNomina", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spROL_DecimoTercero", idEmpresaParameter, idPeriodoParameter, regionParameter, idUsuarioParameter, observacionParameter, idRolParameter, idSucursalInicioParameter, idSucursalFinParameter, idNominaParameter);
+        }
+    
+        public virtual int spRo_Cierre_Rol(Nullable<int> idEmpresa, Nullable<int> idPeriodo, Nullable<int> idNomina_Tipo, Nullable<int> idNomina_TipoLiqui, Nullable<int> idRol)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idPeriodoParameter = idPeriodo.HasValue ?
+                new ObjectParameter("IdPeriodo", idPeriodo) :
+                new ObjectParameter("IdPeriodo", typeof(int));
+    
+            var idNomina_TipoParameter = idNomina_Tipo.HasValue ?
+                new ObjectParameter("IdNomina_Tipo", idNomina_Tipo) :
+                new ObjectParameter("IdNomina_Tipo", typeof(int));
+    
+            var idNomina_TipoLiquiParameter = idNomina_TipoLiqui.HasValue ?
+                new ObjectParameter("IdNomina_TipoLiqui", idNomina_TipoLiqui) :
+                new ObjectParameter("IdNomina_TipoLiqui", typeof(int));
+    
+            var idRolParameter = idRol.HasValue ?
+                new ObjectParameter("IdRol", idRol) :
+                new ObjectParameter("IdRol", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Cierre_Rol", idEmpresaParameter, idPeriodoParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idRolParameter);
         }
     }
 }
