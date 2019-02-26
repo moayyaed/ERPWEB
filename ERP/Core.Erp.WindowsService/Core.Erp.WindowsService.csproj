@@ -120,7 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Core.Erp.WindowsService_ClaveTemporal.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
