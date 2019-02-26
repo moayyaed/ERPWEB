@@ -60,7 +60,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  Total_Pagado = q.Total_Pagado,
                                  TelefonoContacto = q.TelefonoContacto,
                                  IdContacto = q.IdContacto,
-                                 NomContacto = q.NomContacto
+                                 NomContacto = q.NomContacto,
+                                 Descripcion_tip_cliente = q.Descripcion_tip_cliente
                              }).ToList();
                 }
                 return Lista;

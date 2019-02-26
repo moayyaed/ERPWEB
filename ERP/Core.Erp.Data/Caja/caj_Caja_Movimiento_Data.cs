@@ -81,6 +81,28 @@ namespace Core.Erp.Data.Caja
             }
         }
 
+        public decimal get_id(int IdEmpresa, int IdCaja)
+        {
+
+            try
+            {
+                decimal ID = 1;
+                using (Entities_caja db = new Entities_caja())
+                {
+                    var Lista = db.caj_Caja_Movimiento.Where(q => q.IdEmpresa == IdEmpresa && q.IdCaja == IdCaja).Select(q => q.IdCaja);
+
+                    if (Lista.Count() > 0)
+                        ID = Lista.Max() + 1;
+                }
+                return ID;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public caj_Caja_Movimiento_Info get_info(int IdEmpresa, int IdTipocbte, decimal IdCbteCble)
         {
             try
@@ -143,6 +165,7 @@ namespace Core.Erp.Data.Caja
                         cm_valor = info.cm_valor,
                         CodMoviCaja = info.CodMoviCaja,
                         Estado = info.Estado="A",
+                        SecuenciaCaja =  info.SecuenciaCaja= get_id(info.IdEmpresa, info.IdCaja),
 
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
@@ -224,6 +247,7 @@ namespace Core.Erp.Data.Caja
                     Entity.IdEntidad = info.IdEntidad;
                     Entity.IdCaja = info.IdCaja;
                     Entity.IdTipoMovi = info.IdTipoMovi;
+
                     caj_Caja_Movimiento_det Entity_det = Context.caj_Caja_Movimiento_det.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTipocbte == info.IdTipocbte && q.IdCbteCble == info.IdCbteCble);
                     if(Entity_det == null) return false;
 

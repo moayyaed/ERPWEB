@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public caj_Caja()
         {
-            this.caj_Caja_Movimiento = new HashSet<caj_Caja_Movimiento>();
             this.cp_conciliacion_Caja = new HashSet<cp_conciliacion_Caja>();
+            this.caj_Caja_Movimiento = new HashSet<caj_Caja_Movimiento>();
         }
     
         public int IdEmpresa { get; set; }
@@ -36,7 +36,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnu { get; set; }
     
-        public virtual ICollection<caj_Caja_Movimiento> caj_Caja_Movimiento { get; set; }
         public virtual ICollection<cp_conciliacion_Caja> cp_conciliacion_Caja { get; set; }
+        public virtual ICollection<caj_Caja_Movimiento> caj_Caja_Movimiento { get; set; }
     }
 }

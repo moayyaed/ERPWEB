@@ -198,6 +198,8 @@ namespace Core.Erp.Info.Helps
         public bool mostrar_observacion_completa { get; set; }
         public int Idtipo_cliente { get; set; }
         public string IdCatalogo_FormaPago { get; set; }
+
+        public string IdCobro_tipo { get; set; }
         public cl_filtros_facturacion_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
