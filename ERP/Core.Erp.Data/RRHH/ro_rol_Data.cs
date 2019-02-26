@@ -132,7 +132,8 @@ namespace Core.Erp.Data.RRHH
                                  pe_FechaIni = ROL.pe_FechaIni,
                                  pe_FechaFin = ROL.pe_FechaFin,
                                  IdRol=ROL.IdRol,
-                                 Su_Descripcion=ROL.Su_Descripcion
+                                 Su_Descripcion=ROL.Su_Descripcion,
+                                 EstadoRol=ROL.EstadoRol
 
                              }).ToList();
                 }
@@ -316,7 +317,7 @@ namespace Core.Erp.Data.RRHH
                     info.IdRol = get_id(info.IdEmpresa);
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.spROL_DecimoTercero(info.IdEmpresa,  info.Anio, info.region, info.UsuarioIngresa, info.Observacion,Convert.ToInt32( info.IdRol),IdSucursalInicio,IdSucursalFin);
+                    Context.spROL_DecimoTercero(info.IdEmpresa,  info.Anio, info.region, info.UsuarioIngresa, info.Observacion,Convert.ToInt32( info.IdRol),IdSucursalInicio,IdSucursalFin, info.IdNomina_Tipo);
                 }
                 return true;
             }
@@ -338,7 +339,7 @@ namespace Core.Erp.Data.RRHH
                     info.IdRol = get_id(info.IdEmpresa);
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.spROL_DecimoCuarto(info.IdEmpresa, info.Anio, info.region, info.UsuarioIngresa, info.Observacion, Convert.ToInt32(info.IdRol), IdSucursalInicio, IdSucursalFin);
+                    Context.spROL_DecimoCuarto(info.IdEmpresa, info.Anio, info.region, info.UsuarioIngresa, info.Observacion, Convert.ToInt32(info.IdRol), IdSucursalInicio, IdSucursalFin, info.IdNomina_Tipo);
                 }
                 return true;
             }
