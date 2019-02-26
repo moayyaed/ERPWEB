@@ -8,6 +8,8 @@ using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Web.Helps;
+using Core.Erp.Info.Contabilidad;
+using DevExpress.Web;
 
 namespace Core.Erp.Web.Areas.Inventario.Controllers
 {
@@ -36,6 +38,33 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.lst_cuentas = lst_ctacble;
         }
         #endregion
+        #region Metodos ComboBox bajo demanda
+        public ActionResult CmbCuenta_Categ1()
+        {
+            in_categorias_Info model = new in_categorias_Info();
+            return PartialView("_CmbCuenta_Categ1", model);
+        }
+        public ActionResult CmbCuenta_Categ2()
+        {
+            in_categorias_Info model = new in_categorias_Info();
+            return PartialView("_CmbCuenta_Categ2", model);
+        }
+        public ActionResult CmbCuenta_Categ3()
+        {
+            in_categorias_Info model = new in_categorias_Info();
+            return PartialView("_CmbCuenta_Categ3", model);
+        }
+
+        public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
         #region Variables
         public ActionResult Nuevo(int IdEmpresa = 0)
         {

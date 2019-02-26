@@ -9905,6 +9905,9 @@
     <Content Include="Areas\Reportes\Views\FacturacionReportes\_CmbClientePorTipo.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_008.cshtml" />
     <Content Include="Areas\General\Views\Sucursal\_GridViewPartial_Sucursal_x_NivelDescuento.cshtml" />
+    <Content Include="Areas\Inventario\Views\Categoria\_CmbCuenta_Categ1.cshtml" />
+    <Content Include="Areas\Inventario\Views\Categoria\_CmbCuenta_Categ2.cshtml" />
+    <Content Include="Areas\Inventario\Views\Categoria\_CmbCuenta_Categ3.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10028,6 +10031,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

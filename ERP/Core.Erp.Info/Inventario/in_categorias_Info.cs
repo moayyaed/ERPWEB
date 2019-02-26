@@ -15,18 +15,14 @@ namespace Core.Erp.Info.Inventario
         [Required(ErrorMessage = ("El campo id es obligatorio"))]
         [StringLength(25, MinimumLength = 1, ErrorMessage = ("El campo id debe tener mínimo 1 caracter máximo 25"))]
         public string IdCategoria { get; set; }
-
-        [Required(ErrorMessage = ("El campo código es obligatorio"))]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = ("El campo código debe tener mínimo 1 caracter máximo 50"))]
+        
         public string cod_categoria { get; set; }
         [Required(ErrorMessage = ("El campo descripción es obligatorio"))]
         [StringLength(100, MinimumLength = 1, ErrorMessage = ("El campo descripción debe tener mínimo 1 caracter máximo 100"))]
         public string ca_Categoria { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-        [Required(ErrorMessage = "El campo cuenta contable es obligatorio")]
         public string IdCtaCtble_Inve { get; set; }
-        [Required(ErrorMessage = "El campo cuenta contable es obligatorio")]
         public string IdCtaCtble_Costo { get; set; }
         public string IdCtaCble_venta { get; set; }
 
