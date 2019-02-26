@@ -18,6 +18,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         ba_Cbte_Ban_Bus bus_cbte = new ba_Cbte_Ban_Bus();
         ba_Banco_Cuenta_Bus bus_banco = new ba_Banco_Cuenta_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Cheque.repx";
+        tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -243,13 +244,22 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult BAN_008()
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             cl_filtros_banco_Info model = new cl_filtros_banco_Info
             {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdEmpresa = IdEmpresa,
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             cargar_banco(model.IdEmpresa);
             BAN_008_Rpt report = new BAN_008_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
@@ -262,7 +272,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         [HttpPost]
         public ActionResult BAN_008(cl_filtros_banco_Info model)
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             BAN_008_Rpt report = new BAN_008_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
