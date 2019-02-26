@@ -42,7 +42,8 @@ namespace Core.Erp.Data.Caja
                                  Fecha_ini = q.Fecha_ini,
                                  Fecha_fin = q.Fecha_fin,
                                  IdEmpresa_op = q.IdEmpresa_op,
-                                 IdOrdenPago_op = q.IdOrdenPago_op
+                                 IdOrdenPago_op = q.IdOrdenPago_op,
+                                 SecuenciaCaja = q.SecuenciaCaja
                              }).ToList();
                 }
 

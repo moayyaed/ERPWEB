@@ -62,6 +62,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                                  q.RubroDescripcion,
                                  q.Valor,
                                  q.Grupo,
+                                 q.ca_orden,
                                  q.ru_orden
                              } into ing
                              select new ROL_002_Info
@@ -75,6 +76,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                                  RubroDescripcion = ing.Key.RubroDescripcion,
                                  Valor = ing.Key.Valor,
                                  Grupo = ing.Key.Grupo,
+                                 ca_orden = ing.Key.ca_orden,
                                  ru_orden = ing.Key.ru_orden
                              }).ToList();
 
@@ -91,6 +93,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                                 q.RubroDescripcion,
                                 q.Valor,
                                 q.Grupo,
+                                q.ca_orden,
                                 q.ru_orden
 
                             } into egr
@@ -105,6 +108,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                                 RubroDescripcion = egr.Key.RubroDescripcion,
                                 Valor = (egr.Key.Valor) * -1,
                                 Grupo = egr.Key.Grupo,
+                                ca_orden = egr.Key.ca_orden,
                                 ru_orden = egr.Key.ru_orden
                             }).ToList();
             

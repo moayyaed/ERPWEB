@@ -26,8 +26,8 @@ namespace Core.Erp.Data.Reportes.Caja
                         IdCbteCble = q.IdCbteCble,
                         IdTipocbte = q.IdTipocbte,
                         pe_nombreCompleto = q.pe_nombreCompleto,
-                        Valor = q.Valor
-
+                        Valor = q.Valor,
+                        SecuenciaCaja = q.SecuenciaCaja
                     }).ToList();
                 }
                 return Lista;

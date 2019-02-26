@@ -22,5 +22,6 @@ namespace Core.Erp.Data
         public string pe_nombreCompleto { get; set; }
         public string cm_observacion { get; set; }
         public System.DateTime cm_fecha { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
     }
 }

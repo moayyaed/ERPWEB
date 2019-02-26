@@ -45,8 +45,8 @@ namespace Core.Erp.Data.Reportes.Caja
                                  IdCtaCble =q.IdCtaCble,
                                  pe_nombreCompleto = q.pe_nombreCompleto,
                                  Nombre = q.Nombre,
-                                 Su_Descripcion = q.Su_Descripcion
-
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 SecuenciaCaja = q.SecuenciaCaja
                              }).ToList();
                 }
                 return Lista;

@@ -43,7 +43,7 @@ namespace Core.Erp.Data.Caja
                                      pe_nombreCompleto = q.pe_nombreCompleto,
                                      tm_descripcion = q.tm_descripcion,
                                      cm_valor = q.cm_valor,
-
+                                     SecuenciaCaja = q.SecuenciaCaja,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -68,7 +68,7 @@ namespace Core.Erp.Data.Caja
                                      pe_nombreCompleto = q.pe_nombreCompleto,
                                      tm_descripcion = q.tm_descripcion,
                                      cm_valor = q.cm_valor,
-
+                                     SecuenciaCaja = q.SecuenciaCaja,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }

@@ -45,7 +45,7 @@ namespace Core.Erp.Info.Caja
         public string IdTipo_Persona { get; set; }
         public decimal IdEntidad { get; set; }
         public decimal IdPersona { get; set; }
-        public decimal SecuenciaCaja { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
 
 
         #region Campos que no existen en la tabla
