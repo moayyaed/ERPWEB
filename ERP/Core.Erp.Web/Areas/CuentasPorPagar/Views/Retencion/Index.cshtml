@@ -12,7 +12,8 @@
 
 @using (Html.BeginForm())
 {
-    <div class="box ">
+    @Html.HiddenFor(q => q.IdEmpresa)
+  <div class="box ">
         <div class="box-header with-border">
             <div class="row">
                 <div class="col-md-12">
@@ -35,7 +36,7 @@
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal*</label>
                             <div class="form-group">
-                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
                                 @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -99,7 +100,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_retenciones", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_retenciones", new { IdSucursal = Model.IdSucursal, fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

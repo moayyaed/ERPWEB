@@ -13,22 +13,21 @@ namespace Core.Erp.Data.CuentasPorPagar
 {
    public class cp_retencion_Data
     {
-        public List<cp_retencion_Info> get_list(int IdEmpresa, DateTime Fechaini, DateTime FechaFin, int IdSucursal)
+        public List<cp_retencion_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
 
-                Fechaini = Convert.ToDateTime(Fechaini.ToShortDateString());
-                FechaFin = Convert.ToDateTime(FechaFin.ToShortDateString());
-
                 List<cp_retencion_Info> lista = new List<cp_retencion_Info>();
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
                     lista = (from item in Context.vwcp_retencion
                              where item.IdEmpresa == IdEmpresa
                              && item.IdSucursal == IdSucursal
-                             && item.fecha>=Fechaini
-                             && item.fecha<=FechaFin
+                             && fecha_ini <= item.fecha
+                             && item.fecha <= fecha_fin
                              orderby item.IdRetencion descending
                              select new cp_retencion_Info
                              {
@@ -46,7 +45,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  co_baseImponible = item.co_baseImponible,
                                  Estado = item.Estado,
                                  pe_nombreCompleto=item.pe_nombreCompleto,
-
+                                 fecha = item.fecha,
                                  EstadoBool = item.Estado == "A" ? true : false
 
                              }).ToList();

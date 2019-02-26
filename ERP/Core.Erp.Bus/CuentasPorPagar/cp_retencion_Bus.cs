@@ -28,11 +28,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         cp_retencion_det_Data data_retencion_der = new cp_retencion_det_Data();
         #endregion
-        public List<cp_retencion_Info> get_list(int IdEmpresa, DateTime Fechaini, DateTime FechaFin, int IdSucursal)
+        public List<cp_retencion_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
-                return odata.get_list(IdEmpresa,Fechaini, FechaFin, IdSucursal);
+                return odata.get_list(IdEmpresa, IdSucursal, fecha_ini, fecha_fin);
             }
             catch (Exception)
             {

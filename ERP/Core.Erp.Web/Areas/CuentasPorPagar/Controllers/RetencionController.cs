@@ -11,6 +11,7 @@ using DevExpress.Web.Mvc;
 using Core.Erp.Web.Helps;
 using Core.Erp.Info.Helps;
 using Core.Erp.Bus.General;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -37,31 +38,27 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-
-            cargar_combos_consulta(model.IdEmpresa);
+            cargar_combos_consulta();
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            cargar_combos_consulta(model.IdEmpresa);
-
+            cargar_combos_consulta();
             return View(model);
         }
 
-        public ActionResult GridViewPartial_retenciones(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal)
+        public ActionResult GridViewPartial_retenciones(DateTime? fecha_ini, DateTime? fecha_fin ,int IdSucursal = 0)
         {
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
-
-            List<cp_retencion_Info> model = new List<cp_retencion_Info>();
-            model = bus_retencion.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdSucursal);
+            ViewBag.IdEmpresa = IdEmpresa;
+            ViewBag.IdSucursal = IdSucursal;
+            var model = bus_retencion.get_list(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_retenciones", model);
         }
         [ValidateInput(false)]
@@ -531,23 +528,19 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
         #endregion
 
-        private void cargar_combos_consulta(int IdEmpresa)
+        private void cargar_combos_consulta()
         {
-            try
-            {
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-                lst_sucursal.Add(new Info.General.tb_sucursal_Info
+
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                lst_sucursal.Add(new tb_sucursal_Info
                 {
                     IdEmpresa = IdEmpresa,
                     IdSucursal = 0,
                     Su_Descripcion = "TODOS"
                 });
                 ViewBag.lst_sucursal = lst_sucursal;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            
         }
     }
 
