@@ -187,6 +187,8 @@
     <Compile Include="FacturacionElectronica\Factura_V2\rubro.cs" />
     <Compile Include="FacturacionElectronica\GuiaRemision\guiaRemision.cs" />
     <Compile Include="FacturacionElectronica\NotaCredito\notaCredito.cs" />
+    <Compile Include="FacturacionElectronica\NotaDebito\notaDebito.cs" />
+    <Compile Include="FacturacionElectronica\Retencion\comprobanteRetencion.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Info.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Info.cs" />
     <Compile Include="Facturacion\fa_catalogo_Info.cs" />
@@ -519,10 +521,7 @@
       <Link>Index.cshtml</Link>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FacturacionElectronica\NotaDebito\" />
-    <Folder Include="FacturacionElectronica\Retencion\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
