@@ -21,11 +21,15 @@ namespace Core.Erp.Data.CuentasPorPagar
                 List<cp_retencion_Info> lista = new List<cp_retencion_Info>();
                 fecha_ini = fecha_ini.Date;
                 fecha_fin = fecha_fin.Date;
+
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
                     lista = (from item in Context.vwcp_retencion
                              where item.IdEmpresa == IdEmpresa
-                             && item.IdSucursal == IdSucursal
+                             && IdSucursalIni <= item.IdSucursal
+                             && item.IdSucursal <= IdSucursalFin
                              && fecha_ini <= item.fecha
                              && item.fecha <= fecha_fin
                              orderby item.IdRetencion descending

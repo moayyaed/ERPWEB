@@ -50,12 +50,26 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cargar_combos_consulta();
             return View(model);
         }
+        private void cargar_combos_consulta()
+        {
+
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODOS"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+
+        }
 
         public ActionResult GridViewPartial_retenciones(DateTime? fecha_ini, DateTime? fecha_fin ,int IdSucursal = 0)
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
             var model = bus_retencion.get_list(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin);
@@ -528,20 +542,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
         #endregion
 
-        private void cargar_combos_consulta()
-        {
-
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-                lst_sucursal.Add(new tb_sucursal_Info
-                {
-                    IdEmpresa = IdEmpresa,
-                    IdSucursal = 0,
-                    Su_Descripcion = "TODOS"
-                });
-                ViewBag.lst_sucursal = lst_sucursal;
-            
-        }
     }
 
     public class cp_codigo_SRI_List
