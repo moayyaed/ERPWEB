@@ -1,0 +1,1934 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model_facturacion_electronica.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwcp_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcp_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetencion" />
+            <PropertyRef Name="fecha" />
+            <PropertyRef Name="observacion" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="co_fechaOg" />
+            <PropertyRef Name="co_serie" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="co_FechaFactura" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="IdOrden_giro_Tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdRetencion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="varchar" MaxLength="20" />
+          <Property Name="serie1" Type="varchar" MaxLength="3" />
+          <Property Name="serie2" Type="varchar" MaxLength="3" />
+          <Property Name="NumRetencion" Type="varchar" MaxLength="20" />
+          <Property Name="NAutorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_Autorizacion" Type="datetime" />
+          <Property Name="fecha" Type="date" Nullable="false" />
+          <Property Name="observacion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="int" Nullable="false" />
+          <Property Name="co_fechaOg" Type="datetime" Nullable="false" />
+          <Property Name="co_serie" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="co_factura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="co_FechaFactura" Type="datetime" Nullable="false" />
+          <Property Name="Num_Autorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Num_Autorizacion_Imprenta" Type="varchar" MaxLength="50" />
+          <Property Name="pe_Naturaleza" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_direccion" Type="varchar" MaxLength="150" />
+          <Property Name="pe_telfono_Contacto" Type="varchar" MaxLength="50" />
+          <Property Name="pe_celular" Type="varchar" MaxLength="50" />
+          <Property Name="pe_correo" Type="varchar" MaxLength="200" />
+          <Property Name="pe_razonSocial" Type="varchar" MaxLength="150" />
+          <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="NombreComercial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="ContribuyenteEspecial" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="em_direccion" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="em_telefonos" Type="varchar" MaxLength="200" />
+          <Property Name="em_Email" Type="varchar" MaxLength="300" />
+          <Property Name="IdOrden_giro_Tipo" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="es_Documento_Electronico" Type="bit" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwcp_retencion_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcp_retencion_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetencion" />
+            <PropertyRef Name="Idsecuencia" />
+            <PropertyRef Name="re_tipoRet" />
+            <PropertyRef Name="IdCodigo_SRI" />
+            <PropertyRef Name="re_Codigo_impuesto" />
+            <PropertyRef Name="re_Porcen_retencion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdRetencion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Idsecuencia" Type="int" Nullable="false" />
+          <Property Name="re_tipoRet" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="baseRetencion" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="IdCodigo_SRI" Type="int" Nullable="false" />
+          <Property Name="re_Codigo_impuesto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="re_Porcen_retencion" Type="float" Nullable="false" />
+          <Property Name="re_valor_retencion" Type="numeric" Precision="10" Scale="2" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_factura' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_factura">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="nom_FormaPago" />
+            <PropertyRef Name="IdFormaPago" />
+            <PropertyRef Name="Dias_Vct" />
+            <PropertyRef Name="Expr2" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="pe_Naturaleza" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="200" />
+          <Property Name="Celular" Type="varchar" MaxLength="200" />
+          <Property Name="Correo" Type="varchar" MaxLength="1000" />
+          <Property Name="Direccion" Type="varchar" MaxLength="150" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="NombreComercial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="ContribuyenteEspecial" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="em_direccion" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="nom_FormaPago" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdFormaPago" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Dias_Vct" Type="int" Nullable="false" />
+          <Property Name="Base_imponible" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="totalDescuento" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="total_sin_impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="importeTotal" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="Expr1" Type="varchar" MaxLength="150" />
+          <Property Name="Expr2" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="em_telefonos" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_factura_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_factura_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="vt_cantidad" />
+            <PropertyRef Name="vt_PorDescUnitario" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_codigo2" Type="nvarchar" MaxLength="40" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="vt_detallexItems" Type="nvarchar(max)" />
+          <Property Name="vt_cantidad" Type="float" Nullable="false" />
+          <Property Name="vt_Precio" Type="numeric" Precision="10" Scale="5" />
+          <Property Name="vt_PorDescUnitario" Type="float" Nullable="false" />
+          <Property Name="vt_DescUnitario" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="vt_PrecioFinal" Type="numeric" Precision="10" Scale="5" />
+          <Property Name="vt_Subtotal" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="vt_iva" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="vt_total" Type="numeric" Precision="10" Scale="5" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_factura_impuestos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_factura_impuestos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Base_imponible" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_guia_remision' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_guia_remision">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="CodGuiaRemision" />
+            <PropertyRef Name="gi_fecha" />
+            <PropertyRef Name="gi_FechaFinTraslado" />
+            <PropertyRef Name="gi_FechaInicioTraslado" />
+            <PropertyRef Name="placa" />
+            <PropertyRef Name="Direccion_Origen" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CodGuiaRemision" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="varchar" MaxLength="20" />
+          <Property Name="Serie1" Type="varchar" MaxLength="3" />
+          <Property Name="Serie2" Type="varchar" MaxLength="3" />
+          <Property Name="NumGuia_Preimpresa" Type="varchar" MaxLength="20" />
+          <Property Name="NUAutorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_Autorizacion" Type="datetime" />
+          <Property Name="gi_fecha" Type="datetime" Nullable="false" />
+          <Property Name="gi_plazo" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="gi_fech_venc" Type="datetime" />
+          <Property Name="gi_Observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="gi_FechaFinTraslado" Type="date" Nullable="false" />
+          <Property Name="gi_FechaInicioTraslado" Type="date" Nullable="false" />
+          <Property Name="placa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ruta" Type="varchar" MaxLength="300" />
+          <Property Name="Direccion_Origen" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Direccion_Destino" Type="varchar" MaxLength="300" />
+          <Property Name="Cedula" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" />
+          <Property Name="Nombres" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="200" />
+          <Property Name="Celular" Type="varchar" MaxLength="200" />
+          <Property Name="Correo" Type="varchar" MaxLength="1000" />
+          <Property Name="Direccion" Type="varchar" MaxLength="1000" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_Naturaleza" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="NombreComercial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="em_telefonos" Type="varchar" MaxLength="200" />
+          <Property Name="ContribuyenteEspecial" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="em_Email" Type="varchar" MaxLength="300" />
+          <Property Name="em_direccion" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_guia_remision_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_guia_remision_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="gi_cantidad" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="gi_cantidad" Type="float" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_codigo2" Type="nvarchar" MaxLength="40" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_guia_remision_x_factura' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_guia_remision_x_factura">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="vt_tipoDoc" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Autorizacion" Type="datetime" />
+          <Property Name="vt_autorizacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_nota_credito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_nota_credito">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="CreDeb" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="no_fecha" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dev_IdEmpresa" Type="int" />
+          <Property Name="dev_IdDev_Inven" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="CodNota" Type="varchar" MaxLength="50" />
+          <Property Name="CreDeb" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="varchar" MaxLength="20" />
+          <Property Name="Serie1" Type="varchar" MaxLength="3" />
+          <Property Name="Serie2" Type="varchar" MaxLength="3" />
+          <Property Name="NumNota_Impresa" Type="varchar" MaxLength="20" />
+          <Property Name="NumAutorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_Autorizacion" Type="datetime" />
+          <Property Name="Nombres" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="200" />
+          <Property Name="Celular" Type="varchar" MaxLength="200" />
+          <Property Name="Correo" Type="varchar" MaxLength="1000" />
+          <Property Name="pe_Naturaleza" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_razonSocial" Type="varchar" MaxLength="150" />
+          <Property Name="no_fecha" Type="datetime" Nullable="false" />
+          <Property Name="sc_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="em_direccion" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="NombreComercial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Expr1" Type="varchar" MaxLength="200" />
+          <Property Name="ContribuyenteEspecial" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="importeTotal" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="em_telefonos" Type="varchar" MaxLength="200" />
+          <Property Name="total_sin_impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="totalDescuento" Type="numeric" Precision="10" Scale="2" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_nota_credito_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_nota_credito_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="sc_cantidad" />
+            <PropertyRef Name="sc_Precio" />
+            <PropertyRef Name="sc_descUni" />
+            <PropertyRef Name="sc_PordescUni" />
+            <PropertyRef Name="sc_precioFinal" />
+            <PropertyRef Name="sc_subtotal" />
+            <PropertyRef Name="sc_iva" />
+            <PropertyRef Name="sc_total" />
+            <PropertyRef Name="sc_costo" />
+            <PropertyRef Name="vt_por_iva" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sc_cantidad" Type="float" Nullable="false" />
+          <Property Name="sc_Precio" Type="float" Nullable="false" />
+          <Property Name="sc_descUni" Type="float" Nullable="false" />
+          <Property Name="sc_PordescUni" Type="float" Nullable="false" />
+          <Property Name="sc_precioFinal" Type="float" Nullable="false" />
+          <Property Name="sc_subtotal" Type="float" Nullable="false" />
+          <Property Name="sc_iva" Type="float" Nullable="false" />
+          <Property Name="sc_total" Type="float" Nullable="false" />
+          <Property Name="sc_costo" Type="float" Nullable="false" />
+          <Property Name="sc_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_codigo2" Type="nvarchar" MaxLength="40" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_nota_credito_impuestos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_nota_credito_impuestos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Base_imponible" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_nota_debito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_nota_debito">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="CreDeb" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="no_fecha" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dev_IdEmpresa" Type="int" />
+          <Property Name="dev_IdDev_Inven" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="CodNota" Type="varchar" MaxLength="50" />
+          <Property Name="CreDeb" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="varchar" MaxLength="20" />
+          <Property Name="Serie1" Type="varchar" MaxLength="3" />
+          <Property Name="Serie2" Type="varchar" MaxLength="3" />
+          <Property Name="NumNota_Impresa" Type="varchar" MaxLength="20" />
+          <Property Name="NumAutorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_Autorizacion" Type="datetime" />
+          <Property Name="Nombres" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="200" />
+          <Property Name="Celular" Type="varchar" MaxLength="200" />
+          <Property Name="Correo" Type="varchar" MaxLength="1000" />
+          <Property Name="pe_Naturaleza" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_razonSocial" Type="varchar" MaxLength="150" />
+          <Property Name="no_fecha" Type="datetime" Nullable="false" />
+          <Property Name="sc_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="em_direccion" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="NombreComercial" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Expr1" Type="varchar" MaxLength="200" />
+          <Property Name="ContribuyenteEspecial" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="importeTotal" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="em_telefonos" Type="varchar" MaxLength="200" />
+          <Property Name="total_sin_impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="totalDescuento" Type="numeric" Precision="10" Scale="2" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_nota_debito_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_nota_debito_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="sc_cantidad" />
+            <PropertyRef Name="sc_Precio" />
+            <PropertyRef Name="sc_descUni" />
+            <PropertyRef Name="sc_PordescUni" />
+            <PropertyRef Name="sc_precioFinal" />
+            <PropertyRef Name="sc_subtotal" />
+            <PropertyRef Name="sc_iva" />
+            <PropertyRef Name="sc_total" />
+            <PropertyRef Name="sc_costo" />
+            <PropertyRef Name="vt_por_iva" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sc_cantidad" Type="float" Nullable="false" />
+          <Property Name="sc_Precio" Type="float" Nullable="false" />
+          <Property Name="sc_descUni" Type="float" Nullable="false" />
+          <Property Name="sc_PordescUni" Type="float" Nullable="false" />
+          <Property Name="sc_precioFinal" Type="float" Nullable="false" />
+          <Property Name="sc_subtotal" Type="float" Nullable="false" />
+          <Property Name="sc_iva" Type="float" Nullable="false" />
+          <Property Name="sc_total" Type="float" Nullable="false" />
+          <Property Name="sc_costo" Type="float" Nullable="false" />
+          <Property Name="sc_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_codigo2" Type="nvarchar" MaxLength="40" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfa_nota_debito_impuestos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_nota_debito_impuestos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Base_imponible" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Model_facturacion_electronicaStoreContainer">
+          <EntitySet Name="vwcp_retencion" EntityType="Self.vwcp_retencion" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwcp_retencion].[IdEmpresa] AS [IdEmpresa], 
+    [vwcp_retencion].[IdRetencion] AS [IdRetencion], 
+    [vwcp_retencion].[CodDocumentoTipo] AS [CodDocumentoTipo], 
+    [vwcp_retencion].[serie1] AS [serie1], 
+    [vwcp_retencion].[serie2] AS [serie2], 
+    [vwcp_retencion].[NumRetencion] AS [NumRetencion], 
+    [vwcp_retencion].[NAutorizacion] AS [NAutorizacion], 
+    [vwcp_retencion].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
+    [vwcp_retencion].[fecha] AS [fecha], 
+    [vwcp_retencion].[observacion] AS [observacion], 
+    [vwcp_retencion].[IdCbteCble_Ogiro] AS [IdCbteCble_Ogiro], 
+    [vwcp_retencion].[IdTipoCbte_Ogiro] AS [IdTipoCbte_Ogiro], 
+    [vwcp_retencion].[co_fechaOg] AS [co_fechaOg], 
+    [vwcp_retencion].[co_serie] AS [co_serie], 
+    [vwcp_retencion].[co_factura] AS [co_factura], 
+    [vwcp_retencion].[co_FechaFactura] AS [co_FechaFactura], 
+    [vwcp_retencion].[Num_Autorizacion] AS [Num_Autorizacion], 
+    [vwcp_retencion].[Num_Autorizacion_Imprenta] AS [Num_Autorizacion_Imprenta], 
+    [vwcp_retencion].[pe_Naturaleza] AS [pe_Naturaleza], 
+    [vwcp_retencion].[IdTipoDocumento] AS [IdTipoDocumento], 
+    [vwcp_retencion].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwcp_retencion].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcp_retencion].[pe_direccion] AS [pe_direccion], 
+    [vwcp_retencion].[pe_telfono_Contacto] AS [pe_telfono_Contacto], 
+    [vwcp_retencion].[pe_celular] AS [pe_celular], 
+    [vwcp_retencion].[pe_correo] AS [pe_correo], 
+    [vwcp_retencion].[pe_razonSocial] AS [pe_razonSocial], 
+    [vwcp_retencion].[em_nombre] AS [em_nombre], 
+    [vwcp_retencion].[RazonSocial] AS [RazonSocial], 
+    [vwcp_retencion].[NombreComercial] AS [NombreComercial], 
+    [vwcp_retencion].[ContribuyenteEspecial] AS [ContribuyenteEspecial], 
+    [vwcp_retencion].[ObligadoAllevarConta] AS [ObligadoAllevarConta], 
+    [vwcp_retencion].[em_ruc] AS [em_ruc], 
+    [vwcp_retencion].[em_direccion] AS [em_direccion], 
+    [vwcp_retencion].[em_telefonos] AS [em_telefonos], 
+    [vwcp_retencion].[em_Email] AS [em_Email], 
+    [vwcp_retencion].[IdOrden_giro_Tipo] AS [IdOrden_giro_Tipo], 
+    [vwcp_retencion].[es_Documento_Electronico] AS [es_Documento_Electronico]
+    FROM [EntidadRegulatoria].[vwcp_retencion] AS [vwcp_retencion]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcp_retencion_detalle" EntityType="Self.vwcp_retencion_detalle" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwcp_retencion_detalle].[IdEmpresa] AS [IdEmpresa], 
+    [vwcp_retencion_detalle].[IdRetencion] AS [IdRetencion], 
+    [vwcp_retencion_detalle].[Idsecuencia] AS [Idsecuencia], 
+    [vwcp_retencion_detalle].[re_tipoRet] AS [re_tipoRet], 
+    [vwcp_retencion_detalle].[baseRetencion] AS [baseRetencion], 
+    [vwcp_retencion_detalle].[IdCodigo_SRI] AS [IdCodigo_SRI], 
+    [vwcp_retencion_detalle].[re_Codigo_impuesto] AS [re_Codigo_impuesto], 
+    [vwcp_retencion_detalle].[re_Porcen_retencion] AS [re_Porcen_retencion], 
+    [vwcp_retencion_detalle].[re_valor_retencion] AS [re_valor_retencion]
+    FROM [EntidadRegulatoria].[vwcp_retencion_detalle] AS [vwcp_retencion_detalle]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_factura" EntityType="Self.vwfa_factura" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_factura].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_factura].[IdSucursal] AS [IdSucursal], 
+    [vwfa_factura].[IdBodega] AS [IdBodega], 
+    [vwfa_factura].[IdCbteVta] AS [IdCbteVta], 
+    [vwfa_factura].[vt_serie1] AS [vt_serie1], 
+    [vwfa_factura].[vt_serie2] AS [vt_serie2], 
+    [vwfa_factura].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_factura].[vt_fecha] AS [vt_fecha], 
+    [vwfa_factura].[pe_Naturaleza] AS [pe_Naturaleza], 
+    [vwfa_factura].[IdTipoDocumento] AS [IdTipoDocumento], 
+    [vwfa_factura].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwfa_factura].[Nombres] AS [Nombres], 
+    [vwfa_factura].[Telefono] AS [Telefono], 
+    [vwfa_factura].[Celular] AS [Celular], 
+    [vwfa_factura].[Correo] AS [Correo], 
+    [vwfa_factura].[Direccion] AS [Direccion], 
+    [vwfa_factura].[RazonSocial] AS [RazonSocial], 
+    [vwfa_factura].[NombreComercial] AS [NombreComercial], 
+    [vwfa_factura].[ContribuyenteEspecial] AS [ContribuyenteEspecial], 
+    [vwfa_factura].[ObligadoAllevarConta] AS [ObligadoAllevarConta], 
+    [vwfa_factura].[em_ruc] AS [em_ruc], 
+    [vwfa_factura].[em_direccion] AS [em_direccion], 
+    [vwfa_factura].[nom_FormaPago] AS [nom_FormaPago], 
+    [vwfa_factura].[IdFormaPago] AS [IdFormaPago], 
+    [vwfa_factura].[Dias_Vct] AS [Dias_Vct], 
+    [vwfa_factura].[Base_imponible] AS [Base_imponible], 
+    [vwfa_factura].[impuesto] AS [impuesto], 
+    [vwfa_factura].[totalDescuento] AS [totalDescuento], 
+    [vwfa_factura].[total_sin_impuesto] AS [total_sin_impuesto], 
+    [vwfa_factura].[importeTotal] AS [importeTotal], 
+    [vwfa_factura].[Expr1] AS [Expr1], 
+    [vwfa_factura].[Expr2] AS [Expr2], 
+    [vwfa_factura].[em_telefonos] AS [em_telefonos]
+    FROM [EntidadRegulatoria].[vwfa_factura] AS [vwfa_factura]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_factura_detalle" EntityType="Self.vwfa_factura_detalle" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_factura_detalle].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_factura_detalle].[IdSucursal] AS [IdSucursal], 
+    [vwfa_factura_detalle].[IdBodega] AS [IdBodega], 
+    [vwfa_factura_detalle].[IdCbteVta] AS [IdCbteVta], 
+    [vwfa_factura_detalle].[Secuencia] AS [Secuencia], 
+    [vwfa_factura_detalle].[pr_codigo] AS [pr_codigo], 
+    [vwfa_factura_detalle].[pr_codigo2] AS [pr_codigo2], 
+    [vwfa_factura_detalle].[pr_descripcion] AS [pr_descripcion], 
+    [vwfa_factura_detalle].[vt_detallexItems] AS [vt_detallexItems], 
+    [vwfa_factura_detalle].[vt_cantidad] AS [vt_cantidad], 
+    [vwfa_factura_detalle].[vt_Precio] AS [vt_Precio], 
+    [vwfa_factura_detalle].[vt_PorDescUnitario] AS [vt_PorDescUnitario], 
+    [vwfa_factura_detalle].[vt_DescUnitario] AS [vt_DescUnitario], 
+    [vwfa_factura_detalle].[vt_PrecioFinal] AS [vt_PrecioFinal], 
+    [vwfa_factura_detalle].[vt_Subtotal] AS [vt_Subtotal], 
+    [vwfa_factura_detalle].[vt_iva] AS [vt_iva], 
+    [vwfa_factura_detalle].[vt_total] AS [vt_total], 
+    [vwfa_factura_detalle].[vt_por_iva] AS [vt_por_iva]
+    FROM [EntidadRegulatoria].[vwfa_factura_detalle] AS [vwfa_factura_detalle]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_factura_impuestos" EntityType="Self.vwfa_factura_impuestos" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_factura_impuestos].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_factura_impuestos].[IdSucursal] AS [IdSucursal], 
+    [vwfa_factura_impuestos].[IdBodega] AS [IdBodega], 
+    [vwfa_factura_impuestos].[IdCbteVta] AS [IdCbteVta], 
+    [vwfa_factura_impuestos].[Base_imponible] AS [Base_imponible], 
+    [vwfa_factura_impuestos].[impuesto] AS [impuesto], 
+    [vwfa_factura_impuestos].[vt_por_iva] AS [vt_por_iva]
+    FROM [EntidadRegulatoria].[vwfa_factura_impuestos] AS [vwfa_factura_impuestos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_guia_remision" EntityType="Self.vwfa_guia_remision" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_guia_remision].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_guia_remision].[IdSucursal] AS [IdSucursal], 
+    [vwfa_guia_remision].[IdBodega] AS [IdBodega], 
+    [vwfa_guia_remision].[IdGuiaRemision] AS [IdGuiaRemision], 
+    [vwfa_guia_remision].[CodGuiaRemision] AS [CodGuiaRemision], 
+    [vwfa_guia_remision].[CodDocumentoTipo] AS [CodDocumentoTipo], 
+    [vwfa_guia_remision].[Serie1] AS [Serie1], 
+    [vwfa_guia_remision].[Serie2] AS [Serie2], 
+    [vwfa_guia_remision].[NumGuia_Preimpresa] AS [NumGuia_Preimpresa], 
+    [vwfa_guia_remision].[NUAutorizacion] AS [NUAutorizacion], 
+    [vwfa_guia_remision].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
+    [vwfa_guia_remision].[gi_fecha] AS [gi_fecha], 
+    [vwfa_guia_remision].[gi_plazo] AS [gi_plazo], 
+    [vwfa_guia_remision].[gi_fech_venc] AS [gi_fech_venc], 
+    [vwfa_guia_remision].[gi_Observacion] AS [gi_Observacion], 
+    [vwfa_guia_remision].[gi_FechaFinTraslado] AS [gi_FechaFinTraslado], 
+    [vwfa_guia_remision].[gi_FechaInicioTraslado] AS [gi_FechaInicioTraslado], 
+    [vwfa_guia_remision].[placa] AS [placa], 
+    [vwfa_guia_remision].[ruta] AS [ruta], 
+    [vwfa_guia_remision].[Direccion_Origen] AS [Direccion_Origen], 
+    [vwfa_guia_remision].[Direccion_Destino] AS [Direccion_Destino], 
+    [vwfa_guia_remision].[Cedula] AS [Cedula], 
+    [vwfa_guia_remision].[Nombre] AS [Nombre], 
+    [vwfa_guia_remision].[Nombres] AS [Nombres], 
+    [vwfa_guia_remision].[Telefono] AS [Telefono], 
+    [vwfa_guia_remision].[Celular] AS [Celular], 
+    [vwfa_guia_remision].[Correo] AS [Correo], 
+    [vwfa_guia_remision].[Direccion] AS [Direccion], 
+    [vwfa_guia_remision].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwfa_guia_remision].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwfa_guia_remision].[IdTipoDocumento] AS [IdTipoDocumento], 
+    [vwfa_guia_remision].[pe_Naturaleza] AS [pe_Naturaleza], 
+    [vwfa_guia_remision].[em_nombre] AS [em_nombre], 
+    [vwfa_guia_remision].[RazonSocial] AS [RazonSocial], 
+    [vwfa_guia_remision].[NombreComercial] AS [NombreComercial], 
+    [vwfa_guia_remision].[em_ruc] AS [em_ruc], 
+    [vwfa_guia_remision].[em_telefonos] AS [em_telefonos], 
+    [vwfa_guia_remision].[ContribuyenteEspecial] AS [ContribuyenteEspecial], 
+    [vwfa_guia_remision].[ObligadoAllevarConta] AS [ObligadoAllevarConta], 
+    [vwfa_guia_remision].[em_Email] AS [em_Email], 
+    [vwfa_guia_remision].[em_direccion] AS [em_direccion], 
+    [vwfa_guia_remision].[vt_serie1] AS [vt_serie1], 
+    [vwfa_guia_remision].[vt_serie2] AS [vt_serie2], 
+    [vwfa_guia_remision].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_guia_remision].[vt_fecha] AS [vt_fecha]
+    FROM [EntidadRegulatoria].[vwfa_guia_remision] AS [vwfa_guia_remision]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_guia_remision_detalle" EntityType="Self.vwfa_guia_remision_detalle" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_guia_remision_detalle].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_guia_remision_detalle].[IdSucursal] AS [IdSucursal], 
+    [vwfa_guia_remision_detalle].[IdBodega] AS [IdBodega], 
+    [vwfa_guia_remision_detalle].[IdGuiaRemision] AS [IdGuiaRemision], 
+    [vwfa_guia_remision_detalle].[Secuencia] AS [Secuencia], 
+    [vwfa_guia_remision_detalle].[gi_cantidad] AS [gi_cantidad], 
+    [vwfa_guia_remision_detalle].[pr_codigo] AS [pr_codigo], 
+    [vwfa_guia_remision_detalle].[pr_codigo2] AS [pr_codigo2], 
+    [vwfa_guia_remision_detalle].[pr_descripcion] AS [pr_descripcion], 
+    [vwfa_guia_remision_detalle].[pr_descripcion_2] AS [pr_descripcion_2]
+    FROM [EntidadRegulatoria].[vwfa_guia_remision_detalle] AS [vwfa_guia_remision_detalle]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_guia_remision_x_factura" EntityType="Self.vwfa_guia_remision_x_factura" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_guia_remision_x_factura].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_guia_remision_x_factura].[IdSucursal] AS [IdSucursal], 
+    [vwfa_guia_remision_x_factura].[IdBodega] AS [IdBodega], 
+    [vwfa_guia_remision_x_factura].[IdGuiaRemision] AS [IdGuiaRemision], 
+    [vwfa_guia_remision_x_factura].[vt_tipoDoc] AS [vt_tipoDoc], 
+    [vwfa_guia_remision_x_factura].[vt_serie1] AS [vt_serie1], 
+    [vwfa_guia_remision_x_factura].[vt_serie2] AS [vt_serie2], 
+    [vwfa_guia_remision_x_factura].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_guia_remision_x_factura].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
+    [vwfa_guia_remision_x_factura].[vt_autorizacion] AS [vt_autorizacion]
+    FROM [EntidadRegulatoria].[vwfa_guia_remision_x_factura] AS [vwfa_guia_remision_x_factura]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_nota_credito" EntityType="Self.vwfa_nota_credito" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_nota_credito].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_nota_credito].[IdSucursal] AS [IdSucursal], 
+    [vwfa_nota_credito].[IdBodega] AS [IdBodega], 
+    [vwfa_nota_credito].[IdNota] AS [IdNota], 
+    [vwfa_nota_credito].[dev_IdEmpresa] AS [dev_IdEmpresa], 
+    [vwfa_nota_credito].[dev_IdDev_Inven] AS [dev_IdDev_Inven], 
+    [vwfa_nota_credito].[CodNota] AS [CodNota], 
+    [vwfa_nota_credito].[CreDeb] AS [CreDeb], 
+    [vwfa_nota_credito].[CodDocumentoTipo] AS [CodDocumentoTipo], 
+    [vwfa_nota_credito].[Serie1] AS [Serie1], 
+    [vwfa_nota_credito].[Serie2] AS [Serie2], 
+    [vwfa_nota_credito].[NumNota_Impresa] AS [NumNota_Impresa], 
+    [vwfa_nota_credito].[NumAutorizacion] AS [NumAutorizacion], 
+    [vwfa_nota_credito].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
+    [vwfa_nota_credito].[Nombres] AS [Nombres], 
+    [vwfa_nota_credito].[Telefono] AS [Telefono], 
+    [vwfa_nota_credito].[Celular] AS [Celular], 
+    [vwfa_nota_credito].[Correo] AS [Correo], 
+    [vwfa_nota_credito].[pe_Naturaleza] AS [pe_Naturaleza], 
+    [vwfa_nota_credito].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwfa_nota_credito].[IdTipoDocumento] AS [IdTipoDocumento], 
+    [vwfa_nota_credito].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwfa_nota_credito].[pe_razonSocial] AS [pe_razonSocial], 
+    [vwfa_nota_credito].[no_fecha] AS [no_fecha], 
+    [vwfa_nota_credito].[sc_observacion] AS [sc_observacion], 
+    [vwfa_nota_credito].[em_direccion] AS [em_direccion], 
+    [vwfa_nota_credito].[em_ruc] AS [em_ruc], 
+    [vwfa_nota_credito].[RazonSocial] AS [RazonSocial], 
+    [vwfa_nota_credito].[NombreComercial] AS [NombreComercial], 
+    [vwfa_nota_credito].[Expr1] AS [Expr1], 
+    [vwfa_nota_credito].[ContribuyenteEspecial] AS [ContribuyenteEspecial], 
+    [vwfa_nota_credito].[ObligadoAllevarConta] AS [ObligadoAllevarConta], 
+    [vwfa_nota_credito].[vt_serie1] AS [vt_serie1], 
+    [vwfa_nota_credito].[vt_serie2] AS [vt_serie2], 
+    [vwfa_nota_credito].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_nota_credito].[vt_fecha] AS [vt_fecha], 
+    [vwfa_nota_credito].[importeTotal] AS [importeTotal], 
+    [vwfa_nota_credito].[impuesto] AS [impuesto], 
+    [vwfa_nota_credito].[em_telefonos] AS [em_telefonos], 
+    [vwfa_nota_credito].[total_sin_impuesto] AS [total_sin_impuesto], 
+    [vwfa_nota_credito].[totalDescuento] AS [totalDescuento]
+    FROM [EntidadRegulatoria].[vwfa_nota_credito] AS [vwfa_nota_credito]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_nota_credito_detalle" EntityType="Self.vwfa_nota_credito_detalle" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_nota_credito_detalle].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_nota_credito_detalle].[IdSucursal] AS [IdSucursal], 
+    [vwfa_nota_credito_detalle].[IdBodega] AS [IdBodega], 
+    [vwfa_nota_credito_detalle].[IdNota] AS [IdNota], 
+    [vwfa_nota_credito_detalle].[Secuencia] AS [Secuencia], 
+    [vwfa_nota_credito_detalle].[IdProducto] AS [IdProducto], 
+    [vwfa_nota_credito_detalle].[sc_cantidad] AS [sc_cantidad], 
+    [vwfa_nota_credito_detalle].[sc_Precio] AS [sc_Precio], 
+    [vwfa_nota_credito_detalle].[sc_descUni] AS [sc_descUni], 
+    [vwfa_nota_credito_detalle].[sc_PordescUni] AS [sc_PordescUni], 
+    [vwfa_nota_credito_detalle].[sc_precioFinal] AS [sc_precioFinal], 
+    [vwfa_nota_credito_detalle].[sc_subtotal] AS [sc_subtotal], 
+    [vwfa_nota_credito_detalle].[sc_iva] AS [sc_iva], 
+    [vwfa_nota_credito_detalle].[sc_total] AS [sc_total], 
+    [vwfa_nota_credito_detalle].[sc_costo] AS [sc_costo], 
+    [vwfa_nota_credito_detalle].[sc_observacion] AS [sc_observacion], 
+    [vwfa_nota_credito_detalle].[vt_por_iva] AS [vt_por_iva], 
+    [vwfa_nota_credito_detalle].[pr_codigo] AS [pr_codigo], 
+    [vwfa_nota_credito_detalle].[pr_codigo2] AS [pr_codigo2], 
+    [vwfa_nota_credito_detalle].[pr_descripcion] AS [pr_descripcion], 
+    [vwfa_nota_credito_detalle].[pr_descripcion_2] AS [pr_descripcion_2]
+    FROM [EntidadRegulatoria].[vwfa_nota_credito_detalle] AS [vwfa_nota_credito_detalle]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_nota_credito_impuestos" EntityType="Self.vwfa_nota_credito_impuestos" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_nota_credito_impuestos].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_nota_credito_impuestos].[IdSucursal] AS [IdSucursal], 
+    [vwfa_nota_credito_impuestos].[IdBodega] AS [IdBodega], 
+    [vwfa_nota_credito_impuestos].[IdNota] AS [IdNota], 
+    [vwfa_nota_credito_impuestos].[Base_imponible] AS [Base_imponible], 
+    [vwfa_nota_credito_impuestos].[impuesto] AS [impuesto], 
+    [vwfa_nota_credito_impuestos].[vt_por_iva] AS [vt_por_iva]
+    FROM [EntidadRegulatoria].[vwfa_nota_credito_impuestos] AS [vwfa_nota_credito_impuestos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_nota_debito" EntityType="Self.vwfa_nota_debito" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_nota_debito].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_nota_debito].[IdSucursal] AS [IdSucursal], 
+    [vwfa_nota_debito].[IdBodega] AS [IdBodega], 
+    [vwfa_nota_debito].[IdNota] AS [IdNota], 
+    [vwfa_nota_debito].[dev_IdEmpresa] AS [dev_IdEmpresa], 
+    [vwfa_nota_debito].[dev_IdDev_Inven] AS [dev_IdDev_Inven], 
+    [vwfa_nota_debito].[CodNota] AS [CodNota], 
+    [vwfa_nota_debito].[CreDeb] AS [CreDeb], 
+    [vwfa_nota_debito].[CodDocumentoTipo] AS [CodDocumentoTipo], 
+    [vwfa_nota_debito].[Serie1] AS [Serie1], 
+    [vwfa_nota_debito].[Serie2] AS [Serie2], 
+    [vwfa_nota_debito].[NumNota_Impresa] AS [NumNota_Impresa], 
+    [vwfa_nota_debito].[NumAutorizacion] AS [NumAutorizacion], 
+    [vwfa_nota_debito].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
+    [vwfa_nota_debito].[Nombres] AS [Nombres], 
+    [vwfa_nota_debito].[Telefono] AS [Telefono], 
+    [vwfa_nota_debito].[Celular] AS [Celular], 
+    [vwfa_nota_debito].[Correo] AS [Correo], 
+    [vwfa_nota_debito].[pe_Naturaleza] AS [pe_Naturaleza], 
+    [vwfa_nota_debito].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwfa_nota_debito].[IdTipoDocumento] AS [IdTipoDocumento], 
+    [vwfa_nota_debito].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwfa_nota_debito].[pe_razonSocial] AS [pe_razonSocial], 
+    [vwfa_nota_debito].[no_fecha] AS [no_fecha], 
+    [vwfa_nota_debito].[sc_observacion] AS [sc_observacion], 
+    [vwfa_nota_debito].[em_direccion] AS [em_direccion], 
+    [vwfa_nota_debito].[em_ruc] AS [em_ruc], 
+    [vwfa_nota_debito].[RazonSocial] AS [RazonSocial], 
+    [vwfa_nota_debito].[NombreComercial] AS [NombreComercial], 
+    [vwfa_nota_debito].[Expr1] AS [Expr1], 
+    [vwfa_nota_debito].[ContribuyenteEspecial] AS [ContribuyenteEspecial], 
+    [vwfa_nota_debito].[ObligadoAllevarConta] AS [ObligadoAllevarConta], 
+    [vwfa_nota_debito].[vt_serie1] AS [vt_serie1], 
+    [vwfa_nota_debito].[vt_serie2] AS [vt_serie2], 
+    [vwfa_nota_debito].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_nota_debito].[vt_fecha] AS [vt_fecha], 
+    [vwfa_nota_debito].[importeTotal] AS [importeTotal], 
+    [vwfa_nota_debito].[impuesto] AS [impuesto], 
+    [vwfa_nota_debito].[em_telefonos] AS [em_telefonos], 
+    [vwfa_nota_debito].[total_sin_impuesto] AS [total_sin_impuesto], 
+    [vwfa_nota_debito].[totalDescuento] AS [totalDescuento]
+    FROM [EntidadRegulatoria].[vwfa_nota_debito] AS [vwfa_nota_debito]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_nota_debito_detalle" EntityType="Self.vwfa_nota_debito_detalle" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_nota_debito_detalle].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_nota_debito_detalle].[IdSucursal] AS [IdSucursal], 
+    [vwfa_nota_debito_detalle].[IdBodega] AS [IdBodega], 
+    [vwfa_nota_debito_detalle].[IdNota] AS [IdNota], 
+    [vwfa_nota_debito_detalle].[Secuencia] AS [Secuencia], 
+    [vwfa_nota_debito_detalle].[IdProducto] AS [IdProducto], 
+    [vwfa_nota_debito_detalle].[sc_cantidad] AS [sc_cantidad], 
+    [vwfa_nota_debito_detalle].[sc_Precio] AS [sc_Precio], 
+    [vwfa_nota_debito_detalle].[sc_descUni] AS [sc_descUni], 
+    [vwfa_nota_debito_detalle].[sc_PordescUni] AS [sc_PordescUni], 
+    [vwfa_nota_debito_detalle].[sc_precioFinal] AS [sc_precioFinal], 
+    [vwfa_nota_debito_detalle].[sc_subtotal] AS [sc_subtotal], 
+    [vwfa_nota_debito_detalle].[sc_iva] AS [sc_iva], 
+    [vwfa_nota_debito_detalle].[sc_total] AS [sc_total], 
+    [vwfa_nota_debito_detalle].[sc_costo] AS [sc_costo], 
+    [vwfa_nota_debito_detalle].[sc_observacion] AS [sc_observacion], 
+    [vwfa_nota_debito_detalle].[vt_por_iva] AS [vt_por_iva], 
+    [vwfa_nota_debito_detalle].[pr_codigo] AS [pr_codigo], 
+    [vwfa_nota_debito_detalle].[pr_codigo2] AS [pr_codigo2], 
+    [vwfa_nota_debito_detalle].[pr_descripcion] AS [pr_descripcion], 
+    [vwfa_nota_debito_detalle].[pr_descripcion_2] AS [pr_descripcion_2]
+    FROM [EntidadRegulatoria].[vwfa_nota_debito_detalle] AS [vwfa_nota_debito_detalle]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_nota_debito_impuestos" EntityType="Self.vwfa_nota_debito_impuestos" store:Type="Views" store:Schema="EntidadRegulatoria">
+            <DefiningQuery>SELECT 
+    [vwfa_nota_debito_impuestos].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_nota_debito_impuestos].[IdSucursal] AS [IdSucursal], 
+    [vwfa_nota_debito_impuestos].[IdBodega] AS [IdBodega], 
+    [vwfa_nota_debito_impuestos].[IdNota] AS [IdNota], 
+    [vwfa_nota_debito_impuestos].[Base_imponible] AS [Base_imponible], 
+    [vwfa_nota_debito_impuestos].[impuesto] AS [impuesto], 
+    [vwfa_nota_debito_impuestos].[vt_por_iva] AS [vt_por_iva]
+    FROM [EntidadRegulatoria].[vwfa_nota_debito_impuestos] AS [vwfa_nota_debito_impuestos]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_facturacion_electronica" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="vwcp_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetencion" />
+            <PropertyRef Name="fecha" />
+            <PropertyRef Name="observacion" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="co_fechaOg" />
+            <PropertyRef Name="co_serie" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="co_FechaFactura" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="IdOrden_giro_Tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRetencion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NumRetencion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
+          <Property Name="co_fechaOg" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="co_serie" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="co_factura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Num_Autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Num_Autorizacion_Imprenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_Naturaleza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="pe_telfono_Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_razonSocial" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreComercial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContribuyenteEspecial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_telefonos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="em_Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IdOrden_giro_Tipo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="es_Documento_Electronico" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="vwcp_retencion_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetencion" />
+            <PropertyRef Name="Idsecuencia" />
+            <PropertyRef Name="re_tipoRet" />
+            <PropertyRef Name="IdCodigo_SRI" />
+            <PropertyRef Name="re_Codigo_impuesto" />
+            <PropertyRef Name="re_Porcen_retencion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRetencion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Idsecuencia" Type="Int32" Nullable="false" />
+          <Property Name="re_tipoRet" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="baseRetencion" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="IdCodigo_SRI" Type="Int32" Nullable="false" />
+          <Property Name="re_Codigo_impuesto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="re_Porcen_retencion" Type="Double" Nullable="false" />
+          <Property Name="re_valor_retencion" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="vwfa_factura">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="nom_FormaPago" />
+            <PropertyRef Name="IdFormaPago" />
+            <PropertyRef Name="Dias_Vct" />
+            <PropertyRef Name="Expr2" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pe_Naturaleza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreComercial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContribuyenteEspecial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nom_FormaPago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdFormaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dias_Vct" Type="Int32" Nullable="false" />
+          <Property Name="Base_imponible" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="totalDescuento" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="total_sin_impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="importeTotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Expr1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Expr2" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_telefonos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwfa_factura_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="vt_cantidad" />
+            <PropertyRef Name="vt_PorDescUnitario" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="pr_codigo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_codigo2" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vt_detallexItems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="vt_cantidad" Type="Double" Nullable="false" />
+          <Property Name="vt_Precio" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="vt_PorDescUnitario" Type="Double" Nullable="false" />
+          <Property Name="vt_DescUnitario" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vt_PrecioFinal" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="vt_Subtotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vt_iva" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vt_total" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwfa_factura_impuestos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Base_imponible" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwfa_guia_remision">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="CodGuiaRemision" />
+            <PropertyRef Name="gi_fecha" />
+            <PropertyRef Name="gi_FechaFinTraslado" />
+            <PropertyRef Name="gi_FechaInicioTraslado" />
+            <PropertyRef Name="placa" />
+            <PropertyRef Name="Direccion_Origen" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CodGuiaRemision" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NumGuia_Preimpresa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NUAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="gi_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gi_plazo" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="gi_fech_venc" Type="DateTime" Precision="3" />
+          <Property Name="gi_Observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="gi_FechaFinTraslado" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="gi_FechaInicioTraslado" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="placa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ruta" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion_Origen" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion_Destino" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_Naturaleza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreComercial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_telefonos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ContribuyenteEspecial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="em_direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vwfa_guia_remision_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="gi_cantidad" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="gi_cantidad" Type="Double" Nullable="false" />
+          <Property Name="pr_codigo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_codigo2" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwfa_guia_remision_x_factura">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="vt_tipoDoc" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="vt_autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwfa_nota_credito">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="CreDeb" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="no_fecha" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dev_IdEmpresa" Type="Int32" />
+          <Property Name="dev_IdDev_Inven" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CodNota" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreDeb" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NumNota_Impresa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="Nombres" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pe_Naturaleza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_razonSocial" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="no_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sc_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="em_direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreComercial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Expr1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ContribuyenteEspecial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="importeTotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="em_telefonos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="total_sin_impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="totalDescuento" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="vwfa_nota_credito_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="sc_cantidad" />
+            <PropertyRef Name="sc_Precio" />
+            <PropertyRef Name="sc_descUni" />
+            <PropertyRef Name="sc_PordescUni" />
+            <PropertyRef Name="sc_precioFinal" />
+            <PropertyRef Name="sc_subtotal" />
+            <PropertyRef Name="sc_iva" />
+            <PropertyRef Name="sc_total" />
+            <PropertyRef Name="sc_costo" />
+            <PropertyRef Name="vt_por_iva" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sc_cantidad" Type="Double" Nullable="false" />
+          <Property Name="sc_Precio" Type="Double" Nullable="false" />
+          <Property Name="sc_descUni" Type="Double" Nullable="false" />
+          <Property Name="sc_PordescUni" Type="Double" Nullable="false" />
+          <Property Name="sc_precioFinal" Type="Double" Nullable="false" />
+          <Property Name="sc_subtotal" Type="Double" Nullable="false" />
+          <Property Name="sc_iva" Type="Double" Nullable="false" />
+          <Property Name="sc_total" Type="Double" Nullable="false" />
+          <Property Name="sc_costo" Type="Double" Nullable="false" />
+          <Property Name="sc_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+          <Property Name="pr_codigo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_codigo2" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwfa_nota_credito_impuestos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Base_imponible" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwfa_nota_debito">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="CreDeb" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="no_fecha" />
+            <PropertyRef Name="em_direccion" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="RazonSocial" />
+            <PropertyRef Name="NombreComercial" />
+            <PropertyRef Name="ContribuyenteEspecial" />
+            <PropertyRef Name="ObligadoAllevarConta" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dev_IdEmpresa" Type="Int32" />
+          <Property Name="dev_IdDev_Inven" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CodNota" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreDeb" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NumNota_Impresa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="Nombres" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pe_Naturaleza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_razonSocial" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="no_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sc_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="em_direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="em_ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreComercial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Expr1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ContribuyenteEspecial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ObligadoAllevarConta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="importeTotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="em_telefonos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="total_sin_impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="totalDescuento" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="vwfa_nota_debito_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="sc_cantidad" />
+            <PropertyRef Name="sc_Precio" />
+            <PropertyRef Name="sc_descUni" />
+            <PropertyRef Name="sc_PordescUni" />
+            <PropertyRef Name="sc_precioFinal" />
+            <PropertyRef Name="sc_subtotal" />
+            <PropertyRef Name="sc_iva" />
+            <PropertyRef Name="sc_total" />
+            <PropertyRef Name="sc_costo" />
+            <PropertyRef Name="vt_por_iva" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sc_cantidad" Type="Double" Nullable="false" />
+          <Property Name="sc_Precio" Type="Double" Nullable="false" />
+          <Property Name="sc_descUni" Type="Double" Nullable="false" />
+          <Property Name="sc_PordescUni" Type="Double" Nullable="false" />
+          <Property Name="sc_precioFinal" Type="Double" Nullable="false" />
+          <Property Name="sc_subtotal" Type="Double" Nullable="false" />
+          <Property Name="sc_iva" Type="Double" Nullable="false" />
+          <Property Name="sc_total" Type="Double" Nullable="false" />
+          <Property Name="sc_costo" Type="Double" Nullable="false" />
+          <Property Name="sc_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+          <Property Name="pr_codigo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_codigo2" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwfa_nota_debito_impuestos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="vt_por_iva" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Base_imponible" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="impuesto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Entity_facturacion_electronica" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vwcp_retencion" EntityType="Self.vwcp_retencion" />
+          <EntitySet Name="vwcp_retencion_detalle" EntityType="Self.vwcp_retencion_detalle" />
+          <EntitySet Name="vwfa_factura" EntityType="Self.vwfa_factura" />
+          <EntitySet Name="vwfa_factura_detalle" EntityType="Self.vwfa_factura_detalle" />
+          <EntitySet Name="vwfa_factura_impuestos" EntityType="Self.vwfa_factura_impuestos" />
+          <EntitySet Name="vwfa_guia_remision" EntityType="Self.vwfa_guia_remision" />
+          <EntitySet Name="vwfa_guia_remision_detalle" EntityType="Self.vwfa_guia_remision_detalle" />
+          <EntitySet Name="vwfa_guia_remision_x_factura" EntityType="Self.vwfa_guia_remision_x_factura" />
+          <EntitySet Name="vwfa_nota_credito" EntityType="Self.vwfa_nota_credito" />
+          <EntitySet Name="vwfa_nota_credito_detalle" EntityType="Self.vwfa_nota_credito_detalle" />
+          <EntitySet Name="vwfa_nota_credito_impuestos" EntityType="Self.vwfa_nota_credito_impuestos" />
+          <EntitySet Name="vwfa_nota_debito" EntityType="Self.vwfa_nota_debito" />
+          <EntitySet Name="vwfa_nota_debito_detalle" EntityType="Self.vwfa_nota_debito_detalle" />
+          <EntitySet Name="vwfa_nota_debito_impuestos" EntityType="Self.vwfa_nota_debito_impuestos" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_facturacion_electronicaStoreContainer" CdmEntityContainer="Entity_facturacion_electronica">
+          <EntitySetMapping Name="vwcp_retencion">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwcp_retencion">
+              <MappingFragment StoreEntitySet="vwcp_retencion">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdRetencion" ColumnName="IdRetencion" />
+                <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
+                <ScalarProperty Name="serie1" ColumnName="serie1" />
+                <ScalarProperty Name="serie2" ColumnName="serie2" />
+                <ScalarProperty Name="NumRetencion" ColumnName="NumRetencion" />
+                <ScalarProperty Name="NAutorizacion" ColumnName="NAutorizacion" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
+                <ScalarProperty Name="co_fechaOg" ColumnName="co_fechaOg" />
+                <ScalarProperty Name="co_serie" ColumnName="co_serie" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
+                <ScalarProperty Name="Num_Autorizacion" ColumnName="Num_Autorizacion" />
+                <ScalarProperty Name="Num_Autorizacion_Imprenta" ColumnName="Num_Autorizacion_Imprenta" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="pe_direccion" ColumnName="pe_direccion" />
+                <ScalarProperty Name="pe_telfono_Contacto" ColumnName="pe_telfono_Contacto" />
+                <ScalarProperty Name="pe_celular" ColumnName="pe_celular" />
+                <ScalarProperty Name="pe_correo" ColumnName="pe_correo" />
+                <ScalarProperty Name="pe_razonSocial" ColumnName="pe_razonSocial" />
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
+                <ScalarProperty Name="ContribuyenteEspecial" ColumnName="ContribuyenteEspecial" />
+                <ScalarProperty Name="ObligadoAllevarConta" ColumnName="ObligadoAllevarConta" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="em_direccion" ColumnName="em_direccion" />
+                <ScalarProperty Name="em_telefonos" ColumnName="em_telefonos" />
+                <ScalarProperty Name="em_Email" ColumnName="em_Email" />
+                <ScalarProperty Name="IdOrden_giro_Tipo" ColumnName="IdOrden_giro_Tipo" />
+                <ScalarProperty Name="es_Documento_Electronico" ColumnName="es_Documento_Electronico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcp_retencion_detalle">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwcp_retencion_detalle">
+              <MappingFragment StoreEntitySet="vwcp_retencion_detalle">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdRetencion" ColumnName="IdRetencion" />
+                <ScalarProperty Name="Idsecuencia" ColumnName="Idsecuencia" />
+                <ScalarProperty Name="re_tipoRet" ColumnName="re_tipoRet" />
+                <ScalarProperty Name="baseRetencion" ColumnName="baseRetencion" />
+                <ScalarProperty Name="IdCodigo_SRI" ColumnName="IdCodigo_SRI" />
+                <ScalarProperty Name="re_Codigo_impuesto" ColumnName="re_Codigo_impuesto" />
+                <ScalarProperty Name="re_Porcen_retencion" ColumnName="re_Porcen_retencion" />
+                <ScalarProperty Name="re_valor_retencion" ColumnName="re_valor_retencion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_factura">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_factura">
+              <MappingFragment StoreEntitySet="vwfa_factura">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
+                <ScalarProperty Name="ContribuyenteEspecial" ColumnName="ContribuyenteEspecial" />
+                <ScalarProperty Name="ObligadoAllevarConta" ColumnName="ObligadoAllevarConta" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="em_direccion" ColumnName="em_direccion" />
+                <ScalarProperty Name="nom_FormaPago" ColumnName="nom_FormaPago" />
+                <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />
+                <ScalarProperty Name="Dias_Vct" ColumnName="Dias_Vct" />
+                <ScalarProperty Name="Base_imponible" ColumnName="Base_imponible" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="totalDescuento" ColumnName="totalDescuento" />
+                <ScalarProperty Name="total_sin_impuesto" ColumnName="total_sin_impuesto" />
+                <ScalarProperty Name="importeTotal" ColumnName="importeTotal" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="em_telefonos" ColumnName="em_telefonos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_factura_detalle">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_factura_detalle">
+              <MappingFragment StoreEntitySet="vwfa_factura_detalle">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_codigo2" ColumnName="pr_codigo2" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="vt_detallexItems" ColumnName="vt_detallexItems" />
+                <ScalarProperty Name="vt_cantidad" ColumnName="vt_cantidad" />
+                <ScalarProperty Name="vt_Precio" ColumnName="vt_Precio" />
+                <ScalarProperty Name="vt_PorDescUnitario" ColumnName="vt_PorDescUnitario" />
+                <ScalarProperty Name="vt_DescUnitario" ColumnName="vt_DescUnitario" />
+                <ScalarProperty Name="vt_PrecioFinal" ColumnName="vt_PrecioFinal" />
+                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
+                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
+                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_factura_impuestos">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_factura_impuestos">
+              <MappingFragment StoreEntitySet="vwfa_factura_impuestos">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="Base_imponible" ColumnName="Base_imponible" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_guia_remision">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_guia_remision">
+              <MappingFragment StoreEntitySet="vwfa_guia_remision">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
+                <ScalarProperty Name="CodGuiaRemision" ColumnName="CodGuiaRemision" />
+                <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
+                <ScalarProperty Name="Serie1" ColumnName="Serie1" />
+                <ScalarProperty Name="Serie2" ColumnName="Serie2" />
+                <ScalarProperty Name="NumGuia_Preimpresa" ColumnName="NumGuia_Preimpresa" />
+                <ScalarProperty Name="NUAutorizacion" ColumnName="NUAutorizacion" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="gi_fecha" ColumnName="gi_fecha" />
+                <ScalarProperty Name="gi_plazo" ColumnName="gi_plazo" />
+                <ScalarProperty Name="gi_fech_venc" ColumnName="gi_fech_venc" />
+                <ScalarProperty Name="gi_Observacion" ColumnName="gi_Observacion" />
+                <ScalarProperty Name="gi_FechaFinTraslado" ColumnName="gi_FechaFinTraslado" />
+                <ScalarProperty Name="gi_FechaInicioTraslado" ColumnName="gi_FechaInicioTraslado" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="Direccion_Origen" ColumnName="Direccion_Origen" />
+                <ScalarProperty Name="Direccion_Destino" ColumnName="Direccion_Destino" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="em_telefonos" ColumnName="em_telefonos" />
+                <ScalarProperty Name="ContribuyenteEspecial" ColumnName="ContribuyenteEspecial" />
+                <ScalarProperty Name="ObligadoAllevarConta" ColumnName="ObligadoAllevarConta" />
+                <ScalarProperty Name="em_Email" ColumnName="em_Email" />
+                <ScalarProperty Name="em_direccion" ColumnName="em_direccion" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_guia_remision_detalle">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_guia_remision_detalle">
+              <MappingFragment StoreEntitySet="vwfa_guia_remision_detalle">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="gi_cantidad" ColumnName="gi_cantidad" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_codigo2" ColumnName="pr_codigo2" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_descripcion_2" ColumnName="pr_descripcion_2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_guia_remision_x_factura">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_guia_remision_x_factura">
+              <MappingFragment StoreEntitySet="vwfa_guia_remision_x_factura">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="vt_autorizacion" ColumnName="vt_autorizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_nota_credito">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_nota_credito">
+              <MappingFragment StoreEntitySet="vwfa_nota_credito">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="dev_IdEmpresa" ColumnName="dev_IdEmpresa" />
+                <ScalarProperty Name="dev_IdDev_Inven" ColumnName="dev_IdDev_Inven" />
+                <ScalarProperty Name="CodNota" ColumnName="CodNota" />
+                <ScalarProperty Name="CreDeb" ColumnName="CreDeb" />
+                <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
+                <ScalarProperty Name="Serie1" ColumnName="Serie1" />
+                <ScalarProperty Name="Serie2" ColumnName="Serie2" />
+                <ScalarProperty Name="NumNota_Impresa" ColumnName="NumNota_Impresa" />
+                <ScalarProperty Name="NumAutorizacion" ColumnName="NumAutorizacion" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="pe_razonSocial" ColumnName="pe_razonSocial" />
+                <ScalarProperty Name="no_fecha" ColumnName="no_fecha" />
+                <ScalarProperty Name="sc_observacion" ColumnName="sc_observacion" />
+                <ScalarProperty Name="em_direccion" ColumnName="em_direccion" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="ContribuyenteEspecial" ColumnName="ContribuyenteEspecial" />
+                <ScalarProperty Name="ObligadoAllevarConta" ColumnName="ObligadoAllevarConta" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="importeTotal" ColumnName="importeTotal" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="em_telefonos" ColumnName="em_telefonos" />
+                <ScalarProperty Name="total_sin_impuesto" ColumnName="total_sin_impuesto" />
+                <ScalarProperty Name="totalDescuento" ColumnName="totalDescuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_nota_credito_detalle">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_nota_credito_detalle">
+              <MappingFragment StoreEntitySet="vwfa_nota_credito_detalle">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="sc_cantidad" ColumnName="sc_cantidad" />
+                <ScalarProperty Name="sc_Precio" ColumnName="sc_Precio" />
+                <ScalarProperty Name="sc_descUni" ColumnName="sc_descUni" />
+                <ScalarProperty Name="sc_PordescUni" ColumnName="sc_PordescUni" />
+                <ScalarProperty Name="sc_precioFinal" ColumnName="sc_precioFinal" />
+                <ScalarProperty Name="sc_subtotal" ColumnName="sc_subtotal" />
+                <ScalarProperty Name="sc_iva" ColumnName="sc_iva" />
+                <ScalarProperty Name="sc_total" ColumnName="sc_total" />
+                <ScalarProperty Name="sc_costo" ColumnName="sc_costo" />
+                <ScalarProperty Name="sc_observacion" ColumnName="sc_observacion" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_codigo2" ColumnName="pr_codigo2" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_descripcion_2" ColumnName="pr_descripcion_2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_nota_credito_impuestos">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_nota_credito_impuestos">
+              <MappingFragment StoreEntitySet="vwfa_nota_credito_impuestos">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="Base_imponible" ColumnName="Base_imponible" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_nota_debito">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_nota_debito">
+              <MappingFragment StoreEntitySet="vwfa_nota_debito">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="dev_IdEmpresa" ColumnName="dev_IdEmpresa" />
+                <ScalarProperty Name="dev_IdDev_Inven" ColumnName="dev_IdDev_Inven" />
+                <ScalarProperty Name="CodNota" ColumnName="CodNota" />
+                <ScalarProperty Name="CreDeb" ColumnName="CreDeb" />
+                <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
+                <ScalarProperty Name="Serie1" ColumnName="Serie1" />
+                <ScalarProperty Name="Serie2" ColumnName="Serie2" />
+                <ScalarProperty Name="NumNota_Impresa" ColumnName="NumNota_Impresa" />
+                <ScalarProperty Name="NumAutorizacion" ColumnName="NumAutorizacion" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="pe_razonSocial" ColumnName="pe_razonSocial" />
+                <ScalarProperty Name="no_fecha" ColumnName="no_fecha" />
+                <ScalarProperty Name="sc_observacion" ColumnName="sc_observacion" />
+                <ScalarProperty Name="em_direccion" ColumnName="em_direccion" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="ContribuyenteEspecial" ColumnName="ContribuyenteEspecial" />
+                <ScalarProperty Name="ObligadoAllevarConta" ColumnName="ObligadoAllevarConta" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="importeTotal" ColumnName="importeTotal" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="em_telefonos" ColumnName="em_telefonos" />
+                <ScalarProperty Name="total_sin_impuesto" ColumnName="total_sin_impuesto" />
+                <ScalarProperty Name="totalDescuento" ColumnName="totalDescuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_nota_debito_detalle">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_nota_debito_detalle">
+              <MappingFragment StoreEntitySet="vwfa_nota_debito_detalle">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="sc_cantidad" ColumnName="sc_cantidad" />
+                <ScalarProperty Name="sc_Precio" ColumnName="sc_Precio" />
+                <ScalarProperty Name="sc_descUni" ColumnName="sc_descUni" />
+                <ScalarProperty Name="sc_PordescUni" ColumnName="sc_PordescUni" />
+                <ScalarProperty Name="sc_precioFinal" ColumnName="sc_precioFinal" />
+                <ScalarProperty Name="sc_subtotal" ColumnName="sc_subtotal" />
+                <ScalarProperty Name="sc_iva" ColumnName="sc_iva" />
+                <ScalarProperty Name="sc_total" ColumnName="sc_total" />
+                <ScalarProperty Name="sc_costo" ColumnName="sc_costo" />
+                <ScalarProperty Name="sc_observacion" ColumnName="sc_observacion" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_codigo2" ColumnName="pr_codigo2" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_descripcion_2" ColumnName="pr_descripcion_2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_nota_debito_impuestos">
+            <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfa_nota_debito_impuestos">
+              <MappingFragment StoreEntitySet="vwfa_nota_debito_impuestos">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="Base_imponible" ColumnName="Base_imponible" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

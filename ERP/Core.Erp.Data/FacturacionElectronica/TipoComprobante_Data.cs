@@ -25,6 +25,10 @@ namespace Core.Erp.Data.FacturacionElectronica
 
                 #region Facturas Fixed
 
+
+
+
+
                 #endregion
 
 
