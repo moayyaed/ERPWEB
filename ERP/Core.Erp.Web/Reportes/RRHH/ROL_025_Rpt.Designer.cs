@@ -33,7 +33,6 @@
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.p_IdSucursal = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_IdRol = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdNomina_Tipo = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdPeriodo = new DevExpress.XtraReports.Parameters.Parameter();
@@ -124,11 +123,6 @@
             // 
             this.p_IdSucursal.Name = "p_IdSucursal";
             this.p_IdSucursal.Visible = false;
-            // 
-            // p_IdRol
-            // 
-            this.p_IdRol.Name = "p_IdRol";
-            this.p_IdRol.Visible = false;
             // 
             // p_IdEmpresa
             // 
@@ -666,7 +660,6 @@
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
             this.p_IdEmpresa,
             this.p_IdSucursal,
-            this.p_IdRol,
             this.p_IdNomina_Tipo,
             this.p_IdPeriodo});
             this.Version = "17.2";
@@ -688,7 +681,6 @@
         private DevExpress.XtraReports.UI.TopMarginBand TopMargin;
         private DevExpress.XtraReports.UI.BottomMarginBand BottomMargin;
         public DevExpress.XtraReports.Parameters.Parameter p_IdSucursal;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdRol;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpresa;
         public DevExpress.XtraReports.Parameters.Parameter p_IdNomina_Tipo;
         public DevExpress.XtraReports.Parameters.Parameter p_IdPeriodo;

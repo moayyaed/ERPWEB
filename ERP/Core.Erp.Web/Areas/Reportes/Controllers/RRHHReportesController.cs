@@ -975,14 +975,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
-
             };
 
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
             ROL_025_Rpt reporte = new ROL_025_Rpt();
             reporte.p_IdEmpresa.Value = model.IdEmpresa;
             reporte.p_IdSucursal.Value = model.IdSucursal;
-            //reporte.p_IdRol.Value = model.IdRol;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;            
             reporte.p_IdPeriodo.Value = model.IdPeriodo;
 
@@ -999,12 +997,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_025_Rpt reporte = new ROL_025_Rpt();
             reporte.p_IdEmpresa.Value = model.IdEmpresa;
             reporte.p_IdSucursal.Value = model.IdSucursal;
-            //reporte.p_IdRol.Value = model.IdRol;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdPeriodo.Value = model.IdPeriodo;
             
             reporte.usuario = SessionFixed.IdUsuario.ToString();
-            //reporte.empresa = SessionFixed.NomEmpresa.ToString();
+            reporte.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = reporte;
             return View(model);
         }
