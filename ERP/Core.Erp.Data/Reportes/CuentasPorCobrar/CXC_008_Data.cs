@@ -18,10 +18,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 
                 decimal IdClienteIni = IdCliente;
                 decimal IdClienteFin = IdCliente == 0 ? 9999 : IdCliente;
-
-                string IdCobro_tipoIni = IdCobro_tipo;
-                string IdCobro_tipoFin = IdCobro_tipo == null ? "9999" : IdCobro_tipo;
-
+                
                 List<CXC_008_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
@@ -33,8 +30,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     && IdClienteIni <= q.IdCliente
                     && q.IdCliente <= IdClienteFin
                     && fecha_ini <= q.cr_fecha
-                    && q.cr_fecha <= fecha_fin
-                    && q.cr_estado == "I").Select(q => new CXC_008_Info
+                    && q.cr_fecha <= fecha_fin).Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdBodega = q.IdBodega,
