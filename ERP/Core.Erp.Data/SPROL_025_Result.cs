@@ -13,6 +13,7 @@ namespace Core.Erp.Data
     
     public partial class SPROL_025_Result
     {
+        public Nullable<long> IdRow { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdEmpleado { get; set; }
         public decimal IdPersona { get; set; }

@@ -36,7 +36,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  IdPeriodo = q.IdPeriodo,
                                  IdRubro = q.IdRubro,
                                  IdPersona = q.IdPersona,
-                                 Valor = q.Valor
+                                 Valor = q.Valor,
+                                 IdRow = q.IdRow
                              }).ToList();
                 }
                 return Lista;
