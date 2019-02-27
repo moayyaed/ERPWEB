@@ -36,17 +36,13 @@
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdCliente">Proveedor</label>
                             @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
-                            @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
