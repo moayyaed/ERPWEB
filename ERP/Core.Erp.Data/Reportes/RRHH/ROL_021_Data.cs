@@ -109,7 +109,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  || q.IdRubro == info_rub_calculados.IdRubro_fondo_reserva
                                   )
                                  && ( q.ru_tipo == "I" 
-                                 //|| q.IdRubro == info_rub_calculados.IdRubro_tot_ing
+                                 || q.IdRubro == info_rub_calculados.IdRubro_tot_ing
                                  )
                                  select new ROL_021_Info
                                  {
