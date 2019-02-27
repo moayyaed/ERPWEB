@@ -20,7 +20,7 @@ namespace Core.Erp.Data
         public int Secuencia { get; set; }
         public int IdEmpresa_OGiro { get; set; }
         public int IdTipoCbte_Ogiro { get; set; }
-        public decimal IdCbteCble_Ogiro { get; set; }
+        public Nullable<decimal> IdCbteCble_Ogiro { get; set; }
         public string co_factura { get; set; }
         public string pe_nombreCompleto { get; set; }
         public System.DateTime co_FechaFactura { get; set; }
