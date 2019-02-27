@@ -12,25 +12,14 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_nota_debito_detalle
+    public partial class vwfe_guia_remision_detalle
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
-        public decimal IdNota { get; set; }
+        public decimal IdGuiaRemision { get; set; }
         public int Secuencia { get; set; }
-        public decimal IdProducto { get; set; }
-        public double sc_cantidad { get; set; }
-        public double sc_Precio { get; set; }
-        public double sc_descUni { get; set; }
-        public double sc_PordescUni { get; set; }
-        public double sc_precioFinal { get; set; }
-        public double sc_subtotal { get; set; }
-        public double sc_iva { get; set; }
-        public double sc_total { get; set; }
-        public double sc_costo { get; set; }
-        public string sc_observacion { get; set; }
-        public double vt_por_iva { get; set; }
+        public double gi_cantidad { get; set; }
         public string pr_codigo { get; set; }
         public string pr_codigo2 { get; set; }
         public string pr_descripcion { get; set; }

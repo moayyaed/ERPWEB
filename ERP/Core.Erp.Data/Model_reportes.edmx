@@ -3082,7 +3082,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_002' no tiene definida ningu
           <Property Name="ru_orden" Type="int" Nullable="false" />
           <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
-          <Property Name="Grupo" Type="varchar" MaxLength="250" />
+          <Property Name="Grupo" Type="varchar" MaxLength="17" />
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
           <Property Name="de_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Area" Type="varchar" MaxLength="50" Nullable="false" />
@@ -4169,6 +4169,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
           <Parameter Name="IdAreaFin" Type="int" Mode="In" />
           <Parameter Name="IdDepartamentoIni" Type="int" Mode="In" />
           <Parameter Name="IdDepartamentoFin" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPROL_025" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdSucursal" Type="int" Mode="In" />
+          <Parameter Name="IdNomina_TipoLiqui" Type="int" Mode="In" />
+          <Parameter Name="IdPeriodo" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="Model_reportesStoreContainer">
           <EntitySet Name="ro_SPROL_002" EntityType="Self.ro_SPROL_002" Schema="web" store:Type="Tables" />
@@ -8181,6 +8187,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
           <EntitySet Name="VWCAJ_002_ValesNoConciliados" EntityType="Model_reportes.VWCAJ_002_ValesNoConciliados" />
           <EntitySet Name="VWROL_021" EntityType="Model_reportes.VWROL_021" />
           <EntitySet Name="VWROL_002" EntityType="Model_reportes.VWROL_002" />
+          <FunctionImport Name="SPROL_025" ReturnType="Collection(Model_reportes.SPROL_025_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina_TipoLiqui" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -11252,7 +11264,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
           <Property Name="ru_orden" Type="Int32" Nullable="false" />
           <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Grupo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Grupo" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
           <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="de_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -11262,6 +11274,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
           <Property Name="ca_orden" Type="Int32" />
           <Property Name="CodCatalogo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SPROL_025_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="IdPersona" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="pe_apellido" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pe_nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pe_sexo" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
+          <Property Type="String" Name="ca_descripcion" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="pe_FechaIni" Nullable="false" Precision="16" />
+          <Property Type="DateTime" Name="pe_FechaFin" Nullable="false" Precision="16" />
+          <Property Type="Decimal" Name="IdRol" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="IdPeriodo" Nullable="false" />
+          <Property Type="String" Name="IdRubro" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ru_descripcion" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Valor" Nullable="false" />
+          <Property Type="Int32" Name="dias" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14593,6 +14623,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPROL_025" FunctionName="Model_reportes.Store.SPROL_025">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPROL_025_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
+                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
+                <ScalarProperty Name="pe_sexo" ColumnName="pe_sexo" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
+                <ScalarProperty Name="pe_FechaIni" ColumnName="pe_FechaIni" />
+                <ScalarProperty Name="pe_FechaFin" ColumnName="pe_FechaFin" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="dias" ColumnName="dias" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1124,5 +1124,26 @@ namespace Core.Erp.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPFAC_002_Result>("SPFAC_002", idEmpresaParameter, sucursalIniParameter, sucursalFinParameter, idClienteIniParameter, idClienteFinParameter, idTipoClienteIniParameter, idTipoClienteFinParameter, fechaCorteParameter, mostrarSoloCarteraVencidaParameter);
         }
+    
+        public virtual ObjectResult<SPROL_025_Result> SPROL_025(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idNomina_TipoLiqui, Nullable<int> idPeriodo)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var idNomina_TipoLiquiParameter = idNomina_TipoLiqui.HasValue ?
+                new ObjectParameter("IdNomina_TipoLiqui", idNomina_TipoLiqui) :
+                new ObjectParameter("IdNomina_TipoLiqui", typeof(int));
+    
+            var idPeriodoParameter = idPeriodo.HasValue ?
+                new ObjectParameter("IdPeriodo", idPeriodo) :
+                new ObjectParameter("IdPeriodo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_025_Result>("SPROL_025", idEmpresaParameter, idSucursalParameter, idNomina_TipoLiquiParameter, idPeriodoParameter);
+        }
     }
 }

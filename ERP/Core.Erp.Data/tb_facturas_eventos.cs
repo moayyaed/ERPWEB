@@ -12,14 +12,18 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_nota_credito_impuestos
+    public partial class tb_facturas_eventos
     {
         public int IdEmpresa { get; set; }
-        public int IdSucursal { get; set; }
-        public int IdBodega { get; set; }
-        public decimal IdNota { get; set; }
-        public Nullable<decimal> Base_imponible { get; set; }
-        public Nullable<decimal> impuesto { get; set; }
-        public double vt_por_iva { get; set; }
+        public string Establecimiento { get; set; }
+        public string Puntoemision { get; set; }
+        public decimal NumFactura { get; set; }
+        public Nullable<decimal> Cantidad { get; set; }
+        public Nullable<decimal> ValorUnitario { get; set; }
+        public Nullable<decimal> Subtotal { get; set; }
+        public Nullable<decimal> Iva { get; set; }
+        public Nullable<decimal> Total { get; set; }
+        public int Evento { get; set; }
+        public int Factura { get; set; }
     }
 }

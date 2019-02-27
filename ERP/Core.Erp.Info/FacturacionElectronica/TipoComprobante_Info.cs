@@ -18,10 +18,20 @@ namespace Core.Erp.Info.FacturacionElectronica
         public eTipoDocumento TipoCbte { get; set; }
         public string Observacion { get; set; }
 
-        public factura CbteFactura { get; set; }
-        public comprobanteRetencion cbteRet { get; set; }
-        public notaCredito cbteNC { get; set; }
-        public notaDebito cbteDeb { get; set; }
-        public guiaRemision cbtGR { get; set; }
+        public List<factura>  CbteFactura { get; set; }
+        public List<comprobanteRetencion>  cbteRet { get; set; }
+        public List<notaCredito>  cbteNC { get; set; }
+        public List<notaDebito>  cbteDeb { get; set; }
+        public List<guiaRemision>  cbtGR { get; set; }
+
+
+        public TipoComprobante_Info()
+        {
+            cbteRet = new List<comprobanteRetencion>();
+            cbteRet = new List<comprobanteRetencion>();
+            cbteNC = new List<notaCredito>();
+            cbteDeb = new List<notaDebito>();
+            cbtGR = new List<guiaRemision>();
+        }
     }
 }

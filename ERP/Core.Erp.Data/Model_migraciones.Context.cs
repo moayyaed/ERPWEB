@@ -12,9 +12,7 @@ namespace Core.Erp.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
-
+    
     public partial class Entity_Eventos : DbContext
     {
         public Entity_Eventos()
@@ -29,5 +27,6 @@ namespace Core.Erp.Data
     
         public virtual DbSet<Factura> Facturas { get; set; }
         public virtual DbSet<vwFacturas_sin_aprobar> vwFacturas_sin_aprobar { get; set; }
+        public virtual DbSet<vwFacturas_fac_electronica> vwFacturas_fac_electronica { get; set; }
     }
 }

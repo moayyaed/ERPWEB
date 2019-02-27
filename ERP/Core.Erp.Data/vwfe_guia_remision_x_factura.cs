@@ -12,7 +12,7 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_guia_remision_x_factura
+    public partial class vwfe_guia_remision_x_factura
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }

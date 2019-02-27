@@ -12,17 +12,16 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_guia_remision_detalle
+    public partial class vwfe_retencion_detalle
     {
         public int IdEmpresa { get; set; }
-        public int IdSucursal { get; set; }
-        public int IdBodega { get; set; }
-        public decimal IdGuiaRemision { get; set; }
-        public int Secuencia { get; set; }
-        public double gi_cantidad { get; set; }
-        public string pr_codigo { get; set; }
-        public string pr_codigo2 { get; set; }
-        public string pr_descripcion { get; set; }
-        public string pr_descripcion_2 { get; set; }
+        public decimal IdRetencion { get; set; }
+        public int Idsecuencia { get; set; }
+        public string re_tipoRet { get; set; }
+        public Nullable<decimal> baseRetencion { get; set; }
+        public int IdCodigo_SRI { get; set; }
+        public string re_Codigo_impuesto { get; set; }
+        public double re_Porcen_retencion { get; set; }
+        public Nullable<decimal> re_valor_retencion { get; set; }
     }
 }
