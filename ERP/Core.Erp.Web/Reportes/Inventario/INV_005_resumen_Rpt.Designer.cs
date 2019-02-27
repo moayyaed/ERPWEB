@@ -549,13 +549,13 @@
             this.xrTableCell27.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.xrTableCell27.Name = "xrTableCell27";
             this.xrTableCell27.StylePriority.UseFont = false;
-            this.xrTableCell27.Text = "Prod. Matriz:";
+            this.xrTableCell27.Text = "Producto:";
             this.xrTableCell27.Weight = 0.32171582595108722D;
             // 
             // xrTableCell28
             // 
             this.xrTableCell28.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[P_IdProductoPadre]=0,\'TODOS\' ,[pr_descripcion] )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[P_IdProducto]=0,\'TODOS\' ,[pr_descripcion] )")});
             this.xrTableCell28.Name = "xrTableCell28";
             this.xrTableCell28.Weight = 1.8588025530254597D;
             // 
@@ -590,15 +590,11 @@
             this.xrTableCell31.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.xrTableCell31.Name = "xrTableCell31";
             this.xrTableCell31.StylePriority.UseFont = false;
-            this.xrTableCell31.Text = "Prod. Lote:";
             this.xrTableCell31.Weight = 0.32171582595108716D;
             // 
             // xrTableCell111
             // 
-            this.xrTableCell111.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[P_IdProducto]=0,\'TODOS\' ,[pr_descripcion] )")});
             this.xrTableCell111.Name = "xrTableCell111";
-            this.xrTableCell111.Text = "xrTableCell111";
             this.xrTableCell111.Weight = 1.8588029365249625D;
             // 
             // xrTableCell110

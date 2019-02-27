@@ -374,7 +374,7 @@
             // xrTableCell3
             // 
             this.xrTableCell3.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_fechaIni]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_fecha_ini]")});
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.TextFormatString = "{0:dd-MM-yyyy}";
             this.xrTableCell3.Weight = 0.82499762911041574D;
@@ -394,7 +394,7 @@
             // xrTableCell5
             // 
             this.xrTableCell5.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_fechaFin]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_fecha_fin]")});
             this.xrTableCell5.Name = "xrTableCell5";
             this.xrTableCell5.TextFormatString = "{0:dd-MM-yyyy}";
             this.xrTableCell5.Weight = 1.4167772603740876D;

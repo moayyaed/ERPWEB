@@ -87,6 +87,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     }).ToList();
                     }
                 }
+
                 if (!string.IsNullOrEmpty(IdCobro_tipo))
                     Lista = Lista.Where(q => q.IdCobro_tipo == IdCobro_tipo).ToList();
                 return Lista;
