@@ -58,7 +58,6 @@ namespace Core.Erp.Web.Reportes.RRHH
                     case "I":
                         lblNombreReporte.Text = "Reporte de rubros de ingresos";
                         xrPivotGrid1.OptionsView.ShowColumnTotals = true;
-                        //xrPivotGrid1.OptionsView.ShowColumnGrandTotals = true;
 
                         pivotGridField5.Visible = false;
                         pivotGridField8.Visible = true;
