@@ -20,7 +20,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 
                     {
 
-                    }).ToList():
+                    }).ToList();
                 }
                 return Lista;
             }

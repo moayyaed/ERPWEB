@@ -883,6 +883,12 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_013_Rpt.Designer.cs">
       <DependentUpon>CXP_013_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Rpt.Designer.cs">
+      <DependentUpon>CXP_014_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
