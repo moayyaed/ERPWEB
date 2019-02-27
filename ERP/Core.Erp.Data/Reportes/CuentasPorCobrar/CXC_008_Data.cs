@@ -17,8 +17,10 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
                 decimal IdClienteIni = IdCliente;
-                decimal IdClienteFin = IdCliente == 0 ? 9999 : IdCliente;
-                
+                decimal IdClienteFin = IdCliente == 0 ? 9999999 : IdCliente;
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
+
                 List<CXC_008_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
