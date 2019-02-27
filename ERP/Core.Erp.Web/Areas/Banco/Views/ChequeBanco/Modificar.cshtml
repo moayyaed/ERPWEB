@@ -105,6 +105,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                GridView_cheque_op_x_cruzar.PerformCallback();
+                GridView_cheque_op_x_cruzar.UnselectRows();
+                $("#OpModal").modal("show");
             },
             error: function (error) {
             }
