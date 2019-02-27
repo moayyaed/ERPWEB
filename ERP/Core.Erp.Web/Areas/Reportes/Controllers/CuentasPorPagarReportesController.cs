@@ -137,6 +137,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa, 
+                IdSucursal = 0,
+                Su_Descripcion = "TODOS"
+            });
             ViewBag.lst_sucursal = lst_sucursal;
 
 
@@ -303,6 +309,44 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.RequestParameters = false;
             model.DefaultPrinterSettingsUsing.UsePaperKind = false;
 
+            return View(model);
+        }
+
+        public ActionResult CXP_014()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdProveedor = 0
+            };
+            cargar_combos();
+            CXP_014_Rpt report = new CXP_014_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CXP_014(cl_filtros_Info model)
+        {
+            CXP_014_Rpt report = new CXP_014_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_combos();
+            report.RequestParameters = false;
+            ViewBag.Report = report;
             return View(model);
         }
     }
