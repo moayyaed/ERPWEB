@@ -1259,6 +1259,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_011_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_012_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_013_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_002_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
