@@ -26,5 +26,6 @@ namespace Core.Erp.Info.Reportes.RRHH
         public string ru_descripcion { get; set; }
         public double Valor { get; set; }
         public Nullable<int> dias { get; set; }
+        public Nullable<long> IdRow { get; set; }
     }
 }
