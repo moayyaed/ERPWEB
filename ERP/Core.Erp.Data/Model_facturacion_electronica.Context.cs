@@ -25,19 +25,20 @@ namespace Core.Erp.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<vwcp_retencion> vwcp_retencion { get; set; }
-        public virtual DbSet<vwcp_retencion_detalle> vwcp_retencion_detalle { get; set; }
-        public virtual DbSet<vwfa_factura> vwfa_factura { get; set; }
-        public virtual DbSet<vwfa_factura_detalle> vwfa_factura_detalle { get; set; }
-        public virtual DbSet<vwfa_factura_impuestos> vwfa_factura_impuestos { get; set; }
-        public virtual DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
-        public virtual DbSet<vwfa_guia_remision_detalle> vwfa_guia_remision_detalle { get; set; }
-        public virtual DbSet<vwfa_guia_remision_x_factura> vwfa_guia_remision_x_factura { get; set; }
-        public virtual DbSet<vwfa_nota_credito> vwfa_nota_credito { get; set; }
-        public virtual DbSet<vwfa_nota_credito_detalle> vwfa_nota_credito_detalle { get; set; }
-        public virtual DbSet<vwfa_nota_credito_impuestos> vwfa_nota_credito_impuestos { get; set; }
-        public virtual DbSet<vwfa_nota_debito> vwfa_nota_debito { get; set; }
-        public virtual DbSet<vwfa_nota_debito_detalle> vwfa_nota_debito_detalle { get; set; }
-        public virtual DbSet<vwfa_nota_debito_impuestos> vwfa_nota_debito_impuestos { get; set; }
+        public virtual DbSet<tb_facturas_eventos> tb_facturas_eventos { get; set; }
+        public virtual DbSet<vwfe_factura> vwfe_factura { get; set; }
+        public virtual DbSet<vwfe_factura_detalle> vwfe_factura_detalle { get; set; }
+        public virtual DbSet<vwfe_factura_impuestos> vwfe_factura_impuestos { get; set; }
+        public virtual DbSet<vwfe_guia_remision> vwfe_guia_remision { get; set; }
+        public virtual DbSet<vwfe_guia_remision_detalle> vwfe_guia_remision_detalle { get; set; }
+        public virtual DbSet<vwfe_guia_remision_x_factura> vwfe_guia_remision_x_factura { get; set; }
+        public virtual DbSet<vwfe_nota_credito> vwfe_nota_credito { get; set; }
+        public virtual DbSet<vwfe_nota_credito_detalle> vwfe_nota_credito_detalle { get; set; }
+        public virtual DbSet<vwfe_nota_credito_impuestos> vwfe_nota_credito_impuestos { get; set; }
+        public virtual DbSet<vwfe_nota_debito> vwfe_nota_debito { get; set; }
+        public virtual DbSet<vwfe_nota_debito_detalle> vwfe_nota_debito_detalle { get; set; }
+        public virtual DbSet<vwfe_nota_debito_impuestos> vwfe_nota_debito_impuestos { get; set; }
+        public virtual DbSet<vwfe_retencion> vwfe_retencion { get; set; }
+        public virtual DbSet<vwfe_retencion_detalle> vwfe_retencion_detalle { get; set; }
     }
 }

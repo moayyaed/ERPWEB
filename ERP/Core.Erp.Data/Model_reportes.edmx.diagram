@@ -91,12 +91,11 @@
         <EntityTypeShape EntityType="Model_reportes.VWROL_010" Width="1.5" PointX="39.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_008" Width="1.5" PointX="39.375" PointY="20.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_001" Width="1.5" PointX="17.375" PointY="36.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCAJ_002" Width="1.5" PointX="39.375" PointY="26.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_002_ingresos" Width="1.5" PointX="9.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_002_ValesNoConciliados" Width="1.5" PointX="39.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_021" Width="1.5" PointX="39.375" PointY="34.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_002" Width="1.5" PointX="11.375" PointY="40.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCAJ_002" Width="1.5" PointX="39.375" PointY="26.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCXP_014" Width="1.5" PointX="13.375" PointY="40.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

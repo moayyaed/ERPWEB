@@ -14,7 +14,7 @@ namespace Core.Erp.Info.Reportes.Caja
         public int Secuencia { get; set; }
         public int IdEmpresa_OGiro { get; set; }
         public int IdTipoCbte_Ogiro { get; set; }
-        public Nullable<decimal> IdCbteCble_Ogiro { get; set; }
+        public decimal IdCbteCble_Ogiro { get; set; }
         public string co_factura { get; set; }
         public string pe_nombreCompleto { get; set; }
         public System.DateTime co_FechaFactura { get; set; }
@@ -28,14 +28,14 @@ namespace Core.Erp.Info.Reportes.Caja
         public Nullable<double> Total_fact_vale { get; set; }
         public double Dif_x_pagar_o_cobrar { get; set; }
         public string TIPO { get; set; }
-        public System.DateTime Fecha_ini { get; set; }
-        public System.DateTime Fecha_fin { get; set; }
+        public Nullable<System.DateTime> Fecha_ini { get; set; }
+        public Nullable<System.DateTime> Fecha_fin { get; set; }
         public Nullable<double> valor_a_reponer { get; set; }
         public string NombreCaja { get; set; }
         public string tm_descripcion { get; set; }
         public string IdUsuarioCreacion { get; set; }
         public string NombreUsuario { get; set; }
         public string Su_Descripcion { get; set; }
-        public decimal SecuenciaCaja { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
     }
 }

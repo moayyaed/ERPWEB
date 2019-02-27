@@ -1259,7 +1259,6 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_011_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_012_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_013_Data.cs" />
-    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_002_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
@@ -1792,6 +1791,9 @@
     <Compile Include="tb_empresa.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="tb_facturas_eventos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
     <Compile Include="tb_mes.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -2012,13 +2014,10 @@
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_retencion.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_retencion_det.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwcp_retencion_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_SolicitudPago.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
@@ -2146,8 +2145,8 @@
     <Compile Include="VWCXP_013.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="VWCXP_014.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
+    <Compile Include="vwFacturas_fac_electronica.cs">
+      <DependentUpon>Model_migraciones.tt</DependentUpon>
     </Compile>
     <Compile Include="vwFacturas_sin_aprobar.cs">
       <DependentUpon>Model_migraciones.tt</DependentUpon>
@@ -2207,16 +2206,10 @@
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_factura.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_factura_det.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_factura_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_factura_impuestos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_factura_sin_automatico.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
@@ -2228,16 +2221,10 @@
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_guia_remision.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_guia_remision_det.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_guia_remision_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_guia_remision_x_factura.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_notaCreDeb.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
@@ -2247,24 +2234,6 @@
     </Compile>
     <Compile Include="vwfa_notaCreDeb_x_fa_factura_NotaDeb.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_nota_credito.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_nota_credito_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_nota_credito_impuestos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_nota_debito.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_nota_debito_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfa_nota_debito_impuestos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_proforma.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
@@ -2277,6 +2246,48 @@
     </Compile>
     <Compile Include="vwfa_PuntoVta.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_factura.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_factura_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_factura_impuestos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_guia_remision.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_guia_remision_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_guia_remision_x_factura.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_credito.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_credito_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_credito_impuestos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_debito.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_debito_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_debito_impuestos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_retencion.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_retencion_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="VWIMP_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>

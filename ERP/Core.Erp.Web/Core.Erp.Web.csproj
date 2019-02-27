@@ -883,12 +883,6 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_013_Rpt.Designer.cs">
       <DependentUpon>CXP_013_Rpt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Rpt.Designer.cs">
-      <DependentUpon>CXP_014_Rpt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1314,12 +1308,6 @@
     </Compile>
     <Compile Include="Reportes\RRHH\ROL_024_Rpt.Designer.cs">
       <DependentUpon>ROL_024_Rpt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\RRHH\ROL_025_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\RRHH\ROL_025_Rpt.Designer.cs">
-      <DependentUpon>ROL_025_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -10043,7 +10031,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10448,9 +10435,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_024_Rpt.resx">
       <DependentUpon>ROL_024_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\RRHH\ROL_025_Rpt.resx">
-      <DependentUpon>ROL_025_Rpt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

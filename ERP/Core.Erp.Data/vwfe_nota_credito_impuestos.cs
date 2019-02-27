@@ -12,7 +12,7 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_nota_debito_impuestos
+    public partial class vwfe_nota_credito_impuestos
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }

@@ -12,48 +12,52 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_nota_credito
+    public partial class vwfe_guia_remision
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
-        public decimal IdNota { get; set; }
-        public Nullable<int> dev_IdEmpresa { get; set; }
-        public Nullable<decimal> dev_IdDev_Inven { get; set; }
-        public string CodNota { get; set; }
-        public string CreDeb { get; set; }
+        public decimal IdGuiaRemision { get; set; }
+        public string CodGuiaRemision { get; set; }
         public string CodDocumentoTipo { get; set; }
         public string Serie1 { get; set; }
         public string Serie2 { get; set; }
-        public string NumNota_Impresa { get; set; }
-        public string NumAutorizacion { get; set; }
+        public string NumGuia_Preimpresa { get; set; }
+        public string NUAutorizacion { get; set; }
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
+        public System.DateTime gi_fecha { get; set; }
+        public Nullable<decimal> gi_plazo { get; set; }
+        public Nullable<System.DateTime> gi_fech_venc { get; set; }
+        public string gi_Observacion { get; set; }
+        public System.DateTime gi_FechaFinTraslado { get; set; }
+        public System.DateTime gi_FechaInicioTraslado { get; set; }
+        public string placa { get; set; }
+        public string ruta { get; set; }
+        public string Direccion_Origen { get; set; }
+        public string Direccion_Destino { get; set; }
+        public string Cedula { get; set; }
+        public string Nombre { get; set; }
         public string Nombres { get; set; }
         public string Telefono { get; set; }
         public string Celular { get; set; }
         public string Correo { get; set; }
-        public string pe_Naturaleza { get; set; }
+        public string Direccion { get; set; }
         public string pe_cedulaRuc { get; set; }
-        public string IdTipoDocumento { get; set; }
         public string pe_nombreCompleto { get; set; }
-        public string pe_razonSocial { get; set; }
-        public System.DateTime no_fecha { get; set; }
-        public string sc_observacion { get; set; }
-        public string em_direccion { get; set; }
-        public string em_ruc { get; set; }
+        public string IdTipoDocumento { get; set; }
+        public string pe_Naturaleza { get; set; }
+        public string em_nombre { get; set; }
         public string RazonSocial { get; set; }
         public string NombreComercial { get; set; }
-        public string Expr1 { get; set; }
+        public string em_ruc { get; set; }
+        public string em_telefonos { get; set; }
         public string ContribuyenteEspecial { get; set; }
         public string ObligadoAllevarConta { get; set; }
+        public string em_Email { get; set; }
+        public string em_direccion { get; set; }
         public string vt_serie1 { get; set; }
         public string vt_serie2 { get; set; }
         public string vt_NumFactura { get; set; }
         public System.DateTime vt_fecha { get; set; }
-        public Nullable<decimal> importeTotal { get; set; }
-        public Nullable<decimal> impuesto { get; set; }
-        public string em_telefonos { get; set; }
-        public Nullable<decimal> total_sin_impuesto { get; set; }
-        public Nullable<decimal> totalDescuento { get; set; }
     }
 }

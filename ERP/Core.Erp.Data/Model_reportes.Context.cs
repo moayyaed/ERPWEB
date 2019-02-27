@@ -113,12 +113,11 @@ namespace Core.Erp.Data
         public DbSet<VWROL_010> VWROL_010 { get; set; }
         public DbSet<VWCXC_008> VWCXC_008 { get; set; }
         public DbSet<VWCAJ_001> VWCAJ_001 { get; set; }
+        public DbSet<VWCAJ_002> VWCAJ_002 { get; set; }
         public DbSet<VWCAJ_002_ingresos> VWCAJ_002_ingresos { get; set; }
         public DbSet<VWCAJ_002_ValesNoConciliados> VWCAJ_002_ValesNoConciliados { get; set; }
         public DbSet<VWROL_021> VWROL_021 { get; set; }
         public DbSet<VWROL_002> VWROL_002 { get; set; }
-        public DbSet<VWCAJ_002> VWCAJ_002 { get; set; }
-        public DbSet<VWCXP_014> VWCXP_014 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
@@ -1126,7 +1125,7 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPFAC_002_Result>("SPFAC_002", idEmpresaParameter, sucursalIniParameter, sucursalFinParameter, idClienteIniParameter, idClienteFinParameter, idTipoClienteIniParameter, idTipoClienteFinParameter, fechaCorteParameter, mostrarSoloCarteraVencidaParameter);
         }
     
-        public virtual ObjectResult<SPROL_025_Result> SPROL_025(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idRol, Nullable<int> idNomina_Tipo, Nullable<int> idPeriodo)
+        public virtual ObjectResult<SPROL_025_Result> SPROL_025(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idNomina_TipoLiqui, Nullable<int> idPeriodo)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
@@ -1136,19 +1135,15 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdSucursal", idSucursal) :
                 new ObjectParameter("IdSucursal", typeof(int));
     
-            var idRolParameter = idRol.HasValue ?
-                new ObjectParameter("IdRol", idRol) :
-                new ObjectParameter("IdRol", typeof(int));
-    
-            var idNomina_TipoParameter = idNomina_Tipo.HasValue ?
-                new ObjectParameter("IdNomina_Tipo", idNomina_Tipo) :
-                new ObjectParameter("IdNomina_Tipo", typeof(int));
+            var idNomina_TipoLiquiParameter = idNomina_TipoLiqui.HasValue ?
+                new ObjectParameter("IdNomina_TipoLiqui", idNomina_TipoLiqui) :
+                new ObjectParameter("IdNomina_TipoLiqui", typeof(int));
     
             var idPeriodoParameter = idPeriodo.HasValue ?
                 new ObjectParameter("IdPeriodo", idPeriodo) :
                 new ObjectParameter("IdPeriodo", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_025_Result>("SPROL_025", idEmpresaParameter, idSucursalParameter, idRolParameter, idNomina_TipoParameter, idPeriodoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_025_Result>("SPROL_025", idEmpresaParameter, idSucursalParameter, idNomina_TipoLiquiParameter, idPeriodoParameter);
         }
     }
 }
