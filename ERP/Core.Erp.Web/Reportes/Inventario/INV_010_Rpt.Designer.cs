@@ -535,7 +535,7 @@
             // xrTableCell4
             // 
             this.xrTableCell4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_IdProducto]=0,\'TODOS\' ,[IdProducto])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_IdProducto]=0,\'TODOS\' ,[pr_descripcion])")});
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.Weight = 2.1061790327760495D;
             // 

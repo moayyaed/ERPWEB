@@ -30,24 +30,20 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal</label>
                             @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdBodega">Bodega</label>
                             @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
                             @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdProductoPadre">Producto</label>
@@ -58,7 +54,46 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for=""></label>
-                            <label for="mostrar_agrupado">@Html.CheckBoxFor(q => q.mostrar_agrupado) Mostrar agrupado</label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrar_agrupado, settings =>
+                           {
+                               settings.Name = "mostrar_agrupado";
+                               settings.Text = "Mostrar agrupado";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.mostrar_agrupado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdCategoria">Categoría</label>
+                            @Html.DropDownListFor(q => q.IdCategoria, new SelectList(ViewBag.lst_categoria, "IdCategoria", "ca_Categoria"), new { @class = "form-control", @id = "IdCategoria" })
+                            @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdLinea">Línea</label>
+                            @Html.DropDownListFor(q => q.IdLinea, new SelectList(ViewBag.lst_linea, "IdLinea", "nom_linea"), new { @class = "form-control", @id = "IdLinea" })
+                            @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="dGrupo">Grupo</label>
+                            @Html.DropDownListFor(q => q.IdGrupo, new SelectList(ViewBag.lst_grupo, "IdGrupo", "nom_grupo"), new { @class = "form-control", @id = "IdGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdSubGrupo">Subgrupo</label>
+                            @Html.DropDownListFor(q => q.IdSubGrupo, new SelectList(ViewBag.lst_subgrupo, "IdSubgrupo", "nom_subgrupo"), new { @class = "form-control", @id = "IdSubGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdSubGrupo, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -100,39 +135,6 @@
                                  }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdCategoria">Categoría</label>
-                            @Html.DropDownListFor(q => q.IdCategoria, new SelectList(ViewBag.lst_categoria, "IdCategoria", "ca_Categoria"), new { @class = "form-control", @id = "IdCategoria" })
-                            @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdLinea">Línea</label>
-                            @Html.DropDownListFor(q => q.IdLinea, new SelectList(ViewBag.lst_linea, "IdLinea", "nom_linea"), new { @class = "form-control", @id = "IdLinea" })
-                            @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="dGrupo">Grupo</label>
-                            @Html.DropDownListFor(q => q.IdGrupo, new SelectList(ViewBag.lst_grupo, "IdGrupo", "nom_grupo"), new { @class = "form-control", @id = "IdGrupo" })
-                            @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdSubGrupo">Subgrupo</label>
-                            @Html.DropDownListFor(q => q.IdSubGrupo, new SelectList(ViewBag.lst_subgrupo, "IdSubgrupo", "nom_subgrupo"), new { @class = "form-control", @id = "IdSubGrupo" })
-                            @Html.ValidationMessageFor(q => q.IdSubGrupo, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
