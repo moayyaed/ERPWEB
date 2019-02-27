@@ -17,6 +17,8 @@ namespace Core.Erp.Info.Reportes.RRHH
         public System.DateTime FechaInicio { get; set; }
         public string ca_descripcion { get; set; }
         public System.DateTime pe_FechaIni { get; set; }
+        public Nullable<int> IdNomina { get; set; }
+        public string Descripcion { get; set; }
         public System.DateTime pe_FechaFin { get; set; }
         public decimal IdRol { get; set; }
         public int IdPeriodo { get; set; }

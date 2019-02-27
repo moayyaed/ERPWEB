@@ -96,6 +96,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_002_ValesNoConciliados" Width="1.5" PointX="39.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_021" Width="1.5" PointX="39.375" PointY="34.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_002" Width="1.5" PointX="11.375" PointY="40.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCXP_014" Width="1.5" PointX="13.375" PointY="40.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
