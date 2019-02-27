@@ -33,8 +33,8 @@
                 <div class="col-md-12">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="IdProductoPadre">Producto padre</label>
-                            @Html.Partial("_CmbProductoPadre_Inventario", Model)
+                            <label for="IdProductoPadre">Producto</label>
+                            @Html.Partial("_CmbProducto_Inventario", Model)
                             @Html.ValidationMessageFor(q => q.IdProductoPadre, "", new { @class = "text-danger" })
                         </div>
                     </div>
