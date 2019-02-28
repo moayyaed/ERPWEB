@@ -34,11 +34,11 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public List<ro_prestamo_Info> get_list_aprobacion(int IdEmpresa, DateTime fechaInicio, DateTime fechaFin)
+        public List<ro_prestamo_Info> get_list_aprobacion(int IdEmpresa)
         {
             try
             {
-                return odata.get_list_aprobacion(IdEmpresa, fechaInicio, fechaFin);
+                return odata.get_list_aprobacion(IdEmpresa);
             }
             catch (Exception)
             {

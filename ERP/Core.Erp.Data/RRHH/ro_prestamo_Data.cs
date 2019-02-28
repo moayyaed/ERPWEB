@@ -123,12 +123,10 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public List<ro_prestamo_Info> get_list_aprobacion(int IdEmpresa, DateTime fechaInicio, DateTime fechaFin)
+        public List<ro_prestamo_Info> get_list_aprobacion(int IdEmpresa)
         {
             try
             {
-                DateTime fi = Convert.ToDateTime(fechaInicio.ToShortDateString());
-                DateTime ff = Convert.ToDateTime(fechaFin.ToShortDateString());
 
                 List<ro_prestamo_Info> Lista;
 
@@ -136,8 +134,7 @@ namespace Core.Erp.Data.RRHH
                 {
                     Lista = (from q in Context.vwRo_Prestamo
                              where q.IdEmpresa == IdEmpresa
-                             && q.Fecha >= fi
-                             && q.Fecha <= ff
+                           
                              && q.EstadoAprob == "PEND"
                              select new ro_prestamo_Info
                              {

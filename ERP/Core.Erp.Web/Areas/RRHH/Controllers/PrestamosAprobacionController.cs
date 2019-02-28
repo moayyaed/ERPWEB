@@ -38,12 +38,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_prestamos_aprobacion(DateTime? Fecha_ini, DateTime? Fecha_fin)
+        public ActionResult GridViewPartial_prestamos_aprobacion()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            List<ro_prestamo_Info> model = bus_prestamos.get_list_aprobacion(IdEmpresa, Convert.ToDateTime(Fecha_ini), Convert.ToDateTime(Fecha_fin));
+           
+            List<ro_prestamo_Info> model = bus_prestamos.get_list_aprobacion(IdEmpresa);
             return PartialView("_GridViewPartial_prestamos_aprobacion", model);
         }
 
