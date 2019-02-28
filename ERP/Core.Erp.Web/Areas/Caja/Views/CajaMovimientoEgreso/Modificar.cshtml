@@ -25,7 +25,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
+                $("#cr_Valor").val(data.Valor);
+                $("#cm_observacion").val(data.Observacion);
             },
             error: function (error) {
             }
@@ -234,7 +235,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="cm_observacion">Observación</label>
-                    @Html.TextAreaFor(q => q.cm_observacion, new { @class = "form-control" })
+                    @Html.TextAreaFor(q => q.cm_observacion, new { @class = "form-control", @id = "cm_observacion" })
                     @Html.ValidationMessageFor(q => q.cm_observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
