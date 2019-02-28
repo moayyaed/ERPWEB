@@ -20,7 +20,7 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     if (MostrarCerrado == false)
                     {
-                        Lista = db.vw_ct_CierrePorModuloPorSucursal.Where(q => q.Cerrado == false && q.IdEmpresa == IdEmpresa && q.IdSucursal >= IdSucursalIni
+                        Lista = db.vwct_CierrePorModuloPorSucursal.Where(q => q.Cerrado == false && q.IdEmpresa == IdEmpresa && q.IdSucursal >= IdSucursalIni
                                      && q.IdSucursal <= IdSucursalFin).Select(q => new ct_CierrePorModuloPorSucursal_Info
                         {
                             IdEmpresa = q.IdEmpresa,
@@ -36,7 +36,7 @@ namespace Core.Erp.Data.Contabilidad
                     }
                     else
                     {
-                        Lista = db.vw_ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal >= IdSucursalIni
+                        Lista = db.vwct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal >= IdSucursalIni
                                      && q.IdSucursal <= IdSucursalFin).Select(q => new ct_CierrePorModuloPorSucursal_Info
                         {
                             IdEmpresa = q.IdEmpresa,
