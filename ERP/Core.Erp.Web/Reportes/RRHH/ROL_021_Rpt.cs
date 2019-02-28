@@ -58,6 +58,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                     case "I":
                         lblNombreReporte.Text = "Reporte de rubros de ingresos";
                         xrPivotGrid1.OptionsView.ShowColumnTotals = true;
+                        xrPivotGrid1.OptionsView.ShowColumnGrandTotals = true;
 
                         pivotGridField5.Visible = false;
                         pivotGridField8.Visible = true;
@@ -65,18 +66,21 @@ namespace Core.Erp.Web.Reportes.RRHH
                     case "E":
                         lblNombreReporte.Text = "Reporte de rubros de egresos";
                         xrPivotGrid1.OptionsView.ShowColumnTotals = false;
+                        xrPivotGrid1.OptionsView.ShowColumnGrandTotals = false;
                         pivotGridField5.Visible = false;
                         pivotGridField8.Visible = false;
                         break;
                     case "A":
                         lblNombreReporte.Text = "Rol General";
                         xrPivotGrid1.OptionsView.ShowColumnTotals = false;
+                        xrPivotGrid1.OptionsView.ShowColumnGrandTotals = false;
                         pivotGridField5.Visible = true;
                         pivotGridField8.Visible = false;
                         break;
                     default:
                         lblNombreReporte.Text = "Rol General";
                         xrPivotGrid1.OptionsView.ShowColumnTotals = false;
+                        xrPivotGrid1.OptionsView.ShowColumnGrandTotals = false;
                         pivotGridField5.Visible = true;
                         pivotGridField8.Visible = false;
                         break;
@@ -101,13 +105,14 @@ namespace Core.Erp.Web.Reportes.RRHH
 
         private void xrPivotGrid1_PrintFieldValue(object sender, DevExpress.XtraReports.UI.PivotGrid.CustomExportFieldValueEventArgs e)
         {   
+            /*
             if (e.Field != null && e.Field.Area == DevExpress.XtraPivotGrid.PivotArea.ColumnArea && e.Field.Caption == "Tipo")
             {
                 
                 LabelBrick lb = new LabelBrick();
                 lb.IsVisible = false;
                 e.Brick = lb;
-            }
+            }*/
         }
 
         private void xrPivotGrid1_FieldValueDisplayText(object sender, DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs e)

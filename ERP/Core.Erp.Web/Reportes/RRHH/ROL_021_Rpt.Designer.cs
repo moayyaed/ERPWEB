@@ -859,6 +859,8 @@
             this.pivotGridField4.Appearance.Cell.TextVerticalAlignment = DevExpress.Utils.VertAlignment.Center;
             this.pivotGridField4.Appearance.Cell.WordWrap = true;
             this.pivotGridField4.Appearance.FieldValue.ForeColor = System.Drawing.Color.Transparent;
+            this.pivotGridField4.Appearance.FieldValueGrandTotal.BackColor = System.Drawing.Color.Black;
+            this.pivotGridField4.Appearance.FieldValueTotal.BackColor = System.Drawing.Color.Black;
             this.pivotGridField4.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             this.pivotGridField4.AreaIndex = 0;
             this.pivotGridField4.Caption = "Tipo";
@@ -998,11 +1000,11 @@
             this.xrPivotGrid1.OptionsView.RowTreeOffset = 40;
             this.xrPivotGrid1.OptionsView.RowTreeWidth = 300;
             this.xrPivotGrid1.OptionsView.ShowColumnGrandTotalHeader = false;
-            this.xrPivotGrid1.OptionsView.ShowColumnGrandTotals = false;
             this.xrPivotGrid1.OptionsView.ShowColumnHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowCustomTotalsForSingleValues = true;
             this.xrPivotGrid1.OptionsView.ShowDataHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowFilterHeaders = false;
+            this.xrPivotGrid1.OptionsView.ShowGrandTotalsForSingleValues = true;
             this.xrPivotGrid1.OptionsView.ShowRowHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowTotalsForSingleValues = true;
             this.xrPivotGrid1.Scripts.OnCustomRowHeight = "xrPivotGrid1_CustomRowHeight";
