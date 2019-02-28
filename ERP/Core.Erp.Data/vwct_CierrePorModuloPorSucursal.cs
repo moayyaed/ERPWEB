@@ -12,7 +12,7 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_ct_CierrePorModuloPorSucursal
+    public partial class vwct_CierrePorModuloPorSucursal
     {
         public int IdEmpresa { get; set; }
         public int IdCierre { get; set; }

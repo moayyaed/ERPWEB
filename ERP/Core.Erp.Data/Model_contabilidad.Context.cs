@@ -49,7 +49,7 @@ namespace Core.Erp.Data
         public DbSet<vwct_cbtecble_det> vwct_cbtecble_det { get; set; }
         public DbSet<vwct_RevisionContableFacturas> vwct_RevisionContableFacturas { get; set; }
         public DbSet<ct_CierrePorModuloPorSucursal> ct_CierrePorModuloPorSucursal { get; set; }
-        public DbSet<vw_ct_CierrePorModuloPorSucursal> vw_ct_CierrePorModuloPorSucursal { get; set; }
+        public DbSet<vwct_CierrePorModuloPorSucursal> vwct_CierrePorModuloPorSucursal { get; set; }
     
         public virtual ObjectResult<generarATS_Result> generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo)
         {
