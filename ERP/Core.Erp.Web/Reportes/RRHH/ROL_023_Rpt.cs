@@ -41,6 +41,25 @@ namespace Core.Erp.Web.Reportes.RRHH
 
             ROL_023_Bus bus_rpt = new ROL_023_Bus();
             List<ROL_023_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdNomina, IdNominaTipoLiqui, IdPeriodo, IdDivision, IdArea, IdDepartamento);
+
+            #region MOVIMIENTO DE ANTICIPO PARA QUE AFECTE LA FILA CON MAYOR INGRESO
+            //OBTENER REGISTROS DE LA FILA 1 QUE ESTEN EN NEGATIVO
+            var lst_1 = lst_rpt.Where(q => q.NETO < 0 && q.Fila == 1).ToList();
+            //CRUZAR CON REGISTROS DE FILA 2 PARA PASAR EL VALOR
+            var lst_2_ = lst_rpt.Where(q => q.Fila == 2).ToList();
+            ROL_023_Info objrpt = new ROL_023_Info();
+            lst_1.ForEach(q =>
+            {
+                objrpt = lst_rpt.Where(v => v.IdEmpresa == q.IdEmpresa && v.IdEmpleado == q.IdEmpleado && v.Fila == 2).FirstOrDefault();
+                if(objrpt != null)
+                {
+                    objrpt.ANTICIPO = q.ANTICIPO;
+                    q.ANTICIPO = 0;
+                }
+            });
+            #endregion
+
+            #region REDONDEOS POR CUADRE DE FONDO DE RESERVA E IESS
             lst_rpt.ForEach(q => {
                 q.FRESERVA_R = Math.Round(q.FRESERVA ?? 0, 2, MidpointRounding.AwayFromZero);
                 q.IESS_R = Math.Round(q.IESS ?? 0, 2, MidpointRounding.AwayFromZero);
@@ -120,6 +139,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                 q.TOTALE = q.PRESTAMO + q.IESS_R + q.ANTICIPO + q.OTROEGR;
                 q.NETO = q.TOTALI - q.TOTALE;
             });
+            #endregion
 
             this.DataSource = lst_final;
             
