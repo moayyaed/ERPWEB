@@ -354,30 +354,6 @@
           <Property Name="ivaComp" Type="numeric" Precision="20" Scale="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vw_ct_CierrePorModuloPorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vw_ct_CierrePorModuloPorSucursal">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdCierre" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="CodModulo" />
-            <PropertyRef Name="Descripcion" />
-            <PropertyRef Name="FechaIni" />
-            <PropertyRef Name="FechaFin" />
-            <PropertyRef Name="Cerrado" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdCierre" Type="int" Nullable="false" />
-          <Property Name="IdSucursal" Type="int" Nullable="false" />
-          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CodModulo" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FechaIni" Type="date" Nullable="false" />
-          <Property Name="FechaFin" Type="date" Nullable="false" />
-          <Property Name="Cerrado" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_cbtecble">
           <Key>
@@ -440,6 +416,30 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble_det' no tiene defini
           <Property Name="dc_para_conciliar" Type="bit" />
           <Property Name="IdGrupoPresupuesto" Type="int" />
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="523" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_CierrePorModuloPorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwct_CierrePorModuloPorSucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCierre" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="CodModulo" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="FechaIni" />
+            <PropertyRef Name="FechaFin" />
+            <PropertyRef Name="Cerrado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCierre" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodModulo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaIni" Type="date" Nullable="false" />
+          <Property Name="FechaFin" Type="date" Nullable="false" />
+          <Property Name="Cerrado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -706,19 +706,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ATS_exportaciones" EntityType="Self.ATS_exportaciones" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ATS_retenciones" EntityType="Self.ATS_retenciones" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ATS_ventas" EntityType="Self.ATS_ventas" Schema="EntidadRegulatoria" store:Type="Tables" />
-          <EntitySet Name="vw_ct_CierrePorModuloPorSucursal" EntityType="Self.vw_ct_CierrePorModuloPorSucursal" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_ct_CierrePorModuloPorSucursal].[IdEmpresa] AS [IdEmpresa], 
-    [vw_ct_CierrePorModuloPorSucursal].[IdCierre] AS [IdCierre], 
-    [vw_ct_CierrePorModuloPorSucursal].[IdSucursal] AS [IdSucursal], 
-    [vw_ct_CierrePorModuloPorSucursal].[Su_Descripcion] AS [Su_Descripcion], 
-    [vw_ct_CierrePorModuloPorSucursal].[CodModulo] AS [CodModulo], 
-    [vw_ct_CierrePorModuloPorSucursal].[Descripcion] AS [Descripcion], 
-    [vw_ct_CierrePorModuloPorSucursal].[FechaIni] AS [FechaIni], 
-    [vw_ct_CierrePorModuloPorSucursal].[FechaFin] AS [FechaFin], 
-    [vw_ct_CierrePorModuloPorSucursal].[Cerrado] AS [Cerrado]
-    FROM [dbo].[vw_ct_CierrePorModuloPorSucursal] AS [vw_ct_CierrePorModuloPorSucursal]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vwct_cbtecble" EntityType="Self.vwct_cbtecble" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwct_cbtecble].[IdEmpresa] AS [IdEmpresa], 
@@ -756,6 +743,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
     [vwct_cbtecble_det].[IdGrupoPresupuesto] AS [IdGrupoPresupuesto], 
     [vwct_cbtecble_det].[pc_Cuenta] AS [pc_Cuenta]
     FROM [dbo].[vwct_cbtecble_det] AS [vwct_cbtecble_det]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwct_CierrePorModuloPorSucursal" EntityType="Self.vwct_CierrePorModuloPorSucursal" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwct_CierrePorModuloPorSucursal].[IdEmpresa] AS [IdEmpresa], 
+    [vwct_CierrePorModuloPorSucursal].[IdCierre] AS [IdCierre], 
+    [vwct_CierrePorModuloPorSucursal].[IdSucursal] AS [IdSucursal], 
+    [vwct_CierrePorModuloPorSucursal].[Su_Descripcion] AS [Su_Descripcion], 
+    [vwct_CierrePorModuloPorSucursal].[CodModulo] AS [CodModulo], 
+    [vwct_CierrePorModuloPorSucursal].[Descripcion] AS [Descripcion], 
+    [vwct_CierrePorModuloPorSucursal].[FechaIni] AS [FechaIni], 
+    [vwct_CierrePorModuloPorSucursal].[FechaFin] AS [FechaFin], 
+    [vwct_CierrePorModuloPorSucursal].[Cerrado] AS [Cerrado]
+    FROM [dbo].[vwct_CierrePorModuloPorSucursal] AS [vwct_CierrePorModuloPorSucursal]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwct_RevisionContableFacturas" EntityType="Self.vwct_RevisionContableFacturas" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -1236,7 +1236,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="vwct_cbtecble_det" EntityType="Model_contabilidad.vwct_cbtecble_det" />
           <EntitySet Name="vwct_RevisionContableFacturas" EntityType="Model_contabilidad.vwct_RevisionContableFacturas" />
           <EntitySet Name="ct_CierrePorModuloPorSucursal" EntityType="Model_contabilidad.ct_CierrePorModuloPorSucursal" />
-          <EntitySet Name="vw_ct_CierrePorModuloPorSucursal" EntityType="Model_contabilidad.vw_ct_CierrePorModuloPorSucursal" />
+          <EntitySet Name="vwct_CierrePorModuloPorSucursal" EntityType="Model_contabilidad.vwct_CierrePorModuloPorSucursal" />
         </EntityContainer>
         <ComplexType Name="generarATS_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -1626,7 +1626,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Cerrado" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="vw_ct_CierrePorModuloPorSucursal">
+        <EntityType Name="vwct_CierrePorModuloPorSucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdCierre" />
@@ -2082,9 +2082,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_ct_CierrePorModuloPorSucursal">
-            <EntityTypeMapping TypeName="Model_contabilidad.vw_ct_CierrePorModuloPorSucursal">
-              <MappingFragment StoreEntitySet="vw_ct_CierrePorModuloPorSucursal">
+          <EntitySetMapping Name="vwct_CierrePorModuloPorSucursal">
+            <EntityTypeMapping TypeName="Model_contabilidad.vwct_CierrePorModuloPorSucursal">
+              <MappingFragment StoreEntitySet="vwct_CierrePorModuloPorSucursal">
                 <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
                 <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
                 <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />

@@ -2032,6 +2032,9 @@
     <Compile Include="vwct_cbtecble_det.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwct_CierrePorModuloPorSucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwct_RevisionContableFacturas.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
@@ -2655,9 +2658,6 @@
     </Compile>
     <Compile Include="vwtb_TarjetaCredito_x_cp_proveedor.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vw_ct_CierrePorModuloPorSucursal.cs">
-      <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_diarios_contables_migracion.cs">
       <DependentUpon>Model_ImportacionDiarios.tt</DependentUpon>
