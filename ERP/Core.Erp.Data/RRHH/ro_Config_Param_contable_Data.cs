@@ -150,7 +150,7 @@ namespace Core.Erp.Data.RRHH
                                 IdCentroCosto = item.IdCentroCosto,
                                 DebCre = item.DebCre,
                                 IdCtaCble = item.IdCtaCble_prov_debito,
-                                IdCtaCble_Haber=item.IdCtaCble
+                                IdCtaCble_Haber=item.IdCtaCble_prov_credito
                             };
                             Context.ro_Config_Param_contable.Add(Entity_);
                         }
