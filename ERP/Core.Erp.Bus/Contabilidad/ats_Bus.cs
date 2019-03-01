@@ -210,6 +210,13 @@ namespace Core.Erp.Bus.Contabilidad
                 #region Ventas
                 if (info_ats.lst_ventas != null)
                 {
+
+
+                    #region Agrupando clintes
+
+                    #endregion
+
+
                     if (info_ats.lst_ventas.Count() > 0)
                     {
                         ats.ventas = new List<detalleVentas>();
