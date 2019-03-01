@@ -75,6 +75,7 @@
     @Html.HiddenFor(q => q.IdPersona)
     @Html.HiddenFor(q => q.info_comprobante.IdTipoCbte)
     @Html.HiddenFor(q => q.info_comprobante.IdCbteCble)
+    @Html.HiddenFor(q => q.IdTipo_op)
 
     <div class="row">
         <div class="col-md-12">
@@ -92,6 +93,7 @@
                        {
                            settings.Name = "IdTipo_op";
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.ReadOnly = true;
                            settings.Properties.DisplayFormatString = "[{0}] - {1}";
                            settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
                            settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
@@ -100,7 +102,7 @@
                            settings.Properties.ValueType = typeof(string);
                            settings.Properties.TextField = "Descricpion";
                            //Boton para seleccionar ningun registro
-                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                            settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
                        }).BindList(ViewBag.lst_tipo_orden_pago).GetHtml()

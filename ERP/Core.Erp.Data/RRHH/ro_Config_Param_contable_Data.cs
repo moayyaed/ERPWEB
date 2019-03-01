@@ -51,10 +51,19 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                       
-                    string sql = " select IdEmpresa,IdRubro,IdCtaCble,IdCtaCble_Haber, ru_descripcion,ru_tipo,IdDepartamento, IdArea, IdDivision,DescripcionArea,de_descripcion,rub_ContPorEmpleado from vwRo_Division_Area_dep_rubro where IdEmpresa='" + IdEmpresa + "' and rub_provision='" + es_provision + "' and rub_nocontab='" + 1 + "' group by IdEmpresa,IdRubro,IdCtaCble, ru_descripcion,IdCtaCble_Haber,ru_tipo ,IdDepartamento, IdArea, IdDivision,DescripcionArea,de_descripcion,rub_ContPorEmpleado";
+                    string sql = " select IdEmpresa,IdRubro,IdCtaCble,IdCtaCble_Haber, ru_descripcion,ru_tipo,IdDepartamento, IdArea, IdDivision,DescripcionArea,de_descripcion,rub_ContPorEmpleado,pc_Cuenta_prov_debito,pc_Cuenta " +
+                        "from vwRo_Division_Area_dep_rubro where IdEmpresa='" + IdEmpresa + "' and rub_provision='" + es_provision + "' and rub_nocontab='" + 1 + "' group by IdEmpresa,IdRubro,IdCtaCble, ru_descripcion,IdCtaCble_Haber,ru_tipo ,IdDepartamento, IdArea, IdDivision,DescripcionArea,de_descripcion,rub_ContPorEmpleado,pc_Cuenta_prov_debito,pc_Cuenta";
                     var result = Context.Database.SqlQuery<ro_Config_Param_contable_Info>(sql).ToList();
                     Lista = result;
-                    Lista.ForEach(v => v.Secuencia = secuencia++);
+                    Lista.ForEach(v =>
+                    {
+                        v.Secuencia = secuencia++;
+                        if (v.IdCtaCble == null | v.IdCtaCble == "")
+                            v.IdCtaCble = v.rub_ctacon;
+                        v.IdCtaCble_prov_debito = v.IdCtaCble;
+
+                        v.pc_Cuenta_prov_credito = v.pc_Cuenta;
+                    });
 
                 }
 

@@ -259,6 +259,8 @@ namespace Core.Erp.Bus.RRHH
                         oct_cbtecble_det_Info.secuencia = secuecia;
                         oct_cbtecble_det_Info.IdEmpresa = idEmpresa;
                         oct_cbtecble_det_Info.IdCtaCble = item.IdCtaCble;
+                        oct_cbtecble_det_Info.pc_Cuenta = item.pc_Cuenta;
+                        
                         if (item.ru_tipo == "E")
                         {
                             egreso = egreso + valorTotal;
@@ -297,6 +299,7 @@ namespace Core.Erp.Bus.RRHH
                         oct_cbtecble_det_Info.secuencia = secuecia;
                         oct_cbtecble_det_Info.IdEmpresa = idEmpresa;
                         oct_cbtecble_det_Info.IdCtaCble = item.IdCtaCble_Emplea;
+                        oct_cbtecble_det_Info.pc_Cuenta = item.pc_CuentaEmple;
                         if (item.ru_tipo == "E")
                         {
                             egreso = egreso + valorTotal;
@@ -326,6 +329,7 @@ namespace Core.Erp.Bus.RRHH
                 oct_cbtecble_det_Info2.secuencia = secuecia;
                 oct_cbtecble_det_Info2.IdEmpresa = idEmpresa;
                 oct_cbtecble_det_Info2.IdCtaCble = (info_cta_sueldo_x_pagar.IdCtaCble)==null?"": info_cta_sueldo_x_pagar.IdCtaCble;
+                oct_cbtecble_det_Info2.pc_Cuenta = info_cta_sueldo_x_pagar.pc_Cuenta;
                 oct_cbtecble_det_Info2.dc_Valor = valorSueldoXPagar * -1;
                 oct_cbtecble_det_Info2.dc_Valor_haber = valorSueldoXPagar ;
                 oct_cbtecble_det_Info2.dc_Observacion = "Sueldo por Pagar Neto a Recibir al " + idPeriodo;
@@ -367,6 +371,7 @@ namespace Core.Erp.Bus.RRHH
                         oct_cbtecble_det_Info.dc_Valor_debe = valorTotal;
                         oct_cbtecble_det_Info.dc_Valor = valorTotal;
                         oct_cbtecble_det_Info.dc_Observacion = item.ru_descripcion + "/ " + item.DescripcionArea + "/ " + item.de_descripcion;
+                        oct_cbtecble_det_Info.pc_Cuenta = item.pc_Cuenta_prov_debito;
                         lst_detalle_diario.Add(oct_cbtecble_det_Info);
 
                         secuencia++;
@@ -380,6 +385,7 @@ namespace Core.Erp.Bus.RRHH
                         oct_cbtecble_det_Info2.dc_Valor_haber = valorTotal;
 
                         oct_cbtecble_det_Info2.dc_Observacion = item.ru_descripcion + "/ " + item.DescripcionArea + "/ " + item.de_descripcion;
+                        oct_cbtecble_det_Info2.pc_Cuenta = item.pc_Cuenta_prov_credito;
                         lst_detalle_diario.Add(oct_cbtecble_det_Info2);
                     }
                     

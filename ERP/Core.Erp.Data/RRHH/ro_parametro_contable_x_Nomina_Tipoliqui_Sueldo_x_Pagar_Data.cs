@@ -51,7 +51,7 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar Entity = Context.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdNomina == IdNomina && q.IdNominaTipo == IdNominaTipo);
+                    vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar Entity = Context.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdNomina == IdNomina && q.IdNominaTipo == IdNominaTipo);
                     if (Entity == null) return null;
 
                     info = new ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info
@@ -61,7 +61,8 @@ namespace Core.Erp.Data.RRHH
                         IdNominaTipo = Entity.IdNominaTipo,
                         IdTipoFlujo = Entity.IdTipoFlujo,
                         Observacion = Entity.Observacion,
-                        IdCtaCble = Entity.IdCtaCble
+                        IdCtaCble = Entity.IdCtaCble,
+                        pc_Cuenta = Entity.pc_Cuenta,
                     };
                 }
 

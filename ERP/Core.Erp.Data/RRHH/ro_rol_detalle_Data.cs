@@ -46,6 +46,9 @@ namespace Core.Erp.Data.RRHH
                                      IdCtaCble_Emplea=a.IdCtaCble_Emplea,
                                     IdCtaCble_Debe = a.rub_ctacon,
                                     ru_descripcion=a.ru_descripcion,
+                                    pc_CuentaEmple = a.pc_CuentaEmple,
+                                    pc_CuentaRubro = a.pc_CuentaRubro
+                                    
                                 }).ToList();
                 }
                 return oListado;

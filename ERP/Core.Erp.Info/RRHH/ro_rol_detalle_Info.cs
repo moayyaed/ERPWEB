@@ -39,6 +39,8 @@ namespace Core.Erp.Info.RRHH
         public decimal? Valor_ { get; set; }
         public bool check { get; set; }
         public string IdCtaCble_Debe { get; set; }
+        public string pc_CuentaRubro { get; set; }
+        public string pc_CuentaEmple { get; set; }
 
         #endregion
 

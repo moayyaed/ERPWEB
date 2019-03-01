@@ -242,8 +242,9 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 if (oData.anularDB(info))
                 {
                     info.info_comprobante.IdEmpresa = info.IdEmpresa;
-                    bus_contabilidad.anularDB(info.info_comprobante);
-
+                    if (info.IdTipo_op != "FACT_PROVEE")
+                        bus_contabilidad.anularDB(info.info_comprobante);
+                    
                 }
                 return true;
             }

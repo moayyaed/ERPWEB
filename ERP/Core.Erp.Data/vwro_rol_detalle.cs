@@ -25,7 +25,9 @@ namespace Core.Erp.Data
         public double Valor { get; set; }
         public string ru_tipo { get; set; }
         public string rub_ctacon { get; set; }
+        public string pc_CuentaRubro { get; set; }
         public string IdCtaCble_Emplea { get; set; }
+        public string pc_CuentaEmple { get; set; }
         public Nullable<int> IdDivision { get; set; }
         public Nullable<int> IdArea { get; set; }
         public int IdDepartamento { get; set; }
