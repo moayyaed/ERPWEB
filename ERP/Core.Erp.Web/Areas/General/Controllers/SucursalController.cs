@@ -152,7 +152,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         [HttpPost]
         public ActionResult Modificar(tb_sucursal_Info model)
         {
-            model.ListaNivelDescuento = FormaPago_x_NivelDescuento_List.get_list(model.IdTransaccionSession);
+            model.ListaNivelDescuento = FormaPago_x_NivelDescuento_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             if (!bus_sucursal.modificarDB(model))
             {

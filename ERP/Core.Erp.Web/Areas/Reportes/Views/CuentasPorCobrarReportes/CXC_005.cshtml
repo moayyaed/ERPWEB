@@ -32,6 +32,13 @@
             <div class="col-md-12">
                 <div class="col-md-4">
                     <div class="form-group">
+                        <label for="IdSucursal">Sucursal</label>
+                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label for="IdCliente">Cliente</label>
                         @Html.Partial("_CmbCliente_CXC", Model.IdCliente)
                         @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
@@ -44,7 +51,11 @@
                         @Html.DropDownListFor(q => q.IdClienteContacto, new SelectList(ViewBag.lst_contacto, "IdContacto", "Nombres", Model.IdClienteContacto), new { @class = "form-control", @id = "IdClienteContacto" })
                         @Html.ValidationMessageFor(q => q.IdClienteContacto, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Fecha corte</label>
@@ -52,15 +63,15 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            @Html.DevExpress().DateEditFor(q=> q.fecha_corte, settings =>
-                        {
-                            settings.Name = "fecha_corte";
-                            settings.Properties.UseMaskBehavior = true;
-                            settings.Properties.EditFormat = EditFormat.Date;
-                            settings.Properties.EditFormatString = "dd/MM/yyyy";
-                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                        }).GetHtml()
+                            @Html.DevExpress().DateEditFor(q => q.fecha_corte, settings =>
+                       {
+                           settings.Name = "fecha_corte";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
                             @Html.ValidationMessageFor(q => q.fecha_corte, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -74,63 +85,63 @@
                 </div>
             </div>
         </div>
-        <!-- /.box-body -->
-    </div>
-</div>
-                
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@ViewBag.Title</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">@ViewBag.Title</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fa fa-times"></i>
+                    </button>
                 </div>
-                <div class="box-body">
-                    @Html.DevExpress().WebDocumentViewer(settings =>
+            </div>
+            <div class="box-body">
+                @Html.DevExpress().WebDocumentViewer(settings =>
                {
                    settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
                    settings.MobileMode = false;
                    settings.Name = "webDocumentViewer";
                }).Bind(ViewBag.Report).GetHtml()
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    [@Session["IdEmpresa"]] @Session["nom_empresa"]
-                </div>
-                <!-- /.box-footer-->
             </div>
-            }
+            <!-- /.box-body -->
+            <div class="box-footer">
+                [@Session["IdEmpresa"]] @Session["nom_empresa"]
+            </div>
+            <!-- /.box-footer-->
+        </div>
+        }
         <script>
-        function cargar_cliente() {
-            $("#IdClienteContacto").empty();
+            function cargar_cliente() {
+                $("#IdClienteContacto").empty();
 
-            var datos = {
+                var datos = {
 
-                IdEmpresa: $("#IdEmpresa").val(),
-                IdCliente: IdCliente.GetValue()
+                    IdEmpresa: $("#IdEmpresa").val(),
+                    IdCliente: IdCliente.GetValue()
 
-                    }
-                    $.ajax({
-                        type: 'POST',
-                        data: JSON.stringify(datos),
-                        url: '@Url.Action("cargar_cliente", "CuentasPorCobrarReportes",new { Area = "Reportes"})',
-                        async: false,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-                            $.each(data, function (i, row) {
-                                $("#IdClienteContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
-                                $("#IdClienteContacto").val("0");
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("cargar_cliente", "CuentasPorCobrarReportes",new { Area = "Reportes"})',
+                    async: false,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        $.each(data, function (i, row) {
+                            $("#IdClienteContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
+                            $("#IdClienteContacto").val("0");
                         });
                     },
                     error: function (error) {
                     }
                 });
             };
-    </script>
+        </script>
 

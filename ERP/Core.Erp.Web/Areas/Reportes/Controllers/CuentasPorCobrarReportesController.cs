@@ -35,7 +35,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         #region Json
         private void cargar_cliente_contacto(cl_filtros_facturacion_Info model)
         {
-            
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
+            lst_sucursal.Add(new Info.General.tb_sucursal_Info
+            {
+                IdSucursal = 0,
+                Su_Descripcion = "Todas"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+
             fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
             var lst_cliente = bus_cliente.get_list(model.IdEmpresa, false);
             lst_cliente.Add(new fa_cliente_Info
@@ -186,12 +194,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdCliente = 0
 
             };
             cargar_cliente_contacto(model);
             CXC_005_Rpt report = new CXC_005_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_IdContacto.Value = model.IdClienteContacto;
             report.p_fecha_corte.Value = model.fecha_corte;
@@ -207,6 +217,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             CXC_005_Rpt report = new CXC_005_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_IdContacto.Value = model.IdClienteContacto;
             report.p_fecha_corte.Value = model.fecha_corte;

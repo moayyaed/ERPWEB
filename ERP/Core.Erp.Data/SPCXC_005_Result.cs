@@ -31,5 +31,6 @@ namespace Core.Erp.Data
         public double Cobrado { get; set; }
         public double NotaCredito { get; set; }
         public Nullable<double> Saldo { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }

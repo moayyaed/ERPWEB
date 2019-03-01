@@ -11,12 +11,12 @@ namespace Core.Erp.Bus.Reportes.CuentasPorCobrar
     public class CXC_005_Bus
     {
         CXC_005_Data odata = new CXC_005_Data();
-        public List<CXC_005_Info> get_list(int IdEmpresa, decimal IdCLiente, int IdContacto, DateTime? fecha_corte, bool mostrarSaldo0)
+        public List<CXC_005_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCLiente, int IdContacto, DateTime? fecha_corte, bool mostrarSaldo0)
 
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdCLiente, IdContacto, fecha_corte, mostrarSaldo0);
+                return odata.get_list(IdEmpresa, IdSucursal, IdCLiente, IdContacto, fecha_corte, mostrarSaldo0);
             }
             catch (Exception)
             {
