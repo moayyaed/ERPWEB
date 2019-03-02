@@ -213,44 +213,81 @@ namespace Core.Erp.Bus.Contabilidad
 
 
                     #region Agrupando clintes
+
+
+                        
+
+
+                        var lst_ventas_x_cliente = (from q in info_ats.lst_ventas
+                                   
+                                   group q by new
+                                   {
+                                       q.idCliente,
+                                       q.DenoCli,
+                                       q.tipoCliente,
+                                       q.tipoComprobante
+                                   }
+                                  into g
+                                   select new ventas_Info
+                                   {
+                                       idCliente = g.Key.idCliente,
+                                       DenoCli = g.Key.DenoCli,
+                                       tipoCliente = g.Key.tipoCliente,
+                                       tipoComprobante = g.Key.tipoComprobante,
+                                       baseNoGraIva = g.Sum(y => y.baseNoGraIva),
+                                       baseImponible = g.Sum(y => y.baseImponible),
+                                       baseImpGrav = g.Sum(y => y.baseImpGrav),
+                                       montoIva = g.Sum(y => y.montoIva),
+                                       montoIce = g.Sum(y => y.montoIce),
+                                       valorRetIva = g.Sum(y => y.valorRetIva),
+                                       valorRetRenta = g.Sum(y => y.valorRetRenta),
+                                       numeroComprobantes = info_ats.lst_ventas.Count()
+                                   }).ToList();
+
+
+                                 ats.ventas = new List<detalleVentas>();
+                                lst_ventas_x_cliente.ForEach(
+                                 vent =>
+                                 {
+                                     detalleVentas det_ventas = new detalleVentas();
+                                     det_ventas.tpIdCliente = vent.tpIdCliente;
+                                     det_ventas.idCliente = vent.idCliente;
+                                     if (det_ventas.tpIdCliente == " 04" | det_ventas.tpIdCliente == " 05" | det_ventas.tpIdCliente == " 06")
+                                     {
+                                         det_ventas.parteRelVtas = parteRelType.NO;
+                                     }
+                                     vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
+                                     det_ventas.tipoComprobante = "18";
+                                     det_ventas.tipoEmision = tipoEmisionType.F;
+                                     det_ventas.numeroComprobantes = vent.numeroComprobantes.ToString();
+                                     det_ventas.baseNoGraIva = vent.baseNoGraIva;
+                                     det_ventas.baseImponible = vent.baseImponible;
+                                     det_ventas.baseImpGrav = vent.baseImpGrav;
+                                     det_ventas.montoIva = vent.montoIva;
+                                     det_ventas.montoIce = vent.montoIce;
+                                     det_ventas.valorRetIva = vent.valorRetIva.ToString("n2");
+                                     det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
+                                     det_ventas.montoIceSpecified = true;
+                                     det_ventas.formasDePago = null;
+                                     string[] AFormaPago = { "20" };
+                                     det_ventas.formasDePago = AFormaPago;
+
+                                     ats.ventas.Add(det_ventas);
+                                 }
+                                );
+
+                    }
                     
+
+
+
+
                     #endregion
 
 
-                    if (info_ats.lst_ventas.Count() > 0)
-                    {
-                        ats.ventas = new List<detalleVentas>();
-                        info_ats.lst_ventas.ForEach(
-                             vent =>
-                             {
-                                 detalleVentas det_ventas = new detalleVentas();
-                                 det_ventas.tpIdCliente = vent.tpIdCliente;
-                                 det_ventas.idCliente = vent.idCliente;
-                                 if (det_ventas.tpIdCliente == " 04" | det_ventas.tpIdCliente == " 05" | det_ventas.tpIdCliente == " 06")
-                                 {
-                                     det_ventas.parteRelVtas = parteRelType.NO;
-                                 }
-                                 vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
-                                 det_ventas.tipoComprobante = vent.tipoComprobante;
-                                 det_ventas.tipoEmision = tipoEmisionType.F;
-                                 det_ventas.numeroComprobantes = vent.numeroComprobantes.ToString();
-                                 det_ventas.baseNoGraIva = vent.baseNoGraIva;
-                                 det_ventas.baseImponible = vent.baseImponible;
-                                 det_ventas.baseImpGrav = vent.baseImpGrav;
-                                 det_ventas.montoIva = vent.montoIva;
-                                 det_ventas.montoIce = vent.montoIce;
-                                 det_ventas.valorRetIva = vent.valorRetIva.ToString("n2");
-                                 det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
-                                 det_ventas.montoIceSpecified = true;
-                                 det_ventas.formasDePago = null;
-                                 string[] AFormaPago = { "20" };
-                                 det_ventas.formasDePago = AFormaPago;
-                                 
-                                 ats.ventas.Add(det_ventas);
-                             }
-                            );
-                    }
-                }
+                   
+                    
+                
                 #endregion
 
                 #region ventas por establecimientos
