@@ -213,7 +213,7 @@ namespace Core.Erp.Bus.Contabilidad
 
 
                     #region Agrupando clintes
-
+                    
                     #endregion
 
 

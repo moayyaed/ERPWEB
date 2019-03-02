@@ -33,7 +33,11 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
-
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
         settings.Columns.Add(column =>
         {
             column.FieldName = "DescripcionDiv";

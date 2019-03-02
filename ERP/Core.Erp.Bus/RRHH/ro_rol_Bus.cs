@@ -245,6 +245,10 @@ namespace Core.Erp.Bus.RRHH
                 foreach (ro_Config_Param_contable_Info item in lst_confn_param_contables.Where(v => v.rub_ContPorEmpleado == false))
                 {
 
+                    if(item.IdRubro=="19")
+                    {
+
+                    }
                     double valorTotal = 0;
                     valorTotal = oListro_rol_detalle_Info.Where(v => v.IdDivision == Convert.ToInt32(item.IdDivision)
                                                                 && v.IdArea == item.IdArea
