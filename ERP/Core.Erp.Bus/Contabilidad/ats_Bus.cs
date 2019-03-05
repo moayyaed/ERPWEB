@@ -225,7 +225,8 @@ namespace Core.Erp.Bus.Contabilidad
                                        q.idCliente,
                                        q.DenoCli,
                                        q.tipoCliente,
-                                       q.tipoComprobante
+                                       q.tipoComprobante,
+                                       q.tpIdCliente
                                    }
                                   into g
                                    select new ventas_Info
@@ -233,6 +234,7 @@ namespace Core.Erp.Bus.Contabilidad
                                        idCliente = g.Key.idCliente,
                                        DenoCli = g.Key.DenoCli,
                                        tipoCliente = g.Key.tipoCliente,
+                                       tpIdCliente=g.Key.tpIdCliente,
                                        tipoComprobante = g.Key.tipoComprobante,
                                        baseNoGraIva = g.Sum(y => y.baseNoGraIva),
                                        baseImponible = g.Sum(y => y.baseImponible),
@@ -250,7 +252,7 @@ namespace Core.Erp.Bus.Contabilidad
                                  vent =>
                                  {
                                      detalleVentas det_ventas = new detalleVentas();
-                                     det_ventas.tpIdCliente = vent.tpIdCliente;
+                                     det_ventas.tpIdCliente = vent.tipoCliente;
                                      det_ventas.idCliente = vent.idCliente;
                                      if (det_ventas.tpIdCliente == " 04" | det_ventas.tpIdCliente == " 05" | det_ventas.tpIdCliente == " 06")
                                      {
