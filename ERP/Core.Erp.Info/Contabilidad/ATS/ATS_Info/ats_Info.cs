@@ -15,6 +15,7 @@ namespace Core.Erp.Info.Contabilidad.ATS.ATS_Info
         public List<importaciones_info> lst_importaciones { get; set; }
         public List<comprobantesAnulados_info> lst_anulados { get; set; }
         public List<exportaciones_Info> lst_exportaciones { get; set; }
+        public int IdSucursal { get; set; }
 
         public ats_Info()
         {

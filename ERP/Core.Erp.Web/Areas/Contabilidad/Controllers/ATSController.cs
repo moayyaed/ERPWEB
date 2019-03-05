@@ -16,6 +16,7 @@ using DevExpress.Web.Mvc;
 using DevExpress.Web;
 using DevExpress.Utils;
 using Core.Erp.Bus.Helps;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 {
@@ -50,8 +51,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             string xml = "";
             iva ats = new iva();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            ats = bus_ats.get_ats(IdEmpresa, model.info_periodo.IdPeriodo, IdSucursal);
+            ats = bus_ats.get_ats(IdEmpresa, model.info_periodo.IdPeriodo, model.IdSucursal);
             var ms = new MemoryStream();
             var xw = XmlWriter.Create(ms);
 
@@ -128,12 +128,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #endregion
 
         #region json
-        public JsonResult get_ats(int IdPeriodo)
+        public JsonResult get_ats(int IdPeriodo, int IdSucursal)
         {
             bus_ats = new ats_Bus();
             ats_Info model = new ats_Info();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            model = bus_ats.get_info(IdEmpresa, IdPeriodo);
+            model = bus_ats.get_info(IdEmpresa, IdPeriodo, IdSucursal);
             Session["lst_compras"] = model.lst_compras;
             Session["lst_ventas"] = model.lst_ventas;
             Session["lst_retenciones"] = model.lst_retenciones;
@@ -144,6 +144,22 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        private void cargar_combos(int IdNomina_Tipo, int IdNomina_Tipo_Liqui)
+        {
+            try
+            {
+                tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+                var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+                ViewBag.lst_sucursal = lst_sucursal;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         public class HomeControllerControllerUploadControlSettings
         {

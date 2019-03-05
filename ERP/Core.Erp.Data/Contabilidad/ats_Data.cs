@@ -9,15 +9,17 @@ namespace Core.Erp.Data.Contabilidad
 {
    public class ats_Data
     {
-        public ats_Info get_info(int IdEmpresa, int IdPeriodo)
+        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal)
         {
             try
             {
+                int IdSucursalInicio = Convert.ToInt32(IdSucursal);
+                int IdSucursalFin = Convert.ToInt32(IdSucursal) == 0 ? 9999 : Convert.ToInt32(IdSucursal);
                 ats_Info info = new ats_Info();
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
 
-                    Context.generarATS(IdEmpresa, IdPeriodo);
+                    Context.generarATS(IdEmpresa, IdPeriodo, IdSucursalInicio, IdSucursalFin);
 
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
