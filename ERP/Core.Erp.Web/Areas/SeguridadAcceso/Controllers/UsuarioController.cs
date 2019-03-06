@@ -288,6 +288,12 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
             if (ModelState.IsValid)
             {
+                seg_usuario_x_tb_sucursal_Info info_ = new seg_usuario_x_tb_sucursal_Info();
+                info_.IdSucursal = info_det.IdSucursal;
+                info_.Su_Descripcion = info_det.Su_Descripcion;
+                info_.IdEmpresa = info_det.IdEmpresa;
+                info_.em_nombre = info_det.em_nombre;
+                var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
             cargar_combos_det(info_det.IdEmpresa);
