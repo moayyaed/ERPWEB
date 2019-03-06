@@ -73,42 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <table class="table table-bordered table-striped dataTable" role="grid">
-            <thead>
-                <tr role="row">
-                    <td width="10%"><strong>*</strong></td>
-                    <td width="90%"><strong>Empresa</strong></td>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    string clase = "";
-                    for (int i = 0; i < Model.lst_usuario_x_empresa.Count; i++)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            clase = "even";
-                        }
-                        else
-                        {
-                            clase = "odd";
-                        }
-                        <tr role="row" class=@clase>
-                            @Html.HiddenFor(q => q.lst_usuario_x_empresa[i].em_nombre)
-                            @Html.HiddenFor(q => q.lst_usuario_x_empresa[i].IdEmpresa)
-                            <td>
-                                @Html.CheckBoxFor(q => q.lst_usuario_x_empresa[i].seleccionado)
-                            </td>
-                            <td>
-                                @Model.lst_usuario_x_empresa[i].em_nombre
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -143,7 +108,7 @@
             $("#div_admin").hide();
     }
     function OnSelectedEmpresaChanged() {
-        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdSucursal").PerformCallback();
+        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdString").PerformCallback();
     }
     function SucursalComboBox_BeginCallback(s, e) {
         e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
