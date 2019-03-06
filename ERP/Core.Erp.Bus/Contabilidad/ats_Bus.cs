@@ -107,11 +107,11 @@ namespace Core.Erp.Bus.Contabilidad
                            item_pago.aplicConvDobTrib = aplicConvDobTribType.NA;
                            item_pago.pagExtSujRetNorLeg = aplicConvDobTribType.NA;
                            comp_det.pagoExterior = item_pago;
-                           if (comp_det.secuencial == "000001512")
+                           if (comp_det.idProv == "0601895618001")
                            {
 
                            }
-                           if (Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav) >= 1000)
+                           if ((Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav) + Convert.ToDecimal(comp.montoIva)) >= 1000)
                            {
                                comp_det.formasDePago = null;
                                string[] AFormaPago = { "20" };
@@ -255,12 +255,12 @@ namespace Core.Erp.Bus.Contabilidad
                                      detalleVentas det_ventas = new detalleVentas();
                                      det_ventas.tpIdCliente = vent.tpIdCliente;
                                      det_ventas.idCliente = vent.idCliente;
-                                     
+                                     det_ventas.parteRelVtas = parteRelType.NO;
+                                     det_ventas.parteRelVtasSpecified = true;
+
                                      if (vent.tipoCliente == " 01" && vent.idCliente!= "9999999999999")
                                      {
-                                         det_ventas.parteRelVtas = parteRelType.NO;
                                          det_ventas.tipoCliente = vent.tipoCliente;
-                                         det_ventas.parteRelVtasSpecified = true;
 
                                      }
 
