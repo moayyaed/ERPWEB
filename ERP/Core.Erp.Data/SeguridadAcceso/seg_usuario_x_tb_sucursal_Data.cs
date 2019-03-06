@@ -13,6 +13,7 @@ namespace Core.Erp.Data.SeguridadAcceso
         {
             try
             {
+                int Secuencia = 1;
                 List<seg_usuario_x_tb_sucursal_Info> Lista;
                 using (Entities_seguridad_acceso Context = new Entities_seguridad_acceso())
                 {
@@ -22,7 +23,8 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
                         Su_Descripcion = q.Su_Descripcion,
-                        em_nombre = q.em_nombre
+                        em_nombre = q.em_nombre,
+                        Secuencia = Secuencia
                     }).ToList();
                 }
                 return Lista;

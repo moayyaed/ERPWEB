@@ -43,8 +43,16 @@ namespace Core.Erp.Web.Reportes.RRHH
                 lbl_empresa.Text = emp.RazonSocial;
 
                 tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-                var info_sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-                lbl_sucursal.Text = info_sucursal.Su_Descripcion;
+                if (IdSucursal>0)
+                {
+                    var info_sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
+                    lbl_sucursal.Text = info_sucursal.Su_Descripcion;
+                }
+                else
+                {
+                    lbl_sucursal.Text = "";
+                }
+                
 
                 ImageConverter obj = new ImageConverter();
                 lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);

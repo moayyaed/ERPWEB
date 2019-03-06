@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.General;
 using Core.Erp.Info.General;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 
@@ -85,5 +86,29 @@ namespace Core.Erp.Bus.General
             }
         }
 
+        public tb_empresa_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            try
+            {
+                return odata.get_info_bajo_demanda(args);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<tb_empresa_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            try
+            {
+                return odata.get_list_bajo_demanda(args);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

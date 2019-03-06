@@ -16,6 +16,7 @@ namespace Core.Erp.Info.SeguridadAcceso
         public string Su_Descripcion { get; set; }
         public string em_nombre { get; set; }
         public string IdString { get; set; }
+        public int Secuencia { get; set; }
         #endregion
     }
 }
