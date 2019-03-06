@@ -1,5 +1,4 @@
 @using System.Web.UI.WebControls;
-@model Core.Erp.Info.SeguridadAcceso.seg_usuario_Info
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
@@ -87,9 +86,5 @@
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
-    if (ViewData["EditError"] != null)
-    {
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
 }
-@grid.Bind(Model.lst_usuario_x_sucursal).GetHtml()
+@grid.Bind(Model).GetHtml()

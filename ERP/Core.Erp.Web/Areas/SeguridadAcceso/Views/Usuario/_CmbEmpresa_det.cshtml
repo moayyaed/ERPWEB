@@ -18,6 +18,6 @@
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedEmpresaChanged";
     })
      .BindList(new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_list_bajo_demanda_sucursal, new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_info_bajo_demanda_sucursal)
-    .Bind(Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_Info) ? "" :  Model);
+     .Bind(Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_Info) ? "" :  Model);
 }
 @comboBox.GetHtml()
