@@ -74,7 +74,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult CmbEmpresa_det()
         {
-            seg_usuario_x_tb_sucursal_Info model = new seg_usuario_x_tb_sucursal_Info();
+            seg_usuario_Info model = new seg_usuario_Info();
             return PartialView("_CmbEmpresa_det", model);
         }
         public List<tb_empresa_Info> get_list_bajo_demanda_sucursal(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -301,8 +301,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         public ActionResult EditingDelete(int Secuencia = 0)
         {
             List_det.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            seg_usuario_Info model = new seg_usuario_Info();
-            model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
 
