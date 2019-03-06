@@ -54,7 +54,7 @@ namespace Core.Erp.Data.General
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
-
+                Lista.ForEach(q => q.IdString = q.IdSucursal.ToString("000") + q.IdBodega.ToString("000"));
                 return Lista;
             }
             catch (Exception)
@@ -104,7 +104,7 @@ namespace Core.Erp.Data.General
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
-
+                Lista.ForEach(q => q.IdString = q.IdSucursal.ToString("000") + q.IdBodega.ToString("000"));
                 return Lista;
             }
             catch (Exception)

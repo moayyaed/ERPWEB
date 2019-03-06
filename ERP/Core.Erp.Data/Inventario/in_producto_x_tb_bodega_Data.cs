@@ -28,12 +28,13 @@ namespace Core.Erp.Data.Inventario
                                 IdBodega=q.IdBodega,
                                 IdProducto=q.IdProducto,
                                 Su_Descripcion =q.Su_Descripcion,
+                                bo_Descripcion = q.bo_Descripcion,
                                 Stock_minimo=q.pr_stock_minimo
 
                              }).ToList();
                         
                 }
-                lista.ForEach(v => v.Secuencia = secuancia++);
+                lista.ForEach(v => { v.Secuencia = secuancia++; v.IdString = v.IdSucursal.ToString("000") + v.IdBodega.ToString("000"); });
                 return lista;
             }
             catch (Exception)
@@ -63,11 +64,12 @@ namespace Core.Erp.Data.Inventario
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,
                                  IdBodega = q.IdBodega,
-                                 Su_Descripcion = q.Su_Descripcion
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 bo_Descripcion = q.bo_Descripcion
                              }).ToList();
 
                 }
-                lista.ForEach(v => v.Secuencia = secuancia++);
+                lista.ForEach(v => { v.Secuencia = secuancia++; v.IdString = v.IdSucursal.ToString("000") + v.IdBodega.ToString("000"); });
                 return lista;
             }
             catch (Exception)
