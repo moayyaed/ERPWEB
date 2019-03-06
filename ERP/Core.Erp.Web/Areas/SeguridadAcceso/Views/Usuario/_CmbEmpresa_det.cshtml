@@ -19,7 +19,7 @@
     })
      .BindList(new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_list_bajo_demanda_sucursal, new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_info_bajo_demanda_sucursal)
      //.Bind(Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info) ? "" :  Model);
-     .Bind((Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_Info) || Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info) || Model.GetType() == typeof(List<Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info>)) ? "" : Model);
+     .Bind((Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_Info) || Model.GetType() == typeof(List<Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info>)) ? "" : Model);
 
 }
 @comboBox.GetHtml()
