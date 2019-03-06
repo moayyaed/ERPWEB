@@ -8,6 +8,7 @@ namespace Core.Erp.Info.SeguridadAcceso
 {
     public class seg_usuario_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Key]
         [Required(ErrorMessage = "El campo usuario es obligatorio")]
         public string IdUsuario { get; set; }
@@ -29,5 +30,6 @@ namespace Core.Erp.Info.SeguridadAcceso
         public string IPMaquina { get; set; }
         public string IPImpresora { get; set; }
         public List<seg_Usuario_x_Empresa_Info> lst_usuario_x_empresa { get; set; }
+        public List<seg_usuario_x_tb_sucursal_Info> lst_usuario_x_sucursal { get; set; }
     }
 }

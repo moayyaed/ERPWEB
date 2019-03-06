@@ -18,6 +18,10 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         seg_Usuario_x_Empresa_Bus bus_usuario_x_empresa = new seg_Usuario_x_Empresa_Bus();
         seg_Menu_Bus bus_menu = new seg_Menu_Bus();
+        seg_usuario_x_sucursal_list List_det = new seg_usuario_x_sucursal_list();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+        tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+        seg_usuario_x_tb_sucursal_Bus bus_usuario_x_sucursal = new seg_usuario_x_tb_sucursal_Bus();
         public ActionResult Index()
         {
             return View();
@@ -68,7 +72,17 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult Nuevo()
         {
-            seg_usuario_Info model = new seg_usuario_Info();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            seg_usuario_Info model = new seg_usuario_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+            };
+            List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
         }
@@ -81,6 +95,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 return View(model);
             }
 
+            model.lst_usuario_x_sucursal = List_det.get_list(model.IdTransaccionSession);
             if (!bus_usuario.guardarDB(model))
                 return View(model);
             
@@ -96,15 +111,24 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult Modificar(string IdUsuario = "")
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
             seg_usuario_Info model = bus_usuario.get_info(IdUsuario);
             if (model == null)
                 return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
             cargar_combos(model);
             return View(model);
         }
         [HttpPost]
         public ActionResult Modificar(seg_usuario_Info model)
         {
+            model.lst_usuario_x_sucursal = List_det.get_list(model.IdTransaccionSession);
             if (!bus_usuario.modificarDB(model))
                 return View(model);
 
@@ -121,9 +145,17 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult Anular(string IdUsuario = "")
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
             seg_usuario_Info model = bus_usuario.get_info(IdUsuario);
             if (model == null)
                 return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
             cargar_combos(model);
             return View(model);
         }
@@ -147,12 +179,141 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region Detalle
 
         [ValidateInput(false)]
         public ActionResult GridViewPartial_Usuario_x_Sucursal()
         {
-            var model = new object[0];
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] seg_usuario_x_tb_sucursal_Info info_det)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            if (info_det != null)
+            {
+                var emp = bus_empresa.get_info(IdEmpresa);
+
+                info_det.IdSucursal = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
+
+                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+                if (suc != null && emp != null)
+                {
+                    info_det.IdSucursal = info_det.IdSucursal;
+                    info_det.Su_Descripcion = suc.Su_Descripcion;
+                    info_det.IdEmpresa = info_det.IdEmpresa;
+                    info_det.em_nombre = emp.em_nombre;
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                seg_usuario_x_tb_sucursal_Info info_= new seg_usuario_x_tb_sucursal_Info();
+                info_.IdSucursal = info_det.IdSucursal;
+                info_.Su_Descripcion = info_det.Su_Descripcion;
+                info_.IdEmpresa = info_det.IdEmpresa;
+                var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            }
+            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] seg_usuario_x_tb_sucursal_Info info_det)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            if (info_det != null)
+            {
+                var emp = bus_empresa.get_info(IdEmpresa);
+
+                info_det.IdSucursal = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
+
+                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+                if (suc != null && emp != null)
+                {
+                    info_det.IdSucursal = info_det.IdSucursal;
+                    info_det.Su_Descripcion = suc.Su_Descripcion;
+                    info_det.IdEmpresa = info_det.IdEmpresa;
+                    info_det.em_nombre = emp.em_nombre;
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            }
+             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
+        }
+        public ActionResult EditingDelete(string IdUsuario = "")
+        {
+            List_det.DeleteRow(IdUsuario, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
+        }
+
+        #endregion
+
     }
+    public class seg_usuario_x_sucursal_list
+    {
+        string Variable = "seg_usuario_x_tb_sucursal_Info";
+        public List<seg_usuario_x_tb_sucursal_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<seg_usuario_x_tb_sucursal_Info> list = new List<seg_usuario_x_tb_sucursal_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<seg_usuario_x_tb_sucursal_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<seg_usuario_x_tb_sucursal_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(seg_usuario_x_tb_sucursal_Info info_det, decimal IdTransaccionSession)
+        {
+            List<seg_usuario_x_tb_sucursal_Info> list = get_list(IdTransaccionSession);
+
+            if (list.Where(q => q.IdEmpresa == info_det.IdEmpresa && q.IdSucursal == info_det.IdSucursal).Count() == 0)
+            {
+                info_det.IdEmpresa = list.Count == 0 ? 1 : list.Max(q => q.IdEmpresa) + 1;
+                info_det.IdUsuario = info_det.IdUsuario;
+                info_det.IdSucursal = info_det.IdSucursal;
+                info_det.IdEmpresa = info_det.IdEmpresa;
+                info_det.em_nombre = info_det.em_nombre;
+                info_det.Su_Descripcion = info_det.Su_Descripcion;
+                info_det.IdString = info_det.IdString;
+                list.Add(info_det);
+            }
+
+        }
+
+        public void UpdateRow(seg_usuario_x_tb_sucursal_Info info_det, decimal IdTransaccionSession)
+        {
+            seg_usuario_x_tb_sucursal_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdUsuario == info_det.IdUsuario).First();
+            edited_info.IdUsuario = info_det.IdUsuario;
+            edited_info.IdSucursal = info_det.IdSucursal;
+            edited_info.IdEmpresa = info_det.IdEmpresa;
+            edited_info.em_nombre = info_det.em_nombre;
+            edited_info.Su_Descripcion = info_det.Su_Descripcion;
+            edited_info.IdString = info_det.IdString;
+        }
+
+        public void DeleteRow(string IdUsuario, decimal IdTransaccionSession)
+        {
+            List<seg_usuario_x_tb_sucursal_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.IdUsuario == IdUsuario).First());
+        }
+    }
+
 }

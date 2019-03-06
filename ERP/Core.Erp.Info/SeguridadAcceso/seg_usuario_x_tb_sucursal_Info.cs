@@ -15,6 +15,7 @@ namespace Core.Erp.Info.SeguridadAcceso
         #region Campos que no existen en la tabla
         public string Su_Descripcion { get; set; }
         public string em_nombre { get; set; }
+        public string IdString { get; set; }
         #endregion
     }
 }
