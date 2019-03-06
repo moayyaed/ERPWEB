@@ -736,11 +736,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 Total = Math.Round(lst_det.Sum(q => q.Total), 2, MidpointRounding.AwayFromZero);
             }
             Diferencia = Math.Round(Subtotal0 + SubtotalIVA + IVA - Total, 2);
-            if (Math.Round(Diferencia, 2) > 0)
+            if (Math.Round(Diferencia, 2) != 0)
                 Total += Diferencia;
-            else
-                Subtotal0 += Math.Abs(Diferencia);
-
+            Total = Math.Round(Total, 2, MidpointRounding.AwayFromZero);
             #region Armar diario sin inventario
 
             #region Proveedor
@@ -793,8 +791,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     ct_cbtecble_det_Info det = new ct_cbtecble_det_Info
                     {
                         IdCtaCble = item.IdCtaCble,
-                        dc_Valor_debe = Math.Round(item.Valor + (cont == lst_g.Count ? Diferencia : 0), 2),
-                        dc_Valor = Math.Round(item.Valor + (cont == lst_g.Count ? Diferencia : 0), 2),
+                        dc_Valor_debe = Math.Round(item.Valor, 2,MidpointRounding.AwayFromZero),
+                        dc_Valor = Math.Round(item.Valor, 2,MidpointRounding.AwayFromZero),
                         dc_Observacion = observacion
                     };
                     Lis_ct_cbtecble_det_List.AddRow(det, IdTransaccionSession);
