@@ -218,9 +218,8 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             });
         }
 
-        private void cargar_combos_det()
+        private void cargar_combos_det(int IdEmpresa)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
         }
@@ -236,15 +235,14 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] seg_usuario_x_tb_sucursal_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             if (info_det != null)
             {
-                var emp = bus_empresa.get_info(IdEmpresa);
+                var emp = bus_empresa.get_info(info_det.IdEmpresa);
 
                 info_det.IdSucursal = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
 
-                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+                var suc = bus_sucursal.get_info(info_det.IdEmpresa, info_det.IdSucursal);
                 if (suc != null && emp != null)
                 {
                     info_det.IdSucursal = info_det.IdSucursal;
@@ -264,7 +262,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             }
-            cargar_combos_det();
+            cargar_combos_det(info_det.IdEmpresa);
             seg_usuario_Info model = new seg_usuario_Info();
             model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
@@ -272,15 +270,13 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] seg_usuario_x_tb_sucursal_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
             if (info_det != null)
             {
-                var emp = bus_empresa.get_info(IdEmpresa);
+                var emp = bus_empresa.get_info(info_det.IdEmpresa);
 
                 info_det.IdSucursal = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
 
-                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+                var suc = bus_sucursal.get_info(info_det.IdEmpresa, info_det.IdSucursal);
                 if (suc != null && emp != null)
                 {
                     info_det.IdSucursal = info_det.IdSucursal;
@@ -294,7 +290,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             {
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
-            cargar_combos_det();
+            cargar_combos_det(info_det.IdEmpresa);
             seg_usuario_Info model = new seg_usuario_Info();
             model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);

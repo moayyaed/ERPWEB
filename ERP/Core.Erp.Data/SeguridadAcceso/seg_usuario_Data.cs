@@ -157,6 +157,22 @@ namespace Core.Erp.Data.SeguridadAcceso
                         Fecha_Transaccion = info.Fecha_Transaccion
                     };
                     Context.seg_usuario.Add(Entity);
+                    
+                    if(info.lst_usuario_x_sucursal.Count()>0)
+                    {
+                        foreach (var item in info.lst_usuario_x_sucursal)
+
+                        {
+                            Context.seg_usuario_x_tb_sucursal.Add(new seg_usuario_x_tb_sucursal
+                            {
+                                IdEmpresa = item.IdEmpresa, 
+                                IdUsuario = info.IdUsuario, 
+                                IdSucursal = item.IdSucursal,
+                                Observacion = item.Observacion
+                                
+                            });
+                        }
+                    }
                     Context.SaveChanges();
                 }
 
@@ -187,6 +203,24 @@ namespace Core.Erp.Data.SeguridadAcceso
                     Entity.IdMenu = info.IdMenu == 0 ? null : info.IdMenu;
                     Entity.IPImpresora = info.IPImpresora;
                     Entity.IPUsuario = info.IPMaquina;
+
+                    var lst = Context.seg_usuario_x_tb_sucursal.Where(q => q.IdUsuario == info.IdUsuario).ToList();
+                    Context.seg_usuario_x_tb_sucursal.RemoveRange(lst);
+                    if (info.lst_usuario_x_sucursal.Count() > 0)
+                    {
+                        foreach (var item in info.lst_usuario_x_sucursal)
+
+                        {
+                            Context.seg_usuario_x_tb_sucursal.Add(new seg_usuario_x_tb_sucursal
+                            {
+                                IdEmpresa = item.IdEmpresa,
+                                IdUsuario = info.IdUsuario,
+                                IdSucursal = item.IdSucursal,
+                                Observacion = item.Observacion
+
+                            });
+                        }
+                    }
                     Context.SaveChanges();
                 }               
 
