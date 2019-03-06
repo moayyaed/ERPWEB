@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <div class="col-md-12">
+    @*<div class="col-md-12">
         <table class="table table-bordered table-striped dataTable" role="grid">
             <thead>
                 <tr role="row">
@@ -125,8 +125,19 @@
                 }
             </tbody>
         </table>
-    </div>
+    </div>*@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
 
+                    @Html.Action("GridViewPartial_Usuario_x_Sucursal")
+
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "SeguridadAcceso" },null)">Cancelar</a>

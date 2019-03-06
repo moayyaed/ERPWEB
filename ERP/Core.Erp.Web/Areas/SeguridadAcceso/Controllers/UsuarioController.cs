@@ -147,5 +147,12 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_Usuario_x_Sucursal()
+        {
+            var model = new object[0];
+            return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
+        }
     }
 }

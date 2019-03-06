@@ -12,5 +12,9 @@ namespace Core.Erp.Info.SeguridadAcceso
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public string Observacion { get; set; }
+        #region Campos que no existen en la tabla
+        public string Su_Descripcion { get; set; }
+        public string em_nombre { get; set; }
+        #endregion
     }
 }
