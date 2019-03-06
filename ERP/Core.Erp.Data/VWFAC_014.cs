@@ -31,5 +31,6 @@ namespace Core.Erp.Data
         public int Factura { get; set; }
         public Nullable<System.DateTime> Fecha_Emi_Fact { get; set; }
         public Nullable<System.DateTime> Fecha_transaccion { get; set; }
+        public string Nombre_Evento { get; set; }
     }
 }
