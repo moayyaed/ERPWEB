@@ -974,7 +974,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdDivision = 0,
+                IdArea = 0
             };
 
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
@@ -984,6 +986,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             //reporte.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
             reporte.p_IdPeriodo.Value = model.IdPeriodo;
+            reporte.p_IdDivision.Value = model.IdDivision;
+            reporte.p_IdArea.Value = model.IdArea;
             reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
@@ -1000,7 +1004,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdSucursal.Value = model.IdSucursal;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             //reporte.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
-            reporte.p_IdPeriodo.Value = model.IdPeriodo;            
+            reporte.p_IdPeriodo.Value = model.IdPeriodo;
+            reporte.p_IdDivision.Value = model.IdDivision;
+            reporte.p_IdArea.Value = model.IdArea;
             reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
