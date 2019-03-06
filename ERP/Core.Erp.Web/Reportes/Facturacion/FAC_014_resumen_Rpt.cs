@@ -13,5 +13,9 @@ namespace Core.Erp.Web.Reportes.Facturacion
             InitializeComponent();
         }
 
+        private void FAC_014_resumen_Rpt_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+
+        }
     }
 }

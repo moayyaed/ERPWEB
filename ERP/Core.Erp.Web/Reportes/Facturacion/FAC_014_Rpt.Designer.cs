@@ -610,7 +610,7 @@
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.SubReporte_resumen,
             this.xrTable4});
-            this.ReportFooter.HeightF = 183.5417F;
+            this.ReportFooter.HeightF = 87.54169F;
             this.ReportFooter.Name = "ReportFooter";
             // 
             // SubReporte_resumen
