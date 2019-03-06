@@ -12,15 +12,12 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class seg_Menu_x_Empresa_x_Usuario
+    public partial class vwseg_usuario_x_tb_sucursal
     {
-        public int IdEmpresa { get; set; }
         public string IdUsuario { get; set; }
-        public int IdMenu { get; set; }
-        public bool Lectura { get; set; }
-        public bool Escritura { get; set; }
-        public bool Eliminacion { get; set; }
-    
-        public virtual seg_usuario seg_usuario { get; set; }
+        public int IdEmpresa { get; set; }
+        public int IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
+        public string em_nombre { get; set; }
     }
 }

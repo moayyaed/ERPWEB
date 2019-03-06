@@ -518,6 +518,7 @@
     <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_x_Usuario_Info.cs" />
     <Compile Include="SeguridadAcceso\seg_usuario_Info.cs" />
     <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Info.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Info.cs" />
     <Compile Include="vwcaj_Caja_Movimiento_por_conciliar_Info.cs" />
   </ItemGroup>
   <ItemGroup>
