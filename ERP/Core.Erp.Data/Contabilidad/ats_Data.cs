@@ -73,6 +73,7 @@ namespace Core.Erp.Data.Contabilidad
                                             IdPeriodo = v.IdPeriodo,
                                             Secuencia = v.Secuencia,
                                             tpIdCliente = v.tpIdCliente,
+                                            tipoCliente=v.tipoCliente,
                                             idCliente = v.idCliente,
                                             parteRelVtas = v.parteRel,
                                             tipoComprobante = v.tipoComprobante,

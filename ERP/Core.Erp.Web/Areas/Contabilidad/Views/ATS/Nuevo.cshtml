@@ -38,7 +38,7 @@
             <div class="col-md-10">
                 <div class="form-group">
                     <label for="info_periodo.IdanioFiscal">Periodo*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.info_periodo.IdanioFiscal, settings =>
+                    @Html.DevExpress().ComboBoxFor(q => q.info_periodo.IdPeriodo, settings =>
                {
                    settings.Name = "IdPeriodo";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
@@ -131,10 +131,12 @@
 
 
 <script>
+
+    $("#IdSucursal").change(function () {
+        dolowadATS();
+
+    });
     function dolowadATS() {
-
-
-
         if (IdPeriodo.GetValue() > 0) {
             var datos = {
                 IdPeriodo: IdPeriodo.GetValue(),

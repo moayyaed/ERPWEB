@@ -17,6 +17,7 @@ using DevExpress.Web;
 using DevExpress.Utils;
 using Core.Erp.Bus.Helps;
 using Core.Erp.Bus.General;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 {
@@ -119,16 +120,26 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
             var lst_periodos = bus_periodo.get_list(IdEmpresa, false);
-
-
             ViewBag.lst_periodos = lst_periodos;
+
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+
+            tb_sucursal_Info info_suc = new tb_sucursal_Info()
+            {
+                IdSucursal = 0,
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                Su_Descripcion = "TODAS"
+           };
+            lst_sucursal.Add(info_suc);
+            ViewBag.lst_sucursal = lst_sucursal;
 
         }
 
         #endregion
 
         #region json
-        public JsonResult get_ats(int IdPeriodo, int IdSucursal)
+        public JsonResult get_ats(int IdPeriodo=0, int IdSucursal=0)
         {
             bus_ats = new ats_Bus();
             ats_Info model = new ats_Info();
@@ -145,21 +156,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         #endregion
 
-        private void cargar_combos(int IdNomina_Tipo, int IdNomina_Tipo_Liqui)
-        {
-            try
-            {
-                tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-                var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
-                ViewBag.lst_sucursal = lst_sucursal;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
+     
 
         public class HomeControllerControllerUploadControlSettings
         {

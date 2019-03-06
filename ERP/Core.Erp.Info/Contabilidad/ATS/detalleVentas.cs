@@ -21,7 +21,7 @@ namespace Core.Erp.Info.Contabilidad.ATS
 
         private parteRelType parteRelVtasField;
 
-        //private bool parteRelVtasFieldSpecified;
+        private bool parteRelVtasFieldSpecified;
 
         private string tipoClienteField;
 
@@ -93,18 +93,18 @@ namespace Core.Erp.Info.Contabilidad.ATS
         }
 
         /// <comentarios/>
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public bool parteRelVtasSpecified
-        //{
-        //    get
-        //    {
-        //        return this.parteRelVtasFieldSpecified;
-        //    }
-        //    set
-        //    {
-        //        this.parteRelVtasFieldSpecified = value;
-        //    }
-        //}
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool parteRelVtasSpecified
+        {
+            get
+            {
+                return this.parteRelVtasFieldSpecified;
+            }
+            set
+            {
+                this.parteRelVtasFieldSpecified = value;
+            }
+        }
 
         /// <comentarios/>
         public string tipoCliente

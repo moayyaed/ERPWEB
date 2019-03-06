@@ -52,8 +52,8 @@ namespace Core.Erp.Bus.Contabilidad
                 ats.razonSocial = info_empresa.RazonSocial.Replace(".", " ").Replace("ñ", "n").Replace("Ñ", "N");
                 ats.Anio = info_periodo.IdanioFiscal.ToString();
                 ats.Mes = info_periodo.pe_mes.ToString().PadLeft(2, '0');
-                info_sucursal = data_sucursal.get_info(IdEmpresa, IdSucursal);
-                ats.numEstabRuc = info_sucursal.Su_CodigoEstablecimiento.ToString().PadLeft(3, '0');
+                var  sucursales = data_sucursal.get_list(IdEmpresa, false);
+                ats.numEstabRuc = sucursales.Count.ToString().PadLeft(3, '0');
                 ats.TipoIDInformante = ivaTypeTipoIDInformante.R;
                 ats.codigoOperativo = codigoOperativoType.IVA;
                 ats.totalVentas = info_ats.lst_ventas.Sum(v=>v.baseImpGrav+v.baseImpGrav);
@@ -69,78 +69,79 @@ namespace Core.Erp.Bus.Contabilidad
                     info_ats.lst_compras.ForEach(
                     comp =>
                        {
-                       detalleCompras comp_det = new detalleCompras();
+                           detalleCompras comp_det = new detalleCompras();
 
-                       registro = comp.denopr + " " + comp.secuencial;
-                        comp.denopr = cl_funciones.QuitartildesEspaciosPuntos(comp.denopr);
-                       comp_det.codSustento = comp.codSustento;
-                       comp_det.tpIdProv = comp.tpIdProv;
-                       comp_det.idProv = comp.idProv;
-                       comp_det.tipoComprobante = comp.tipoComprobante;
-                       comp_det.parteRel = parteRelType.NO;
-                       comp_det.fechaRegistro = comp.fechaRegistro.ToString().Substring(0, 10);
-                       comp_det.establecimiento = comp.establecimiento;
-                       comp_det.puntoEmision = comp.puntoEmision;
-                       comp_det.secuencial = comp.secuencial;
-                       comp_det.fechaEmision = comp.fechaEmision.ToString().Substring(0, 10);
-                       comp_det.autorizacion = comp.autorizacion;
-                       comp_det.baseNoGraIva = comp.baseNoGraIva.ToString("n2");
-                       comp_det.baseImponible = comp.baseImponible.ToString("n2");
-                       comp_det.baseImpGrav = comp.baseImpGrav.ToString("n2");
-                       comp_det.baseImpExe = comp.baseImpExe.ToString("n2");
-                       comp_det.montoIce = comp.montoIce.ToString("n2");
-                       comp_det.montoIva = comp.montoIva.ToString("n2");
-                       comp_det.valRetBien10 = "0.00";
-                       comp_det.valRetServ20 = "0.00";
-                       comp_det.valorRetBienes = "0.00";
-                       comp_det.valRetServ50 = "0.00";
-                       comp_det.valorRetServicios = "0.00";
-                       comp_det.valRetServ100 = "0.00";
-                       comp_det.totbasesImpReemb = "0.00";
-                       comp_det.valRetBien10Specified = true;
-                       comp_det.valRetServ20Specified = true;
-                       comp_det.valRetServ50Specified = true;
-                       comp_det.totbasesImpReembSpecified = true;
-                       pagoExterior item_pago = new pagoExterior();
-                       item_pago.pagoLocExt = (comp.pagoLocExt == "LOC") ? pagoLocExtType.Item01 : pagoLocExtType.Item02;
-                       item_pago.paisEfecPago = (item_pago.pagoLocExt == pagoLocExtType.Item01) ? "NA" : (comp.pagoLocExt != null || comp.pagoLocExt != "") ? comp.pagoLocExt : "NA";
-                       item_pago.aplicConvDobTrib = aplicConvDobTribType.NA;
-                       item_pago.pagExtSujRetNorLeg = aplicConvDobTribType.NA;
-                       comp_det.pagoExterior = item_pago;
-                        if(comp_det.secuencial== "000001512")
+                           registro = comp.denopr + " " + comp.secuencial;
+                           comp.denopr = cl_funciones.QuitartildesEspaciosPuntos(comp.denopr);
+                           comp_det.codSustento = comp.codSustento;
+                           comp_det.tpIdProv = comp.tpIdProv;
+                           comp_det.idProv = comp.idProv;
+                           comp_det.tipoComprobante = comp.tipoComprobante;
+                           comp_det.parteRel = parteRelType.NO;
+                           comp_det.fechaRegistro = comp.fechaRegistro.ToString().Substring(0, 10);
+                           comp_det.establecimiento = comp.establecimiento;
+                           comp_det.puntoEmision = comp.puntoEmision;
+                           comp_det.secuencial = comp.secuencial;
+                           comp_det.fechaEmision = comp.fechaEmision.ToString().Substring(0, 10);
+                           comp_det.autorizacion = comp.autorizacion;
+                           comp_det.baseNoGraIva = comp.baseNoGraIva.ToString("n2");
+                           comp_det.baseImponible = comp.baseImponible.ToString("n2");
+                           comp_det.baseImpGrav = comp.baseImpGrav.ToString("n2");
+                           comp_det.baseImpExe = comp.baseImpExe.ToString("n2");
+                           comp_det.montoIce = comp.montoIce.ToString("n2");
+                           comp_det.montoIva = comp.montoIva.ToString("n2");
+                           comp_det.valRetBien10 = "0.00";
+                           comp_det.valRetServ20 = "0.00";
+                           comp_det.valorRetBienes = "0.00";
+                           comp_det.valRetServ50 = "0.00";
+                           comp_det.valorRetServicios = "0.00";
+                           comp_det.valRetServ100 = "0.00";
+                           comp_det.totbasesImpReemb = "0.00";
+                           comp_det.valRetBien10Specified = true;
+                           comp_det.valRetServ20Specified = true;
+                           comp_det.valRetServ50Specified = true;
+                           comp_det.totbasesImpReembSpecified = true;
+                           pagoExterior item_pago = new pagoExterior();
+                           item_pago.pagoLocExt = (comp.pagoLocExt == "LOC") ? pagoLocExtType.Item01 : pagoLocExtType.Item02;
+                           item_pago.paisEfecPago = (item_pago.pagoLocExt == pagoLocExtType.Item01) ? "NA" : (comp.pagoLocExt != null || comp.pagoLocExt != "") ? comp.pagoLocExt : "NA";
+                           item_pago.aplicConvDobTrib = aplicConvDobTribType.NA;
+                           item_pago.pagExtSujRetNorLeg = aplicConvDobTribType.NA;
+                           comp_det.pagoExterior = item_pago;
+                           if (comp_det.secuencial == "000001512")
                            {
 
                            }
-                       if (Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav) >= 1000)
-                       {
-                           comp_det.formasDePago = null;
-                           string[] AFormaPago = { "20" };
-                           comp_det.formasDePago = AFormaPago;
-                       }
-                       #region Reembolso
-                       if (comp.codSustento == "41")
-                       {
-                           comp_det.codSustento = "01";
-                           comp_det.reembolsos = new List<reembolso>();
-                           reembolso reem = new reembolso();
-                           reem.tipoComprobanteReemb = "01";
-                           reem.tpIdProvReemb = comp.tpIdProv;
-                           reem.idProvReemb = comp.idProv;
-                           reem.establecimientoReemb = comp.establecimiento;
-                           reem.puntoEmisionReemb = comp.puntoEmision;
-                           reem.secuencialReemb = comp.secuencial;
-                           reem.fechaEmisionReemb = comp.fechaEmision.ToString().Substring(0, 10);
-                           reem.autorizacionReemb = comp.autorizacion;
-                           reem.baseImponibleReemb = comp.baseImponible;
-                           reem.baseImpGravReemb = comp.baseImpGrav;
-                           reem.baseImpExeReemb = comp.baseImpExe;
-                           reem.montoIceRemb = comp.montoIce;
-                           reem.montoIvaRemb = comp.montoIva;
-                           comp_det.totbasesImpReembSpecified = true;
-                           comp_det.totbasesImpReemb = Convert.ToString(Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav));
-                           comp_det.reembolsos.Add(reem);
+                           if (Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav) >= 1000)
+                           {
+                               comp_det.formasDePago = null;
+                               string[] AFormaPago = { "20" };
+                               comp_det.formasDePago = AFormaPago;
+                           }
+                           #region Reembolso
+                           if (comp.codSustento == "41")
+                           {
+                               comp_det.codSustento = "01";
+                               comp_det.reembolsos = new List<reembolso>();
+                               reembolso reem = new reembolso();
+                               reem.tipoComprobanteReemb = "01";
+                               reem.tpIdProvReemb = comp.tpIdProv;
+                               reem.idProvReemb = comp.idProv;
+                               reem.establecimientoReemb = comp.establecimiento;
+                               reem.puntoEmisionReemb = comp.puntoEmision;
+                               reem.secuencialReemb = comp.secuencial;
+                               reem.fechaEmisionReemb = comp.fechaEmision.ToString().Substring(0, 10);
+                               reem.autorizacionReemb = comp.autorizacion;
+                               reem.baseImponibleReemb = comp.baseImponible;
+                               reem.baseImpGravReemb = comp.baseImpGrav;
+                               reem.baseImpExeReemb = comp.baseImpExe;
+                               reem.montoIceRemb = comp.montoIce;
+                               reem.montoIvaRemb = comp.montoIva;
+                               comp_det.totbasesImpReembSpecified = true;
+                               comp_det.totbasesImpReemb = Convert.ToString(Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav));
+                               comp_det.reembolsos.Add(reem);
 
-                       }
+                           }
+                       
                        #endregion
 
                        #region retencion por facturas
@@ -252,12 +253,29 @@ namespace Core.Erp.Bus.Contabilidad
                                  vent =>
                                  {
                                      detalleVentas det_ventas = new detalleVentas();
-                                     det_ventas.tpIdCliente = vent.tipoCliente;
+                                     det_ventas.tpIdCliente = vent.tpIdCliente;
                                      det_ventas.idCliente = vent.idCliente;
-                                     if (det_ventas.tpIdCliente == " 04" | det_ventas.tpIdCliente == " 05" | det_ventas.tpIdCliente == " 06")
+                                     
+                                     if (vent.tipoCliente == " 01" && vent.idCliente!= "9999999999999")
                                      {
                                          det_ventas.parteRelVtas = parteRelType.NO;
+                                         det_ventas.tipoCliente = vent.tipoCliente;
+                                         det_ventas.parteRelVtasSpecified = true;
+
                                      }
+
+                                     if (det_ventas.idCliente== "9999999999999")
+                                     {
+                                         det_ventas.tpIdCliente = "07";
+                                         det_ventas.parteRelVtasSpecified = false;
+                                         
+                                     }
+                                     if (det_ventas.tpIdCliente == "06")
+                                     {
+                                         det_ventas.tipoCliente = vent.tipoCliente;
+                                         det_ventas.denoCli = vent.DenoCli;
+                                     }
+
                                      vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
                                      det_ventas.tipoComprobante = "18";
                                      det_ventas.tipoEmision = tipoEmisionType.F;
@@ -390,6 +408,12 @@ namespace Core.Erp.Bus.Contabilidad
 
                 ats.totalVentas = info_ats.lst_ventas.Sum(y => y.ventasEstab);
                 ats.totalVentasSpecified = true;
+                ats.numEstabRuc  = info_ats.lst_ventas.GroupBy(x => x.codEstab)
+                        .Select(x => new
+                        {
+                            codEstab = x.Key,
+                            ventasEstab = x.Sum(y => y.ventasEstab)
+                        }).Count().ToString().PadLeft(3,'0');
                 return ats;
 
                 
