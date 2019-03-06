@@ -466,6 +466,7 @@
     <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_x_Usuario_Bus.cs" />
     <Compile Include="SeguridadAcceso\seg_usuario_Bus.cs" />
     <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Bus.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

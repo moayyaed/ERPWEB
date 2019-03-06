@@ -1630,6 +1630,7 @@
     <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_x_Usuario_Data.cs" />
     <Compile Include="SeguridadAcceso\seg_usuario_Data.cs" />
     <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Data.cs" />
     <Compile Include="seg_Menu.cs">
       <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
     </Compile>
@@ -1646,6 +1647,9 @@
       <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
     </Compile>
     <Compile Include="seg_usuario_x_tb_sis_reporte.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_usuario_x_tb_sucursal.cs">
       <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
     </Compile>
     <Compile Include="SPACTF_004_detalle_Result.cs">
@@ -2631,6 +2635,9 @@
     </Compile>
     <Compile Include="vwRo_Solicitud_Vacaciones.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwseg_usuario_x_tb_sucursal.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
     </Compile>
     <Compile Include="vwtb_banco_procesos_bancarios_x_empresa.cs">
       <DependentUpon>Model_general.tt</DependentUpon>

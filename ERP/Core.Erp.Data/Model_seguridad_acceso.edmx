@@ -86,6 +86,33 @@
           <Property Name="CodReporte" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="observacion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="seg_usuario_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwseg_usuario_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="em_nombre" />
+          </Key>
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+        </EntityType>
         <Association Name="FK_seg_Menu_x_Empresa_seg_Menu">
           <End Role="seg_Menu" Type="Self.seg_Menu" Multiplicity="1" />
           <End Role="seg_Menu_x_Empresa" Type="Self.seg_Menu_x_Empresa" Multiplicity="*" />
@@ -146,6 +173,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_seg_usuario_x_tb_sucursal_seg_usuario">
+          <End Role="seg_usuario" Type="Self.seg_usuario" Multiplicity="1" />
+          <End Role="seg_usuario_x_tb_sucursal" Type="Self.seg_usuario_x_tb_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seg_usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="seg_usuario_x_tb_sucursal">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Model_seguridad_accesoStoreContainer">
           <EntitySet Name="seg_Menu" EntityType="Self.seg_Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_Menu_x_Empresa" EntityType="Self.seg_Menu_x_Empresa" Schema="dbo" store:Type="Tables" />
@@ -153,6 +192,16 @@
           <EntitySet Name="seg_usuario" EntityType="Self.seg_usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_Usuario_x_Empresa" EntityType="Self.seg_Usuario_x_Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_usuario_x_tb_sis_reporte" EntityType="Self.seg_usuario_x_tb_sis_reporte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Self.seg_usuario_x_tb_sucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwseg_usuario_x_tb_sucursal" EntityType="Self.vwseg_usuario_x_tb_sucursal" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwseg_usuario_x_tb_sucursal].[IdUsuario] AS [IdUsuario], 
+    [vwseg_usuario_x_tb_sucursal].[IdEmpresa] AS [IdEmpresa], 
+    [vwseg_usuario_x_tb_sucursal].[IdSucursal] AS [IdSucursal], 
+    [vwseg_usuario_x_tb_sucursal].[Su_Descripcion] AS [Su_Descripcion], 
+    [vwseg_usuario_x_tb_sucursal].[em_nombre] AS [em_nombre]
+    FROM [dbo].[vwseg_usuario_x_tb_sucursal] AS [vwseg_usuario_x_tb_sucursal]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_seg_Menu_x_Empresa_seg_Menu" Association="Self.FK_seg_Menu_x_Empresa_seg_Menu">
             <End Role="seg_Menu" EntitySet="seg_Menu" />
             <End Role="seg_Menu_x_Empresa" EntitySet="seg_Menu_x_Empresa" />
@@ -172,6 +221,10 @@
           <AssociationSet Name="FK_seg_usuario_x_tb_sis_reporte_seg_usuario" Association="Self.FK_seg_usuario_x_tb_sis_reporte_seg_usuario">
             <End Role="seg_usuario" EntitySet="seg_usuario" />
             <End Role="seg_usuario_x_tb_sis_reporte" EntitySet="seg_usuario_x_tb_sis_reporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_seg_usuario_x_tb_sucursal_seg_usuario" Association="Self.FK_seg_usuario_x_tb_sucursal_seg_usuario">
+            <End Role="seg_usuario" EntitySet="seg_usuario" />
+            <End Role="seg_usuario_x_tb_sucursal" EntitySet="seg_usuario_x_tb_sucursal" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -249,6 +302,12 @@
             <End Role="seg_usuario" EntitySet="seg_usuario" />
             <End Role="seg_usuario_x_tb_sis_reporte" EntitySet="seg_usuario_x_tb_sis_reporte" />
           </AssociationSet>
+          <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" />
+          <EntitySet Name="vwseg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.vwseg_usuario_x_tb_sucursal" />
+          <AssociationSet Name="FK_seg_usuario_x_tb_sucursal_seg_usuario" Association="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario">
+            <End Role="seg_usuario" EntitySet="seg_usuario" />
+            <End Role="seg_usuario_x_tb_sucursal" EntitySet="seg_usuario_x_tb_sucursal" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="seg_Menu">
           <Key>
@@ -308,6 +367,7 @@
           <NavigationProperty Name="seg_Menu_x_Empresa_x_Usuario" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" FromRole="seg_usuario" ToRole="seg_Menu_x_Empresa_x_Usuario" />
           <NavigationProperty Name="seg_Usuario_x_Empresa" Relationship="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario" FromRole="seg_usuario" ToRole="seg_Usuario_x_Empresa" />
           <NavigationProperty Name="seg_usuario_x_tb_sis_reporte" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sis_reporte_seg_usuario" FromRole="seg_usuario" ToRole="seg_usuario_x_tb_sis_reporte" />
+          <NavigationProperty Name="seg_usuario_x_tb_sucursal" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario" FromRole="seg_usuario" ToRole="seg_usuario_x_tb_sucursal" />
         </EntityType>
         <Association Name="FK_seg_usuario_seg_Menu">
           <End Type="Model_seguridad_acceso.seg_Menu" Role="seg_Menu" Multiplicity="0..1" />
@@ -353,6 +413,44 @@
               <PropertyRef Name="IdUsuario" />
             </Principal>
             <Dependent Role="seg_usuario_x_tb_sis_reporte">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="seg_usuario_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario" FromRole="seg_usuario_x_tb_sucursal" ToRole="seg_usuario" />
+        </EntityType>
+        <EntityType Name="vwseg_usuario_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="em_nombre" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_seg_usuario_x_tb_sucursal_seg_usuario">
+          <End Type="Model_seguridad_acceso.seg_usuario" Role="seg_usuario" Multiplicity="1" />
+          <End Type="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" Role="seg_usuario_x_tb_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seg_usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="seg_usuario_x_tb_sucursal">
               <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
@@ -441,6 +539,27 @@
                 <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seg_usuario_x_tb_sucursal">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_usuario_x_tb_sucursal">
+              <MappingFragment StoreEntitySet="seg_usuario_x_tb_sucursal">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwseg_usuario_x_tb_sucursal">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.vwseg_usuario_x_tb_sucursal">
+              <MappingFragment StoreEntitySet="vwseg_usuario_x_tb_sucursal">
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>
             </EntityTypeMapping>

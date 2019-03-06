@@ -573,8 +573,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
                 p.TextField = "bo_Descripcion";
-                p.ValueField = "IdBodega";
-                p.ValueType = typeof(int);
+                p.ValueField = "IdString";
+                p.Columns.Add("bo_Descripcion","Bodega");
+                p.TextFormatString = "{0}";
+                p.ValueType = typeof(string);
                 p.BindList(bus_bodega.get_list(IdEmpresa, IdSucursal, false));
             });
         }
@@ -695,7 +697,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         #endregion
 
-
         #region funciones del detalle producto por bodega
 
      
@@ -707,6 +708,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             if(info_det!= null)
             {
                 var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+
+                info_det.IdBodega = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
+
                 var bod = bus_bodega.get_info(IdEmpresa, info_det.IdSucursal, info_det.IdBodega);
                 if(suc!= null && bod !=null)
                 {
@@ -741,6 +745,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             if (info_det != null)
             {
                 var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+
+                info_det.IdBodega = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
+
                 var bod = bus_bodega.get_info(IdEmpresa, info_det.IdSucursal, info_det.IdBodega);
                 if (suc != null && bod != null)
                 {
@@ -1170,7 +1177,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 info_det.Stock_minimo = info_det.Stock_minimo;
                 info_det.Su_Descripcion = info_det.Su_Descripcion;
                 info_det.bo_Descripcion = info_det.bo_Descripcion;
-
+                info_det.IdString = info_det.IdString;
                 list.Add(info_det);
             }
 
@@ -1185,7 +1192,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             edited_info.Stock_minimo = info_det.Stock_minimo;
             edited_info.Su_Descripcion = info_det.Su_Descripcion;
             edited_info.bo_Descripcion = info_det.bo_Descripcion;
-
+            edited_info.IdString = info_det.IdString;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

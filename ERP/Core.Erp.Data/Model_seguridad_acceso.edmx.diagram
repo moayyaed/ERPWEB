@@ -16,6 +16,9 @@
         <AssociationConnector Association="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" />
         <AssociationConnector Association="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario" />
         <AssociationConnector Association="Model_seguridad_acceso.FK_seg_usuario_x_tb_sis_reporte_seg_usuario" />
+        <EntityTypeShape EntityType="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" Width="1.5" PointX="10.625" PointY="7.25" />
+        <EntityTypeShape EntityType="Model_seguridad_acceso.vwseg_usuario_x_tb_sucursal" Width="1.5" PointX="0.75" PointY="9.75" />
+        <AssociationConnector Association="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

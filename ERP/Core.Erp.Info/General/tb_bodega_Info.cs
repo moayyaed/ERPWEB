@@ -37,8 +37,11 @@ namespace Core.Erp.Info.General
         public string IdCtaCtble_Inve { get; set; }
         public string IdCtaCtble_Costo { get; set; }
 
-        //Campos que no existen en la tabla
+        #region Campos que no existen en la tabla
+        public string IdString { get; set; }
         public bool bo_manejaFacturacion_bool { get; set; }
         public bool bo_EsBodega_bool { get; set; }
+        #endregion
+
     }
 }
