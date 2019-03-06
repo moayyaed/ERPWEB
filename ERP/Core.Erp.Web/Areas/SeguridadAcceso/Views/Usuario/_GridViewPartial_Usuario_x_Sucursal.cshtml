@@ -5,9 +5,7 @@
     {
         settings.Name = "GridView_usuario_x_sucursal";
         settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_Usuario_x_Sucursal" };
-
-
-        settings.KeyFieldName = "IdUsuario";
+        settings.KeyFieldName = "Secuencia";
         settings.Width = Unit.Percentage(100);
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Usuario", Action = "EditingAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Usuario", Action = "EditingUpdate" };
@@ -87,9 +85,7 @@
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
-
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-
     });
     if (ViewData["EditError"] != null)
     {

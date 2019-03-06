@@ -205,7 +205,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         #region Detalle
         public ActionResult CargarSucursal()
         {
-         //  int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+           // int IdEmpresa = 0;
             int IdEmpresa = Request.Params["IdEmpresa"] != null ? Convert.ToInt32(Request.Params["IdEmpresa"].ToString()) : 0;
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {

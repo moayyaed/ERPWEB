@@ -148,6 +148,10 @@
                     }
 
 <script>
+    function OnBeginCallback(s, e) {
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+    }
+
     function OnSelectedEmpresaChanged() {
         GridViewPartial_Usuario_x_Sucursal.GetEditor("IdSucursal").PerformCallback();
     }
