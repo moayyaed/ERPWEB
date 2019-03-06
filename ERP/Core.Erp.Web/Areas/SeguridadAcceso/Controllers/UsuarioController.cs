@@ -291,9 +291,9 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
-        public ActionResult EditingDelete(string IdUsuario = "")
+        public ActionResult EditingDelete(int Secuencia = 0)
         {
-            List_det.DeleteRow(IdUsuario, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List_det.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
@@ -327,7 +327,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
             if (list.Where(q => q.IdEmpresa == info_det.IdEmpresa && q.IdSucursal == info_det.IdSucursal).Count() == 0)
             {
-                info_det.IdEmpresa = list.Count == 0 ? 1 : list.Max(q => q.IdEmpresa) + 1;
+                info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
                 info_det.IdUsuario = info_det.IdUsuario;
                 info_det.IdSucursal = info_det.IdSucursal;
                 info_det.IdEmpresa = info_det.IdEmpresa;
@@ -350,10 +350,10 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             edited_info.IdString = info_det.IdString;
         }
 
-        public void DeleteRow(string IdUsuario, decimal IdTransaccionSession)
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<seg_usuario_x_tb_sucursal_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.IdUsuario == IdUsuario).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
         }
     }
 
