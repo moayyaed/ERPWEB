@@ -12,7 +12,8 @@
 @using (Html.BeginForm("Modificar", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" })
-    <div class="row">
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+<div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
@@ -107,6 +108,15 @@
                 }
             </tbody>
         </table>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_Usuario_x_Sucursal")
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="box-footer">
