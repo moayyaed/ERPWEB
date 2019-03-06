@@ -1,4 +1,5 @@
 @using System.Web.UI.WebControls;
+@model Core.Erp.Info.SeguridadAcceso.seg_usuario_Info
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
@@ -81,7 +82,6 @@
                 p.TextFormatString = "{0}";
                 p.Columns.Add("Su_Descripcion", "Sucursal");
                 p.ValueType = typeof(string);
-                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
                 p.BindList(ViewBag.lst_sucursal);
                 p.ClientSideEvents.BeginCallback = "SucursalComboBox_BeginCallback";
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
@@ -91,5 +91,9 @@
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
     });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
 }
-@grid.Bind(Model).GetHtml()
+@grid.Bind(Model.lst_usuario_x_sucursal).GetHtml()

@@ -74,7 +74,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult CmbEmpresa_det()
         {
-            int model = 0;
+            seg_usuario_x_tb_sucursal_Info model = new seg_usuario_x_tb_sucursal_Info();
             return PartialView("_CmbEmpresa_det", model);
         }
         public List<tb_empresa_Info> get_list_bajo_demanda_sucursal(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -101,7 +101,10 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             {
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
             };
-            List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            var lst = bus_usuario_x_sucursal.GetList(Convert.ToString(SessionFixed.IdUsuario));
+            List_det.set_list(lst, model.IdTransaccionSession);
+
             cargar_combos(model);
             return View(model);
         }
@@ -141,6 +144,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 return RedirectToAction("Index");
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
+            List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
         }
@@ -201,7 +205,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         #region Detalle
         public ActionResult CargarSucursal()
         {
-         //   int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+         //  int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             int IdEmpresa = Request.Params["IdEmpresa"] != null ? Convert.ToInt32(Request.Params["IdEmpresa"].ToString()) : 0;
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
@@ -224,7 +228,8 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         public ActionResult GridViewPartial_Usuario_x_Sucursal()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            seg_usuario_Info model = new seg_usuario_Info();
+            model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
 
@@ -254,12 +259,14 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 info_.IdSucursal = info_det.IdSucursal;
                 info_.Su_Descripcion = info_det.Su_Descripcion;
                 info_.IdEmpresa = info_det.IdEmpresa;
+                info_.em_nombre = info_det.em_nombre;
                 var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             }
             cargar_combos_det();
-            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            seg_usuario_Info model = new seg_usuario_Info();
+            model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
         [HttpPost, ValidateInput(false)]
@@ -288,13 +295,15 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
             cargar_combos_det();
-            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            seg_usuario_Info model = new seg_usuario_Info();
+            model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
         public ActionResult EditingDelete(int Secuencia = 0)
         {
             List_det.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            seg_usuario_Info model = new seg_usuario_Info();
+            model.lst_usuario_x_sucursal = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
 

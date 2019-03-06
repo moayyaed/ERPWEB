@@ -149,6 +149,7 @@ namespace Core.Erp.Data.General
                                  }).ToList();
                 }
 
+                Lista.ForEach(v => {v.IdString = v.IdEmpresa.ToString("000") + v.IdSucursal.ToString("000"); });
                 return Lista;
             }
             catch (Exception)

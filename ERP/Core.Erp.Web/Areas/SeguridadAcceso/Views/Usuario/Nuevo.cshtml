@@ -11,13 +11,16 @@
 
 
 <script>
-    $(function () {
+
+   $(function () {
         $("#div_admin").hide();
     })
+
 </script>
 
 @using (Html.BeginForm("Nuevo", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(q=>q.IdTransaccionSession)
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -27,7 +30,6 @@
         </div>
 
     }
-    @Html.HiddenFor(q=>q.IdTransaccionSession)
 
     <div class="row">
         <div class="col-md-12">
@@ -146,7 +148,12 @@
                     }
 
 <script>
-
+    function OnSelectedEmpresaChanged() {
+        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdSucursal").PerformCallback();
+    }
+    function SucursalComboBox_BeginCallback(s, e) {
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+    }
     $("#es_super_admin").change(function () {
 
         if ($("#es_super_admin").is(":checked")) {
@@ -154,10 +161,5 @@
         } else
             $("#div_admin").hide();
     });
-    function OnSelectedEmpresaChanged(s, e) {
-        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdSucursal").PerformCallback();
-    }
-    function SucursalComboBox_BeginCallback(s, e) {
-        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
-    }
+
 </script>
