@@ -74,7 +74,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult CmbEmpresa_det()
         {
-            seg_usuario_Info model = new seg_usuario_Info();
+            int model = 0;
             return PartialView("_CmbEmpresa_det", model);
         }
         public List<tb_empresa_Info> get_list_bajo_demanda_sucursal(ListEditItemsRequestedByFilterConditionEventArgs args)

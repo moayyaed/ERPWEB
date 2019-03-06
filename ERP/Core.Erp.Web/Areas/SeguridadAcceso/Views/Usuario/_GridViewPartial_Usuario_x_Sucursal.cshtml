@@ -6,7 +6,7 @@
         settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_Usuario_x_Sucursal" };
 
 
-        settings.KeyFieldName = "Secuencia";
+        settings.KeyFieldName = "IdUsuario";
         settings.Width = Unit.Percentage(100);
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Usuario", Action = "EditingAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Usuario", Action = "EditingUpdate" };
@@ -75,7 +75,7 @@
             column.Visible = false;
             column.EditorProperties().ComboBox(p =>
             {
-                p.CallbackRouteValues = new { Controller = "Usuario", Action = "CargarEmpresa", Area = "SeguridadAcceso" };
+                p.CallbackRouteValues = new { Controller = "Usuario", Action = "CargarSucursal", Area = "SeguridadAcceso" };
                 p.ValueField = "IdString";
                 p.TextField = "Su_Descripcion";
                 p.TextFormatString = "{0}";

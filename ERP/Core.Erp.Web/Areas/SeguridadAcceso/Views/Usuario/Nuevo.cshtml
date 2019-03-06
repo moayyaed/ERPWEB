@@ -154,7 +154,7 @@
         } else
             $("#div_admin").hide();
     });
-    function OnSelectedEmpresaChanged() {
+    function OnSelectedEmpresaChanged(s, e) {
         GridViewPartial_Usuario_x_Sucursal.GetEditor("IdSucursal").PerformCallback();
     }
     function SucursalComboBox_BeginCallback(s, e) {
