@@ -32,5 +32,7 @@ namespace Core.Erp.Data
         public string ru_descripcion { get; set; }
         public double Valor { get; set; }
         public Nullable<int> dias { get; set; }
+        public string Division { get; set; }
+        public string Area { get; set; }
     }
 }
