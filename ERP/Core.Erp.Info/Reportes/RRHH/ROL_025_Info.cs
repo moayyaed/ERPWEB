@@ -27,5 +27,7 @@ namespace Core.Erp.Info.Reportes.RRHH
         public double Valor { get; set; }
         public Nullable<int> dias { get; set; }
         public Nullable<long> IdRow { get; set; }
+        public string Division { get; set; }
+        public string Area { get; set; }
     }
 }
