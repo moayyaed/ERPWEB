@@ -17,7 +17,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-de
+
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Empleado", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -553,17 +553,7 @@ de
                             }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                      
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="IdDepartamento">Cuenta contable*</label>
-                                @Html.Partial("_CmbEmpleado_CtaCon", Model.IdCtaCble_Emplea)
-                                @Html.ValidationMessageFor(q => q.IdCtaCble_Emplea, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
+                        </div>                     
 
                         <div class="col-md-2">
                             <div class="form-group">
@@ -577,10 +567,6 @@ de
                                 @Html.ValidationMessageFor(q => q.GozaMasDeQuinceDiasVaciones, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-
-
-
 
                         <div id="Divdias">
                             <div class="col-md-2">
