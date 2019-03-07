@@ -250,7 +250,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 {
                     info_det.IdSucursal = info_det.IdSucursal;
                     info_det.Su_Descripcion = suc.Su_Descripcion;
-                    info_det.var_IdEmpresa = info_det.IdEmpresa;
+                    info_det.IdEmpresa = info_det.IdEmpresa;
                     info_det.em_nombre = emp.em_nombre;
                 }
             }
@@ -259,7 +259,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 seg_usuario_x_tb_sucursal_Info info_= new seg_usuario_x_tb_sucursal_Info();
                 info_.IdSucursal = info_det.IdSucursal;
                 info_.Su_Descripcion = info_det.Su_Descripcion;
-                info_.var_IdEmpresa = info_det.IdEmpresa;
+                info_.IdEmpresa = info_det.IdEmpresa;
                 info_.em_nombre = info_det.em_nombre;
                 var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
