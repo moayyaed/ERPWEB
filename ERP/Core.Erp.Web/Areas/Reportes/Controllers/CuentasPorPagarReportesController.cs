@@ -325,6 +325,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_IdTipoServicio.Value = model.IdTipoServicio;
+            report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario;
@@ -340,6 +342,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_IdTipoServicio.Value = model.IdTipoServicio;
+            report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario;
