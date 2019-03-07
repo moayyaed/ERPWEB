@@ -794,6 +794,61 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+
+        public ActionResult INV_016()
+        {
+
+            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCategoria = "",
+                IdLinea = 0,
+                IdGrupo = 0,
+                IdSubGrupo = 0
+            };
+
+            cargar_combos(model);
+            INV_016_Rpt report = new INV_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCategoria.Value = model.IdCategoria == null ? "" : model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubGrupo.Value = model.IdSubGrupo;
+            report.p_noMostrarSinVenta.Value = model.no_mostrar_valores_en_0;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult INV_016(cl_filtros_inventario_Info model)
+        {
+            INV_016_Rpt report = new INV_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubGrupo.Value = model.IdSubGrupo;
+            report.p_noMostrarSinVenta.Value = model.no_mostrar_valores_en_0;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            cargar_combos(model);
+
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 
 }
