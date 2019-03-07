@@ -41,7 +41,6 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-
         public List<ro_Config_Param_contable_Info> get_list(int IdEmpresa, string es_provision)
         {
             try
@@ -76,7 +75,6 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-
         public ro_Config_Param_contable_Info get_info(int IdEmpresa, int IdDivision, int IdArea, int IdDepartamento, string IdRubro)
         {
             try
@@ -166,6 +164,52 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+
+        public bool ModificarDB(ro_Config_Param_contable_Info info)
+        {
+            try
+            {
+                using (Entities_rrhh db = new Entities_rrhh())
+                {
+                    if (info.IdCtaCble == "")
+                        info.IdCtaCble = null;
+                    if (info.IdCtaCble_prov_debito == "")
+                        info.IdCtaCble_prov_debito = null;
+
+                    var entity = db.ro_Config_Param_contable.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdDivision == info.IdDivision && q.IdArea == info.IdArea && q.IdDepartamento == info.IdDepartamento && q.IdRubro == info.IdRubro).FirstOrDefault();
+                    if(entity != null)
+                    {
+                        entity.IdCtaCble = info.rub_provision == true ? info.IdCtaCble_prov_debito : null;
+                        entity.IdCtaCble_Haber = info.rub_provision == true ? info.IdCtaCble_prov_credito : null;
+                    }else
+                    {
+                        entity = new ro_Config_Param_contable
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdDivision = info.IdDivision,
+                            IdArea = info.IdArea,
+                            IdDepartamento = info.IdDepartamento,
+                            IdRubro = info.IdRubro,
+                            IdCentroCosto = info.IdCentroCosto,
+                            DebCre = info.DebCre,
+
+
+                            IdCtaCble = info.rub_provision == true ? info.IdCtaCble_prov_debito : null,
+                            IdCtaCble_Haber = info.rub_provision == true ? info.IdCtaCble_prov_credito : info.IdCtaCble
+                        };
+                        db.ro_Config_Param_contable.Add(entity);
+                    }
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public bool eliminarDB(int IdEmpresa)
         {
             try
