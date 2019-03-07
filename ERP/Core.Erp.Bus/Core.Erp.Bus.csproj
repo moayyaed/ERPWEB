@@ -146,6 +146,7 @@
     <Compile Include="CuentasPorPagar\cp_SolicitudPagoDet_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_SolicitudPago_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_TipoDocumento_Bus.cs" />
+    <Compile Include="FacturacionElectronica\TipoComprobante_Bus.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Bus.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Bus.cs" />
     <Compile Include="Facturacion\fa_catalogo_Bus.cs" />
@@ -468,9 +469,7 @@
     <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Bus.cs" />
     <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Bus.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FacturacionElectronica\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Core.Erp.Data\Core.Erp.Data.csproj">
       <Project>{a52f3b91-b460-4ffb-aa55-a667dc60db43}</Project>

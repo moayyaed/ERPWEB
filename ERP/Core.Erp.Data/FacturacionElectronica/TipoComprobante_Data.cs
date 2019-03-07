@@ -22,15 +22,19 @@ namespace Core.Erp.Data.FacturacionElectronica
             TipoComprobante_Info info_comprobantes = new TipoComprobante_Info();
             List<comprobanteRetencion> lista = new List<comprobanteRetencion>();
             List<factura> lista_facturas = new List<factura>();
+            List<guiaRemision> lista_guia_remision = new List<guiaRemision>();
+            List<notaCredito> lista_nc = new List<notaCredito>();
+            List<notaDebito> lista_nd = new List<notaDebito>();
 
+            DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
+            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
 
             #region Facturas Fixed
 
             try
             {
                
-                DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
-                DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+              
                 try
                 {
                     using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
@@ -342,7 +346,397 @@ namespace Core.Erp.Data.FacturacionElectronica
 
             #endregion
 
+            #region Guia de remision
+            try
+            {
+                using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
+                {
+                    var guiaRemisions = context.vwfe_guia_remision.Where(v => v.gi_fecha >= Fi && v.gi_fecha <= Ff).ToList();
+                    foreach (var item in guiaRemisions)
+                    {
 
+
+                        guiaRemision myObject = new guiaRemision();
+                        myObject.version = "1.1.0";
+                        myObject.id = guiaRemisionID.comprobante;
+                        infoTributaria info = new infoTributaria();
+                        myObject.infoGuiaRemision = new guiaRemisionInfoGuiaRemision();
+                        destinatario destinatario = new destinatario();
+
+                        myObject.infoTributaria = info;
+                        myObject.destinatarios = new guiaRemisionDestinatarios();
+                        info.ambiente = "1";
+                        myObject.infoTributaria.tipoEmision = "1";
+                        myObject.infoTributaria.razonSocial = item.RazonSocial;
+                        myObject.infoTributaria.nombreComercial = item.NombreComercial;
+                        myObject.infoTributaria.ruc = item.em_ruc;
+                        myObject.infoTributaria.claveAcceso = "0000000000000000000000000000000000000000000000000";
+                        //*********************************************************************************
+                        myObject.infoTributaria.codDoc = "06";
+                        myObject.infoTributaria.estab = item.Serie1;
+                        myObject.infoTributaria.ptoEmi = item.Serie2;
+                        myObject.infoTributaria.secuencial = item.NumGuia_Preimpresa;
+                        myObject.infoTributaria.dirMatriz = item.em_direccion;
+                        myObject.infoGuiaRemision.dirEstablecimiento = item.em_direccion;
+                        myObject.infoGuiaRemision.dirPartida = item.Direccion_Origen;
+                        myObject.infoGuiaRemision.razonSocialTransportista = item.Nombre;
+                        myObject.infoGuiaRemision.rucTransportista = item.Cedula;
+                        myObject.infoGuiaRemision.placa = item.placa;
+                        if (item.Cedula.Length == 10)
+                            myObject.infoGuiaRemision.tipoIdentificacionTransportista = "05";
+
+                        if (item.Cedula.Length == 13)
+                            myObject.infoGuiaRemision.tipoIdentificacionTransportista = "04";
+
+                        myObject.infoGuiaRemision.fechaIniTransporte = string.Format("{0:dd/MM/yyyy}", item.gi_FechaInicioTraslado);
+                        myObject.infoGuiaRemision.fechaFinTransporte = string.Format("{0:dd/MM/yyyy}", item.gi_FechaFinTraslado);
+                        myObject.infoGuiaRemision.obligadoContabilidad = obligadoContabilidad.SI.ToString();
+                        if (item.ContribuyenteEspecial == "S")
+                        {
+                            myObject.infoGuiaRemision.contribuyenteEspecial = "1234";
+                        }
+
+                        var facturas_x_guias = context.vwfe_guia_remision_x_factura.Where(v => v.IdEmpresa == item.IdEmpresa && v.IdGuiaRemision == item.IdGuiaRemision).ToList();
+                        myObject.destinatarios.destinatario = new List<destinatario>();
+                        foreach (var item_fac in facturas_x_guias)
+                        {
+                            destinatario.identificacionDestinatario = item.pe_cedulaRuc;
+                            destinatario.razonSocialDestinatario = item.pe_nombreCompleto;
+                            destinatario.dirDestinatario = item.Direccion;
+                            destinatario.motivoTraslado = item.gi_Observacion;
+                            destinatario.codEstabDestino = item_fac.vt_serie1;
+                            destinatario.ruta = item.ruta;
+                            destinatario.codDocSustento = "01";
+                            destinatario.numDocSustento = item_fac.vt_serie1 + "-" + item_fac.vt_serie2 + "-" + item_fac.vt_NumFactura;
+                            destinatario.numAutDocSustento = item_fac.vt_autorizacion;
+                            destinatario.fechaEmisionDocSustento = string.Format("{0:dd/MM/yyyy}", item.gi_fecha);
+                            myObject.destinatarios.destinatario.Add(destinatario);
+                        }
+
+                        var guia_detalle = context.vwfe_guia_remision_detalle.Where(v => v.IdEmpresa == item.IdEmpresa && v.IdGuiaRemision == item.IdGuiaRemision).ToList();
+                        destinatario.detalles = new destinatarioDetalles();
+                        destinatario.detalles.detalle = new List<detalle>();
+                        foreach (var item_det in guia_detalle)
+                        {
+                            destinatario.detalles.detalle.Add(new detalle
+                            {
+                                codigoAdicional = item_det.pr_codigo,
+                                codigoInterno = item_det.pr_codigo,
+                                descripcion = item_det.pr_descripcion,
+                                cantidad = Convert.ToDecimal(item_det.gi_cantidad),
+
+
+                            });
+                        }
+                        // campos adicionales 
+
+                        myObject.infoAdicional = new List<guiaRemisionCampoAdicional>();
+                        if (item.Correo != null)
+                        {
+                            if (validar_correo(item.Correo) == true)
+                            {
+                                guiaRemisionCampoAdicional compoadicional = new guiaRemisionCampoAdicional();
+                                compoadicional.nombre = "MAIL";
+                                compoadicional.Value = item.Correo;
+                                myObject.infoAdicional.Add(compoadicional);
+                            }
+                        }
+                        if (item.Telefono != null)
+                        {
+                            guiaRemisionCampoAdicional compoadicional = new guiaRemisionCampoAdicional();
+                            compoadicional.nombre = "TELEFONO";
+                            compoadicional.Value = item.Telefono;
+                            myObject.infoAdicional.Add(compoadicional);
+                        }
+                        lista_guia_remision.Add(myObject);
+
+                    }
+                }
+                info_comprobantes.cbtGR.AddRange(lista_guia_remision) ;
+            }
+            catch (Exception ex)
+            {
+             
+            }
+            #endregion
+
+            #region Nota credito
+            try
+            {
+                using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
+                {
+                    var nota_credito = context.vwfe_nota_credito.Where(v => v.no_fecha >= Fi && v.no_fecha <= Ff);
+                    foreach (var item in nota_credito)
+                    {
+
+
+                        notaCredito myObject = new notaCredito();
+                        totalConImpuestosTotalImpuesto impuesto = null;
+                        myObject.version = "1.1.0";
+                        myObject.id = new notaCreditoID();
+                        infoTributaria info = new infoTributaria();
+                        myObject.infoNotaCredito = new notaCreditoInfoNotaCredito();
+                        myObject.infoNotaCredito.totalConImpuestos = new List<totalConImpuestosTotalImpuesto>();
+                        myObject.infoTributaria = info;
+                        myObject.detalles = new List<notaCreditoDetalle>();
+                        info.ambiente = "1";
+                        myObject.infoTributaria.tipoEmision = "1";
+                        myObject.infoTributaria.razonSocial = item.NombreComercial.Trim().ToString().Replace("S.A", ""); ;
+                        myObject.infoTributaria.nombreComercial = item.NombreComercial.Trim().ToString().Replace("S.A", ""); ;
+                        myObject.infoTributaria.ruc = item.em_ruc;
+                        myObject.infoTributaria.claveAcceso = "0000000000000000000000000000000000000000000000000";
+                        //*********************************************************************************
+                        myObject.infoTributaria.codDoc = "04";
+                        myObject.infoTributaria.estab = item.Serie1;
+                        myObject.infoTributaria.ptoEmi = item.Serie2;
+                        myObject.infoTributaria.secuencial = item.NumNota_Impresa;
+                        myObject.infoTributaria.dirMatriz = item.em_direccion;
+                        myObject.infoNotaCredito.fechaEmision = string.Format("{0:dd/MM/yyyy}", item.no_fecha);
+                        myObject.infoNotaCredito.dirEstablecimiento = item.em_direccion;
+                        //if(item.ContribuyenteEspecial=="S")
+                        //myObject.infoNotaCredito.contribuyenteEspecial = "00000";
+                        myObject.infoNotaCredito.obligadoContabilidad = obligadoContabilidad.SI.ToString();
+                        myObject.infoNotaCredito.codDocModificado = "01";
+                        myObject.infoNotaCredito.numDocModificado = item.vt_serie1 + "-" + item.vt_serie2 + "-" + item.vt_NumFactura;
+                        myObject.infoNotaCredito.fechaEmisionDocSustento = string.Format("{0:dd/MM/yyyy}", item.vt_fecha);
+                        myObject.infoNotaCredito.motivo = item.sc_observacion;
+                        if (item.IdTipoDocumento == "RUC")
+                            myObject.infoNotaCredito.tipoIdentificacionComprador = "04";
+
+                        if (item.IdTipoDocumento == "PAS")
+                            myObject.infoNotaCredito.tipoIdentificacionComprador = "06";
+
+                        if (item.IdTipoDocumento == "CED")
+                            myObject.infoNotaCredito.tipoIdentificacionComprador = "05";
+
+                        myObject.infoNotaCredito.razonSocialComprador = item.pe_nombreCompleto.ToString().Replace("S.A", "").Trim();
+                        myObject.infoNotaCredito.identificacionComprador = item.pe_cedulaRuc;
+                        myObject.infoNotaCredito.dirEstablecimiento = item.em_direccion;
+                        myObject.infoNotaCredito.totalSinImpuestos = Convert.ToDecimal(item.total_sin_impuesto);
+                        myObject.infoNotaCredito.valorModificacion = Convert.ToDecimal(item.importeTotal);
+
+                        //valor total de la factura
+                        myObject.infoNotaCredito.valorModificacion = Convert.ToDecimal(item.importeTotal);
+                        myObject.infoNotaCredito.moneda = "DOLAR";
+
+
+                        var facturas_imuestos = context.vwfe_nota_credito_impuestos.Where(v => v.IdEmpresa == item.IdEmpresa && v.IdSucursal == item.IdSucursal && v.IdBodega == item.IdBodega && v.IdNota == item.IdNota).ToList();
+                        foreach (var item_imp in facturas_imuestos)
+                        {
+                            impuesto = new totalConImpuestosTotalImpuesto();
+                            impuesto.codigo = "2";
+                            if (item_imp.vt_por_iva == 0)
+                                impuesto.codigoPorcentaje = "1";
+                            if (item_imp.vt_por_iva == 12)
+                                impuesto.codigoPorcentaje = "2";
+                            if (item_imp.vt_por_iva == 14)
+                                impuesto.codigoPorcentaje = "3";
+                            impuesto.baseImponible = Convert.ToDecimal(item_imp.Base_imponible);
+                            impuesto.valor = Convert.ToDecimal(item_imp.impuesto);
+                            myObject.infoNotaCredito.totalConImpuestos.Add(impuesto);
+                        }
+
+
+                        var facturas_detalle = context.vwfe_nota_credito_detalle.Where(v => v.IdEmpresa == item.IdEmpresa && v.IdSucursal == item.IdSucursal && v.IdBodega == item.IdBodega && v.IdNota == item.IdNota).ToList();
+
+                        foreach (var item_det in facturas_detalle)
+                        {
+
+                            Info.FacturacionElectronica.Factura_V2.impuesto imp = new Info.FacturacionElectronica.Factura_V2.impuesto();
+                            notaCreditoDetalle fDetalle = new notaCreditoDetalle();
+                            fDetalle.codigoInterno = item_det.pr_codigo;
+                            fDetalle.codigoAdicional = item_det.pr_codigo;
+                            fDetalle.descripcion = item_det.pr_descripcion;
+                            fDetalle.cantidad = Convert.ToDecimal(item_det.sc_cantidad);
+                            fDetalle.precioUnitario = Convert.ToDecimal(item_det.sc_Precio);
+                            fDetalle.descuento = Convert.ToDecimal(item_det.sc_descUni * item_det.sc_cantidad);
+                            fDetalle.descuentoSpecified = true;
+                            fDetalle.precioTotalSinImpuesto = Convert.ToDecimal(item_det.sc_subtotal);
+                            if (item_det.vt_por_iva == 12)
+                            {
+                                imp.codigo = "2";
+                                imp.codigoPorcentaje = "2";
+                                imp.tarifa = Convert.ToDecimal(item_det.vt_por_iva);
+                                imp.baseImponible = Convert.ToDecimal(item_det.sc_subtotal);
+                                imp.valor = Convert.ToDecimal(item_det.sc_iva);
+
+                            }
+
+                            if (item_det.vt_por_iva == 14)
+                            {
+                                imp.codigo = "2";
+                                imp.codigoPorcentaje = "3";
+                                imp.tarifa = Convert.ToDecimal(item_det.vt_por_iva);
+                                imp.baseImponible = Convert.ToDecimal(item_det.sc_subtotal);
+                                imp.valor = Convert.ToDecimal(item_det.sc_iva);
+
+                            }
+                            if (item_det.vt_por_iva == 0)
+                            {
+                                imp.codigo = "2";
+                                imp.codigoPorcentaje = "0";
+                                imp.tarifa = Convert.ToDecimal(item_det.vt_por_iva);
+                                imp.baseImponible = Convert.ToDecimal(item_det.sc_subtotal);
+                                imp.valor = Convert.ToDecimal(item_det.sc_iva);
+
+                            }
+
+                            fDetalle.impuestos = new List<Info.FacturacionElectronica.Factura_V2.impuesto>();
+                            fDetalle.impuestos.Add(imp);
+                            myObject.detalles.Add(fDetalle);
+                        }
+
+
+                        // campos adicionales 
+
+                        myObject.infoAdicional = new List<notaCreditoCampoAdicional>();
+                        if (item.Correo != null)
+                        {
+                            if (validar_correo(item.Correo) == true)
+                            {
+                                notaCreditoCampoAdicional compoadicional = new notaCreditoCampoAdicional();
+                                compoadicional.nombre = "MAIL";
+                                compoadicional.Value = item.Correo;
+                                myObject.infoAdicional.Add(compoadicional);
+                            }
+                        }
+
+                        lista_nc.Add(myObject);
+
+                    }
+                }
+                lista_nc.AddRange(lista_nc);
+            }
+            catch (Exception ex)
+            {
+            }
+
+            #endregion
+
+
+            #region Nota debito
+
+            try
+            {
+                using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
+                {
+                    var nota_credito = context.vwfe_nota_debito.Where(v => v.no_fecha >= Fi && v.no_fecha <= Ff);
+                    foreach (var item in nota_credito)
+                    {
+                        notaDebito myObject = new notaDebito();
+                        myObject.version = "1.0.0";
+                        myObject.id = new notaDebitoID();
+                        infoTributaria info = new infoTributaria();
+                        myObject.infoNotaDebito = new notaDebitoInfoNotaDebito();
+                        myObject.infoNotaDebito.impuestos = new List<Info.FacturacionElectronica.Factura_V2.impuesto>();
+                        myObject.infoTributaria = info;
+                        info.ambiente = "1";
+                        myObject.infoTributaria.tipoEmision = "1";
+                        myObject.infoTributaria.razonSocial = item.NombreComercial;
+                        myObject.infoTributaria.nombreComercial = item.NombreComercial;
+                        myObject.infoTributaria.ruc = item.em_ruc;
+                        myObject.infoTributaria.claveAcceso = "0000000000000000000000000000000000000000000000000";
+                        myObject.idSpecified = true;
+                        //*********************************************************************************
+                        myObject.infoTributaria.codDoc = "05";
+                        myObject.infoTributaria.estab = item.Serie1;
+                        myObject.infoTributaria.ptoEmi = item.Serie2;
+                        myObject.infoTributaria.secuencial = item.NumNota_Impresa;
+                        myObject.infoTributaria.dirMatriz = item.em_direccion;
+                        myObject.infoNotaDebito.fechaEmision = string.Format("{0:dd/MM/yyyy}", item.no_fecha);
+                        myObject.infoNotaDebito.dirEstablecimiento = item.em_direccion;
+                        //if(item.ContribuyenteEspecial=="S")
+                        //myObject.infoNotaDebito.contribuyenteEspecial = "00000";
+                        myObject.infoNotaDebito.obligadoContabilidad = obligadoContabilidad.SI.ToString();
+                        myObject.infoNotaDebito.codDocModificado = "01";
+                        myObject.infoNotaDebito.numDocModificado = item.vt_serie1 + "-" + item.vt_serie2 + "-" + item.vt_NumFactura;
+                        myObject.infoNotaDebito.fechaEmisionDocSustento = string.Format("{0:dd/MM/yyyy}", item.vt_fecha);
+                        if (item.IdTipoDocumento == "RUC")
+                            myObject.infoNotaDebito.tipoIdentificacionComprador = "04";
+
+                        if (item.IdTipoDocumento == "PAS")
+                            myObject.infoNotaDebito.tipoIdentificacionComprador = "06";
+
+                        if (item.IdTipoDocumento == "CED")
+                            myObject.infoNotaDebito.tipoIdentificacionComprador = "05";
+
+                        myObject.infoNotaDebito.razonSocialComprador = item.pe_nombreCompleto.ToString().Replace("S.A", "").Trim();
+                        myObject.infoNotaDebito.identificacionComprador = item.pe_cedulaRuc;
+                        myObject.infoNotaDebito.dirEstablecimiento = item.em_direccion;
+
+                        decimal totalSinImpuestos = 0;
+                        decimal total = 0;
+
+
+                        var facturas_imuestos = context.vwfe_nota_debito_impuestos.Where(v => v.IdEmpresa == item.IdEmpresa && v.IdSucursal == item.IdSucursal && v.IdBodega == item.IdBodega && v.IdNota == item.IdNota).ToList();
+                        foreach (var item_imp in facturas_imuestos)
+                        {
+                            if (item_imp.vt_por_iva > 0)
+                            {
+                                Info.FacturacionElectronica.Factura_V2.impuesto impuesto = new Info.FacturacionElectronica.Factura_V2.impuesto();
+                                impuesto.codigo = "2";
+                                if (item_imp.vt_por_iva == 0)
+                                    impuesto.codigoPorcentaje = "1";
+                                if (item_imp.vt_por_iva == 12)
+                                    impuesto.codigoPorcentaje = "2";
+                                if (item_imp.vt_por_iva == 14)
+                                    impuesto.codigoPorcentaje = "3";
+                                impuesto.tarifa = Convert.ToDecimal(item_imp.vt_por_iva);
+                                impuesto.baseImponible = Convert.ToDecimal(item_imp.Base_imponible);
+                                totalSinImpuestos = totalSinImpuestos + impuesto.baseImponible;
+                                impuesto.valor = Convert.ToDecimal(item_imp.impuesto);
+                                total = total + impuesto.baseImponible + impuesto.valor;
+                                myObject.infoNotaDebito.impuestos.Add(impuesto);
+                            }
+                        }
+                        myObject.infoNotaDebito.totalSinImpuestos = Convert.ToDecimal(totalSinImpuestos);
+                        myObject.infoNotaDebito.valorTotal = total;
+
+                        myObject.motivos = new notaDebitoMotivos();
+                        myObject.motivos.motivo = new List<notaDebitoMotivosMotivo>();
+                        var facturas_detalle = context.vwfe_nota_debito_detalle.Where(v => v.IdEmpresa == item.IdEmpresa && v.IdSucursal == item.IdSucursal && v.IdBodega == item.IdBodega && v.IdNota == item.IdNota && v.sc_total > 0).ToList();
+
+                        foreach (var item_det in facturas_detalle)
+                        {
+                            notaDebitoMotivosMotivo motivos = new notaDebitoMotivosMotivo();
+                            motivos.razon = item_det.pr_descripcion;
+                            motivos.valor = Convert.ToDecimal(item_det.sc_subtotal);
+                            myObject.motivos.motivo.Add(motivos);
+
+                        }
+
+
+
+                        myObject.infoAdicional = new List<notaDebitoCampoAdicional>();
+                        if (item.Correo != null)
+                        {
+                            if (validar_correo(item.Correo) == true)
+                            {
+                                notaDebitoCampoAdicional compoadicional = new notaDebitoCampoAdicional();
+                                compoadicional.nombre = "MAIL";
+                                compoadicional.Value = item.Correo;
+                                myObject.infoAdicional.Add(compoadicional);
+                            }
+                        }
+                        if (item.Telefono != null)
+                        {
+                            notaDebitoCampoAdicional compoadicional = new notaDebitoCampoAdicional();
+                            compoadicional.nombre = "TELEFONO";
+                            compoadicional.Value = item.Telefono;
+                            myObject.infoAdicional.Add(compoadicional);
+                        }
+                        lista_nd.Add(myObject);
+
+                    }
+                }
+                info_comprobantes.cbteDeb.AddRange(lista_nd);
+            }
+            catch (Exception ex)
+            {
+               
+            }
+
+            #endregion
 
             return info_comprobantes;
         }

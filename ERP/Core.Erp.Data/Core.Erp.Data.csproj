@@ -277,6 +277,7 @@
     <Compile Include="Contabilidad\ct_plancta_nivel_Data.cs" />
     <Compile Include="Contabilidad\ct_punto_cargo_Data.cs" />
     <Compile Include="Contabilidad\ct_RevisionContable_Data.cs" />
+    <Compile Include="Core\Erp\Info\class_sri.cs" />
     <Compile Include="cp_codigo_SRI.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
