@@ -17,7 +17,7 @@
 {
     @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" })
     @Html.HiddenFor(q => q.IdTransaccionSession)
-<div class="row">
+    <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
@@ -51,14 +51,49 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label for="es_super_admin">@Html.CheckBoxFor(q => q.es_super_admin, new { @id = "es_super_admin" }) ¿Es usuario Administrador?</label>
-                        <label for="ExigirDirectivaContrasenia">@Html.CheckBoxFor(q => q.ExigirDirectivaContrasenia) Exigir directivas de contraseña</label>
-                        <label for="CambiarContraseniaSgtSesion">@Html.CheckBoxFor(q => q.CambiarContraseniaSgtSesion) Cambiar contraseña el próximo inicio de sesión</label>
-                    </div>
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.es_super_admin, settings =>
+                           {
+                               settings.Name = "es_super_admin";
+                               settings.Text = "¿Es usuario Administrador?";
+                               settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){ValidarSuperAdmin();}";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.es_super_admin, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.ExigirDirectivaContrasenia, settings =>
+                           {
+                               settings.Name = "ExigirDirectivaContrasenia";
+                               settings.Text = "Exigir directivas de contraseña";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.ExigirDirectivaContrasenia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.CambiarContraseniaSgtSesion, settings =>
+                           {
+                               settings.Name = "CambiarContraseniaSgtSesion";
+                               settings.Text = "Cambiar contraseña el próximo inicio de sesión";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.CambiarContraseniaSgtSesion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
                 <div class="form-group" id="div_admin" hidden>
                     <label for="contrasena_admin">Contraseña Administrador</label>
                     @Html.TextBoxFor(q => q.contrasena_admin, new { @class = "form-control", @id = "contrasena_admin" })
@@ -66,36 +101,36 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdMenu">Menú inicio de sesión</label>
-                    @Html.DropDownListFor(q => q.IdMenu, new SelectList(ViewBag.lst_menu, "IdMenu", "DescripcionMenu_combo", Model.IdMenu == null ? 0 : Model.IdMenu), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.IdMenu, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdMenu">Menú inicio de sesión</label>
+                                @Html.DropDownListFor(q => q.IdMenu, new SelectList(ViewBag.lst_menu, "IdMenu", "DescripcionMenu_combo", Model.IdMenu == null ? 0 : Model.IdMenu), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdMenu, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    @Html.Action("GridViewPartial_Usuario_x_Sucursal")
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_Usuario_x_Sucursal")
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary" id="btn_guardar">Guardar</button>        
-        <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "SeguridadAcceso" },null)">Cancelar</a>
-        <button type="button" class="btn btn-danger" onclick="ResetearContrasena();" id="btn_resetear">Resetear contraseña</button>
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="btn_guardar">Guardar</button>
+                    <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "SeguridadAcceso" },null)">Cancelar</a>
+                    <button type="button" class="btn btn-danger" onclick="ResetearContrasena();" id="btn_resetear">Resetear contraseña</button>
+                </div>
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }
 }
 <script>
 
@@ -106,12 +141,14 @@
     });
 
     function ValidarSuperAdmin() {
-        if ($("#es_super_admin").is(":checked")) {
+        var admin = es_super_admin.GetValue();
+        if (admin == true) {
             $("#div_admin").show();
-        } else
+        }
+        else {
             $("#div_admin").hide();
+        }
     }
-
     function ResetearContrasena() {
         var r = confirm("A continuación se reseteará la contraseña del usuario " + $("#IdUsuario").val() + ", se le asignará la contraseña por defecto: 1234, ¿Desea continuar?");
         if (r == true) {
@@ -143,12 +180,12 @@
                 error: function (error) {
                 }
             });
-        }        
+        }
     }
     function OnSelectedEmpresaChanged() {
         GridViewPartial_Usuario_x_Sucursal.GetEditor("IdString").PerformCallback();
     }
     function SucursalComboBox_BeginCallback(s, e) {
-        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+        e.customArgs["var_IdEmpresa"] = IdEmpresa.GetValue();
     }
 </script>
