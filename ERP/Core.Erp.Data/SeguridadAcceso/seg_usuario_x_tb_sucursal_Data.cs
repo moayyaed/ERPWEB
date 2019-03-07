@@ -23,10 +23,11 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
                         Su_Descripcion = q.Su_Descripcion,
-                        em_nombre = q.em_nombre,
-                        Secuencia = Secuencia
+                        em_nombre = q.em_nombre
                     }).ToList();
                 }
+
+                Lista.ForEach(v => { v.Secuencia = Secuencia++; });
                 Lista.ForEach(v => { v.IdString = v.IdEmpresa.ToString("000") + v.IdSucursal.ToString("000"); });
                 return Lista;
             }

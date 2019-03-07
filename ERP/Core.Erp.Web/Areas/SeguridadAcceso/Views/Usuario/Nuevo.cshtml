@@ -10,12 +10,14 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
 
-<script>
+<script type="text/javascript">
 
    $(function () {
         $("#div_admin").hide();
     })
-
+    function OnBeginCallback(s, e) {
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+    }
 </script>
 
 @using (Html.BeginForm("Nuevo", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -116,7 +118,7 @@
         GridViewPartial_Usuario_x_Sucursal.GetEditor("IdSucursal").PerformCallback();
     }
     function SucursalComboBox_BeginCallback(s, e) {
-        e.customArgs["var_IdEmpresa"] = IdEmpresa.GetValue();
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
     }
     $("#es_super_admin").change(function () {
 

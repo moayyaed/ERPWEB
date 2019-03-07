@@ -6,9 +6,9 @@
         settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_Usuario_x_Sucursal" };
         settings.KeyFieldName = "Secuencia";
         settings.Width = Unit.Percentage(100);
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Usuario", Action = "EditingAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Usuario", Action = "EditingUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Usuario", Action = "EditingDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Usuario", Action = "EditingAddNew", Area = "SeguridadAcceso" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Usuario", Action = "EditingUpdate", Area = "SeguridadAcceso" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Usuario", Action = "EditingDelete", Area = "SeguridadAcceso" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
 
         //Configuración para que la grilla no muestre texto completo
@@ -81,7 +81,7 @@
                 p.ValueType = typeof(string);
                 p.BindList(ViewBag.lst_sucursal);
                 p.ClientSideEvents.BeginCallback = "SucursalComboBox_BeginCallback";
-                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
             });
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
