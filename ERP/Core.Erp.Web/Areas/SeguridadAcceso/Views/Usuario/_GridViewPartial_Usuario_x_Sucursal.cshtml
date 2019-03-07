@@ -40,14 +40,14 @@
         {
             column.FieldName = "em_nombre";
             column.Caption = "Empresa";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(40);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdEmpresa";
             column.Caption = "Empresa";
-            column.Width = Unit.Percentage(35);
+            column.Width = Unit.Percentage(40);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -61,14 +61,14 @@
         {
             column.FieldName = "Su_Descripcion";
             column.Caption = "Sucursal";
-            column.Width = Unit.Percentage(35);
+            column.Width = Unit.Percentage(40);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdString";
             column.Caption = "Sucursal";
-            column.Width = Unit.Percentage(35);
+            column.Width = Unit.Percentage(40);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.Visible = false;
             column.EditorProperties().ComboBox(p =>
