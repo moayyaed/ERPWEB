@@ -32,6 +32,8 @@ namespace Core.Erp.Info.Helps
         public bool no_mostrar_en_conciliacion { get; set; }
         public bool no_mostrar_saldo_en_0 { get; set; }
         public string IdTipoServicio { get; set; }
+
+        public int[] IntArray { get; set; }
         #endregion
 
         #region filtros de RRHH

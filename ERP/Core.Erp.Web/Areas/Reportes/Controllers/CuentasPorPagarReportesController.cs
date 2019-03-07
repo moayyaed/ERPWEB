@@ -101,8 +101,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos();
+            cargar_combos(false);
             CXP_007_Rpt report = new CXP_007_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
@@ -117,6 +118,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_007(cl_filtros_Info model)
         {
             CXP_007_Rpt report = new CXP_007_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
@@ -124,11 +126,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_agrupado.Value = model.mostrar_agrupado;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos();
+            cargar_combos(false);
             ViewBag.Report = report;
             return View(model);
         }
-        private void cargar_combos()
+        private void cargar_combos(bool agregar_todos)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             cp_proveedor_Bus bus_proveedor = new cp_proveedor_Bus();
@@ -137,12 +139,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            lst_sucursal.Add(new tb_sucursal_Info
+
+            if (agregar_todos== true)
             {
-                IdEmpresa = IdEmpresa, 
-                IdSucursal = 0,
-                Su_Descripcion = "TODOS"
-            });
+                lst_sucursal.Add(new tb_sucursal_Info
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = 0,
+                    Su_Descripcion = "TODOS"
+                });
+            }
+            
             ViewBag.lst_sucursal = lst_sucursal;
 
 
@@ -155,7 +162,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdProveedor = 0
             };
-            cargar_combos();
+            cargar_combos(true);
             CXP_008_Rpt report = new CXP_008_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -180,7 +187,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_no_mostrar_saldo_0.Value = model.no_mostrar_saldo_en_0;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos();
+            cargar_combos(true);
             report.RequestParameters = false;
                 ViewBag.Report = report;
             return View(model);
@@ -192,7 +199,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos();
+            cargar_combos(true);
             CXP_009_Rpt report = new CXP_009_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -216,7 +223,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos();
+            cargar_combos(true);
             ViewBag.Report = report;
             return View(model);
         }
@@ -227,7 +234,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdProveedor = 0
             };
-            cargar_combos();
+            cargar_combos(true);
             CXP_010_Rpt report = new CXP_010_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdProveedor.Value = model.IdProveedor;
@@ -253,7 +260,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_observacion_completa.Value = model.mostrar_observacion_completa;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos();
+            cargar_combos(true);
             report.RequestParameters = false;
             ViewBag.Report = report;
             return View(model);
@@ -320,7 +327,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdProveedor = 0
             };
-            cargar_combos();
+            cargar_combos(true);
             CXP_014_Rpt report = new CXP_014_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -348,7 +355,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos();
+            cargar_combos(true);
             report.RequestParameters = false;
             ViewBag.Report = report;
             return View(model);
