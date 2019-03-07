@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Web.Areas.Inventario.Controllers;
@@ -254,6 +255,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursal = lst_sucursal;
 
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
