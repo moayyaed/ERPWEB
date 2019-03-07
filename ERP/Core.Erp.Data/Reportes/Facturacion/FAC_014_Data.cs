@@ -38,7 +38,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                         Subtotal = q.Subtotal,
                         Total = q.Total,
                         ValorUnitario = q.ValorUnitario,
-                        Nombre_Evento = q.Nombre_Evento
+                        Nombre_Evento = q.Nombre_Evento,
+                        Observacion = q.Observacion
                     }).ToList();
                 }
                 return Lista;
