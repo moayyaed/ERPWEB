@@ -8,7 +8,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script type="text/javascript">
+    function OnBeginCallback(s, e) {
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+    }
+</script>
 @using (Html.BeginForm("Modificar", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" })
@@ -145,6 +149,6 @@
         GridViewPartial_Usuario_x_Sucursal.GetEditor("IdString").PerformCallback();
     }
     function SucursalComboBox_BeginCallback(s, e) {
-        e.customArgs["var_IdEmpresa"] = IdEmpresa.GetValue();
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
     }
 </script>
