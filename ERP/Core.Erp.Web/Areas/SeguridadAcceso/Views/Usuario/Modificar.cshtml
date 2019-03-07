@@ -107,12 +107,7 @@
         } else
             $("#div_admin").hide();
     }
-    function OnSelectedEmpresaChanged() {
-        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdString").PerformCallback();
-    }
-    function SucursalComboBox_BeginCallback(s, e) {
-        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
-    }
+
     function ResetearContrasena() {
         var r = confirm("A continuación se reseteará la contraseña del usuario " + $("#IdUsuario").val() + ", se le asignará la contraseña por defecto: 1234, ¿Desea continuar?");
         if (r == true) {
@@ -146,5 +141,10 @@
             });
         }        
     }
-
+    function OnSelectedEmpresaChanged() {
+        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdString").PerformCallback();
+    }
+    function SucursalComboBox_BeginCallback(s, e) {
+        e.customArgs["var_IdEmpresa"] = IdEmpresa.GetValue();
+    }
 </script>

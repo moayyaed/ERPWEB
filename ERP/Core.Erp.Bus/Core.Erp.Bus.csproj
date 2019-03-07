@@ -349,6 +349,7 @@
     <Compile Include="Reportes\Inventario\INV_013_Bus.cs" />
     <Compile Include="Reportes\Inventario\INV_014_Bus.cs" />
     <Compile Include="Reportes\Inventario\INV_015_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_016_Bus.cs" />
     <Compile Include="Reportes\Presupuesto\PRE_001_Bus.cs" />
     <Compile Include="Reportes\Produccion\PRO_001_Bus.cs" />
     <Compile Include="Reportes\RRHH\ROL_001_Bus.cs" />

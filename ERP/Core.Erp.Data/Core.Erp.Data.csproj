@@ -1294,6 +1294,7 @@
     <Compile Include="Reportes\Inventario\INV_013_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_014_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_015_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_016_Data.cs" />
     <Compile Include="Reportes\Presupuesto\PRE_001_Data.cs" />
     <Compile Include="Reportes\Produccion\PRO_001_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_001_Data.cs" />
@@ -1729,6 +1730,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPINV_012_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_016_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="sppro_GetProductoFacturadosPorFecha_Result.cs">

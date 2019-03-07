@@ -17,9 +17,7 @@
         settings.Properties.Columns.Add("em_nombre", "Descripción", 90);
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedEmpresaChanged";
     })
-     .BindList(new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_list_bajo_demanda_sucursal, new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_info_bajo_demanda_sucursal)
-     //.Bind(Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info) ? "" :  Model);
+     .BindList(new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_list_bajo_demanda, new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_info_bajo_demanda)
      .Bind((Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_Info) || Model.GetType() == typeof(List<Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info>)) ? "" : Model);
-
 }
 @comboBox.GetHtml()

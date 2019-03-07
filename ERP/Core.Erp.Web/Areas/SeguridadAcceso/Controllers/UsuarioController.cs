@@ -77,12 +77,12 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             seg_usuario_x_tb_sucursal_Info model = new seg_usuario_x_tb_sucursal_Info();
             return PartialView("_CmbEmpresa_det", model);
         }
-        public List<tb_empresa_Info> get_list_bajo_demanda_sucursal(ListEditItemsRequestedByFilterConditionEventArgs args)
+        public List<tb_empresa_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             return bus_empresa.get_list_bajo_demanda(args);
         }
 
-        public tb_empresa_Info get_info_bajo_demanda_sucursal(ListEditItemRequestedByValueEventArgs args)
+        public tb_empresa_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_empresa.get_info_bajo_demanda(args);
         }
@@ -206,7 +206,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         public ActionResult CargarSucursal()
         {
            // int IdEmpresa = 0;
-            int IdEmpresa = Request.Params["IdEmpresa"] != null ? Convert.ToInt32(Request.Params["IdEmpresa"].ToString()) : 0;
+            int IdEmpresa = Request.Params["var_IdEmpresa"] != null ? Convert.ToInt32(Request.Params["var_IdEmpresa"].ToString()) : 0;
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
                 p.TextField = "Su_Descripcion";
@@ -221,6 +221,12 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         private void cargar_combos_det(int IdEmpresa)
         {
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = 0,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursal = lst_sucursal;
         }
         [ValidateInput(false)]
@@ -228,6 +234,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_det(0);
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
 
@@ -261,7 +268,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             }
-            cargar_combos_det(info_det.IdEmpresa);
+            cargar_combos_det(0);
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
@@ -294,7 +301,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
-            cargar_combos_det(info_det.IdEmpresa);
+            cargar_combos_det(0);
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }

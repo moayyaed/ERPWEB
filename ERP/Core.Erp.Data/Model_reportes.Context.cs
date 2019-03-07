@@ -14,7 +14,6 @@ namespace Core.Erp.Data
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
@@ -1173,6 +1172,71 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdAreaFin", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_025_Result>("SPROL_025", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idNomina_TipoParameter, idPeriodoParameter, idDivisionIniParameter, idDivisionFinParameter, idAreaIniParameter, idAreaFinParameter);
+        }
+    
+        public virtual ObjectResult<SPINV_016_Result> SPINV_016(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<int> idCategoriaIni, Nullable<int> idCategoriaFin, Nullable<int> idLineaIni, Nullable<int> idLineaFin, Nullable<int> idGrupoIni, Nullable<int> idGrupoFin, Nullable<int> idSubGrupoIni, Nullable<int> idSubGrupoFin, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> noMostrarSinVenta, string idUsuario)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            var idCategoriaIniParameter = idCategoriaIni.HasValue ?
+                new ObjectParameter("IdCategoriaIni", idCategoriaIni) :
+                new ObjectParameter("IdCategoriaIni", typeof(int));
+    
+            var idCategoriaFinParameter = idCategoriaFin.HasValue ?
+                new ObjectParameter("IdCategoriaFin", idCategoriaFin) :
+                new ObjectParameter("IdCategoriaFin", typeof(int));
+    
+            var idLineaIniParameter = idLineaIni.HasValue ?
+                new ObjectParameter("IdLineaIni", idLineaIni) :
+                new ObjectParameter("IdLineaIni", typeof(int));
+    
+            var idLineaFinParameter = idLineaFin.HasValue ?
+                new ObjectParameter("IdLineaFin", idLineaFin) :
+                new ObjectParameter("IdLineaFin", typeof(int));
+    
+            var idGrupoIniParameter = idGrupoIni.HasValue ?
+                new ObjectParameter("IdGrupoIni", idGrupoIni) :
+                new ObjectParameter("IdGrupoIni", typeof(int));
+    
+            var idGrupoFinParameter = idGrupoFin.HasValue ?
+                new ObjectParameter("IdGrupoFin", idGrupoFin) :
+                new ObjectParameter("IdGrupoFin", typeof(int));
+    
+            var idSubGrupoIniParameter = idSubGrupoIni.HasValue ?
+                new ObjectParameter("IdSubGrupoIni", idSubGrupoIni) :
+                new ObjectParameter("IdSubGrupoIni", typeof(int));
+    
+            var idSubGrupoFinParameter = idSubGrupoFin.HasValue ?
+                new ObjectParameter("IdSubGrupoFin", idSubGrupoFin) :
+                new ObjectParameter("IdSubGrupoFin", typeof(int));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var noMostrarSinVentaParameter = noMostrarSinVenta.HasValue ?
+                new ObjectParameter("NoMostrarSinVenta", noMostrarSinVenta) :
+                new ObjectParameter("NoMostrarSinVenta", typeof(bool));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_016_Result>("SPINV_016", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idCategoriaIniParameter, idCategoriaFinParameter, idLineaIniParameter, idLineaFinParameter, idGrupoIniParameter, idGrupoFinParameter, idSubGrupoIniParameter, idSubGrupoFinParameter, fechaIniParameter, fechaFinParameter, noMostrarSinVentaParameter, idUsuarioParameter);
         }
     }
 }
