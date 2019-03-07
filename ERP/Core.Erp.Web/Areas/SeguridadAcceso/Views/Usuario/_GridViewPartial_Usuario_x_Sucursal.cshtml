@@ -2,11 +2,9 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridView_usuario_x_sucursal";
+        settings.Name = "GridViewPartial_Usuario_x_Sucursal";
         settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_Usuario_x_Sucursal" };
-
-
-        settings.KeyFieldName = "IdUsuario";
+        settings.KeyFieldName = "Secuencia";
         settings.Width = Unit.Percentage(100);
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Usuario", Action = "EditingAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Usuario", Action = "EditingUpdate" };
@@ -81,15 +79,12 @@
                 p.TextFormatString = "{0}";
                 p.Columns.Add("Su_Descripcion", "Sucursal");
                 p.ValueType = typeof(string);
-                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
                 p.BindList(ViewBag.lst_sucursal);
                 p.ClientSideEvents.BeginCallback = "SucursalComboBox_BeginCallback";
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
-
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-
     });
 }
 @grid.Bind(Model).GetHtml()

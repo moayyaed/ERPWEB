@@ -27,6 +27,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                         Secuencia = Secuencia
                     }).ToList();
                 }
+                Lista.ForEach(v => { v.IdString = v.IdEmpresa.ToString("000") + v.IdSucursal.ToString("000"); });
                 return Lista;
             }
             catch (Exception)

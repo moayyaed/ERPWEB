@@ -43,5 +43,7 @@ namespace Core.Erp.Info.General
         public string IdCtaCble_vtaIVA { get; set; }
 
         public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> ListaNivelDescuento { get; set; }
+        public string IdString { get; set; }
+
     }
 }

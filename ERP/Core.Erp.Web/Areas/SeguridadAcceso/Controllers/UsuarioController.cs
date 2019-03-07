@@ -38,32 +38,32 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         private void cargar_combos(seg_usuario_Info model)
         {
-            if (!string.IsNullOrEmpty(model.IdUsuario))
-                model.lst_usuario_x_empresa = bus_usuario_x_empresa.get_list(model.IdUsuario);
-            else
-                model.lst_usuario_x_empresa = new List<seg_Usuario_x_Empresa_Info>();
+            //if (!string.IsNullOrEmpty(model.IdUsuario))
+            //    model.lst_usuario_x_empresa = bus_usuario_x_empresa.get_list(model.IdUsuario);
+            //else
+            //    model.lst_usuario_x_empresa = new List<seg_Usuario_x_Empresa_Info>();
 
-            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
-            var lst_empresa = bus_empresa.get_list(false);
-            if (model.lst_usuario_x_empresa.Count == 0)
-            {                
-                foreach (var item in lst_empresa)
-                {
-                    model.lst_usuario_x_empresa.Add(new seg_Usuario_x_Empresa_Info { IdEmpresa = item.IdEmpresa, em_nombre = item.em_nombre});
-                }
-            }else
-            {
-                model.lst_usuario_x_empresa = (from e in lst_empresa
-                                               join pp in model.lst_usuario_x_empresa
-                                               on e.IdEmpresa equals pp.IdEmpresa into temp_emp
-                                               from pp in temp_emp.DefaultIfEmpty()
-                                               select new seg_Usuario_x_Empresa_Info
-                                               {
-                                                   IdEmpresa = e.IdEmpresa,
-                                                   em_nombre = e.em_nombre,
-                                                   seleccionado =  pp == null ? false : true                                                  
-                                               }).ToList();
-            }
+            //tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            //var lst_empresa = bus_empresa.get_list(false);
+            //if (model.lst_usuario_x_empresa.Count == 0)
+            //{                
+            //    foreach (var item in lst_empresa)
+            //    {
+            //        model.lst_usuario_x_empresa.Add(new seg_Usuario_x_Empresa_Info { IdEmpresa = item.IdEmpresa, em_nombre = item.em_nombre});
+            //    }
+            //}else
+            //{
+            //    model.lst_usuario_x_empresa = (from e in lst_empresa
+            //                                   join pp in model.lst_usuario_x_empresa
+            //                                   on e.IdEmpresa equals pp.IdEmpresa into temp_emp
+            //                                   from pp in temp_emp.DefaultIfEmpty()
+            //                                   select new seg_Usuario_x_Empresa_Info
+            //                                   {
+            //                                       IdEmpresa = e.IdEmpresa,
+            //                                       em_nombre = e.em_nombre,
+            //                                       seleccionado =  pp == null ? false : true                                                  
+            //                                   }).ToList();
+            //}
             var lst_menu = bus_menu.get_list_combo(false);
             lst_menu.Add(new seg_Menu_Info { IdMenu = 0, DescripcionMenu_combo = "== Seleccione ==" });
             ViewBag.lst_menu = lst_menu;
@@ -74,7 +74,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public ActionResult CmbEmpresa_det()
         {
-            int model = 0;
+            seg_usuario_x_tb_sucursal_Info model = new seg_usuario_x_tb_sucursal_Info();
             return PartialView("_CmbEmpresa_det", model);
         }
         public List<tb_empresa_Info> get_list_bajo_demanda_sucursal(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -101,7 +101,10 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             {
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
             };
-            List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            var lst = bus_usuario_x_sucursal.GetList(Convert.ToString(SessionFixed.IdUsuario));
+            List_det.set_list(lst, model.IdTransaccionSession);
+
             cargar_combos(model);
             return View(model);
         }
@@ -118,12 +121,12 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             if (!bus_usuario.guardarDB(model))
                 return View(model);
             
-            #region Guardar usuario_x_empresa
-            bus_usuario_x_empresa.eliminarDB(model.IdUsuario);
-            model.lst_usuario_x_empresa = model.lst_usuario_x_empresa.Where(q => q.seleccionado == true).ToList();
-            model.lst_usuario_x_empresa.ForEach(q => q.IdUsuario = model.IdUsuario);
-            bus_usuario_x_empresa.guardarDB(model.lst_usuario_x_empresa);
-            #endregion
+            //#region Guardar usuario_x_empresa
+            //bus_usuario_x_empresa.eliminarDB(model.IdUsuario);
+            //model.lst_usuario_x_empresa = model.lst_usuario_x_empresa.Where(q => q.seleccionado == true).ToList();
+            //model.lst_usuario_x_empresa.ForEach(q => q.IdUsuario = model.IdUsuario);
+            //bus_usuario_x_empresa.guardarDB(model.lst_usuario_x_empresa);
+            //#endregion
 
             return RedirectToAction("Index");
         }
@@ -141,6 +144,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 return RedirectToAction("Index");
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
+            List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
         }
@@ -151,13 +155,13 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             if (!bus_usuario.modificarDB(model))
                 return View(model);
 
-            #region Guardar usuario_x_empresa
+        /*    #region Guardar usuario_x_empresa
             bus_usuario_x_empresa.eliminarDB(model.IdUsuario);
             model.lst_usuario_x_empresa = model.lst_usuario_x_empresa.Where(q => q.seleccionado == true).ToList();
             model.lst_usuario_x_empresa.ForEach(q => q.IdUsuario = model.IdUsuario);
             bus_usuario_x_empresa.eliminarDB(model.IdUsuario);
             bus_usuario_x_empresa.guardarDB(model.lst_usuario_x_empresa);
-            #endregion
+            #endregion*/
 
             return RedirectToAction("Index");
         }
@@ -201,7 +205,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         #region Detalle
         public ActionResult CargarSucursal()
         {
-         //   int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+           // int IdEmpresa = 0;
             int IdEmpresa = Request.Params["IdEmpresa"] != null ? Convert.ToInt32(Request.Params["IdEmpresa"].ToString()) : 0;
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
@@ -214,9 +218,8 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             });
         }
 
-        private void cargar_combos_det()
+        private void cargar_combos_det(int IdEmpresa)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
         }
@@ -231,15 +234,14 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] seg_usuario_x_tb_sucursal_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             if (info_det != null)
             {
-                var emp = bus_empresa.get_info(IdEmpresa);
+                var emp = bus_empresa.get_info(info_det.IdEmpresa);
 
                 info_det.IdSucursal = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
 
-                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+                var suc = bus_sucursal.get_info(info_det.IdEmpresa, info_det.IdSucursal);
                 if (suc != null && emp != null)
                 {
                     info_det.IdSucursal = info_det.IdSucursal;
@@ -254,26 +256,25 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 info_.IdSucursal = info_det.IdSucursal;
                 info_.Su_Descripcion = info_det.Su_Descripcion;
                 info_.IdEmpresa = info_det.IdEmpresa;
+                info_.em_nombre = info_det.em_nombre;
                 var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             }
-            cargar_combos_det();
+            cargar_combos_det(info_det.IdEmpresa);
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] seg_usuario_x_tb_sucursal_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
             if (info_det != null)
             {
-                var emp = bus_empresa.get_info(IdEmpresa);
+                var emp = bus_empresa.get_info(info_det.IdEmpresa);
 
                 info_det.IdSucursal = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
 
-                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
+                var suc = bus_sucursal.get_info(info_det.IdEmpresa, info_det.IdSucursal);
                 if (suc != null && emp != null)
                 {
                     info_det.IdSucursal = info_det.IdSucursal;
@@ -285,9 +286,15 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
             if (ModelState.IsValid)
             {
+                seg_usuario_x_tb_sucursal_Info info_ = new seg_usuario_x_tb_sucursal_Info();
+                info_.IdSucursal = info_det.IdSucursal;
+                info_.Su_Descripcion = info_det.Su_Descripcion;
+                info_.IdEmpresa = info_det.IdEmpresa;
+                info_.em_nombre = info_det.em_nombre;
+                var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
-            cargar_combos_det();
+            cargar_combos_det(info_det.IdEmpresa);
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Usuario_x_Sucursal", model);
         }
@@ -341,7 +348,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         public void UpdateRow(seg_usuario_x_tb_sucursal_Info info_det, decimal IdTransaccionSession)
         {
-            seg_usuario_x_tb_sucursal_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdUsuario == info_det.IdUsuario).First();
+            seg_usuario_x_tb_sucursal_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
             edited_info.IdUsuario = info_det.IdUsuario;
             edited_info.IdSucursal = info_det.IdSucursal;
             edited_info.IdEmpresa = info_det.IdEmpresa;
