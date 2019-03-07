@@ -55,6 +55,20 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+
+        public bool ModificarDB(ro_Config_Param_contable_Info info)
+        {
+            try
+            {
+                return odata.ModificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool anularDB(int IdEmpresa)
         {
             try

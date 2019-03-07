@@ -34,11 +34,11 @@ namespace Core.Erp.Bus.RRHH
                      odata.modificarDB(info);
                 else
                      odata.guardarDB(info);
-                bus_parametros.anularDB(info.IdEmpresa);
-                bus_parametros.guardarDB(info.lst_cta_x_rubros);
-                bus_nomina_sueldo.anularDB(info.IdEmpresa);
-                info.lst_cta_x_sueldo_pagar.ForEach(v=>v.IdEmpresa=info.IdEmpresa);
-                bus_nomina_sueldo.guardarDB(info.lst_cta_x_sueldo_pagar);
+                //bus_parametros.anularDB(info.IdEmpresa);
+                //bus_parametros.guardarDB(info.lst_cta_x_rubros);
+                //bus_nomina_sueldo.anularDB(info.IdEmpresa);
+                //info.lst_cta_x_sueldo_pagar.ForEach(v=>v.IdEmpresa=info.IdEmpresa);
+                //bus_nomina_sueldo.guardarDB(info.lst_cta_x_sueldo_pagar);
                 return true;
             }
             catch (Exception)
@@ -51,13 +51,12 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-
                 odata.modificarDB(info);
-                bus_parametros.anularDB(info.IdEmpresa);
-                bus_parametros.guardarDB(info.lst_cta_x_rubros);
-                bus_nomina_sueldo.anularDB(info.IdEmpresa);
-                info.lst_cta_x_sueldo_pagar.ForEach(v => v.IdEmpresa = info.IdEmpresa);
-                bus_nomina_sueldo.guardarDB(info.lst_cta_x_sueldo_pagar);
+                //bus_parametros.anularDB(info.IdEmpresa);
+                //bus_parametros.guardarDB(info.lst_cta_x_rubros);
+                //bus_nomina_sueldo.anularDB(info.IdEmpresa);
+                //info.lst_cta_x_sueldo_pagar.ForEach(v => v.IdEmpresa = info.IdEmpresa);
+                //bus_nomina_sueldo.guardarDB(info.lst_cta_x_sueldo_pagar);
                 return true;
             }
             catch (Exception)

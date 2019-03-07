@@ -176,11 +176,14 @@ namespace Core.Erp.Data.RRHH
                     if (info.IdCtaCble_prov_debito == "")
                         info.IdCtaCble_prov_debito = null;
 
+                    if (info.IdEmpresa == 0)
+                        return false;
+
                     var entity = db.ro_Config_Param_contable.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdDivision == info.IdDivision && q.IdArea == info.IdArea && q.IdDepartamento == info.IdDepartamento && q.IdRubro == info.IdRubro).FirstOrDefault();
                     if(entity != null)
                     {
                         entity.IdCtaCble = info.rub_provision == true ? info.IdCtaCble_prov_debito : null;
-                        entity.IdCtaCble_Haber = info.rub_provision == true ? info.IdCtaCble_prov_credito : null;
+                        entity.IdCtaCble_Haber = info.rub_provision == true ? info.IdCtaCble_prov_credito : info.IdCtaCble;
                     }else
                     {
                         entity = new ro_Config_Param_contable
@@ -192,7 +195,6 @@ namespace Core.Erp.Data.RRHH
                             IdRubro = info.IdRubro,
                             IdCentroCosto = info.IdCentroCosto,
                             DebCre = info.DebCre,
-
 
                             IdCtaCble = info.rub_provision == true ? info.IdCtaCble_prov_debito : null,
                             IdCtaCble_Haber = info.rub_provision == true ? info.IdCtaCble_prov_credito : info.IdCtaCble

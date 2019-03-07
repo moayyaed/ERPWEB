@@ -130,7 +130,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult CargarNomina()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdNomina = Request.Params["IdNomina"] != null ? Convert.ToInt32(Request.Params["IdNomina"].ToString()) : 0;
+            int IdNomina = 0;
+            if (Request.Params["IdNomina"] == null || !Int32.TryParse(Request.Params["IdNomina"].ToString(), out IdNomina))
+                IdNomina = 0;
+
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
                 p.TextField = "DescripcionProcesoNomina";
@@ -215,7 +218,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult GridViewPartial_cta_contable_sueldo_pagar()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_Parametros_Info model = new ro_Parametros_Info();
             model.lst_cta_x_sueldo_pagar = lst_cta_rubro.get_list_sueldo_x_pagar();
            
@@ -226,7 +229,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         private void cargar_combos_detalle()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.lst_catalogo = bus_catalogo.get_list_x_tipo(34);
             ViewBag.lst_nomina_tipo = bus_nomina_tipo.get_list(IdEmpresa, false);
         }
@@ -234,7 +237,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Config_Param_contable_Info info_det)
         {
             if (ModelState.IsValid)
+            {
                 lst_cta_rubro.UpdateRow_cta_rubros(info_det);
+                bus_configuracion_ctas.ModificarDB(lst_cta_rubro.get_list_cta_rubros().Where(q => q.Secuencia == info_det.Secuencia).FirstOrDefault());
+            }
             ro_Parametros_Info model = new ro_Parametros_Info();
             model.lst_cta_x_rubros = lst_cta_rubro.get_list_cta_rubros().Where(v => v.rub_provision == false).ToList();
             cargar_combos_detalle();
@@ -243,7 +249,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingUpdate_provisiones([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Config_Param_contable_Info info_det)
         {
             if (ModelState.IsValid)
+            {
                 lst_cta_rubro.UpdateRow_cta_rubros_x_provision(info_det);
+                bus_configuracion_ctas.ModificarDB(lst_cta_rubro.get_list_cta_rubros().Where(q => q.Secuencia == info_det.Secuencia).FirstOrDefault());
+            }            
             ro_Parametros_Info model = new ro_Parametros_Info();
             model.lst_cta_x_provisiones = lst_cta_rubro.get_list_cta_rubros().Where(v => v.rub_provision == true).ToList();
             cargar_combos_detalle();
@@ -253,7 +262,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingUpdate_cta_sueldo([ModelBinder(typeof(DevExpressEditorsBinder))] ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info info_det)
         {
             if (ModelState.IsValid)
+            {
                 lst_cta_rubro.UpdateRow_cta_sueldo_x_pagar(info_det);
+                info_det.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                bus_configuracion_cta_x_sueldo.modificar(lst_cta_rubro.get_list_sueldo_x_pagar().Where(q => q.Secuencia == info_det.Secuencia).First());
+            }
             ro_Parametros_Info model = new ro_Parametros_Info();
             model.lst_cta_x_sueldo_pagar = lst_cta_rubro.get_list_sueldo_x_pagar();
             cargar_combos_detalle();
@@ -277,7 +290,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             if (ModelState.IsValid)
+            {
                 lst_cta_rubro.NewRow_cta_sueldo_x_pagar(info_det);
+                info_det.IdEmpresa = IdEmpresa;
+                bus_configuracion_cta_x_sueldo.modificar(lst_cta_rubro.get_list_sueldo_x_pagar().Where(q => q.Secuencia == info_det.Secuencia).First());
+            }
             ro_Parametros_Info model = new ro_Parametros_Info();
             model.lst_cta_x_sueldo_pagar = lst_cta_rubro.get_list_sueldo_x_pagar();
             cargar_combos_detalle();
@@ -286,7 +303,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingDelete_cta_sueldo([ModelBinder(typeof(DevExpressEditorsBinder))] ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info info_det)
         {
             if (ModelState.IsValid)
-                lst_cta_rubro.DeleteRow_cta_sueldo_x_pagar(info_det);
+            {
+                var det = lst_cta_rubro.get_list_sueldo_x_pagar().Where(q => q.Secuencia == info_det.Secuencia).FirstOrDefault();
+                if (det != null)
+                {
+                    det.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                    if (bus_configuracion_cta_x_sueldo.eliminarDB(det.IdEmpresa, det.IdNomina, det.IdNominaTipo))
+                        lst_cta_rubro.DeleteRow_cta_sueldo_x_pagar(info_det);
+                }                
+            }
             ro_Parametros_Info model = new ro_Parametros_Info();
             model.lst_cta_x_sueldo_pagar = lst_cta_rubro.get_list_sueldo_x_pagar();
             lst_cta_rubro.set_list_sueldo_x_pagar(model.lst_cta_x_sueldo_pagar);

@@ -43,6 +43,7 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+
         public ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info get_info(int IdEmpresa, int IdNomina, int IdNominaTipo)
         {
             try
@@ -74,6 +75,7 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+
         public bool guardarDB(List<ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info> info)
         {
             try
@@ -103,6 +105,57 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+
+        public bool modificar(ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info info)
+        {
+            try
+            {
+                using (Entities_rrhh db = new Entities_rrhh())
+                {
+                    var entity = db.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdNomina == info.IdNomina && q.IdNominaTipo == info.IdNominaTipo).FirstOrDefault();
+                    if(entity != null)
+                        db.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.Remove(entity);
+                    db.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.Add(new ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdNominaTipo = info.IdNominaTipo,
+                        IdNomina = info.IdNomina,
+                        IdCtaCble = info.IdCtaCble_sueldo,
+                        IdTipoFlujo = info.IdTipoFlujo,
+                        Observacion = info.Observacion
+                    });
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool eliminarDB(int IdEmpresa, int IdNomina, int IdNominaTipo)
+        {
+            try
+            {
+                using (Entities_rrhh db = new Entities_rrhh())
+                {
+                    var entity = db.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.Where(q => q.IdEmpresa == IdEmpresa && q.IdNomina == IdNomina && q.IdNominaTipo == IdNominaTipo).FirstOrDefault();
+                    if(entity != null)
+                        db.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.Remove(entity);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool eliminarDB(int IdEmpresa)
         {
             try

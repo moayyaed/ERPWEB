@@ -43,11 +43,37 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+
+        public bool modificar(ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info info)
+        {
+            try
+            {
+                return odata.modificar(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool anularDB(int IdEmpresa)
         {
             try
             {
                 return odata.eliminarDB(IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool eliminarDB(int IdEmpresa, int IdNomina, int IdNominaTipo)
+        {
+            try
+            {
+                return odata.eliminarDB(IdEmpresa, IdNomina, IdNominaTipo);
             }
             catch (Exception)
             {
