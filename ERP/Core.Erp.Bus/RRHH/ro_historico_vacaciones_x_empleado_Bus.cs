@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.RRHH;
 using Core.Erp.Info.RRHH;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 namespace Core.Erp.Bus.RRHH
@@ -297,5 +298,29 @@ namespace Core.Erp.Bus.RRHH
 
         }
 
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_list_bajo_demanda(args, IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ro_historico_vacaciones_x_empleado_Info get_info_bajo_demanda(int IdEmpresa, ListEditItemRequestedByValueEventArgs args)
+        {
+            try
+            {
+                return odata.get_info_bajo_demanda(IdEmpresa,args);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

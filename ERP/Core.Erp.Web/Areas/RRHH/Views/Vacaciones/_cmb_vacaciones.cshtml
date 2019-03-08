@@ -12,10 +12,8 @@
         settings.Properties.Columns.Add("IdPeriodo_Inicio", "Periodo inicio").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Properties.Columns.Add("IdPeriodo_Fin", "Periodo hasta").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Properties.Columns.Add("FechaIni", "Fecha inicio").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-
-
+        
        
-
         settings.Properties.Columns.Add("FechaFin", "Fecha hasta").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Properties.Columns.Add("DiasGanado", "Días ganado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Properties.Columns.Add("DiasTomados", "Días gozado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
@@ -24,6 +22,8 @@
         settings.Properties.ValueType = typeof(int);
 
     })
-    .BindList(Model).Bind(Model);
+    .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.VacacionesController().get_list_bajo_demanda_periodo, new Core.Erp.Web.Areas.RRHH.Controllers.VacacionesController().get_info_bajo_demanda_periodo)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_historico_vacaciones_x_empleado_Info) ? "" : Model );
+
 }
 @comboBox.GetHtml()
