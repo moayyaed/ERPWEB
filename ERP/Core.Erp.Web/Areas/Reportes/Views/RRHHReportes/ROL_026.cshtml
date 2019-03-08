@@ -59,8 +59,8 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdAnio">Año</label>
-                            @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
-                            @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(q => q.IdAnio, new SelectList(ViewBag.lst_anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "IdAnio" })
+                            @Html.ValidationMessageFor(q => q.IdAnio, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

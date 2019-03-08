@@ -14,6 +14,7 @@ using Core.Erp.Info.Reportes.RRHH;
 using Core.Erp.Bus.Reportes.RRHH;
 using Core.Erp.Web.Areas.Reportes.Views.RRHHReportes;
 using Core.Erp.Info.Helps;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
 {
@@ -383,7 +384,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         private void cargar_combos(int IdEmpresa)
         {
             ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
-            
+            ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
+
             var lst_nomina = bus_nomina.get_list(IdEmpresa, false);
             ViewBag.lst_nomina = lst_nomina;
 
@@ -424,6 +426,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_proceso = bus_procesos.get_list(IdEmpresa, false);
             ViewBag.lst_proceso = lst_proceso;
 
+            var lst_anio = bus_anio.get_list(false);
+            ViewBag.lst_anio = lst_anio;
         }
         public ActionResult ROL_012( )
         {
@@ -1008,6 +1012,49 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdDivision.Value = model.IdDivision;
             reporte.p_IdArea.Value = model.IdArea;
             reporte.usuario = SessionFixed.IdUsuario.ToString();
+
+            ViewBag.Report = reporte;
+            return View(model);
+        }
+
+        public ActionResult ROL_026()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdDivision = 0,
+                IdArea = 0,
+                IdAnio = 0
+            };
+
+            cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
+            ROL_026_Rpt reporte = new ROL_026_Rpt();
+            reporte.p_IdEmpresa.Value = model.IdEmpresa;
+            reporte.p_IdSucursal.Value = model.IdSucursal;
+            reporte.p_IdNomina_Tipo.Value = model.IdNomina;
+            reporte.p_IdAnio.Value = model.IdAnio;
+            reporte.p_IdDivision.Value = model.IdDivision;
+            reporte.p_IdArea.Value = model.IdArea;
+            //reporte.usuario = SessionFixed.IdUsuario.ToString();
+
+            ViewBag.Report = reporte;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ROL_026(cl_filtros_Info model)
+        {
+            cargar_combos(model.IdEmpresa);
+
+            ROL_026_Rpt reporte = new ROL_026_Rpt();
+            reporte.p_IdEmpresa.Value = model.IdEmpresa;
+            reporte.p_IdSucursal.Value = model.IdSucursal;
+            reporte.p_IdNomina_Tipo.Value = model.IdNomina;
+            reporte.p_IdAnio.Value = model.IdAnio;
+            reporte.p_IdDivision.Value = model.IdDivision;
+            reporte.p_IdArea.Value = model.IdArea;
+            //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
             return View(model);

@@ -8,5 +8,6 @@ namespace Core.Erp.Info.Reportes.RRHH
 {
     public class ROL_026_Info
     {
+        public int IdEmpleado { get; set; }
     }
 }
