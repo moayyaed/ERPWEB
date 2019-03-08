@@ -477,7 +477,7 @@
             // 
             // xrTableCell4
             // 
-            this.xrTableCell4.Font = new System.Drawing.Font("Verdana", 6F);
+            this.xrTableCell4.Font = new System.Drawing.Font("Verdana", 5F);
             this.xrTableCell4.Multiline = true;
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.StylePriority.UseFont = false;
@@ -2992,11 +2992,11 @@
             // xrTable8
             // 
             this.xrTable8.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.xrTable8.LocationFloat = new DevExpress.Utils.PointFloat(0F, 2F);
+            this.xrTable8.LocationFloat = new DevExpress.Utils.PointFloat(2.000067F, 2F);
             this.xrTable8.Name = "xrTable8";
             this.xrTable8.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow55});
-            this.xrTable8.SizeF = new System.Drawing.SizeF(595F, 48F);
+            this.xrTable8.SizeF = new System.Drawing.SizeF(585F, 48F);
             this.xrTable8.StylePriority.UseBorders = false;
             // 
             // xrTableRow55
@@ -3014,7 +3014,7 @@
             this.xrTableCell148.StylePriority.UseFont = false;
             this.xrTableCell148.Text = "COMPROBANTE DE RETENCIONES EN LA FUENTE DEL IMPUESTO A LA RENTA POR INGRESOS DEL " +
     "TRABAJO EN RELACIÓN DE DEPENDENCIA";
-            this.xrTableCell148.Weight = 1.6666668376916463D;
+            this.xrTableCell148.Weight = 1.6329968005735227D;
             // 
             // xrTableCell149
             // 
