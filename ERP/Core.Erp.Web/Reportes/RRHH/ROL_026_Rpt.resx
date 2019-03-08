@@ -160,15 +160,15 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>03/08/2019 14:20:48</value>
+    <value>03/08/2019 16:37:15</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
   </data>
-  <metadata name="objectDataSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 173</value>
-  </metadata>
+  <data name="xrTableCell99.ExpressionBindings" xml:space="preserve">
+    <value>[Sueldo]+[IngresoVarios]+[AportePErsonal]+[IessPorOtrosEmpleadores]-[GastoVestimenta]-[GastoSalud]-[GastoEucacion]-[GastoAlimentacion]-[GastoVestimenta]-[ExoneraionPorDiscapacidad]-[ExoneracionPorTerceraEdad]+[ValorImpuestoPorEsteEmplador]</value>
+  </data>
   <data name="xrTableCell116.Text" xml:space="preserve">
     <value>1.- El trabajador que, en el mismo periodo fiscal haya reiniciado su actividad con otro empleador, estará en obligación de entregar el formulario 107 entregado por su antiguo empleador a su nuevo empleador, para que aquel, efectúe el cálculo de las retenciones a relizarse en el resto del año.</value>
   </data>
@@ -191,4 +191,7 @@
     <value>8.- El presente formulario constituye la declaración de Impuesto a la renta del trabajador, siempre que durante el periodo declarado la persona únicamente haya prestado sus servivios en relación de dependencia con el empleador que entrega este formulario, y no existan valores de gastos personales que deban ser reliquidados. en caso de pérdida de este documento el trabajador deberá solicitar una copia a su empleador.
 Por el contrario, el trabajador deberá presentar obligatoriamente su declaración de Impuesto a la Renta cuando haya obtenido rentas en relación de dependencia con dos o más empleadores o haya recibido además de su remuneración ingresos de otras fuentes como por ejemplo: rendimientos financieros, arrendamientos, ingresos por el libre ejercicio profesional, u otros ingresos, los cuales en conjunto superen la fracción básica de Impuesto a la Renta de personas naturales, o cuando tenga que reliquidar gastos personales con aquellos efectivamente incurridos, teniendo presente los límites referidos en las notas 3 y 4 de este documento. </value>
   </data>
+  <metadata name="objectDataSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 173</value>
+  </metadata>
 </root>

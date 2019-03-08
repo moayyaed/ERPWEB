@@ -252,6 +252,9 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_rol_detalle" Width="1.5" PointX="25.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_rdep" Width="1.5" PointX="30.25" PointY="27.25" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_Nomina_Tipo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

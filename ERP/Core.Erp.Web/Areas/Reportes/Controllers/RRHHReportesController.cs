@@ -1035,8 +1035,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdSucursal.Value = model.IdSucursal;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdAnio.Value = model.IdAnio;
-            reporte.p_IdDivision.Value = model.IdDivision;
-            reporte.p_IdArea.Value = model.IdArea;
             //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
@@ -1053,8 +1051,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdSucursal.Value = model.IdSucursal;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdAnio.Value = model.IdAnio;
-            reporte.p_IdDivision.Value = model.IdDivision;
-            reporte.p_IdArea.Value = model.IdArea;
             //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
