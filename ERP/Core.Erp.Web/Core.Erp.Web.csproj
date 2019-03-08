@@ -9937,6 +9937,7 @@
     <Content Include="Areas\SeguridadAcceso\Views\Usuario\_GridViewPartial_Usuario_x_Sucursal.cshtml" />
     <Content Include="Areas\SeguridadAcceso\Views\Usuario\_CmbEmpresa_det.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_016.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_026.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
