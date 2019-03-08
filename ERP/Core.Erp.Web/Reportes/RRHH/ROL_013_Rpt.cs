@@ -26,11 +26,12 @@ namespace Core.Erp.Web.Reportes.RRHH
             lbl_usuario.Text = usuario;
             int IdEmpresa = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
             int IdNomina = p_IdNomina.Value == null ? 0 : Convert.ToInt32(p_IdNomina.Value);
+            int IdNominaTipoLiqui = p_IdNominaTipoLiqui.Value == null ? 0 : Convert.ToInt32(p_IdNominaTipoLiqui.Value);
             int IdSucursal = p_IdSucursal.Value == null ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             int IdPeriodo = p_IdPeriodo.Value == null ? 0 : Convert.ToInt32(p_IdPeriodo.Value);
 
             ROL_013_Bus bus_rpt = new ROL_013_Bus();
-            List<ROL_013_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdNomina, IdSucursal, IdPeriodo);
+            List<ROL_013_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdNomina, IdNominaTipoLiqui, IdSucursal, IdPeriodo);
             this.DataSource = lst_rpt;
         }
     }

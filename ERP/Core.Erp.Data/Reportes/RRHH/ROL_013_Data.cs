@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_013_Data
     {
-        public List<ROL_013_Info> get_list(int IdEmpresa, int IdNomina, int IdSucursal, int IdPeriodo)
+        public List<ROL_013_Info> get_list(int IdEmpresa, int IdNomina, int IdNominaTipoLiqui, int IdSucursal, int IdPeriodo)
         {
             try
             {
@@ -19,7 +19,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                 List<ROL_013_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPROL_013(IdEmpresa, IdNomina, IdSucursalIni, IdSucursalFin, IdPeriodo)
+                    Lista = Context.SPROL_013(IdEmpresa, IdNomina, IdSucursalIni, IdSucursalFin, IdPeriodo).Where(q=>q.IdNominaTipoLiqui == IdNominaTipoLiqui)
                              .Select(q=> new ROL_013_Info
                               {
                                  IdDepartamento = q.IdDepartamento,
