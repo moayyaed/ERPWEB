@@ -2,13 +2,13 @@
 @model Core.Erp.Info.Helps.cl_filtros_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "ROL_025";
+    ViewBag.Title = "ROL_026";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
 }
-@using (Html.BeginForm("ROL_025", "RRHHReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("ROL_026", "RRHHReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa)
     <div class="box">
@@ -37,23 +37,11 @@
                             @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdNomina_Tipo">Nómina*</label>
                             @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
                             @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="IdDivision">Division</label>
-                            @Html.Partial("_CmbDivision_reportes", Model.IdDivision)
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdArea">Area</label>
-                            @Html.Partial("_CmbArea_reportes", Model.IdArea)
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -96,82 +84,3 @@
             </div>
             }
 
-
-
-            <script>
-                $(function () {
-                    cargar_tipo_liquidacion_nomina();
-                    cargar_periodos_x_nomina();
-                });
-
-                $("#IdNomina_Tipo").change(function () {
-                    cargar_tipo_liquidacion_nomina();
-
-                });
-                $("#IdNomina_TipoLiqui").change(function () {
-                    $("#IdPeriodo").empty();
-                    cargar_periodos_x_nomina();
-                });
-
-
-                function cargar_tipo_liquidacion_nomina() {
-                    $("#IdNomina_TipoLiqui").empty();
-                    var datos = {
-                        IdNomina: $("#IdNomina_Tipo").val()
-                    }
-
-                    $.ajax({
-                        type: 'POST',
-                        data: JSON.stringify(datos),
-                        url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
-                        async: false,
-                        bDeferRender: true,
-                        bProcessing: true,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-
-                            $.each(data, function (i, row) {
-                                $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
-                            });
-                            $("#IdNomina_TipoLiqui").val(4);
-                        },
-                        error: function (error) {
-                        }
-                    });
-                };
-
-
-                function cargar_periodos_x_nomina() {
-                    var IdPeriodoSet = $("#IdPeriodoSet").val();
-                    console.log(IdPeriodoSet);
-                    var datos = {
-                        IdEmpresa: $("#IdEmpresa").val(),
-                        IdNomina: $("#IdNomina_Tipo").val(),
-                        IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
-                    }
-
-                    $.ajax({
-                        type: 'POST',
-                        data: JSON.stringify(datos),
-                        url: '@Url.Action("get_lst_periodo_x_nomina","PeriodosPorNomina", new { Area = "RRHH" })',
-                        async: false,
-                        bDeferRender: true,
-                        bProcessing: true,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-
-                            $.each(data, function (i, row) {
-                                $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
-                            });
-
-                            $("#IdPeriodo").val(IdPeriodoSet);
-                        },
-                        error: function (error) {
-                        }
-                    });
-                };
-
-
-            </script>
