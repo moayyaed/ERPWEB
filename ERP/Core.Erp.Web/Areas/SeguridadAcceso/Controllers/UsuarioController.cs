@@ -288,12 +288,6 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             }
             if (ModelState.IsValid)
             {
-                seg_usuario_x_tb_sucursal_Info info_ = new seg_usuario_x_tb_sucursal_Info();
-                info_.IdSucursal = info_det.IdSucursal;
-                info_.Su_Descripcion = info_det.Su_Descripcion;
-                info_.IdEmpresa = info_det.IdEmpresa;
-                info_.em_nombre = info_det.em_nombre;
-                var lista = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -334,7 +328,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         {
             List<seg_usuario_x_tb_sucursal_Info> list = get_list(IdTransaccionSession);
 
-            if (list.Where(q => q.IdSucursal == info_det.IdSucursal).Count() == 0)
+            if (list.Where(q => q.IdEmpresa == info_det.IdEmpresa && q.IdSucursal == info_det.IdSucursal).Count() == 0)
             {
                 info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
                 info_det.IdUsuario = info_det.IdUsuario;
