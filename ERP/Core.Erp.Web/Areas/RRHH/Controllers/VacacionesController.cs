@@ -49,7 +49,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult cmb_vacaciones()
         {
-            ro_historico_vacaciones_x_empleado_Info model = new ro_historico_vacaciones_x_empleado_Info();
+            int model = new int();
             return PartialView("_cmb_vacaciones", model);
         }
         public List<ro_historico_vacaciones_x_empleado_Info> get_list_bajo_demanda_periodo(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -173,8 +173,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     Fecha_Desde = DateTime.Now,
                     Fecha_Hasta = DateTime.Now,
-                    Fecha_Retorno = DateTime.Now,
-                    IdVacacion = 1,
+                    Fecha_Retorno = DateTime.Now
                 };
                 cargar_combo();
                 return View(info);
