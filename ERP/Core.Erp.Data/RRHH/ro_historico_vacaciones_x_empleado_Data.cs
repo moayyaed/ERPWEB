@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.RRHH;
+using DevExpress.Web;
+
 namespace Core.Erp.Data.RRHH
 {
    public class ro_historico_vacaciones_x_empleado_Data
@@ -121,8 +123,6 @@ namespace Core.Erp.Data.RRHH
                 throw ;
             }
         }
-
-
         public int get_id(int IdEmpresa, decimal IdEmpleado)
         {
             try
@@ -147,5 +147,87 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+
+        #region Combo bajo demanda
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list(int IdEmpresa, int skip, int take, string filter)
+        {
+            try
+            {
+                List<ro_historico_vacaciones_x_empleado_Info> Lista = new List<ro_historico_vacaciones_x_empleado_Info>();
+
+                Entities_rrhh context_g = new Entities_rrhh();
+
+                var lstg = context_g.ro_historico_vacaciones_x_empleado.Where(q => q.IdEmpresa == IdEmpresa && (q.IdPeriodo_Inicio.ToString() + " " + q.IdPeriodo_Fin).Contains(filter)).OrderBy(q => q.IdEmpleado).Skip(skip).Take(take).Where(q=>q.DiasGanado >= q.DiasTomados);
+                foreach (var q in lstg)
+                {
+                    Lista.Add(new ro_historico_vacaciones_x_empleado_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdPeriodo_Inicio = q.IdPeriodo_Inicio,
+                        IdPeriodo_Fin = q.IdPeriodo_Fin,
+                        DiasGanado = q.DiasGanado,
+                        DiasTomados = q.DiasTomados,
+                        FechaFin = q.FechaFin,
+                        FechaIni = q.FechaIni,
+                        IdEmpleado = q.IdEmpleado,
+                        IdVacacion = q.IdVacacion
+
+                    });
+                }
+
+                context_g.Dispose();
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ro_historico_vacaciones_x_empleado_Info get_info_demanda(int IdEmpresa, int value)
+        {
+            ro_historico_vacaciones_x_empleado_Info info = new ro_historico_vacaciones_x_empleado_Info();
+            using (Entities_rrhh Contex = new Entities_rrhh())
+            {
+                info = (from q in Contex.ro_historico_vacaciones_x_empleado
+                        where q.IdEmpresa == IdEmpresa
+                        && q.IdPeriodo_Inicio == value
+                        && q.IdPeriodo_Fin == value
+                        select new ro_historico_vacaciones_x_empleado_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            IdPeriodo_Inicio = q.IdPeriodo_Inicio,
+                            IdPeriodo_Fin = q.IdPeriodo_Fin,
+                            DiasGanado = q.DiasGanado,
+                            DiasTomados = q.DiasTomados,
+                            FechaFin = q.FechaFin,
+                            FechaIni = q.FechaIni,
+                            IdEmpleado = q.IdEmpleado,
+                            IdVacacion = q.IdVacacion
+                        }).FirstOrDefault();
+            }
+            return info;
+        }
+
+
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<ro_historico_vacaciones_x_empleado_Info> Lista = new List<ro_historico_vacaciones_x_empleado_Info>();
+            Lista = get_list(IdEmpresa, skip, take, args.Filter);
+            return Lista;
+        }
+
+        public ro_historico_vacaciones_x_empleado_Info get_info_bajo_demanda(int IdEmpresa, ListEditItemRequestedByValueEventArgs args)
+        {
+            decimal id;
+            if (args.Value == null || !decimal.TryParse(args.Value.ToString(), out id))
+                return null;
+            return get_info_demanda(IdEmpresa, (int)args.Value);
+        }
+
+        #endregion
+
     }
 }
