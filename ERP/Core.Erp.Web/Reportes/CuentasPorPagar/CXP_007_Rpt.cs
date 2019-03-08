@@ -13,6 +13,8 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
+
         public CXP_007_Rpt()
         {
             InitializeComponent();
@@ -31,7 +33,15 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             int IdSucursal = p_IdSucursal.Value == null ? 0 : Convert.ToInt32(p_IdSucursal.Value);
 
             CXP_007_Bus bus_rpt = new CXP_007_Bus();
-            List<CXP_007_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, fecha_ini, fecha_fin, mostrar_agrupado, IdSucursal);
+            List<CXP_007_Info> lst_rpt = new List<CXP_007_Info>();
+
+            if (IntArray != null)
+            {
+                foreach (var item in IntArray)
+                {
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, fecha_ini, fecha_fin, mostrar_agrupado, item));
+                }
+            }
             this.DataSource = lst_rpt;
         }
 

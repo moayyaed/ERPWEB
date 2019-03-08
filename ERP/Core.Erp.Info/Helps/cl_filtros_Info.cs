@@ -31,7 +31,9 @@ namespace Core.Erp.Info.Helps
         public bool mostrar_agrupado { get; set; }
         public bool no_mostrar_en_conciliacion { get; set; }
         public bool no_mostrar_saldo_en_0 { get; set; }
+        public string IdTipoServicio { get; set; }
 
+        public int[] IntArray { get; set; }
         #endregion
 
         #region filtros de RRHH
@@ -117,7 +119,7 @@ namespace Core.Erp.Info.Helps
         public bool no_mostrar_valores_en_0 { get; set; }
         public bool mostrar_saldos_en_0 { get; set; }
         public bool mostrar_agrupado { get; set; }
-
+        public string IdUsuario { get; set; }
         public int dIAS { get; set; }
         public cl_filtros_inventario_Info()
         {

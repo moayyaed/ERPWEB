@@ -629,6 +629,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region Metodos de ingreso compartido
         public ActionResult GridViewPartial_IngresoCompartido()
         {
+            cargar_combos();
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = ListaEmpleadoXDivisionXArea.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_IngresoCompartido", model);
@@ -638,7 +639,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ro_empleado_x_division_x_area_Info info_det)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-
+            cargar_combos();
             if (info_det != null)
                 if (info_det.IdArea_det != 0)
                 {
@@ -666,6 +667,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_empleado_x_division_x_area_Info info_det)
         {
+            cargar_combos();
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             if (info_det != null)
                 if (info_det.IdArea_det != 0)
@@ -694,6 +696,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult EditingDelete(int Secuencia)
         {
+            cargar_combos();
             ListaEmpleadoXDivisionXArea.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_empleado_Info model = new ro_empleado_Info();
             model.lst_empleado_area = ListaEmpleadoXDivisionXArea.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));

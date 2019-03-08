@@ -29,20 +29,23 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal</label>
                             @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <label for="IdCliente">Proveedor</label>
                             @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
                         </div>
                     </div>
-
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
@@ -50,15 +53,15 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_ini, settings =>
-                            {
-                                settings.Name = "fecha_ini";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                           {
+                               settings.Name = "fecha_ini";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -70,23 +73,49 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_fin, settings =>
-                            {
-                                settings.Name = "fecha_fin";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                           {
+                               settings.Name = "fecha_fin";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdTipoServicio">Tipo de servicio</label>
+                            @Html.DevExpress().ComboBoxFor(q => q.IdTipoServicio, setting =>
+               {
+                   setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   setting.Properties.Items.Add("BIENES", "BIEN");
+                   setting.Properties.Items.Add("SERVICIOS", "SERVI");
+                   setting.Properties.Items.Add("MIXTO", "AMBAS");
+               }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.IdTipoServicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="mostrarAnulados"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados, settings =>
+                           {
+                               settings.Name = "mostrarAnulados";
+                               settings.Text = "Mostrar anulados";
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.mostrarAnulados, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
             </div>
             <!-- /.box-body -->
         </div>
+
     </div>
 
     <div class="box">

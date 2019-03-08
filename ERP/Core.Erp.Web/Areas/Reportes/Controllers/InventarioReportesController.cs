@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Web.Areas.Inventario.Controllers;
@@ -254,6 +255,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursal = lst_sucursal;
 
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
@@ -784,6 +791,61 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdGrupo.Value = model.IdGrupo;
             report.p_IdSubgrupo.Value = model.IdSubGrupo;
             report.p_MostrarAgrupado.Value = model.mostrar_agrupado;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            cargar_combos(model);
+
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+
+        public ActionResult INV_016()
+        {
+
+            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCategoria = "",
+                IdLinea = 0,
+                IdGrupo = 0,
+                IdSubGrupo = 0
+            };
+
+            cargar_combos(model);
+            INV_016_Rpt report = new INV_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCategoria.Value = model.IdCategoria == null ? "" : model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubGrupo.Value = model.IdSubGrupo;
+            report.p_noMostrarSinVenta.Value = model.no_mostrar_valores_en_0;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult INV_016(cl_filtros_inventario_Info model)
+        {
+            INV_016_Rpt report = new INV_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubGrupo.Value = model.IdSubGrupo;
+            report.p_noMostrarSinVenta.Value = model.no_mostrar_valores_en_0;
+            report.p_IdUsuario.Value = model.IdUsuario;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             cargar_combos(model);
