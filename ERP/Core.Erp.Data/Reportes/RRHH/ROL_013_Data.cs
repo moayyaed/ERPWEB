@@ -36,7 +36,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  IdNomina_Tipo = q.IdNomina_Tipo,
                                  pe_FechaFin = q.pe_FechaFin,
                                  Prestamos = q.Prestamos,
-                                 Sueldo = q.Sueldo
+                                 Sueldo = q.Sueldo,
+                                 Valor = q.Valor
                              }).ToList();
                 }
                 return Lista;

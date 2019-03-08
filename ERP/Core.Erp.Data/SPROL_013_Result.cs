@@ -28,5 +28,6 @@ namespace Core.Erp.Data
         public string em_codigo { get; set; }
         public System.DateTime pe_FechaFin { get; set; }
         public int Prestamos { get; set; }
+        public double Valor { get; set; }
     }
 }

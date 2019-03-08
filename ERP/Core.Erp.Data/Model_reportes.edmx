@@ -11580,6 +11580,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
           <Property Type="String" Name="em_codigo" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="pe_FechaFin" Nullable="false" Precision="16" />
           <Property Type="Int32" Name="Prestamos" Nullable="false" />
+          <Property Type="Double" Name="Valor" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -15015,6 +15016,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_024' no tiene definida ningu
                 <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
                 <ScalarProperty Name="pe_FechaFin" ColumnName="pe_FechaFin" />
                 <ScalarProperty Name="Prestamos" ColumnName="Prestamos" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
