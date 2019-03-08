@@ -27,8 +27,16 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  ca_descripcion = q.ca_descripcion,
                                  em_fechaIngaRol = q.em_fechaIngaRol,
                                  Descripcion = q.de_descripcion,
-
-
+                                 Empleado = q.Empleado,
+                                 em_codigo = q.em_codigo,
+                                 IdArea = q.IdArea,
+                                 IdDivision = q.IdDivision,
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdNominaTipoLiqui = q.IdNominaTipoLiqui,
+                                 IdNomina_Tipo = q.IdNomina_Tipo,
+                                 pe_FechaFin = q.pe_FechaFin,
+                                 Prestamos = q.Prestamos,
+                                 Sueldo = q.Sueldo
                              }).ToList();
                 }
                 return Lista;
