@@ -259,7 +259,7 @@ namespace Core.Erp.Bus.RRHH
                         ct_cbtecble_det_Info oct_cbtecble_det_Info = new ct_cbtecble_det_Info();
                         oct_cbtecble_det_Info.secuencia = secuecia;
                         oct_cbtecble_det_Info.IdEmpresa = idEmpresa;
-                        oct_cbtecble_det_Info.IdCtaCble = item.IdCtaCble;
+                        oct_cbtecble_det_Info.IdCtaCble = item.IdCtaCble_Haber;
                         oct_cbtecble_det_Info.pc_Cuenta = item.pc_Cuenta;
                         
                         if (item.ru_tipo == "E")
