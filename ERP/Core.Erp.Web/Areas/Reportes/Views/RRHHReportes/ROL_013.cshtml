@@ -9,7 +9,8 @@
 }
 @using (Html.BeginForm("ROL_013", "RRHHReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdPeriodoSet)
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -29,72 +30,32 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdNomina">Nomina</label>
-                            @Html.DevExpress().ComboBoxFor(q => q.IdNomina, settings =>
-                           {
-                               settings.Name = "IdNomina";
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                               settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                               settings.Properties.Columns.Add("IdNomina_Tipo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                               settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
-                               //Campo ID
-                               settings.Properties.ValueField = "IdNomina_Tipo";
-                               settings.Properties.ValueType = typeof(int);
-                               settings.Properties.TextField = "Descripcion";
-                               settings.Properties.NullText = "== Seleccione ==";
-                               
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                           }).BindList(ViewBag.lst_nomina).GetHtml()
-                            @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                            <label for="IdRubro">Sucursal</label>
+                            @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
+                        </div>
+                    </div>
 
-                        </div>
-                    </div>       
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdProveedor">Empleado</label>
-                            @Html.Partial("_CmbEmpleado_RRHH", Model.IdEmpleado)
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="">Fecha inicio*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_ini, settings =>
-                            {
-                                settings.Name = "fecha_ini";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
-                            </div>
+                            <label for="IdNomina_Tipo">Nómina*</label>
+                            @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                            @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="">Fecha fin*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_fin, settings =>
-                            {
-                                settings.Name = "fecha_fin";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
-                            </div>
+                            <label for="IdNomina_TipoLiqui">Tipo liquidación de nómina*</label>
+                            @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                            @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="FechaInicio">Periodo*</label>
+                            @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), new { @class = "form-control", @id = "IdPeriodo" })
+                            @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -129,3 +90,80 @@
         <!-- /.box-footer-->
     </div>
 }
+<script>
+    $(function () {
+        cargar_tipo_liquidacion_nomina();
+        cargar_periodos_x_nomina();
+    });
+
+    $("#IdNomina_Tipo").change(function () {
+        cargar_tipo_liquidacion_nomina();
+
+    });
+    $("#IdNomina_TipoLiqui").change(function () {
+        $("#IdPeriodo").empty();
+        cargar_periodos_x_nomina();
+    });
+
+
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+                var datos = {
+                    IdNomina: $("#IdNomina_Tipo").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $.each(data, function (i, row) {
+                            $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                        });
+                        $("#IdNomina_TipoLiqui").val(2);
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+
+    function cargar_periodos_x_nomina() {
+        var IdPeriodoSet = $("#IdPeriodoSet").val();
+        console.log(IdPeriodoSet);
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdNomina: $("#IdNomina_Tipo").val(),
+            IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_periodo_x_nomina","PeriodosPorNomina", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
+                });
+
+                $("#IdPeriodo").val(IdPeriodoSet);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+</script>

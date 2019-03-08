@@ -463,15 +463,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNomina = 1
             };
             cargar_combos(model.IdEmpresa);
             ROL_013_Rpt report = new ROL_013_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdNomina.Value = model.IdNomina;
-            report.p_IdEmpleado.Value = model.IdEmpleado;
-            report.p_fecha_inicio.Value = model.fecha_ini;
-            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdPeriodo.Value = model.IdPeriodo;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
@@ -483,9 +484,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_013_Rpt report = new ROL_013_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdNomina.Value = model.IdNomina;
-            report.p_IdEmpleado.Value = model.IdEmpleado;
-            report.p_fecha_inicio.Value = model.fecha_ini;
-            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdPeriodo.Value = model.IdPeriodo;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
