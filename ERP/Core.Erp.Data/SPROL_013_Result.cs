@@ -13,22 +13,21 @@ namespace Core.Erp.Data
     
     public partial class SPROL_013_Result
     {
-        public int IdDepartamento { get; set; }
-        public decimal IdEmpleado { get; set; }
-        public Nullable<int> pe_anio { get; set; }
-        public System.DateTime pe_FechaIni { get; set; }
-        public System.DateTime pe_FechaFin { get; set; }
-        public string pe_cedulaRuc { get; set; }
-        public string pe_apellido { get; set; }
-        public string pe_nombre { get; set; }
-        public string ru_descripcion { get; set; }
-        public string de_descripcion { get; set; }
-        public string Nomina { get; set; }
+        public int IdEmpresa { get; set; }
+        public int IdNomina_Tipo { get; set; }
+        public int IdNominaTipoLiqui { get; set; }
         public string ca_descripcion { get; set; }
-        public Nullable<int> pe_mes { get; set; }
-        public Nullable<System.DateTime> em_fechaSalida { get; set; }
-        public Nullable<System.DateTime> em_fechaIngaRol { get; set; }
+        public string de_descripcion { get; set; }
         public string Descripcion { get; set; }
+        public Nullable<System.DateTime> em_fechaIngaRol { get; set; }
+        public Nullable<int> IdArea { get; set; }
+        public int IdDepartamento { get; set; }
+        public Nullable<int> IdDivision { get; set; }
+        public Nullable<double> Sueldo { get; set; }
+        public string Empleado { get; set; }
+        public string em_codigo { get; set; }
+        public System.DateTime pe_FechaFin { get; set; }
+        public int Prestamos { get; set; }
         public double Valor { get; set; }
     }
 }

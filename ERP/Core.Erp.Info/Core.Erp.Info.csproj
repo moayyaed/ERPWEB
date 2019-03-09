@@ -435,6 +435,7 @@
     <Compile Include="Reportes\RRHH\ROL_023_Info.cs" />
     <Compile Include="Reportes\RRHH\ROL_024_Info.cs" />
     <Compile Include="Reportes\RRHH\ROL_025_Info.cs" />
+    <Compile Include="Reportes\RRHH\ROL_026_Info.cs" />
     <Compile Include="RRHH\MTE\ro_archivosCSV_Info.cs" />
     <Compile Include="RRHH\RDEP\Rdep.cs" />
     <Compile Include="RRHH\RDEP\Rdep_Info.cs" />

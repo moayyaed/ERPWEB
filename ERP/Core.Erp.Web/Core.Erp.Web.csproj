@@ -1333,6 +1333,12 @@
     <Compile Include="Reportes\RRHH\ROL_025_Rpt.Designer.cs">
       <DependentUpon>ROL_025_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\RRHH\ROL_026_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_026_Rpt.Designer.cs">
+      <DependentUpon>ROL_026_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -9937,6 +9943,7 @@
     <Content Include="Areas\SeguridadAcceso\Views\Usuario\_GridViewPartial_Usuario_x_Sucursal.cshtml" />
     <Content Include="Areas\SeguridadAcceso\Views\Usuario\_CmbEmpresa_det.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_016.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_026.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10477,6 +10484,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_025_Rpt.resx">
       <DependentUpon>ROL_025_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_026_Rpt.resx">
+      <DependentUpon>ROL_026_Rpt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
