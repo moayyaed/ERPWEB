@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public fa_PuntoVta()
         {
-            this.fa_notaCreDeb = new HashSet<fa_notaCreDeb>();
             this.fa_factura = new HashSet<fa_factura>();
+            this.fa_notaCreDeb = new HashSet<fa_notaCreDeb>();
         }
     
         public int IdEmpresa { get; set; }
@@ -31,7 +31,7 @@ namespace Core.Erp.Data
         public string IPImpresora { get; set; }
         public Nullable<int> NumCopias { get; set; }
     
-        public virtual ICollection<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public virtual ICollection<fa_factura> fa_factura { get; set; }
+        public virtual ICollection<fa_notaCreDeb> fa_notaCreDeb { get; set; }
     }
 }

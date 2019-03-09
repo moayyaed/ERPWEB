@@ -50,9 +50,10 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnulacion { get; set; }
         public bool aprobada_enviar_sri { get; set; }
+        public Nullable<bool> Generado { get; set; }
     
+        public virtual cp_orden_giro cp_orden_giro { get; set; }
         public virtual ICollection<cp_retencion_det> cp_retencion_det { get; set; }
         public virtual ICollection<cp_retencion_x_ct_cbtecble> cp_retencion_x_ct_cbtecble { get; set; }
-        public virtual cp_orden_giro cp_orden_giro { get; set; }
     }
 }

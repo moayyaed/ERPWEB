@@ -58,6 +58,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> fecha_primera_cuota { get; set; }
         public Nullable<double> valor_abono { get; set; }
         public bool aprobada_enviar_sri { get; set; }
+        public Nullable<bool> Generado { get; set; }
     
         public virtual fa_catalogo fa_catalogo { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }

@@ -38,7 +38,6 @@ namespace Core.Erp.Data
         public DbSet<fa_factura_x_in_Ing_Egr_Inven> fa_factura_x_in_Ing_Egr_Inven { get; set; }
         public DbSet<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public DbSet<fa_guia_remision_det_x_factura> fa_guia_remision_det_x_factura { get; set; }
-        public DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public DbSet<fa_notaCreDeb_x_ct_cbtecble> fa_notaCreDeb_x_ct_cbtecble { get; set; }
         public DbSet<fa_notaCreDeb_x_cxc_cobro> fa_notaCreDeb_x_cxc_cobro { get; set; }
         public DbSet<fa_notaCreDeb_x_fa_factura_NotaDeb> fa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
@@ -60,7 +59,6 @@ namespace Core.Erp.Data
         public DbSet<fa_parametro> fa_parametro { get; set; }
         public DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
         public DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
-        public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
         public DbSet<fa_CambioProducto> fa_CambioProducto { get; set; }
         public DbSet<vwfa_CambioProducto> vwfa_CambioProducto { get; set; }
         public DbSet<vwfa_CambioProductoDet_facturas> vwfa_CambioProductoDet_facturas { get; set; }
@@ -79,11 +77,13 @@ namespace Core.Erp.Data
         public DbSet<fa_PuntoVta> fa_PuntoVta { get; set; }
         public DbSet<vwfa_PuntoVta> vwfa_PuntoVta { get; set; }
         public DbSet<fa_factura_resumen> fa_factura_resumen { get; set; }
-        public DbSet<fa_factura> fa_factura { get; set; }
         public DbSet<vwfa_factura_sin_automatico> vwfa_factura_sin_automatico { get; set; }
         public DbSet<vwfa_cliente_consulta> vwfa_cliente_consulta { get; set; }
         public DbSet<vwfa_factura> vwfa_factura { get; set; }
         public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
+        public DbSet<fa_factura> fa_factura { get; set; }
+        public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
+        public DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {
