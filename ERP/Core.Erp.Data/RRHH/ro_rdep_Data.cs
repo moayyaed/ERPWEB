@@ -123,7 +123,10 @@ namespace Core.Erp.Data.RRHH
                         ExoneracionPorTerceraEdad = q.ExoneracionPorTerceraEdad,
                         OtrosIngresosRelacionDependencia = q.OtrosIngresosRelacionDependencia,
                         ImpuestoRentaCausado = q.ImpuestoRentaCausado,
-                        ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador
+                        ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador,
+                        ImpuestoRentaAsumidoPorEsteEmpleador = q.ImpuestoRentaAsumidoPorEsteEmpleador,
+                        BaseImponibleGravada = q.BaseImponibleGravada,
+                        IngresosGravadorPorEsteEmpleador = q.IngresosGravadorPorEsteEmpleador
                     }).ToList();
                 }
 
@@ -180,7 +183,10 @@ namespace Core.Erp.Data.RRHH
                         ExoneracionPorTerceraEdad = Entity.ExoneracionPorTerceraEdad,
                         OtrosIngresosRelacionDependencia = Entity.OtrosIngresosRelacionDependencia,
                         ImpuestoRentaCausado = Entity.ImpuestoRentaCausado,
-                        ValorImpuestoRetenidoTrabajador = Entity.ValorImpuestoRetenidoTrabajador
+                        ValorImpuestoRetenidoTrabajador = Entity.ValorImpuestoRetenidoTrabajador,
+                        ImpuestoRentaAsumidoPorEsteEmpleador = Entity.ImpuestoRentaAsumidoPorEsteEmpleador,
+                        BaseImponibleGravada = Entity.BaseImponibleGravada,
+                        IngresosGravadorPorEsteEmpleador = Entity.IngresosGravadorPorEsteEmpleador
                     };
                 }
 
@@ -189,58 +195,6 @@ namespace Core.Erp.Data.RRHH
             catch (Exception)
             {
 
-                throw;
-            }
-        }
-
-        public bool GuardarBD(ro_rdep_Info info)
-        {
-            try
-            {
-                using (Entities_rrhh Context = new Entities_rrhh())
-                {
-                    Context.ro_rdep.Add(new ro_rdep
-                    {
-                        IdEmpresa = info.IdEmpresa,
-                        pe_anio = info.pe_anio,
-                        IdEmpleado = info.IdEmpleado,
-                        IdSucursal = info.IdSucursal,
-                        IdNomina_Tipo = info.IdNomina_Tipo,
-                        Su_CodigoEstablecimiento = info.Su_CodigoEstablecimiento,
-                        pe_cedulaRuc = info.pe_cedulaRuc,
-                        pe_nombre = info.pe_nombre,
-                        pe_apellido = info.pe_apellido,
-                        Sueldo = info.Sueldo,
-                        FondosReserva = info.FondosReserva,
-                        DecimoTercerSueldo = info.DecimoTercerSueldo,
-                        DecimoCuartoSueldo = info.DecimoCuartoSueldo,
-                        Vacaciones = info.Vacaciones,
-                        AportePErsonal = info.AportePErsonal,
-                        GastoAlimentacion = info.GastoAlimentacion,
-                        GastoEucacion = info.GastoEucacion,
-                        GastoSalud = info.GastoSalud,
-                        GastoVestimenta = info.GastoVestimenta,
-                        GastoVivienda = info.GastoVivienda,
-                        Utilidades = info.Utilidades,
-                        IngresoVarios = info.IngresoVarios,
-                        IngresoPorOtrosEmpleaodres = info.IngresoPorOtrosEmpleaodres,
-                        IessPorOtrosEmpleadores = info.IessPorOtrosEmpleadores,
-                        ValorImpuestoPorEsteEmplador = info.ValorImpuestoPorEsteEmplador,
-                        ValorImpuestoPorOtroEmplador = info.ValorImpuestoPorOtroEmplador,
-                        ExoneraionPorDiscapacidad = info.ExoneraionPorDiscapacidad,
-                        ExoneracionPorTerceraEdad = info.ExoneracionPorTerceraEdad,
-                        OtrosIngresosRelacionDependencia = info.OtrosIngresosRelacionDependencia,
-                        ImpuestoRentaCausado = info.ImpuestoRentaCausado,
-                        ValorImpuestoRetenidoTrabajador = info.ValorImpuestoRetenidoTrabajador
-                    });
-
-                    Context.SaveChanges();
-                }
-
-                return true;
-            }
-            catch (Exception)
-            {
                 throw;
             }
         }
@@ -257,16 +211,7 @@ namespace Core.Erp.Data.RRHH
                     {
                         return false;
                     }
-
-                    entity.IdEmpresa = info.IdEmpresa;
-                    entity.pe_anio = info.pe_anio;
-                    entity.IdEmpleado = info.IdEmpleado;
-                    entity.IdSucursal = info.IdSucursal;
-                    entity.IdNomina_Tipo = info.IdNomina_Tipo;
-                    entity.Su_CodigoEstablecimiento = info.Su_CodigoEstablecimiento;
-                    entity.pe_cedulaRuc = info.pe_cedulaRuc;
-                    entity.pe_nombre = info.pe_nombre;
-                    entity.pe_apellido = info.pe_apellido;
+                    
                     entity.Sueldo = info.Sueldo;
                     entity.FondosReserva = info.FondosReserva;
                     entity.DecimoTercerSueldo = info.DecimoTercerSueldo;
@@ -289,6 +234,9 @@ namespace Core.Erp.Data.RRHH
                     entity.OtrosIngresosRelacionDependencia = info.OtrosIngresosRelacionDependencia;
                     entity.ImpuestoRentaCausado = info.ImpuestoRentaCausado;
                     entity.ValorImpuestoRetenidoTrabajador = info.ValorImpuestoRetenidoTrabajador;
+                    entity.ImpuestoRentaAsumidoPorEsteEmpleador = info.ImpuestoRentaAsumidoPorEsteEmpleador;
+                    entity.BaseImponibleGravada = info.BaseImponibleGravada;
+                    entity.IngresosGravadorPorEsteEmpleador = info.IngresosGravadorPorEsteEmpleador;
 
                     Context.SaveChanges();
                 }

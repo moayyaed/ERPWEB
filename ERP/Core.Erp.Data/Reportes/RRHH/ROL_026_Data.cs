@@ -57,8 +57,11 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  ExoneracionPorTerceraEdad = q.ExoneracionPorTerceraEdad,
                                  OtrosIngresosRelacionDependencia = q.OtrosIngresosRelacionDependencia,
                                  ImpuestoRentaCausado = q.ImpuestoRentaCausado,
-                                 ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador
-                             }).ToList();
+                                 ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador,
+                                 ImpuestoRentaAsumidoPorEsteEmpleador = q.ImpuestoRentaAsumidoPorEsteEmpleador,
+                                 BaseImponibleGravada = q.BaseImponibleGravada,
+                                 IngresosGravadorPorEsteEmpleador = q.IngresosGravadorPorEsteEmpleador
+                }).ToList();
                 }
                 return Lista;
             }

@@ -1555,6 +1555,9 @@
           <Property Name="OtrosIngresosRelacionDependencia" Type="float" />
           <Property Name="ImpuestoRentaCausado" Type="float" />
           <Property Name="ValorImpuestoRetenidoTrabajador" Type="float" />
+          <Property Name="ImpuestoRentaAsumidoPorEsteEmpleador" Type="float" />
+          <Property Name="BaseImponibleGravada" Type="float" />
+          <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -8706,6 +8709,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Parameter Name="IdRol" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="vwro_rol_detalle" EntityType="Model_rrhh.vwro_rol_detalle" />
+          <FunctionImport Name="GenerarRDEP">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="ro_rdep" EntityType="Model_rrhh.ro_rdep" />
           <AssociationSet Name="FK_ro_rdep_ro_empleado" Association="Model_rrhh.FK_ro_rdep_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
@@ -8715,13 +8725,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_Nomina_Tipo" EntitySet="ro_Nomina_Tipo" />
             <End Role="ro_rdep" EntitySet="ro_rdep" />
           </AssociationSet>
-          <FunctionImport Name="GenerarRDEP">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
-            <Parameter Name="IdNomina" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12429,6 +12432,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="OtrosIngresosRelacionDependencia" Type="Double" />
           <Property Name="ImpuestoRentaCausado" Type="Double" />
           <Property Name="ValorImpuestoRetenidoTrabajador" Type="Double" />
+          <Property Name="ImpuestoRentaAsumidoPorEsteEmpleador" Type="Double" />
+          <Property Name="BaseImponibleGravada" Type="Double" />
+          <Property Name="IngresosGravadorPorEsteEmpleador" Type="Double" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_rdep_ro_empleado" FromRole="ro_rdep" ToRole="ro_empleado" />
           <NavigationProperty Name="ro_Nomina_Tipo" Relationship="Model_rrhh.FK_ro_rdep_ro_Nomina_Tipo" FromRole="ro_rdep" ToRole="ro_Nomina_Tipo" />
         </EntityType>
@@ -14992,9 +14998,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GenerarRDEP" FunctionName="Model_rrhh.Store.GenerarRDEP" />
           <EntitySetMapping Name="ro_rdep">
             <EntityTypeMapping TypeName="Model_rrhh.ro_rdep">
               <MappingFragment StoreEntitySet="ro_rdep">
+                <ScalarProperty Name="IngresosGravadorPorEsteEmpleador" ColumnName="IngresosGravadorPorEsteEmpleador" />
+                <ScalarProperty Name="BaseImponibleGravada" ColumnName="BaseImponibleGravada" />
+                <ScalarProperty Name="ImpuestoRentaAsumidoPorEsteEmpleador" ColumnName="ImpuestoRentaAsumidoPorEsteEmpleador" />
                 <ScalarProperty Name="ValorImpuestoRetenidoTrabajador" ColumnName="ValorImpuestoRetenidoTrabajador" />
                 <ScalarProperty Name="ImpuestoRentaCausado" ColumnName="ImpuestoRentaCausado" />
                 <ScalarProperty Name="OtrosIngresosRelacionDependencia" ColumnName="OtrosIngresosRelacionDependencia" />
@@ -15029,7 +15039,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GenerarRDEP" FunctionName="Model_rrhh.Store.GenerarRDEP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

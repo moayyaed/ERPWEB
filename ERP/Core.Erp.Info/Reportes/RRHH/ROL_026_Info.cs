@@ -39,5 +39,9 @@ namespace Core.Erp.Info.Reportes.RRHH
         public Nullable<double> OtrosIngresosRelacionDependencia { get; set; }
         public Nullable<double> ImpuestoRentaCausado { get; set; }
         public Nullable<double> ValorImpuestoRetenidoTrabajador { get; set; }
+        public Nullable<double> ImpuestoRentaAsumidoPorEsteEmpleador { get; set; }
+        public Nullable<double> BaseImponibleGravada { get; set; }
+        public Nullable<double> IngresosGravadorPorEsteEmpleador { get; set; }
+
     }
 }

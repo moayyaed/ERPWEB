@@ -9491,7 +9491,7 @@
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_010.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_005.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\_GridViewPartial_rdep_det.cshtml" />
-    <Content Include="Areas\RRHH\Views\Rdep\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\Rdep\Nuevo.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\_CmbEmpleado_rdep.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_004.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_012.cshtml" />
@@ -9945,6 +9945,7 @@
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_016.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_026.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\Rdep\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

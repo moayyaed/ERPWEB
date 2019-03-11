@@ -45,6 +45,9 @@ namespace Core.Erp.Data
         public Nullable<double> OtrosIngresosRelacionDependencia { get; set; }
         public Nullable<double> ImpuestoRentaCausado { get; set; }
         public Nullable<double> ValorImpuestoRetenidoTrabajador { get; set; }
+        public Nullable<double> ImpuestoRentaAsumidoPorEsteEmpleador { get; set; }
+        public Nullable<double> BaseImponibleGravada { get; set; }
+        public Nullable<double> IngresosGravadorPorEsteEmpleador { get; set; }
     
         public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_Nomina_Tipo ro_Nomina_Tipo { get; set; }

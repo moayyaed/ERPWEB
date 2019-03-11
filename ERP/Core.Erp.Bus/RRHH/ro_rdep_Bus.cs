@@ -48,19 +48,6 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public bool GuardarBD(ro_rdep_Info info)
-        {
-            try
-            {
-                return oData.GuardarBD(info);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         public bool ModificarBD(ro_rdep_Info info)
         {
             try

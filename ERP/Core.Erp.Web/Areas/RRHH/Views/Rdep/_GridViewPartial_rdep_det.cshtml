@@ -59,6 +59,12 @@
                     Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdNomina_tipo = DataBinder.Eval(tc.DataItem, "IdNomina_tipo"), pe_anio = DataBinder.Eval(tc.DataItem, "pe_anio"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado") })
                 );
             });
+            c.SetHeaderTemplateContent(tc =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                );
+            });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);

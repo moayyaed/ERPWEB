@@ -87,8 +87,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
-                IdAnio = 0,
-                IdNomina = 0,
+                IdAnio = (DateTime.Now.Year)-1,
+                IdNomina = 1,
             };
 
             cargar_combos(model.IdEmpresa);
@@ -100,6 +100,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
             cargar_combos(model.IdEmpresa);
+            ro_rdep_Lista = bus_ro_rpde.GetList(model.IdEmpresa, model.IdSucursal, model.IdNomina, model.IdAnio);
+            Lista_ro_rdep.set_list(ro_rdep_Lista, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            
             return View(model);
         }
         /*
@@ -141,13 +144,28 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ViewBag.IdNomina_Tipo = IdNomina_Tipo == 0 ? 0 : Convert.ToInt32(IdNomina_Tipo);
             ViewBag.pe_anio = pe_anio == 0 ? 0 : Convert.ToInt32(pe_anio);
 
-            //model = bus_rpde.GetList(IdEmpresa, IdSucursal, IdNomina_Tipo, pe_anio);
             model = Lista_ro_rdep.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_rdep_det", model);
         }
         #endregion
 
         #region Acciones
+
+        public ActionResult Nuevo()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
+                IdAnio = (DateTime.Now.Year) - 1,
+                IdNomina = 1,
+            };
+
+            cargar_combos(model.IdEmpresa);
+            return View(model);
+
+        }
+
         public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdNomina_tipo = 0, int pe_anio = 0, int IdEmpleado=0)
         {
             #region Validar Session
@@ -171,17 +189,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Modificar(ro_rdep_Info model)
         {
-            //if (!Validar(model, ref mensaje))
-            //{
-            //    ViewBag.mensaje = mensaje;
-            //    cargar_combos(model.IdEmpresa);
-            //    return View(model);
-            //}
-
             if (!bus_ro_rpde.ModificarBD(model))
             {
                 return View(model);
             }
+
+            cargar_combos(model.IdEmpresa);
             return RedirectToAction("Index");
         }
 

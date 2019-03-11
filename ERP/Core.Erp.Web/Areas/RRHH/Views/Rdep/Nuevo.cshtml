@@ -1,0 +1,80 @@
+﻿@model Core.Erp.Info.Helps.cl_filtros_Info
+
+@{
+    ViewBag.Title = "RDEP";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_Sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdAnio">Año fiscal*</label>
+                    @Html.DropDownListFor(q => q.IdAnio, new SelectList(ViewBag.lst_Anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "pe_anio" })
+                    @Html.ValidationMessageFor(q => q.IdAnio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdNomina">Tipo de Nómina</label>
+                    @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="button" class="btn btn-default" id="btn_buscar" onclick="Buscar();">Generar Rdep</button>
+        <button type="submit" class="btn btn-primary" id="btn_guardar">Descargar</button>
+    </div>
+    @*<div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdProveedor">Detalle de rdep</label>
+                    @Html.Action("GridViewPartial_rdep_det", new { IdSucursal=Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, pe_anio = Model.IdAnio })
+                </div>
+            </div>
+        </div>
+    </div>*@
+}
+
+<script>
+    function Buscar() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),            
+            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+            pe_anio: $("#pe_anio").val(),
+        }
+        $("#btn_guardar").disabled = true;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Buscar", "Rdep", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_rdep_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+        $("#btn_guardar").disabled = false;
+    }
+</script>
