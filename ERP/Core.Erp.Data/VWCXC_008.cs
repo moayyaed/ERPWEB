@@ -31,5 +31,6 @@ namespace Core.Erp.Data
         public string pe_nombreCompleto { get; set; }
         public string Su_Descripcion { get; set; }
         public string IdCobro_tipo { get; set; }
+        public Nullable<System.DateTime> FechaLiquidacion { get; set; }
     }
 }

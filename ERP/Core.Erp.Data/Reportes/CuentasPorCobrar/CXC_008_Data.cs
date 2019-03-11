@@ -31,8 +31,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     && q.IdSucursal <= IdSucursalFin
                     && IdClienteIni <= q.IdCliente
                     && q.IdCliente <= IdClienteFin
-                    && fecha_ini <= q.cr_fecha
-                    && q.cr_fecha <= fecha_fin).Select(q => new CXC_008_Info
+                    && fecha_ini <= q.FechaLiquidacion
+                    && q.FechaLiquidacion <= fecha_fin).Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdBodega = q.IdBodega,
@@ -50,7 +50,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                         tc_descripcion = q.tc_descripcion,
                         vt_fecha = q.vt_fecha,
                         vt_NumFactura = q.vt_NumFactura,
-                        vt_tipoDoc = q.vt_tipoDoc
+                        vt_tipoDoc = q.vt_tipoDoc,
+                        FechaLiquidacion = q.FechaLiquidacion
                     }).ToList();
                     }
                     else
@@ -60,8 +61,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     && q.IdSucursal <= IdSucursalFin
                     && IdClienteIni <= q.IdCliente
                     && q.IdCliente <= IdClienteFin
-                    && fecha_ini <= q.cr_fecha
-                    && q.cr_fecha <= fecha_fin
+                    && fecha_ini <= q.FechaLiquidacion
+                    && q.FechaLiquidacion <= fecha_fin
                     && q.cr_estado == "A").Select(q => new CXC_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
@@ -80,7 +81,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                         tc_descripcion = q.tc_descripcion,
                         vt_fecha = q.vt_fecha,
                         vt_NumFactura = q.vt_NumFactura,
-                        vt_tipoDoc = q.vt_tipoDoc
+                        vt_tipoDoc = q.vt_tipoDoc,
+                        FechaLiquidacion = q.FechaLiquidacion
 
                     }).ToList();
                     }

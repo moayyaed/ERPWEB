@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
 {
     public class CXC_008_Info
     {
+
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
@@ -25,5 +26,6 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
         public string pe_nombreCompleto { get; set; }
         public string Su_Descripcion { get; set; }
         public string IdCobro_tipo { get; set; }
+        public Nullable<System.DateTime> FechaLiquidacion { get; set; }
     }
 }
