@@ -24,11 +24,11 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public ro_rdep_Info GetInfo(int IdEmpresa, int IdSucursal, int IdEmpleado)
+        public ro_rdep_Info GetInfo(int IdEmpresa, int IdSucursal, int IdNomina_tipo, int pe_anio, int IdEmpleado )
         {
             try
             {
-                return oData.GetInfo(IdEmpresa, IdSucursal, IdEmpleado);
+                return oData.GetInfo(IdEmpresa, IdSucursal, IdNomina_tipo, pe_anio, IdEmpleado);
             }
             catch (Exception)
             {

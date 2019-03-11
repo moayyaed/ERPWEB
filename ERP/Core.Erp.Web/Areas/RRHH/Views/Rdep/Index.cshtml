@@ -14,20 +14,21 @@
         <div class="col-md-12">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_Sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="ca_descripcion">Año fiscal*</label>
+                    <label for="IdAnio">Año fiscal*</label>
                     @Html.DropDownListFor(q => q.IdAnio, new SelectList(ViewBag.lst_Anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "pe_anio" })
                     @Html.ValidationMessageFor(q => q.IdAnio, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="IdProveedor">Tipo de Nómina</label>
+                    <label for="IdNomina">Tipo de Nómina</label>
                     @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
                 </div>
@@ -51,11 +52,10 @@
 }
 
 <script>
-
     function Buscar() {
         var datos = {
-            IdSucursal: IdSucursal.val(),            
-            IdNomina_Tipo: IdNomina_Tipo.val(),
+            IdSucursal: $("#IdSucursal").val(),            
+            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
             pe_anio: $("#pe_anio").val(),
         }
         $("#btn_guardar").disabled = true;

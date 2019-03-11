@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
     public class ro_rdep_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int pe_anio { get; set; }
         public decimal IdEmpleado { get; set; }
@@ -40,8 +41,12 @@ namespace Core.Erp.Info.RRHH
         public Nullable<double> ImpuestoRentaCausado { get; set; }
         public Nullable<double> ValorImpuestoRetenidoTrabajador { get; set; }
 
+        #region Campos que no estan en la tabla
+        public string IdRdep { get; set; }
         public string Su_Descripcion { get; set; }
         public string Empleado { get; set; }
+        #endregion
+
 
     }
 }

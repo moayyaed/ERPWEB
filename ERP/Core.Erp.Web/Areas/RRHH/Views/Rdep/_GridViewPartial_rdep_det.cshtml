@@ -4,9 +4,13 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_rdep_det";
         settings.CallbackRouteValues = new { Controller = "Rdep", Action = "GridViewPartial_rdep_det", IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, pe_anio = ViewBag.pe_anio };
-        //, IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, pe_anio = ViewBag.pe_anio 
         settings.Width = Unit.Percentage(100);
-        settings.KeyFieldName = "IdEmpleado";
+        settings.KeyFieldName = "IdRdep";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //CConfiguracion responsive
 
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
@@ -15,7 +19,7 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
-
+        //Configuración scrolling y pager
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
         settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
         settings.Settings.VerticalScrollableHeight = 400;
@@ -23,14 +27,12 @@
         settings.SettingsPager.PageSize = 10;
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsPager.AlwaysShowPager = true;
-
-
+        //Configuración filtro por columna
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-
-
+        //Configuracion exportacion
         settings.SettingsExport.EnableClientSideExportAPI = true;
         settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
         settings.Toolbars.Add(t =>
@@ -48,8 +50,19 @@
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
-
-
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "#";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdNomina_tipo = DataBinder.Eval(tc.DataItem, "IdNomina_tipo"), pe_anio = DataBinder.Eval(tc.DataItem, "pe_anio"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado") })
+                );
+            });
+            c.Settings.AllowDragDrop = DefaultBoolean.False;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Width = Unit.Pixel(150);
+        });
 
         settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(15);
         settings.Columns.Add("pe_cedulaRuc", "Cedula").Width = Unit.Percentage(10);

@@ -35,7 +35,7 @@ namespace Core.Erp.Data.RRHH
                         IdSucursal = q.IdSucursal,
                         IdNomina_Tipo = q.IdNomina_Tipo,
                         Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
-                        Empleado = q.pe_apellido+' '+ q.pe_nombre,
+                        Empleado = q.pe_apellido + " " + q.pe_nombre,
                         pe_cedulaRuc = q.pe_cedulaRuc,
                         pe_nombre = q.pe_nombre,
                         pe_apellido = q.pe_apellido,
@@ -63,6 +63,8 @@ namespace Core.Erp.Data.RRHH
                         ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador
                     }).ToList();
                 }
+
+                Lista.ForEach(q => { q.IdRdep = q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000") + q.IdEmpleado.ToString("00000000") + q.pe_anio.ToString("0000"); });
                 return Lista;
             }
             catch (Exception ex)
@@ -83,13 +85,12 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Context.GenerarRDEP(IdEmpresa, IdAnio, IdNomina_Tipo, IdSucursalInicio, IdSucursalFin);
-                    Lista = (from q in Context.ro_rdep
-                           where q.IdEmpresa == IdEmpresa
-                            && q.IdSucursal >= IdSucursalInicio
-                            && q.IdSucursal <= IdSucursalFin
-                            && q.IdNomina_Tipo == IdNomina_Tipo
-                            && q.pe_anio == IdAnio
-                             select new ro_rdep_Info
+
+                    Lista = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa
+                    && q.IdSucursal >= IdSucursalInicio
+                    && q.IdSucursal <= IdSucursalFin
+                    && q.IdNomina_Tipo == IdNomina_Tipo
+                    && q.pe_anio == IdAnio).Select(q => new ro_rdep_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         pe_anio = q.pe_anio,
@@ -97,7 +98,7 @@ namespace Core.Erp.Data.RRHH
                         IdSucursal = q.IdSucursal,
                         IdNomina_Tipo = q.IdNomina_Tipo,
                         Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
-                        Empleado = q.pe_apellido + ' ' + q.pe_nombre,
+                        Empleado = q.pe_apellido + " " + q.pe_nombre,
                         pe_cedulaRuc = q.pe_cedulaRuc,
                         pe_nombre = q.pe_nombre,
                         pe_apellido = q.pe_apellido,
@@ -125,15 +126,17 @@ namespace Core.Erp.Data.RRHH
                         ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador
                     }).ToList();
                 }
+
+                Lista.ForEach(q => { q.IdRdep = q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000") + q.IdEmpleado.ToString("00000000") + q.pe_anio.ToString("0000"); });
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
         }
 
-        public ro_rdep_Info GetInfo(int IdEmpresa, int IdSucursal, int IdEmpleado)
+        public ro_rdep_Info GetInfo(int IdEmpresa, int IdSucursal, int IdNomina_tipo, int pe_anio, int IdEmpleado)
         {
             try
             {
@@ -153,6 +156,7 @@ namespace Core.Erp.Data.RRHH
                         IdNomina_Tipo = Entity.IdNomina_Tipo,
                         Su_CodigoEstablecimiento = Entity.Su_CodigoEstablecimiento,
                         pe_cedulaRuc = Entity.pe_cedulaRuc,
+                        Empleado = Entity.pe_apellido + " " + Entity.pe_nombre,
                         pe_nombre = Entity.pe_nombre,
                         pe_apellido = Entity.pe_apellido,
                         Sueldo = Entity.Sueldo,
@@ -247,7 +251,7 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_rdep entity = Context.ro_rdep.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdEmpleado == info.IdEmpleado).FirstOrDefault();
+                    ro_rdep entity = Context.ro_rdep.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdNomina_Tipo == info.IdNomina_Tipo && q.pe_anio == info.pe_anio && q.IdEmpleado == info.IdEmpleado).FirstOrDefault();
 
                     if (entity == null)
                     {
