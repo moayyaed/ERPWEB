@@ -5025,6 +5025,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
           <Parameter Name="IdNomina" Type="int" Mode="In" />
         </Function>
+        <Function Name="GenerarRDEP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EntidadRegulatoria">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdPeriodo" Type="int" Mode="In" />
+          <Parameter Name="IdNomina" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalInicio" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
+        </Function>
         <Function Name="spROL_DecimosCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EntidadRegulatoria">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
@@ -8708,6 +8715,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_Nomina_Tipo" EntitySet="ro_Nomina_Tipo" />
             <End Role="ro_rdep" EntitySet="ro_rdep" />
           </AssociationSet>
+          <FunctionImport Name="GenerarRDEP">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -15015,6 +15029,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GenerarRDEP" FunctionName="Model_rrhh.Store.GenerarRDEP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

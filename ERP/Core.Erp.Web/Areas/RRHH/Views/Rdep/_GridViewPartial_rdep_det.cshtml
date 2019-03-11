@@ -1,8 +1,10 @@
 @using System.Web.UI.WebControls
+
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_rdep_det";
-        settings.CallbackRouteValues = new { Controller = "Rdep", Action = "GridViewPartial_rdep_det" };
+        settings.CallbackRouteValues = new { Controller = "Rdep", Action = "GridViewPartial_rdep_det", IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, pe_anio = ViewBag.pe_anio };
+        //, IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, pe_anio = ViewBag.pe_anio 
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdEmpleado";
 
@@ -49,9 +51,9 @@
 
 
 
-        settings.Columns.Add("pe_nombre", "Nombres").Width = Unit.Percentage(15);
-        settings.Columns.Add("pe_apellido", "Apellidos").Width = Unit.Percentage(15);
-        settings.Columns.Add("Sueldo", "sueldo").Width = Unit.Percentage(5);
+        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(15);
+        settings.Columns.Add("pe_cedulaRuc", "Cedula").Width = Unit.Percentage(10);
+        settings.Columns.Add("Sueldo", "Sueldo").Width = Unit.Percentage(5);
         settings.Columns.Add("FondosReserva", "FR").Width = Unit.Percentage(5);
         settings.Columns.Add("DecimoTercerSueldo", "DIII").Width = Unit.Percentage(5);
         settings.Columns.Add("DecimoCuartoSueldo", "DIV").Width = Unit.Percentage(5);

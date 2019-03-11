@@ -450,6 +450,7 @@
     <Compile Include="RRHH\ro_permiso_x_empleado_Bus.cs" />
     <Compile Include="RRHH\ro_prestamo_Bus.cs" />
     <Compile Include="RRHH\ro_prestamo_detalle_Bus.cs" />
+    <Compile Include="RRHH\ro_rdep_Bus.cs" />
     <Compile Include="RRHH\ro_rol_Bus.cs" />
     <Compile Include="RRHH\ro_rol_detalle_Bus.cs" />
     <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Bus.cs" />

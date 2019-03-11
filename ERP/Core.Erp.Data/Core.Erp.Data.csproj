@@ -1617,6 +1617,7 @@
     <Compile Include="RRHH\ro_permiso_x_empleado_Data.cs" />
     <Compile Include="RRHH\ro_prestamo_Data.cs" />
     <Compile Include="RRHH\ro_prestamo_detalle_Data.cs" />
+    <Compile Include="RRHH\ro_rdep_Data.cs" />
     <Compile Include="RRHH\ro_rol_Data.cs" />
     <Compile Include="RRHH\ro_rol_detalle_Data.cs" />
     <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Data.cs" />

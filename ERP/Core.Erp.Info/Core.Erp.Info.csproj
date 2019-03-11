@@ -500,6 +500,7 @@
     <Compile Include="RRHH\ro_permiso_x_empleado_Info.cs" />
     <Compile Include="RRHH\ro_prestamo_detalle_Info.cs" />
     <Compile Include="RRHH\ro_prestamo_Info.cs" />
+    <Compile Include="RRHH\ro_rdep_Info.cs" />
     <Compile Include="RRHH\ro_rol_detalle_Info.cs" />
     <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Info.cs" />
     <Compile Include="RRHH\ro_rol_Info.cs" />

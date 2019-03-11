@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.General;
+﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.General;
 using Core.Erp.Bus.Helps;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.General;
@@ -22,9 +23,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class RdepController : Controller
     {
         #region variables
-        Rdep_Info_lis Lis_Rdep_Info_lis = new Rdep_Info_lis();
-        Rdep_Bus bus_rpde = new Rdep_Bus();
+        //Rdep_Info_lis Lis_Rdep_Info_lis = new Rdep_Info_lis();
+        //Rdep_Bus bus_rpde = new Rdep_Bus();
+        ro_rdep_List Lista_ro_rdep = new ro_rdep_List();
+        List<ro_rdep_Info> ro_rdep_Lista = new List<ro_rdep_Info>();
         FilesHelper_Bus FilesHelper_B = new FilesHelper_Bus();
+        tb_sucursal_Bus bus_Sucursal = new tb_sucursal_Bus();
+        ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
+        ro_rdep_Bus bus_rpde = new ro_rdep_Bus();
+        ro_nomina_tipo_Bus bus_tipo_nomina = new ro_nomina_tipo_Bus();
 
         #endregion
 
@@ -45,6 +52,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         #endregion
 
+        #region Metodos
+        private void cargar_combos(int IdEmpresa)
+        {
+            try
+            {
+                var lst_Sucursal = bus_Sucursal.get_list(IdEmpresa, false);
+                ViewBag.lst_Sucursal = lst_Sucursal;
+
+                var lst_Anio = bus_anio.get_list(false);
+                ViewBag.lst_Anio = lst_Anio;
+
+                var lst_nomina_tipo = bus_tipo_nomina.get_list(IdEmpresa, false);
+                ViewBag.lst_nomina_tipo = lst_nomina_tipo;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
         #region vistas
         public ActionResult Index()
         {
@@ -54,9 +82,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-            Rdep_Info model = new Rdep_Info();
+
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
+                IdAnio = 0,
+                IdNomina = 0,
+            };
+
+            cargar_combos(model.IdEmpresa);
+
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Index(cl_filtros_Info model)
+        {
+            model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+            cargar_combos(model.IdEmpresa);
+            return View(model);
+        }
+        /*
         [HttpPost]
         public ActionResult Index(Rdep_Info model)
         {
@@ -83,46 +129,58 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return File(fileBytes, "application/xml", nombre_file + ".xml");
 
         }
-        public ActionResult GridViewPartial_rdep_det()
+        */
+        public ActionResult GridViewPartial_rdep_det(int IdSucursal, int IdNomina_Tipo, int pe_anio)
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-            List<Rdep_Info> model = new List<Rdep_Info>();
-            model = Lis_Rdep_Info_lis.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //List<Rdep_Info> model = new List<Rdep_Info>();
+            //model = Lis_Rdep_Info_lis.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //return PartialView("_GridViewPartial_rdep_det", model);
+
+            List<ro_rdep_Info> model = new List<ro_rdep_Info>();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);            
+            ViewBag.IdEmpresa = IdEmpresa == 0 ? 0 : Convert.ToInt32(IdEmpresa);
+            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
+            ViewBag.IdEmpleado = IdNomina_Tipo == 0 ? 0 : Convert.ToInt32(IdNomina_Tipo);
+            ViewBag.pe_anio = pe_anio == 0 ? 0 : Convert.ToInt32(pe_anio);
+
+            model = bus_rpde.GetList(IdEmpresa, IdSucursal, IdNomina_Tipo, pe_anio);
             return PartialView("_GridViewPartial_rdep_det", model);
         }
         #endregion
 
         #region Funciones Json
 
-        public JsonResult Buscar(int Anio=0, decimal IdEmpleado=0)
+        public JsonResult Buscar(int IdSucursal=0, int IdNomina_Tipo=0, int pe_anio = 0)
         {
 
             int IdEmpresa= Convert.ToInt32( SessionFixed.IdEmpresa);
-            List<Rdep_Info> model = new List<Rdep_Info>();
-            model = bus_rpde.get_list_rdep(IdEmpresa, Anio,Convert.ToDecimal( IdEmpleado));
-            Lis_Rdep_Info_lis.set_list(model,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual) );
-            return Json("", JsonRequestBehavior.AllowGet);
+            List<ro_rdep_Info> model = new List<ro_rdep_Info>();
+            model = bus_rpde.GenerarRDEP(IdEmpresa, IdSucursal, pe_anio, IdNomina_Tipo);
+
+            Lista_ro_rdep.set_list(model,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual) );
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }
 
 
-    public class  Rdep_Info_lis
-  {
-        string variable = "Rdep_Info";
-        public List<Rdep_Info> get_list(decimal IdTransaccionSession)
+    public class ro_rdep_List
+    {
+        string variable = "ro_rdep_Info";
+        public List<ro_rdep_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable+IdTransaccionSession.ToString()] == null)
             {
-                List<Rdep_Info> list = new List<Rdep_Info>();
+                List<ro_rdep_Info> list = new List<ro_rdep_Info>();
 
                 HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<Rdep_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+            return (List<ro_rdep_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<Rdep_Info> list, decimal IdTransaccionSession)
+        public void set_list(List<ro_rdep_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[variable+IdTransaccionSession.ToString()] = list;
         }

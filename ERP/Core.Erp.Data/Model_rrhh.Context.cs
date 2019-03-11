@@ -497,5 +497,30 @@ namespace Core.Erp.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Cierre_Rol", idEmpresaParameter, idPeriodoParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idRolParameter);
         }
+    
+        public virtual int GenerarRDEP(Nullable<int> idEmpresa, Nullable<int> idPeriodo, Nullable<int> idNomina, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idPeriodoParameter = idPeriodo.HasValue ?
+                new ObjectParameter("IdPeriodo", idPeriodo) :
+                new ObjectParameter("IdPeriodo", typeof(int));
+    
+            var idNominaParameter = idNomina.HasValue ?
+                new ObjectParameter("IdNomina", idNomina) :
+                new ObjectParameter("IdNomina", typeof(int));
+    
+            var idSucursalInicioParameter = idSucursalInicio.HasValue ?
+                new ObjectParameter("IdSucursalInicio", idSucursalInicio) :
+                new ObjectParameter("IdSucursalInicio", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerarRDEP", idEmpresaParameter, idPeriodoParameter, idNominaParameter, idSucursalInicioParameter, idSucursalFinParameter);
+        }
     }
 }
