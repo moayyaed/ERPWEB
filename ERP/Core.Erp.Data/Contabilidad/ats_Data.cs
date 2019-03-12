@@ -5,14 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.Contabilidad.ATS;
 using Core.Erp.Info.Contabilidad.ATS.ATS_Info;
+using Core.Erp.Data.General;
+
 namespace Core.Erp.Data.Contabilidad
 {
    public class ats_Data
     {
-        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal)
+        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal, int[] IntArray)
         {
             try
             {
+                tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
+                string Establecimiento = "";
+                if(IntArray!=null)
+                foreach (var item in IntArray)
+                {
+                    Establecimiento += data_sucursal.get_info(IdEmpresa,item).Su_CodigoEstablecimiento+",";
+                }
+
                 int IdSucursalInicio = Convert.ToInt32(IdSucursal);
                 int IdSucursalFin = Convert.ToInt32(IdSucursal) == 0 ? 9999 : Convert.ToInt32(IdSucursal);
                 ats_Info info = new ats_Info();
@@ -24,6 +34,8 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
+                                        && Establecimiento.Contains(q.establecimiento)
+                                       // && q.establecimiento.contr
                                        // && q.idProv== "0909594202001"
                                         select new compras_Info
                              {
@@ -66,7 +78,8 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_ventas = (from v in Context.ATS_ventas
                                         where v.IdEmpresa == IdEmpresa
                                         && v.IdPeriodo == IdPeriodo
-                                      //  && v.idCliente== "0190339092001"
+                                         && Establecimiento.Contains(v.codEstab)
+                                       //  && v.idCliente== "0190339092001"
                                        select new ventas_Info
                                         {
                                             IdEmpresa = v.IdEmpresa,
@@ -97,7 +110,8 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_retenciones = (from r in Context.ATS_retenciones
                                        where r.IdEmpresa == IdEmpresa
                                        && r.IdPeriodo == IdPeriodo
-                                      // && r.Cedula_ruc== "0909594202001"
+                                       
+                                            // && r.Cedula_ruc== "0909594202001"
                                             select new retenciones_Info
                                        {
                                            IdEmpresa = r.IdEmpresa,
@@ -163,8 +177,9 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_anulados = (from a in Context.ATS_comprobantes_anulados
                                               where a.IdEmpresa == IdEmpresa
                                               && a.IdPeriodo == IdPeriodo
-                                              // && r.Cedula_ruc== "0909594202001"
-                                              select new comprobantesAnulados_info
+                                               && Establecimiento.Contains(a.Establecimiento)
+                                         // && r.Cedula_ruc== "0909594202001"
+                                         select new comprobantesAnulados_info
                                               {
                                                   IdEmpresa = a.IdEmpresa,
                                                   IdPeriodo = a.IdPeriodo,

@@ -23,11 +23,11 @@ namespace Core.Erp.Bus.Contabilidad
         tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
         tb_sucursal_Info info_sucursal = new tb_sucursal_Info();
         #endregion
-        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal)
+        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal, int[] IntArray)
         {
             try
             {
-                return odata.get_info(IdEmpresa, IdPeriodo, IdSucursal); 
+                return odata.get_info(IdEmpresa, IdPeriodo, IdSucursal, IntArray); 
             }
             catch (Exception)
             {
@@ -37,7 +37,7 @@ namespace Core.Erp.Bus.Contabilidad
         }
 
 
-        public iva get_ats(int IdEmpresa, int IdPeriodo, int IdSucursal)
+        public iva get_ats(int IdEmpresa, int IdPeriodo, int IdSucursal, int[] IntArray)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Core.Erp.Bus.Contabilidad
                 iva ats = new iva();
                 info_periodo = data_periodo.get_info(IdEmpresa, IdPeriodo);
                 info_empresa = data_empresa.get_info(IdEmpresa);
-                ats_Info info_ats = get_info(IdEmpresa, IdPeriodo, IdSucursal);
+                ats_Info info_ats = get_info(IdEmpresa, IdPeriodo, IdSucursal, IntArray);
 
                 #region cabecera del xml
                 ats.IdInformante = info_empresa.em_ruc;

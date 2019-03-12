@@ -367,16 +367,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     foreach (var item in info.detalle.Where(v=>v.Valor>0))
                     {
-                        if(item.pe_cedulaRuc== "0912646684")
-                        {
-
-                        }
-
+                        
                         item.em_NumCta = item.em_NumCta.Trim();
                         string linea = "";
                         double valor = Convert.ToDouble(item.Valor);
                         double valorEntero = Math.Floor(valor);
                         double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
+                       
 
                         if (item.em_tipoCta == "COR" || item.em_tipoCta == "AHO")
                         {
