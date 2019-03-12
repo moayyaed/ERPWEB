@@ -184,7 +184,7 @@ namespace Core.Erp.Data.RRHH
                             IdArchivo = item.IdArchivo=info.IdArchivo,
                             IdSucursal = item.IdSucursal,
                             IdEmpleado = item.IdEmpleado,
-                            Valor = item.Valor,
+                            Valor =Math.Round( item.Valor,2),
                             pagacheque = item.pagacheque,
                             Secuencia=secuencia
                         };
