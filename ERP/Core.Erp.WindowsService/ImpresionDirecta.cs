@@ -1,19 +1,17 @@
-﻿using Core.Erp.Bus.General;
-using Core.Erp.Info.General;
+﻿using Core.Erp.Bus.FacturacionElectronica;
+using Core.Erp.Bus.General;
+using Core.Erp.Info.FacturacionElectronica;
+using Core.Erp.Info.FacturacionElectronica.Factura_V2;
 using Core.Erp.Web.Reportes.Facturacion;
 using DevExpress.XtraPrinting;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Xml.Serialization;
 
 namespace Core.Erp.WindowsService
 {
@@ -33,6 +31,16 @@ namespace Core.Erp.WindowsService
         }
 
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Serv_ImpresionDirecta();
+        }
+
+        protected override void OnStop()
+        {
+        }
+
+
+        public void Serv_ImpresionDirecta()
         {
             #region Variables
             tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
@@ -159,8 +167,105 @@ namespace Core.Erp.WindowsService
             }
         }
 
-        protected override void OnStop()
+        private void Serv_GeneradorDocumentosElectronicos()
         {
+            try
+            {
+
+                #region Variables
+                TipoComprobante_Bus bus_comprobante = new TipoComprobante_Bus();
+                TipoComprobante_Info info_tipo_comprobante = new TipoComprobante_Info();
+                StreamWriter myWriter;
+                #endregion
+
+                #region Generando facturas
+                var info_factura = bus_comprobante.get_info_factura(DateTime.Now.AddMonths(-1).Date, DateTime.Now.Date);
+                if (info_factura != null && info_factura.infoTributaria.secuencial != null)
+                {
+
+                    string sIdCbteFact = info_factura.infoTributaria.razonSocial.Substring(0, 3) + "FAC" + info_factura.infoTributaria.estab + "-" + info_factura.infoTributaria.ptoEmi + "-" + info_factura.infoTributaria.secuencial;
+                    XmlSerializerNamespaces NamespaceObject = new XmlSerializerNamespaces();
+                    NamespaceObject.Add("", "");
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(factura));
+                    myWriter = new StreamWriter(@"C:\Comprobantes EFIXED\Repositorio de Comprobantes" + sIdCbteFact + ".xml");
+                    mySerializer.Serialize(myWriter, info_factura, NamespaceObject);
+                    myWriter.Close();
+                }
+
+                #endregion
+
+
+                #region Generando retencion
+                var info_retencion = bus_comprobante.get_info_factura(DateTime.Now.AddMonths(-1).Date, DateTime.Now.Date);
+                if (info_retencion != null && info_retencion.infoTributaria.secuencial != null)
+                {
+
+                    string sIdCbteFact = info_retencion.infoTributaria.razonSocial.Substring(0, 3) + "RET" + info_retencion.infoTributaria.estab + "-" + info_retencion.infoTributaria.ptoEmi + "-" + info_retencion.infoTributaria.secuencial;
+                    XmlSerializerNamespaces NamespaceObject = new XmlSerializerNamespaces();
+                    NamespaceObject.Add("", "");
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(factura));
+                    myWriter = new StreamWriter(@"C:\Comprobantes EFIXED\Repositorio de Comprobantes" + sIdCbteFact + ".xml");
+                    mySerializer.Serialize(myWriter, info_retencion, NamespaceObject);
+                    myWriter.Close();
+                }
+
+                #endregion
+
+
+                #region Generando guia remision
+                var info_guia = bus_comprobante.get_info_factura(DateTime.Now.AddMonths(-1).Date, DateTime.Now.Date);
+                if (info_guia != null && info_guia.infoTributaria.secuencial != null)
+                {
+
+                    string sIdCbteFact = info_guia.infoTributaria.razonSocial.Substring(0, 3) + "GUI" + info_guia.infoTributaria.estab + "-" + info_guia.infoTributaria.ptoEmi + "-" + info_guia.infoTributaria.secuencial;
+                    XmlSerializerNamespaces NamespaceObject = new XmlSerializerNamespaces();
+                    NamespaceObject.Add("", "");
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(factura));
+                    myWriter = new StreamWriter(@"C:\Comprobantes EFIXED\Repositorio de Comprobantes" + sIdCbteFact + ".xml");
+                    mySerializer.Serialize(myWriter, info_guia, NamespaceObject);
+                    myWriter.Close();
+                }
+
+                #endregion
+
+
+                #region Generando nota credito
+                var info_nc = bus_comprobante.get_info_factura(DateTime.Now.AddMonths(-1).Date, DateTime.Now.Date);
+                if (info_nc != null && info_nc.infoTributaria.secuencial != null)
+                {
+
+                    string sIdCbteFact = info_nc.infoTributaria.razonSocial.Substring(0, 3) + "NTC" + info_nc.infoTributaria.estab + "-" + info_nc.infoTributaria.ptoEmi + "-" + info_nc.infoTributaria.secuencial;
+                    XmlSerializerNamespaces NamespaceObject = new XmlSerializerNamespaces();
+                    NamespaceObject.Add("", "");
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(factura));
+                    myWriter = new StreamWriter(@"C:\Comprobantes EFIXED\Repositorio de Comprobantes" + sIdCbteFact + ".xml");
+                    mySerializer.Serialize(myWriter, info_nc, NamespaceObject);
+                    myWriter.Close();
+                }
+
+                #endregion
+
+
+                #region Generando nota debito
+                var info_nd = bus_comprobante.get_info_factura(DateTime.Now.AddMonths(-1).Date, DateTime.Now.Date);
+                if (info_nd != null && info_nd.infoTributaria.secuencial != null)
+                {
+
+                    string sIdCbteFact = info_nd.infoTributaria.razonSocial.Substring(0, 3) + "NTD" + info_nd.infoTributaria.estab + "-" + info_nd.infoTributaria.ptoEmi + "-" + info_nd.infoTributaria.secuencial;
+                    XmlSerializerNamespaces NamespaceObject = new XmlSerializerNamespaces();
+                    NamespaceObject.Add("", "");
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(factura));
+                    myWriter = new StreamWriter(@"C:\Comprobantes EFIXED\Repositorio de Comprobantes" + sIdCbteFact + ".xml");
+                    mySerializer.Serialize(myWriter, info_nd, NamespaceObject);
+                    myWriter.Close();
+                }
+
+                #endregion
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
