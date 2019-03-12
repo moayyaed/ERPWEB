@@ -145,6 +145,8 @@ namespace Core.Erp.Data
         public DbSet<vwRo_rol_detalle_saldo_por_pagar> vwRo_rol_detalle_saldo_por_pagar { get; set; }
         public DbSet<vwro_rol_detalle> vwro_rol_detalle { get; set; }
         public DbSet<ro_rdep> ro_rdep { get; set; }
+        public DbSet<ro_rdep_det> ro_rdep_det { get; set; }
+        public DbSet<vwro_rdep> vwro_rdep { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {
@@ -498,11 +500,15 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Cierre_Rol", idEmpresaParameter, idPeriodoParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idRolParameter);
         }
     
-        public virtual int GenerarRDEP(Nullable<int> idEmpresa, Nullable<int> idPeriodo, Nullable<int> idNomina, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
+        public virtual int GenerarRDEP(Nullable<int> idEmpresa, Nullable<int> idErdp, Nullable<int> idPeriodo, Nullable<int> idNomina, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin, Nullable<decimal> idEmpleadoInicio, Nullable<decimal> idEmpleadoFin, string observacion, string idUsuario)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
                 new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idErdpParameter = idErdp.HasValue ?
+                new ObjectParameter("IdErdp", idErdp) :
+                new ObjectParameter("IdErdp", typeof(int));
     
             var idPeriodoParameter = idPeriodo.HasValue ?
                 new ObjectParameter("IdPeriodo", idPeriodo) :
@@ -520,7 +526,23 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdSucursalFin", idSucursalFin) :
                 new ObjectParameter("IdSucursalFin", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerarRDEP", idEmpresaParameter, idPeriodoParameter, idNominaParameter, idSucursalInicioParameter, idSucursalFinParameter);
+            var idEmpleadoInicioParameter = idEmpleadoInicio.HasValue ?
+                new ObjectParameter("IdEmpleadoInicio", idEmpleadoInicio) :
+                new ObjectParameter("IdEmpleadoInicio", typeof(decimal));
+    
+            var idEmpleadoFinParameter = idEmpleadoFin.HasValue ?
+                new ObjectParameter("IdEmpleadoFin", idEmpleadoFin) :
+                new ObjectParameter("IdEmpleadoFin", typeof(decimal));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("Observacion", observacion) :
+                new ObjectParameter("Observacion", typeof(string));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerarRDEP", idEmpresaParameter, idErdpParameter, idPeriodoParameter, idNominaParameter, idSucursalInicioParameter, idSucursalFinParameter, idEmpleadoInicioParameter, idEmpleadoFinParameter, observacionParameter, idUsuarioParameter);
         }
     }
 }

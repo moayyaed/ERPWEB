@@ -1509,6 +1509,9 @@
     <Compile Include="ro_rdep.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_rdep_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_rol.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1618,6 +1621,7 @@
     <Compile Include="RRHH\ro_prestamo_Data.cs" />
     <Compile Include="RRHH\ro_prestamo_detalle_Data.cs" />
     <Compile Include="RRHH\ro_rdep_Data.cs" />
+    <Compile Include="RRHH\ro_rdep_det_Data.cs" />
     <Compile Include="RRHH\ro_rol_Data.cs" />
     <Compile Include="RRHH\ro_rol_detalle_Data.cs" />
     <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Data.cs" />
@@ -2623,6 +2627,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwRo_Prestamo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rdep.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_rol.cs">

@@ -12,30 +12,16 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ro_rdep
+    public partial class vwro_rdep
     {
-        public ro_rdep()
-        {
-            this.ro_rdep_det = new HashSet<ro_rdep_det>();
-        }
-    
         public int IdEmpresa { get; set; }
         public int Id_Rdep { get; set; }
         public int IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
         public int pe_anio { get; set; }
         public int IdNomina_Tipo { get; set; }
-        public string Su_CodigoEstablecimiento { get; set; }
+        public string Descripcion { get; set; }
         public string Observacion { get; set; }
         public long Estado { get; set; }
-        public string IdUsuario { get; set; }
-        public Nullable<System.DateTime> Fecha_Transac { get; set; }
-        public string IdUsuarioUltMod { get; set; }
-        public Nullable<System.DateTime> Fecha_UltMod { get; set; }
-        public string IdUsuarioUltAnu { get; set; }
-        public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public string MotiAnula { get; set; }
-    
-        public virtual ro_Nomina_Tipo ro_Nomina_Tipo { get; set; }
-        public virtual ICollection<ro_rdep_det> ro_rdep_det { get; set; }
     }
 }

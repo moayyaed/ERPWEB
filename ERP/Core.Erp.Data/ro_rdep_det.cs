@@ -12,16 +12,10 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class VWROL_026
+    public partial class ro_rdep_det
     {
         public int IdEmpresa { get; set; }
         public int Id_Rdep { get; set; }
-        public int IdSucursal { get; set; }
-        public int pe_anio { get; set; }
-        public int IdNomina_Tipo { get; set; }
-        public string Su_CodigoEstablecimiento { get; set; }
-        public string Observacion { get; set; }
-        public long Estado { get; set; }
         public int Secuencia { get; set; }
         public decimal IdEmpleado { get; set; }
         public string pe_cedulaRuc { get; set; }
@@ -52,5 +46,8 @@ namespace Core.Erp.Data
         public Nullable<double> ImpuestoRentaAsumidoPorEsteEmpleador { get; set; }
         public Nullable<double> BaseImponibleGravada { get; set; }
         public Nullable<double> IngresosGravadorPorEsteEmpleador { get; set; }
+    
+        public virtual ro_empleado ro_empleado { get; set; }
+        public virtual ro_rdep ro_rdep { get; set; }
     }
 }

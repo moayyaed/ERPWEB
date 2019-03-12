@@ -1,7 +1,7 @@
-﻿@model Core.Erp.Info.Helps.cl_filtros_Info
+﻿@model Core.Erp.Info.RRHH.ro_rdep_Info
 
 @{
-    ViewBag.Title = "RDEP";
+    ViewBag.Title = "Nuevo RDEP";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -23,58 +23,43 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdAnio">Año fiscal*</label>
-                    @Html.DropDownListFor(q => q.IdAnio, new SelectList(ViewBag.lst_Anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "pe_anio" })
-                    @Html.ValidationMessageFor(q => q.IdAnio, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(q => q.pe_anio, new SelectList(ViewBag.lst_Anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "pe_anio" })
+                    @Html.ValidationMessageFor(q => q.pe_anio, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdNomina">Tipo de Nómina</label>
-                    @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
-                    @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="IdNomina">Empleado</label>
+                    @Html.Partial("_CmbEmpleado_rdep", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="IdNomina">Observación</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-default" id="btn_buscar" onclick="Buscar();">Generar Rdep</button>
-        <button type="submit" class="btn btn-primary" id="btn_guardar">Descargar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Rdep", new { Area ="RRHH" }, null)">Cancelar</a>
     </div>
-    @*<div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdProveedor">Detalle de rdep</label>
-                    @Html.Action("GridViewPartial_rdep_det", new { IdSucursal=Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, pe_anio = Model.IdAnio })
-                </div>
-            </div>
-        </div>
-    </div>*@
 }
-
-<script>
-    function Buscar() {
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),            
-            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
-            pe_anio: $("#pe_anio").val(),
-        }
-        $("#btn_guardar").disabled = true;
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Buscar", "Rdep", new { Area = "RRHH" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridViewPartial_rdep_det.PerformCallback();
-            },
-            error: function (error) {
-            }
-        });
-        $("#btn_guardar").disabled = false;
-    }
-</script>

@@ -87,7 +87,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
-                IdAnio = (DateTime.Now.Year)-1,
+                IdAnio = (DateTime.Now.Year),
                 IdNomina = 1,
             };
 
@@ -100,10 +100,23 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
             cargar_combos(model.IdEmpresa);
-            ro_rdep_Lista = bus_ro_rpde.GetList(model.IdEmpresa, model.IdSucursal, model.IdNomina, model.IdAnio);
-            Lista_ro_rdep.set_list(ro_rdep_Lista, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //ro_rdep_Lista = bus_ro_rpde.GetList(model.IdEmpresa, model.IdSucursal, model.IdNomina, model.IdAnio);
+            //Lista_ro_rdep.set_list(ro_rdep_Lista, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             
             return View(model);
+        }
+
+        public ActionResult GridViewPartial_rdep(int IdSucursal, int IdNomina_Tipo, int pe_anio)
+        {
+            List<ro_rdep_Info> model = new List<ro_rdep_Info>();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.IdEmpresa = IdEmpresa == 0 ? 0 : Convert.ToInt32(IdEmpresa);
+            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
+            ViewBag.IdNomina_Tipo = IdNomina_Tipo == 0 ? 0 : Convert.ToInt32(IdNomina_Tipo);
+            ViewBag.pe_anio = pe_anio == 0 ? 0 : Convert.ToInt32(pe_anio);
+
+            model = bus_ro_rpde.GetList(IdEmpresa, IdSucursal, IdNomina_Tipo, pe_anio);
+            return PartialView("_GridViewPartial_rdep", model);
         }
         /*
         [HttpPost]
@@ -133,18 +146,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         }
         */
-        public ActionResult GridViewPartial_rdep_det(int IdSucursal, int IdNomina_Tipo, int pe_anio)
+        
+        public ActionResult GridViewPartial_rdep_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-            List<ro_rdep_Info> model = new List<ro_rdep_Info>();
+            ro_rdep_Info model = new ro_rdep_Info();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);            
-            ViewBag.IdEmpresa = IdEmpresa == 0 ? 0 : Convert.ToInt32(IdEmpresa);
-            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
-            ViewBag.IdNomina_Tipo = IdNomina_Tipo == 0 ? 0 : Convert.ToInt32(IdNomina_Tipo);
-            ViewBag.pe_anio = pe_anio == 0 ? 0 : Convert.ToInt32(pe_anio);
 
-            model = Lista_ro_rdep.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            model.Lista_Rdep_Det = Lista_ro_rdep.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_rdep_det", model);
         }
         #endregion
@@ -153,20 +163,49 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult Nuevo()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            ro_rdep_Info model = new ro_rdep_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
-                IdAnio = (DateTime.Now.Year) - 1,
-                IdNomina = 1,
+                pe_anio = (DateTime.Now.Year),
+                IdNomina_Tipo = 1,
             };
 
+            model.Lista_Rdep_Det = new List<ro_rdep_det_Info>();
             cargar_combos(model.IdEmpresa);
             return View(model);
 
         }
+        [HttpPost]
+        public ActionResult Nuevo(ro_rdep_Info info)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    info.IdUsuario = SessionFixed.IdUsuario;
+                    if (!bus_ro_rpde.GenerarRDEP(info.IdEmpresa, info.IdSucursal, info.Id_Rdep, info.pe_anio, info.IdNomina_Tipo, info.IdEmpleado, info.Observacion, info.IdUsuario))
+                    {
+                        cargar_combos(info.IdEmpresa);
+                        return View(info);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                        
+                }
+                else
+                    return View(info);
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdNomina_tipo = 0, int pe_anio = 0, int IdEmpleado=0)
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal=0, int Id_Rdep=0)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -175,13 +214,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            ro_rdep_Info model = bus_ro_rpde.GetInfo(IdEmpresa, IdSucursal, IdNomina_tipo, pe_anio, IdEmpleado);
+            ro_rdep_Info model = bus_ro_rpde.GetInfo(IdEmpresa, IdSucursal, Id_Rdep);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            Lista_ro_rdep.set_list(model.Lista_Rdep_Det, Convert.ToDecimal(SessionFixed.IdTransaccionSession) );
 
             if (model == null)
                 return RedirectToAction("Index");
-
-            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-
+           
             cargar_combos(IdEmpresa);
             return View(model);
         }
@@ -199,38 +238,24 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
         #endregion
-
-        #region Funciones Json
-
-        public JsonResult Buscar(int IdSucursal=0, int IdNomina_Tipo=0, int pe_anio = 0)
-        {
-
-            int IdEmpresa= Convert.ToInt32( SessionFixed.IdEmpresa);
-            List<ro_rdep_Info> model = new List<ro_rdep_Info>();
-            model = bus_ro_rpde.GenerarRDEP(IdEmpresa, IdSucursal, pe_anio, IdNomina_Tipo);
-
-            Lista_ro_rdep.set_list(model,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual) );
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
     }
 
 
     public class ro_rdep_List
     {
-        string variable = "ro_rdep_Info";
-        public List<ro_rdep_Info> get_list(decimal IdTransaccionSession)
+        string variable = "ro_rdep_det_Info";
+        public List<ro_rdep_det_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable+IdTransaccionSession.ToString()] == null)
             {
-                List<ro_rdep_Info> list = new List<ro_rdep_Info>();
+                List<ro_rdep_det_Info> list = new List<ro_rdep_det_Info>();
 
                 HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ro_rdep_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+            return (List<ro_rdep_det_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<ro_rdep_Info> list, decimal IdTransaccionSession)
+        public void set_list(List<ro_rdep_det_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[variable+IdTransaccionSession.ToString()] = list;
         }

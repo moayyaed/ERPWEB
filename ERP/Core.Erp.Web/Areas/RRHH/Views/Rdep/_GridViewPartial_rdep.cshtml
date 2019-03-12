@@ -2,10 +2,10 @@
 
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "GridViewPartial_rdep_det";
-        settings.CallbackRouteValues = new { Controller = "Rdep", Action = "GridViewPartial_rdep_det", Area = "RRHH" };
+        settings.Name = "_GridViewPartial_rdep";
+        settings.CallbackRouteValues = new { Controller = "Rdep", Action = "GridViewPartial_rdep", IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, pe_anio = ViewBag.pe_anio };
         settings.Width = Unit.Percentage(100);
-        settings.KeyFieldName = "Secuencia";
+        settings.KeyFieldName = "Id_Rdep";
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -56,7 +56,13 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep"), Secuencia = DataBinder.Eval(tc.DataItem, "Secuencia") })
+                    Html.ActionLink("Reprocesar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep") })
+                );
+            });
+            c.SetHeaderTemplateContent(tc =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
@@ -64,18 +70,11 @@
             c.Width = Unit.Pixel(150);
         });
 
-        settings.Columns.Add("pe_cedulaRuc", "Cedula").Width = Unit.Percentage(10);
-        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(22);
-        settings.Columns.Add("Sueldo", "Sueldo").Width = Unit.Percentage(8);
-        settings.Columns.Add("IngresoVarios", "Otros ing.").Width = Unit.Percentage(8);
-        settings.Columns.Add("DecimoTercerSueldo", "DIII").Width = Unit.Percentage(8);
-        settings.Columns.Add("DecimoCuartoSueldo", "DIV").Width = Unit.Percentage(8);
-        settings.Columns.Add("Vacaciones", "Vacaciones").Width = Unit.Percentage(8);
-        settings.Columns.Add("AportePErsonal", "IESS").Width = Unit.Percentage(8);
-        settings.Columns.Add("BaseImponibleGravada", "Base Imponible").Width = Unit.Percentage(8);
-        settings.Columns.Add("IngresosGravadorPorEsteEmpleador", "Ingresos Gravados").Width = Unit.Percentage(8);
+        settings.Columns.Add("pe_anio", "Año").Width = Unit.Percentage(10);
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(20);
+        settings.Columns.Add("Descripcion", "Tipo de nómina").Width = Unit.Percentage(20);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(40);
 
-        settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
     });
 }
 @grid.Bind(Model).GetHtml()

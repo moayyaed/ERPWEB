@@ -9946,6 +9946,7 @@
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_026.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\Modificar.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\Rdep\_GridViewPartial_rdep.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

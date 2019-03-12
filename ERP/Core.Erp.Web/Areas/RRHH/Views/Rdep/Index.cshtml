@@ -12,7 +12,6 @@
 @using (Html.BeginForm("Index", "Rdep", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa)
-    @Html.HiddenFor(q => q.IdTransaccionSession);
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -72,7 +71,8 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_rdep_det", new { IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, pe_anio = Model.IdAnio })
+            @Html.Action("GridViewPartial_rdep", new { IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, pe_anio = Model.IdAnio })
+            @*@Html.Action("GridViewPartial_rdep_det", new { IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, pe_anio = Model.IdAnio })*@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
