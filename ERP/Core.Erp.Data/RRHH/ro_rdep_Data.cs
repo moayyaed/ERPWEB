@@ -36,38 +36,10 @@ namespace Core.Erp.Data.RRHH
                         pe_anio = q.pe_anio,
                         Su_Descripcion = q.Su_Descripcion,
                         Descripcion = q.Descripcion,
-                        Observacion = q.Observacion
-                        /*IdEmpleado = q.IdEmpleado,
-                        Empleado = q.pe_apellido + " " + q.pe_nombre,
-                        pe_cedulaRuc = q.pe_cedulaRuc,
-                        pe_nombre = q.pe_nombre,
-                        pe_apellido = q.pe_apellido,
-                        Sueldo = q.Sueldo,
-                        FondosReserva = q.FondosReserva,
-                        DecimoTercerSueldo = q.DecimoTercerSueldo,
-                        DecimoCuartoSueldo = q.DecimoCuartoSueldo,
-                        Vacaciones = q.Vacaciones,
-                        AportePErsonal = q.AportePErsonal,
-                        GastoAlimentacion = q.GastoAlimentacion,
-                        GastoEucacion = q.GastoEucacion,
-                        GastoSalud = q.GastoSalud,
-                        GastoVestimenta = q.GastoVestimenta,
-                        GastoVivienda = q.GastoVivienda,
-                        Utilidades = q.Utilidades,
-                        IngresoVarios = q.IngresoVarios,
-                        IngresoPorOtrosEmpleaodres = q.IngresoPorOtrosEmpleaodres,
-                        IessPorOtrosEmpleadores = q.IessPorOtrosEmpleadores,
-                        ValorImpuestoPorEsteEmplador = q.ValorImpuestoPorEsteEmplador,
-                        ValorImpuestoPorOtroEmplador = q.ValorImpuestoPorOtroEmplador,
-                        ExoneraionPorDiscapacidad = q.ExoneraionPorDiscapacidad,
-                        ExoneracionPorTerceraEdad = q.ExoneracionPorTerceraEdad,
-                        OtrosIngresosRelacionDependencia = q.OtrosIngresosRelacionDependencia,
-                        ImpuestoRentaCausado = q.ImpuestoRentaCausado,
-                        ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador*/
+                        Observacion = q.Observacion                        
                     }).ToList();
                 }
-
-                //Lista.ForEach(q => { q.IdRdep = q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000") + q.IdEmpleado.ToString("00000000") + q.pe_anio.ToString("0000"); });
+                
                 return Lista;
             }
             catch (Exception ex)
@@ -76,13 +48,40 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
+        public int get_id(int IdEmpresa)
+        {
+
+            try
+            {
+                int ID = 1;
+                using (Entities_rrhh db = new Entities_rrhh())
+                {
+                    var Lista = db.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa).Select(q => q.Id_Rdep);
+
+                    if (Lista.Count() > 0)
+                        ID = Lista.Max() + 1;
+                }
+                return ID;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
         public bool GenerarRDEP(int IdEmpresa, int IdSucursal, int Id_Rdep, int IdAnio, int IdNomina_Tipo, decimal IdEmpleado, string Observacion, string IdUsuario)
         {
             int IdSucursalInicio = IdSucursal;
             int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
             decimal IdEmpleadoInicio = IdEmpleado;
-            decimal IdEmpleadoFin = IdEmpleado == 0 ? 9999 : IdEmpleado;
+            decimal IdEmpleadoFin = IdEmpleado == 0 ? 99999999 : IdEmpleado;
+
+            if (Id_Rdep == 0)
+            {
+                Id_Rdep = get_id(IdEmpresa);
+            }
 
             try
             {
@@ -91,52 +90,8 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Context.GenerarRDEP(IdEmpresa, Id_Rdep, IdAnio, IdNomina_Tipo, IdSucursalInicio, IdSucursalFin, IdEmpleadoInicio, IdEmpleadoFin, Observacion, IdUsuario);
-                    /*
-                    Lista = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa
-                    && q.IdSucursal >= IdSucursalInicio
-                    && q.IdSucursal <= IdSucursalFin
-                    && q.IdNomina_Tipo == IdNomina_Tipo
-                    && q.pe_anio == IdAnio).Select(q => new ro_rdep_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        pe_anio = q.pe_anio,
-                        IdEmpleado = q.IdEmpleado,
-                        IdSucursal = q.IdSucursal,
-                        IdNomina_Tipo = q.IdNomina_Tipo,
-                        Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
-                        Empleado = q.pe_apellido + " " + q.pe_nombre,
-                        pe_cedulaRuc = q.pe_cedulaRuc,
-                        pe_nombre = q.pe_nombre,
-                        pe_apellido = q.pe_apellido,
-                        Sueldo = q.Sueldo,
-                        FondosReserva = q.FondosReserva,
-                        DecimoTercerSueldo = q.DecimoTercerSueldo,
-                        DecimoCuartoSueldo = q.DecimoCuartoSueldo,
-                        Vacaciones = q.Vacaciones,
-                        AportePErsonal = q.AportePErsonal,
-                        GastoAlimentacion = q.GastoAlimentacion,
-                        GastoEucacion = q.GastoEucacion,
-                        GastoSalud = q.GastoSalud,
-                        GastoVestimenta = q.GastoVestimenta,
-                        GastoVivienda = q.GastoVivienda,
-                        Utilidades = q.Utilidades,
-                        IngresoVarios = q.IngresoVarios,
-                        IngresoPorOtrosEmpleaodres = q.IngresoPorOtrosEmpleaodres,
-                        IessPorOtrosEmpleadores = q.IessPorOtrosEmpleadores,
-                        ValorImpuestoPorEsteEmplador = q.ValorImpuestoPorEsteEmplador,
-                        ValorImpuestoPorOtroEmplador = q.ValorImpuestoPorOtroEmplador,
-                        ExoneraionPorDiscapacidad = q.ExoneraionPorDiscapacidad,
-                        ExoneracionPorTerceraEdad = q.ExoneracionPorTerceraEdad,
-                        OtrosIngresosRelacionDependencia = q.OtrosIngresosRelacionDependencia,
-                        ImpuestoRentaCausado = q.ImpuestoRentaCausado,
-                        ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador,
-                        ImpuestoRentaAsumidoPorEsteEmpleador = q.ImpuestoRentaAsumidoPorEsteEmpleador,
-                        BaseImponibleGravada = q.BaseImponibleGravada,
-                        IngresosGravadorPorEsteEmpleador = q.IngresosGravadorPorEsteEmpleador
-                    }).ToList();*/
                 }
-
-                //Lista.ForEach(q => { q.IdRdep = q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000") + q.IdEmpleado.ToString("00000000") + q.pe_anio.ToString("0000"); });
+                
                 return true;
             }
             catch (Exception)
@@ -145,7 +100,7 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public ro_rdep_Info GetInfo(int IdEmpresa, int IdSucursal, int Id_Rdep)
+        public ro_rdep_Info GetInfo(int IdEmpresa, int Id_Rdep)
         {
             try
             {
@@ -154,7 +109,7 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_rdep Entity = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.Id_Rdep == Id_Rdep).FirstOrDefault();
+                    ro_rdep Entity = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep).FirstOrDefault();
                     List<ro_rdep_det> Entity_Det = Context.ro_rdep_det.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep).ToList();
 
                     if (Entity == null) return null;
@@ -174,8 +129,12 @@ namespace Core.Erp.Data.RRHH
                     {
                         info_det = new ro_rdep_det_Info
                         {
+                            IdEmpresa = item.IdEmpresa,
                             IdEmpleado = item.IdEmpleado,
+                            Id_Rdep = item.Id_Rdep,
+                            Secuencia = item.Secuencia,
                             pe_cedulaRuc = item.pe_cedulaRuc,
+                            Empleado = item.pe_apellido + " "+ item.pe_nombre,
                             pe_nombre = item.pe_nombre,
                             pe_apellido = item.pe_apellido,
                             Sueldo = item.Sueldo,
@@ -218,19 +177,71 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public bool ModificarBD(ro_rdep_Info info)
+        public ro_rdep_det_Info GetInfo_x_Empleado(int IdEmpresa, int Id_Rdep, int Secuencia)
+        {
+            try
+            {
+                ro_rdep_det_Info info_det = new ro_rdep_det_Info();
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    ro_rdep_det Entity_Det = Context.ro_rdep_det.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep && q.Secuencia == Secuencia).FirstOrDefault();
+
+                    info_det.IdEmpresa = Entity_Det.IdEmpresa;
+                    info_det.IdEmpleado = Entity_Det.IdEmpleado;
+                    info_det.Secuencia = Entity_Det.Secuencia;
+                    info_det.pe_cedulaRuc = Entity_Det.pe_cedulaRuc;
+                    info_det.Empleado = Entity_Det.pe_apellido + " " + Entity_Det.pe_nombre;
+                    info_det.pe_nombre = Entity_Det.pe_nombre;
+                    info_det.pe_apellido = Entity_Det.pe_apellido;
+                    info_det.Sueldo = Entity_Det.Sueldo;
+                    info_det.FondosReserva = Entity_Det.FondosReserva;
+                    info_det.DecimoTercerSueldo = Entity_Det.DecimoTercerSueldo;
+                    info_det.DecimoCuartoSueldo = Entity_Det.DecimoCuartoSueldo;
+                    info_det.Vacaciones = Entity_Det.Vacaciones;
+                    info_det.AportePErsonal = Entity_Det.AportePErsonal;
+                    info_det.GastoAlimentacion = Entity_Det.GastoAlimentacion;
+                    info_det.GastoEucacion = Entity_Det.GastoEucacion;
+                    info_det.GastoSalud = Entity_Det.GastoSalud;
+                    info_det.GastoVestimenta = Entity_Det.GastoVestimenta;
+                    info_det.GastoVivienda = Entity_Det.GastoVivienda;
+                    info_det.Utilidades = Entity_Det.Utilidades;
+                    info_det.IngresoVarios = Entity_Det.IngresoVarios;
+                    info_det.IngresoPorOtrosEmpleaodres = Entity_Det.IngresoPorOtrosEmpleaodres;
+                    info_det.IessPorOtrosEmpleadores = Entity_Det.IessPorOtrosEmpleadores;
+                    info_det.ValorImpuestoPorEsteEmplador = Entity_Det.ValorImpuestoPorEsteEmplador;
+                    info_det.ValorImpuestoPorOtroEmplador = Entity_Det.ValorImpuestoPorOtroEmplador;
+                    info_det.ExoneraionPorDiscapacidad = Entity_Det.ExoneraionPorDiscapacidad;
+                    info_det.ExoneracionPorTerceraEdad = Entity_Det.ExoneracionPorTerceraEdad;
+                    info_det.OtrosIngresosRelacionDependencia = Entity_Det.OtrosIngresosRelacionDependencia;
+                    info_det.ImpuestoRentaCausado = Entity_Det.ImpuestoRentaCausado;
+                    info_det.ValorImpuestoRetenidoTrabajador = Entity_Det.ValorImpuestoRetenidoTrabajador;
+                    info_det.ImpuestoRentaAsumidoPorEsteEmpleador = Entity_Det.ImpuestoRentaAsumidoPorEsteEmpleador;
+                    info_det.BaseImponibleGravada = Entity_Det.BaseImponibleGravada;
+                    info_det.IngresosGravadorPorEsteEmpleador = Entity_Det.IngresosGravadorPorEsteEmpleador;
+                }
+
+                return info_det;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarBD(ro_rdep_det_Info info)
         {
             try
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
-                {
-                    ro_rdep entity = Context.ro_rdep.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdNomina_Tipo == info.IdNomina_Tipo && q.pe_anio == info.pe_anio).FirstOrDefault();
-
+                {                    
+                    ro_rdep_det entity = Context.ro_rdep_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.Id_Rdep == info.Id_Rdep && q.Secuencia == info.Secuencia).FirstOrDefault();
                     if (entity == null)
                     {
                         return false;
                     }
-                    /*
+                    
                     entity.Sueldo = info.Sueldo;
                     entity.FondosReserva = info.FondosReserva;
                     entity.DecimoTercerSueldo = info.DecimoTercerSueldo;
@@ -256,7 +267,7 @@ namespace Core.Erp.Data.RRHH
                     entity.ImpuestoRentaAsumidoPorEsteEmpleador = info.ImpuestoRentaAsumidoPorEsteEmpleador;
                     entity.BaseImponibleGravada = info.BaseImponibleGravada;
                     entity.IngresosGravadorPorEsteEmpleador = info.IngresosGravadorPorEsteEmpleador;
-                    */
+                    
                     Context.SaveChanges();
                 }
                 return true;

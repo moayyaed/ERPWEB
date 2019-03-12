@@ -41,5 +41,9 @@ namespace Core.Erp.Info.RRHH
         public Nullable<double> ImpuestoRentaAsumidoPorEsteEmpleador { get; set; }
         public Nullable<double> BaseImponibleGravada { get; set; }
         public Nullable<double> IngresosGravadorPorEsteEmpleador { get; set; }
+
+        #region Campos que no existen en la tabla
+        public string Empleado { get; set; }
+        #endregion
     }
 }

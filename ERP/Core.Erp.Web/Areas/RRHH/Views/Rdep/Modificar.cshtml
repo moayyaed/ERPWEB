@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_rdep_Info
 
 @{
-    ViewBag.Title = "Nuevo RDEP";
+    ViewBag.Title = "RDEP";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -11,6 +11,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Modificar", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(q => q.IdEmpresa);
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">
@@ -38,7 +39,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdNomina">Observación</label>
                     @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })

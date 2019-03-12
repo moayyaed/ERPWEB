@@ -155,7 +155,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);            
 
             model.Lista_Rdep_Det = Lista_ro_rdep.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_rdep_det", model);
+            return PartialView("_GridViewPartial_rdep_det", model.Lista_Rdep_Det);
         }
         #endregion
 
@@ -181,23 +181,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                info.IdUsuario = SessionFixed.IdUsuario;
+                if (!bus_ro_rpde.GenerarRDEP(info.IdEmpresa, info.IdSucursal, info.Id_Rdep, info.pe_anio, info.IdNomina_Tipo, info.IdEmpleado, info.Observacion, info.IdUsuario))
                 {
-                    info.IdUsuario = SessionFixed.IdUsuario;
-                    if (!bus_ro_rpde.GenerarRDEP(info.IdEmpresa, info.IdSucursal, info.Id_Rdep, info.pe_anio, info.IdNomina_Tipo, info.IdEmpleado, info.Observacion, info.IdUsuario))
-                    {
-                        cargar_combos(info.IdEmpresa);
-                        return View(info);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index");
-                    }
-                        
+                    cargar_combos(info.IdEmpresa);
+                    return View(info);
                 }
                 else
-                    return View(info);
-
+                {
+                    return RedirectToAction("Index");
+                }
             }
             catch (Exception)
             {
@@ -205,7 +198,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal=0, int Id_Rdep=0)
+        public ActionResult Modificar(int IdEmpresa = 0, int Id_Rdep=0)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -214,7 +207,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            ro_rdep_Info model = bus_ro_rpde.GetInfo(IdEmpresa, IdSucursal, Id_Rdep);
+            ro_rdep_Info model = bus_ro_rpde.GetInfo(IdEmpresa, Id_Rdep);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             Lista_ro_rdep.set_list(model.Lista_Rdep_Det, Convert.ToDecimal(SessionFixed.IdTransaccionSession) );
 
@@ -225,8 +218,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return View(model);
         }
 
+        public ActionResult Modificar_x_Empleado(int IdEmpresa = 0, int Id_Rdep = 0, int Secuencia=0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_rdep_det_Info model = bus_ro_rpde.GetInfo_x_Empleado(IdEmpresa, Id_Rdep, Secuencia);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            cargar_combos(IdEmpresa);
+            return View(model);
+        }
+
         [HttpPost]
-        public ActionResult Modificar(ro_rdep_Info model)
+        public ActionResult Modificar_x_Empleado(ro_rdep_det_Info model)
         {
             if (!bus_ro_rpde.ModificarBD(model))
             {
@@ -234,9 +246,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             cargar_combos(model.IdEmpresa);
-            return RedirectToAction("Index");
+            return RedirectToAction("Modificar", "Rdep", new { model.IdEmpresa, model.Id_Rdep });
         }
-
         #endregion
     }
 

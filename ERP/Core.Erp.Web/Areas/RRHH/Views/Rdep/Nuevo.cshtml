@@ -11,6 +11,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(q => q.IdEmpresa);
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">
@@ -49,7 +50,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdNomina">Observación</label>
                     @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })

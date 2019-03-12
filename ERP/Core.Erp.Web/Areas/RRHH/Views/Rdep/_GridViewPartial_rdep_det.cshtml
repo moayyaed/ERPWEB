@@ -56,7 +56,7 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep"), Secuencia = DataBinder.Eval(tc.DataItem, "Secuencia") })
+                    Html.ActionLink("Modificar", "Modificar_x_Empleado", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep"), Secuencia = DataBinder.Eval(tc.DataItem, "Secuencia") })
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;

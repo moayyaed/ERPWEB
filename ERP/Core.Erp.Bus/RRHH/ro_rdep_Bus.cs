@@ -24,11 +24,23 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public ro_rdep_Info GetInfo(int IdEmpresa, int IdSucursal, int Id_Rdep )
+        public ro_rdep_Info GetInfo(int IdEmpresa, int Id_Rdep )
         {
             try
             {
-                return oData.GetInfo(IdEmpresa, IdSucursal, Id_Rdep);
+                return oData.GetInfo(IdEmpresa, Id_Rdep);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ro_rdep_det_Info GetInfo_x_Empleado(int IdEmpresa, int Id_Rdep, int Secuencia)
+        {
+            try
+            {
+                return oData.GetInfo_x_Empleado(IdEmpresa, Id_Rdep, Secuencia);
             }
             catch (Exception)
             {
@@ -48,7 +60,7 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public bool ModificarBD(ro_rdep_Info info)
+        public bool ModificarBD(ro_rdep_det_Info info)
         {
             try
             {
