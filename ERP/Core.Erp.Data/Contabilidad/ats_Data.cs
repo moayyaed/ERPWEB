@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Contabilidad
 {
    public class ats_Data
     {
-        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal)
+        public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal, int[] IntArray)
         {
             try
             {
@@ -24,6 +24,7 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
+                                       // && q.establecimiento.contr
                                        // && q.idProv== "0909594202001"
                                         select new compras_Info
                              {
