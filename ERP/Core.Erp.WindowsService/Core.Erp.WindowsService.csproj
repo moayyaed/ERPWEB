@@ -103,6 +103,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="facturacion_electronica_generardor_xml.cs" />
+    <Compile Include="facturacion_electronica_generardor_xml.Designer.cs">
+      <DependentUpon>facturacion_electronica_generardor_xml.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImpresionDirecta.cs">
       <SubType>Component</SubType>
     </Compile>
