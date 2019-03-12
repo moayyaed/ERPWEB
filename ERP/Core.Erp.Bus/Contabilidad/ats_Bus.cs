@@ -52,8 +52,7 @@ namespace Core.Erp.Bus.Contabilidad
                 ats.razonSocial = info_empresa.RazonSocial.Replace(".", " ").Replace("ñ", "n").Replace("Ñ", "N");
                 ats.Anio = info_periodo.IdanioFiscal.ToString();
                 ats.Mes = info_periodo.pe_mes.ToString().PadLeft(2, '0');
-                var  sucursales = data_sucursal.get_list(IdEmpresa, false);
-                ats.numEstabRuc = sucursales.Count.ToString().PadLeft(3, '0');
+                
                 ats.TipoIDInformante = ivaTypeTipoIDInformante.R;
                 ats.codigoOperativo = codigoOperativoType.IVA;
                 ats.totalVentas = info_ats.lst_ventas.Sum(v=>v.baseImpGrav+v.baseImpGrav);

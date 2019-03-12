@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.SeguridadAcceso;
+﻿using Core.Erp.Info.General;
+using Core.Erp.Info.SeguridadAcceso;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
@@ -161,7 +162,6 @@ namespace Core.Erp.Data.SeguridadAcceso
                     if(info.lst_usuario_x_sucursal.Count()>0)
                     {
                         foreach (var item in info.lst_usuario_x_sucursal)
-
                         {
                             Context.seg_usuario_x_tb_sucursal.Add(new seg_usuario_x_tb_sucursal
                             {
@@ -169,18 +169,34 @@ namespace Core.Erp.Data.SeguridadAcceso
                                 IdUsuario = info.IdUsuario, 
                                 IdSucursal = item.IdSucursal,
                                 Observacion = item.Observacion
-                                
                             });
                         }
-                    }
+                         List<tb_empresa_Info> Lista_empresa;
+                            Lista_empresa = (from q in info.lst_usuario_x_sucursal
+                                             group q by new
+                                             {
+                                               q.IdEmpresa,
+                                             } into emp
+                                             select new tb_empresa_Info
+                                             {
+                                                IdEmpresa = emp.Key.IdEmpresa,
+                                             }).ToList();
+
+                            foreach (var item in Lista_empresa)
+                            {
+                                Context.seg_Usuario_x_Empresa.Add(new seg_Usuario_x_Empresa
+                                {
+                                    IdEmpresa = item.IdEmpresa,
+                                    IdUsuario = info.IdUsuario
+                                });
+                            }
+                        }
                     Context.SaveChanges();
                 }
-
                 return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -206,6 +222,9 @@ namespace Core.Erp.Data.SeguridadAcceso
 
                     var lst = Context.seg_usuario_x_tb_sucursal.Where(q => q.IdUsuario == info.IdUsuario).ToList();
                     Context.seg_usuario_x_tb_sucursal.RemoveRange(lst);
+
+                    var lista = Context.seg_Usuario_x_Empresa.Where(q => q.IdUsuario == info.IdUsuario).ToList();
+                    Context.seg_Usuario_x_Empresa.RemoveRange(lista);
                     if (info.lst_usuario_x_sucursal.Count() > 0)
                     {
                         foreach (var item in info.lst_usuario_x_sucursal)
@@ -218,6 +237,26 @@ namespace Core.Erp.Data.SeguridadAcceso
                                 IdSucursal = item.IdSucursal,
                                 Observacion = item.Observacion
 
+                            });
+                        }
+
+                        List<tb_empresa_Info> Lista_empresa;
+                        Lista_empresa = (from q in info.lst_usuario_x_sucursal
+                                         group q by new
+                                         {
+                                             q.IdEmpresa,
+                                         } into emp
+                                         select new tb_empresa_Info
+                                         {
+                                             IdEmpresa = emp.Key.IdEmpresa,
+                                         }).ToList();
+
+                        foreach (var item in Lista_empresa)
+                        {
+                            Context.seg_Usuario_x_Empresa.Add(new seg_Usuario_x_Empresa
+                            {
+                                IdEmpresa = item.IdEmpresa,
+                                IdUsuario = info.IdUsuario
                             });
                         }
                     }
@@ -342,5 +381,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                 throw;
             }
         }
-    }
+
+
+     }
 }

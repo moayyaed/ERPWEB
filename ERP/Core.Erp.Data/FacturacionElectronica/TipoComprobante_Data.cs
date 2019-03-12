@@ -176,8 +176,18 @@ namespace Core.Erp.Data.FacturacionElectronica
 
 
                     }
+                    #region Actualizando estado a generado
+                    using (Entities_facturacion entity_fac = new Entities_facturacion())
+                    {
+                        fa_factura Entity = entity_fac.fa_factura.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal && q.IdBodega == item.IdBodega && q.IdCbteVta == item.IdCbteVta);
 
+                        if (Entity != null)
+                            Entity.Generado = true;
+                        entity_fac.SaveChanges();
+                    }
+                    #endregion
                 }
+
 
                 return myObject;
             }
@@ -188,9 +198,11 @@ namespace Core.Erp.Data.FacturacionElectronica
 
 
 
-        
 
-        #endregion
+
+            #endregion
+
+           
 
         }
 
@@ -297,6 +309,16 @@ namespace Core.Erp.Data.FacturacionElectronica
                     }
 
 
+                    #region Actualizando estado a generado
+                    using (Entities_cuentas_por_pagar entity_ret = new Entities_cuentas_por_pagar())
+                    {
+                        cp_retencion Entity = entity_ret.cp_retencion.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdRetencion == item.IdRetencion );
+
+                        if (Entity != null)
+                            Entity.Generado = true;
+                        entity_ret.SaveChanges();
+                    }
+                    #endregion
                 }
                 return myObjectRete;
             }
@@ -417,6 +439,17 @@ namespace Core.Erp.Data.FacturacionElectronica
                         }
 
                     }
+
+                    #region Actualizando estado a generado
+                    using (Entities_facturacion entity_fac = new Entities_facturacion())
+                    {
+                        fa_guia_remision Entity = entity_fac.fa_guia_remision.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdGuiaRemision == item.IdGuiaRemision);
+
+                        if (Entity != null)
+                            Entity.Generado = true;
+                        entity_fac.SaveChanges();
+                    }
+                    #endregion
                 }
                 return myObject;
             }
@@ -575,11 +608,23 @@ namespace Core.Erp.Data.FacturacionElectronica
                             }
                         }
 
-                   
 
+                        #region Actualizando estado a generado
+                        using (Entities_facturacion entity_fac = new Entities_facturacion())
+                        {
+                            fa_notaCreDeb Entity = entity_fac.fa_notaCreDeb.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdNota == item.IdNota && q.IdSucursal==item.IdSucursal && q.IdBodega==item.IdBodega);
+
+                            if (Entity != null)
+                                Entity.Generado = true;
+                            entity_fac.SaveChanges();
+                        }
+                        #endregion
                     }
+
+
+
                 }
-                    return myObject;
+                return myObject;
             }
             catch (Exception ex)
             {
@@ -707,10 +752,21 @@ namespace Core.Erp.Data.FacturacionElectronica
                             compoadicional.Value = item.Telefono;
                             myObject.infoAdicional.Add(compoadicional);
                         }
+                        #region Actualizando estado a generado
+                        using (Entities_facturacion entity_fac = new Entities_facturacion())
+                        {
+                            fa_notaCreDeb Entity = entity_fac.fa_notaCreDeb.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdNota == item.IdNota && q.IdSucursal==item.IdSucursal && q.IdBodega==item.IdBodega);
 
+                            if (Entity != null)
+                                Entity.Generado = true;
+                            entity_fac.SaveChanges();
+                        }
+                        #endregion
                     }
+
+
                 }
-                    return myObject;
+                return myObject;
             }
             catch (Exception ex)
             {
