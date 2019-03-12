@@ -167,7 +167,7 @@ namespace Core.Erp.WindowsService
             }
         }
 
-        private void Serv_GeneradorDocumentosElectronicos()
+        public void Serv_GeneradorDocumentosElectronicos()
         {
             try
             {

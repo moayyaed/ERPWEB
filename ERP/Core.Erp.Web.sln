@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Erp.Data", "Core.Erp.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Erp.WindowsService", "Core.Erp.WindowsService\Core.Erp.WindowsService.csproj", "{F108EF73-6980-48C6-B528-A9CD1DA0BF14}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FixedImpresionDirecta", "FixedImpresionDirecta\FixedImpresionDirecta.vdproj", "{2989C6C0-6DDF-40C2-98FB-853B60218EAD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,14 +105,6 @@ Global
 		{F108EF73-6980-48C6-B528-A9CD1DA0BF14}.Release|x64.Build.0 = Release|Any CPU
 		{F108EF73-6980-48C6-B528-A9CD1DA0BF14}.Release|x86.ActiveCfg = Release|Any CPU
 		{F108EF73-6980-48C6-B528-A9CD1DA0BF14}.Release|x86.Build.0 = Release|Any CPU
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Debug|Any CPU.ActiveCfg = Debug
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Debug|ARM.ActiveCfg = Debug
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Debug|x64.ActiveCfg = Debug
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Debug|x86.ActiveCfg = Debug
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Release|Any CPU.ActiveCfg = Release
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Release|ARM.ActiveCfg = Release
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Release|x64.ActiveCfg = Release
-		{2989C6C0-6DDF-40C2-98FB-853B60218EAD}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
