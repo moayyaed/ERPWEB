@@ -120,7 +120,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             model.lst_usuario_x_sucursal = List_det.get_list(model.IdTransaccionSession);
             if (!bus_usuario.guardarDB(model))
                 return View(model);
-            
+            cargar_combos(model);
             //#region Guardar usuario_x_empresa
             //bus_usuario_x_empresa.eliminarDB(model.IdUsuario);
             //model.lst_usuario_x_empresa = model.lst_usuario_x_empresa.Where(q => q.seleccionado == true).ToList();
@@ -179,6 +179,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 return RedirectToAction("Index");
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
+            List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
         }

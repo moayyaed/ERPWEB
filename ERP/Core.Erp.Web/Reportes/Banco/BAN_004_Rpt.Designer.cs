@@ -347,6 +347,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SaldoBanco_EstCta]")});
             this.xrTableCell11.Name = "xrTableCell11";
             this.xrTableCell11.StylePriority.UseBorders = false;
+            this.xrTableCell11.TextFormatString = "{0:n2}";
             this.xrTableCell11.Weight = 1.3637763490407968D;
             // 
             // xrTableRow6
@@ -414,6 +415,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "ABS([SaldoFinal])")});
             this.xrTableCell15.Name = "xrTableCell15";
             this.xrTableCell15.StylePriority.UseBorders = false;
+            this.xrTableCell15.TextFormatString = "{0:n2}";
             this.xrTableCell15.Weight = 1.4166654014416176D;
             // 
             // xrTableRow7
@@ -484,6 +486,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SaldoBanco_EstCta]+[SaldoFinal]")});
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.StylePriority.UseBorders = false;
+            this.xrTableCell19.TextFormatString = "{0:n2}";
             this.xrTableCell19.Weight = 1.4166654014416176D;
             // 
             // xrTableRow8
@@ -546,6 +549,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "ABS([SaldoInicial])")});
             this.xrTableCell23.Name = "xrTableCell23";
             this.xrTableCell23.StylePriority.UseBorders = false;
+            this.xrTableCell23.TextFormatString = "{0:n2}";
             this.xrTableCell23.Weight = 1.4166654014416176D;
             // 
             // xrTableRow9
