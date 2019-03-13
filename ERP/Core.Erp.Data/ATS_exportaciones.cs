@@ -34,5 +34,6 @@ namespace Core.Erp.Data
         public string autorizacion { get; set; }
         public Nullable<System.DateTime> fechaEmision { get; set; }
         public string denoExpCli { get; set; }
+        public Nullable<int> IdSucursal { get; set; }
     }
 }

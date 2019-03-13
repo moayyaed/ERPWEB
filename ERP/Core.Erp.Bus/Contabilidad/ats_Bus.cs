@@ -247,54 +247,56 @@ namespace Core.Erp.Bus.Contabilidad
                                    }).ToList();
 
 
-                                 ats.ventas = new List<detalleVentas>();
-                                lst_ventas_x_cliente.ForEach(
-                                 vent =>
-                                 {
-                                     detalleVentas det_ventas = new detalleVentas();
-                                     det_ventas.tpIdCliente = vent.tpIdCliente;
-                                     det_ventas.idCliente = vent.idCliente;
-                                     det_ventas.parteRelVtas = parteRelType.NO;
-                                     det_ventas.parteRelVtasSpecified = true;
+                    if (lst_ventas_x_cliente.Count > 0)
+                    {
+                        ats.ventas = new List<detalleVentas>();
+                        lst_ventas_x_cliente.ForEach(
+                         vent =>
+                         {
+                             detalleVentas det_ventas = new detalleVentas();
+                             det_ventas.tpIdCliente = vent.tpIdCliente;
+                             det_ventas.idCliente = vent.idCliente;
+                             det_ventas.parteRelVtas = parteRelType.NO;
+                             det_ventas.parteRelVtasSpecified = true;
 
-                                     if (vent.tipoCliente == " 01" && vent.idCliente!= "9999999999999")
-                                     {
-                                         det_ventas.tipoCliente = vent.tipoCliente;
+                             if (vent.tipoCliente == " 01" && vent.idCliente != "9999999999999")
+                             {
+                                 det_ventas.tipoCliente = vent.tipoCliente;
 
-                                     }
+                             }
 
-                                     if (det_ventas.idCliente== "9999999999999")
-                                     {
-                                         det_ventas.tpIdCliente = "07";
-                                         det_ventas.parteRelVtasSpecified = false;
-                                         
-                                     }
-                                     if (det_ventas.tpIdCliente == "06")
-                                     {
-                                         det_ventas.tipoCliente = vent.tipoCliente;
-                                         det_ventas.denoCli = vent.DenoCli;
-                                     }
+                             if (det_ventas.idCliente == "9999999999999")
+                             {
+                                 det_ventas.tpIdCliente = "07";
+                                 det_ventas.parteRelVtasSpecified = false;
 
-                                     vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
-                                     det_ventas.tipoComprobante = "18";
-                                     det_ventas.tipoEmision = tipoEmisionType.F;
-                                     det_ventas.numeroComprobantes = vent.numeroComprobantes.ToString();
-                                     det_ventas.baseNoGraIva = vent.baseNoGraIva;
-                                     det_ventas.baseImponible = vent.baseImponible;
-                                     det_ventas.baseImpGrav = vent.baseImpGrav;
-                                     det_ventas.montoIva = vent.montoIva;
-                                     det_ventas.montoIce = vent.montoIce;
-                                     det_ventas.valorRetIva = vent.valorRetIva.ToString("n2");
-                                     det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
-                                     det_ventas.montoIceSpecified = true;
-                                     det_ventas.formasDePago = null;
-                                     string[] AFormaPago = { "20" };
-                                     det_ventas.formasDePago = AFormaPago;
+                             }
+                             if (det_ventas.tpIdCliente == "06")
+                             {
+                                 det_ventas.tipoCliente = vent.tipoCliente;
+                                 det_ventas.denoCli = vent.DenoCli;
+                             }
 
-                                     ats.ventas.Add(det_ventas);
-                                 }
-                                );
+                             vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
+                             det_ventas.tipoComprobante = "18";
+                             det_ventas.tipoEmision = tipoEmisionType.F;
+                             det_ventas.numeroComprobantes = vent.numeroComprobantes.ToString();
+                             det_ventas.baseNoGraIva = vent.baseNoGraIva;
+                             det_ventas.baseImponible = vent.baseImponible;
+                             det_ventas.baseImpGrav = vent.baseImpGrav;
+                             det_ventas.montoIva = vent.montoIva;
+                             det_ventas.montoIce = vent.montoIce;
+                             det_ventas.valorRetIva = vent.valorRetIva.ToString("n2");
+                             det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
+                             det_ventas.montoIceSpecified = true;
+                             det_ventas.formasDePago = null;
+                             string[] AFormaPago = { "20" };
+                             det_ventas.formasDePago = AFormaPago;
 
+                             ats.ventas.Add(det_ventas);
+                         }
+                        );
+                    }
                     }
                     
 
@@ -314,7 +316,7 @@ namespace Core.Erp.Bus.Contabilidad
                 {
                     if (info_ats.lst_ventas.Count() > 0)
                     {
-
+                       
                         ats.ventasEstablecimiento = new List<ventaEst>();
 
                          var vtas = info_ats.lst_ventas.GroupBy(x => x.codEstab)
@@ -380,7 +382,7 @@ namespace Core.Erp.Bus.Contabilidad
                 #endregion
 
                 #region Anulados
-                if (info_ats.lst_exportaciones != null)
+                if (info_ats.lst_anulados != null)
                 {
                     if (info_ats.lst_anulados.Count() > 0)
                     {
@@ -405,14 +407,19 @@ namespace Core.Erp.Bus.Contabilidad
                 #endregion
 
 
-                ats.totalVentas = info_ats.lst_ventas.Sum(y => y.ventasEstab);
-                ats.totalVentasSpecified = true;
-                ats.numEstabRuc  = info_ats.lst_ventas.GroupBy(x => x.codEstab)
-                        .Select(x => new
-                        {
-                            codEstab = x.Key,
-                            ventasEstab = x.Sum(y => y.ventasEstab)
-                        }).Count().ToString().PadLeft(3,'0');
+                if (info_ats.lst_ventas.Count == 0)
+                {
+                    ats.totalVentasSpecified = false;
+                }
+                else
+                {
+                    ats.numEstabRuc = info_ats.lst_ventas.GroupBy(x => x.codEstab)
+                            .Select(x => new
+                            {
+                                codEstab = x.Key,
+                                ventasEstab = x.Sum(y => y.ventasEstab)
+                            }).Count().ToString().PadLeft(3, '0');
+                }
                 return ats;
 
                 

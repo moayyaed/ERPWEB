@@ -36,5 +36,6 @@ namespace Core.Erp.Data
         public string codEstab { get; set; }
         public decimal ventasEstab { get; set; }
         public decimal ivaComp { get; set; }
+        public Nullable<int> IdSucursal { get; set; }
     }
 }
