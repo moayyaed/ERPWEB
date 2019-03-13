@@ -139,13 +139,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #endregion
 
         #region json
-        public JsonResult get_ats(int IdPeriodo=0, int IdSucursal=0)
+        public JsonResult get_ats(int[] IntArray,int IdPeriodo=0, int IdSucursal=0)
         {
-            //int[] IntArray= new int();
             bus_ats = new ats_Bus();
             ats_Info model = new ats_Info();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-          //  model = bus_ats.get_info(IdEmpresa, IdPeriodo, IdSucursal, IntArray);
+            model = bus_ats.get_info(IdEmpresa, IdPeriodo, IdSucursal, IntArray);
             Session["lst_compras"] = model.lst_compras;
             Session["lst_ventas"] = model.lst_ventas;
             Session["lst_retenciones"] = model.lst_retenciones;
