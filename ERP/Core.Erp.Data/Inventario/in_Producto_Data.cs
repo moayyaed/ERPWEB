@@ -805,7 +805,7 @@ namespace Core.Erp.Data.Inventario
                           && c.IdEmpresa == IdEmpresa
                           && pr.IdEmpresa == IdEmpresa
                           && p.Estado=="A"
-                          &&(p.IdProducto.ToString() + " " + p.pr_descripcion + " " + p.lote_num_lote).Contains(filter)
+                          &&(p.IdProducto.ToString() + " " + p.pr_descripcion ).Contains(filter)
                          select new {
                              p.IdEmpresa,
                              p.IdProducto,
