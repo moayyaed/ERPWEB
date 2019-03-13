@@ -110,7 +110,7 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     ro_rdep Entity = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep).FirstOrDefault();
-                    List<ro_rdep_det> Entity_Det = Context.ro_rdep_det.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep).ToList();
+                    List<ro_rdep_det> Entity_Det = Context.ro_rdep_det.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep).OrderBy(q => q.pe_apellido).ThenBy(q => q.pe_nombre).ToList();
 
                     if (Entity == null) return null;
                     info = new ro_rdep_Info
