@@ -234,7 +234,7 @@
     </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index", "Rdep", new { Area ="RRHH" }, null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Modificar", "Rdep", new { Area ="RRHH" , Model.IdEmpresa, Model.Id_Rdep })">Cancelar</a>
     </div>
 
     @section Scripts {
@@ -248,6 +248,11 @@
     });
 
     $("#IngresoVarios").change(function () {
+        generar_BaseImponibleGravada();
+        generar_IngresosGravadosConEsteEmpleador();
+    });
+
+    $("#IngresoPorOtrosEmpleaodres").change(function () {
         generar_BaseImponibleGravada();
         generar_IngresosGravadosConEsteEmpleador();
     });
@@ -302,7 +307,7 @@
     {
         var Suedo = isNaN(parseFloat($("#Sueldo").val())) ? 0 : parseFloat($("#Sueldo").val());
         var IngresoVarios = isNaN(parseFloat($("#IngresoVarios").val())) ? 0 : parseFloat($("#IngresoVarios").val());
-        var Utilidades = isNaN(parseFloat($("#Utilidades").val())) ? 0 : parseFloat($("#Utilidades").val());
+        var IngresoPorOtrosEmpleaodres = isNaN(parseFloat($("#IngresoPorOtrosEmpleaodres").val())) ? 0 : parseFloat($("#IngresoPorOtrosEmpleaodres").val());
         var AportePErsonal = isNaN(parseFloat($("#AportePErsonal").val())) ? 0 : parseFloat($("#AportePErsonal").val());
         var IessPorOtrosEmpleadores = isNaN(parseFloat($("#IessPorOtrosEmpleadores").val())) ? 0 : parseFloat($("#IessPorOtrosEmpleadores").val());
         var GastoVivienda = isNaN(parseFloat($("#GastoVivienda").val())) ? 0 : parseFloat($("#GastoVivienda").val());
@@ -314,7 +319,7 @@
         var ExoneracionPorTerceraEdad = isNaN(parseFloat($("#ExoneracionPorTerceraEdad").val())) ? 0 : parseFloat($("#ExoneracionPorTerceraEdad").val());
         var ImpuestoRentaAsumidoPorEsteEmpleador = isNaN(parseFloat($("#ImpuestoRentaAsumidoPorEsteEmpleador").val())) ? 0 : parseFloat($("#ImpuestoRentaAsumidoPorEsteEmpleador").val());
 
-        var BaseImponibleGravada = Suedo + IngresoVarios + Utilidades - AportePErsonal - IessPorOtrosEmpleadores - GastoVivienda - GastoEucacion - GastoAlimentacion - GastoVestimenta - ExoneraionPorDiscapacidad - ExoneracionPorTerceraEdad + ImpuestoRentaAsumidoPorEsteEmpleador;
+        var BaseImponibleGravada = Suedo + IngresoVarios + IngresoPorOtrosEmpleaodres - AportePErsonal - IessPorOtrosEmpleadores - GastoVivienda - GastoEucacion - GastoAlimentacion - GastoVestimenta - ExoneraionPorDiscapacidad - ExoneracionPorTerceraEdad + ImpuestoRentaAsumidoPorEsteEmpleador;
             
         $("#BaseImponibleGravada").val(BaseImponibleGravada);
     }
