@@ -41,7 +41,6 @@
 </script>
 @using (Html.BeginForm("Nuevo", "ATS", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IntArray, new {@id= "IntArray" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -102,19 +101,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="row">
         <div class="col-md-12">
 
@@ -219,14 +205,14 @@
         dolowadATS();
 
     });
-    function dolowadATS() {
+    
+    function dolowadATS() {        
         if (IdPeriodo.GetValue() > 0) {
+            console.log(checkComboBox.GetValue());
             var datos = {
                 IntArray: checkComboBox.GetValue(),
                 IdPeriodo: IdPeriodo.GetValue(),
-                IdSucursal: $("#IdSucursal").val()
-                
-
+                IdSucursal: $("#IdSucursal").val()                
             }
             $.ajax({
                 type: 'POST',
