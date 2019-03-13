@@ -40,5 +40,6 @@ namespace Core.Erp.Data
         public virtual DbSet<vwfe_nota_debito_impuestos> vwfe_nota_debito_impuestos { get; set; }
         public virtual DbSet<vwfe_retencion> vwfe_retencion { get; set; }
         public virtual DbSet<vwfe_retencion_detalle> vwfe_retencion_detalle { get; set; }
+        public virtual DbSet<vwfe_documentos_peniente_enviar_sri> vwfe_documentos_peniente_enviar_sri { get; set; }
     }
 }

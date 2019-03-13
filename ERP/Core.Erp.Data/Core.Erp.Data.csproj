@@ -2269,6 +2269,9 @@
     <Compile Include="vwfa_PuntoVta.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwfe_documentos_peniente_enviar_sri.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwfe_factura.cs">
       <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>

@@ -130,7 +130,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
                 Fecha = DateTime.Now,
                 Fecha_PriPago = DateTime.Now,
-                IdEmpleado = 1,
                 descuento_mensual = true
             };
             model.lst_detalle = new List<ro_prestamo_detalle_Info>();

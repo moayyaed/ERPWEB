@@ -20,6 +20,7 @@
         <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_debito_impuestos" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_retencion" Width="1.5" PointX="12.75" PointY="4.75" />
         <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_retencion_detalle" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_documentos_peniente_enviar_sri" Width="1.5" PointX="13.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
