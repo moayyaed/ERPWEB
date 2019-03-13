@@ -40,6 +40,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TerminoPago_Bus bus_pago = new fa_TerminoPago_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
+        fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
+        tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
         #endregion
 
         #region Index
@@ -153,6 +155,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             var lst_NivelDescuento = bus_nivel.GetList(IdEmpresa, false);
             ViewBag.lst_NivelDescuento = lst_NivelDescuento;
+
+            var lst_formapago = bus_catalogo.get_list((int)cl_enumeradores.eTipoCatalogoFact.FormaDePago, false);
+            ViewBag.lst_formapago = lst_formapago;
         }
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
@@ -410,8 +415,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
+        public JsonResult Get_NivelDescuento_x_FormaPago(int IdEmpresa = 0, int IdSucursal = 0, string IdCatalogo_FormaPago = "")
+        {
+            tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info_NivelDescuento_x_FormaPago = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info();
 
+            info_NivelDescuento_x_FormaPago = bus_formapago_x_niveldescuento.GetInfo(IdEmpresa, IdSucursal, IdCatalogo_FormaPago);
+            var IdNivel = info_NivelDescuento_x_FormaPago == null ? 0 : info_NivelDescuento_x_FormaPago.IdNivel;
+
+            return Json(IdNivel, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         #region funciones del detalle
 
         public ActionResult GridViewPartial_LoteProforma()
