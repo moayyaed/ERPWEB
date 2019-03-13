@@ -37,14 +37,13 @@ namespace Core.Erp.Bus.RRHH
                     item.pe_apellido = item.pe_apellido.Replace(".", " ").Replace("ñ", "n").Replace("Ñ", "N");
                     item.pe_nombre = item.pe_nombre.Replace(".", " ").Replace("ñ", "n").Replace("Ñ", "N");
                     archivo += item.pe_cedulaRuc + ";";
-                    archivo += item.pe_apellido + ";";
                     archivo += item.pe_nombre + ";";
+                    archivo += item.pe_apellido + ";";
                     if (item.pe_sexo == cl_enumeradores.eTipoSexoGeneral.SEXO_FEM.ToString())
                         archivo += "F" + ";";
                     else
                         archivo += "M" + ";";
                     archivo += item.CodigoSectorial + ";";
-                    archivo += item.Valor + ";";
                     archivo += item.DiasA_considerar_Decimo + ";";
                     archivo += "A" + ";";//Tipo de Deposito
                     archivo += ";";

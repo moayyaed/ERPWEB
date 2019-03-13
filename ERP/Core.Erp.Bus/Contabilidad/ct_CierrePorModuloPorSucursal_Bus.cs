@@ -61,5 +61,19 @@ namespace Core.Erp.Bus.Contabilidad
                 throw;
             }
         }
+
+        public bool AnularDB(ct_CierrePorModuloPorSucursal_Info info)
+
+        {
+            try
+            {
+                return odata.AnularDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

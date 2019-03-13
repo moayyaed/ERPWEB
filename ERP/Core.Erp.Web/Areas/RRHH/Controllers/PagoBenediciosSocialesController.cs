@@ -198,7 +198,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             string archivo = "";
             string NombreFile = "";
 
-            var listado = bus_archivos.get_lis(Convert.ToInt32(SessionFixed.IdEmpresa), IdRol, 950);
+            var listado = bus_archivos.get_lis(Convert.ToInt32(SessionFixed.IdEmpresa), IdRol, 24);
             if (IdNomina_TipoLiqui == 3)
             {
                 NombreFile = "Decimo III";

@@ -55,12 +55,11 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Cerrado")) == false)
-                {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") })
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
-                }                
             });
             c.SetHeaderTemplateContent(tc =>
             {
