@@ -65,12 +65,6 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_fa_TerminoPago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" />
         <EntityTypeShape EntityType="Model_facturacion.fa_TipoNota" Width="1.5" PointX="21.375" PointY="1" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_proforma" Width="1.5" PointX="23.875" PointY="28.625" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_cliente" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_NivelDescuento" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_TerminoPago" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_Vendedor" />
         <EntityTypeShape EntityType="Model_facturacion.fa_factura_x_cxc_cobro" Width="1.5" PointX="29.125" PointY="30.875" />
         <EntityTypeShape EntityType="Model_facturacion.fa_PuntoVta" Width="1.5" PointX="19.375" PointY="18" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_PuntoVta" Width="1.5" PointX="0.75" PointY="21.75" />
@@ -106,6 +100,12 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_fa_TipoNota1" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_x_ct_cbtecble_fa_notaCreDeb" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_x_cxc_cobro_fa_notaCreDeb" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_proforma" Width="1.5" PointX="23.875" PointY="28.5" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_cliente" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_NivelDescuento" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_TerminoPago" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_Vendedor" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

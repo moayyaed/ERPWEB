@@ -35,6 +35,7 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo días de entrega es obligatorio")]
         public int pr_dias_entrega { get; set; }
         public int IdNivel { get; set; }
+        public string IdCatalogo_FormaPago { get; set; }
 
         #region Campos de auditoria
         public string IdUsuario_creacion { get; set; }

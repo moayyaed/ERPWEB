@@ -76,7 +76,8 @@ namespace Core.Erp.Data.Facturacion
                         IdBodega = Entity.IdBodega,
                         IdVendedor = Entity.IdVendedor,
                         pr_dias_entrega = Entity.pr_dias_entrega,
-                        IdNivel = Entity.IdNivel
+                        IdNivel = Entity.IdNivel,
+                        IdCatalogo_FormaPago= Entity.IdCatalogo_FormaPago
                     };
 
                 }
@@ -138,6 +139,7 @@ namespace Core.Erp.Data.Facturacion
                         IdVendedor = info.IdVendedor,
                         pr_dias_entrega = info.pr_dias_entrega,
                         IdNivel = info.IdNivel,
+                        IdCatalogo_FormaPago = info.IdCatalogo_FormaPago,
 
                         IdUsuario_creacion = info.IdUsuario_creacion,
                         fecha_creacion = DateTime.Now
@@ -201,6 +203,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.IdNivel = info.IdNivel;
                     Entity.IdUsuario_modificacion = info.IdUsuario_modificacion;
                     Entity.fecha_modificacion = DateTime.Now;
+                    Entity.IdCatalogo_FormaPago = info.IdCatalogo_FormaPago;
 
                     var lst = Context.fa_proforma_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdProforma == info.IdProforma);
                     Context.fa_proforma_det.RemoveRange(lst);
