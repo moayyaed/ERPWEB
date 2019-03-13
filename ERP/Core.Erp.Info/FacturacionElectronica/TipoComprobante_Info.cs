@@ -9,6 +9,8 @@ using Core.Erp.Info.FacturacionElectronica.NotaCredito;
 using Core.Erp.Info.FacturacionElectronica.NotaDebito;
 using Core.Erp.Info.FacturacionElectronica.Retencion;
 using static Core.Erp.Info.Helps.cl_enumeradores;
+using Core.Erp.Info.Helps;
+
 namespace Core.Erp.Info.FacturacionElectronica
 {
     public class TipoComprobante_Info
@@ -27,6 +29,18 @@ namespace Core.Erp.Info.FacturacionElectronica
         public guiaRemision  cbtGR { get; set; }
 
 
+        public cl_enumeradores.eTipoDocumento TipoDocumento { get; set; }
+
+
+
+        #region MyRegion
+        public int IdEmpresa { get; set; }
+        public int IdSucursal { get; set; }
+        public int IdBodega { get; set; }
+        public decimal IdCbteVta { get; set; }
+        public Nullable<System.DateTime> Fecha_Transaccion { get; set; }
+        public System.DateTime vt_fecha { get; set; }
+        #endregion
         public TipoComprobante_Info()
         {
             CbteFactura = new factura();

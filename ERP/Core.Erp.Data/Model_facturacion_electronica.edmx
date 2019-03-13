@@ -32,6 +32,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_documentos_pen
             <PropertyRef Name="IdBodega" />
             <PropertyRef Name="IdCbteVta" />
             <PropertyRef Name="TipoDocumento" />
+            <PropertyRef Name="vt_fecha" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -39,6 +40,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_documentos_pen
           <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="TipoDocumento" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="Fecha_Transaccion" Type="datetime" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_factura' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -622,7 +624,8 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_retencion_deta
     [vwfe_documentos_peniente_enviar_sri].[IdBodega] AS [IdBodega], 
     [vwfe_documentos_peniente_enviar_sri].[IdCbteVta] AS [IdCbteVta], 
     [vwfe_documentos_peniente_enviar_sri].[TipoDocumento] AS [TipoDocumento], 
-    [vwfe_documentos_peniente_enviar_sri].[Fecha_Transaccion] AS [Fecha_Transaccion]
+    [vwfe_documentos_peniente_enviar_sri].[Fecha_Transaccion] AS [Fecha_Transaccion], 
+    [vwfe_documentos_peniente_enviar_sri].[vt_fecha] AS [vt_fecha]
     FROM [EntidadRegulatoria].[vwfe_documentos_peniente_enviar_sri] AS [vwfe_documentos_peniente_enviar_sri]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwfe_factura" EntityType="Self.vwfe_factura" store:Type="Views" store:Schema="EntidadRegulatoria">
@@ -1582,6 +1585,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_retencion_deta
             <PropertyRef Name="IdBodega" />
             <PropertyRef Name="IdCbteVta" />
             <PropertyRef Name="TipoDocumento" />
+            <PropertyRef Name="vt_fecha" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
@@ -1589,6 +1593,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_retencion_deta
           <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="TipoDocumento" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_Transaccion" Type="DateTime" Precision="3" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2008,6 +2013,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwfe_retencion_deta
           <EntitySetMapping Name="vwfe_documentos_peniente_enviar_sri">
             <EntityTypeMapping TypeName="Model_facturacion_electronica.vwfe_documentos_peniente_enviar_sri">
               <MappingFragment StoreEntitySet="vwfe_documentos_peniente_enviar_sri">
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
                 <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
                 <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
                 <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />

@@ -10,12 +10,39 @@ using Core.Erp.Info.FacturacionElectronica.NotaDebito;
 using Core.Erp.Info.FacturacionElectronica.Retencion;
 using Core.Erp.Info.FacturacionElectronica;
 using System.Text.RegularExpressions;
+using Core.Erp.Info.Helps;
 
 namespace Core.Erp.Data.FacturacionElectronica
 {
     public class TipoComprobante_Data
     {
 
+
+        public TipoComprobante_Info get_info_comprobante_a_generar()
+        {
+            try
+            {
+                DateTime fi = DateTime.Now.AddMonths(-1);
+                DateTime ff = DateTime.Now.Date;
+                TipoComprobante_Info info = new TipoComprobante_Info();
+                using (Entity_facturacion_electronica context=new Entity_facturacion_electronica())
+                {
+                    var entity = context.vwfe_documentos_peniente_enviar_sri.Where(v=>v.vt_fecha>=fi && v.vt_fecha<=ff).FirstOrDefault();
+                    if(entity!=null)
+                    {
+                        info.TipoDocumento= (cl_enumeradores.eTipoDocumento)Enum.Parse(typeof(cl_enumeradores.eTipoDocumento), entity.TipoDocumento);
+                    }
+                }
+
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public factura get_info_factura(DateTime FechaInicio, DateTime FechaFin)
         {

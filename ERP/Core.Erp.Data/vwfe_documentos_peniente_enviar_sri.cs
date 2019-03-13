@@ -20,5 +20,6 @@ namespace Core.Erp.Data
         public decimal IdCbteVta { get; set; }
         public string TipoDocumento { get; set; }
         public Nullable<System.DateTime> Fecha_Transaccion { get; set; }
+        public System.DateTime vt_fecha { get; set; }
     }
 }
