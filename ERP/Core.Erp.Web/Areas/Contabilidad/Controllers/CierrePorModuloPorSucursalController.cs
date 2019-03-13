@@ -131,6 +131,27 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Anular(int IdEmpresa = 0, int IdCierre = 0)
+        {
+            ct_CierrePorModuloPorSucursal_Info model = bus_CierreModulo.GetInfo(IdEmpresa, IdCierre);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            cargar_combos(IdEmpresa);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Anular(ct_CierrePorModuloPorSucursal_Info model)
+        {
+            if (!bus_CierreModulo.AnularDB(model))
+            {
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
         #endregion
     }
 }
