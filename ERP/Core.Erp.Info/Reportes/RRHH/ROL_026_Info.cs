@@ -9,19 +9,23 @@ namespace Core.Erp.Info.Reportes.RRHH
     public class ROL_026_Info
     {
         public int IdEmpresa { get; set; }
-        public int pe_anio { get; set; }
-        public decimal IdEmpleado { get; set; }
+        public int Id_Rdep { get; set; }
         public int IdSucursal { get; set; }
+        public int pe_anio { get; set; }
         public int IdNomina_Tipo { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
+        public string Observacion { get; set; }
+        public long Estado { get; set; }
+        public int Secuencia { get; set; }
+        public decimal IdEmpleado { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string pe_nombre { get; set; }
         public string pe_apellido { get; set; }
         public Nullable<double> Sueldo { get; set; }
-        public Nullable<decimal> FondosReserva { get; set; }
-        public Nullable<decimal> DecimoTercerSueldo { get; set; }
+        public Nullable<double> FondosReserva { get; set; }
+        public Nullable<double> DecimoTercerSueldo { get; set; }
         public Nullable<double> DecimoCuartoSueldo { get; set; }
-        public Nullable<decimal> Vacaciones { get; set; }
+        public Nullable<double> Vacaciones { get; set; }
         public Nullable<double> AportePErsonal { get; set; }
         public Nullable<double> GastoAlimentacion { get; set; }
         public Nullable<double> GastoEucacion { get; set; }

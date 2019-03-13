@@ -4005,10 +4005,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
           <Property Name="pe_apellido" Type="varchar" MaxLength="100" />
           <Property Name="Sueldo" Type="float" />
-          <Property Name="FondosReserva" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="DecimoTercerSueldo" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="FondosReserva" Type="float" />
+          <Property Name="DecimoTercerSueldo" Type="float" />
           <Property Name="DecimoCuartoSueldo" Type="float" />
-          <Property Name="Vacaciones" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Vacaciones" Type="float" />
           <Property Name="AportePErsonal" Type="float" />
           <Property Name="GastoAlimentacion" Type="float" />
           <Property Name="GastoEucacion" Type="float" />
@@ -11705,10 +11705,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Sueldo" Type="Double" />
-          <Property Name="FondosReserva" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DecimoTercerSueldo" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FondosReserva" Type="Double" />
+          <Property Name="DecimoTercerSueldo" Type="Double" />
           <Property Name="DecimoCuartoSueldo" Type="Double" />
-          <Property Name="Vacaciones" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Vacaciones" Type="Double" />
           <Property Name="AportePErsonal" Type="Double" />
           <Property Name="GastoAlimentacion" Type="Double" />
           <Property Name="GastoEucacion" Type="Double" />

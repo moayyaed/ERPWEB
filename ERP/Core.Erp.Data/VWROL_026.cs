@@ -28,10 +28,10 @@ namespace Core.Erp.Data
         public string pe_nombre { get; set; }
         public string pe_apellido { get; set; }
         public Nullable<double> Sueldo { get; set; }
-        public Nullable<decimal> FondosReserva { get; set; }
-        public Nullable<decimal> DecimoTercerSueldo { get; set; }
+        public Nullable<double> FondosReserva { get; set; }
+        public Nullable<double> DecimoTercerSueldo { get; set; }
         public Nullable<double> DecimoCuartoSueldo { get; set; }
-        public Nullable<decimal> Vacaciones { get; set; }
+        public Nullable<double> Vacaciones { get; set; }
         public Nullable<double> AportePErsonal { get; set; }
         public Nullable<double> GastoAlimentacion { get; set; }
         public Nullable<double> GastoEucacion { get; set; }

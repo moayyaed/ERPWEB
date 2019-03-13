@@ -249,15 +249,15 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_rol_detalle" Width="1.5" PointX="25.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_rrhh.ro_rdep" Width="1.5" PointX="10.5" PointY="49.125" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_rdep_det" Width="1.5" PointX="30.25" PointY="32.625" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_Nomina_Tipo1" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_rdep_det_ro_rdep" />
-        <EntityTypeShape EntityType="Model_rrhh.vwro_rdep" Width="1.5" PointX="17.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_rrhh.ro_archivos_bancos_generacion_x_empleado" Width="1.5" PointX="30.25" PointY="29.125" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_archivos_bancos_generacion_x_empleado" Width="1.5" PointX="27.375" PointY="13.75" />
         <AssociationConnector Association="Model_rrhh.FK_ro_archivos_bancos_generacion_x_empleado_ro_archivos_bancos_generacion" />
         <AssociationConnector Association="Model_rrhh.FK_ro_archivos_bancos_generacion_x_empleado_ro_empleado" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_rdep_det" Width="1.5" PointX="30.25" PointY="32.625" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_rdep" Width="1.5" PointX="17.375" PointY="6.75" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_rdep_det_ro_rdep" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
