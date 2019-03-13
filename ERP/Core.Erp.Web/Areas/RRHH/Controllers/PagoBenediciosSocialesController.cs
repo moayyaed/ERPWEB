@@ -192,14 +192,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
 
-        public FileResult GetCSV(int IdRol=0,int IdNomina_TipoLiqui = 0)
+        public FileResult GetCSV(int IdRol=0,int IdNominaTipoLiqui = 0)
         {
             ro_archivosCSV_Bus bus_archivos = new ro_archivosCSV_Bus();
             string archivo = "";
             string NombreFile = "";
 
-            var listado = bus_archivos.get_lis(Convert.ToInt32(SessionFixed.IdEmpresa), IdRol, 950);
-            if (IdNomina_TipoLiqui == 3)
+            var listado = bus_archivos.get_lis(Convert.ToInt32(SessionFixed.IdEmpresa), IdRol, 24);
+            if (IdNominaTipoLiqui == 3)
             {
                 NombreFile = "Decimo III";
                 archivo = bus_archivos.Get_decimoIII(listado);

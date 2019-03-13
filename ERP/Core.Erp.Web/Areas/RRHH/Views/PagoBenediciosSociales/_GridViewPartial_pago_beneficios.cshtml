@@ -135,26 +135,15 @@
 
         });
         settings.Columns.Add("EstadoRol", "Estado").Width = Unit.Percentage(10);
-
         settings.Columns.Add(column =>
         {
-            column.Caption = "General";
-
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_021", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdNomina_Tipo = DataBinder.Eval(c.DataItem, "IdNomina_Tipo"), IdNomina_TipoLiqui = DataBinder.Eval(c.DataItem, "IdNomina_TipoLiqui"), IdPeriodo = DataBinder.Eval(c.DataItem, "IdPeriodo"), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal") }, Request.Url.Scheme) + "');\"></span>");
+                
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("GetCSV", "PagoBenediciosSociales", new { Area = "RRHH", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdNominaTipoLiqui = DataBinder.Eval(c.DataItem, "IdNominaTipoLiqui") }, Request.Url.Scheme) + "');\"></span>");
+                
             });
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(6);
-        });
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "Individual";
-            column.SetDataItemTemplateContent(c =>
-            {
-
-                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_002", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdNomina_Tipo = DataBinder.Eval(c.DataItem, "IdNomina_Tipo"), IdNomina_TipoLiqui = DataBinder.Eval(c.DataItem, "IdNomina_TipoLiqui"), IdPeriodo = DataBinder.Eval(c.DataItem, "IdPeriodo"), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal") }, Request.Url.Scheme) + "');\"></span>");
-            });
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(6);
+            column.Width = Unit.Percentage(5);
         });
     });
 }
