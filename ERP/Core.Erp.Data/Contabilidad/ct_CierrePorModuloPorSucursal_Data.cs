@@ -170,5 +170,25 @@ namespace Core.Erp.Data.Contabilidad
                 throw;
             }
         }
+        
+        public bool AnularDB(ct_CierrePorModuloPorSucursal_Info info)
+        {
+            try
+            {
+                using (Entities_contabilidad Context = new Entities_contabilidad())
+                {
+                    var Entity = Context.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCierre == info.IdCierre).FirstOrDefault();
+                    if (Entity != null)
+                        Context.ct_CierrePorModuloPorSucursal.Remove(Entity);
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
