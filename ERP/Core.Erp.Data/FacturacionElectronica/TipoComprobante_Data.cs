@@ -31,6 +31,11 @@ namespace Core.Erp.Data.FacturacionElectronica
                     if(entity!=null)
                     {
                         info.TipoDocumento= (cl_enumeradores.eTipoDocumento)Enum.Parse(typeof(cl_enumeradores.eTipoDocumento), entity.TipoDocumento);
+                        info.IdCbteVta = entity.IdCbteVta;
+                        info.IdEmpresa = entity.IdEmpresa;
+                        info.IdSucursal = entity.IdSucursal;
+                        info.IdBodega = entity.IdBodega;
+
                     }
                 }
 
@@ -44,11 +49,10 @@ namespace Core.Erp.Data.FacturacionElectronica
             }
         }
 
-        public factura get_info_factura(DateTime FechaInicio, DateTime FechaFin)
+        public factura get_info_factura(TipoComprobante_Info info_)
         {
 
-            DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
-            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+           
             factura myObject = new factura();
             #region Facturas Fixed
 
@@ -56,7 +60,7 @@ namespace Core.Erp.Data.FacturacionElectronica
             {
                 using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
                 {
-                    var item = context.vwfe_factura.Where(v => v.vt_fecha >= Fi && v.vt_fecha <= Ff).FirstOrDefault();
+                    var item = context.vwfe_factura.Where(v => v.IdEmpresa == info_.IdEmpresa && v.IdCbteVta == info_.IdCbteVta && v.IdBodega == info_.IdBodega && v.IdSucursal == info_.IdSucursal).FirstOrDefault();
                     if (item != null)
                     {
                         myObject.version = "1.1.0";
@@ -233,19 +237,18 @@ namespace Core.Erp.Data.FacturacionElectronica
 
         }
 
-        public comprobanteRetencion get_info_retencion(DateTime FechaInicio, DateTime FechaFin)
+        public comprobanteRetencion get_info_retencion(TipoComprobante_Info info_)
         {
 
 
-            DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
-            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+            
             comprobanteRetencion myObjectRete = new comprobanteRetencion();
             #region Retenciones
             try
             {
                 using (Entity_facturacion_electronica Context = new Entity_facturacion_electronica())
                 {
-                    var item = Context.vwfe_retencion.Where(v => v.fecha >= FechaInicio && v.fecha <= FechaFin).FirstOrDefault();
+                    var item = Context.vwfe_retencion.Where(v => v.IdEmpresa == info_.IdEmpresa && v.IdRetencion == info_.IdCbteVta).FirstOrDefault();
 
                     if (item != null)
                     {
@@ -359,19 +362,18 @@ namespace Core.Erp.Data.FacturacionElectronica
 
         }
 
-        public guiaRemision get_info_guia(DateTime FechaInicio, DateTime FechaFin)
+        public guiaRemision get_info_guia(TipoComprobante_Info info_)
         {
 
 
-            DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
-            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+           
             guiaRemision myObject = new guiaRemision();
             #region Guia de remision
             try
             {
                 using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
                 {
-                    var item = context.vwfe_guia_remision.Where(v => v.gi_fecha >= Fi && v.gi_fecha <= Ff).First();
+                    var item = context.vwfe_guia_remision.Where(v => v.IdEmpresa == info_.IdEmpresa && v.IdGuiaRemision == info_.IdCbteVta && v.IdBodega==info_.IdBodega && v.IdSucursal==info_.IdSucursal).FirstOrDefault();
                     if (item != null)
                     {
                         myObject.version = "1.1.0";
@@ -489,18 +491,17 @@ namespace Core.Erp.Data.FacturacionElectronica
 
         }
 
-        public notaCredito get_info_nota_credito(DateTime FechaInicio, DateTime FechaFin)
+        public notaCredito get_info_nota_credito(TipoComprobante_Info info_)
         {
         
-            DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
-            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+           
                 notaCredito myObject = new notaCredito();
                 #region Nota credito
                 try
                 {
                 using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
                 {
-                    var nota_credito = context.vwfe_nota_credito.Where(v => v.no_fecha >= Fi && v.no_fecha <= Ff);
+                    var nota_credito = context.vwfe_nota_credito.Where(v => v.IdEmpresa == info_.IdEmpresa && v.IdNota== info_.IdCbteVta && v.IdBodega== info_.IdBodega && v.IdSucursal== info_.IdSucursal);
                     foreach (var item in nota_credito)
                     {
 
@@ -662,12 +663,11 @@ namespace Core.Erp.Data.FacturacionElectronica
             
         }
 
-        public notaDebito get_info_nota_debito(DateTime FechaInicio, DateTime FechaFin)
+        public notaDebito get_info_nota_debito(TipoComprobante_Info info_)
         {
   
 
-            DateTime Fi = Convert.ToDateTime(FechaInicio.ToShortDateString());
-            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+          
             notaDebito myObject = new notaDebito();
                 #region Nota debito
 
@@ -675,8 +675,8 @@ namespace Core.Erp.Data.FacturacionElectronica
                 {
                 using (Entity_facturacion_electronica context = new Entity_facturacion_electronica())
                 {
-                    var nota_credito = context.vwfe_nota_debito.Where(v => v.no_fecha >= Fi && v.no_fecha <= Ff);
-                    foreach (var item in nota_credito)
+                    var item = context.vwfe_nota_credito.Where(v => v.IdEmpresa == info_.IdEmpresa && v.IdNota == info_.IdCbteVta && v.IdBodega == info_.IdBodega && v.IdSucursal == info_.IdSucursal).FirstOrDefault();
+                    if(item!=null)
                     {
                         myObject.version = "1.0.0";
                         myObject.id = new notaDebitoID();
@@ -805,7 +805,7 @@ namespace Core.Erp.Data.FacturacionElectronica
         }
 
 
-        public factura get_facturas_eventos(DateTime FechaIni, DateTime FechaFin)
+        public factura get_facturas_eventos(TipoComprobante_Info info_)
         {
             tb_empresa info_empresa = new tb_empresa();
             tb_facturas_eventos info_factura_evento = new tb_facturas_eventos();
@@ -831,8 +831,8 @@ namespace Core.Erp.Data.FacturacionElectronica
 
 
 
-            DateTime Fi = Convert.ToDateTime(FechaIni.ToShortDateString());
-            DateTime Ff = Convert.ToDateTime(FechaFin.ToShortDateString());
+            DateTime Fi = DateTime.Now.AddMonths(-1);
+            DateTime Ff = DateTime.Now.Date;
             factura myObject = new factura();
             try
             {

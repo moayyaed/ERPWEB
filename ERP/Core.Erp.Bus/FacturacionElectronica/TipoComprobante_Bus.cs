@@ -17,11 +17,11 @@ namespace Core.Erp.Bus.FacturacionElectronica
     {
 
         TipoComprobante_Data odata = new TipoComprobante_Data();
-        public factura get_info_factura(DateTime FechaInicio, DateTime FechaFin)
+        public factura get_info_factura(TipoComprobante_Info info)
         {
             try
             {
-                return odata.get_info_factura(FechaInicio, FechaFin);
+                return odata.get_info_factura(info);
             }
             catch (Exception)
             {
@@ -31,11 +31,11 @@ namespace Core.Erp.Bus.FacturacionElectronica
         }
 
 
-        public comprobanteRetencion get_info_retencion(DateTime FechaInicio, DateTime FechaFin)
+        public comprobanteRetencion get_info_retencion(TipoComprobante_Info info)
         {
             try
             {
-                return odata.get_info_retencion(FechaInicio, FechaFin);
+                return odata.get_info_retencion(info);
             }
             catch (Exception)
             {
@@ -45,11 +45,11 @@ namespace Core.Erp.Bus.FacturacionElectronica
         }
 
 
-        public guiaRemision get_info_guia(DateTime FechaInicio, DateTime FechaFin)
+        public guiaRemision get_info_guia(TipoComprobante_Info info)
         {
             try
             {
-                return odata.get_info_guia(FechaInicio, FechaFin);
+                return odata.get_info_guia(info);
             }
             catch (Exception)
             {
@@ -59,11 +59,11 @@ namespace Core.Erp.Bus.FacturacionElectronica
         }
 
 
-        public notaCredito get_info_nota_credito(DateTime FechaInicio, DateTime FechaFin)
+        public notaCredito get_info_nota_credito(TipoComprobante_Info info)
         {
             try
             {
-                return odata.get_info_nota_credito(FechaInicio, FechaFin);
+                return odata.get_info_nota_credito(info);
             }
             catch (Exception)
             {
@@ -73,11 +73,11 @@ namespace Core.Erp.Bus.FacturacionElectronica
         }
 
 
-        public notaDebito get_info_nota_debito(DateTime FechaInicio, DateTime FechaFin)
+        public notaDebito get_info_nota_debito(TipoComprobante_Info info)
         {
             try
             {
-                return odata.get_info_nota_debito(FechaInicio, FechaFin);
+                return odata.get_info_nota_debito(info);
             }
             catch (Exception)
             {
@@ -86,11 +86,25 @@ namespace Core.Erp.Bus.FacturacionElectronica
             }
         }
 
-        public factura get_facturas_eventos(DateTime FechaInicio, DateTime FechaFin)
+        public factura get_facturas_eventos(TipoComprobante_Info info)
         {
             try
             {
-                return odata.get_facturas_eventos(FechaInicio, FechaFin);
+                return odata.get_facturas_eventos(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        public TipoComprobante_Info get_info_comprobante_a_generar()
+        {
+            try
+            {
+                return odata.get_info_comprobante_a_generar();
             }
             catch (Exception)
             {
