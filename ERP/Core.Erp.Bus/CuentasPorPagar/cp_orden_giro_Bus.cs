@@ -577,5 +577,31 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
+
+        public bool ValidarExisteOrdenPAgo(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble)
+        {
+            try
+            {
+                return data.ValidarExisteOrdenPAgo(IdEmpresa, IdTipoCbte, IdCbteCble);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool ModificarDBCabecera(cp_orden_giro_Info info)
+
+        {
+            try
+            {
+                return data.ModificarDBCabecera(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         }
 }
