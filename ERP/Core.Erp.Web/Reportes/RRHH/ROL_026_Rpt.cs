@@ -29,6 +29,7 @@ namespace Core.Erp.Web.Reportes.RRHH
                 ROL_026_Bus bus_rpt = new ROL_026_Bus();
                 List<ROL_026_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdNomina_Tipo, IdAnio);
 
+                (sender as XtraReport).PrintingSystem.Document.AutoFitToPagesWidth = 1;
                 this.DataSource = lst_rpt;
 
                 tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

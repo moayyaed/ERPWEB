@@ -188,6 +188,7 @@ namespace Core.Erp.Data.RRHH
                     ro_rdep_det Entity_Det = Context.ro_rdep_det.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Id_Rdep && q.Secuencia == Secuencia).FirstOrDefault();
 
                     info_det.IdEmpresa = Entity_Det.IdEmpresa;
+                    info_det.Id_Rdep = Entity_Det.Id_Rdep;
                     info_det.IdEmpleado = Entity_Det.IdEmpleado;
                     info_det.Secuencia = Entity_Det.Secuencia;
                     info_det.pe_cedulaRuc = Entity_Det.pe_cedulaRuc;
