@@ -14,9 +14,6 @@ namespace Core.Erp.Data.RRHH
             int IdSucursalInicio = IdSucursal;
             int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
-            //int IdEmpleadoInicio = IdAnio;
-            //int IdEmpleadoFin = IdAnio == 0 ? 99999999 : IdAnio;
-
             try
             {
                 List<ro_rdep_Info> Lista = new List<ro_rdep_Info>();
@@ -34,6 +31,7 @@ namespace Core.Erp.Data.RRHH
                         IdNomina_Tipo = q.IdNomina_Tipo,
                         Id_Rdep =  q.Id_Rdep,
                         pe_anio = q.pe_anio,
+                        Estado = q.Estado,
                         Su_Descripcion = q.Su_Descripcion,
                         Descripcion = q.Descripcion,
                         Observacion = q.Observacion                        
@@ -42,7 +40,7 @@ namespace Core.Erp.Data.RRHH
                 
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -76,7 +74,7 @@ namespace Core.Erp.Data.RRHH
             int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
             decimal IdEmpleadoInicio = IdEmpleado;
-            decimal IdEmpleadoFin = IdEmpleado == 0 ? 99999999 : IdEmpleado;
+            decimal IdEmpleadoFin = IdEmpleado == 0 ? 999999999 : IdEmpleado;
 
             if (Id_Rdep == 0)
             {
@@ -119,6 +117,7 @@ namespace Core.Erp.Data.RRHH
                         pe_anio = Entity.pe_anio,                        
                         IdSucursal = Entity.IdSucursal,
                         IdNomina_Tipo = Entity.IdNomina_Tipo,
+                        Estado = Entity.Estado,
                         Su_CodigoEstablecimiento = Entity.Su_CodigoEstablecimiento,
                         Observacion = Entity.Observacion
                     };
@@ -236,13 +235,18 @@ namespace Core.Erp.Data.RRHH
             try
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
-                {                    
+                {
+                    ro_rdep entity_rdep = Context.ro_rdep.Where(q => q.IdEmpresa == info.IdEmpresa && q.Id_Rdep == info.Id_Rdep).FirstOrDefault();
                     ro_rdep_det entity = Context.ro_rdep_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.Id_Rdep == info.Id_Rdep && q.Secuencia == info.Secuencia).FirstOrDefault();
-                    if (entity == null)
+
+                    if (entity_rdep == null)
                     {
                         return false;
                     }
-                    
+
+                    entity_rdep.IdUsuarioUltMod = info.IdUsuario;
+                    entity_rdep.Fecha_UltMod = DateTime.Now;
+
                     entity.Sueldo = info.Sueldo;
                     entity.FondosReserva = info.FondosReserva;
                     entity.DecimoTercerSueldo = info.DecimoTercerSueldo;
@@ -268,7 +272,7 @@ namespace Core.Erp.Data.RRHH
                     entity.ImpuestoRentaAsumidoPorEsteEmpleador = info.ImpuestoRentaAsumidoPorEsteEmpleador;
                     entity.BaseImponibleGravada = info.BaseImponibleGravada;
                     entity.IngresosGravadorPorEsteEmpleador = info.IngresosGravadorPorEsteEmpleador;
-                    
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -280,6 +284,33 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
+        public bool AnularBD(ro_rdep_Info info)
+        {
+            try
+            {
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    ro_rdep entity = Context.ro_rdep.Where(q => q.IdEmpresa == info.IdEmpresa && q.Id_Rdep == info.Id_Rdep).FirstOrDefault();
+                    if (entity == null)
+                    {
+                        return false;
+                    }
+
+                    entity.Estado = false;
+                    entity.MotiAnula = info.MotiAnula;
+                    entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                    entity.Fecha_UltAnu = DateTime.Now;
+
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         /**************************************************************/
         /*public List<Rdep_Info> gett_list(int IdEmpresa, int Anio, decimal IdEmpleado)
         {

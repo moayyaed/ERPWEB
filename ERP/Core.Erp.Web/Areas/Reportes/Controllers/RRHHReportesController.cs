@@ -13,7 +13,6 @@ using System.Web.Mvc;
 using Core.Erp.Info.Reportes.RRHH;
 using Core.Erp.Bus.Reportes.RRHH;
 using Core.Erp.Web.Areas.Reportes.Views.RRHHReportes;
-using Core.Erp.Info.Helps;
 using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -1026,7 +1025,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdDivision = 0,
                 IdArea = 0,
-                IdAnio = 0
+                IdAnio = 0,
+                IdEmpleado = 0
             };
 
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
@@ -1035,6 +1035,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdSucursal.Value = model.IdSucursal;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdAnio.Value = model.IdAnio;
+            reporte.p_IdEmpleado.Value = model.IdEmpleado;
             //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
@@ -1051,6 +1052,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdSucursal.Value = model.IdSucursal;
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdAnio.Value = model.IdAnio;
+            reporte.p_IdEmpleado.Value = model.IdEmpleado;
             //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;

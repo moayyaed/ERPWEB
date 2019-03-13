@@ -222,7 +222,7 @@ namespace Core.Erp.Data.FacturacionElectronica
 
                 return myObject;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return myObject;
             }
@@ -352,7 +352,7 @@ namespace Core.Erp.Data.FacturacionElectronica
                 }
                 return myObjectRete;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return myObjectRete;
             }
@@ -482,7 +482,7 @@ namespace Core.Erp.Data.FacturacionElectronica
                 }
                 return myObject;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return myObject;
             }
@@ -654,7 +654,7 @@ namespace Core.Erp.Data.FacturacionElectronica
                 }
                 return myObject;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                     return myObject;
             }
@@ -795,7 +795,7 @@ namespace Core.Erp.Data.FacturacionElectronica
                 }
                 return myObject;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                     return myObject;
             }
@@ -1042,7 +1042,7 @@ namespace Core.Erp.Data.FacturacionElectronica
 
                 return myObject;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return myObject;
             }

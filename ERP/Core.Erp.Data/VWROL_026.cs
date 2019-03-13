@@ -14,6 +14,7 @@ namespace Core.Erp.Data
     
     public partial class VWROL_026
     {
+        public Nullable<long> IdRow { get; set; }
         public int IdEmpresa { get; set; }
         public int Id_Rdep { get; set; }
         public int IdSucursal { get; set; }
@@ -21,7 +22,7 @@ namespace Core.Erp.Data
         public int IdNomina_Tipo { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
         public string Observacion { get; set; }
-        public long Estado { get; set; }
+        public bool Estado { get; set; }
         public int Secuencia { get; set; }
         public decimal IdEmpleado { get; set; }
         public string pe_cedulaRuc { get; set; }

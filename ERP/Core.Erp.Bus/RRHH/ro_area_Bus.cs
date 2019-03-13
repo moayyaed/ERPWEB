@@ -104,7 +104,7 @@ namespace Core.Erp.Bus.RRHH
             {
                 return odata.get_info_bajo_demanda(args, IdEmpresa, IdDivision);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
@@ -130,7 +130,7 @@ namespace Core.Erp.Bus.RRHH
             {
                 return odata.get_info_bajo_demanda_individual(args, IdEmpresa);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

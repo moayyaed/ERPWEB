@@ -44,6 +44,7 @@ namespace Core.Erp.Info.RRHH
 
         #region Campos que no existen en la tabla
         public string Empleado { get; set; }
+        public string IdUsuario { get; set; }
         #endregion
     }
 }

@@ -71,7 +71,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                 }
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

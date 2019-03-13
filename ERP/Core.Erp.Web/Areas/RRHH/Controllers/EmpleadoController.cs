@@ -394,7 +394,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(info);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

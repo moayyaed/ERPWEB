@@ -51,6 +51,13 @@
                             @Html.ValidationMessageFor(q => q.IdAnio, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdNomina">Empleado</label>
+                            @Html.Partial("_CmbEmpleado_RRHH", Model.IdEmpleado)
+                            @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

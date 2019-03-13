@@ -42,17 +42,16 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public FileResult Nuevo(ats_Info model)
         {
 
-            model.info_periodo.IdPeriodo =Convert.ToInt32( Session["IdPeriodo"]) ;
             bus_ats = new ats_Bus();
-            string nombre_file = model.info_periodo.IdPeriodo.ToString();
-            if (model.info_periodo.IdPeriodo.ToString().Length == 6)
+            string nombre_file = model.IdPeriodo.ToString();
+            if (model.IdPeriodo.ToString().Length == 6)
             {
-                nombre_file = "AT-" + model.info_periodo.IdPeriodo.ToString().Substring(4, 2) + model.info_periodo.IdPeriodo.ToString().Substring(0, 4);
+                nombre_file = "AT-" + model.IdPeriodo.ToString().Substring(4, 2) + model.IdPeriodo.ToString().Substring(0, 4);
             }
             string xml = "";
             iva ats = new iva();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ats = bus_ats.get_ats(IdEmpresa, model.info_periodo.IdPeriodo, model.IdSucursal, model.IntArray);
+            ats = bus_ats.get_ats(IdEmpresa, model.IdPeriodo, model.IdSucursal, model.IntArray);
             var ms = new MemoryStream();
             var xw = XmlWriter.Create(ms);
 
@@ -136,27 +135,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         }
 
-        #endregion
-
-        #region json
-        public JsonResult get_ats(string IntArray,int IdPeriodo=0, int IdSucursal=0)
-        {
-            bus_ats = new ats_Bus();
-            ats_Info model = new ats_Info();
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            //model = bus_ats.get_info(IdEmpresa, IdPeriodo, IdSucursal, IntArray);
-            //Session["lst_compras"] = model.lst_compras;
-            //Session["lst_ventas"] = model.lst_ventas;
-            //Session["lst_retenciones"] = model.lst_retenciones;
-            //Session["lst_exportaciones"] = model.lst_exportaciones;
-            //Session["lst_anulados"] = model.lst_anulados;
-            //Session["IdPeriodo"] = IdPeriodo;
-
-            return Json("", JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
-     
+        #endregion     
 
         public class HomeControllerControllerUploadControlSettings
         {

@@ -50,14 +50,26 @@
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToBoolean(e.GetValue("Estado")) == false)
+            {
+                e.Row.ForeColor = System.Drawing.Color.Red;
+            }
+        };
         settings.Columns.Add(c =>
         {
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Reprocesar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep") })
-                );
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Reprocesar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(tc.DataItem, "Id_Rdep") },
+                                new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
             });
             c.SetHeaderTemplateContent(tc =>
             {
