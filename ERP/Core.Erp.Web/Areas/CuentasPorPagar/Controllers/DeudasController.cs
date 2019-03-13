@@ -560,6 +560,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
 
+            if(bus_orden_giro.ValidarExisteOrdenPAgo(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro) == true)
+            {
+               if(!bus_orden_giro.ModificarDBCabecera(model))
+                {
+                    cargar_combos(model);
+                    return View(model);
+                }
+               
+            }
+            else
             if (!bus_orden_giro.modificarDB(model))
             {
                 cargar_combos(model);

@@ -760,5 +760,56 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
+
+        public bool ValidarExisteOrdenPAgo(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble)
+        {
+            try
+            {
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    var lst = Context.cp_orden_pago_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdTipoCbte_cxp == IdTipoCbte && q.IdCbteCble_cxp == IdCbteCble).ToList();
+                    if (lst.Count() > 0)
+                        return true;
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarDBCabecera(cp_orden_giro_Info info)
+        {
+            try
+            {
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    cp_orden_giro Entity = Context.cp_orden_giro.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.co_observacion = info.co_observacion;
+                    Entity.Tipodoc_a_Modificar = info.Tipodoc_a_Modificar;
+                    Entity.co_plazo = info.co_plazo;
+                    Entity.IdProveedor = info.IdProveedor;
+                    Entity.IdIden_credito = info.IdIden_credito;
+                    Entity.IdOrden_giro_Tipo = info.IdOrden_giro_Tipo;
+                    Entity.PagoLocExt = info.PagoLocExt;
+                    Entity.Num_Autorizacion= info.Num_Autorizacion;
+                    Entity.co_serie = info.co_serie;
+                    Entity.co_factura = info.co_factura;
+
+                    Context.SaveChanges();
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
