@@ -245,6 +245,7 @@
           <Property Name="ptoEmiModificado" Type="varchar" MaxLength="5" />
           <Property Name="secModificado" Type="varchar" MaxLength="9" />
           <Property Name="autModificado" Type="varchar" MaxLength="60" />
+          <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <EntityType Name="ATS_comprobantes_anulados">
           <Key>
@@ -261,6 +262,7 @@
           <Property Name="secuencialInicio" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="secuencialFin" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="Autorización" Type="varchar" MaxLength="49" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <EntityType Name="ATS_exportaciones">
           <Key>
@@ -288,6 +290,7 @@
           <Property Name="autorizacion" Type="varchar" MaxLength="50" />
           <Property Name="fechaEmision" Type="date" />
           <Property Name="denoExpCli" Type="varchar" MaxLength="500" />
+          <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <EntityType Name="ATS_retenciones">
           <Key>
@@ -323,6 +326,7 @@
           <Property Name="autModificado" Type="varchar" MaxLength="49" />
           <Property Name="re_tipo_Ret" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="denopr" Type="varchar" MaxLength="500" />
+          <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <EntityType Name="ATS_ventas">
           <Key>
@@ -352,6 +356,7 @@
           <Property Name="codEstab" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="ventasEstab" Type="numeric" Precision="20" Scale="2" Nullable="false" />
           <Property Name="ivaComp" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1008,6 +1013,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="ptoEmiModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="secModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="autModificado" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
         <EntityType Name="ATS_comprobantes_anulados">
           <Key>
@@ -1024,6 +1030,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="secuencialInicio" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="secuencialFin" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Autorización" Type="String" MaxLength="49" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
         <EntityType Name="ATS_exportaciones">
           <Key>
@@ -1051,6 +1058,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fechaEmision" Type="DateTime" Precision="0" />
           <Property Name="denoExpCli" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
         <EntityType Name="ATS_retenciones">
           <Key>
@@ -1086,6 +1094,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="autModificado" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
           <Property Name="re_tipo_Ret" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="denopr" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
         <EntityType Name="ATS_ventas">
           <Key>
@@ -1115,6 +1124,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="codEstab" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ventasEstab" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="ivaComp" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
         <EntityType Name="vwct_cbtecble_con_ctacble_acreedora">
           <Key>
@@ -1235,7 +1245,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="vwct_RevisionContableFacturas" EntityType="Model_contabilidad.vwct_RevisionContableFacturas" />
           <EntitySet Name="ct_CierrePorModuloPorSucursal" EntityType="Model_contabilidad.ct_CierrePorModuloPorSucursal" />
           <EntitySet Name="vwct_CierrePorModuloPorSucursal" EntityType="Model_contabilidad.vwct_CierrePorModuloPorSucursal" />
-          <FunctionImport Name="generarATS" ReturnType="Collection(Model_contabilidad.generarATS_Result)">
+          <FunctionImport Name="generarATS">
             <Parameter Name="idempresa" Mode="In" Type="Int32" />
             <Parameter Name="idPeriodo" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
@@ -1630,28 +1640,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Cerrado" Type="Boolean" Nullable="false" />
         </EntityType>
-        <ComplexType Name="generarATS_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdPeriodo" Nullable="false" />
-          <Property Type="Int32" Name="Secuencia" Nullable="false" />
-          <Property Type="String" Name="tpIdClienteEx" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="idClienteEx" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="parteRel" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="tipoRegi" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="paisEfecPagoGen" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="paisEfecExp" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="exportacionDe" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="tipoComprobante" Nullable="true" MaxLength="5" />
-          <Property Type="DateTime" Name="fechaEmbarque" Nullable="true" />
-          <Property Type="Decimal" Name="valorFOB" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="valorFOBComprobante" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="establecimiento" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="puntoEmision" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="secuencial" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="autorizacion" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="fechaEmision" Nullable="true" />
-          <Property Type="String" Name="denoExpCli" Nullable="true" MaxLength="500" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1775,6 +1763,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ATS_compras">
             <EntityTypeMapping TypeName="Model_contabilidad.ATS_compras">
               <MappingFragment StoreEntitySet="ATS_compras">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
@@ -1812,6 +1801,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ATS_comprobantes_anulados">
             <EntityTypeMapping TypeName="Model_contabilidad.ATS_comprobantes_anulados">
               <MappingFragment StoreEntitySet="ATS_comprobantes_anulados">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
@@ -1827,6 +1817,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ATS_exportaciones">
             <EntityTypeMapping TypeName="Model_contabilidad.ATS_exportaciones">
               <MappingFragment StoreEntitySet="ATS_exportaciones">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
@@ -1853,6 +1844,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ATS_retenciones">
             <EntityTypeMapping TypeName="Model_contabilidad.ATS_retenciones">
               <MappingFragment StoreEntitySet="ATS_retenciones">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
@@ -1887,6 +1879,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ATS_ventas">
             <EntityTypeMapping TypeName="Model_contabilidad.ATS_ventas">
               <MappingFragment StoreEntitySet="ATS_ventas">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
@@ -2075,32 +2068,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="generarATS" FunctionName="Model_contabilidad.Store.generarATS">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_contabilidad.generarATS_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="tpIdClienteEx" ColumnName="tpIdClienteEx" />
-                <ScalarProperty Name="idClienteEx" ColumnName="idClienteEx" />
-                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
-                <ScalarProperty Name="tipoRegi" ColumnName="tipoRegi" />
-                <ScalarProperty Name="paisEfecPagoGen" ColumnName="paisEfecPagoGen" />
-                <ScalarProperty Name="paisEfecExp" ColumnName="paisEfecExp" />
-                <ScalarProperty Name="exportacionDe" ColumnName="exportacionDe" />
-                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
-                <ScalarProperty Name="fechaEmbarque" ColumnName="fechaEmbarque" />
-                <ScalarProperty Name="valorFOB" ColumnName="valorFOB" />
-                <ScalarProperty Name="valorFOBComprobante" ColumnName="valorFOBComprobante" />
-                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
-                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
-                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
-                <ScalarProperty Name="autorizacion" ColumnName="autorizacion" />
-                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
-                <ScalarProperty Name="denoExpCli" ColumnName="denoExpCli" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="generarATS" FunctionName="Model_contabilidad.Store.generarATS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

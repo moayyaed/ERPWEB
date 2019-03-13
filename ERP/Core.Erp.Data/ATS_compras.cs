@@ -45,5 +45,6 @@ namespace Core.Erp.Data
         public string ptoEmiModificado { get; set; }
         public string secModificado { get; set; }
         public string autModificado { get; set; }
+        public Nullable<int> IdSucursal { get; set; }
     }
 }

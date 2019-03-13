@@ -23,5 +23,6 @@ namespace Core.Erp.Data
         public string secuencialInicio { get; set; }
         public string secuencialFin { get; set; }
         public string Autorización { get; set; }
+        public Nullable<int> IdSucursal { get; set; }
     }
 }

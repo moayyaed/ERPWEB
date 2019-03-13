@@ -15,7 +15,6 @@ namespace Core.Erp.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
-
     public partial class Entities_contabilidad : DbContext
     {
         public Entities_contabilidad()
@@ -52,7 +51,7 @@ namespace Core.Erp.Data
         public DbSet<ct_CierrePorModuloPorSucursal> ct_CierrePorModuloPorSucursal { get; set; }
         public DbSet<vwct_CierrePorModuloPorSucursal> vwct_CierrePorModuloPorSucursal { get; set; }
     
-        public virtual ObjectResult<generarATS_Result> generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
+        public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {
             var idempresaParameter = idempresa.HasValue ?
                 new ObjectParameter("idempresa", idempresa) :
@@ -70,7 +69,7 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdSucursalFin", idSucursalFin) :
                 new ObjectParameter("IdSucursalFin", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<generarATS_Result>("generarATS", idempresaParameter, idPeriodoParameter, idSucursalInicioParameter, idSucursalFinParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generarATS", idempresaParameter, idPeriodoParameter, idSucursalInicioParameter, idSucursalFinParameter);
         }
     }
 }

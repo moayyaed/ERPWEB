@@ -407,7 +407,7 @@ namespace Core.Erp.Bus.Contabilidad
 
                 if (info_ats.lst_ventas.Count == 0)
                 {
-                    ats.totalVentasSpecified = false
+                    ats.totalVentasSpecified = true;
                 }
                 else
                 {
