@@ -405,14 +405,21 @@ namespace Core.Erp.Bus.Contabilidad
                 #endregion
 
 
-                ats.totalVentas = info_ats.lst_ventas.Sum(y => y.ventasEstab);
-                ats.totalVentasSpecified = true;
-                ats.numEstabRuc  = info_ats.lst_ventas.GroupBy(x => x.codEstab)
-                        .Select(x => new
-                        {
-                            codEstab = x.Key,
-                            ventasEstab = x.Sum(y => y.ventasEstab)
-                        }).Count().ToString().PadLeft(3,'0');
+                if (info_ats.lst_ventas.Count == 0)
+                {
+                    ats.totalVentasSpecified = false
+                }
+                else
+                {
+                    ats.totalVentas = info_ats.lst_ventas.Sum(y => y.ventasEstab);
+                    ats.totalVentasSpecified = true;
+                    ats.numEstabRuc = info_ats.lst_ventas.GroupBy(x => x.codEstab)
+                            .Select(x => new
+                            {
+                                codEstab = x.Key,
+                                ventasEstab = x.Sum(y => y.ventasEstab)
+                            }).Count().ToString().PadLeft(3, '0');
+                }
                 return ats;
 
                 
