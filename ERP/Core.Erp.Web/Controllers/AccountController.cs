@@ -127,22 +127,12 @@ namespace Core.Erp.Web.Controllers
         private void cargar_combos(int IdEmpresa, string IdUsuario)
         {
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, IdUsuario, false);
-            lst_sucursal.Add(new tb_sucursal_Info
-            {
-                IdEmpresa = IdEmpresa,
-                IdSucursal = 0,
-                Su_Descripcion = "TODOS"
-
-            });
             ViewBag.lst_sucursal = lst_sucursal;
         }
         #region Json
         public JsonResult cargar_sucursal_x_empresa(int IdEmpresa = 0, string IdUsuario = "")
-        {            
-           // var resultado = bus_sucursal.get_list(IdEmpresa, false);
-
+        {           
             var login = bus_sucursal.GetList(IdEmpresa, IdUsuario, false);
-
             return Json(login, JsonRequestBehavior.AllowGet);
         }
         #endregion
