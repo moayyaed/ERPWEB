@@ -33,7 +33,7 @@ namespace Core.Erp.Data.RRHH
                                  pe_nombre = q.pe_nombre,
                                  pe_apellido = q.pe_apellido,
                                  Sueldo = q.Sueldo,
-                                 FondosReserva = q.FondosReserva,
+                                 /*FondosReserva = q.FondosReserva,
                                  DecimoTercerSueldo = q.DecimoTercerSueldo,
                                  DecimoCuartoSueldo = q.DecimoCuartoSueldo,
                                  Vacaciones = q.Vacaciones,
@@ -45,7 +45,7 @@ namespace Core.Erp.Data.RRHH
                                  GastoVivienda = q.GastoVivienda,
                                  Utilidades = q.Utilidades,
                                  IngresoVarios = q.IngresoVarios
-
+                                 */
 
                              }).ToList();
 
