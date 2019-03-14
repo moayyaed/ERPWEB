@@ -1058,5 +1058,51 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = reporte;
             return View(model);
         }
+
+
+        public ActionResult ROL_027()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdDivision = 0,
+                IdArea = 0,
+            };
+            cargar_combos(model.IdEmpresa);
+
+            ROL_027_Rpt report = new ROL_027_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdNomina_Tipo.Value = model.IdNomina;
+            report.p_IdDivision.Value = model.IdDivision;
+            report.p_IdArea.Value = model.IdArea;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ROL_027(cl_filtros_Info model)
+        {
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            ROL_027_Rpt report = new ROL_027_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdNomina_Tipo.Value = model.IdNomina;
+            report.p_IdDivision.Value = model.IdDivision;
+            report.p_IdArea.Value = model.IdArea;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model.IdEmpresa);
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }
