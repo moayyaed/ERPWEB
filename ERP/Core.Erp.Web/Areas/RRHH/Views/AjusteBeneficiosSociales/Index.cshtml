@@ -11,7 +11,7 @@
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
-@using (Html.BeginForm("Nuevo", "AjusteBeneficiosSociales", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm())
 {
     <div class="box ">
         <div class="box-header with-border">
@@ -148,7 +148,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_AjusteBeneficiosSociales", new { IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, IdRubro = Model.IdRubro, FechaIni = Model.fecha_ini, FechaFin = Model.fecha_fin })
+            @Html.Action("GridViewPartial_AjusteBeneficiosSociales", new { FechaIni = Model.fecha_ini, FechaFin = Model.fecha_fin, IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, IdRubro = Model.IdRubro })
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -165,16 +165,14 @@
 <script type="text/javascript">
     function ActualizarValores() {
         var datos = {
-            FechaIni: $("#FechaIni").val(),
-            FechaFin: $("#FechaFin").val(),
-            IdEmpresa: $("#IdEmpresa").val(),
+            FechaIni: fecha_ini.GetValue(),
+            FechaFin: fecha_fin.GetValue(),
             IdSucursal: $("#IdSucursal").val(),
             IdNomina_Tipo: $("#IdNomina_Tipo").val(),
             IdRubro: $("#IdRubro").val(),            
             IdSigno: $("#IdSigno").val(),
             Valor: $("#Valor").val()
         }
-
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),

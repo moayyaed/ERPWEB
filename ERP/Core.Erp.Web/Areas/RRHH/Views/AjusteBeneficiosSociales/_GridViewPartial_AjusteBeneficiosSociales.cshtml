@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_AjusteBeneficiosSociales";
-        settings.CallbackRouteValues = new { Controller = "AjusteBeneficiosSociales", Action = "GridViewPartial_AjusteBeneficiosSociales", IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, IdRubro = ViewBag.IdRubro, FechaInicio = ViewBag.FechaInicio, FechaFin = ViewBag.FechaFin };
+        settings.CallbackRouteValues = new { Controller = "AjusteBeneficiosSociales", Action = "GridViewPartial_AjusteBeneficiosSociales", FechaInicio = ViewBag.FechaInicio, FechaFin = ViewBag.FechaFin, IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, IdRubro = ViewBag.IdRubro };
         settings.KeyFieldName = "Secuencial";
         settings.Width = Unit.Percentage(100);
 
