@@ -51,15 +51,15 @@ namespace Core.Erp.Bus.Inventario
                     bus_ingreso.guardarDB(info.info_ingreso,"+");
                     bus_ingreso.guardarDB(info.info_egreso,"-");
 
-                    info.IdEmpresa_Ing_Egr_Inven_Origen = info.IdEmpresa;
-                    info.IdSucursal_Ing_Egr_Inven_Origen = info.IdSucursalOrigen;
-                    info.IdMovi_inven_tipo_SucuOrig = info.IdMovi_inven_tipo_SucuOrig;
-                    info.IdNumMovi_Ing_Egr_Inven_Origen = info.info_ingreso.IdNumMovi;
+                    info.IdEmpresa_Ing_Egr_Inven_Origen = info.info_egreso.IdEmpresa;
+                    info.IdSucursal_Ing_Egr_Inven_Origen = info.info_egreso.IdSucursal;
+                    info.IdMovi_inven_tipo_SucuOrig = info.info_egreso.IdMovi_inven_tipo;
+                    info.IdNumMovi_Ing_Egr_Inven_Origen = info.info_egreso.IdNumMovi;
 
-                    info.IdEmpresa_Ing_Egr_Inven_Destino = info.IdEmpresa;
-                    info.IdSucursal_Ing_Egr_Inven_Destino = info.IdSucursalDest;
-                    info.IdMovi_inven_tipo_SucuDest = info.IdMovi_inven_tipo_SucuDest;
-                    info.IdNumMovi_Ing_Egr_Inven_Destino = info.info_egreso.IdNumMovi;
+                    info.IdEmpresa_Ing_Egr_Inven_Destino = info.info_ingreso.IdEmpresa;
+                    info.IdSucursal_Ing_Egr_Inven_Destino = info.info_ingreso.IdSucursal;
+                    info.IdMovi_inven_tipo_SucuDest = info.info_ingreso.IdMovi_inven_tipo;
+                    info.IdNumMovi_Ing_Egr_Inven_Destino = info.info_ingreso.IdNumMovi;
                     odata.modificar_id_ing_egrDB(info);
                 }
 
@@ -128,9 +128,9 @@ namespace Core.Erp.Bus.Inventario
                 ingreso.IdBodega = info.IdBodegaDest;
                 ingreso.cm_observacion = "Ingreso x Trans." + info.tr_Observacion;
                 ingreso.IdMovi_inven_tipo = info.IdMovi_inven_tipo_SucuDest == null ? 0 : Convert.ToInt32(info.IdMovi_inven_tipo_SucuDest);
-                ingreso.IdMotivo_Inv = info.IdMovi_inven_tipo_SucuDest;
                 ingreso.IdMotivo_Inv = bus_motivo.get_id_movimiento(info.IdEmpresa, "+");
                 ingreso.lst_in_Ing_Egr_Inven_det = new List<in_Ing_Egr_Inven_det_Info>();
+                info.list_detalle.ForEach(q => { q.IdEmpresa = info.IdEmpresa; q.IdSucursalOrigen = info.IdSucursalOrigen; q.IdBodegaOrigen = info.IdBodegaOrigen; });
                 ingreso.lst_in_Ing_Egr_Inven_det = get_detalle(info.list_detalle, info.IdSucursalDest, info.IdBodegaDest, "+", ingreso.cm_fecha);
                 info.info_ingreso=ingreso;
 
