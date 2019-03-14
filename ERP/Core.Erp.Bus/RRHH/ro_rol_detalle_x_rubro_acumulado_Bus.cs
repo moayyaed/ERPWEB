@@ -1,5 +1,8 @@
 ﻿using Core.Erp.Data.RRHH;
+using Core.Erp.Info.RRHH;
 using System;
+using System.Collections.Generic;
+
 namespace Core.Erp.Bus.RRHH
 {
     public class ro_rol_detalle_x_rubro_acumulado_Bus
@@ -30,5 +33,17 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-   }
+
+        public List<ro_rol_detalle_x_rubro_acumulado_Info> GetList_BeneficiosSociales(int IdEmpresa, int IdSucursal, int IdNomina_Tipo, string IdRubro, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                return odata.GetList_BeneficiosSociales(IdEmpresa, IdSucursal, IdNomina_Tipo, IdRubro, FechaIni, FechaFin);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
 }

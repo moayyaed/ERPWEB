@@ -258,6 +258,8 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_Nomina_Tipo1" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rdep_det_ro_rdep" />
         <EntityTypeShape EntityType="Model_rrhh.vwrdep_IngrEgr_x_Empleado" Width="1.5" PointX="30.375" PointY="0.75" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_rol_detalle_x_rubro_acumulado" Width="1.5" PointX="17.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

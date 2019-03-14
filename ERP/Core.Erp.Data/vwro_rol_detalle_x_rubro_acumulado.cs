@@ -12,17 +12,17 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ro_rol_detalle_x_rubro_acumulado
+    public partial class vwro_rol_detalle_x_rubro_acumulado
     {
         public int IdEmpresa { get; set; }
         public decimal IdRol { get; set; }
         public decimal IdEmpleado { get; set; }
         public string IdRubro { get; set; }
         public double Valor { get; set; }
-        public string Estado { get; set; }
         public Nullable<int> IdSucursal { get; set; }
-    
-        public virtual ro_rol ro_rol { get; set; }
-        public virtual ro_empleado ro_empleado { get; set; }
+        public System.DateTime pe_FechaIni { get; set; }
+        public System.DateTime pe_FechaFin { get; set; }
+        public string Empleado { get; set; }
+        public int IdNominaTipo { get; set; }
     }
 }

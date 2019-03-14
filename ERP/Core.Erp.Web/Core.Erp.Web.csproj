@@ -9951,6 +9951,8 @@
     <Content Include="Areas\RRHH\Views\Rdep\Modificar.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\Anular.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\_GridViewPartial_AjusteBeneficiosSociales.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10036,7 +10038,6 @@
     <Folder Include="Areas\Produccion\Views\Shared\" />
     <Folder Include="Areas\Reportes\Models\" />
     <Folder Include="Areas\RRHH\Models\" />
-    <Folder Include="Areas\RRHH\Views\AjusteBeneficiosSociales\" />
     <Folder Include="Areas\RRHH\Views\AprobacionPrestamos\" />
     <Folder Include="Areas\RRHH\Views\SancionesPorAtraso\" />
     <Folder Include="Areas\SeguridadAcceso\Models\" />
