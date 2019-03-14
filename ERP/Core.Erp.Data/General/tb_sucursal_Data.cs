@@ -360,25 +360,21 @@ namespace Core.Erp.Data.General
                 List<tb_sucursal_Info> Lista;
                 using (Entities_seguridad_acceso Context = new Entities_seguridad_acceso())
                 {
-                   if(MostrarTodos)
+                    Lista = Context.vwseg_usuario_x_tb_sucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario).Select(q => new tb_sucursal_Info
                     {
-                        Lista = Context.vwseg_usuario_x_tb_sucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario).Select(q => new tb_sucursal_Info
-                        {
-                            IdEmpresa = q.IdEmpresa,
-                            IdUsuario = q.IdUsuario, 
-                            IdSucursal = q.IdSucursal,
-                            Su_Descripcion = q.Su_Descripcion,
-                        }).ToList();
-                    }
-                   else
+                        IdEmpresa = q.IdEmpresa,
+                        IdUsuario = q.IdUsuario,
+                        IdSucursal = q.IdSucursal,
+                        Su_Descripcion = q.Su_Descripcion,
+                    }).ToList();
+                    if (MostrarTodos)
                     {
-                        Lista = Context.vwseg_usuario_x_tb_sucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario).Select(q => new tb_sucursal_Info
+                        Lista.Add(new tb_sucursal_Info
                         {
-                            IdEmpresa = q.IdEmpresa,
-                            IdUsuario = q.IdUsuario,
-                            IdSucursal = q.IdSucursal,
-                            Su_Descripcion = q.Su_Descripcion,
-                        }).ToList();
+                            IdEmpresa = IdEmpresa, 
+                            IdSucursal = 0,
+                            Su_Descripcion = "TODAS"
+                        });
                     }
                 }
                 return Lista;
