@@ -87,5 +87,37 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
         #endregion
+
+        #region Json
+        public JsonResult ActualizarValores(DateTime FechaIni, DateTime FechaFin, int IdEmpresa, int IdSucursal, int IdNomina_Tipo, string IdRubro, string IdSigno, double Valor)
+        {
+            var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            ViewBag.FechaIni = FechaIni == null ? DateTime.Now.Date : Convert.ToDateTime(FechaIni);
+            ViewBag.FechaFin = FechaFin == null ? DateTime.Now.Date : Convert.ToDateTime(FechaFin);
+            ViewBag.IdEmpresa = IdEmpresa == 0 ? 0 : IdEmpresa;
+            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : IdSucursal;
+            ViewBag.IdRubro = IdRubro == null ? "" : IdRubro;
+            /*
+            var model = bus_ing_egr_Inven.BuscarMovimientos(IdEmpresa, ViewBag.fecha_ini, ViewBag.fecha_fin, ViewBag.TipoMovimiento);
+            ListaIngEgrInvMovimientos.set_list(model, IdTransaccionSession);
+            */
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Acciones
+        [HttpPost]
+        public ActionResult Nuevo(List<ro_rol_detalle_x_rubro_acumulado_Info> model)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            if (!bus_detalle_rubro_acumulado.ModificarBD(model))
+            {
+                cargar_combos(IdEmpresa);
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
+        #endregion
     }
 }

@@ -10,7 +10,8 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm())
+@Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+@using (Html.BeginForm("Nuevo", "AjusteBeneficiosSociales", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
     <div class="box ">
         <div class="box-header with-border">
@@ -160,3 +161,34 @@
         <!-- /.box-footer-->
     </div>
     }
+
+<script type="text/javascript">
+    function ActualizarValores() {
+        var datos = {
+            FechaIni: $("#FechaIni").val(),
+            FechaFin: $("#FechaFin").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+            IdRubro: $("#IdRubro").val(),            
+            IdSigno: $("#IdSigno").val(),
+            Valor: $("#Valor").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ActualizarValores", "AjusteBeneficiosSociales", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

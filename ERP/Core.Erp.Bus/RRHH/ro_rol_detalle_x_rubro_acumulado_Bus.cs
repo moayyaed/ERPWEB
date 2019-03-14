@@ -45,5 +45,18 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+
+        public bool ModificarBD(List<ro_rol_detalle_x_rubro_acumulado_Info> Lista)
+        {
+            try
+            {
+                return odata.ModificarBD(Lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
