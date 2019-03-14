@@ -69,8 +69,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     info.Estado = "A";
                     info.cn_vaCoa = "N";
                     info.IdTipoNota = info.IdTipoNota;
-                    info.nom_pc = " ";
-                    info.ip = " ";
                    if( data.guardarDB(info))
                     {
                         if (info.lst_det_canc_op == null)
@@ -415,8 +413,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     info.Estado = "A";
                     info.cn_vaCoa = "N";
                     info.IdTipoNota = info.IdTipoNota;
-                    info.nom_pc = " ";
-                    info.ip = " ";
                     if (data.guardarDB(info))
                     {
                         return true;

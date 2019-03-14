@@ -188,8 +188,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now,
                         Estado = info.Estado,
-                        ip=info.ip,
-                        nom_pc=info.nom_pc,
                         ConvenioTributacion = info.ConvenioTributacion_bool == true ? "SI" : "NO",
                         PagoSujetoRetencion = info.PagoSujetoRetencion_bool == true ? "SI" : "NO",
                     };

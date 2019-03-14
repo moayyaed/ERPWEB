@@ -19,6 +19,7 @@ namespace Core.Erp.Info.Banco
         public System.DateTime cb_Fecha { get; set; }
         public string cb_Observacion { get; set; }
         public double cb_Valor { get; set; }
+        [Required(ErrorMessage ="El campo número de cheque es obligatorio")]
         public string cb_Cheque { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
