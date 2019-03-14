@@ -25,6 +25,7 @@ namespace Core.Erp.Info.Facturacion
         public string Su_Descripcion { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
         public string IPImpresora { get; set; }
+        public bool CobroAutomatico { get; set; }
         #endregion
     }
 }
