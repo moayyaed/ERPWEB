@@ -1,5 +1,8 @@
-﻿using Core.Erp.Data.RRHH;
+﻿using Core.Erp.Bus.General;
+using Core.Erp.Data.RRHH;
+using Core.Erp.Info.General;
 using Core.Erp.Info.RRHH;
+using Core.Erp.Info.RRHH.RDEP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +14,8 @@ namespace Core.Erp.Bus.RRHH
     public class ro_rdep_Bus
     {
         ro_rdep_Data oData = new ro_rdep_Data();
+        tb_empresa_Info info_empresa = new tb_empresa_Info();
+        tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
 
         public List<ro_rdep_Info> GetList(int IdEmpresa, int IdSucursal, int IdNomina_Tipo, int IdAnio)
         {
@@ -86,30 +91,27 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        /********************************************************/
-        /*Rdep_Data odata = new Rdep_Data();
-        rdep rdp = new rdep();
+        /********* XML ***************/
+        rdep rdep = new rdep();
         List<ro_tabla_Impu_Renta_Info> list_base_calculo = new List<ro_tabla_Impu_Renta_Info>();
         ro_tabla_Impu_Renta_Data odata_base_Calculo = new ro_tabla_Impu_Renta_Data();
-        tb_empresa_Info info_empresa = new tb_empresa_Info();
-        tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
-        public rdep get_list(int IdEmpresa, int Anio, decimal IdEmpleado)
+        
+        public rdep get_info_xml(int IdEmpresa, int IdRdep)
         {
             try
             {
                 info_empresa = bus_empresa.get_info(IdEmpresa);
-                list_base_calculo = odata_base_Calculo.get_list(Anio).OrderByDescending(v => v.Secuencia).ToList();
-                rdp.anio = Anio.ToString();
-                rdp.numRuc = info_empresa.em_ruc;
-                datRetRelDepTyp detalle = new datRetRelDepTyp();
-                rdp.retRelDep = new List<datRetRelDepTyp>();
-                var lis = odata.gett_list(IdEmpresa, Anio, IdEmpleado);
-                lis.ForEach(item =>
-                {
-                    if (item.pe_cedulaRuc == "0927181131")
-                    {
+                rdep.numRuc = info_empresa.em_ruc;
 
-                    }
+                datRetRelDepTyp detalle = new datRetRelDepTyp();
+                rdep.retRelDep = new List<datRetRelDepTyp>();
+
+                List<ro_rdep_det_Info> Lista_RDEP = new List<ro_rdep_det_Info>();
+
+                Lista_RDEP = oData.get_info_xml(IdEmpresa, IdRdep);
+
+                Lista_RDEP.ForEach(item =>
+                {
                     datRetRelDepTyp info_det = new datRetRelDepTyp();
                     info_det.empleado = new datEmpTyp();
                     info_det.empleado.benGalpg = benGalpgType.NO;
@@ -117,10 +119,8 @@ namespace Core.Erp.Bus.RRHH
                     info_det.empleado.idRet = item.pe_cedulaRuc;
                     info_det.empleado.apellidoTrab = item.pe_apellido.Replace("Ñ", "N").Trim();
                     info_det.empleado.nombreTrab = item.pe_nombre.Replace("Ñ", "N").Trim();
-
                     info_det.empleado.apellidoTrab = info_det.empleado.apellidoTrab.Replace("  ", " ").Trim();
                     info_det.empleado.nombreTrab = info_det.empleado.nombreTrab.Replace("  ", " ").Trim();
-
 
                     info_det.empleado.estab = item.Su_CodigoEstablecimiento;
                     info_det.empleado.residenciaTrab = resciTyp.Item01;
@@ -146,31 +146,31 @@ namespace Core.Erp.Bus.RRHH
                     info_det.decimCuar = (item.DecimoCuartoSueldo) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.DecimoCuartoSueldo);
                     info_det.fondoReserva = (item.FondosReserva) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.FondosReserva);
                     info_det.salarioDigno = 0;
-                    info_det.otrosIngRenGrav = 0;
+                    info_det.otrosIngRenGrav = Convert.ToDecimal(item.OtrosIngresosRelacionDependencia);
                     info_det.sisSalNet = "1";
                     info_det.apoPerIess = Convert.ToDecimal(item.AportePErsonal);
-                    info_det.aporPerIessConOtrosEmpls = 0;
+                    info_det.aporPerIessConOtrosEmpls = Convert.ToDecimal(item.IessPorOtrosEmpleadores);
                     info_det.deducVivienda = Convert.ToDecimal(item.GastoVivienda);
                     info_det.deducSalud = Convert.ToDecimal(item.GastoSalud);
                     info_det.deducEduca = Convert.ToDecimal(item.GastoEucacion);
                     info_det.deducAliement = Convert.ToDecimal(item.GastoAlimentacion);
                     info_det.deducVestim = Convert.ToDecimal(item.GastoVestimenta);
                     info_det.deducArtycult = 0;
-                    info_det.exoDiscap = 0;
-                    info_det.exoTerEd = 0;
-                    info_det.basImp = Convert.ToDecimal((info_det.suelSal + info_det.sobSuelComRemu) - (info_det.deducVivienda + info_det.deducSalud + info_det.deducEduca + info_det.deducAliement + info_det.deducVestim + info_det.apoPerIess));
-                    info_det.impRentCaus = CalcularImpuestoRenta(info_det);
-                    info_det.valRetAsuOtrosEmpls = 0;
-                    info_det.valImpAsuEsteEmpl = 0;
-                    info_det.valRet = 0;
-                    info_det.ingGravConEsteEmpl = info_det.suelSal + info_det.sobSuelComRemu;
+                    info_det.exoDiscap = Convert.ToDecimal(item.ExoneraionPorDiscapacidad);
+                    info_det.exoTerEd = Convert.ToDecimal(item.ExoneracionPorTerceraEdad);
+                    info_det.basImp = Convert.ToDecimal((item.BaseImponibleGravada));
+                    info_det.impRentCaus = Convert.ToDecimal((item.ImpuestoRentaCausado));
+                    info_det.valRetAsuOtrosEmpls = Convert.ToDecimal((item.ValorImpuestoPorOtroEmplador));
+                    info_det.valImpAsuEsteEmpl = Convert.ToDecimal((item.ValorImpuestoPorEsteEmplador));
+                    info_det.valRet = Convert.ToDecimal((item.ValorImpuestoRetenidoTrabajador));
+                    info_det.ingGravConEsteEmpl = Convert.ToDecimal((item.IngresosGravadorPorEsteEmpleador));
                     info_det.intGrabGen = 0;
 
-                    rdp.retRelDep.Add(info_det);
+                    rdep.retRelDep.Add(info_det);
 
 
                 });
-                return rdp;
+                return rdep;
             }
             catch (Exception)
             {
@@ -178,7 +178,7 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-
+        /*
         public decimal CalcularImpuestoRenta(datRetRelDepTyp item)
         {
             try
@@ -214,11 +214,11 @@ namespace Core.Erp.Bus.RRHH
 
         }
 
-        public List<Rdep_Info> get_list_rdep(int IdEmpresa, int Anio, decimal IdEmpleado)
+        public List<ro_rdep_Info> get_list_rdep(int IdEmpresa, int Anio, decimal IdEmpleado)
         {
             try
             {
-                return odata.gett_list(IdEmpresa, Anio, IdEmpleado);
+                return oData.gett_list(IdEmpresa, Anio, IdEmpleado);
             }
             catch (Exception)
             {

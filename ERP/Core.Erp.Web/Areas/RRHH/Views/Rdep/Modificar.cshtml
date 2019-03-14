@@ -51,14 +51,46 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Descargar </button>
+                <a class="btn btn-default" href="@Url.Action("Index", "Rdep", new { Area ="RRHH" }, null)">Cancelar</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdProveedor">Detalle de rdep</label>
                     @Html.Action("GridViewPartial_rdep_det")
                 </div>
             </div>
         </div>
     </div>
-    <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index", "Rdep", new { Area ="RRHH" }, null)">Cancelar</a>
-    </div>
 }
+
+<script>
+
+    function GenerarXML() {
+        var datos = {            
+            IdSucursal: $("#IdSucursal").val(),
+            pe_anio: $("#pe_anio").val(),
+            IdNomina_Tipo: $("#IdNomina_Tipo").val()
+        }
+        $("#btn_generar").disabled = true;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GenerarXML", "Rdep", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                
+            },
+            error: function (error) {
+            }
+        });
+        $("#btn_generar").disabled = false;
+    }
+</script>

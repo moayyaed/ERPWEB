@@ -311,49 +311,55 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        /**************************************************************/
-        /*public List<Rdep_Info> gett_list(int IdEmpresa, int Anio, decimal IdEmpleado)
-        {
-            List<Rdep_Info> Lista = new List<Rdep_Info>();
-            decimal IdEmpleadoIni = IdEmpleado == 0 ? 0 : IdEmpleado;
-            decimal IdEmpleadoFin = IdEmpleado == 0 ? 99999 : IdEmpleado;
-
+        /**************** XML ************/
+        public List<ro_rdep_det_Info> get_info_xml(int IdEmpresa, int Id_Rdep)
+        {            
             try
             {
-                using (Entities_rrhh context = new Entities_rrhh())
+                List<ro_rdep_det_Info> Lista = new List<ro_rdep_det_Info>();
+
+                using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in context.vwrdep_IngrEgr_x_Empleado
-                             where q.IdEmpresa == IdEmpresa
-                             && q.pe_anio == Anio
-                             && q.IdEmpleado >= IdEmpleadoIni
-                             && q.IdEmpleado <= IdEmpleadoFin
-                             select new Rdep_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdEmpleado = q.IdEmpleado,
-                                 pe_anio = q.pe_anio,
-                                 Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
-                                 pe_cedulaRuc = q.pe_cedulaRuc,
-                                 pe_nombre = q.pe_nombre,
-                                 pe_apellido = q.pe_apellido,
-                                 Sueldo = q.Sueldo,
-                                 FondosReserva = q.FondosReserva,
-                                 DecimoTercerSueldo = q.DecimoTercerSueldo,
-                                 DecimoCuartoSueldo = q.DecimoCuartoSueldo,
-                                 Vacaciones = q.Vacaciones,
-                                 AportePErsonal = q.AportePErsonal,
-                                 GastoAlimentacion = q.GastoAlimentacion,
-                                 GastoEucacion = q.GastoEucacion,
-                                 GastoSalud = q.GastoSalud,
-                                 GastoVestimenta = q.GastoVestimenta,
-                                 GastoVivienda = q.GastoVivienda,
-                                 Utilidades = q.Utilidades,
-                                 IngresoVarios = q.IngresoVarios
-
-
-                             }).ToList();
-
-
+                    Lista = Context.vwrdep_IngrEgr_x_Empleado.Where(q => q.IdEmpresa == IdEmpresa 
+                    && q.Id_Rdep == Id_Rdep).Select(q => new ro_rdep_det_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdSucursal = q.IdSucursal,
+                        Id_Rdep = q.Id_Rdep,
+                        pe_anio = q.pe_anio,
+                        Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,     
+                        Observacion =  q.Observacion,
+                        Secuencia = q.Secuencia,
+                        pe_cedulaRuc = q.pe_cedulaRuc,
+                        Empleado = q.pe_apellido + " " + q.pe_nombre,
+                        pe_nombre = q.pe_nombre,
+                        pe_apellido = q.pe_apellido,
+                        Sueldo = q.Sueldo,
+                        FondosReserva = q.FondosReserva,
+                        DecimoTercerSueldo = q.DecimoTercerSueldo,
+                        DecimoCuartoSueldo = q.DecimoCuartoSueldo,
+                        Vacaciones = q.Vacaciones,
+                        AportePErsonal = q.AportePErsonal,
+                        GastoAlimentacion = q.GastoAlimentacion,
+                        GastoEucacion = q.GastoEucacion,
+                        GastoSalud = q.GastoSalud,
+                        GastoVestimenta = q.GastoVestimenta,
+                        GastoVivienda = q.GastoVivienda,
+                        Utilidades = q.Utilidades,
+                        IngresoVarios = q.IngresoVarios,
+                        IngresoPorOtrosEmpleaodres = q.IngresoPorOtrosEmpleaodres,
+                        IessPorOtrosEmpleadores = q.IessPorOtrosEmpleadores,
+                        ValorImpuestoPorEsteEmplador = q.ValorImpuestoPorEsteEmplador,
+                        ValorImpuestoPorOtroEmplador = q.ValorImpuestoPorOtroEmplador,
+                        ExoneraionPorDiscapacidad = q.ExoneraionPorDiscapacidad,
+                        ExoneracionPorTerceraEdad = q.ExoneracionPorTerceraEdad,
+                        OtrosIngresosRelacionDependencia = q.OtrosIngresosRelacionDependencia,
+                        ImpuestoRentaCausado = q.ImpuestoRentaCausado,
+                        ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador,
+                        ImpuestoRentaAsumidoPorEsteEmpleador = q.ImpuestoRentaAsumidoPorEsteEmpleador,
+                        BaseImponibleGravada = q.BaseImponibleGravada,
+                        IngresosGravadorPorEsteEmpleador = q.IngresosGravadorPorEsteEmpleador
+                    }).ToList();                    
                 }
 
                 return Lista;
@@ -363,6 +369,6 @@ namespace Core.Erp.Data.RRHH
 
                 throw;
             }
-        }*/
+        }
     }
 }

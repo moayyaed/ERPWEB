@@ -74,7 +74,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_periodo_x_ro_Nomina_TipoLiqui_ro_periodo" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model_rrhh.ro_tabla_Impu_Renta" Width="1.5" PointX="17.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_x_Proyeccion_Gastos_Personales" Width="1.5" PointX="17.375" PointY="14.75" />
-        <EntityTypeShape EntityType="Model_rrhh.vwrdep_IngrEgr_x_Empleado" Width="1.5" PointX="19.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_rrhh.ro_marcaciones_tipo" Width="1.5" PointX="19.375" PointY="13.875" />
         <EntityTypeShape EntityType="Model_rrhh.ro_permiso_x_empleado" Width="1.5" PointX="11.25" PointY="74.875" />
         <EntityTypeShape EntityType="Model_rrhh.ro_empleado_x_ro_rubro" Width="1.5" PointX="15.75" PointY="48.125" />
@@ -258,6 +257,7 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_rdep" Width="1.5" PointX="17.375" PointY="6.75" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rdep_ro_Nomina_Tipo1" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rdep_det_ro_rdep" />
+        <EntityTypeShape EntityType="Model_rrhh.vwrdep_IngrEgr_x_Empleado" Width="1.5" PointX="30.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

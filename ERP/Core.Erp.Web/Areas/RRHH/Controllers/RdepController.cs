@@ -23,8 +23,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class RdepController : Controller
     {
         #region variables
-        //Rdep_Info_lis Lis_Rdep_Info_lis = new Rdep_Info_lis();
-        //Rdep_Bus bus_rpde = new Rdep_Bus();
         ro_rdep_List Lista_ro_rdep = new ro_rdep_List();
         List<ro_rdep_Info> ro_rdep_Lista = new List<ro_rdep_Info>();
         FilesHelper_Bus FilesHelper_B = new FilesHelper_Bus();
@@ -70,6 +68,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 throw;
             }
+        }
+        #endregion
+
+        #region Funciones Json
+        public JsonResult BuscaGenerarXMLr(int IdSucursal = 0, int pe_anio = 0, int IdNomina_Tipo=0)
+        {
+
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            List<Rdep_Info> model = new List<Rdep_Info>();
+            //model = bus_ro_rpde.get_list_rdep(IdEmpresa, Anio, Convert.ToDecimal(IdEmpleado));
+            //Lis_Rdep_Info_lis.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -217,6 +227,38 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
            
             cargar_combos(IdEmpresa);
             return View(model);
+        }
+
+        [HttpPost]
+        public FileResult Modificar(ro_rdep_Info model)
+        {
+            string nombre_file = model.pe_anio.ToString();
+            if (model.pe_anio.ToString().Length == 6)
+            {
+                nombre_file = "RDEP-" + model.pe_anio.ToString();
+            }
+
+            string xml = "";
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var RDEP = bus_ro_rpde.get_info_xml(IdEmpresa, model.Id_Rdep);
+            var ms = new MemoryStream();
+            var xw = XmlWriter.Create(ms);
+
+
+            var serializer = new XmlSerializer(RDEP.GetType());
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
+            serializer.Serialize(xw, RDEP, ns);
+            xw.Flush();
+            ms.Seek(0, SeekOrigin.Begin);
+            using (var sr = new StreamReader(ms, Encoding.UTF8))
+            {
+                xml = sr.ReadToEnd();
+            }
+            byte[] fileBytes = ms.ToArray();
+            return File(fileBytes, "application/xml", nombre_file + ".xml");
+
+
         }
 
         public ActionResult Modificar_x_Empleado(int IdEmpresa = 0, int Id_Rdep = 0, int Secuencia=0)
