@@ -24,7 +24,7 @@
 
     })
     .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.RdepController().get_list_bajo_demanda, new Core.Erp.Web.Areas.RRHH.Controllers.RdepController().get_info_bajo_demanda)
-    .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.RDEP.Rdep_Info) ? "" : (Model == 0 ? "" : Model));
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_rdep_Info) ? "" : (Model == 0 ? "" : Model));
 
 }
 @comboBox.GetHtml()

@@ -1554,7 +1554,6 @@
     <Compile Include="ro_turno.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="RRHH\Rdep_Data.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Data.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Data.cs" />
     <Compile Include="RRHH\ro_archivosCSV_Data.cs" />

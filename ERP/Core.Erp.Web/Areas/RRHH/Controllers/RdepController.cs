@@ -37,7 +37,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         public ActionResult CmbEmpleado_rdep()
         {
-            Rdep_Info model = new Rdep_Info();
+            ro_rdep_Info model = new ro_rdep_Info();
             return PartialView("_CmbEmpleado_rdep", model);
         }
         public List<tb_persona_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -68,18 +68,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 throw;
             }
-        }
-        #endregion
-
-        #region Funciones Json
-        public JsonResult BuscaGenerarXMLr(int IdSucursal = 0, int pe_anio = 0, int IdNomina_Tipo=0)
-        {
-
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<Rdep_Info> model = new List<Rdep_Info>();
-            //model = bus_ro_rpde.get_list_rdep(IdEmpresa, Anio, Convert.ToDecimal(IdEmpleado));
-            //Lis_Rdep_Info_lis.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -232,15 +220,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public FileResult Modificar(ro_rdep_Info model)
         {
-            string nombre_file = model.pe_anio.ToString();
-            if (model.pe_anio.ToString().Length == 6)
-            {
-                nombre_file = "RDEP-" + model.pe_anio.ToString();
-            }
-
+            string nombre_file = "RDEP-" + model.pe_anio.ToString();
             string xml = "";
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var RDEP = bus_ro_rpde.get_info_xml(IdEmpresa, model.Id_Rdep);
+            var RDEP = bus_ro_rpde.get_info_xml(model.IdEmpresa, model.Id_Rdep);
             var ms = new MemoryStream();
             var xw = XmlWriter.Create(ms);
 

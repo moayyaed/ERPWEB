@@ -114,6 +114,7 @@ namespace Core.Erp.Data.RRHH
                     info = new ro_rdep_Info
                     {
                         IdEmpresa = Entity.IdEmpresa,
+                        Id_Rdep = Entity.Id_Rdep,
                         pe_anio = Entity.pe_anio,                        
                         IdSucursal = Entity.IdSucursal,
                         IdNomina_Tipo = Entity.IdNomina_Tipo,
@@ -321,7 +322,7 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Lista = Context.vwrdep_IngrEgr_x_Empleado.Where(q => q.IdEmpresa == IdEmpresa 
-                    && q.Id_Rdep == Id_Rdep).Select(q => new ro_rdep_det_Info
+                    && q.Id_Rdep == Id_Rdep).OrderBy(q=> q.pe_apellido).ThenBy(q => q.pe_nombre).Select(q => new ro_rdep_det_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,

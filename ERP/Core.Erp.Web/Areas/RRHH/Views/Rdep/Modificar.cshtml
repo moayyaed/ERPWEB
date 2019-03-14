@@ -12,6 +12,7 @@
 @using (Html.BeginForm("Modificar", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.Id_Rdep);
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">
@@ -66,31 +67,3 @@
         </div>
     </div>
 }
-
-<script>
-
-    function GenerarXML() {
-        var datos = {            
-            IdSucursal: $("#IdSucursal").val(),
-            pe_anio: $("#pe_anio").val(),
-            IdNomina_Tipo: $("#IdNomina_Tipo").val()
-        }
-        $("#btn_generar").disabled = true;
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GenerarXML", "Rdep", new { Area = "RRHH" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                
-            },
-            error: function (error) {
-            }
-        });
-        $("#btn_generar").disabled = false;
-    }
-</script>
