@@ -39,7 +39,12 @@ namespace Core.Erp.Data.Reportes.RRHH
                         pe_nombre = q.pe_nombre,
                         pe_nombreCompleto = q.pe_nombreCompleto,
                         Total = q.Total,
-                        Valor = q.Valor
+                        Valor = q.Valor,
+                        de_descripcion = q.de_descripcion,
+                        IdArea = q.IdArea,
+                        IdDepartamento = q.IdDepartamento,
+                        IdDivision = q.IdDivision
+
                     }).ToList();
                 }
                 return Lista;

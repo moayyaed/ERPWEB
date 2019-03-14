@@ -26,5 +26,9 @@ namespace Core.Erp.Data
         public Nullable<double> Valor { get; set; }
         public int Descuento { get; set; }
         public Nullable<double> Total { get; set; }
+        public int IdDepartamento { get; set; }
+        public Nullable<int> IdDivision { get; set; }
+        public Nullable<int> IdArea { get; set; }
+        public string de_descripcion { get; set; }
     }
 }
