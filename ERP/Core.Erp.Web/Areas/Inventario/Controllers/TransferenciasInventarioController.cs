@@ -133,7 +133,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            model.IdUsuario = Session["IdUsuario"].ToString();
+            model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_trnferencia.guardarDB(model))
             {
                 cargar_combos(model.IdEmpresa);
