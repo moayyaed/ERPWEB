@@ -352,5 +352,42 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+        public List<tb_sucursal_Info> GetList(int IdEmpresa, string IdUsuario, bool MostrarTodos)
+        {
+            try
+            {
+                List<tb_sucursal_Info> Lista;
+                using (Entities_seguridad_acceso Context = new Entities_seguridad_acceso())
+                {
+                   if(MostrarTodos)
+                    {
+                        Lista = Context.vwseg_usuario_x_tb_sucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario).Select(q => new tb_sucursal_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            IdUsuario = q.IdUsuario, 
+                            IdSucursal = q.IdSucursal,
+                            Su_Descripcion = q.Su_Descripcion,
+                        }).ToList();
+                    }
+                   else
+                    {
+                        Lista = Context.vwseg_usuario_x_tb_sucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario).Select(q => new tb_sucursal_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            IdUsuario = q.IdUsuario,
+                            IdSucursal = q.IdSucursal,
+                            Su_Descripcion = q.Su_Descripcion,
+                        }).ToList();
+                    }
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

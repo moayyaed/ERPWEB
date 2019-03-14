@@ -98,6 +98,22 @@
           <Property Name="Observacion" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwseg_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="em_ruc" />
+          </Key>
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="varchar" MaxLength="50" />
+          <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwseg_usuario_x_tb_sucursal">
           <Key>
@@ -193,6 +209,16 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
           <EntitySet Name="seg_Usuario_x_Empresa" EntityType="Self.seg_Usuario_x_Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_usuario_x_tb_sis_reporte" EntityType="Self.seg_usuario_x_tb_sis_reporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Self.seg_usuario_x_tb_sucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Self.vwseg_Usuario_x_Empresa" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwseg_Usuario_x_Empresa].[IdUsuario] AS [IdUsuario], 
+    [vwseg_Usuario_x_Empresa].[IdEmpresa] AS [IdEmpresa], 
+    [vwseg_Usuario_x_Empresa].[Observacion] AS [Observacion], 
+    [vwseg_Usuario_x_Empresa].[em_nombre] AS [em_nombre], 
+    [vwseg_Usuario_x_Empresa].[em_ruc] AS [em_ruc], 
+    [vwseg_Usuario_x_Empresa].[Nombre] AS [Nombre]
+    FROM [dbo].[vwseg_Usuario_x_Empresa] AS [vwseg_Usuario_x_Empresa]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwseg_usuario_x_tb_sucursal" EntityType="Self.vwseg_usuario_x_tb_sucursal" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwseg_usuario_x_tb_sucursal].[IdUsuario] AS [IdUsuario], 
@@ -308,6 +334,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             <End Role="seg_usuario" EntitySet="seg_usuario" />
             <End Role="seg_usuario_x_tb_sucursal" EntitySet="seg_usuario_x_tb_sucursal" />
           </AssociationSet>
+          <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.vwseg_Usuario_x_Empresa" />
           </EntityContainer>
         <EntityType Name="seg_Menu">
           <Key>
@@ -455,6 +482,20 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwseg_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="em_ruc" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -559,6 +600,18 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
                 <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
                 <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwseg_Usuario_x_Empresa">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.vwseg_Usuario_x_Empresa">
+              <MappingFragment StoreEntitySet="vwseg_Usuario_x_Empresa">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>

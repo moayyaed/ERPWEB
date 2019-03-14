@@ -95,5 +95,19 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+
+        public List<tb_sucursal_Info> GetList(int IdEmpresa, string IdUsuario, bool MostrarTodos)
+
+        {
+            try
+            {
+                return odata.GetList(IdEmpresa, IdUsuario, MostrarTodos);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

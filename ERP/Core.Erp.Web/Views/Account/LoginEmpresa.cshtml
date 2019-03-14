@@ -42,7 +42,7 @@
                 <p class="login-box-msg">Seleccione la sucursal en la que desea trabajar</p>
 
                 <div class="form-group has-feedback">
-                    @Html.TextBoxFor(q => q.IdUsuario, new { @class = "form-control", @placeholder = "Usuario", @readonly = "readonly"})
+                    @Html.TextBoxFor(q => q.IdUsuario, new { @class = "form-control", @placeholder = "Usuario", @readonly = "readonly", @id="IdUsuario"})
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 
@@ -86,7 +86,8 @@
         $("#IdSucursal").empty();        
 
         var datos = {
-            IdEmpresa: $("#IdEmpresa").val()
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdUsuario: $("#IdUsuario").val()
         }
 
         $.ajax({

@@ -46,25 +46,13 @@ namespace Core.Erp.Web.Controllers
             var lst = bus_usuario_x_empresa.get_list(IdUsuario);
             if (lst.Count == 0)
                 return RedirectToAction("Login");
-
-            var lst_empresa = bus_empresa.get_list(true);
-            var lst_sucursal = new List<tb_sucursal_Info>();
-            ViewBag.lst_sucursal = lst_sucursal;
-            lst = (from q in lst
-                   join e in lst_empresa
-                   on q.IdEmpresa equals e.IdEmpresa
-                   select new seg_Usuario_x_Empresa_Info
-                   {
-                       IdEmpresa = q.IdEmpresa,
-                       em_nombre = e.em_nombre
-                   }).ToList();
-
-            ViewBag.lst_empresas = lst;
+             ViewBag.lst_empresas = lst;
             LoginModel model = new LoginModel
             {
                 IdUsuario = IdUsuario,
-                IdEmpresa = 1
+                IdEmpresa = lst.FirstOrDefault().IdEmpresa
             };
+            cargar_combos(model.IdEmpresa, IdUsuario);
             return View(model);
         }
         [HttpPost]
@@ -73,8 +61,7 @@ namespace Core.Erp.Web.Controllers
             var info_empresa = bus_empresa.get_info(model.IdEmpresa);
             if (info_empresa == null)
             {
-                var lst_sucursal = new List<tb_sucursal_Info>();
-                ViewBag.lst_sucursal = lst_sucursal;
+                cargar_combos(model.IdEmpresa, model.IdUsuario);
                 return View(model);
             }
             Session["IdUsuario"] = model.IdUsuario;            
@@ -137,13 +124,26 @@ namespace Core.Erp.Web.Controllers
             }
             return RedirectToAction("Login");
         }
+        private void cargar_combos(int IdEmpresa, string IdUsuario)
+        {
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, IdUsuario, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODOS"
 
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
         #region Json
-        public JsonResult cargar_sucursal_x_empresa(int IdEmpresa = 0)
+        public JsonResult cargar_sucursal_x_empresa(int IdEmpresa = 0, string IdUsuario = "")
         {            
-            var resultado = bus_sucursal.get_list(IdEmpresa, false);
+           // var resultado = bus_sucursal.get_list(IdEmpresa, false);
 
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            var login = bus_sucursal.GetList(IdEmpresa, IdUsuario, false);
+
+            return Json(login, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }
