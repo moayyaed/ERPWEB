@@ -61,8 +61,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public string MotivoAnu { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public Nullable<decimal> IdCbteCble_Anulacion { get; set; }
         public Nullable<int> IdTipoCbte_Anulacion { get; set; }

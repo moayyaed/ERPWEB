@@ -244,7 +244,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (model.IdProveedor != 0)
             {
-                var list_tipo_doc = bus_tipo_documento.get_list(model.IdEmpresa, model.IdProveedor, model.IdOrden_giro_Tipo);
+                var list_tipo_doc = bus_tipo_documento.get_list(model.IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
                 ViewBag.lst_tipo_doc = list_tipo_doc;
             }
             else

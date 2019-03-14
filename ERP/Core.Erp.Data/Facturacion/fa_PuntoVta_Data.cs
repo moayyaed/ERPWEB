@@ -25,7 +25,8 @@ namespace Core.Erp.Data.Facturacion
                                  cod_PuntoVta = q.cod_PuntoVta,
                                  nom_PuntoVta = q.nom_PuntoVta,
                                  estado = q.estado,
-                                 Su_Descripcion = q.Su_Descripcion
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 CobroAutomatico = q.CobroAutomatico ?? false
                              }).ToList();
                 }
                 return Lista;
@@ -56,7 +57,8 @@ namespace Core.Erp.Data.Facturacion
                                      IdPuntoVta = q.IdPuntoVta,
                                      cod_PuntoVta = q.cod_PuntoVta,
                                      nom_PuntoVta = q.nom_PuntoVta,
-                                     estado = q.estado
+                                     estado = q.estado,
+                                     CobroAutomatico = q.CobroAutomatico ?? false
 
                                  }).ToList();
                     else
@@ -71,7 +73,8 @@ namespace Core.Erp.Data.Facturacion
                                      IdPuntoVta = q.IdPuntoVta,
                                      cod_PuntoVta = q.cod_PuntoVta,
                                      nom_PuntoVta = q.nom_PuntoVta,
-                                     estado = q.estado
+                                     estado = q.estado,
+                                     CobroAutomatico = q.CobroAutomatico ?? false
                                  }).ToList();
                 }
                 return Lista;
@@ -103,7 +106,8 @@ namespace Core.Erp.Data.Facturacion
                         Su_CodigoEstablecimiento = Entity.Su_CodigoEstablecimiento,
                         IdCaja = Entity.IdCaja,
                         IPImpresora = Entity.IPImpresora,
-                        NumCopias = Entity.NumCopias
+                        NumCopias = Entity.NumCopias,
+                        CobroAutomatico = Entity.CobroAutomatico ?? false
                         
                     };
                 }
@@ -158,7 +162,8 @@ namespace Core.Erp.Data.Facturacion
                         estado = info.estado = true,
                         IdCaja = info.IdCaja,
                         IPImpresora = info.IPImpresora,
-                        NumCopias = info.NumCopias
+                        NumCopias = info.NumCopias,
+                        CobroAutomatico = info.CobroAutomatico
                     };
                     Context.fa_PuntoVta.Add(Entity);
                     Context.SaveChanges();
@@ -186,6 +191,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.IdCaja = info.IdCaja;
                     Entity.IPImpresora = info.IPImpresora;
                     Entity.NumCopias = info.NumCopias;
+                    Entity.CobroAutomatico = info.CobroAutomatico;
 
                     Context.SaveChanges();
                 

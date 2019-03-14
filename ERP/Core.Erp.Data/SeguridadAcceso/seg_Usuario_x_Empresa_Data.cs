@@ -17,12 +17,13 @@ namespace Core.Erp.Data.SeguridadAcceso
 
                 using (Entities_seguridad_acceso Context = new Entities_seguridad_acceso())
                 {
-                    Lista = (from q in Context.seg_Usuario_x_Empresa
+                    Lista = (from q in Context.vwseg_Usuario_x_Empresa
                              where q.IdUsuario == IdUsuario
                              select new seg_Usuario_x_Empresa_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
-                                 IdUsuario = q.IdUsuario
+                                 IdUsuario = q.IdUsuario,
+                                 em_nombre = q.em_nombre
                              }).ToList();
                 }
 

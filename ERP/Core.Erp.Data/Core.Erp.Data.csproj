@@ -2656,6 +2656,9 @@
     <Compile Include="vwRo_Solicitud_Vacaciones.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwseg_Usuario_x_Empresa.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwseg_usuario_x_tb_sucursal.cs">
       <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
     </Compile>
