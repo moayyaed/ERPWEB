@@ -431,20 +431,24 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
 
                 #region Cobranza
-                if (info.IdCatalogo_FormaPago != "CRE")
+                var pto_vta = db_f.fa_PuntoVta.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdPuntoVta == info.IdPuntoVta).FirstOrDefault();
+                if (pto_vta != null)
                 {
-                    var cobro = GenerarCobroEfectivo(info);
-                    if (odata_cxc.guardarDB(cobro))
+                    if (pto_vta.CobroAutomatico == true && info.IdCatalogo_FormaPago != "CRE")
                     {
-                        db_f.fa_factura_x_cxc_cobro.Add(new fa_factura_x_cxc_cobro
+                        var cobro = GenerarCobroEfectivo(info);
+                        if (odata_cxc.guardarDB(cobro))
                         {
-                            IdEmpresa = info.IdEmpresa,
-                            IdSucursal = info.IdSucursal,
-                            IdBodega = info.IdBodega,
-                            IdCbteVta = info.IdCbteVta,
-                            IdCobro = cobro.IdCobro
-                        });
-                        db_f.SaveChanges();
+                            db_f.fa_factura_x_cxc_cobro.Add(new fa_factura_x_cxc_cobro
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdSucursal = info.IdSucursal,
+                                IdBodega = info.IdBodega,
+                                IdCbteVta = info.IdCbteVta,
+                                IdCobro = cobro.IdCobro
+                            });
+                            db_f.SaveChanges();
+                        }
                     }
                 }
                 #endregion
@@ -997,20 +1001,24 @@ namespace Core.Erp.Data.Facturacion
 
                 #region Cobranza
                 db_f.SPFAC_EliminarCobroEfectivo(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdCbteVta);
-                if (info.IdCatalogo_FormaPago != "CRE")
+                var pto_vta = db_f.fa_PuntoVta.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdPuntoVta == info.IdPuntoVta).FirstOrDefault();
+                if (pto_vta != null)
                 {
-                    var cobro = GenerarCobroEfectivo(info);
-                    if (odata_cxc.guardarDB(cobro))
+                    if (pto_vta.CobroAutomatico == true && info.IdCatalogo_FormaPago != "CRE")
                     {
-                        db_f.fa_factura_x_cxc_cobro.Add(new fa_factura_x_cxc_cobro
+                        var cobro = GenerarCobroEfectivo(info);
+                        if (odata_cxc.guardarDB(cobro))
                         {
-                            IdEmpresa = info.IdEmpresa,
-                            IdSucursal = info.IdSucursal,
-                            IdBodega = info.IdBodega,
-                            IdCbteVta = info.IdCbteVta,
-                            IdCobro = cobro.IdCobro
-                        });
-                        db_f.SaveChanges();
+                            db_f.fa_factura_x_cxc_cobro.Add(new fa_factura_x_cxc_cobro
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdSucursal = info.IdSucursal,
+                                IdBodega = info.IdBodega,
+                                IdCbteVta = info.IdCbteVta,
+                                IdCobro = cobro.IdCobro
+                            });
+                            db_f.SaveChanges();
+                        }
                     }
                 }
                 #endregion
@@ -1087,9 +1095,6 @@ namespace Core.Erp.Data.Facturacion
                     Context.SPFAC_EliminarCobroEfectivo(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdCbteVta);
                     Context.SaveChanges();
                 }
-
-
-
                 return true;
             }
             catch (Exception)

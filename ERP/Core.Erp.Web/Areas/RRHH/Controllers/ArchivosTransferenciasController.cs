@@ -512,7 +512,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                                 else
                                     linea += info_empresa.RazonSocial.PadRight(38, ' ');
                                 linea += "C";
-                                linea += (valorEntero.ToString() + valorDecimal.ToString()).PadLeft(15, '0');
+                                linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2,'0')).PadLeft(15, '0');
                                 linea += DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') + DateTime.Now.Day.ToString().PadLeft(2, '0');
                                 linea += info.detalle.Count().ToString().PadLeft(5, '0');
                                 file.WriteLine(linea);

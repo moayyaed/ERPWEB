@@ -31,6 +31,12 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
         settings.Columns.Add("IdCbte_vta_nota", "ID").Width = Unit.Percentage(10);
         settings.Columns.Add("NomCliente", "Cliente").Width = Unit.Percentage(20);
         settings.Columns.Add("vt_NumDocumento", "# Documento").Width = Unit.Percentage(20);

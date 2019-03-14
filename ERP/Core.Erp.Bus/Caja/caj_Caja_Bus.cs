@@ -109,5 +109,19 @@ namespace Core.Erp.Bus.Caja
                 throw;
             }
         }
+
+        public int GetIdCajaPorSucursal(int IdEmpresa, int IdSucursal)
+
+        {
+            try
+            {
+                return odata.GetIdCajaPorSucursal(IdEmpresa, IdSucursal);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
