@@ -69,7 +69,7 @@
             {
 
 
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Cerrado")) == "N" & Convert.ToString(DataBinder.Eval(tc.DataItem, "Contabilizado")) == "N")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoRol")) == "ABIERTO")
                 {
 
                     ViewContext.Writer.Write(
