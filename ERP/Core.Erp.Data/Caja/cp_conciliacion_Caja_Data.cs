@@ -1296,7 +1296,7 @@ namespace Core.Erp.Data.Caja
                 Context_cxp.Dispose();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Context_ct.Dispose();
                 Context_cxp.Dispose();

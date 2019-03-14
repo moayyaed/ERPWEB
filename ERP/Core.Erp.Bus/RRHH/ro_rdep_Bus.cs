@@ -73,6 +73,19 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
+        public bool AnularBD(ro_rdep_Info info)
+        {
+            try
+            {
+                return oData.AnularBD(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         /********************************************************/
         /*Rdep_Data odata = new Rdep_Data();
         rdep rdp = new rdep();

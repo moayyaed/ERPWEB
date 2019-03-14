@@ -22,6 +22,6 @@ namespace Core.Erp.Data
         public int IdNomina_Tipo { get; set; }
         public string Descripcion { get; set; }
         public string Observacion { get; set; }
-        public long Estado { get; set; }
+        public bool Estado { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Reportes.RRHH
 {
     public class ROL_026_Info
     {
+        public Nullable<long> IdRow { get; set; }
         public int IdEmpresa { get; set; }
         public int Id_Rdep { get; set; }
         public int IdSucursal { get; set; }
@@ -15,7 +16,7 @@ namespace Core.Erp.Info.Reportes.RRHH
         public int IdNomina_Tipo { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
         public string Observacion { get; set; }
-        public long Estado { get; set; }
+        public bool Estado { get; set; }        
         public int Secuencia { get; set; }
         public decimal IdEmpleado { get; set; }
         public string pe_cedulaRuc { get; set; }
@@ -46,6 +47,7 @@ namespace Core.Erp.Info.Reportes.RRHH
         public Nullable<double> ImpuestoRentaAsumidoPorEsteEmpleador { get; set; }
         public Nullable<double> BaseImponibleGravada { get; set; }
         public Nullable<double> IngresosGravadorPorEsteEmpleador { get; set; }
-
+        
+        public string Empleado { get; set; }
     }
 }

@@ -225,7 +225,7 @@ namespace Core.Erp.Data.RRHH
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 throw;

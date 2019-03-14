@@ -8,7 +8,6 @@ namespace Core.Erp.Info.Contabilidad.ATS.ATS_Info
 {
    public class ats_Info
     {
-        public ct_periodo_Info info_periodo { get; set; }
         public List<compras_Info> lst_compras { get; set; }
         public List<ventas_Info> lst_ventas { get; set; }
         public List<retenciones_Info> lst_retenciones { get; set; }
@@ -18,10 +17,9 @@ namespace Core.Erp.Info.Contabilidad.ATS.ATS_Info
         public int IdSucursal { get; set; }
 
         public int[] IntArray { get; set; }
+        public int IdPeriodo { get; set; }
         public ats_Info()
         {
-
-            info_periodo = new ct_periodo_Info();
             lst_compras = new List<compras_Info>();
             lst_ventas = new List<ventas_Info>();
             lst_retenciones = new List<retenciones_Info>();

@@ -198,6 +198,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
+
         public ActionResult Modificar(int IdEmpresa = 0, int Id_Rdep=0)
         {
             #region Validar Session
@@ -229,24 +230,63 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             ro_rdep_det_Info model = bus_ro_rpde.GetInfo_x_Empleado(IdEmpresa, Id_Rdep, Secuencia);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.IdUsuario = SessionFixed.IdUsuario;
+            cargar_combos(IdEmpresa);
 
             if (model == null)
                 return RedirectToAction("Index");
-
-            cargar_combos(IdEmpresa);
+            
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Modificar_x_Empleado(ro_rdep_det_Info model)
         {
+            model.IdUsuario = SessionFixed.IdUsuario;
+            cargar_combos(model.IdEmpresa);
+
             if (!bus_ro_rpde.ModificarBD(model))
             {
                 return View(model);
             }
-
-            cargar_combos(model.IdEmpresa);
+            
             return RedirectToAction("Modificar", "Rdep", new { model.IdEmpresa, model.Id_Rdep });
+        }
+
+        public ActionResult Anular(int IdEmpresa = 0, int Id_Rdep = 0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_rdep_Info model = bus_ro_rpde.GetInfo(IdEmpresa, Id_Rdep);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
+
+            Lista_ro_rdep.set_list(model.Lista_Rdep_Det, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            cargar_combos(IdEmpresa);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Anular(ro_rdep_Info model)
+        {
+            model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
+            cargar_combos(model.IdEmpresa);
+
+            if (!bus_ro_rpde.AnularBD(model))
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
         }
         #endregion
     }

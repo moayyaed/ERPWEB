@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_rdep_Info
 
 @{
-    ViewBag.Title = "Reprocesar RDEP";
+    ViewBag.Title = "Anular RDEP";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -9,9 +9,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Modificar", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Anular", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.Id_Rdep);
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">
@@ -52,6 +53,17 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
+                    <label for="IdNomina">Motivo de Anulación*</label>
+                    @Html.TextBoxFor(q => q.MotiAnula, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.MotiAnula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
                     <label for="IdProveedor">Detalle de rdep</label>
                     @Html.Action("GridViewPartial_rdep_det")
                 </div>
@@ -59,6 +71,7 @@
         </div>
     </div>
     <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Rdep", new { Area ="RRHH" }, null)">Cancelar</a>
     </div>
 }

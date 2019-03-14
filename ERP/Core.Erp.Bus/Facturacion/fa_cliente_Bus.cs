@@ -74,7 +74,7 @@ namespace Core.Erp.Bus.Facturacion
                     return odata.guardarDB(info);
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

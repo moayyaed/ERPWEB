@@ -26,7 +26,7 @@ namespace Core.Erp.Data
         public int IdNomina_Tipo { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
         public string Observacion { get; set; }
-        public long Estado { get; set; }
+        public bool Estado { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }

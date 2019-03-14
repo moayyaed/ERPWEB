@@ -265,6 +265,7 @@
             this.xrTableCell137 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow58 = new DevExpress.XtraReports.UI.XRTableRow();
             this.lbl_ruc_contador1 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.p_IdEmpleado = new DevExpress.XtraReports.Parameters.Parameter();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection2)).BeginInit();
@@ -289,6 +290,8 @@
             this.Detail.HeightF = 0F;
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
+            this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("Empleado", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // TopMargin
@@ -308,21 +311,29 @@
             // p_IdEmpresa
             // 
             this.p_IdEmpresa.Name = "p_IdEmpresa";
+            this.p_IdEmpresa.Type = typeof(short);
+            this.p_IdEmpresa.ValueInfo = "0";
             this.p_IdEmpresa.Visible = false;
             // 
             // p_IdSucursal
             // 
             this.p_IdSucursal.Name = "p_IdSucursal";
+            this.p_IdSucursal.Type = typeof(short);
+            this.p_IdSucursal.ValueInfo = "0";
             this.p_IdSucursal.Visible = false;
             // 
             // p_IdNomina_Tipo
             // 
             this.p_IdNomina_Tipo.Name = "p_IdNomina_Tipo";
+            this.p_IdNomina_Tipo.Type = typeof(short);
+            this.p_IdNomina_Tipo.ValueInfo = "0";
             this.p_IdNomina_Tipo.Visible = false;
             // 
             // p_IdAnio
             // 
             this.p_IdAnio.Name = "p_IdAnio";
+            this.p_IdAnio.Type = typeof(short);
+            this.p_IdAnio.ValueInfo = "0";
             this.p_IdAnio.Visible = false;
             // 
             // imageCollection1
@@ -350,7 +361,7 @@
             this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable2});
             this.GroupHeader1.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
-            new DevExpress.XtraReports.UI.GroupField("IdEmpleado", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            new DevExpress.XtraReports.UI.GroupField("IdRow", DevExpress.XtraReports.UI.XRColumnSortOrder.None)});
             this.GroupHeader1.HeightF = 1062.5F;
             this.GroupHeader1.Name = "GroupHeader1";
             // 
@@ -1030,7 +1041,7 @@
             // lbl_nombres_completos
             // 
             this.lbl_nombres_completos.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat([pe_apellido],\' \',[pe_nombre] )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Empleado]")});
             this.lbl_nombres_completos.Font = new System.Drawing.Font("Verdana", 7F);
             this.lbl_nombres_completos.Name = "lbl_nombres_completos";
             this.lbl_nombres_completos.StylePriority.UseFont = false;
@@ -3102,6 +3113,13 @@
             this.lbl_ruc_contador1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.lbl_ruc_contador1.Weight = 1D;
             // 
+            // p_IdEmpleado
+            // 
+            this.p_IdEmpleado.Name = "p_IdEmpleado";
+            this.p_IdEmpleado.Type = typeof(decimal);
+            this.p_IdEmpleado.ValueInfo = "0";
+            this.p_IdEmpleado.Visible = false;
+            // 
             // objectDataSource1
             // 
             this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.RRHH.ROL_026_Info);
@@ -3125,7 +3143,8 @@
             this.p_IdEmpresa,
             this.p_IdSucursal,
             this.p_IdNomina_Tipo,
-            this.p_IdAnio});
+            this.p_IdAnio,
+            this.p_IdEmpleado});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.ROL_026_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
@@ -3386,5 +3405,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell137;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow58;
         private DevExpress.XtraReports.UI.XRTableCell lbl_ruc_contador1;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdEmpleado;
     }
 }
