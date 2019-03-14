@@ -24,5 +24,6 @@ namespace Core.Erp.Info.Reportes.RRHH
         public System.DateTime pe_FechaFin { get; set; }
         public int Prestamos { get; set; }
         public double Valor { get; set; }
+        public string Mes { get; set; }
     }
 }

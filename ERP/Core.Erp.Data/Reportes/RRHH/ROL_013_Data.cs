@@ -37,7 +37,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  pe_FechaFin = q.pe_FechaFin,
                                  Prestamos = q.Prestamos,
                                  Sueldo = q.Sueldo,
-                                 Valor = q.Valor
+                                 Valor = q.Valor,
+                                 Mes = q.Mes
                              }).ToList();
                 }
                 return Lista;
