@@ -431,6 +431,7 @@
     <Compile Include="Areas\Reportes\Views\RRHHReportes\PivotGridExportDemoOptions.cs" />
     <Compile Include="Areas\Reportes\Views\RRHHReportes\PivotGridDataOutputDemosHelper.cs" />
     <Compile Include="Areas\RRHH\Controllers\ActaFiniquitoController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteBeneficiosSocialesController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjustesAnticipoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosActualizacionSueldoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosTransferenciasController.cs" />
@@ -10035,6 +10036,7 @@
     <Folder Include="Areas\Produccion\Views\Shared\" />
     <Folder Include="Areas\Reportes\Models\" />
     <Folder Include="Areas\RRHH\Models\" />
+    <Folder Include="Areas\RRHH\Views\AjusteBeneficiosSociales\" />
     <Folder Include="Areas\RRHH\Views\AprobacionPrestamos\" />
     <Folder Include="Areas\RRHH\Views\SancionesPorAtraso\" />
     <Folder Include="Areas\SeguridadAcceso\Models\" />
