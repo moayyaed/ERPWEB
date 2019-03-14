@@ -302,5 +302,25 @@ namespace Core.Erp.Data.Caja
             }
         }
 
+        public int GetIdCajaPorSucursal(int IdEmpresa, int IdSucursal)
+        {
+            try
+            {
+
+                int ID = 1;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    var sucursal = Context.fa_PuntoVta.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal).FirstOrDefault();
+                    if (sucursal != null)
+                        ID = sucursal.IdCaja;
+                }
+                return ID;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
