@@ -11,6 +11,9 @@ using Core.Erp.Bus.Caja;
 using Core.Erp.Web.Helps;
 using Core.Erp.Info.Contabilidad;
 using DevExpress.Web;
+using Core.Erp.Info.General;
+using Core.Erp.Info.Helps;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -22,6 +25,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         in_movi_inven_tipo_Bus bus_tipo_movimiento = new in_movi_inven_tipo_Bus();
         caj_Caja_Bus bus_caja = new caj_Caja_Bus();
         fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
+        tb_persona_Bus bus_persona = new tb_persona_Bus();
 
         #endregion
 
@@ -69,6 +73,22 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         #endregion
+        #region Metodos ComboBox bajo demanda cliente
+        public ActionResult CmbCliente_Parametro()
+        {
+            decimal model = new decimal();
+            return PartialView("_CmbCliente_Parametro", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda_cliente(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
+        }
+        public tb_persona_Info get_info_bajo_demanda_cliente(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
+        }
+        #endregion
+
 
         #region Metodos ComboBox bajo demanda
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();

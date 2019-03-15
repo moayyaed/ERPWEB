@@ -34,7 +34,9 @@ namespace Core.Erp.Data.Facturacion
                             pa_IdCtaCble_descuento = Entity.pa_IdCtaCble_descuento,
                             pa_Contabiliza_descuento = Entity.pa_Contabiliza_descuento,
                             clave_desbloqueo_precios = Entity.clave_desbloqueo_precios,
-                            DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo
+                            DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                            IdClienteConsumidorFinal = Entity.IdClienteConsumidorFinal,
+                            MontoMaximoConsumidorFinal = Entity.MontoMaximoConsumidorFinal
                         };
                     else
                         info = null;
@@ -73,7 +75,9 @@ namespace Core.Erp.Data.Facturacion
                             pa_IdCtaCble_descuento = info.pa_IdCtaCble_descuento,
                             pa_Contabiliza_descuento = info.pa_Contabiliza_descuento,
                             clave_desbloqueo_precios = info.clave_desbloqueo_precios,
-                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo
+                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            IdClienteConsumidorFinal = info.IdClienteConsumidorFinal,
+                            MontoMaximoConsumidorFinal = info.MontoMaximoConsumidorFinal
                         };
                         Context.fa_parametro.Add(Entity);
                     }
@@ -94,6 +98,8 @@ namespace Core.Erp.Data.Facturacion
                         Entity.pa_Contabiliza_descuento = info.pa_Contabiliza_descuento;
                         Entity.clave_desbloqueo_precios = info.clave_desbloqueo_precios;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.IdClienteConsumidorFinal = info.IdClienteConsumidorFinal;
+                        Entity.MontoMaximoConsumidorFinal = info.MontoMaximoConsumidorFinal;
                     }
 
                     Context.SaveChanges();
