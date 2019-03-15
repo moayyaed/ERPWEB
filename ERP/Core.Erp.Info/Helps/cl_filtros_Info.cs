@@ -52,6 +52,8 @@ namespace Core.Erp.Info.Helps
         public string em_status { get; set; }
         public string Ubicacion { get; set; }
         public int IdAnio { get; set; }
+        public string IdSigno { get; set; }
+        public double Valor { get; set; }
         #endregion
 
         #region filtros de Presupuesto

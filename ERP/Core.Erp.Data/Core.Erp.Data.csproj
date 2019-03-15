@@ -1320,6 +1320,7 @@
     <Compile Include="Reportes\RRHH\ROL_024_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_025_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_026_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_027_Data.cs" />
     <Compile Include="ro_Acta_Finiquito.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1554,7 +1555,6 @@
     <Compile Include="ro_turno.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="RRHH\rol_detalle_x_rubro_acumulado_Data.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Data.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Data.cs" />
     <Compile Include="RRHH\ro_archivosCSV_Data.cs" />
@@ -1763,6 +1763,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPROL_025_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_027_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="spROL_DecimosCSV_Result.cs">
@@ -2639,6 +2642,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwRo_rol_detalle_saldo_por_pagar.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rol_detalle_x_rubro_acumulado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_rubro_tipo.cs">

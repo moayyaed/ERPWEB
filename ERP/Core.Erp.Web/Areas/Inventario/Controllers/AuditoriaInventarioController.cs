@@ -62,10 +62,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
             ViewBag.lst_bodega = lst_bodega;
 
-            Dictionary<string, string> lst_tipo_movimiento = new Dictionary<string, string>();
-            lst_tipo_movimiento.Add( "+", "Ingreso");
-            lst_tipo_movimiento.Add("-", "Egreso");
-            ViewBag.lst_tipo_movimiento = lst_tipo_movimiento;
+            Dictionary<string, string> lst_Rubro = new Dictionary<string, string>();
+            lst_Rubro.Add( "11", "Décimo cuarto sueldo");
+            lst_Rubro.Add("12", "Décimo tercer sueldo");
+            ViewBag.lst_tipo_movimiento = lst_Rubro;
 
         }
         #endregion

@@ -222,11 +222,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             string nombre_file = "RDEP-" + model.pe_anio.ToString();
             string xml = "";
+            rdep RDEP = new rdep();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var RDEP = bus_ro_rpde.get_info_xml(model.IdEmpresa, model.Id_Rdep);
+            RDEP = bus_ro_rpde.get_info_xml(model.IdEmpresa, model.Id_Rdep);
             var ms = new MemoryStream();
             var xw = XmlWriter.Create(ms);
-
 
             var serializer = new XmlSerializer(RDEP.GetType());
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
@@ -240,8 +240,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             byte[] fileBytes = ms.ToArray();
             return File(fileBytes, "application/xml", nombre_file + ".xml");
-
-
         }
 
         public ActionResult Modificar_x_Empleado(int IdEmpresa = 0, int Id_Rdep = 0, int Secuencia=0)

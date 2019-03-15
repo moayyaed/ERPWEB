@@ -1340,6 +1340,12 @@
     <Compile Include="Reportes\RRHH\ROL_026_Rpt.Designer.cs">
       <DependentUpon>ROL_026_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\RRHH\ROL_027_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_027_Rpt.Designer.cs">
+      <DependentUpon>ROL_027_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -9951,6 +9957,9 @@
     <Content Include="Areas\RRHH\Views\Rdep\Modificar.cshtml" />
     <Content Include="Areas\RRHH\Views\Rdep\Anular.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\_GridViewPartial_AjusteBeneficiosSociales.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_027.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10036,7 +10045,6 @@
     <Folder Include="Areas\Produccion\Views\Shared\" />
     <Folder Include="Areas\Reportes\Models\" />
     <Folder Include="Areas\RRHH\Models\" />
-    <Folder Include="Areas\RRHH\Views\AjusteBeneficiosSociales\" />
     <Folder Include="Areas\RRHH\Views\AprobacionPrestamos\" />
     <Folder Include="Areas\RRHH\Views\SancionesPorAtraso\" />
     <Folder Include="Areas\SeguridadAcceso\Models\" />
@@ -10494,6 +10502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_026_Rpt.resx">
       <DependentUpon>ROL_026_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_027_Rpt.resx">
+      <DependentUpon>ROL_027_Rpt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

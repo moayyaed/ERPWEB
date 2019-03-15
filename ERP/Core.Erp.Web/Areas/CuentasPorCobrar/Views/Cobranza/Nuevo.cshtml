@@ -11,8 +11,8 @@
 
 <script type="text/javascript">
     var selectedIDs;
-
     $(function () {
+        GetIdCajaPorSucursal();
 
         $("#IdCobro_tipo").change(function () {
             SetCobroTipo();
@@ -23,6 +23,12 @@
         });
 
         SetCobroTipo();
+        $("#IdSucursal").change(function () {
+            GetIdCajaPorSucursal();
+        });
+        $("#IdCaja").change(function () {
+            GetIdCajaPorSucursal();
+        });
     })
 
     function SetCobroTipo() {
@@ -62,7 +68,31 @@
         GridView_cobranza_facturas_x_cruzar.UnselectRows();
         $("#FacturasModal").modal("show");
     }
+    function GetIdCajaPorSucursal() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
 
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetIdCajaPorSucursal", "Cobranza", new { Area = "CuentasPorCobrar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data > 0) {
+                    $('#IdCaja').val(data);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    };
     function AddFacturas() {
 
         var datos = {
@@ -136,7 +166,10 @@
             }
         });
         GridView_cobranza_det.PerformCallback();
-    }
+        }
+
+
+
 </script>
 
 

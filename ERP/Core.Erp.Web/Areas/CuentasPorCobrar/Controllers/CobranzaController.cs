@@ -216,7 +216,6 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 IdSucursal = IdSucursal,
                 cr_fecha = DateTime.Now.Date,
                 IdCobro_tipo = "EFEC",
-                IdCaja = 1,
                 lst_det = new List<cxc_cobro_det_Info>(),
             };
             list_det.set_list(new List<cxc_cobro_det_Info>(), model.IdTransaccionSession);
@@ -418,6 +417,14 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         public void VaciarLista(decimal IdTransaccionSession = 0)
         {
             list_det.set_list(new List<cxc_cobro_det_Info>(), IdTransaccionSession);
+        }
+
+        public JsonResult GetIdCajaPorSucursal(int IdEmpresa, int IdSucursal)
+        {
+            var resultado = bus_caja.GetIdCajaPorSucursal(IdEmpresa, IdSucursal);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+
         }
         #endregion
     }

@@ -8,7 +8,6 @@ namespace Core.Erp.Data.RRHH
 {
    public class ro_rol_detalle_x_rubro_acumulado_Data
     {
-
         public double get_valor_x_rubro_acumulado(int IdEmpresa, decimal IdEmpleado, string IdRubro)
         {
             try
@@ -62,6 +61,79 @@ namespace Core.Erp.Data.RRHH
                 }
 
                 return valor_cuotas;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<ro_rol_detalle_x_rubro_acumulado_Info> GetList_BeneficiosSociales (int IdEmpresa, int IdSucursal, int IdNomina_Tipo, string IdRubro, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                List<ro_rol_detalle_x_rubro_acumulado_Info> Lista;
+
+                int IdSucursalInicio = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
+                int IdNomina_TipoInicio = IdNomina_Tipo;
+                int IdNomina_TipoFin = IdNomina_Tipo == 0 ? 9999 : IdNomina_Tipo;
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    Lista = Context.vwro_rol_detalle_x_rubro_acumulado.Where(q => q.IdEmpresa == IdEmpresa
+                    && q.IdSucursal >= IdSucursalInicio
+                    && q.IdSucursal <= IdSucursalFin
+                    && q.IdNominaTipo >= IdNomina_TipoInicio
+                    && q.IdNominaTipo <= IdNomina_TipoFin
+                    && q.IdRubro == IdRubro
+                    && q.pe_FechaIni >= FechaIni
+                    && q.pe_FechaFin <= FechaFin).Select(q => new ro_rol_detalle_x_rubro_acumulado_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            IdSucursal = q.IdSucursal,
+                            IdNominaTipo = q.IdNominaTipo,
+                            IdRol = q.IdRol,
+                            IdRubro = q.IdRubro,
+                            pe_FechaIni = q.pe_FechaIni,
+                            pe_FechaFin = q.pe_FechaFin,
+                            Valor = q.Valor,
+                            IdEmpleado = q.IdEmpleado,
+                            Empleado = q.Empleado                            
+                        }).ToList();                                       
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarBD(List<ro_rol_detalle_x_rubro_acumulado_Info> Lista)
+        {
+            try
+            {
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {                    
+                    foreach (var item in Lista)
+                    {
+                        ro_rol_detalle_x_rubro_acumulado entity = Context.ro_rol_detalle_x_rubro_acumulado.Where(q => q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal 
+                        && q.IdRubro == item.IdRubro && q.IdRol== item.IdRol).FirstOrDefault();
+
+                        if (entity == null)
+                        {
+                            return false;
+                        }
+
+                        entity.Valor = item.Valor;                            
+                        Context.SaveChanges();
+                    }                    
+                }
+                return true;
             }
             catch (Exception)
             {
