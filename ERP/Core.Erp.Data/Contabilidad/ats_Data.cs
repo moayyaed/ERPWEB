@@ -17,10 +17,10 @@ namespace Core.Erp.Data.Contabilidad
             {
                 tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
                 string Establecimiento = "";
-                if(IntArray!=null)
-                foreach (var item in IntArray)
-                {
-                    Establecimiento += data_sucursal.get_info(IdEmpresa,item).Su_CodigoEstablecimiento+",";
+                if (IntArray != null)
+                    foreach (var item in IntArray)
+                    {
+                        Establecimiento += item.ToString()+ ",";
                 }
 
                 int IdSucursalInicio = Convert.ToInt32(IdSucursal);
@@ -34,7 +34,7 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
-                                        && Establecimiento.Contains(q.establecimiento)
+                                        && Establecimiento.Contains(q.IdSucursal.ToString())
                                        // && q.establecimiento.contr
                                        // && q.idProv== "0909594202001"
                                         select new compras_Info
@@ -78,7 +78,7 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_ventas = (from v in Context.ATS_ventas
                                         where v.IdEmpresa == IdEmpresa
                                         && v.IdPeriodo == IdPeriodo
-                                         && Establecimiento.Contains(v.codEstab)
+                                         && Establecimiento.Contains(v.IdSucursal.ToString())
                                        //  && v.idCliente== "0190339092001"
                                        select new ventas_Info
                                         {
@@ -110,7 +110,7 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_retenciones = (from r in Context.ATS_retenciones
                                        where r.IdEmpresa == IdEmpresa
                                        && r.IdPeriodo == IdPeriodo
-                                       
+                                        && Establecimiento.Contains(r.IdSucursal.ToString())
                                             // && r.Cedula_ruc== "0909594202001"
                                             select new retenciones_Info
                                        {
@@ -147,7 +147,8 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_exportaciones = (from e in Context.ATS_exportaciones
                                               where e.IdEmpresa == IdEmpresa
                                               && e.IdPeriodo == IdPeriodo
-                                              // && r.Cedula_ruc== "0909594202001"
+                                              && e.IdPeriodo == IdPeriodo
+                                              && Establecimiento.Contains(e.IdSucursal.ToString())
                                               select new exportaciones_Info
                                               {
                                                   IdEmpresa = e.IdEmpresa,
@@ -177,8 +178,8 @@ namespace Core.Erp.Data.Contabilidad
                     info.lst_anulados = (from a in Context.ATS_comprobantes_anulados
                                               where a.IdEmpresa == IdEmpresa
                                               && a.IdPeriodo == IdPeriodo
-                                               && Establecimiento.Contains(a.Establecimiento)
-                                         // && r.Cedula_ruc== "0909594202001"
+                                             
+                                          && Establecimiento.Contains(a.IdSucursal.ToString())
                                          select new comprobantesAnulados_info
                                               {
                                                   IdEmpresa = a.IdEmpresa,
