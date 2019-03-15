@@ -344,7 +344,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                                 };
 
+                                if(info.IdRubro=="68")
+                                {
 
+                                }
                                 if(info.IdRubro==rubros_calculados.IdRubro_horas_matutina)
                                 info.ValorHora = Convert.ToDouble(empleado.Valor_horas_matutino);
 

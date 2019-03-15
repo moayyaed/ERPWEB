@@ -35,11 +35,6 @@ namespace Core.Erp.Data
         public DbSet<ct_periodo> ct_periodo { get; set; }
         public DbSet<ct_plancta_nivel> ct_plancta_nivel { get; set; }
         public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
-        public DbSet<ATS_compras> ATS_compras { get; set; }
-        public DbSet<ATS_comprobantes_anulados> ATS_comprobantes_anulados { get; set; }
-        public DbSet<ATS_exportaciones> ATS_exportaciones { get; set; }
-        public DbSet<ATS_retenciones> ATS_retenciones { get; set; }
-        public DbSet<ATS_ventas> ATS_ventas { get; set; }
         public DbSet<vwct_cbtecble_con_ctacble_acreedora> vwct_cbtecble_con_ctacble_acreedora { get; set; }
         public DbSet<ct_parametro> ct_parametro { get; set; }
         public DbSet<ct_plancta> ct_plancta { get; set; }
@@ -50,6 +45,11 @@ namespace Core.Erp.Data
         public DbSet<vwct_RevisionContableFacturas> vwct_RevisionContableFacturas { get; set; }
         public DbSet<ct_CierrePorModuloPorSucursal> ct_CierrePorModuloPorSucursal { get; set; }
         public DbSet<vwct_CierrePorModuloPorSucursal> vwct_CierrePorModuloPorSucursal { get; set; }
+        public DbSet<ATS_compras> ATS_compras { get; set; }
+        public DbSet<ATS_comprobantes_anulados> ATS_comprobantes_anulados { get; set; }
+        public DbSet<ATS_exportaciones> ATS_exportaciones { get; set; }
+        public DbSet<ATS_retenciones> ATS_retenciones { get; set; }
+        public DbSet<ATS_ventas> ATS_ventas { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {
