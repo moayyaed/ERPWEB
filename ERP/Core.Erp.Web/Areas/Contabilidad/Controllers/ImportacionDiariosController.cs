@@ -244,6 +244,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_filtros(model.IdEmpresa);
                 return View(model);
             }
+
+            bus_ImporacionDiarios.eliminar_x_tipo_doc(model.tipo_documento);
+
             return RedirectToAction("Index");
         }
 

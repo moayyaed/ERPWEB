@@ -24,5 +24,18 @@ namespace Core.Erp.Bus.Migraciones
                 throw;
             }
         }
+
+        public bool eliminar_x_tipo_doc(string tipo_documento)
+        {
+            try
+            {
+                return odata.eliminar_x_tipo_doc(tipo_documento);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
