@@ -21,6 +21,8 @@ namespace Core.Erp.Info.RRHH
         public System.DateTime pe_FechaFin { get; set; }
         public string Empleado { get; set; }
         public int IdNominaTipo { get; set; }
+        public double ValorAjustado { get; set; }
+        public int Secuencial { get; set; }
         #endregion
 
     }

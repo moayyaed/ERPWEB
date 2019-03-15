@@ -14,14 +14,18 @@ namespace Core.Erp.Data.Reportes.RRHH
             try
             {
                 int IdSucursalIni = IdSucursal;
-                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 999999 : IdSucursal;
 
 
                 int IdDivisionIni = IdDivision;
-                int IdDivisionFin = IdDivision == 0 ? 9999 : IdDivision;
+                int IdDivisionFin = IdDivision == 0 ? 999999 : IdDivision;
 
                 int IdAreaIni = IdArea;
-                int IdAreaFin = IdArea == 0 ? 9999 : IdArea;
+                int IdAreaFin = IdArea == 0 ? 999999 : IdArea;
+
+
+                fecha_fin = fecha_fin.Date;
+                fecha_ini = fecha_ini.Date;
                 List<ROL_027_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
@@ -43,7 +47,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                         de_descripcion = q.de_descripcion,
                         IdArea = q.IdArea,
                         IdDepartamento = q.IdDepartamento,
-                        IdDivision = q.IdDivision
+                        IdDivision = q.IdDivision,
+                        Su_Descripcion = q.Su_Descripcion
 
                     }).ToList();
                 }

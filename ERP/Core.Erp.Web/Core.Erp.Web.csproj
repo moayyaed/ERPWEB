@@ -9960,6 +9960,7 @@
     <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\Index.cshtml" />
     <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\_GridViewPartial_AjusteBeneficiosSociales.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_027.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCliente_Parametro.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10083,6 +10084,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

@@ -23,5 +23,7 @@ namespace Core.Erp.Info.Facturacion
         public int NumeroDeItemProforma { get; set; }
         public string clave_desbloqueo_precios { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
+        public Nullable<decimal> IdClienteConsumidorFinal { get; set; }
+        public Nullable<double> MontoMaximoConsumidorFinal { get; set; }
     }
 }

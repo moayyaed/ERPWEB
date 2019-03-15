@@ -1065,12 +1065,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdDivision = 0,
-                IdArea = 0,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             cargar_combos(model.IdEmpresa);
-
             ROL_027_Rpt report = new ROL_027_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -1088,8 +1085,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         [HttpPost]
         public ActionResult ROL_027(cl_filtros_Info model)
         {
-            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
             ROL_027_Rpt report = new ROL_027_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;

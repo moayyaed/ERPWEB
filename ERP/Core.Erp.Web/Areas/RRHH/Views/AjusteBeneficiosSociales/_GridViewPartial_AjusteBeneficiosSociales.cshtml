@@ -10,7 +10,11 @@
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
-        //CConfiguracion responsive
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
 
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
@@ -51,8 +55,13 @@
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
 
-        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(60);        
+        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(70);        
         settings.Columns.Add("Valor", "Valor").Width = Unit.Percentage(10);
+        settings.Columns.Add("ValorAjustado", "Valor Ajustado").Width = Unit.Percentage(10);
+
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+
     });
 }
 @grid.Bind(Model).GetHtml()

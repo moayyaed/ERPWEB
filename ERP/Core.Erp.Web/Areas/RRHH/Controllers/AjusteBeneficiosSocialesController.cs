@@ -23,16 +23,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         // GET: RRHH/AjusteBeneficiosSociales
         #region Index
         public ActionResult Index()
-        {
+        {            
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNomina = 1,
-                IdRubro = "12",
+                IdRubro = "11",
                 IdSigno = "+",
                 Valor= 0,
             };
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
 
             cargar_combos(model.IdEmpresa);
             return View(model);
@@ -41,7 +43,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult Index(cl_filtros_Info model)
         {
             model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
             List<ro_rol_detalle_x_rubro_acumulado_Info> lst_detalle = bus_detalle_rubro_acumulado.GetList_BeneficiosSociales(model.IdEmpresa, model.IdSucursal, model.IdNomina, model.IdRubro, Convert.ToDateTime(model.fecha_ini), Convert.ToDateTime(model.fecha_fin));
             Lista_DetalleRubrosAcumulados.set_list(lst_detalle, model.IdTransaccionSession);
@@ -58,8 +60,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ViewBag.IdRubro = IdRubro == "" ? "" : Convert.ToString(IdRubro);
             ViewBag.FechaIni = FechaIni == null ? DateTime.Now : FechaIni;
             ViewBag.FechaFin = FechaFin == null ? DateTime.Now : FechaFin;
-
-            //List<ro_rol_detalle_x_rubro_acumulado_Info> lst_detalle = bus_detalle_rubro_acumulado.GetList_BeneficiosSociales(IdEmpresa, IdSucursal, IdNomina_Tipo, IdRubro, Convert.ToDateTime(FechaIni), Convert.ToDateTime(FechaFin));
+            
             var lst_detalle = Lista_DetalleRubrosAcumulados.get_list(IdTransaccionSession);
             return PartialView("_GridViewPartial_AjusteBeneficiosSociales", lst_detalle);
         }
@@ -77,8 +78,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_tipo_nomina = lst_tipo_nomina;
 
                 Dictionary<string, string> lst_Rubro = new Dictionary<string, string>();
-                lst_Rubro.Add("11", "Décimo cuarto sueldo");
-                lst_Rubro.Add("12", "Décimo tercer sueldo");
+                lst_Rubro.Add("11", "Décimo tercer sueldo");
+                lst_Rubro.Add("12", "Décimo cuarto sueldo");
                 ViewBag.lst_Rubro = lst_Rubro;
 
                 Dictionary<string, string> lst_Tipo = new Dictionary<string, string>();
@@ -94,48 +95,80 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
 
         #region Json
-        public JsonResult ActualizarValores(DateTime? FechaIni, DateTime? FechaFin, int IdSucursal=0, int IdNomina_Tipo=0, string IdRubro="", string IdSigno="", double Valor=0)
+        public JsonResult ActualizarValores(string Ids = "", string IdSigno = "", double Valor = 0)
         {
             var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
-            ViewBag.IdNomina_Tipo = IdNomina_Tipo == 0 ? 0 : Convert.ToInt32(IdNomina_Tipo);
-            ViewBag.IdRubro = IdRubro == "" ? "" : Convert.ToString(IdRubro);
-            ViewBag.FechaIni = FechaIni == null ? DateTime.Now : Convert.ToDateTime(FechaIni);
-            ViewBag.FechaFin = FechaFin == null ? DateTime.Now : Convert.ToDateTime(FechaFin);
+        
+            string[] array = Ids.Split(',');
 
-            List<ro_rol_detalle_x_rubro_acumulado_Info> Lista = bus_detalle_rubro_acumulado.GetList_BeneficiosSociales(IdEmpresa, ViewBag.IdSucursal, ViewBag.IdNomina_Tipo, ViewBag.IdRubro, ViewBag.FechaIni, ViewBag.FechaFin);
-
-            foreach (var item in Lista)
+            if (string.IsNullOrEmpty(Ids))
             {
-                if (IdSigno=="+")
-                {
-                    item.Valor = item.Valor + Valor;
-                }
-                else if(IdSigno == "-")
-                {
-                    item.Valor = item.Valor - Valor;
-                }
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
+            else
+            {                
+                List<ro_rol_detalle_x_rubro_acumulado_Info> Lista = Lista_DetalleRubrosAcumulados.get_list(IdTransaccionSession);
 
-            Lista_DetalleRubrosAcumulados.set_list(Lista, IdTransaccionSession);
-            
-            return Json(Lista, JsonRequestBehavior.AllowGet);
+                foreach (var item in array)
+                {
+                    foreach (var item2 in Lista)
+                    {
+                        if (IdEmpresa == item2.IdEmpresa && item2.Secuencial == Convert.ToInt32(item))
+                        {
+                            if (IdSigno == "+")
+                            {
+                                item2.ValorAjustado = item2.Valor + Valor;
+                            }
+                            else if (IdSigno == "-")
+                            {
+                                item2.ValorAjustado = item2.Valor - Valor;
+                            }
+
+                            break;
+                        }                        
+                    }
+
+                    Lista_DetalleRubrosAcumulados.set_list(Lista, IdTransaccionSession);
+                }
+                return Json(Lista, JsonRequestBehavior.AllowGet);
+            }                                                
         }
-        #endregion
 
-        #region Acciones
-        [HttpPost]
-        public ActionResult Nuevo(List<ro_rol_detalle_x_rubro_acumulado_Info> model)
+        public JsonResult ModificarBD(string Ids = "")
         {
+            var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            if (!bus_detalle_rubro_acumulado.ModificarBD(model))
-            {
-                cargar_combos(IdEmpresa);
-                return View(model);
-            }
+            var modificar = true;
+            string[] array = Ids.Split(',');
 
-            return RedirectToAction("Index");
+            if (string.IsNullOrEmpty(Ids))
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                List<ro_rol_detalle_x_rubro_acumulado_Info> Lista = Lista_DetalleRubrosAcumulados.get_list(IdTransaccionSession);
+                List<ro_rol_detalle_x_rubro_acumulado_Info> ListaModificar = new List<ro_rol_detalle_x_rubro_acumulado_Info>();
+                ro_rol_detalle_x_rubro_acumulado_Info info = new ro_rol_detalle_x_rubro_acumulado_Info();
+                foreach (var item in array)
+                {
+                    info = Lista.Where(q => q.IdEmpresa == IdEmpresa && q.Secuencial == Convert.ToInt32(item)).FirstOrDefault();
+
+                    if (info != null)
+                    {
+                        ListaModificar.Add(info);
+                    }
+                }
+
+                if (!bus_detalle_rubro_acumulado.ModificarBD(ListaModificar))
+                {
+                    modificar = false;
+                }
+
+                Lista_DetalleRubrosAcumulados.set_list(new List<ro_rol_detalle_x_rubro_acumulado_Info>(), IdTransaccionSession);
+                return Json(modificar, JsonRequestBehavior.AllowGet);
+            }            
         }
         #endregion
     }
