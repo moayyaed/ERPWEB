@@ -134,6 +134,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             }
             model.IdUsuario = Session["IdUsuario"].ToString();
+
             if (cl_funciones.ValidaIdentificacion(model.info_persona.IdTipoDocumento, model.info_persona.pe_Naturaleza, model.info_persona.pe_cedulaRuc, ref return_naturaleza))
             {
                 model.info_persona.pe_Naturaleza = return_naturaleza;
