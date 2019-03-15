@@ -205,6 +205,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             i_validar.IdCaja = pto_vta.IdCaja;
             #endregion
 
+            #region Validar cliente final
+            var param = bus_param.get_info(i_validar.IdEmpresa);
+            if(param != null && param.IdClienteConsumidorFinal != null && param.MontoMaximoConsumidorFinal > 0)
+            {
+                if (i_validar.info_resumen.Total > Convert.ToDecimal(param.MontoMaximoConsumidorFinal ?? 0))
+                {
+                    msg = "El límite de venta para consumidor final es de $ "+param.MontoMaximoConsumidorFinal.ToString()+", por favor revise.";
+                    return false;
+                }
+            }
+            #endregion
+
             i_validar.info_resumen.SubtotalConDscto = i_validar.info_resumen.SubtotalIVAConDscto + i_validar.info_resumen.SubtotalSinIVAConDscto;
             i_validar.info_resumen.SubtotalSinDscto = i_validar.info_resumen.SubtotalIVASinDscto + i_validar.info_resumen.SubtotalSinIVASinDscto;
 
