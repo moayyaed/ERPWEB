@@ -411,8 +411,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                                 Secuencia = cont,
                                 IdEmpleado = item.IdEmpleado,
                                 IdRubro = rubros_calculados.IdRubro_horas_recargo,
-                                ru_descripcion = rubros.ru_descripcion,
-                                IdJornada = lst_jornada.Where(v => v.codigo == jornada).FirstOrDefault().IdJornada
+                                ru_descripcion = rubros.ru_descripcion
 
                             };
                             info.ValorHora = 1.32;
