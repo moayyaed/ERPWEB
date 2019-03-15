@@ -92,7 +92,7 @@ namespace Core.Erp.Data.RRHH
                     && q.IdNominaTipo <= IdNomina_TipoFin
                     && q.IdRubro == IdRubro
                     && q.pe_FechaIni >= FechaIni
-                    && q.pe_FechaFin <= FechaFin).Select(q => new ro_rol_detalle_x_rubro_acumulado_Info
+                    && q.pe_FechaFin <= FechaFin).OrderBy(q=> q.Empleado).Select(q => new ro_rol_detalle_x_rubro_acumulado_Info
                         {
                             IdEmpresa = q.IdEmpresa,
                             IdSucursal = q.IdSucursal,
@@ -127,14 +127,14 @@ namespace Core.Erp.Data.RRHH
                     foreach (var item in Lista)
                     {
                         ro_rol_detalle_x_rubro_acumulado entity = Context.ro_rol_detalle_x_rubro_acumulado.Where(q => q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal 
-                        && q.IdRubro == item.IdRubro && q.IdRol== item.IdRol).FirstOrDefault();
+                        && q.IdRubro == item.IdRubro && q.IdRol== item.IdRol && q.IdEmpleado == item.IdEmpleado).FirstOrDefault();
 
                         if (entity == null)
                         {
                             return false;
                         }
 
-                        entity.Valor = item.Valor;                            
+                        entity.Valor = item.ValorAjustado;                            
                         Context.SaveChanges();
                     }                    
                 }
