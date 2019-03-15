@@ -29,7 +29,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNomina = 1,
-                IdRubro = "12",
+                IdRubro = "11",
                 IdSigno = "+",
                 Valor= 0,
             };
@@ -78,8 +78,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_tipo_nomina = lst_tipo_nomina;
 
                 Dictionary<string, string> lst_Rubro = new Dictionary<string, string>();
-                lst_Rubro.Add("11", "Décimo cuarto sueldo");
-                lst_Rubro.Add("12", "Décimo tercer sueldo");
+                lst_Rubro.Add("11", "Décimo tercer sueldo");
+                lst_Rubro.Add("12", "Décimo cuarto sueldo");
                 ViewBag.lst_Rubro = lst_Rubro;
 
                 Dictionary<string, string> lst_Tipo = new Dictionary<string, string>();

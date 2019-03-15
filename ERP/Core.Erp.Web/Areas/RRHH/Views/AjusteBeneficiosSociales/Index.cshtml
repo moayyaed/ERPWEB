@@ -223,9 +223,11 @@
             contentType: 'application/json; charset=utf-8',
             success: function (modificar) {
                 if(modificar){
-                    alert();
+                    alert("Datos guardados correctamente.");
+                    GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
                 }
-                else{
+                else {
+                    alert("Ha ocurrrido un error al guardar los datos.");
                     GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
                 }
                 
