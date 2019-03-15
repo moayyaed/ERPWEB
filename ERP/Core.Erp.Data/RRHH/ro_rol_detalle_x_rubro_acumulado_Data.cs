@@ -81,6 +81,8 @@ namespace Core.Erp.Data.RRHH
                 int IdNomina_TipoInicio = IdNomina_Tipo;
                 int IdNomina_TipoFin = IdNomina_Tipo == 0 ? 9999 : IdNomina_Tipo;
 
+                int Secuencial = 1;
+
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Lista = Context.vwro_rol_detalle_x_rubro_acumulado.Where(q => q.IdEmpresa == IdEmpresa
@@ -103,7 +105,10 @@ namespace Core.Erp.Data.RRHH
                             IdEmpleado = q.IdEmpleado,
                             Empleado = q.Empleado                            
                         }).ToList();                                       
-                }
+                }                
+
+                Lista.ForEach(q => q.Secuencial = Secuencial++);
+
                 return Lista;
             }
             catch (Exception)

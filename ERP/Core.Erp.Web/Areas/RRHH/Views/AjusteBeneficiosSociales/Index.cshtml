@@ -10,6 +10,24 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    var selectedIDs;
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("Secuencial", GetSelectedFieldValuesCallback);
+
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+</script>
+
 @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
 @using (Html.BeginForm())
 {
@@ -126,7 +144,15 @@
                         <div class="form-group">
                             <label for="IdSucursal">&nbsp;</label>
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary form-control" id="btn_actualizar" onclick="ActualizarValores();">Ajustar Valores</button>
+                                <button type="button" class="btn btn-primary form-control" id="btn_actualizar" onclick="ActualizarValores();">Ajustar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="IdSucursal">&nbsp;</label>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default form-control" id="btn_guardar" onclick="ModificarBD();">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -150,10 +176,6 @@
         <div class="box-body">
             @Html.Action("GridViewPartial_AjusteBeneficiosSociales", new { FechaIni = Model.fecha_ini, FechaFin = Model.fecha_fin, IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, IdRubro = Model.IdRubro })
         </div>
-        <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a class="btn btn-default" href="@Url.Action("Index", "AjusteBeneficiosSociales", new { Area = "RRHH" }, null)">Cancelar</a>
-        </div>
         <!-- /.box-body -->
         <div class="box-footer">
             [@Session["IdEmpresa"]] @Session["nom_empresa"]
@@ -165,11 +187,7 @@
 <script type="text/javascript">
     function ActualizarValores() {
         var datos = {
-            FechaIni: fecha_ini.GetValue(),
-            FechaFin: fecha_fin.GetValue(),
-            IdSucursal: $("#IdSucursal").val(),
-            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
-            IdRubro: $("#IdRubro").val(),            
+            IDs: selectedIDs,
             IdSigno: $("#IdSigno").val(),
             Valor: $("#Valor").val()
         }
@@ -184,6 +202,33 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function ModificarBD() {
+        var datos = {
+            IDs: selectedIDs,
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ModificarBD", "AjusteBeneficiosSociales", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (modificar) {
+                if(modificar){
+                    alert();
+                }
+                else{
+                    GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
+                }
+                
             },
             error: function (error) {
             }
