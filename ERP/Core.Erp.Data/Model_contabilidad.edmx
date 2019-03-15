@@ -976,156 +976,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="IdPunto_cargo_grupo" Type="Int32" />
         </EntityType>
-        <EntityType Name="ATS_compras">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="codSustento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tpIdProv" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="idProv" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipoComprobante" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="parteRel" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipoProv" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="denopr" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="establecimiento" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="puntoEmision" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="secuencial" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="autorizacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="baseNoGraIva" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="baseImponible" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="baseImpGrav" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="baseImpExe" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="montoIce" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="montoIva" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="pagoLocExt" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="denopago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="paisEfecPago" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="formaPago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="docModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="estabModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="ptoEmiModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="secModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="autModificado" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" />
-        </EntityType>
-        <EntityType Name="ATS_comprobantes_anulados">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="tipoComprobante" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Establecimiento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="puntoEmision" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="secuencialInicio" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="secuencialFin" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Autorización" Type="String" MaxLength="49" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" />
-        </EntityType>
-        <EntityType Name="ATS_exportaciones">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="tpIdClienteEx" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="idClienteEx" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="parteRel" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="tipoRegi" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="paisEfecPagoGen" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="paisEfecExp" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="exportacionDe" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="tipoComprobante" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="fechaEmbarque" Type="DateTime" Precision="0" />
-          <Property Name="valorFOB" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="valorFOBComprobante" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="establecimiento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="puntoEmision" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="secuencial" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fechaEmision" Type="DateTime" Precision="0" />
-          <Property Name="denoExpCli" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" />
-        </EntityType>
-        <EntityType Name="ATS_retenciones">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="co_serie" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="co_factura" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Cedula_ruc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="valRetBien10" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="valRetServ20" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="valorRetBienes" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="valRetServ50" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="valorRetServicios" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="valRetServ100" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="codRetAir" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="baseImpAir" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="porcentajeAir" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="valRetAir" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="estabRetencion1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ptoEmiRetencion1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="secRetencion1" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="autRetencion1" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
-          <Property Name="fechaEmiRet1" Type="DateTime" Precision="0" />
-          <Property Name="docModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="estabModificado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ptoEmiModificado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="secModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="autModificado" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
-          <Property Name="re_tipo_Ret" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="denopr" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" />
-        </EntityType>
-        <EntityType Name="ATS_ventas">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="tpIdCliente" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="idCliente" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="parteRel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipoCliente" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DenoCli" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipoComprobante" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipoEm" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="numeroComprobantes" Type="Int32" Nullable="false" />
-          <Property Name="baseNoGraIva" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="baseImponible" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="baseImpGrav" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="montoIva" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="montoIce" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="valorRetIva" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="valorRetRenta" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="formaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="codEstab" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ventasEstab" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="ivaComp" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" />
-        </EntityType>
         <EntityType Name="vwct_cbtecble_con_ctacble_acreedora">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1170,11 +1020,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ct_periodo" EntityType="Self.ct_periodo" />
           <EntitySet Name="ct_plancta_nivel" EntityType="Self.ct_plancta_nivel" />
           <EntitySet Name="ct_punto_cargo" EntityType="Self.ct_punto_cargo" />
-          <EntitySet Name="ATS_compras" EntityType="Self.ATS_compras" />
-          <EntitySet Name="ATS_comprobantes_anulados" EntityType="Self.ATS_comprobantes_anulados" />
-          <EntitySet Name="ATS_exportaciones" EntityType="Self.ATS_exportaciones" />
-          <EntitySet Name="ATS_retenciones" EntityType="Self.ATS_retenciones" />
-          <EntitySet Name="ATS_ventas" EntityType="Self.ATS_ventas" />
           <EntitySet Name="vwct_cbtecble_con_ctacble_acreedora" EntityType="Self.vwct_cbtecble_con_ctacble_acreedora" />
           <AssociationSet Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal" Association="Self.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal">
             <End Role="ct_anio_fiscal" EntitySet="ct_anio_fiscal" />
@@ -1251,6 +1096,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <Parameter Name="IdSucursalInicio" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="ATS_compras" EntityType="Model_contabilidad.ATS_compras" />
+          <EntitySet Name="ATS_comprobantes_anulados" EntityType="Model_contabilidad.ATS_comprobantes_anulados" />
+          <EntitySet Name="ATS_exportaciones" EntityType="Model_contabilidad.ATS_exportaciones" />
+          <EntitySet Name="ATS_retenciones" EntityType="Model_contabilidad.ATS_retenciones" />
+          <EntitySet Name="ATS_ventas" EntityType="Model_contabilidad.ATS_ventas" />
         </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -1640,6 +1490,156 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Cerrado" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="ATS_compras">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="codSustento" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="tpIdProv" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idProv" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="tipoComprobante" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="parteRel" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="tipoProv" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="denopr" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="establecimiento" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="puntoEmision" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="secuencial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="autorizacion" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="baseNoGraIva" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="baseImponible" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="baseImpGrav" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="baseImpExe" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="montoIce" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="montoIva" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="pagoLocExt" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="denopago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="paisEfecPago" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="formaPago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="docModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="estabModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ptoEmiModificado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="secModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="autModificado" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ATS_comprobantes_anulados">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="tipoComprobante" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Establecimiento" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="puntoEmision" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="secuencialInicio" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="secuencialFin" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Autorización" Type="String" Nullable="false" MaxLength="49" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ATS_exportaciones">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="tpIdClienteEx" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="idClienteEx" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="parteRel" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="tipoRegi" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="paisEfecPagoGen" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="paisEfecExp" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="exportacionDe" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="tipoComprobante" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmbarque" Type="DateTime" Precision="0" />
+          <Property Name="valorFOB" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="valorFOBComprobante" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="establecimiento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="puntoEmision" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="secuencial" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmision" Type="DateTime" Precision="0" />
+          <Property Name="denoExpCli" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ATS_retenciones">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="co_serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Cedula_ruc" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="valRetBien10" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="valRetServ20" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="valorRetBienes" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="valRetServ50" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="valorRetServicios" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="valRetServ100" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="codRetAir" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="baseImpAir" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="porcentajeAir" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="valRetAir" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="estabRetencion1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ptoEmiRetencion1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="secRetencion1" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="autRetencion1" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmiRet1" Type="DateTime" Precision="0" />
+          <Property Name="docModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="estabModificado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ptoEmiModificado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="secModificado" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="autModificado" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
+          <Property Name="re_tipo_Ret" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="denopr" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ATS_ventas">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="tpIdCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="idCliente" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="parteRel" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="tipoCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DenoCli" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="tipoComprobante" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="tipoEm" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="numeroComprobantes" Type="Int32" Nullable="false" />
+          <Property Name="baseNoGraIva" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="baseImponible" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="baseImpGrav" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="montoIva" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="montoIce" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="valorRetIva" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="valorRetRenta" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="formaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="codEstab" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ventasEstab" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="ivaComp" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="IdSucursal" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1757,151 +1757,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
                 <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ATS_compras">
-            <EntityTypeMapping TypeName="Model_contabilidad.ATS_compras">
-              <MappingFragment StoreEntitySet="ATS_compras">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="codSustento" ColumnName="codSustento" />
-                <ScalarProperty Name="tpIdProv" ColumnName="tpIdProv" />
-                <ScalarProperty Name="idProv" ColumnName="idProv" />
-                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
-                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
-                <ScalarProperty Name="tipoProv" ColumnName="tipoProv" />
-                <ScalarProperty Name="denopr" ColumnName="denopr" />
-                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
-                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
-                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
-                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
-                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
-                <ScalarProperty Name="autorizacion" ColumnName="autorizacion" />
-                <ScalarProperty Name="baseNoGraIva" ColumnName="baseNoGraIva" />
-                <ScalarProperty Name="baseImponible" ColumnName="baseImponible" />
-                <ScalarProperty Name="baseImpGrav" ColumnName="baseImpGrav" />
-                <ScalarProperty Name="baseImpExe" ColumnName="baseImpExe" />
-                <ScalarProperty Name="montoIce" ColumnName="montoIce" />
-                <ScalarProperty Name="montoIva" ColumnName="montoIva" />
-                <ScalarProperty Name="pagoLocExt" ColumnName="pagoLocExt" />
-                <ScalarProperty Name="denopago" ColumnName="denopago" />
-                <ScalarProperty Name="paisEfecPago" ColumnName="paisEfecPago" />
-                <ScalarProperty Name="formaPago" ColumnName="formaPago" />
-                <ScalarProperty Name="docModificado" ColumnName="docModificado" />
-                <ScalarProperty Name="estabModificado" ColumnName="estabModificado" />
-                <ScalarProperty Name="ptoEmiModificado" ColumnName="ptoEmiModificado" />
-                <ScalarProperty Name="secModificado" ColumnName="secModificado" />
-                <ScalarProperty Name="autModificado" ColumnName="autModificado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ATS_comprobantes_anulados">
-            <EntityTypeMapping TypeName="Model_contabilidad.ATS_comprobantes_anulados">
-              <MappingFragment StoreEntitySet="ATS_comprobantes_anulados">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
-                <ScalarProperty Name="Establecimiento" ColumnName="Establecimiento" />
-                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
-                <ScalarProperty Name="secuencialInicio" ColumnName="secuencialInicio" />
-                <ScalarProperty Name="secuencialFin" ColumnName="secuencialFin" />
-                <ScalarProperty Name="Autorización" ColumnName="Autorización" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ATS_exportaciones">
-            <EntityTypeMapping TypeName="Model_contabilidad.ATS_exportaciones">
-              <MappingFragment StoreEntitySet="ATS_exportaciones">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="tpIdClienteEx" ColumnName="tpIdClienteEx" />
-                <ScalarProperty Name="idClienteEx" ColumnName="idClienteEx" />
-                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
-                <ScalarProperty Name="tipoRegi" ColumnName="tipoRegi" />
-                <ScalarProperty Name="paisEfecPagoGen" ColumnName="paisEfecPagoGen" />
-                <ScalarProperty Name="paisEfecExp" ColumnName="paisEfecExp" />
-                <ScalarProperty Name="exportacionDe" ColumnName="exportacionDe" />
-                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
-                <ScalarProperty Name="fechaEmbarque" ColumnName="fechaEmbarque" />
-                <ScalarProperty Name="valorFOB" ColumnName="valorFOB" />
-                <ScalarProperty Name="valorFOBComprobante" ColumnName="valorFOBComprobante" />
-                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
-                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
-                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
-                <ScalarProperty Name="autorizacion" ColumnName="autorizacion" />
-                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
-                <ScalarProperty Name="denoExpCli" ColumnName="denoExpCli" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ATS_retenciones">
-            <EntityTypeMapping TypeName="Model_contabilidad.ATS_retenciones">
-              <MappingFragment StoreEntitySet="ATS_retenciones">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="co_serie" ColumnName="co_serie" />
-                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
-                <ScalarProperty Name="Cedula_ruc" ColumnName="Cedula_ruc" />
-                <ScalarProperty Name="valRetBien10" ColumnName="valRetBien10" />
-                <ScalarProperty Name="valRetServ20" ColumnName="valRetServ20" />
-                <ScalarProperty Name="valorRetBienes" ColumnName="valorRetBienes" />
-                <ScalarProperty Name="valRetServ50" ColumnName="valRetServ50" />
-                <ScalarProperty Name="valorRetServicios" ColumnName="valorRetServicios" />
-                <ScalarProperty Name="valRetServ100" ColumnName="valRetServ100" />
-                <ScalarProperty Name="codRetAir" ColumnName="codRetAir" />
-                <ScalarProperty Name="baseImpAir" ColumnName="baseImpAir" />
-                <ScalarProperty Name="porcentajeAir" ColumnName="porcentajeAir" />
-                <ScalarProperty Name="valRetAir" ColumnName="valRetAir" />
-                <ScalarProperty Name="estabRetencion1" ColumnName="estabRetencion1" />
-                <ScalarProperty Name="ptoEmiRetencion1" ColumnName="ptoEmiRetencion1" />
-                <ScalarProperty Name="secRetencion1" ColumnName="secRetencion1" />
-                <ScalarProperty Name="autRetencion1" ColumnName="autRetencion1" />
-                <ScalarProperty Name="fechaEmiRet1" ColumnName="fechaEmiRet1" />
-                <ScalarProperty Name="docModificado" ColumnName="docModificado" />
-                <ScalarProperty Name="estabModificado" ColumnName="estabModificado" />
-                <ScalarProperty Name="ptoEmiModificado" ColumnName="ptoEmiModificado" />
-                <ScalarProperty Name="secModificado" ColumnName="secModificado" />
-                <ScalarProperty Name="autModificado" ColumnName="autModificado" />
-                <ScalarProperty Name="re_tipo_Ret" ColumnName="re_tipo_Ret" />
-                <ScalarProperty Name="denopr" ColumnName="denopr" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ATS_ventas">
-            <EntityTypeMapping TypeName="Model_contabilidad.ATS_ventas">
-              <MappingFragment StoreEntitySet="ATS_ventas">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="tpIdCliente" ColumnName="tpIdCliente" />
-                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
-                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
-                <ScalarProperty Name="tipoCliente" ColumnName="tipoCliente" />
-                <ScalarProperty Name="DenoCli" ColumnName="DenoCli" />
-                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
-                <ScalarProperty Name="tipoEm" ColumnName="tipoEm" />
-                <ScalarProperty Name="numeroComprobantes" ColumnName="numeroComprobantes" />
-                <ScalarProperty Name="baseNoGraIva" ColumnName="baseNoGraIva" />
-                <ScalarProperty Name="baseImponible" ColumnName="baseImponible" />
-                <ScalarProperty Name="baseImpGrav" ColumnName="baseImpGrav" />
-                <ScalarProperty Name="montoIva" ColumnName="montoIva" />
-                <ScalarProperty Name="montoIce" ColumnName="montoIce" />
-                <ScalarProperty Name="valorRetIva" ColumnName="valorRetIva" />
-                <ScalarProperty Name="valorRetRenta" ColumnName="valorRetRenta" />
-                <ScalarProperty Name="formaPago" ColumnName="formaPago" />
-                <ScalarProperty Name="codEstab" ColumnName="codEstab" />
-                <ScalarProperty Name="ventasEstab" ColumnName="ventasEstab" />
-                <ScalarProperty Name="ivaComp" ColumnName="ivaComp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2069,6 +1924,151 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="generarATS" FunctionName="Model_contabilidad.Store.generarATS" />
+          <EntitySetMapping Name="ATS_compras">
+            <EntityTypeMapping TypeName="Model_contabilidad.ATS_compras">
+              <MappingFragment StoreEntitySet="ATS_compras">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="autModificado" ColumnName="autModificado" />
+                <ScalarProperty Name="secModificado" ColumnName="secModificado" />
+                <ScalarProperty Name="ptoEmiModificado" ColumnName="ptoEmiModificado" />
+                <ScalarProperty Name="estabModificado" ColumnName="estabModificado" />
+                <ScalarProperty Name="docModificado" ColumnName="docModificado" />
+                <ScalarProperty Name="formaPago" ColumnName="formaPago" />
+                <ScalarProperty Name="paisEfecPago" ColumnName="paisEfecPago" />
+                <ScalarProperty Name="denopago" ColumnName="denopago" />
+                <ScalarProperty Name="pagoLocExt" ColumnName="pagoLocExt" />
+                <ScalarProperty Name="montoIva" ColumnName="montoIva" />
+                <ScalarProperty Name="montoIce" ColumnName="montoIce" />
+                <ScalarProperty Name="baseImpExe" ColumnName="baseImpExe" />
+                <ScalarProperty Name="baseImpGrav" ColumnName="baseImpGrav" />
+                <ScalarProperty Name="baseImponible" ColumnName="baseImponible" />
+                <ScalarProperty Name="baseNoGraIva" ColumnName="baseNoGraIva" />
+                <ScalarProperty Name="autorizacion" ColumnName="autorizacion" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
+                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="denopr" ColumnName="denopr" />
+                <ScalarProperty Name="tipoProv" ColumnName="tipoProv" />
+                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="idProv" ColumnName="idProv" />
+                <ScalarProperty Name="tpIdProv" ColumnName="tpIdProv" />
+                <ScalarProperty Name="codSustento" ColumnName="codSustento" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATS_comprobantes_anulados">
+            <EntityTypeMapping TypeName="Model_contabilidad.ATS_comprobantes_anulados">
+              <MappingFragment StoreEntitySet="ATS_comprobantes_anulados">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Autorización" ColumnName="Autorización" />
+                <ScalarProperty Name="secuencialFin" ColumnName="secuencialFin" />
+                <ScalarProperty Name="secuencialInicio" ColumnName="secuencialInicio" />
+                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
+                <ScalarProperty Name="Establecimiento" ColumnName="Establecimiento" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATS_exportaciones">
+            <EntityTypeMapping TypeName="Model_contabilidad.ATS_exportaciones">
+              <MappingFragment StoreEntitySet="ATS_exportaciones">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="denoExpCli" ColumnName="denoExpCli" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="autorizacion" ColumnName="autorizacion" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="puntoEmision" ColumnName="puntoEmision" />
+                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
+                <ScalarProperty Name="valorFOBComprobante" ColumnName="valorFOBComprobante" />
+                <ScalarProperty Name="valorFOB" ColumnName="valorFOB" />
+                <ScalarProperty Name="fechaEmbarque" ColumnName="fechaEmbarque" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="exportacionDe" ColumnName="exportacionDe" />
+                <ScalarProperty Name="paisEfecExp" ColumnName="paisEfecExp" />
+                <ScalarProperty Name="paisEfecPagoGen" ColumnName="paisEfecPagoGen" />
+                <ScalarProperty Name="tipoRegi" ColumnName="tipoRegi" />
+                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
+                <ScalarProperty Name="idClienteEx" ColumnName="idClienteEx" />
+                <ScalarProperty Name="tpIdClienteEx" ColumnName="tpIdClienteEx" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATS_retenciones">
+            <EntityTypeMapping TypeName="Model_contabilidad.ATS_retenciones">
+              <MappingFragment StoreEntitySet="ATS_retenciones">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="denopr" ColumnName="denopr" />
+                <ScalarProperty Name="re_tipo_Ret" ColumnName="re_tipo_Ret" />
+                <ScalarProperty Name="autModificado" ColumnName="autModificado" />
+                <ScalarProperty Name="secModificado" ColumnName="secModificado" />
+                <ScalarProperty Name="ptoEmiModificado" ColumnName="ptoEmiModificado" />
+                <ScalarProperty Name="estabModificado" ColumnName="estabModificado" />
+                <ScalarProperty Name="docModificado" ColumnName="docModificado" />
+                <ScalarProperty Name="fechaEmiRet1" ColumnName="fechaEmiRet1" />
+                <ScalarProperty Name="autRetencion1" ColumnName="autRetencion1" />
+                <ScalarProperty Name="secRetencion1" ColumnName="secRetencion1" />
+                <ScalarProperty Name="ptoEmiRetencion1" ColumnName="ptoEmiRetencion1" />
+                <ScalarProperty Name="estabRetencion1" ColumnName="estabRetencion1" />
+                <ScalarProperty Name="valRetAir" ColumnName="valRetAir" />
+                <ScalarProperty Name="porcentajeAir" ColumnName="porcentajeAir" />
+                <ScalarProperty Name="baseImpAir" ColumnName="baseImpAir" />
+                <ScalarProperty Name="codRetAir" ColumnName="codRetAir" />
+                <ScalarProperty Name="valRetServ100" ColumnName="valRetServ100" />
+                <ScalarProperty Name="valorRetServicios" ColumnName="valorRetServicios" />
+                <ScalarProperty Name="valRetServ50" ColumnName="valRetServ50" />
+                <ScalarProperty Name="valorRetBienes" ColumnName="valorRetBienes" />
+                <ScalarProperty Name="valRetServ20" ColumnName="valRetServ20" />
+                <ScalarProperty Name="valRetBien10" ColumnName="valRetBien10" />
+                <ScalarProperty Name="Cedula_ruc" ColumnName="Cedula_ruc" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="co_serie" ColumnName="co_serie" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATS_ventas">
+            <EntityTypeMapping TypeName="Model_contabilidad.ATS_ventas">
+              <MappingFragment StoreEntitySet="ATS_ventas">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="ivaComp" ColumnName="ivaComp" />
+                <ScalarProperty Name="ventasEstab" ColumnName="ventasEstab" />
+                <ScalarProperty Name="codEstab" ColumnName="codEstab" />
+                <ScalarProperty Name="formaPago" ColumnName="formaPago" />
+                <ScalarProperty Name="valorRetRenta" ColumnName="valorRetRenta" />
+                <ScalarProperty Name="valorRetIva" ColumnName="valorRetIva" />
+                <ScalarProperty Name="montoIce" ColumnName="montoIce" />
+                <ScalarProperty Name="montoIva" ColumnName="montoIva" />
+                <ScalarProperty Name="baseImpGrav" ColumnName="baseImpGrav" />
+                <ScalarProperty Name="baseImponible" ColumnName="baseImponible" />
+                <ScalarProperty Name="baseNoGraIva" ColumnName="baseNoGraIva" />
+                <ScalarProperty Name="numeroComprobantes" ColumnName="numeroComprobantes" />
+                <ScalarProperty Name="tipoEm" ColumnName="tipoEm" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="DenoCli" ColumnName="DenoCli" />
+                <ScalarProperty Name="tipoCliente" ColumnName="tipoCliente" />
+                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="tpIdCliente" ColumnName="tpIdCliente" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
