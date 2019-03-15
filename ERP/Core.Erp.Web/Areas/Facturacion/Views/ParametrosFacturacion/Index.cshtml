@@ -213,7 +213,25 @@
                     </div>
 
                     
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdClienteConsumidorFinal">Cliente consumidor final</label>
+                                @Html.Partial("_CmbCliente_Parametro", Model)
+                                @Html.ValidationMessageFor(q => q.IdClienteConsumidorFinal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="MontoMaximoConsumidorFinal">Monto máximo consumidor final</label>
+                                @Html.TextBoxFor(q => q.MontoMaximoConsumidorFinal, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.MontoMaximoConsumidorFinal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
