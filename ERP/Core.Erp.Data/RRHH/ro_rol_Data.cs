@@ -290,13 +290,11 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_periodo_x_ro_Nomina_TipoLiqui Entity = Context.ro_periodo_x_ro_Nomina_TipoLiqui.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
-                    && q.IdNomina_Tipo == info.IdNomina_Tipo
-                    && q.IdNomina_TipoLiqui==info.IdNomina_TipoLiqui
-                    && q.IdPeriodo==info.IdPeriodo);
+                    ro_rol Entity = Context.ro_rol.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
+                    && q.IdRol == info.IdRol);
                     if (Entity == null)
                         return false;
-                    Entity.Cerrado = "N";
+                    Entity.Cerrado = "ABIERTO";
                     Context.SaveChanges();
                 }
 

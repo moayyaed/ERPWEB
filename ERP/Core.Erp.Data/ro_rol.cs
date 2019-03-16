@@ -18,6 +18,7 @@ namespace Core.Erp.Data
         {
             this.ro_rol_detalle = new HashSet<ro_rol_detalle>();
             this.ro_rol_detalle_x_rubro_acumulado = new HashSet<ro_rol_detalle_x_rubro_acumulado>();
+            this.ro_Comprobantes_Contables = new HashSet<ro_Comprobantes_Contables>();
         }
     
         public int IdEmpresa { get; set; }
@@ -47,5 +48,6 @@ namespace Core.Erp.Data
         public virtual ro_periodo_x_ro_Nomina_TipoLiqui ro_periodo_x_ro_Nomina_TipoLiqui { get; set; }
         public virtual ICollection<ro_rol_detalle> ro_rol_detalle { get; set; }
         public virtual ICollection<ro_rol_detalle_x_rubro_acumulado> ro_rol_detalle_x_rubro_acumulado { get; set; }
+        public virtual ICollection<ro_Comprobantes_Contables> ro_Comprobantes_Contables { get; set; }
     }
 }
