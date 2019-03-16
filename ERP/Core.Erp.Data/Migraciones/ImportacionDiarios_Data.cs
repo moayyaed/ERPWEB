@@ -52,5 +52,43 @@ namespace Core.Erp.Data.Migraciones
                 throw;
             }
         }
+
+        public bool eliminar_x_tipo_doc(string tipo_documento)
+        {
+            try
+            {
+                using (DBSACEntities Context = new DBSACEntities())
+                {
+                    var sql = "";
+
+                    switch (tipo_documento)
+                    {
+                        case "FACTURAS":
+                            sql = "delete from conta_factura_exporta";
+                            Context.Database.ExecuteSqlCommand(sql);
+                            break;
+                        case "COBROS":
+                            sql = "delete from conta_cobranza_exporta";
+                            Context.Database.ExecuteSqlCommand(sql);
+                            break;
+                        case "NOTADEBITO":
+                            sql = "delete from conta_nd_exporta";
+                            Context.Database.ExecuteSqlCommand(sql);
+                            break;
+                        case "NOTACREDITO":
+                            sql = "delete from conta_nc_exporta";
+                            Context.Database.ExecuteSqlCommand(sql);
+                            break;
+                    }                    
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.Facturacion;
+﻿using Core.Erp.Bus.General;
+using Core.Erp.Data.Facturacion;
 using Core.Erp.Data.General;
 using Core.Erp.Info.Facturacion;
 using System;
@@ -59,19 +60,31 @@ namespace Core.Erp.Bus.Facturacion
         }
         public bool guardarDB(fa_cliente_Info info)
         {
+            tb_persona_Bus bus_persona = new tb_persona_Bus();
+            var grabar = false;
             try
-            {                
-                if (info.IdPersona == 0)
+            {
+                if (bus_persona.validar_existe_cedula(info.info_persona.pe_cedulaRuc) == 0)
                 {
                     info.info_persona = odata_per.armar_info(info.info_persona);
                     if (odata_per.guardarDB(info.info_persona))
                     {
                         info.IdPersona = info.info_persona.IdPersona;
-                        return odata.guardarDB(info);
+                        grabar = true;
                     }
                 }
                 else
+                {
+                    grabar = true;
+                    //grabar = odata_per.modificarDB(info.info_persona);
+                }                   
+
+
+                if (grabar == true)
+                {
                     return odata.guardarDB(info);
+                }
+                   
                 return false;
             }
             catch (Exception)
