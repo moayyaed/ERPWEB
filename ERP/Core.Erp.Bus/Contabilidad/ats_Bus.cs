@@ -398,7 +398,6 @@ namespace Core.Erp.Bus.Contabilidad
                                 anula.secuencialInicio = anu.secuencialInicio;
                                 anula.secuencialFin = anu.secuencialFin;
                                 anula.autorizacion = anu.Autorizacion;
-
                                 ats.anulados.Add(anula);
                             }
                             );
