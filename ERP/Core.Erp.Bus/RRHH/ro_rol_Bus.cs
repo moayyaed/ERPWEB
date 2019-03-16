@@ -151,7 +151,6 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-
         public bool ContabilizarPeriodo(ro_rol_Info info)
         {
             try
