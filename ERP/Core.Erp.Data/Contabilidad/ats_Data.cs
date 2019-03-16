@@ -11,11 +11,15 @@ namespace Core.Erp.Data.Contabilidad
 {
    public class ats_Data
     {
+        tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
+        tb_empresa_Data data_empresa = new tb_empresa_Data();
+        ct_periodo_Data data_perido = new ct_periodo_Data();
         public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal, int[] IntArray)
         {
             try
             {
-                tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
+                var empresa_info = data_empresa.get_info(IdEmpresa);
+                var perido_info = data_perido.get_info(IdEmpresa, IdPeriodo);
                 string Establecimiento = "";
                 if (IntArray != null)
                     foreach (var item in IntArray)
@@ -31,6 +35,7 @@ namespace Core.Erp.Data.Contabilidad
 
                     Context.generarATS(IdEmpresa, IdPeriodo, IdSucursalInicio, IdSucursalFin);
 
+                    Migrar_ats(empresa_info.IdEmpresa,empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo);
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
@@ -203,6 +208,70 @@ namespace Core.Erp.Data.Contabilidad
                 
                 throw;
             }
+        }
+
+
+        private void Migrar_ats(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin,int IdPeriodo)
+        {
+            try
+            {
+                int secuancia = 200000;
+                Entities_contabilidad context_cont = new Entities_contabilidad();
+                using (Entity_migracion_ats Conexion_ats = new Entity_migracion_ats())
+                {
+                    var Entity = Conexion_ats.vw_importacion_ats_fixed.Where(v => v.RUC_LCG == Ruc && v.fe_factura >= FechaInicio.Date && v.fe_factura <= FechaFin.Date).ToList();
+
+                    if(Entity!=null)
+                    {
+                        Entity.ForEach(item =>
+                        {
+
+                            ATS_ventas ventas = new ATS_ventas
+                            {
+                                IdEmpresa=IdEmpresa,
+                                IdPeriodo=IdPeriodo,
+                                Secuencia=secuancia,
+                                idCliente=item.cedulaRuc,
+                                parteRel="NO",
+                                DenoCli="",
+                                tipoComprobante="18",
+                                tipoEm="F",
+                                numeroComprobantes=Convert.ToInt32( item.nu_comp),
+                                baseNoGraIva= 0,
+                                baseImponible= 0,
+                                baseImpGrav=item.baseImpGrav,
+                                montoIva= 0,
+                                montoIce=0,
+                                valorRetIva= 0,
+                                valorRetRenta= 0,
+                                formaPago="01",
+                                codEstab="001",
+                                ventasEstab=item.baseImpGrav,
+                                IdSucursal=1
+                            };
+                            if(item.cedulaRuc.Length==13)
+                            {
+                                ventas.tpIdCliente = "04";
+                                ventas.tipoCliente = "02";
+                            }
+                            else
+                            {
+                                ventas.tpIdCliente = "05";
+                                ventas.tipoCliente = "01";
+                            }
+                            context_cont.ATS_ventas.Add(ventas);
+                            context_cont.SaveChanges();
+                            secuancia++;
+                        });
+                    }
+                    
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
     }
 }

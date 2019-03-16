@@ -1087,6 +1087,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_migraciones.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model_migracion_ats.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migracion_ats.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migracion_ats.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migracion_ats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migracion_ats.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Model_presupuesto.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2698,6 +2713,9 @@
     <Compile Include="vw_diarios_contables_migracion.cs">
       <DependentUpon>Model_ImportacionDiarios.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_importacion_ats_fixed.cs">
+      <DependentUpon>Model_migracion_ats.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
@@ -2821,6 +2839,13 @@
     </EntityDeploy>
     <None Include="Model_migraciones.edmx.diagram">
       <DependentUpon>Model_migraciones.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_migracion_ats.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_migracion_ats.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_migracion_ats.edmx.diagram">
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
     </None>
     <None Include="Model_presupuesto.edmx.diagram">
       <DependentUpon>Model_presupuesto.edmx</DependentUpon>
@@ -2993,6 +3018,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_migraciones.edmx</DependentUpon>
       <LastGenOutput>Model_migraciones.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_migracion_ats.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+      <LastGenOutput>Model_migracion_ats.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_migracion_ats.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+      <LastGenOutput>Model_migracion_ats.cs</LastGenOutput>
     </Content>
     <Content Include="Model_presupuesto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -55,7 +55,7 @@ namespace Core.Erp.Bus.Contabilidad
                 
                 ats.TipoIDInformante = ivaTypeTipoIDInformante.R;
                 ats.codigoOperativo = codigoOperativoType.IVA;
-                ats.totalVentas = info_ats.lst_ventas.Sum(v=>v.baseImpGrav+v.baseImpGrav);
+                ats.totalVentas = info_ats.lst_ventas.Sum(v=>v.ventasEstab);
                 #endregion
 
                 #region listado de compras
@@ -419,6 +419,7 @@ namespace Core.Erp.Bus.Contabilidad
                                 codEstab = x.Key,
                                 ventasEstab = x.Sum(y => y.ventasEstab)
                             }).Count().ToString().PadLeft(3, '0');
+                    ats.totalVentasSpecified = true;
                 }
                 return ats;
 
