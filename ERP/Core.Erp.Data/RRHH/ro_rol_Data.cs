@@ -253,7 +253,12 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.sprol_CancelarNovedades_Prestamos(info.IdEmpresa,  info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo, info.IdSucursal,Convert.ToInt32( info.IdRol));
+                    var entity = Context.ro_rol.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdRol == info.IdRol).FirstOrDefault();
+                        if(entity!=null)
+                    {
+                        entity.Cerrado = "CONTABILIZADO";
+                        Context.SaveChanges();
+                    }
                 }
                 return true;
             }
@@ -269,7 +274,7 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.spRo_Reverso_Rol(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo);
+                    Context.spRo_Reverso_Rol(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo, Convert.ToInt32(info.IdRol),1);
                 }
                 return true;
             }
@@ -285,14 +290,8 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_periodo_x_ro_Nomina_TipoLiqui Entity = Context.ro_periodo_x_ro_Nomina_TipoLiqui.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
-                    && q.IdNomina_Tipo == info.IdNomina_Tipo
-                    && q.IdNomina_TipoLiqui==info.IdNomina_TipoLiqui
-                    && q.IdPeriodo==info.IdPeriodo);
-                    if (Entity == null)
-                        return false;
-                    Entity.Cerrado = "N";
-                    Context.SaveChanges();
+                    Context.spRo_Reverso_Rol(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo, Convert.ToInt32(info.IdRol), 0);
+
                 }
 
                 return true;

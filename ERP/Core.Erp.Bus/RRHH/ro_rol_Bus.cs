@@ -151,7 +151,6 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-
         public bool ContabilizarPeriodo(ro_rol_Info info)
         {
             try
@@ -174,7 +173,8 @@ namespace Core.Erp.Bus.RRHH
                         info_comprobanteID.IdPeriodo = info.IdPeriodo;
                         info_comprobanteID.IdTipoCbte = info_ctb.IdTipoCbte;
                         info_comprobanteID.IdCbteCble = info_ctb.IdCbteCble;
-                        info_comprobanteID.IdSucursal = info_ctb.IdSucursal;
+                        info_comprobanteID.IdRol = info.IdRol;
+                        info_comprobanteID.IdEmpresa_rol = info.IdEmpresa;
                         ro_comprobante.grabarDB(info_comprobanteID);
                         info_ctb = null;
                         if (info.lst_provisiones.Count() > 0)
@@ -194,7 +194,8 @@ namespace Core.Erp.Bus.RRHH
                                 info_comprobanteID.IdPeriodo = info.IdPeriodo;
                                 info_comprobanteID.IdTipoCbte = info_ctb.IdTipoCbte;
                                 info_comprobanteID.IdCbteCble = info_ctb.IdCbteCble;
-                                info_comprobanteID.IdSucursal = info_ctb.IdSucursal;
+                                info_comprobanteID.IdRol = info.IdRol;
+                                info_comprobanteID.IdEmpresa_rol = info.IdEmpresa;
                                 ro_comprobante.grabarDB(info_comprobanteID);
                             }
                         }

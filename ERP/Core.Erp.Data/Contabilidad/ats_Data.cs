@@ -239,14 +239,14 @@ namespace Core.Erp.Data.Contabilidad
                                 numeroComprobantes=Convert.ToInt32( item.nu_comp),
                                 baseNoGraIva= 0,
                                 baseImponible= 0,
-                                baseImpGrav=item.baseImpGrav,
+                                baseImpGrav=Convert.ToDecimal( item.valorBaseIva),
                                 montoIva= 0,
                                 montoIce=0,
                                 valorRetIva= 0,
                                 valorRetRenta= 0,
                                 formaPago="01",
                                 codEstab="001",
-                                ventasEstab=item.baseImpGrav,
+                                ventasEstab=Convert.ToDecimal( item.valorBaseIva),
                                 IdSucursal=1
                             };
                             if(item.cedulaRuc.Length==13)

@@ -15,6 +15,7 @@ namespace Core.Erp.Info.RRHH
         public Nullable<int> IdNominaTipo { get; set; }
         public int IdPeriodo { get; set; }
         public string cb_Observacion { get; set; }
-        public Nullable<int> IdSucursal { get; set; }
+        public Nullable<int> IdEmpresa_rol { get; set; }
+        public Nullable<decimal> IdRol { get; set; }
     }
 }
