@@ -765,9 +765,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
             //return RedirectToAction("Index");
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta});
+            string MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, MensajeSuccess  = MensajeSuccess});
         }
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string MensajeSuccess = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -787,6 +788,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             List_det.set_list(model.lst_det,model.IdTransaccionSession);            
             List_cuotas.set_list(model.lst_cuota, model.IdTransaccionSession);
             cargar_combos(model);
+            ViewBag.MensajeSuccess = string.IsNullOrEmpty(MensajeSuccess) ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -811,7 +813,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
             //return RedirectToAction("Index");
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta });
+            string MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, MensajeSuccess = MensajeSuccess });
         }
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0)
         {
