@@ -122,6 +122,35 @@
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible">
+                        <h4>
+                            <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-2 col-md-2">
@@ -135,7 +164,7 @@
                 </button>
             </div>
 
-            <div class="col-md-offset-2 col-md-1">
+            <div class="col-md-offset-4 col-md-1">
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                     <i class="fa fa-print"></i>
                 </button>
@@ -178,21 +207,6 @@
         </div>
     </div>
 
-    if (ViewBag.mensaje != null)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12">
-                    <div class="alert alert-warning alert-dismissible">
-                        <h4>
-                            <i class="icon fa fa-warning"></i> @ViewBag.mensaje
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    }
 
     <div class="modal fade" id="ModalDesbloqueo" role="dialog">
         <div class="modal-dialog">
