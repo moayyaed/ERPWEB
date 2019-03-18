@@ -159,8 +159,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 return View(model);
             }
 
-            //return RedirectToAction("Index");            
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConciliacion_caja = model.IdConciliacion_Caja });
+            return RedirectToAction("Index");                       
         }
 
         public ActionResult Modificar(int IdEmpresa = 0 ,decimal IdConciliacion_caja = 0)

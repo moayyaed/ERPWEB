@@ -46,10 +46,16 @@
                     @Html.ValidationMessageFor(q => q.tm_Signo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="checkbox">
-                    <label for="SeDeposita">@Html.CheckBoxFor(q => q.SeDeposita) Se deposita</label>
-                </div>
+            <div class="col-md-5" id="DivCheck">
+                @Html.DevExpress().CheckBoxFor(q => q.SeDeposita,
+                         settings =>
+                         {
+                             settings.Name = "SeDeposita";
+                             settings.Checked = false;
+                             settings.Text = "Este ingreso se deposita";
+                         }
+                     ).GetHtml()
+                @Html.ValidationMessageFor(q => q.SeDeposita, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

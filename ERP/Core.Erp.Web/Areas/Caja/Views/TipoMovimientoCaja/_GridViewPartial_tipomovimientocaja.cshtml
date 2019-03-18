@@ -81,15 +81,25 @@
             c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
 
-        settings.Columns.Add("IdTipoMovi", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("tm_Signo", "Signo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("tm_descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+        settings.Columns.Add("IdTipoMovi", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        settings.Columns.Add("tm_Signo", "Signo").Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        settings.Columns.Add("tm_descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(38);
         settings.Columns.Add("IdCtaCble", "Cta. Cble").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "SeDeposita";
+            column.Caption = "Se deposita";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
+            column.EditorProperties().CheckBox(sp =>
+            {
+
+            });
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
             column.EditorProperties().CheckBox(sp =>
             {
 

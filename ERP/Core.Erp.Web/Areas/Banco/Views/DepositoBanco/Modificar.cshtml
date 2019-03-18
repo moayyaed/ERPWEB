@@ -97,26 +97,6 @@
         });
     }
 
-    function Imprimir() {
-        var datos = {
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("ObtenerURL", "Empresa", new { Area = "General" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {                
-                var win = window.open(data +"/Reportes/BancoReportes/BAN_002?IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
-                win.focus();
-            },
-            error: function (error) {
-            }
-        });
-
     function CalcularPorcentaje() {
         var valor = GridView_flujo_det.GetEditor('Valor').GetValue();
         var ValorTotal = $("#cb_Valor").val();
@@ -231,6 +211,28 @@ function GetListBancoPorSucursal() {
     function GrupoComboBox_BeginCallback(s, e) {
         e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
         e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
+    }
+
+
+    function Imprimir() {
+        var datos = {
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ObtenerURL", "Empresa", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var win = window.open(data +"/Reportes/BancoReportes/BAN_002?IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+                win.focus();
+            },
+            error: function (error) {
+            }
+        });
     }
 </script>
 
