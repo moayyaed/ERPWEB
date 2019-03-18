@@ -2,7 +2,7 @@
 @{
     var comboBox = Html.DevExpress().ComboBox(settings =>
     {
-        settings.Name = "IdCliente";
+        settings.Name = "IdClienteConsumidorFinal";
         settings.Width = Unit.Percentage(100);
         settings.Properties.DropDownWidth = Unit.Pixel(1200);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -21,7 +21,6 @@
         settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 10);
         settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 55);
         settings.Properties.Columns.Add("CodPersona", "Clase", 30);
-        settings.Properties.FilterMinLength = 3;
     })
     .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.ParametrosFacturacionController().get_list_bajo_demanda_cliente, new Core.Erp.Web.Areas.Facturacion.Controllers.ParametrosFacturacionController().get_info_bajo_demanda_cliente)
     .Bind(Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_parametro_Info) ? "" : (Model == 0 ? "" : Model));

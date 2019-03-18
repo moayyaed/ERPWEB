@@ -173,7 +173,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cb_Fecha = DateTime.Now.Date,
                 lst_det_ct = new List<ct_cbtecble_det_Info>(),
                 IdBanco = 1,
-                IdTipoNota = 2,
+                IdTipoNota = null,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 list_det = new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>()
             };
