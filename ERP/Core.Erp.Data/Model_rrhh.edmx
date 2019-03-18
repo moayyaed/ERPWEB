@@ -5124,6 +5124,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Parameter Name="IdNomina_TipoLiqui" Type="int" Mode="In" />
           <Parameter Name="IdPeriodo" Type="int" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
+          <Parameter Name="TipoReverso" Type="int" Mode="In" />
         </Function>
         <Function Name="sprol_CancelarNovedades_Prestamos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -8924,18 +8925,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rol_detalle_x_rubro_acumulado" EntitySet="ro_rol_detalle_x_rubro_acumulado" />
           </AssociationSet>
           <EntitySet Name="vwro_rol_detalle_x_rubro_acumulado" EntityType="Model_rrhh.vwro_rol_detalle_x_rubro_acumulado" />
+          <EntitySet Name="ro_Comprobantes_Contables" EntityType="Model_rrhh.ro_Comprobantes_Contables" />
+          <AssociationSet Name="FK_ro_Comprobantes_Contables_ro_rol" Association="Model_rrhh.FK_ro_Comprobantes_Contables_ro_rol">
+            <End Role="ro_rol" EntitySet="ro_rol" />
+            <End Role="ro_Comprobantes_Contables" EntitySet="ro_Comprobantes_Contables" />
+          </AssociationSet>
           <FunctionImport Name="spRo_Reverso_Rol">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdNomina_Tipo" Mode="In" Type="Int32" />
             <Parameter Name="IdNomina_TipoLiqui" Mode="In" Type="Int32" />
             <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
             <Parameter Name="IdRol" Mode="In" Type="Int32" />
+            <Parameter Name="TipoReverso" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="ro_Comprobantes_Contables" EntityType="Model_rrhh.ro_Comprobantes_Contables" />
-          <AssociationSet Name="FK_ro_Comprobantes_Contables_ro_rol" Association="Model_rrhh.FK_ro_Comprobantes_Contables_ro_rol">
-            <End Role="ro_rol" EntitySet="ro_rol" />
-            <End Role="ro_Comprobantes_Contables" EntitySet="ro_Comprobantes_Contables" />
-          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -15431,7 +15433,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spRo_Reverso_Rol" FunctionName="Model_rrhh.Store.spRo_Reverso_Rol" />
           <EntitySetMapping Name="ro_Comprobantes_Contables">
             <EntityTypeMapping TypeName="Model_rrhh.ro_Comprobantes_Contables">
               <MappingFragment StoreEntitySet="ro_Comprobantes_Contables">
@@ -15447,6 +15448,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spRo_Reverso_Rol" FunctionName="Model_rrhh.Store.spRo_Reverso_Rol" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

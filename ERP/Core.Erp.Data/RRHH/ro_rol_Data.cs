@@ -274,7 +274,7 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.spRo_Reverso_Rol(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo, Convert.ToInt32(info.IdRol));
+                    Context.spRo_Reverso_Rol(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo, Convert.ToInt32(info.IdRol),1);
                 }
                 return true;
             }
@@ -290,12 +290,8 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_rol Entity = Context.ro_rol.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
-                    && q.IdRol == info.IdRol);
-                    if (Entity == null)
-                        return false;
-                    Entity.Cerrado = "ABIERTO";
-                    Context.SaveChanges();
+                    Context.spRo_Reverso_Rol(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo, Convert.ToInt32(info.IdRol), 0);
+
                 }
 
                 return true;

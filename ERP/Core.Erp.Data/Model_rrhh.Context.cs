@@ -525,7 +525,7 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerarRDEP", idEmpresaParameter, idErdpParameter, idPeriodoParameter, idNominaParameter, idSucursalInicioParameter, idSucursalFinParameter, idEmpleadoInicioParameter, idEmpleadoFinParameter, observacionParameter, idUsuarioParameter);
         }
     
-        public virtual int spRo_Reverso_Rol(Nullable<int> idEmpresa, Nullable<int> idNomina_Tipo, Nullable<int> idNomina_TipoLiqui, Nullable<int> idPeriodo, Nullable<int> idRol)
+        public virtual int spRo_Reverso_Rol(Nullable<int> idEmpresa, Nullable<int> idNomina_Tipo, Nullable<int> idNomina_TipoLiqui, Nullable<int> idPeriodo, Nullable<int> idRol, Nullable<int> tipoReverso)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
@@ -547,7 +547,11 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdRol", idRol) :
                 new ObjectParameter("IdRol", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Reverso_Rol", idEmpresaParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idPeriodoParameter, idRolParameter);
+            var tipoReversoParameter = tipoReverso.HasValue ?
+                new ObjectParameter("TipoReverso", tipoReverso) :
+                new ObjectParameter("TipoReverso", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Reverso_Rol", idEmpresaParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idPeriodoParameter, idRolParameter, tipoReversoParameter);
         }
     }
 }
