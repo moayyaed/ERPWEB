@@ -38,6 +38,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         cp_orden_pago_cancelaciones_Bus bus_cancelaciones = new cp_orden_pago_cancelaciones_Bus();
         cp_orden_pago_cancelaciones_PorCruzar ListPorCruzar = new cp_orden_pago_cancelaciones_PorCruzar();
         cp_orden_pago_cancelaciones_List List_op = new cp_orden_pago_cancelaciones_List();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Combo box bajo demanda
@@ -243,11 +244,11 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             #endregion
 
-            //return RedirectToAction("Index");
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble });
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -278,6 +279,8 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }else
                 ViewBag.NoMostrarBotones = false;
 
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
             cargar_combos(IdEmpresa);
             return View(model);
         }
@@ -298,8 +301,9 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            //return RedirectToAction("Index");
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble });
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0)

@@ -31,7 +31,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         string mensaje = string.Empty;
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         cxc_cobro_tipo_Bus bus_cobro = new cxc_cobro_tipo_Bus();
-
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Index
@@ -209,11 +209,12 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             #endregion
 
-            //return RedirectToAction("Index");
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble });
+            
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
         }
         
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -231,6 +232,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, IdTipocbte, IdCbteCble);
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
+            ViewBag.MensajeSuccess = MensajeSuccess=="" ? null : MensajeSuccess;
 
             cargar_combos(IdEmpresa);
 
@@ -241,7 +243,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             else
                 ViewBag.NoMostrarBotones = false;
-
+            ViewBag.MensajeSuccess = MensajeSuccess;
             return View(model);
         }
 
@@ -261,7 +263,9 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0)
