@@ -218,6 +218,14 @@ namespace Core.Erp.Web.Areas.General.Controllers
         }
         #endregion
 
+        #region Json
+        public JsonResult ObtenerURL()
+        {
+            string baseURL = Request.Url.Scheme + "://" + Request.Url.Authority;
+            return Json(baseURL, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
     }
     public class UploadControlSettings
     {
