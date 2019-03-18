@@ -207,7 +207,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region Validar cliente final
             var param = bus_param.get_info(i_validar.IdEmpresa);
-            if(param != null && param.IdClienteConsumidorFinal != null && param.MontoMaximoConsumidorFinal > 0)
+            if(param != null && param.IdClienteConsumidorFinal != null && param.MontoMaximoConsumidorFinal > 0 && i_validar.IdCliente == param.IdClienteConsumidorFinal)
             {
                 if (i_validar.info_resumen.Total > Convert.ToDecimal(param.MontoMaximoConsumidorFinal ?? 0))
                 {
