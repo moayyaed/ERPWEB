@@ -292,7 +292,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble });
         }
         public ActionResult Modificar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0)
         {

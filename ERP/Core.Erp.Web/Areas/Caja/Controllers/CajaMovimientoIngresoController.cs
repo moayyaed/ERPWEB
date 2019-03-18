@@ -2,6 +2,7 @@
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Caja;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
@@ -208,7 +209,8 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             #endregion
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble });
         }
         
         public ActionResult Modificar(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0)

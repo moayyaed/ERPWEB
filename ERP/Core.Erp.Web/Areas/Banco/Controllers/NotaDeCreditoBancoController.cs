@@ -199,7 +199,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble });
         }
         [HttpPost]
         public ActionResult Modificar(ba_Cbte_Ban_Info model)

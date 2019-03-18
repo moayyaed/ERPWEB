@@ -222,6 +222,26 @@ function GetListBancoPorSucursal() {
         e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
     }
 
+    function Imprimir() {
+        var datos = {
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ObtenerURL", "Empresa", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {                
+                var win = window.open(data +"/Reportes/BancoReportes/BAN_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+                win.focus();
+            },
+            error: function (error) {
+            }
+        });
+    }
 </script>
 
 @using (Html.BeginForm("Modificar", "NotaDeDebitoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -295,7 +315,7 @@ function GetListBancoPorSucursal() {
                     @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-2 col-md-2">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="cb_Fecha">Fecha:*</label>
                     <div class="input-group date">
@@ -314,6 +334,16 @@ function GetListBancoPorSucursal() {
                         @Html.ValidationMessageFor(q => q.cb_Fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
+            </div>
+            <div class="col-md-1">
+                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","NotaDeDebitoBanco",new { Area = "Banco", IdEmpresa = Model.IdEmpresa },null)">
+                    <i class="fa fa-plus"></i>
+                </a>
             </div>
         </div>
     </div>
