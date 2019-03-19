@@ -24,6 +24,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         cp_SolicitudPagoDet_Bus bus_pago_Det = new cp_SolicitudPagoDet_Bus();
+        string MensajeSuccess = string.Empty;
         #endregion
         #region Index
 
@@ -108,16 +109,21 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, MensajeSuccess });
+
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdSolicitud = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdSolicitud = 0, string MensajeSuccess = "")
         {
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             cp_SolicitudPago_Info model = bus_solicitud.GetInfo(IdEmpresa, IdSolicitud);
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos(IdEmpresa);
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -130,7 +136,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdSolicitud = 0)

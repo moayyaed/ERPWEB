@@ -14,8 +14,18 @@
             </h4>
         </div>
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 
 @using (Html.BeginForm("Modificar", "Retencion", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -131,8 +141,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-10">
@@ -164,6 +172,18 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-11 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
@@ -176,8 +196,6 @@
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -247,28 +265,33 @@
 
     function armar_diario_retencion() {
 
-                var datos = {
-                    IdEmpresa: $("#IdEmpresa").val(),
-                    IdProveedor: $("#IdProveedor").val(),
-                    IdTransaccionSession: $("#IdTransaccionSession").val(),
-                    IdSucursal_cxp: $("#IdSucursal_cxp").val(),
-                }
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        GridViewPartial_retencio_dc.PerformCallback();
-                    },
-                    error: function (error) {
-                    }
-                });
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProveedor: $("#IdProveedor").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_retencio_dc.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
 
-            };
+    };
 
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdRetencion="+@Model.IdRetencion, '_blank');
+        win.focus();
+    }
 </script>

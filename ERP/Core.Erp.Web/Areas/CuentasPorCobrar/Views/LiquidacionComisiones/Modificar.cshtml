@@ -8,12 +8,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
+<script type="text/javascript">
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorCobrarReportes/CXC_006?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdLiquidacion="+@Model.IdLiquidacion, '_blank');
+        win.focus();
+    }
+</script>
 
 @using (Html.BeginForm("Modificar", "LiquidacionComisiones", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdLiquidacion, new { id = "IdLiquidacion" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { id = "IdTransaccionSession" })
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -24,7 +44,7 @@
                 </div>
             </div>
 
-            <div class=" col-md-offset-4 col-md-2 ">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="">Fecha*</label>
                     <div class="input-group date">
@@ -43,6 +63,15 @@
                         @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
+                &nbsp;&nbsp;
+                <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","LiquidacionComisiones",new { Area = "CuentasPorCobrar", IdEmpresa = Model.IdEmpresa },null)">
+                    <i class="fa fa-plus"></i>
+                </a>
             </div>
         </div>
     </div>

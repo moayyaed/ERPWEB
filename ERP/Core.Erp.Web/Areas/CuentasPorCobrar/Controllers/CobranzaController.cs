@@ -32,6 +32,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         cxc_cobro_det_Bus bus_det = new cxc_cobro_det_Bus();
         cxc_cobro_det_List list_det = new cxc_cobro_det_List();
         string mensaje = string.Empty;
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -240,10 +241,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdCobro= model.IdCobro, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, decimal IdCobro = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, decimal IdCobro = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -259,6 +261,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             list_det.set_list(model.lst_det, model.IdTransaccionSession);
             model.IdEntidad = model.IdCliente;
             cargar_combos(IdEmpresa, model.IdSucursal);
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -280,7 +284,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdCobro = model.IdCobro, MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, decimal IdCobro = 0)

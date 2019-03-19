@@ -14,8 +14,19 @@
             </h4>
         </div>
     }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 
 @using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -58,9 +69,9 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdCliente"></label>
-                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                <label for="IdCliente"></label>
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-primary" onclick="CrearModificarProveedor();">
                         <i class="fa fa-external-link-square"></i>
                     </button>
                 </div>
@@ -203,6 +214,18 @@
                     <label for="co_factura">Número autorización*</label>
                     @Html.TextBoxFor(q => q.Num_Autorizacion, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Num_Autorizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label for="IdImprimir"></label>
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                    &nbsp;&nbsp;
+                    <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","Deudas",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -713,7 +736,7 @@
         }
     };
 
-  // obtener tipo de documento
+    // obtener tipo de documento
     function get_list_tipo_doc() {
 
 
@@ -750,13 +773,13 @@
     function armar_diario() {
         if (IdProveedor.GetValue() > 0) {
             var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdProveedor :  IdProveedor.GetValue(),
-            co_subtotal_iva : $("#co_subtotal_iva").val(),
-            co_subtotal_siniva : $("#co_subtotal_siniva").val(),
-            co_valoriva : $("#co_valoriva").val(),
-            co_total : $("#co_total").val(),
-            observacion: $("#observacion").val(),
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor :  IdProveedor.GetValue(),
+                co_subtotal_iva : $("#co_subtotal_iva").val(),
+                co_subtotal_siniva : $("#co_subtotal_siniva").val(),
+                co_valoriva : $("#co_valoriva").val(),
+                co_total : $("#co_total").val(),
+                observacion: $("#observacion").val(),
                 IdTransaccionSession: $("#IdTransaccionSession").val(),
                 IdSucursal_cxp: $("#IdSucursal_cxp").val(),
             }
@@ -774,7 +797,7 @@
                     $("#co_subtotal_siniva").val(data.Subtotal0);
                     $("#co_valoriva").val(data.IVA);
                     $("#co_Por_iva").val(12);
-                    $("#co_total").val(data.Total); 
+                    $("#co_total").val(data.Total);
                     GridViewPartial_deudas_dc.PerformCallback();
                 },
                 error: function (error) {
@@ -782,7 +805,7 @@
             });
         }
     };
-    function get_info_proveedor() {      
+    function get_info_proveedor() {
 
         if (IdProveedor.GetValue() > 0)  {
             var datos = {
@@ -800,7 +823,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
 
-                    $("#co_plazo").val(data.pr_plazo);       
+                    $("#co_plazo").val(data.pr_plazo);
                     var date = moment(co_FechaFactura.GetValue(), "DD-MM-YYYY").add(data.pr_plazo, 'days');
                     co_FechaFactura_vct.SetValue(new Date(date));
                 },
@@ -817,23 +840,23 @@
             IdProveedor: IdProveedor.GetValue()
         }
         $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("ValidarCompraSucursales", "Deudas", new { Area = "CuentasPorPagar" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ValidarCompraSucursales", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 if (data == "S") {
                     $("#DivSucursalCxp").show();
                 } else
                     $("#DivSucursalCxp").hide();
-                },
-                error: function (error) {
-                }
-            });
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function cargar_bodega() {
@@ -841,8 +864,8 @@
 
         var sucursal = $("#IdSucursal").val();
 
-            var datos = {
-                IdEmpresa: $("#IdEmpresa").val(),
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
             IdSucursal: sucursal
         }
 
@@ -864,7 +887,7 @@
             }
         });
     };
-            function GetInfo_Producto(s, e) {
+    function GetInfo_Producto(s, e) {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdProducto: s.GetValue()
@@ -885,31 +908,31 @@
             error: function (error) {
             }
         });
-            };
+    };
 
-             function armar_diario_retencion() {
+    function armar_diario_retencion() {
 
-                var datos = {
-                    IdEmpresa: $("#IdEmpresa").val(),
-                    IdProveedor: IdProveedor.GetValue(),
-                    IdTransaccionSession: $("#IdTransaccionSession").val(),
-                    IdSucursal_cxp: $("#IdSucursal_cxp").val(),
-                }
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        GridViewPartial_retencio_dc.PerformCallback();
-                    },
-                    error: function (error) {
-                    }
-                });
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProveedor: IdProveedor.GetValue(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_retencio_dc.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
 
     };
     function SetValorRetencion(s, e) {
@@ -942,8 +965,8 @@
         });
     };
 
-    
- function CrearModificarProveedor() {
+
+    function CrearModificarProveedor() {
         if(IdProveedor.GetValue() > 0)
         {
             var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
@@ -953,5 +976,11 @@
             var win = window.open(window.location.origin +"/FixedERP/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
             win.focus();
         }
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte_Ogiro="+@Model.IdTipoCbte_Ogiro+"&IdCbteCble_Ogiro="+@Model.IdCbteCble_Ogiro, '_blank');
+        win.focus();
     }
 </script>

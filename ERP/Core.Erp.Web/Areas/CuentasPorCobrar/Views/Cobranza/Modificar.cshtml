@@ -8,6 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 
 <script type="text/javascript">
     var selectedIDs;
@@ -62,7 +63,7 @@
         $("#FacturasModal").modal("show");
     }
 
-      function AddFacturas() {
+    function AddFacturas() {
 
         var datos = {
             IDs: selectedIDs,
@@ -136,6 +137,12 @@
         });
         GridView_cobranza_det.PerformCallback();
     }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorCobrarReportes/CXC_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdCobro="+@Model.IdCobro, '_blank');
+        win.focus();
+    }
 </script>
 
 
@@ -148,6 +155,15 @@
         <div class="alert alert-warning alert-dismissible">
             <h4>
                 <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
             </h4>
         </div>
     }
@@ -204,7 +220,7 @@
             }
         </div>
         <div class="col-md-4">
-            <div class="col-md-offset-6 col-md-6">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="cr_fecha">Fecha*</label>
                     @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>
@@ -219,28 +235,39 @@
                     @Html.ValidationMessageFor(q => q.cr_fecha, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdCaja">Caja*</label>
-                    @Html.DropDownListFor(q => q.IdCaja, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @class = "form-control", @id = "IdCaja" })
-                    @Html.ValidationMessageFor(q => q.IdCaja, "", new { @class = "text-danger" })
-                </div>
-            </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="cr_TotalCobro">Total*</label>
-                    @Html.TextBoxFor(q => q.cr_TotalCobro, new { @id = "cr_TotalCobro", @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.cr_TotalCobro, "", new { @class = "text-danger" })
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                    &nbsp;&nbsp;
+                    <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","Cobranza",new { Area = "CuentasPorCobrar", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="cr_saldo">Saldo</label>
-                    @Html.TextBoxFor(q => q.cr_saldo, new { @id = "cr_saldo", @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(q => q.cr_saldo, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdCaja">Caja*</label>
+                        @Html.DropDownListFor(q => q.IdCaja, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @class = "form-control", @id = "IdCaja" })
+                        @Html.ValidationMessageFor(q => q.IdCaja, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cr_TotalCobro">Total*</label>
+                        @Html.TextBoxFor(q => q.cr_TotalCobro, new { @id = "cr_TotalCobro", @class = "form-control" })
+                        @Html.ValidationMessageFor(q => q.cr_TotalCobro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cr_saldo">Saldo</label>
+                        @Html.TextBoxFor(q => q.cr_saldo, new { @id = "cr_saldo", @class = "form-control", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(q => q.cr_saldo, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
     <div class="row" id="div_cheque" hidden>
         <div class="col-md-12">
@@ -281,8 +308,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary" id="btn_buscar" onclick="MostrarModal();">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary" title ="Buscar facturas" id="btn_buscar" onclick="MostrarModal();">
                     <i class="fa fa-search"></i>
                 </button>
             </div>

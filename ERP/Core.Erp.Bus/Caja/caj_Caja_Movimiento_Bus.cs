@@ -48,7 +48,7 @@ namespace Core.Erp.Bus.Caja
                 if (odata_ct.guardarDB(info.info_ct_cbtecble))
                 {//Si el diario se guarda exitosamente entonces paso los PK al movimiento de caja
                     info.IdCbteCble = info.info_ct_cbtecble.IdCbteCble;
-                    //Guardo el movimiento de caja
+                    //Guardo el movimiento de caja                    
                     if (odata.guardarDB(info))
                     {
                         return true;

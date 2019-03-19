@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_LiquidacionTarjeta_Info
 @{
-    ViewBag.Title = "Modificacar liquidación de tarjeta de crédito";
+    ViewBag.Title = "Modificar liquidación de tarjeta de crédito";
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
@@ -8,6 +8,8 @@
     }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $("#CobrosModal").modal("hide");
@@ -29,7 +31,7 @@
         //Capture all selected keys
         selectedIDs = values.join(',');
     }
-    function MostrarModal() {        
+    function MostrarModal() {
         selectedIDs = "";
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -106,6 +108,12 @@
         GridViewPartial_CobrosLiquidacion.PerformCallback();
         $("#CobrosModal").modal("hide");
     }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorCobrarReportes/CXC_007?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdLiquidacion="+@Model.IdLiquidacion, '_blank');
+        win.focus();
+    }
 </script>
 @using (Html.BeginForm("Modificar", "LiquidacionTarjetaCredito", FormMethod.Post, new { @class = "form", @role = "form", @id="PostForm" }))
 {
@@ -126,7 +134,15 @@
             </h4>
         </div>
     }
-
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
     <div class="modal fade" id="CobrosModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -163,14 +179,14 @@
                     @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="Lote">Lote:</label>
                     @Html.TextBoxFor(q=> q.Lote, new { @id = "Lote", @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Lote, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-1 col-md-2">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="cb_Fecha">Fecha:*</label>
                     <div class="input-group date">
@@ -190,7 +206,15 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
+                &nbsp;&nbsp;
+                <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","LiquidacionTarjetaCredito",new { Area = "CuentasPorCobrar", IdEmpresa = Model.IdEmpresa },null)">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
         </div>
     </div>
     <div class="row">

@@ -8,6 +8,7 @@
     }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 
 @using (Html.BeginForm("Modificar", "NotaDeCreditoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -89,15 +90,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                    <i class="fa fa-print"></i>
-                </button>
-            </div>
-            <div class="col-md-1">
-                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","NotaDeCreditoBanco",new { Area = "Banco", IdEmpresa = Model.IdEmpresa },null)">
-                    <i class="fa fa-plus"></i>
-                </a>
+            <div class="col-md-2">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                    &nbsp;&nbsp;
+                    <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","NotaDeCreditoBanco",new { Area = "Banco", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -314,23 +317,8 @@ function GetListBancoPorSucursal() {
     }
 
     function Imprimir() {
-        var datos = {
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("ObtenerURL", "Empresa", new { Area = "General" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {                
-                var win = window.open(data +"/FixedERP/Reportes/BancoReportes/BAN_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
-                win.focus();
-            },
-            error: function (error) {
-            }
-        });
+        var location = GetPathServer();        
+        var win = window.open(location +"/Reportes/BancoReportes/BAN_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+        win.focus();
     }
 </script>

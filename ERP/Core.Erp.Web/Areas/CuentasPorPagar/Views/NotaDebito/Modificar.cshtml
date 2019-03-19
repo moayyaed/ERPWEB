@@ -14,8 +14,19 @@
             </h4>
         </div>
     }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 
 @using (Html.BeginForm("Modificar", "NotaDebito", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -53,7 +64,7 @@
         <div class="col-md-1">
             <div class="form-group">
                 <label for="IdCliente"></label>
-                <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                <button type="button" class="btn btn-primary" title="Modificar proveedor" onclick="CrearModificarProveedor();">
                     <i class="fa fa-external-link-square"></i>
                 </button>
             </div>
@@ -160,11 +171,23 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="cn_observacion">Observación*</label>
                     @Html.TextBoxFor(q => q.cn_observacion, new { @class = "form-control", @id = "observacion" })
                     @Html.ValidationMessageFor(q => q.cn_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                    &nbsp;&nbsp;
+                    <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","NotaDebito",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -326,151 +349,151 @@
 
 
 
-<script>    
-$(function () {
-    ocultar_mostrar_div();
-    $("#cn_num_doc_modificado").change(function () {
-        rellenar_ceros();
-    });
-    $("#cn_Nota").change(function () {
-        rellenar_ceros_izquierda();
-
-    });
-    $("#IdTipoNota").change(function () {
+<script>
+    $(function () {
         ocultar_mostrar_div();
-    });
-});
-$("#cn_subtotal_iva").change(function () {
-    actualizar_valores();
-    armar_diario();
-});
-
-$("#cn_subtotal_siniva").change(function () {
-    actualizar_valores();
-    armar_diario();
-});
-
-$("#cmb_idtCredito").change(function () {
-    if (IdProveedor.GetValue() == 0) {
-        alert("Seleccione el proveedor");
-    }
-    $("#cmbTipoDocu").empty();
-    $("#cmbTipoDocu_modif").empty();
-    get_list_tipo_doc();
-});
-
-function rellenar_ceros_izquierda() {
-    var str = "" + Number($("#cn_Nota").val());
-    var pad = "000000000";
-    var doc = pad.substring(0, pad.length - str.length) + str;
-    $("#cn_Nota").val(doc);
-}
-function rellenar_ceros() {
-    var sts = "" + Number($("#cn_num_doc_modificado").val());
-    var pad = "000000000";
-    var doc = pad.substring(0, pad.length - sts.length) + sts;
-    $("#cn_num_doc_modificado").val(doc);
-}
-function ocultar_mostrar_div() {
-    var tipo_nota = $("#IdTipoNota").val();
-    if (tipo_nota == "T_TIP_NOTA_INT") {
-        $("#div_tipo").hide();
-    } else {
-        $("#div_tipo").show();
-    }
-}
-
-function actualizar_valores() {
-    var base_iva = $("#cn_subtotal_iva").val();
-    var base_cero = $("#cn_subtotal_siniva").val();
-    var iva = base_iva * 0.12;
-    if (base_iva == "")
-        base_iva = 0;
-    if (base_cero == "")
-        base_cero = 0;
-    if (iva == "")
-        iva = 0;
-    var tot = parseFloat(parseFloat(base_iva) + parseFloat(base_cero) + parseFloat(iva));
-    $('#cn_valoriva').val(iva.toFixed(2));
-    if (tot > 0)
-        $('#cn_total').val(tot.toFixed(2));
-    else
-        $('#cn_total').val(0.00);
-    if (iva > 0)
-        $('#cn_Por_iva').val(12);
-    else
-        $('#cn_Por_iva').val(0.00);
-
-}
-
-// obtener tipo de documento
-function get_list_tipo_doc() {
-if (IdProveedor.GetValue() > 0 && $("#cmb_idtCredito").val() != "") {
-    var datos = {
-        IdProveedor: IdProveedor.GetValue(),
-        codigoSRI: $("#IdIden_credito").val(),
-        IdEmpresa: $("#IdEmpresa").val()
-
-    }
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(datos),
-        url: '@Url.Action("get_list_tipo_doc", "Deudas", new { Area = "CuentasPorPagar" })',
-        async: false,
-        bDeferRender: true,
-        bProcessing: true,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            $.each(data, function (i, row) {
-                $("#cmbTipoDocu").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
-                $("#cmbTipoDocu_modif").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
-            });
-        },
-        error: function (error) {
-        }
-    });
-}
-};
-
-// armar diario contable
-function armar_diario() {
-
-
-    if (IdProveedor.GetValue() == 0) {
-        alert("Seleccione el proveedor");
-    }
-    else
-    {
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdProveedor: IdProveedor.GetValue(),
-            cn_subtotal_iva: $("#cn_subtotal_iva").val(),
-            cn_subtotal_siniva: $("#cn_subtotal_siniva").val(),
-            valoriva: $("#cn_valoriva").val(),
-            total: $("#cn_total").val(),
-            observacion: $("#observacion").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val(),
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("armar_diario", "NotaDebito", new { Area = "CuentasPorPagar" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridViewPartial_nota_debito_dc.PerformCallback();
-            },
-            error: function (error) {
-            }
+        $("#cn_num_doc_modificado").change(function () {
+            rellenar_ceros();
         });
+        $("#cn_Nota").change(function () {
+            rellenar_ceros_izquierda();
+
+        });
+        $("#IdTipoNota").change(function () {
+            ocultar_mostrar_div();
+        });
+    });
+    $("#cn_subtotal_iva").change(function () {
+        actualizar_valores();
+        armar_diario();
+    });
+
+    $("#cn_subtotal_siniva").change(function () {
+        actualizar_valores();
+        armar_diario();
+    });
+
+    $("#cmb_idtCredito").change(function () {
+        if (IdProveedor.GetValue() == 0) {
+            alert("Seleccione el proveedor");
+        }
+        $("#cmbTipoDocu").empty();
+        $("#cmbTipoDocu_modif").empty();
+        get_list_tipo_doc();
+    });
+
+    function rellenar_ceros_izquierda() {
+        var str = "" + Number($("#cn_Nota").val());
+        var pad = "000000000";
+        var doc = pad.substring(0, pad.length - str.length) + str;
+        $("#cn_Nota").val(doc);
     }
+    function rellenar_ceros() {
+        var sts = "" + Number($("#cn_num_doc_modificado").val());
+        var pad = "000000000";
+        var doc = pad.substring(0, pad.length - sts.length) + sts;
+        $("#cn_num_doc_modificado").val(doc);
+    }
+    function ocultar_mostrar_div() {
+        var tipo_nota = $("#IdTipoNota").val();
+        if (tipo_nota == "T_TIP_NOTA_INT") {
+            $("#div_tipo").hide();
+        } else {
+            $("#div_tipo").show();
+        }
+    }
+
+    function actualizar_valores() {
+        var base_iva = $("#cn_subtotal_iva").val();
+        var base_cero = $("#cn_subtotal_siniva").val();
+        var iva = base_iva * 0.12;
+        if (base_iva == "")
+            base_iva = 0;
+        if (base_cero == "")
+            base_cero = 0;
+        if (iva == "")
+            iva = 0;
+        var tot = parseFloat(parseFloat(base_iva) + parseFloat(base_cero) + parseFloat(iva));
+        $('#cn_valoriva').val(iva.toFixed(2));
+        if (tot > 0)
+            $('#cn_total').val(tot.toFixed(2));
+        else
+            $('#cn_total').val(0.00);
+        if (iva > 0)
+            $('#cn_Por_iva').val(12);
+        else
+            $('#cn_Por_iva').val(0.00);
+
+    }
+
+    // obtener tipo de documento
+    function get_list_tipo_doc() {
+        if (IdProveedor.GetValue() > 0 && $("#cmb_idtCredito").val() != "") {
+            var datos = {
+                IdProveedor: IdProveedor.GetValue(),
+                codigoSRI: $("#IdIden_credito").val(),
+                IdEmpresa: $("#IdEmpresa").val()
+
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_list_tipo_doc", "Deudas", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $.each(data, function (i, row) {
+                        $("#cmbTipoDocu").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
+                        $("#cmbTipoDocu_modif").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
+                    });
+                },
+                error: function (error) {
+                }
+            });
+        }
     };
 
-     function CrearModificarProveedor() {
+    // armar diario contable
+    function armar_diario() {
+
+
+        if (IdProveedor.GetValue() == 0) {
+            alert("Seleccione el proveedor");
+        }
+        else
+        {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor: IdProveedor.GetValue(),
+                cn_subtotal_iva: $("#cn_subtotal_iva").val(),
+                cn_subtotal_siniva: $("#cn_subtotal_siniva").val(),
+                valoriva: $("#cn_valoriva").val(),
+                total: $("#cn_total").val(),
+                observacion: $("#observacion").val(),
+                IdTransaccionSession: $("#IdTransaccionSession").val(),
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("armar_diario", "NotaDebito", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    GridViewPartial_nota_debito_dc.PerformCallback();
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+
+    function CrearModificarProveedor() {
         if(IdProveedor.GetValue() > 0)
         {
             var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
@@ -481,5 +504,10 @@ function armar_diario() {
             win.focus();
         }
     }
-	
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_003?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte="+@Model.IdTipoCbte_Nota+"&IdCbteCble="+@Model.IdCbteCble_Nota, '_blank');
+        win.focus();
+    }
 </script>

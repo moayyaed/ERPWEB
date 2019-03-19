@@ -199,8 +199,9 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             model.IdTipocbte = i_parametro.IdTipoCbteCble_MoviCaja_Ing;
             model.cm_Signo = "+";
+            model.IdUsuario = SessionFixed.IdUsuario;
             #endregion
-            
+
             #region guardar
             if (!bus_caja_mov.guardarDB(model))
             {
@@ -243,7 +244,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             else
                 ViewBag.NoMostrarBotones = false;
-            ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 

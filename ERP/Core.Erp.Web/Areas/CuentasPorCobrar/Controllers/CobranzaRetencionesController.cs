@@ -22,7 +22,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         cxc_cobro_det_ret_List List_det = new cxc_cobro_det_ret_List();
         string mensaje = string.Empty;
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Index
@@ -104,7 +104,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #endregion
 
         #region Aplicar retención
-        public ActionResult AplicarRetencion(int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string CodTipoDocumento = "")
+        public ActionResult AplicarRetencion(int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string CodTipoDocumento = "", string MensajeSuccess="")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
@@ -125,6 +125,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             }
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
         [HttpPost]
@@ -149,8 +151,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             {
                 ViewBag.mensaje = "No se ha podido guardar el registro";
                 return View(model);
-            }            
-            return RedirectToAction("Index");
+            }
+
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("AplicarRetencion", new {IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, CodTipoDocumento=model.vt_tipoDoc, MensajeSuccess });
         }
         #endregion
 

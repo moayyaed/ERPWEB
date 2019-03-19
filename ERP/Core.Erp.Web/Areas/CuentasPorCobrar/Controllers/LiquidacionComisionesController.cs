@@ -20,6 +20,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         cxc_liquidacion_comisiones_det_Bus bus_det = new cxc_liquidacion_comisiones_det_Bus();
         cxc_liquidacion_det_List List_det = new cxc_liquidacion_det_List();
+        string MensajeSuccess = string.Empty;
         #endregion
         #region Index
         public ActionResult Index()
@@ -83,10 +84,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdLiquidacion = model.IdLiquidacion, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdLiquidacion = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdLiquidacion = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -102,6 +105,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdLiquidacion);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -116,7 +121,9 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdLiquidacion = model.IdLiquidacion, MensajeSuccess });
         }
         public ActionResult Anular(int IdEmpresa = 0, decimal IdLiquidacion = 0)
         {

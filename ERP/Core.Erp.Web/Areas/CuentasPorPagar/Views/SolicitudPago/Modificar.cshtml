@@ -8,9 +8,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
 <script type="text/javascript">
-        
-     function CrearModificarProveedor() {
+    function CrearModificarProveedor() {
         if(IdProveedor.GetValue() > 0)
         {
             var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
@@ -22,6 +23,11 @@
         }
     }
 
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_011?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSolicitud="+@Model.IdSolicitud, '_blank');
+        win.focus();
+    }
 </script>
 
 
@@ -32,7 +38,16 @@
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdSolicitud)
-    
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-3">
@@ -50,7 +65,7 @@
                                 @Html.ValidationMessageFor(q => q.Solicitante, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-offset-4 col-md-2">
+                        <div class="col-md-offset-2 col-md-2">
                             <div class="form-group">
                                 <label for="">Fecha*</label>
                                 <div class="input-group date">
@@ -70,6 +85,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <label for="IdImprimir"></label>
+                            <div class="form-group">                                
+                                <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                                    <i class="fa fa-print"></i>
+                                </button>
+                                &nbsp;&nbsp;
+                                <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","SolicitudPago",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -82,9 +109,9 @@
                             </div>
                         </div>
                         <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="IdCliente"></label>
-                                <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                            <label for="IdCliente"></label>
+                            <div class="form-group">                                
+                                <button type="button" class="btn btn-primary" onclick="CrearModificarProveedor();">
                                     <i class="fa fa-external-link-square"></i>
                                 </button>
                             </div>

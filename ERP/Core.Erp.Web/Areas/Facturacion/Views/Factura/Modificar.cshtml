@@ -10,9 +10,12 @@
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
 <script type="text/javascript">
     function ImprimirRIDE() {
-        var win = window.open(window.location.origin +"/FixedERP/Reportes/FacturacionReportes/FAC_007?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
+        var location = GetPathServer();        
+        var win = window.open(location +"/Reportes/FacturacionReportes/FAC_007?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
         win.focus();
     }
 

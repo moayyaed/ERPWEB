@@ -27,6 +27,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         cxc_LiquidacionTarjeta_x_cxc_cobro_List Lista_LiquidacionTarjeta_x_cxc_cobro = new cxc_LiquidacionTarjeta_x_cxc_cobro_List();
         cxc_LiquidacionTarjeta_x_cxc_cobro_pendientes_List Lista_Liquidacion_x_cobro_pendiente = new cxc_LiquidacionTarjeta_x_cxc_cobro_pendientes_List();
         string mensaje = string.Empty;
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Metodos
@@ -239,9 +240,10 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, MensajeSuccess });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -258,6 +260,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             Lista_LiquidacionTarjetaDet.set_list(bus_LiquidacionTarjetaDet.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
             Lista_LiquidacionTarjeta_x_cxc_cobro.set_list(bus_LiquidacionTarjeta_cxc_cobro.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
 
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             cargar_combos(IdEmpresa, model.IdSucursal);
             return View(model);
         }
@@ -278,7 +281,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0)

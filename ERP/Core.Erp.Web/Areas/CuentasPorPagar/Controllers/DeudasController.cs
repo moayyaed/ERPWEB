@@ -54,6 +54,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_giro_det_PorIngresar_List List_det_PorIngresar = new cp_orden_giro_det_PorIngresar_List();
         cp_codigo_SRI_Bus bus_sri = new cp_codigo_SRI_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -444,11 +445,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte_Ogiro = model.IdTipoCbte_Ogiro, IdCbteCble_Ogiro = model.IdCbteCble_Ogiro, MensajeSuccess });
 
-            return RedirectToAction("Index");
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0, string MensajeSuccess = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -485,6 +487,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
             cargar_combos(model);
             cargar_combos_detalle();
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -575,7 +579,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte_Ogiro = model.IdTipoCbte_Ogiro, IdCbteCble_Ogiro = model.IdCbteCble_Ogiro, MensajeSuccess });
+
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0)
         {

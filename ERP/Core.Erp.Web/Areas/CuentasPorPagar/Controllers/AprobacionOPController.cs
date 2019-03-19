@@ -19,6 +19,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         cp_orden_pago_formapago_Bus bus_cp_orden_pago_forma_pago = new cp_orden_pago_formapago_Bus();
         orden_pago_aprobacion_List List_aprobacion_op = new orden_pago_aprobacion_List();
+        string MensajeSuccess = string.Empty;
 
         public ActionResult Index()
         {

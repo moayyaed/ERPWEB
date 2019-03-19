@@ -16,8 +16,19 @@
             </h4>
         </div>
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $("#IdTipo_Persona").change(function () {
@@ -37,12 +48,12 @@
     function OnBeginCallback(s, e) {
         e.customArgs["IdTipo_Persona"] = $("#IdTipo_Persona").val();
         e.customArgs["Entidad"] = IdEntidad.GetValue();
-        e.customArgs["selectedIDs"] = selectedIDs;        
+        e.customArgs["selectedIDs"] = selectedIDs;
     }
 
     function CargarEstadoAprobacion() {
         $("#IdEstado_op").empty();
-        
+
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdTipo_op: IdTipo_op.GetValue()
@@ -64,6 +75,12 @@
             }
         });
     };
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_004?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdOrdenPago="+@Model.IdOrdenPago, '_blank');
+        win.focus();
+    }
 </script>
 @using (Html.BeginForm("Modificar", "OrdenPago", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -207,6 +224,18 @@
                     <label for="IdSolicitudPago"># Solicitud</label>
                     @Html.TextBoxFor(q => q.IdSolicitudPago, new { @class = "form-control", @id = "IdSolicitudPago" })
                     @Html.ValidationMessageFor(q => q.IdSolicitudPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="IdImprimir"></label>
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                    &nbsp;&nbsp;
+                    <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","OrdenPago",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
         </div>
