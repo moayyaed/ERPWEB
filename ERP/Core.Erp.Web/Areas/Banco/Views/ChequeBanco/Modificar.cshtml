@@ -300,8 +300,8 @@
             bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            success: function (data) {                
-                var win = window.open(data +"/Reportes/BancoReportes/BAN_003?IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+            success: function (data) {
+                                var win = window.open(data +"/FixedERP/Reportes/BancoReportes/BAN_006?IdEmpresa="+@Model.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble+"&IdBanco="+@Model.IdBanco, '_blank');
                 win.focus();
             },
             error: function (error) {

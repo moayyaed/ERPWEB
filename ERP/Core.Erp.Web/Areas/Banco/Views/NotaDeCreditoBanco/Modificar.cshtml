@@ -326,7 +326,7 @@ function GetListBancoPorSucursal() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {                
-                var win = window.open(data +"/Reportes/BancoReportes/BAN_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+                var win = window.open(data +"/FixedERP/Reportes/BancoReportes/BAN_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
                 win.focus();
             },
             error: function (error) {

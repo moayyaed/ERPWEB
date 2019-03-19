@@ -376,7 +376,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {                
-                var win = window.open(data +"/Reportes/CajaReportes/CAJ_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+                var win = window.open(data +"/FixedERP/Reportes/CajaReportes/CAJ_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
                 win.focus();
             },
             error: function (error) {
