@@ -199,8 +199,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(true);
+            cargar_combos(false);
             CXP_009_Rpt report = new CXP_009_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_Fecha_ini.Value = model.fecha_ini;
@@ -216,6 +217,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_009(cl_filtros_Info model)
         {
             CXP_009_Rpt report = new CXP_009_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_Fecha_ini.Value = model.fecha_ini;
@@ -223,7 +225,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos(true);
+            cargar_combos(false);
             ViewBag.Report = report;
             return View(model);
         }

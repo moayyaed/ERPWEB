@@ -13,6 +13,8 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
+
         List<CXP_009_resumen_Info> lst_resumen = new List<CXP_009_resumen_Info>();
         public CXP_009_Rpt()
         {
@@ -32,7 +34,16 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
 
             CXP_009_Bus bus_rpt = new CXP_009_Bus();
-            List<CXP_009_Info> lst_rpt = bus_rpt.get_list(IdEmpresa,  IdSucursal ,Fecha_ini,Fecha_fin, ref lst_resumen, mostrar_anulados);
+            List<CXP_009_Info> lst_rpt = new List<CXP_009_Info>();
+
+            if (IntArray != null)
+            {
+                foreach (var item in IntArray)
+                {            
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, item, Fecha_ini, Fecha_fin, ref lst_resumen, mostrar_anulados));
+                }
+            }         
+               
             this.DataSource = lst_rpt;
         }
 
