@@ -16,7 +16,6 @@ namespace Core.Erp.Data
     {
         public Af_Activo_fijo()
         {
-            this.Af_Activo_fijo_CtaCble = new HashSet<Af_Activo_fijo_CtaCble>();
             this.Af_Depreciacion_Det = new HashSet<Af_Depreciacion_Det>();
             this.Af_Mej_Baj_Activo = new HashSet<Af_Mej_Baj_Activo>();
             this.Af_Retiro_Activo = new HashSet<Af_Retiro_Activo>();
@@ -52,6 +51,7 @@ namespace Core.Erp.Data
         public string Af_Codigo_Barra { get; set; }
         public string Estado_Proceso { get; set; }
         public double Af_ValorSalvamento { get; set; }
+        public int Cantidad { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }
@@ -66,8 +66,8 @@ namespace Core.Erp.Data
         public virtual Af_Catalogo Af_Catalogo1 { get; set; }
         public virtual Af_Catalogo Af_Catalogo2 { get; set; }
         public virtual Af_Catalogo Af_Catalogo3 { get; set; }
+        public virtual Af_Catalogo Af_Catalogo4 { get; set; }
         public virtual Af_Departamento Af_Departamento { get; set; }
-        public virtual ICollection<Af_Activo_fijo_CtaCble> Af_Activo_fijo_CtaCble { get; set; }
         public virtual ICollection<Af_Depreciacion_Det> Af_Depreciacion_Det { get; set; }
         public virtual ICollection<Af_Mej_Baj_Activo> Af_Mej_Baj_Activo { get; set; }
         public virtual ICollection<Af_Retiro_Activo> Af_Retiro_Activo { get; set; }

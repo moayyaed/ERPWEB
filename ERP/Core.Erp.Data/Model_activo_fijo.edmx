@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model_activo_fijo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model_activo_fijo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Af_Activo_fijo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -39,6 +39,7 @@
           <Property Name="Af_Codigo_Barra" Type="varchar" MaxLength="50" />
           <Property Name="Estado_Proceso" Type="varchar" MaxLength="35" Nullable="false" />
           <Property Name="Af_ValorSalvamento" Type="float" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
@@ -66,19 +67,6 @@
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="MotiAnula" Type="varchar" MaxLength="5000" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Af_Activo_fijo_CtaCble">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdActivoFijo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
-          <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="IdDepartamento" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Porcentaje" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Af_Activo_fijo_tipo">
           <Key>
@@ -305,26 +293,6 @@
           <Property Name="IdTipoCbte" Type="int" />
           <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwAf_Activo_fijo_CtaCble' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vwAf_Activo_fijo_CtaCble">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdActivoFijo" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdDepartamento" />
-            <PropertyRef Name="IdCtaCble" />
-            <PropertyRef Name="Porcentaje" />
-            <PropertyRef Name="pc_Cuenta" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
-          <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="IdDepartamento" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Porcentaje" Type="float" Nullable="false" />
-          <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
-        </EntityType>
         <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
           <End Role="Af_Activo_fijo_Categoria" Type="Self.Af_Activo_fijo_Categoria" Multiplicity="1" />
           <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
@@ -401,6 +369,18 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwAf_Activo_fijo_CtaCble' no tiene
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo9">
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="Estado_Proceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Af_Activo_fijo_Af_Departamento">
           <End Role="Af_Departamento" Type="Self.Af_Departamento" Multiplicity="1" />
           <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
@@ -426,34 +406,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwAf_Activo_fijo_CtaCble' no tiene
             <Dependent Role="Af_Activo_fijo_Categoria">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdActivoFijoTipo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo">
-          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="1" />
-          <End Role="Af_Activo_fijo_CtaCble" Type="Self.Af_Activo_fijo_CtaCble" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Af_Activo_fijo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdActivoFijo" />
-            </Principal>
-            <Dependent Role="Af_Activo_fijo_CtaCble">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdActivoFijo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Af_Activo_fijo_CtaCble_Af_Departamento">
-          <End Role="Af_Departamento" Type="Self.Af_Departamento" Multiplicity="1" />
-          <End Role="Af_Activo_fijo_CtaCble" Type="Self.Af_Activo_fijo_CtaCble" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Af_Departamento">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdDepartamento" />
-            </Principal>
-            <Dependent Role="Af_Activo_fijo_CtaCble">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdDepartamento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -534,7 +486,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwAf_Activo_fijo_CtaCble' no tiene
         <EntityContainer Name="Model_activo_fijoStoreContainer">
           <EntitySet Name="Af_Activo_fijo" EntityType="Self.Af_Activo_fijo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Activo_fijo_Categoria" EntityType="Self.Af_Activo_fijo_Categoria" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Af_Activo_fijo_CtaCble" EntityType="Self.Af_Activo_fijo_CtaCble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Activo_fijo_tipo" EntityType="Self.Af_Activo_fijo_tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Catalogo" EntityType="Self.Af_Catalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_CatalogoTipo" EntityType="Self.Af_CatalogoTipo" Schema="dbo" store:Type="Tables" />
@@ -545,17 +496,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwAf_Activo_fijo_CtaCble' no tiene
           <EntitySet Name="Af_Parametros" EntityType="Self.Af_Parametros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Retiro_Activo" EntityType="Self.Af_Retiro_Activo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Venta_Activo" EntityType="Self.Af_Venta_Activo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="vwAf_Activo_fijo_CtaCble" EntityType="Self.vwAf_Activo_fijo_CtaCble" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[vwAf_Activo_fijo_CtaCble].[IdEmpresa] AS [IdEmpresa], 
-[vwAf_Activo_fijo_CtaCble].[IdActivoFijo] AS [IdActivoFijo], 
-[vwAf_Activo_fijo_CtaCble].[Secuencia] AS [Secuencia], 
-[vwAf_Activo_fijo_CtaCble].[IdDepartamento] AS [IdDepartamento], 
-[vwAf_Activo_fijo_CtaCble].[IdCtaCble] AS [IdCtaCble], 
-[vwAf_Activo_fijo_CtaCble].[Porcentaje] AS [Porcentaje], 
-[vwAf_Activo_fijo_CtaCble].[pc_Cuenta] AS [pc_Cuenta]
-FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" Association="Self.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
             <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
@@ -580,6 +520,10 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
             <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
           </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo9" Association="Self.FK_Af_Activo_fijo_Af_Catalogo9">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Af_Activo_fijo_Af_Departamento" Association="Self.FK_Af_Activo_fijo_Af_Departamento">
             <End Role="Af_Departamento" EntitySet="Af_Departamento" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
@@ -587,14 +531,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           <AssociationSet Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" Association="Self.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
             <End Role="Af_Activo_fijo_tipo" EntitySet="Af_Activo_fijo_tipo" />
             <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo" Association="Self.FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo">
-            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
-            <End Role="Af_Activo_fijo_CtaCble" EntitySet="Af_Activo_fijo_CtaCble" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Af_Activo_fijo_CtaCble_Af_Departamento" Association="Self.FK_Af_Activo_fijo_CtaCble_Af_Departamento">
-            <End Role="Af_Departamento" EntitySet="Af_Departamento" />
-            <End Role="Af_Activo_fijo_CtaCble" EntitySet="Af_Activo_fijo_CtaCble" />
           </AssociationSet>
           <AssociationSet Name="FK_Af_Catalogo_Af_CatalogoTipo" Association="Self.FK_Af_Catalogo_Af_CatalogoTipo">
             <End Role="Af_CatalogoTipo" EntitySet="Af_CatalogoTipo" />
@@ -793,20 +729,18 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           </FunctionImport>
           <EntitySet Name="Af_Parametros" EntityType="Model_activo_fijo.Af_Parametros" />
           <EntitySet Name="Af_Activo_fijo_Categoria" EntityType="Model_activo_fijo.Af_Activo_fijo_Categoria" />
-          <EntitySet Name="Af_Activo_fijo_CtaCble" EntityType="Model_activo_fijo.Af_Activo_fijo_CtaCble" />
           <EntitySet Name="Af_Activo_fijo_tipo" EntityType="Model_activo_fijo.Af_Activo_fijo_tipo" />
           <EntitySet Name="Af_Departamento" EntityType="Model_activo_fijo.Af_Departamento" />
           <AssociationSet Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" Association="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
             <End Role="Af_Activo_fijo_tipo" EntitySet="Af_Activo_fijo_tipo" />
             <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
           </AssociationSet>
-          <AssociationSet Name="FK_Af_Activo_fijo_CtaCble_Af_Departamento" Association="Model_activo_fijo.FK_Af_Activo_fijo_CtaCble_Af_Departamento">
-            <End Role="Af_Departamento" EntitySet="Af_Departamento" />
-            <End Role="Af_Activo_fijo_CtaCble" EntitySet="Af_Activo_fijo_CtaCble" />
-          </AssociationSet>
-          <EntitySet Name="vwAf_Activo_fijo_CtaCble" EntityType="Model_activo_fijo.vwAf_Activo_fijo_CtaCble" />
-          <EntitySet Name="Af_Activo_fijo" EntityType="Model_activo_fijo.Af_Activo_fijo" />
           <EntitySet Name="Af_Catalogo" EntityType="Model_activo_fijo.Af_Catalogo" />
+          <AssociationSet Name="FK_Af_Catalogo_Af_CatalogoTipo" Association="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo">
+            <End Role="Af_CatalogoTipo" EntitySet="Af_CatalogoTipo" />
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+          </AssociationSet>
+          <EntitySet Name="Af_Activo_fijo" EntityType="Model_activo_fijo.Af_Activo_fijo" />
           <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
             <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
@@ -831,13 +765,13 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
             <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
           </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo9" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Af_Activo_fijo_Af_Departamento" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento">
             <End Role="Af_Departamento" EntitySet="Af_Departamento" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo">
-            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
-            <End Role="Af_Activo_fijo_CtaCble" EntitySet="Af_Activo_fijo_CtaCble" />
           </AssociationSet>
           <AssociationSet Name="FK_Af_Depreciacion_Det_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Depreciacion_Det_Af_Activo_fijo">
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
@@ -854,10 +788,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           <AssociationSet Name="FK_Af_Venta_Activo_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo">
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
             <End Role="Af_Venta_Activo" EntitySet="Af_Venta_Activo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Af_Catalogo_Af_CatalogoTipo" Association="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo">
-            <End Role="Af_CatalogoTipo" EntitySet="Af_CatalogoTipo" />
-            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spACTF_activos_a_depreciar_Result">
@@ -914,21 +844,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           <NavigationProperty Name="Af_Activo_fijo_tipo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" FromRole="Af_Activo_fijo_Categoria" ToRole="Af_Activo_fijo_tipo" />
           <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" FromRole="Af_Activo_fijo_Categoria" ToRole="Af_Activo_fijo" />
         </EntityType>
-        <EntityType Name="Af_Activo_fijo_CtaCble">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdActivoFijo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdDepartamento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Porcentaje" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Af_Departamento" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_CtaCble_Af_Departamento" FromRole="Af_Activo_fijo_CtaCble" ToRole="Af_Departamento" />
-          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo" FromRole="Af_Activo_fijo_CtaCble" ToRole="Af_Activo_fijo" />
-        </EntityType>
         <EntityType Name="Af_Activo_fijo_tipo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -975,7 +890,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Af_Activo_fijo_CtaCble" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_CtaCble_Af_Departamento" FromRole="Af_Departamento" ToRole="Af_Activo_fijo_CtaCble" />
           <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento" FromRole="Af_Departamento" ToRole="Af_Activo_fijo" />
         </EntityType>
         <Association Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
@@ -992,38 +906,39 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Af_Activo_fijo_CtaCble_Af_Departamento">
-          <End Type="Model_activo_fijo.Af_Departamento" Role="Af_Departamento" Multiplicity="1" />
-          <End Type="Model_activo_fijo.Af_Activo_fijo_CtaCble" Role="Af_Activo_fijo_CtaCble" Multiplicity="*" />
+        <EntityType Name="Af_Catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogo" />
+          </Key>
+          <Property Name="IdCatalogo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoCatalogo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="0" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="0" />
+          <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Af_CatalogoTipo" Relationship="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo" FromRole="Af_Catalogo" ToRole="Af_CatalogoTipo" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo5" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo1" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo2" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo3" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo4" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <Association Name="FK_Af_Catalogo_Af_CatalogoTipo">
+          <End Type="Model_activo_fijo.Af_CatalogoTipo" Role="Af_CatalogoTipo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Af_Departamento">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdDepartamento" />
+            <Principal Role="Af_CatalogoTipo">
+              <PropertyRef Name="IdTipoCatalogo" />
             </Principal>
-            <Dependent Role="Af_Activo_fijo_CtaCble">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdDepartamento" />
+            <Dependent Role="Af_Catalogo">
+              <PropertyRef Name="IdTipoCatalogo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwAf_Activo_fijo_CtaCble">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdActivoFijo" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdDepartamento" />
-            <PropertyRef Name="IdCtaCble" />
-            <PropertyRef Name="Porcentaje" />
-            <PropertyRef Name="pc_Cuenta" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdDepartamento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Porcentaje" Type="Double" Nullable="false" />
-          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Af_Activo_fijo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1058,6 +973,7 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           <Property Name="Af_Codigo_Barra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado_Proceso" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="Af_ValorSalvamento" Type="Double" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -1071,32 +987,12 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
           <NavigationProperty Name="Af_Catalogo1" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
           <NavigationProperty Name="Af_Catalogo2" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
           <NavigationProperty Name="Af_Catalogo3" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
+          <NavigationProperty Name="Af_Catalogo4" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
           <NavigationProperty Name="Af_Departamento" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento" FromRole="Af_Activo_fijo" ToRole="Af_Departamento" />
-          <NavigationProperty Name="Af_Activo_fijo_CtaCble" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Activo_fijo_CtaCble" />
           <NavigationProperty Name="Af_Depreciacion_Det" Relationship="Model_activo_fijo.FK_Af_Depreciacion_Det_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Depreciacion_Det" />
           <NavigationProperty Name="Af_Mej_Baj_Activo" Relationship="Model_activo_fijo.FK_Af_Mej_Baj_Activo_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Mej_Baj_Activo" />
           <NavigationProperty Name="Af_Retiro_Activo" Relationship="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Retiro_Activo" />
           <NavigationProperty Name="Af_Venta_Activo" Relationship="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Venta_Activo" />
-        </EntityType>
-        <EntityType Name="Af_Catalogo">
-          <Key>
-            <PropertyRef Name="IdCatalogo" />
-          </Key>
-          <Property Name="IdCatalogo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoCatalogo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FechaUltMod" Type="DateTime" Precision="0" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="0" />
-          <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo5" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
-          <NavigationProperty Name="Af_Activo_fijo1" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
-          <NavigationProperty Name="Af_Activo_fijo2" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
-          <NavigationProperty Name="Af_Activo_fijo3" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
-          <NavigationProperty Name="Af_CatalogoTipo" Relationship="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo" FromRole="Af_Catalogo" ToRole="Af_CatalogoTipo" />
         </EntityType>
         <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
           <End Type="Model_activo_fijo.Af_Activo_fijo_Categoria" Role="Af_Activo_fijo_Categoria" Multiplicity="1" />
@@ -1174,6 +1070,18 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo9">
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="Estado_Proceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Af_Activo_fijo_Af_Departamento">
           <End Type="Model_activo_fijo.Af_Departamento" Role="Af_Departamento" Multiplicity="1" />
           <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
@@ -1185,20 +1093,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
             <Dependent Role="Af_Activo_fijo">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdDepartamento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Af_Activo_fijo_CtaCble_Af_Activo_fijo">
-          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="1" />
-          <End Type="Model_activo_fijo.Af_Activo_fijo_CtaCble" Role="Af_Activo_fijo_CtaCble" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Af_Activo_fijo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdActivoFijo" />
-            </Principal>
-            <Dependent Role="Af_Activo_fijo_CtaCble">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdActivoFijo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1255,18 +1149,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
             <Dependent Role="Af_Venta_Activo">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdActivoFijo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Af_Catalogo_Af_CatalogoTipo">
-          <End Type="Model_activo_fijo.Af_CatalogoTipo" Role="Af_CatalogoTipo" Multiplicity="1" />
-          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Af_CatalogoTipo">
-              <PropertyRef Name="IdTipoCatalogo" />
-            </Principal>
-            <Dependent Role="Af_Catalogo">
-              <PropertyRef Name="IdTipoCatalogo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1484,18 +1366,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Af_Activo_fijo_CtaCble">
-            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo_CtaCble">
-              <MappingFragment StoreEntitySet="Af_Activo_fijo_CtaCble">
-                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Af_Activo_fijo_tipo">
             <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo_tipo">
               <MappingFragment StoreEntitySet="Af_Activo_fijo_tipo">
@@ -1541,16 +1411,19 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwAf_Activo_fijo_CtaCble">
-            <EntityTypeMapping TypeName="Model_activo_fijo.vwAf_Activo_fijo_CtaCble">
-              <MappingFragment StoreEntitySet="vwAf_Activo_fijo_CtaCble">
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+          <EntitySetMapping Name="Af_Catalogo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Catalogo">
+              <MappingFragment StoreEntitySet="Af_Catalogo">
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoCatalogo" ColumnName="IdTipoCatalogo" />
+                <ScalarProperty Name="IdCatalogo" ColumnName="IdCatalogo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1564,6 +1437,7 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
                 <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
                 <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="Af_ValorSalvamento" ColumnName="Af_ValorSalvamento" />
                 <ScalarProperty Name="Estado_Proceso" ColumnName="Estado_Proceso" />
                 <ScalarProperty Name="Af_Codigo_Barra" ColumnName="Af_Codigo_Barra" />
@@ -1596,22 +1470,6 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Af_Catalogo">
-            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Catalogo">
-              <MappingFragment StoreEntitySet="Af_Catalogo">
-                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdTipoCatalogo" ColumnName="IdTipoCatalogo" />
-                <ScalarProperty Name="IdCatalogo" ColumnName="IdCatalogo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1628,7 +1486,7 @@ FROM [dbo].[vwAf_Activo_fijo_CtaCble] AS [vwAf_Activo_fijo_CtaCble]</DefiningQue
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>

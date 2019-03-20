@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="ActivoFijo\Af_Activo_fijo_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Activo_fijo_Categoria_Bus.cs" />
-    <Compile Include="ActivoFijo\Af_Activo_fijo_CtaCble_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Activo_fijo_tipo_Bus.cs" />
     <Compile Include="ActivoFijo\Af_CatalogoTipo_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Catalogo_Bus.cs" />

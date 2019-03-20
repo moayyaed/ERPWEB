@@ -10,6 +10,14 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Anular", "ActivoFijo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
 
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.IdActivoFijo)
@@ -101,11 +109,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="Af_Nombre">Nombre*</label>
                     @Html.TextBoxFor(q => q.Af_Nombre, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Af_Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Af_Nombre">Cantidad*</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -128,9 +143,6 @@
             </li>
             <li>
                 <a href="#tab_caracteristicas" aria-controls="caracteristicas" role="tab" data-toggle="tab">Características del activo</a>
-            </li>
-            <li>
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Distribución de depreciación</a>
             </li>
             <li>
                 <a href="#tab_encargado" aria-controls="encargado" role="tab" data-toggle="tab">Encargado</a>
@@ -272,34 +284,9 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
-
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_activo_fijo_ctacble")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
             </div>
 
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_encargado">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -322,16 +309,9 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
     </div>
-
-
     <div class="box-footer">
         <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index", "ActivoFijo", new { Area ="ActivoFijo" }, null)">Cancelar</a>
