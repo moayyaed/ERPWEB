@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_nominas_cerradas";
-        settings.CallbackRouteValues = new { Controller = "ProcesarRol", Action = "GridViewPartial_nominas_cerradas" };
+        settings.CallbackRouteValues = new { Controller = "ProcesarRol", Action = "GridViewPartial_nominas_cerradas", IdSucursal = ViewBag.IdSucursal };
 
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdPeriodo";
@@ -56,7 +56,7 @@
             column.Width = Unit.Pixel(70);
             column.SetDataItemTemplateContent(container =>
             {
-                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Cerrado")) == "S" && Convert.ToString(DataBinder.Eval(container.DataItem, "Contabilizado"))=="N")
+                if (Convert.ToString(DataBinder.Eval(container.DataItem, "EstadoRol")) == "CERRADO")
                 {
 
                     Html.DevExpress().HyperLink(hyperlink =>
@@ -79,7 +79,7 @@
             column.Width = Unit.Pixel(90);
             column.SetDataItemTemplateContent(container =>
             {
-                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Contabilizado")) == "S")
+                if (Convert.ToString(DataBinder.Eval(container.DataItem, "EstadoRol")) == "CONTABILIZADO")
                 {
 
                     Html.DevExpress().HyperLink(hyperlink =>

@@ -34,6 +34,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
         ro_Parametros_Bus bus_parametro = new ro_Parametros_Bus();
         #endregion
+
         #region Metodos ComboBox bajo demanda xueldo-prov
 
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
@@ -86,9 +87,20 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         public ActionResult Index2()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+            cargar_combo_consulta(model.IdEmpresa);
+            return View(model);
         }
-
+        [HttpPost]
+        public ActionResult Index2(cl_filtros_Info model)
+        {
+            cargar_combo_consulta(model.IdEmpresa);
+            return View(model);
+        }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_ro_rol( int IdSucursal=0)
         {
@@ -444,6 +456,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                lst_sucursal.Add(new Info.General.tb_sucursal_Info
+                {
+                    IdSucursal = 0,
+                    Su_Descripcion = "Todos"
+                });
+
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)
@@ -476,17 +494,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
   
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_nominas_cerradas()
+        public ActionResult GridViewPartial_nominas_cerradas(int IdSucursal = 0)
         {
             try
             {
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_rol_Info> model = bus_rol.get_list_nominas_cerradas(IdEmpresa);
+                ViewBag.IdSucursal = IdSucursal;
+                List<ro_rol_Info> model = bus_rol.get_list_nominas_cerradas(IdEmpresa, IdSucursal);
                 return PartialView("_GridViewPartial_nominas_cerradas", model);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

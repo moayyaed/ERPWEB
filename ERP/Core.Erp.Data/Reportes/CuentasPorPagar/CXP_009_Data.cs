@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
     public class CXP_009_Data
     {
-        public List<CXP_009_Info> get_list(int IdEmpresa,int IdSucursal, DateTime FechaIni, DateTime FechaFin, ref List<CXP_009_resumen_Info> lst_resumen, bool mostrar_anulados)
+        public List<CXP_009_Info> get_list(int IdEmpresa,int IdSucursal, DateTime FechaIni, DateTime FechaFin, bool mostrar_anulados)
         {
             try
             {
@@ -111,23 +111,6 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      Su_Descripcion = q.Su_Descripcion
                                  }).ToList();
                     }
-                }
-
-                var TdebitosxCta = from Cb in Lista
-                                   group Cb by new { Cb.cod_Impuesto_SRI, Cb.Impuesto, Cb.por_Retencion_SRI, Cb.co_descripcion }
-                                       into grouping
-                                   select new { grouping.Key, total_base_ret = grouping.Sum(p => p.base_retencion), total_ret = grouping.Sum(p => p.valor_Retenido) };
-
-                foreach (var item in TdebitosxCta)
-                {
-                    lst_resumen.Add(new CXP_009_resumen_Info
-                    {
-                        Base_Ret = item.total_base_ret,
-                        Cod_Sri = item.Key.cod_Impuesto_SRI,
-                        descripcion = item.Key.Impuesto + "." + item.Key.por_Retencion_SRI + " " + item.Key.co_descripcion,
-                        Tipo_Retencion = item.Key.Impuesto,
-                        Total_Ret = item.total_ret
-                    });
                 }
 
                 return Lista;
