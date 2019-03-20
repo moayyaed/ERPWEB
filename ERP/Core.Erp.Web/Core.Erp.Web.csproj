@@ -7689,6 +7689,7 @@
     <Content Include="AdminLTE\dist\img\boxed-bg.png" />
     <Content Include="AdminLTE\dist\img\credit\american-express.png" />
     <Content Include="AdminLTE\dist\img\credit\cirrus.png" />
+    <Content Include="AdminLTE\dist\img\logo.png" />
     <Content Include="AdminLTE\dist\img\credit\mastercard.png" />
     <Content Include="AdminLTE\dist\img\credit\mestro.png" />
     <Content Include="AdminLTE\dist\img\credit\paypal.png" />
