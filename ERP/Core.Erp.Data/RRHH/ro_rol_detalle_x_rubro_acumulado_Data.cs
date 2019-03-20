@@ -15,8 +15,7 @@ namespace Core.Erp.Data.RRHH
                 double valor_cuotas = 0;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                 var   datos = (from q in Context.ro_rol_detalle_x_rubro_acumulado
-                                  
+                 var   datos = (from q in Context.ro_rol_detalle_x_rubro_acumulado                                  
                                     where q.IdEmpresa == IdEmpresa
                                           & q.IdEmpleado == IdEmpleado
                                           && q.IdRubro==IdRubro
