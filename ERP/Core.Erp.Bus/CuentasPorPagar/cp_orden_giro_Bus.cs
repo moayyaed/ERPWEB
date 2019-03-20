@@ -85,11 +85,9 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 }
                 else
                     info.info_comrobante.cb_Observacion = info.co_observacion;
-                info.co_valorpagar = info.co_total;
-                if (info.info_cuota.Total_a_pagar == 0)
-                    info.co_FechaFactura_vct = info.co_FechaFactura;
-                else
-                    info.co_FechaFactura_vct = info.co_FechaFactura_vct;
+
+                info.co_valorpagar = info.co_total;               
+                info.co_FechaFactura_vct = info.co_FechaFactura_vct;
                 info.co_fechaOg = info.co_FechaFactura;
                 if (bus_contabilidad.guardarDB(info.info_comrobante))
                 {
@@ -190,12 +188,14 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     info.info_comrobante.cb_Observacion = info.co_observacion;
 
                 info.co_valorpagar = info.co_total;
-                if (info.info_cuota.Total_a_pagar == 0)
-                    info.co_FechaFactura_vct = info.co_FechaFactura;
-                else
-                {
-                    info.co_FechaFactura_vct = info.co_FechaFactura.AddDays(info.co_plazo);
-                }
+                //if (info.info_cuota.Total_a_pagar == 0)
+                //    info.co_FechaFactura_vct = info.co_FechaFactura;
+                //else
+                //{
+                //    info.co_FechaFactura_vct = info.co_FechaFactura.AddDays(info.co_plazo);
+                //}
+
+                info.co_FechaFactura_vct = info.co_FechaFactura.AddDays(info.co_plazo);
                 info.co_fechaOg = info.co_FechaFactura;
                 if (bus_contabilidad.modificarDB(info.info_comrobante))
                 {
@@ -407,7 +407,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 }
 
 
-                if (info.IdSucursal == 0 | info.IdSucursal == null)
+                if (info.IdSucursal == 0)
                 {
                     mensaje = "Selecciona la sucursal";
                     return mensaje;
