@@ -23,6 +23,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Historico_Liquidacion_Vacaciones_Det_Info_lst ro_Historico_Liquidacion_Vacaciones_Det_Info = new ro_Historico_Liquidacion_Vacaciones_Det_Info_lst();
         ro_Historico_Liquidacion_Vacaciones_Info info_liquidacion = new ro_Historico_Liquidacion_Vacaciones_Info();
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
+        string MensajeSuccess = string.Empty;
+
         public static int IdSolicitud { get; set; }
         int IdEmpresa = 0;
 
@@ -140,7 +142,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         return View(info);
                     }
                     else
-                        return RedirectToAction("Index");
+                    {
+                        MensajeSuccess = "Registro creado exitósamente";
+                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdLiquidacion = info.IdLiquidacion, MensajeSuccess });
+                    }
                 }
                 else
                     return View(info);
@@ -209,7 +214,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         return View(info);
                     }
                     else
-                        return RedirectToAction("Index");
+                    {
+                        MensajeSuccess = "Registro actualizado exitósamente";
+                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdLiquidacion = info.IdLiquidacion, MensajeSuccess });
+                    }
                 }
                 else
                     return View(info);
@@ -222,7 +230,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdLiquidacion = 0)
+        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdLiquidacion = 0, string MensajeSuccess="")
         {
             try
             {
@@ -230,6 +238,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info_liquidacion = bus_liquidacion.get_info(IdEmpresa, IdEmpleado, IdLiquidacion);
                 ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list( info_liquidacion.detalle);
                 cargar_combo();
+                ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
                 return View(info_liquidacion);
             }
             catch (Exception)

@@ -28,7 +28,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         List<ro_rubro_tipo_Info> lst_rubros = new List<ro_rubro_tipo_Info>();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
-
+        string MensajeSuccess = string.Empty;
         int IdEmpresa = 0;
         #endregion
 
@@ -196,10 +196,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdNovedad = model.IdNovedad, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpleado, decimal IdNovedad)
+        public ActionResult Modificar(int IdEmpleado, decimal IdNovedad, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -216,6 +218,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_empleado_novedad_det_lst.set_list(model.lst_novedad_det, model.IdTransaccionSession);
             cargar_combos_detalle();
             cargar_combos(model.IdNomina_Tipo);
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
             return View(model);
         }
 
@@ -261,8 +265,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }
-            return RedirectToAction("Index");
 
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdNovedad = model.IdNovedad, MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpleado, decimal IdNovedad)

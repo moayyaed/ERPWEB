@@ -31,6 +31,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         tb_banco_procesos_bancarios_x_empresa_Bus bus_procesos_bancarios = new tb_banco_procesos_bancarios_x_empresa_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Vistas
@@ -93,9 +94,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdNomina= IdNomina_Tipo,
                 IdNominaTipo= IdNomina_TipoLiqui,
                 IdTransaccionSession=Convert.ToDecimal( SessionFixed.IdTransaccionSession),
-                
-                
-
             };
            
             cargar_combos(0,Convert.ToInt32(SessionFixed.IdSucursal));
@@ -105,9 +103,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Nuevo(ro_archivos_bancos_generacion_Info model)
         {
-
-
-
             model.detalle = ro_archivos_bancos_generacion_x_empleado_list_Info.get_list(model.IdTransaccionSession);
             if (model.detalle == null || model.detalle.Count() == 0)
             {
@@ -116,8 +111,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
 
-         
-
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_archivo.guardarDB(model))
@@ -125,10 +118,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos(model.IdNomina, Convert.ToInt32(SessionFixed.IdSucursal));
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa=0, decimal IdArchivo=0)
+        public ActionResult Modificar(int IdEmpresa=0, decimal IdArchivo=0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -143,6 +138,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.detalle = bus_archivo_detalle.get_list(IdEmpresa, IdArchivo);
             ro_archivos_bancos_generacion_x_empleado_list_Info.set_list(model.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
             cargar_combos(model.IdNomina, Convert.ToInt32(SessionFixed.IdSucursal));
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
             return View(model);
         }
 
@@ -163,8 +160,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos(model.IdNomina, Convert.ToInt32(SessionFixed.IdSucursal));
                 return View(model);
             }
-            return RedirectToAction("Index");
 
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa=0, decimal IdArchivo=0)
@@ -202,10 +200,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public FileResult get_archivo(int IdEmpresa = 0, int IdArchivo = 0)
         {
-
-
-           
-
             byte[] archivo;
             string NombreFile = "NCR";
             tb_banco_procesos_bancarios_x_empresa_Bus bus_tipo_file = new tb_banco_procesos_bancarios_x_empresa_Bus();
