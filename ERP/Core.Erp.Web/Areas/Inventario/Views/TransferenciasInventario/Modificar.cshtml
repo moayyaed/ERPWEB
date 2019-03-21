@@ -24,15 +24,14 @@
 
 
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
-    if (ViewBag.mensaje != null)
+    if (ViewBag.MensajeSuccess != null)
     {
-        <div class="alert alert-warning alert-dismissible">
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4>
-                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
             </h4>
         </div>
-
     }
     <div class="row">
         <div class="col-md-12">
@@ -43,7 +42,25 @@
                     @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-6 col-md-3">
+                    <div class="col-md-offset-4 col-md-1">
+                        <label for="IdImprimir"></label>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                                <i class="fa fa-print"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="IdNuevo"></label>
+                        <div class="form-group">
+                            <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Proforma",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+             
+
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="tr_fecha">Fecha</label>
                     <div class="input-group date">
@@ -163,8 +180,8 @@
         });
     });
 
-function CargarBodegaOrigen() {
-    $("#IdBodegaOrigen").empty();
+    function CargarBodegaOrigen() {
+        $("#IdBodegaOrigen").empty();
 
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -181,24 +198,24 @@ function CargarBodegaOrigen() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-            $.each(data, function (i, row) {
-                $("#IdBodegaOrigen").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-            });
+                $.each(data, function (i, row) {
+                    $("#IdBodegaOrigen").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
             },
             error: function (error) {
             }
-            });
+        });
     };
 
 
-     $(function () {
-         $("#IdSucursalDest").change(function () {
-             CargarBodegaDestino();
-            });
+    $(function () {
+        $("#IdSucursalDest").change(function () {
+            CargarBodegaDestino();
+        });
     });
 
-function CargarBodegaDestino() {
-    $("#IdBodegaDest").empty();
+    function CargarBodegaDestino() {
+        $("#IdBodegaDest").empty();
 
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -215,12 +232,17 @@ function CargarBodegaDestino() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-            $.each(data, function (i, row) {
-                $("#IdBodegaDest").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-            });
+                $.each(data, function (i, row) {
+                    $("#IdBodegaDest").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
             },
             error: function (error) {
             }
-            });
+        });
     };
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location + "/Reportes/InventarioReportes/INV_007?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursalOrigen=" +@Model.IdSucursalOrigen +"&IdBodegaOrigen=" +@Model.IdBodegaOrigen +"&IdTransferencia=" +@Model.IdTransferencia +"&mostrar_imagen=" + false, '_blank');
+        win.focus();
+    }
 </script>

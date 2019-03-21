@@ -26,6 +26,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         string mensaje = string.Empty;
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        string MensajeSuccess = string.Empty;
+
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -140,10 +142,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
             Session["in_transferencia_det_Info"] = null;
-            return RedirectToAction("Index");
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursalOrigen = model.IdSucursalOrigen, IdBodegaOrigen = model.IdBodegaOrigen, IdTransferencia = model.IdTransferencia, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursalOrigen = 0, int IdBodegaOrigen = 0, decimal IdTransferencia = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursalOrigen = 0, int IdBodegaOrigen = 0, decimal IdTransferencia = 0, string MensajeSuccess = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -158,6 +161,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.list_detalle = bus_tras_detalle.get_list(IdEmpresa, IdSucursalOrigen, IdBodegaOrigen, IdTransferencia);
             List_in_transferencia_det.set_list(model.list_detalle, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -185,7 +189,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
             List_in_transferencia_det.set_list(null, model.IdTransaccionSession);
-            return RedirectToAction("Index");
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursalOrigen = model.IdSucursalOrigen, IdBodegaOrigen = model.IdBodegaOrigen, IdTransferencia = model.IdTransferencia, MensajeSuccess });
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursalOrigen = 0, int IdBodegaOrigen = 0, decimal IdTransferencia = 0)
         {
