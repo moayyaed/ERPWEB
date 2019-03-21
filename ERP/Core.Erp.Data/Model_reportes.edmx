@@ -4145,6 +4145,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Parameter Name="IdProveedorIni" Type="numeric" Mode="In" />
           <Parameter Name="IdProveedorFin" Type="numeric" Mode="In" />
           <Parameter Name="FechaCorte" Type="date" Mode="In" />
+          <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
         </Function>
         <Function Name="SPFAC_002" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -8502,14 +8503,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SPCXP_015" ReturnType="Collection(Model_reportes.SPCXP_015_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
-            <Parameter Name="IdProveedorIni" Mode="In" Type="Decimal" />
-            <Parameter Name="IdProveedorFin" Mode="In" Type="Decimal" />
-            <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <FunctionImport Name="SPCONTA_002" ReturnType="Collection(Model_reportes.SPCONTA_002_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
@@ -8517,6 +8510,15 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
             <Parameter Name="IdCtaCble" Mode="In" Type="String" />
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SPCXP_015" ReturnType="Collection(Model_reportes.SPCXP_015_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdProveedorIni" Mode="In" Type="Decimal" />
+            <Parameter Name="IdProveedorFin" Mode="In" Type="Decimal" />
+            <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
@@ -11779,28 +11781,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Type="Double" Name="Saldo" Nullable="true" />
           <Property Type="String" Name="Su_Descripcion" Nullable="false" MaxLength="100" />
         </ComplexType>
-        <ComplexType Name="SPCXP_015_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdTipoCbte_Ogiro" Nullable="false" />
-          <Property Type="Decimal" Name="IdCbteCble_Ogiro" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="String" Name="Su_Descripcion" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="co_factura" Nullable="false" MaxLength="50" />
-          <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="pe_nombreCompleto" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="co_observacion" Nullable="true" MaxLength="1000" />
-          <Property Type="DateTime" Name="co_FechaFactura" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="co_FechaFactura_vct" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Codigo" Nullable="true" MaxLength="10" />
-          <Property Type="Double" Name="co_subtotal_iva" Nullable="false" />
-          <Property Type="Double" Name="co_subtotal_siniva" Nullable="false" />
-          <Property Type="Double" Name="co_valoriva" Nullable="false" />
-          <Property Type="Double" Name="co_total" Nullable="false" />
-          <Property Type="Double" Name="ValorRetencion" Nullable="false" />
-          <Property Type="Double" Name="ValorNC" Nullable="false" />
-          <Property Type="Double" Name="ValorAbono" Nullable="false" />
-          <Property Type="Double" Name="Saldo" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="SPCONTA_002_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Int32" Name="IdTipoCbte" Nullable="false" />
@@ -11819,6 +11799,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Type="String" Name="tc_TipoCbte" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="IdMes" Nullable="true" />
           <Property Type="String" Name="smes" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="SPCXP_015_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdTipoCbte_Ogiro" Nullable="false" />
+          <Property Type="Decimal" Name="IdCbteCble_Ogiro" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="String" Name="Su_Descripcion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="co_factura" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="pe_nombreCompleto" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="co_observacion" Nullable="true" />
+          <Property Type="DateTime" Name="co_FechaFactura" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="co_FechaFactura_vct" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Codigo" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="co_subtotal_iva" Nullable="false" />
+          <Property Type="Double" Name="co_subtotal_siniva" Nullable="false" />
+          <Property Type="Double" Name="co_valoriva" Nullable="false" />
+          <Property Type="Double" Name="co_total" Nullable="false" />
+          <Property Type="Double" Name="ValorRetencion" Nullable="false" />
+          <Property Type="Double" Name="ValorNC" Nullable="true" />
+          <Property Type="Double" Name="ValorAbono" Nullable="true" />
+          <Property Type="Double" Name="Saldo" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -15311,6 +15313,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_002" FunctionName="Model_reportes.Store.SPCONTA_002">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_002_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
+                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
+                <ScalarProperty Name="dc_Valor_Debe" ColumnName="dc_Valor_Debe" />
+                <ScalarProperty Name="dc_Valor_Haber" ColumnName="dc_Valor_Haber" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="cb_Fecha" ColumnName="cb_Fecha" />
+                <ScalarProperty Name="cb_Observacion" ColumnName="cb_Observacion" />
+                <ScalarProperty Name="cb_Estado" ColumnName="cb_Estado" />
+                <ScalarProperty Name="tc_TipoCbte" ColumnName="tc_TipoCbte" />
+                <ScalarProperty Name="IdMes" ColumnName="IdMes" />
+                <ScalarProperty Name="smes" ColumnName="smes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPCXP_015" FunctionName="Model_reportes.Store.SPCXP_015">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_reportes.SPCXP_015_Result">
@@ -15334,29 +15359,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
                 <ScalarProperty Name="ValorNC" ColumnName="ValorNC" />
                 <ScalarProperty Name="ValorAbono" ColumnName="ValorAbono" />
                 <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_002" FunctionName="Model_reportes.Store.SPCONTA_002">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_002_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
-                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
-                <ScalarProperty Name="dc_Valor_Debe" ColumnName="dc_Valor_Debe" />
-                <ScalarProperty Name="dc_Valor_Haber" ColumnName="dc_Valor_Haber" />
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-                <ScalarProperty Name="cb_Fecha" ColumnName="cb_Fecha" />
-                <ScalarProperty Name="cb_Observacion" ColumnName="cb_Observacion" />
-                <ScalarProperty Name="cb_Estado" ColumnName="cb_Estado" />
-                <ScalarProperty Name="tc_TipoCbte" ColumnName="tc_TipoCbte" />
-                <ScalarProperty Name="IdMes" ColumnName="IdMes" />
-                <ScalarProperty Name="smes" ColumnName="smes" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
