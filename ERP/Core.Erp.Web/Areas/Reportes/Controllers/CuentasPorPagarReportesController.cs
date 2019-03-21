@@ -378,6 +378,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
@@ -392,6 +393,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             cargar_combos(true);
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
