@@ -23,6 +23,7 @@ namespace Core.Erp.Data.Banco
                         IdEmpresa = Entity.IdEmpresa,
                         CiudadDefaultParaCrearCheques = Entity.CiudadDefaultParaCrearCheques,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        CantidadChequesAlerta = Entity.CantidadChequesAlerta
                     };
                 }
                 return info;
@@ -49,7 +50,9 @@ namespace Core.Erp.Data.Banco
                             CiudadDefaultParaCrearCheques = info.CiudadDefaultParaCrearCheques,
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
                             IdUsuario = info.IdUsuario,
-                            FechaTransac = DateTime.Now
+                            FechaTransac = DateTime.Now,
+                            CantidadChequesAlerta = info.CantidadChequesAlerta
+
                         };
                         Context.ba_parametros.Add(Entity);
                     }
@@ -57,7 +60,7 @@ namespace Core.Erp.Data.Banco
                         {
                         Entity.CiudadDefaultParaCrearCheques = info.CiudadDefaultParaCrearCheques;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
-                        
+                        Entity.CantidadChequesAlerta = info.CantidadChequesAlerta;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.FechaUltMod = DateTime.Now;
                     }

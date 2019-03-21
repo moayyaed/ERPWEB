@@ -11,6 +11,7 @@ namespace Core.Erp.Info.Banco
         public int IdEmpresa { get; set; }
         public string CiudadDefaultParaCrearCheques { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> CantidadChequesAlerta { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> FechaTransac { get; set; }
         public string IdUsuarioUltMod { get; set; }
