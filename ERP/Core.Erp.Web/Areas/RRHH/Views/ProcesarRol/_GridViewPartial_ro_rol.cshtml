@@ -67,7 +67,7 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Cerrado")) == "ABIERTO")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Cerrado")) == "N")
                 {
 
                     ViewContext.Writer.Write(
@@ -93,7 +93,7 @@
             column.Width = Unit.Pixel(85);
             column.SetDataItemTemplateContent(container =>
             {
-                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Cerrado")) == "ABIERTO")
+                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Cerrado")) == "N")
                 {
 
                     Html.DevExpress().HyperLink(hyperlink =>
