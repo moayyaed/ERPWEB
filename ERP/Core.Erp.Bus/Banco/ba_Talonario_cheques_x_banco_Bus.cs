@@ -114,5 +114,19 @@ namespace Core.Erp.Bus.Banco
                 throw;
             }
         }
+
+        public int GetCantidadTalonariosDisponibles(int IdEmpresa, int IdBanco)
+
+        {
+            try
+            {
+                return odata.GetCantidadTalonariosDisponibles(IdEmpresa, IdBanco);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

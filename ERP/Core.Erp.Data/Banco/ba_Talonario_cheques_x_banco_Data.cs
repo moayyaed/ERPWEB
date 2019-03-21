@@ -285,6 +285,23 @@ namespace Core.Erp.Data.Banco
             }
         }
 
+        public int GetCantidadTalonariosDisponibles(int IdEmpresa, int IdBanco)
+        {
+            try
+            {
+                using (Entities_banco Context = new Entities_banco())
+                {
+                    var list = Context.ba_Talonario_cheques_x_banco.Where(q => q.IdEmpresa == IdEmpresa && q.IdBanco == IdBanco).ToList();
 
+
+                    return list.Count();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

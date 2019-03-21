@@ -198,7 +198,7 @@
             this.xrTableCell5.StylePriority.UseTextAlignment = false;
             this.xrTableCell5.Text = "Tipo";
             this.xrTableCell5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell5.Weight = 0.31716243602771749D;
+            this.xrTableCell5.Weight = 0.22654459911551722D;
             // 
             // xrTableCell6
             // 
@@ -212,7 +212,7 @@
             this.xrTableCell6.StylePriority.UseTextAlignment = false;
             this.xrTableCell6.Text = "Documento";
             this.xrTableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell6.Weight = 0.40778025563930304D;
+            this.xrTableCell6.Weight = 0.33981687795515286D;
             // 
             // xrTableCell7
             // 
@@ -242,7 +242,7 @@
             this.xrTableCell8.StylePriority.UseTextAlignment = false;
             this.xrTableCell8.Text = "Observación";
             this.xrTableCell8.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell8.Weight = 1.5858120801763971D;
+            this.xrTableCell8.Weight = 1.5858120801763973D;
             // 
             // xrTableCell11
             // 
@@ -257,7 +257,7 @@
             this.xrTableCell11.Text = "SubtotalIVA";
             this.xrTableCell11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell11.TextFormatString = "{0:n2}";
-            this.xrTableCell11.Weight = 0.31716243254151666D;
+            this.xrTableCell11.Weight = 0.3398168917695667D;
             // 
             // xrTableCell12
             // 
@@ -272,7 +272,7 @@
             this.xrTableCell12.Text = "Subt.SinIVA";
             this.xrTableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell12.TextFormatString = "{0:n2}";
-            this.xrTableCell12.Weight = 0.31716214422523692D;
+            this.xrTableCell12.Weight = 0.33981687999697874D;
             // 
             // xrTableCell26
             // 
@@ -287,7 +287,7 @@
             this.xrTableCell26.Text = "xrTableCell26";
             this.xrTableCell26.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell26.TextFormatString = "{0:n2}";
-            this.xrTableCell26.Weight = 0.22654459433493096D;
+            this.xrTableCell26.Weight = 0.27185351279103109D;
             // 
             // xrTableCell13
             // 
@@ -302,7 +302,7 @@
             this.xrTableCell13.Text = "Total";
             this.xrTableCell13.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell13.TextFormatString = "{0:n2}";
-            this.xrTableCell13.Weight = 0.33981716701887305D;
+            this.xrTableCell13.Weight = 0.36247134970323142D;
             // 
             // xrTableCell16
             // 
@@ -317,7 +317,7 @@
             this.xrTableCell16.Text = "Retención";
             this.xrTableCell16.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell16.TextFormatString = "{0:n2}";
-            this.xrTableCell16.Weight = 0.27185351090786125D;
+            this.xrTableCell16.Weight = 0.2718535109078612D;
             // 
             // xrTableCell22
             // 
@@ -332,7 +332,7 @@
             this.xrTableCell22.Text = "N/C";
             this.xrTableCell22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell22.TextFormatString = "{0:n2}";
-            this.xrTableCell22.Weight = 0.22654459544765113D;
+            this.xrTableCell22.Weight = 0.27638440574936124D;
             // 
             // xrTableCell23
             // 
@@ -362,7 +362,7 @@
             this.xrTableCell24.Text = "Saldo";
             this.xrTableCell24.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell24.TextFormatString = "{0:n2}";
-            this.xrTableCell24.Weight = 0.283180806527276D;
+            this.xrTableCell24.Weight = 0.278649914681666D;
             // 
             // TopMargin
             // 
@@ -429,7 +429,7 @@
             this.xrTableCell14.Name = "xrTableCell14";
             this.xrTableCell14.StylePriority.UseBorders = false;
             this.xrTableCell14.Text = "Tipo";
-            this.xrTableCell14.Weight = 0.31942791651848396D;
+            this.xrTableCell14.Weight = 0.22654459846717007D;
             // 
             // xrTableCell15
             // 
@@ -439,7 +439,7 @@
             this.xrTableCell15.Name = "xrTableCell15";
             this.xrTableCell15.StylePriority.UseBorders = false;
             this.xrTableCell15.Text = "Documento";
-            this.xrTableCell15.Weight = 0.40778025563930304D;
+            this.xrTableCell15.Weight = 0.33981687748075268D;
             // 
             // xrTableCell17
             // 
@@ -449,7 +449,7 @@
             this.xrTableCell17.Name = "xrTableCell17";
             this.xrTableCell17.StylePriority.UseBorders = false;
             this.xrTableCell17.Text = "Fecha";
-            this.xrTableCell17.Weight = 0.33981687407143746D;
+            this.xrTableCell17.Weight = 0.33981687407143751D;
             // 
             // xrTableCell4
             // 
@@ -459,7 +459,7 @@
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.StylePriority.UseBorders = false;
             this.xrTableCell4.Text = "Observación";
-            this.xrTableCell4.Weight = 1.5858120801763971D;
+            this.xrTableCell4.Weight = 1.5880775606829771D;
             // 
             // xrTableCell18
             // 
@@ -469,7 +469,7 @@
             this.xrTableCell18.Name = "xrTableCell18";
             this.xrTableCell18.StylePriority.UseBorders = false;
             this.xrTableCell18.Text = "SubtotalIVA";
-            this.xrTableCell18.Weight = 0.31716160291044138D;
+            this.xrTableCell18.Weight = 0.33981716847139964D;
             // 
             // xrTableCell19
             // 
@@ -479,7 +479,7 @@
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.StylePriority.UseBorders = false;
             this.xrTableCell19.Text = "Subt.SinIVA";
-            this.xrTableCell19.Weight = 0.31716242076892864D;
+            this.xrTableCell19.Weight = 0.33981688015511213D;
             // 
             // xrTableCell25
             // 
@@ -489,7 +489,7 @@
             this.xrTableCell25.Name = "xrTableCell25";
             this.xrTableCell25.StylePriority.UseBorders = false;
             this.xrTableCell25.Text = "IVA";
-            this.xrTableCell25.Weight = 0.22654459449306436D;
+            this.xrTableCell25.Weight = 0.27185296017804389D;
             // 
             // xrTableCell10
             // 
@@ -499,7 +499,7 @@
             this.xrTableCell10.Name = "xrTableCell10";
             this.xrTableCell10.StylePriority.UseBorders = false;
             this.xrTableCell10.Text = "Total";
-            this.xrTableCell10.Weight = 0.33981771994812304D;
+            this.xrTableCell10.Weight = 0.36247162624691914D;
             // 
             // xrTableCell3
             // 
@@ -509,7 +509,7 @@
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.StylePriority.UseBorders = false;
             this.xrTableCell3.Text = "Retención";
-            this.xrTableCell3.Weight = 0.27185351090786125D;
+            this.xrTableCell3.Weight = 0.27185351090786131D;
             // 
             // xrTableCell9
             // 
@@ -519,7 +519,7 @@
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.StylePriority.UseBorders = false;
             this.xrTableCell9.Text = "N/C";
-            this.xrTableCell9.Weight = 0.22654459544765113D;
+            this.xrTableCell9.Weight = 0.27638440609725473D;
             // 
             // xrTableCell20
             // 
@@ -529,7 +529,7 @@
             this.xrTableCell20.Name = "xrTableCell20";
             this.xrTableCell20.StylePriority.UseBorders = false;
             this.xrTableCell20.Text = "Abono";
-            this.xrTableCell20.Weight = 0.31716244441073804D;
+            this.xrTableCell20.Weight = 0.31489699847211972D;
             // 
             // xrTableCell21
             // 
@@ -539,7 +539,7 @@
             this.xrTableCell21.Name = "xrTableCell21";
             this.xrTableCell21.StylePriority.UseBorders = false;
             this.xrTableCell21.Text = "Saldo";
-            this.xrTableCell21.Weight = 0.283180806527276D;
+            this.xrTableCell21.Weight = 0.28091536058865768D;
             // 
             // xrTable1
             // 
@@ -749,7 +749,7 @@
             this.xrTableCell55.StylePriority.UseTextAlignment = false;
             this.xrTableCell55.Text = "Fecha de impresión:";
             this.xrTableCell55.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell55.Weight = 2.5617572907261916D;
+            this.xrTableCell55.Weight = 2.4885635680146816D;
             // 
             // lbl_fecha
             // 
@@ -762,7 +762,7 @@
             this.lbl_fecha.StylePriority.UsePadding = false;
             this.lbl_fecha.StylePriority.UseTextAlignment = false;
             this.lbl_fecha.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.lbl_fecha.Weight = 2.3787748386825696D;
+            this.lbl_fecha.Weight = 2.4592865264501689D;
             // 
             // xrTableCell56
             // 
@@ -773,7 +773,7 @@
             this.xrTableCell56.Name = "xrTableCell56";
             this.xrTableCell56.StylePriority.UseBorders = false;
             this.xrTableCell56.StylePriority.UseFont = false;
-            this.xrTableCell56.Weight = 0.9698069008367729D;
+            this.xrTableCell56.Weight = 0.96248893578068362D;
             // 
             // xrPageInfo2
             // 
@@ -782,7 +782,7 @@
             this.xrPageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.xrPageInfo2.Name = "xrPageInfo2";
             this.xrPageInfo2.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
-            this.xrPageInfo2.SizeF = new System.Drawing.SizeF(132.4998F, 20.00001F);
+            this.xrPageInfo2.SizeF = new System.Drawing.SizeF(130.4997F, 20.00001F);
             this.xrPageInfo2.StylePriority.UseBorders = false;
             this.xrPageInfo2.StylePriority.UseFont = false;
             this.xrPageInfo2.StylePriority.UsePadding = false;
@@ -863,7 +863,7 @@
             this.xrTableCell31.StylePriority.UseTextAlignment = false;
             this.xrTableCell31.Text = "TOTAL";
             this.xrTableCell31.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell31.Weight = 2.6483062710536718D;
+            this.xrTableCell31.Weight = 2.4919905001350475D;
             // 
             // xrTableCell32
             // 
@@ -880,7 +880,7 @@
             this.xrTableCell32.Text = "SubtotalIVA";
             this.xrTableCell32.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell32.TextFormatString = "{0:n2}";
-            this.xrTableCell32.Weight = 0.31716243254151666D;
+            this.xrTableCell32.Weight = 0.33981689209494048D;
             // 
             // xrTableCell33
             // 
@@ -897,7 +897,7 @@
             this.xrTableCell33.Text = "Subt.SinIVA";
             this.xrTableCell33.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell33.TextFormatString = "{0:n2}";
-            this.xrTableCell33.Weight = 0.31716214422523692D;
+            this.xrTableCell33.Weight = 0.33981688032235641D;
             // 
             // xrTableCell34
             // 
@@ -914,7 +914,7 @@
             this.xrTableCell34.Text = "xrTableCell26";
             this.xrTableCell34.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell34.TextFormatString = "{0:n2}";
-            this.xrTableCell34.Weight = 0.22654459466030469D;
+            this.xrTableCell34.Weight = 0.27185351376715228D;
             // 
             // xrTableCell35
             // 
@@ -931,7 +931,7 @@
             this.xrTableCell35.Text = "Total";
             this.xrTableCell35.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell35.TextFormatString = "{0:n2}";
-            this.xrTableCell35.Weight = 0.33981716669349932D;
+            this.xrTableCell35.Weight = 0.36247134970322742D;
             // 
             // xrTableCell36
             // 
@@ -965,7 +965,7 @@
             this.xrTableCell37.Text = "N/C";
             this.xrTableCell37.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell37.TextFormatString = "{0:n2}";
-            this.xrTableCell37.Weight = 0.22654459544765113D;
+            this.xrTableCell37.Weight = 0.27638440646518342D;
             // 
             // xrTableCell38
             // 
@@ -982,7 +982,7 @@
             this.xrTableCell38.Text = "Abono";
             this.xrTableCell38.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell38.TextFormatString = "{0:n2}";
-            this.xrTableCell38.Weight = 0.31942789036608044D;
+            this.xrTableCell38.Weight = 0.31716244441073804D;
             // 
             // xrTableCell39
             // 
@@ -999,7 +999,7 @@
             this.xrTableCell39.Text = "Saldo";
             this.xrTableCell39.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell39.TextFormatString = "{0:n2}";
-            this.xrTableCell39.Weight = 0.283180806527276D;
+            this.xrTableCell39.Weight = 0.27864991461659128D;
             // 
             // p_mostrarSaldo0
             // 
@@ -1094,7 +1094,7 @@
             this.xrTableCell28.StylePriority.UsePadding = false;
             this.xrTableCell28.StylePriority.UseTextAlignment = false;
             this.xrTableCell28.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell28.Weight = 2.6483062710536718D;
+            this.xrTableCell28.Weight = 2.4919905001350475D;
             // 
             // xrTableCell29
             // 
@@ -1111,7 +1111,7 @@
             this.xrTableCell29.Text = "SubtotalIVA";
             this.xrTableCell29.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell29.TextFormatString = "{0:n2}";
-            this.xrTableCell29.Weight = 0.31716243254151666D;
+            this.xrTableCell29.Weight = 0.33981689209494048D;
             // 
             // xrTableCell30
             // 
@@ -1128,7 +1128,7 @@
             this.xrTableCell30.Text = "Subt.SinIVA";
             this.xrTableCell30.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell30.TextFormatString = "{0:n2}";
-            this.xrTableCell30.Weight = 0.31716214422523692D;
+            this.xrTableCell30.Weight = 0.33981688032235641D;
             // 
             // xrTableCell40
             // 
@@ -1145,7 +1145,7 @@
             this.xrTableCell40.Text = "xrTableCell26";
             this.xrTableCell40.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell40.TextFormatString = "{0:n2}";
-            this.xrTableCell40.Weight = 0.22654459466030469D;
+            this.xrTableCell40.Weight = 0.27185351376715228D;
             // 
             // xrTableCell41
             // 
@@ -1162,7 +1162,7 @@
             this.xrTableCell41.Text = "Total";
             this.xrTableCell41.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell41.TextFormatString = "{0:n2}";
-            this.xrTableCell41.Weight = 0.33981716669349932D;
+            this.xrTableCell41.Weight = 0.36247134970322742D;
             // 
             // xrTableCell42
             // 
@@ -1196,7 +1196,7 @@
             this.xrTableCell43.Text = "N/C";
             this.xrTableCell43.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell43.TextFormatString = "{0:n2}";
-            this.xrTableCell43.Weight = 0.22654459544765113D;
+            this.xrTableCell43.Weight = 0.27638440646518342D;
             // 
             // xrTableCell44
             // 
@@ -1213,7 +1213,7 @@
             this.xrTableCell44.Text = "Abono";
             this.xrTableCell44.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell44.TextFormatString = "{0:n2}";
-            this.xrTableCell44.Weight = 0.32169333632142283D;
+            this.xrTableCell44.Weight = 0.3171624444107381D;
             // 
             // xrTableCell45
             // 
@@ -1230,7 +1230,7 @@
             this.xrTableCell45.Text = "Saldo";
             this.xrTableCell45.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell45.TextFormatString = "{0:n2}";
-            this.xrTableCell45.Weight = 0.27864991461659122D;
+            this.xrTableCell45.Weight = 0.27638446866124883D;
             // 
             // CXP_015_Rpt
             // 
