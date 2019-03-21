@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Reportes.Facturacion
 {
   public class FAC_010_Info
     {
+
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
@@ -29,6 +30,8 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public Nullable<decimal> SubtotalSinIVAConDscto { get; set; }
         public Nullable<decimal> ValorIVA { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public int FacturasEmitidas { get; set; }
+        public int FacturasAnuladas { get; set; }
 
     }
 }

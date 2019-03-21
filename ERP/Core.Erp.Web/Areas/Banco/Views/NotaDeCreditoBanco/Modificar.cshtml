@@ -90,14 +90,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="IdImprimir"></label>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
                     </button>
-                    &nbsp;&nbsp;
-                    <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","NotaDeCreditoBanco",new { Area = "Banco", IdEmpresa = Model.IdEmpresa },null)">
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","NotaDeCreditoBanco",new { Area = "Banco", IdEmpresa = Model.IdEmpresa },null)">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>

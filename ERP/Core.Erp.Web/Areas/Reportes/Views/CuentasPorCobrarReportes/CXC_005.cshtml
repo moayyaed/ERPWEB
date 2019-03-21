@@ -30,32 +30,22 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="IdSucursal">Sucursal</label>
                         @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="IdCliente">Cliente</label>
                         @Html.Partial("_CmbCliente_CXC", Model.IdCliente)
                         @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
 
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="IdClienteContacto">Contacto</label>
-                        @Html.DropDownListFor(q => q.IdClienteContacto, new SelectList(ViewBag.lst_contacto, "IdContacto", "Nombres", Model.IdClienteContacto), new { @class = "form-control", @id = "IdClienteContacto" })
-                        @Html.ValidationMessageFor(q => q.IdClienteContacto, "", new { @class = "text-danger" })
-                    </div>
-                </div>                
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+                </div>              
+
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Fecha corte</label>
@@ -79,7 +69,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <div class="checkbox">
-                            <label for="mostrarSaldo0">@Html.CheckBoxFor(q => q.mostrarSaldo0) Mostrar saldo 0</label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarSaldo0, settings =>
+                           {
+                               settings.Name = "mostrarSaldo0";
+                               settings.Text = "Mostrar saldo 0";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.mostrarSaldo0, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -116,32 +112,4 @@
             <!-- /.box-footer-->
         </div>
         }
-        <script>
-            function cargar_cliente() {
-                $("#IdClienteContacto").empty();
-
-                var datos = {
-
-                    IdEmpresa: $("#IdEmpresa").val(),
-                    IdCliente: IdCliente.GetValue()
-
-                }
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("cargar_cliente", "CuentasPorCobrarReportes",new { Area = "Reportes"})',
-                    async: false,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        $.each(data, function (i, row) {
-                            $("#IdClienteContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
-                            $("#IdClienteContacto").val("0");
-                        });
-                    },
-                    error: function (error) {
-                    }
-                });
-            };
-        </script>
 

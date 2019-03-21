@@ -40,7 +40,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             lst_sucursal.Add(new Info.General.tb_sucursal_Info
             {
                 IdSucursal = 0,
-                Su_Descripcion = "Todas"
+                Su_Descripcion = "TODAS"
             });
             ViewBag.lst_sucursal = lst_sucursal;
 
@@ -84,6 +84,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new Info.General.tb_sucursal_Info
+            {
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursal = lst_sucursal;
 
             cxc_cobro_tipo_Bus bus_cobro = new cxc_cobro_tipo_Bus();
@@ -203,7 +208,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
-            report.p_IdContacto.Value = model.IdClienteContacto;
             report.p_fecha_corte.Value = model.fecha_corte;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();
@@ -219,7 +223,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
-            report.p_IdContacto.Value = model.IdClienteContacto;
             report.p_fecha_corte.Value = model.fecha_corte;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();

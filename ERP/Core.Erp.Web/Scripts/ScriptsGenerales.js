@@ -5,8 +5,8 @@
 }
 
 function GetPathServer() {
-    var location = window.location.origin + "/FixedERP"; /*produccion*/
-    //var location = window.location.origin; /*local*/
+    //var location = window.location.origin + "/FixedERP"; /*produccion*/
+    var location = window.location.origin; /*local*/
 
     return location;
 }

@@ -90,7 +90,7 @@
                     @Html.ValidationMessageFor(q => q.cr_NumDocumento, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-5 col-md-2">
+            <div class="col-md-offset-6 col-md-2">
                 <div class="form-group">
                     <label for="cr_fecha">Fecha*</label>
                     @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>
@@ -105,10 +105,13 @@
                     @Html.ValidationMessageFor(q => q.cr_fecha, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-1 col-md-1">
-                <button type="button" class="btn btn-primary" id="btn_imprimir" title="Imprimir" onclick="Imprimir();">
-                    <i class="fa fa-print"></i>
-                </button>
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" title="Imprimir" onclick="Imprimir();">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
