@@ -178,7 +178,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            model.IdUsuarioUltMod = Session["IdUsuario"].ToString();
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_trnferencia.modificarDB(model))
             {
                 cargar_combos(model.IdEmpresa);
@@ -209,20 +209,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult Anular(in_transferencia_Info model)
         {
             model.list_detalle = List_in_transferencia_det.get_list(model.IdTransaccionSession);
-            string mensaje = bus_trnferencia.validar(model);
-            if (mensaje != "")
-            {
-                cargar_combos(model.IdEmpresa);
-                ViewBag.mensaje = mensaje;
-                return View(model);
-            }
-            if (!validar(model, ref mensaje))
-            {
-                cargar_combos(model.IdEmpresa);
-                ViewBag.mensaje = mensaje;
-                return View(model);
-            }
-            model.tr_userAnulo = Session["IdUsuario"].ToString();
+        
+            model.tr_userAnulo = SessionFixed.IdUsuario;
             if (!bus_trnferencia.anularDB(model))
             {
                 cargar_combos(model.IdEmpresa);
