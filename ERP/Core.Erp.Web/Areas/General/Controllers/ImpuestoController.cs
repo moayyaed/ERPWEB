@@ -136,6 +136,9 @@ namespace Core.Erp.Web.Areas.General.Controllers
             }
 
             bus_impuesto_ctacble.eliminarDB(model.IdCod_Impuesto, model.info_impuesto_ctacble.IdEmpresa_cta);
+            model.info_impuesto_ctacble.IdCtaCble = model.IdCtaCble;
+            model.info_impuesto_ctacble.IdCtaCble_vta = model.IdCtaCble_vta;
+
             bus_impuesto_ctacble.guardarDB(model.info_impuesto_ctacble);
             model.info_impuesto_ctacble.IdCtaCble = model.IdCtaCble;
             model.info_impuesto_ctacble.IdCtaCble_vta = model.IdCtaCble_vta;
