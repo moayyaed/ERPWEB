@@ -51,6 +51,18 @@
 
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-offset-11 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="co_observacion">Proveedor</label>
@@ -168,18 +180,6 @@
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.fecha, "", new { @class = "text-danger" })
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-offset-11 col-md-1">
-                <label for="IdImprimir"></label>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
                 </div>
             </div>
         </div>

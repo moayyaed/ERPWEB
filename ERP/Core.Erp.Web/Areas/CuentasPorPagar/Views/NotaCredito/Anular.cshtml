@@ -146,7 +146,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
                     @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
@@ -154,7 +154,7 @@
                 </div>
             </div>
 
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for=""></label>
                     <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Proveedor",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>

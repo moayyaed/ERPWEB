@@ -209,7 +209,6 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 return View(model);
             }
             #endregion
-
             
             MensajeSuccess = "Registro creado exitósamente";
             return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
