@@ -31,8 +31,9 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             string balance = p_balance.Value == null ? "" : Convert.ToString(p_balance.Value);
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
+            bool MostrarSaldoAcumulado = string.IsNullOrEmpty(p_MostrarSaldoAcumulado.Value.ToString()) ? false : Convert.ToBoolean(p_MostrarSaldoAcumulado.Value);
             CONTA_003_balances_Bus bus_rpt = new CONTA_003_balances_Bus();
-            List<CONTA_003_balances_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance,IdSucursal);
+            List<CONTA_003_balances_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance,IdSucursal, MostrarSaldoAcumulado);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

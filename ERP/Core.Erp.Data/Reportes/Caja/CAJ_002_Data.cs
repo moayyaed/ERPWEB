@@ -26,7 +26,7 @@ namespace Core.Erp.Data.Reportes.Caja
                                  IdConciliacion_Caja = q.IdConciliacion_Caja,
                                  Secuencia = q.Secuencia,
                                  IdEmpresa_OGiro = q.IdEmpresa_OGiro,
-                                 IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
+                                 IdCbteCble_Ogiro = q.IdCbteCble_Ogiro ?? 0,
                                  IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
                                  co_factura = q.co_factura,
                                  pe_nombreCompleto = q.pe_nombreCompleto,
@@ -49,7 +49,8 @@ namespace Core.Erp.Data.Reportes.Caja
                                  IdUsuarioCreacion = q.IdUsuarioCreacion,
                                  NombreUsuario = q.NombreUsuario,
                                  Su_Descripcion =  q.Su_Descripcion,
-                                 SecuenciaCaja = q.SecuenciaCaja
+                                 SecuenciaCaja = q.SecuenciaCaja,
+                                 SecuenciaVale = q.SecuenciaVale
                              }).ToList();
                 }
                 return Lista;

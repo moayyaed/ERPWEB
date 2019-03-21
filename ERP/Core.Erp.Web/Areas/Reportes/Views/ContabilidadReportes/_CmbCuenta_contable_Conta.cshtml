@@ -4,7 +4,7 @@
     {
         settings.Name = "IdCtaCble";
         settings.Width = Unit.Percentage(100);
-        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1200);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
         settings.CallbackRouteValues = new { Controller = "ContabilidadReportes", Action = "CmbCuenta_contable_Conta", Area = "Reportes" };
         settings.Properties.CallbackPageSize = 15;
@@ -14,7 +14,9 @@
         settings.Properties.ValueField = "IdCtaCble";
         settings.Properties.ValueType = typeof(string);
         settings.Properties.Columns.Add("IdCtaCble", "ID", 10);
-        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta", 90);
+        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta", 40);
+        settings.Properties.Columns.Add("IdCtaCblePadre", "ID Padre", 10);
+        settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
         settings.Properties.FilterMinLength = 3;
 
     })

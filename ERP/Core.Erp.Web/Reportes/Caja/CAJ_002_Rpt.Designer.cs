@@ -45,10 +45,8 @@
             this.xrTableCell32 = new DevExpress.XtraReports.UI.XRTableCell();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdConciliacionCaja = new DevExpress.XtraReports.Parameters.Parameter();
-            this.SubReporte_ingresos = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -77,7 +75,6 @@
             this.xrTableCell35 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
-            this.subreport_vales_no_conciliados = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTable3 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell40 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -116,8 +113,10 @@
             this.xrTableCell36 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
+            this.subreport_vales_no_conciliados = new DevExpress.XtraReports.UI.XRSubreport();
+            this.SubReporte_ingresos = new DevExpress.XtraReports.UI.XRSubreport();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
@@ -126,6 +125,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
@@ -136,7 +136,8 @@
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
-            new DevExpress.XtraReports.UI.GroupField("co_FechaFactura", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            new DevExpress.XtraReports.UI.GroupField("co_FechaFactura", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+            new DevExpress.XtraReports.UI.GroupField("SecuenciaVale", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // xrTable4
@@ -181,7 +182,7 @@
             // xrTableCell25
             // 
             this.xrTableCell25.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IdCbteCble_Ogiro]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SecuenciaVale]")});
             this.xrTableCell25.Name = "xrTableCell25";
             this.xrTableCell25.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 3, 0, 100F);
             this.xrTableCell25.StylePriority.UsePadding = false;
@@ -261,7 +262,7 @@
             // xrTableCell31
             // 
             this.xrTableCell31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[valor_a_pagar]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[valor_retencion]")});
             this.xrTableCell31.Name = "xrTableCell31";
             this.xrTableCell31.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell31.StylePriority.UsePadding = false;
@@ -296,11 +297,6 @@
             this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Caja.CAJ_002_Info);
-            this.objectDataSource1.Name = "objectDataSource1";
-            // 
             // p_IdEmpresa
             // 
             this.p_IdEmpresa.Name = "p_IdEmpresa";
@@ -310,14 +306,6 @@
             // 
             this.p_IdConciliacionCaja.Name = "p_IdConciliacionCaja";
             this.p_IdConciliacionCaja.Visible = false;
-            // 
-            // SubReporte_ingresos
-            // 
-            this.SubReporte_ingresos.LocationFloat = new DevExpress.Utils.PointFloat(0F, 136.5416F);
-            this.SubReporte_ingresos.Name = "SubReporte_ingresos";
-            this.SubReporte_ingresos.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ingresos_Rpt();
-            this.SubReporte_ingresos.SizeF = new System.Drawing.SizeF(1093F, 20F);
-            this.SubReporte_ingresos.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.SubReporte_ingresos_BeforePrint);
             // 
             // xrTable2
             // 
@@ -612,14 +600,6 @@
             this.PageHeader.HeightF = 40F;
             this.PageHeader.Name = "PageHeader";
             // 
-            // subreport_vales_no_conciliados
-            // 
-            this.subreport_vales_no_conciliados.LocationFloat = new DevExpress.Utils.PointFloat(0F, 175.4167F);
-            this.subreport_vales_no_conciliados.Name = "subreport_vales_no_conciliados";
-            this.subreport_vales_no_conciliados.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ValesNoConciliados_Rpt();
-            this.subreport_vales_no_conciliados.SizeF = new System.Drawing.SizeF(1093F, 23F);
-            this.subreport_vales_no_conciliados.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.subreport_vales_no_conciliados_BeforePrint);
-            // 
             // xrTable3
             // 
             this.xrTable3.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
@@ -683,7 +663,7 @@
             // xrTableCell16
             // 
             this.xrTableCell16.Name = "xrTableCell16";
-            this.xrTableCell16.Text = "ID";
+            this.xrTableCell16.Text = "Sec.";
             this.xrTableCell16.Weight = 0.37562068850701363D;
             // 
             // xrTableCell17
@@ -725,7 +705,7 @@
             // xrTableCell22
             // 
             this.xrTableCell22.Name = "xrTableCell22";
-            this.xrTableCell22.Text = "V. Pagar";
+            this.xrTableCell22.Text = "Retención";
             this.xrTableCell22.Weight = 0.512210030029911D;
             // 
             // xrTableCell23
@@ -1010,6 +990,27 @@
             this.ReportHeader.HeightF = 213F;
             this.ReportHeader.Name = "ReportHeader";
             // 
+            // subreport_vales_no_conciliados
+            // 
+            this.subreport_vales_no_conciliados.LocationFloat = new DevExpress.Utils.PointFloat(0F, 175.4167F);
+            this.subreport_vales_no_conciliados.Name = "subreport_vales_no_conciliados";
+            this.subreport_vales_no_conciliados.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ValesNoConciliados_Rpt();
+            this.subreport_vales_no_conciliados.SizeF = new System.Drawing.SizeF(1093F, 23F);
+            this.subreport_vales_no_conciliados.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.subreport_vales_no_conciliados_BeforePrint);
+            // 
+            // SubReporte_ingresos
+            // 
+            this.SubReporte_ingresos.LocationFloat = new DevExpress.Utils.PointFloat(0F, 136.5416F);
+            this.SubReporte_ingresos.Name = "SubReporte_ingresos";
+            this.SubReporte_ingresos.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ingresos_Rpt();
+            this.SubReporte_ingresos.SizeF = new System.Drawing.SizeF(1093F, 20F);
+            this.SubReporte_ingresos.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.SubReporte_ingresos_BeforePrint);
+            // 
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Caja.CAJ_002_Info);
+            this.objectDataSource1.Name = "objectDataSource1";
+            // 
             // CAJ_002_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1034,7 +1035,6 @@
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CAJ_002_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
@@ -1043,6 +1043,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }

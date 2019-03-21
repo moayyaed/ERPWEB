@@ -37,5 +37,6 @@ namespace Core.Erp.Info.Reportes.Caja
         public string NombreUsuario { get; set; }
         public string Su_Descripcion { get; set; }
         public Nullable<decimal> SecuenciaCaja { get; set; }
+        public decimal? SecuenciaVale { get; set; }
     }
 }

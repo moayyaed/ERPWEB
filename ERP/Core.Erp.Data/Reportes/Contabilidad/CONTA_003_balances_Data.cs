@@ -13,7 +13,7 @@ namespace Core.Erp.Data.Reportes.Contabilidad
 
         tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
         string Su_Descripcion = "";
-        public List<CONTA_003_balances_Info> get_list(int IdEmpresa, int IdAnio, DateTime fechaIni, DateTime fechaFin, string IdUsuario, int IdNivel, bool mostrarSaldo0, string balance, int IdSucursal)
+        public List<CONTA_003_balances_Info> get_list(int IdEmpresa, int IdAnio, DateTime fechaIni, DateTime fechaFin, string IdUsuario, int IdNivel, bool mostrarSaldo0, string balance, int IdSucursal, bool MostrarSaldoAcumulado)
         {
             try
             {
@@ -28,13 +28,13 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                 }
                 else
                 {
-                    Su_Descripcion = "Todas";
+                    Su_Descripcion = "TODAS";
 
                 }
 
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCONTA_003_balances(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance,IdSucursalIni,IdSucursalFin)
+                    Lista = (from q in Context.SPCONTA_003_balances(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance,IdSucursalIni,IdSucursalFin,MostrarSaldoAcumulado)
                              select new CONTA_003_balances_Info
                              {
                                  IdUsuario = q.IdUsuario,

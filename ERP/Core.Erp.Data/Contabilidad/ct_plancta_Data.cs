@@ -43,15 +43,17 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     List<ct_plancta> lstg;
                     if(!MostrarCtaPadre)
-                        lstg = context_g.ct_plancta.Where(q => q.IdEmpresa == IdEmpresa && q.pc_EsMovimiento == "S" && q.pc_Estado == "A" && (q.IdCtaCble + " " + q.pc_Cuenta).Contains(filter)).OrderBy(q => q.IdCtaCble).Skip(skip).Take(take).ToList();
+                        lstg = context_g.ct_plancta.Include("ct_plancta2").Where(q => q.IdEmpresa == IdEmpresa && q.pc_EsMovimiento == "S" && q.pc_Estado == "A" && (q.IdCtaCble + " " + q.pc_Cuenta).Contains(filter)).OrderBy(q => q.IdCtaCble).Skip(skip).Take(take).ToList();
                     else
-                        lstg = context_g.ct_plancta.Where(q => q.IdEmpresa == IdEmpresa && q.pc_Estado == "A" && (q.IdCtaCble +" "+ q.pc_Cuenta).Contains(filter)).OrderBy(q => q.IdCtaCble).Skip(skip).Take(take).ToList();
+                        lstg = context_g.ct_plancta.Include("ct_plancta2").Where(q => q.IdEmpresa == IdEmpresa && q.pc_Estado == "A" && (q.IdCtaCble +" "+ q.pc_Cuenta).Contains(filter)).OrderBy(q => q.IdCtaCble).Skip(skip).Take(take).ToList();
                     foreach (var q in lstg)
                         {
                             Lista.Add(new ct_plancta_Info
                             {
                                 IdCtaCble = q.IdCtaCble,
-                                pc_Cuenta = q.pc_Cuenta
+                                pc_Cuenta = q.pc_Cuenta,
+                                IdCtaCblePadre = q.IdCtaCblePadre,
+                                pc_Cuenta_padre = q.ct_plancta2 == null ? null : q.ct_plancta2.pc_Cuenta
                             });
                         }
                 }

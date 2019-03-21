@@ -516,8 +516,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_002' no tiene definida ningu
             <PropertyRef Name="Fecha_fin" />
             <PropertyRef Name="NombreCaja" />
             <PropertyRef Name="Su_Descripcion" />
-            
-            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="SecuenciaCaja" />
           </Key>
           <Property Name="IdRow" Type="bigint" Nullable="false" />
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
@@ -525,7 +524,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_002' no tiene definida ningu
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="IdEmpresa_OGiro" Type="int" Nullable="false" />
           <Property Name="IdTipoCbte_Ogiro" Type="int" Nullable="false" />
-          <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" />
           <Property Name="co_factura" Type="varchar" MaxLength="50" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="co_FechaFactura" Type="datetime" Nullable="false" />
@@ -548,6 +547,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_002' no tiene definida ningu
           <Property Name="NombreUsuario" Type="varchar" MaxLength="50" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="SecuenciaCaja" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="SecuenciaVale" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_002_ingresos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -4095,6 +4095,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Parameter Name="Balance" Type="varchar" Mode="In" />
           <Parameter Name="IdSucursalIni" Type="int" Mode="In" />
           <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
+          <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
         </Function>
         <Function Name="SPCXC_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -4659,7 +4660,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
     [VWCAJ_002].[IdUsuarioCreacion] AS [IdUsuarioCreacion], 
     [VWCAJ_002].[NombreUsuario] AS [NombreUsuario], 
     [VWCAJ_002].[Su_Descripcion] AS [Su_Descripcion], 
-    [VWCAJ_002].[SecuenciaCaja] AS [SecuenciaCaja]
+    [VWCAJ_002].[SecuenciaCaja] AS [SecuenciaCaja], 
+    [VWCAJ_002].[SecuenciaVale] AS [SecuenciaVale]
     FROM [web].[VWCAJ_002] AS [VWCAJ_002]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCAJ_002_ingresos" EntityType="Self.VWCAJ_002_ingresos" store:Type="Views" store:Schema="web">
@@ -8322,18 +8324,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           </FunctionImport>
           <EntitySet Name="VWCXC_002" EntityType="Model_reportes.VWCXC_002" />
           <EntitySet Name="VWCXP_001" EntityType="Model_reportes.VWCXP_001" />
-          <FunctionImport Name="SPCONTA_003_balances" ReturnType="Collection(Model_reportes.SPCONTA_003_balances_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdAnio" Mode="In" Type="Int32" />
-            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
-            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
-            <Parameter Name="Balance" Mode="In" Type="String" />
-            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="VWROL_009" EntityType="Model_reportes.VWROL_009" />
           <EntitySet Name="VWCONTA_001" EntityType="Model_reportes.VWCONTA_001" />
           <EntitySet Name="VWROL_019" EntityType="Model_reportes.VWROL_019" />
@@ -8436,7 +8426,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           </FunctionImport>
           <EntitySet Name="VWROL_010" EntityType="Model_reportes.VWROL_010" />
           <EntitySet Name="VWCAJ_001" EntityType="Model_reportes.VWCAJ_001" />
-          <EntitySet Name="VWCAJ_002" EntityType="Model_reportes.VWCAJ_002" />
           <EntitySet Name="VWCAJ_002_ingresos" EntityType="Model_reportes.VWCAJ_002_ingresos" />
           <EntitySet Name="VWCAJ_002_ValesNoConciliados" EntityType="Model_reportes.VWCAJ_002_ValesNoConciliados" />
           <EntitySet Name="VWROL_021" EntityType="Model_reportes.VWROL_021" />
@@ -8503,6 +8492,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="SPCONTA_003_balances" ReturnType="Collection(Model_reportes.SPCONTA_003_balances_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdAnio" Mode="In" Type="Int32" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+            <Parameter Name="Balance" Mode="In" Type="String" />
+            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <EntitySet Name="VWCAJ_002" EntityType="Model_reportes.VWCAJ_002" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -10063,35 +10066,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Name="dc_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <ComplexType Name="SPCONTA_003_balances_Result">
-          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
-          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
-          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
-          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
-          <Property Type="Double" Name="DebitosSaldoInicial" Nullable="false" />
-          <Property Type="Double" Name="CreditosSaldoInicial" Nullable="false" />
-          <Property Type="Double" Name="SaldoInicial" Nullable="false" />
-          <Property Type="Double" Name="Debitos" Nullable="false" />
-          <Property Type="Double" Name="Creditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitosCreditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitos" Nullable="false" />
-          <Property Type="Double" Name="SaldoCreditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoFinal" Nullable="false" />
-          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
-          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
-          <Property Type="Double" Name="SaldoInicialNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitosCreditosNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitosNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoCreditosNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoFinalNaturaleza" Nullable="false" />
-        </ComplexType>
         <EntityType Name="VWROL_009">
           <Key>
             <PropertyRef Name="CedulaRuc" />
@@ -11276,60 +11250,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SecuenciaCaja" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <EntityType Name="VWCAJ_002">
-          <Key>
-            <PropertyRef Name="IdRow" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdConciliacion_Caja" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdEmpresa_OGiro" />
-            <PropertyRef Name="IdTipoCbte_Ogiro" />
-            <PropertyRef Name="IdCbteCble_Ogiro" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="co_FechaFactura" />
-            <PropertyRef Name="co_total" />
-            <PropertyRef Name="valor_retencion" />
-            <PropertyRef Name="valor_a_pagar" />
-            <PropertyRef Name="Valor_a_aplicar" />
-            <PropertyRef Name="Saldo_cont_al_periodo" />
-            <PropertyRef Name="Ingresos" />
-            <PropertyRef Name="Dif_x_pagar_o_cobrar" />
-            <PropertyRef Name="TIPO" />
-            <PropertyRef Name="Fecha_ini" />
-            <PropertyRef Name="Fecha_fin" />
-            <PropertyRef Name="NombreCaja" />
-            <PropertyRef Name="Su_Descripcion" />
-          </Key>
-          <Property Name="IdRow" Type="Int64" Nullable="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdConciliacion_Caja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa_OGiro" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="co_factura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="co_total" Type="Double" Nullable="false" />
-          <Property Name="valor_retencion" Type="Double" Nullable="false" />
-          <Property Name="valor_a_pagar" Type="Double" Nullable="false" />
-          <Property Name="Valor_a_aplicar" Type="Double" Nullable="false" />
-          <Property Name="co_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Saldo_cont_al_periodo" Type="Double" Nullable="false" />
-          <Property Name="Ingresos" Type="Double" Nullable="false" />
-          <Property Name="Total_fact_vale" Type="Double" />
-          <Property Name="Dif_x_pagar_o_cobrar" Type="Double" Nullable="false" />
-          <Property Name="TIPO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_ini" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_fin" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="valor_a_reponer" Type="Double" />
-          <Property Name="NombreCaja" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="tm_descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SecuenciaCaja" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-        </EntityType>
         <EntityType Name="VWCAJ_002_ingresos">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -11778,6 +11698,90 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Type="String" Name="de_descripcion" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="Su_Descripcion" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="SPCONTA_003_balances_Result">
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
+          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
+          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
+          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
+          <Property Type="Double" Name="DebitosSaldoInicial" Nullable="false" />
+          <Property Type="Double" Name="CreditosSaldoInicial" Nullable="false" />
+          <Property Type="Double" Name="SaldoInicial" Nullable="false" />
+          <Property Type="Double" Name="Debitos" Nullable="false" />
+          <Property Type="Double" Name="Creditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitosCreditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitos" Nullable="false" />
+          <Property Type="Double" Name="SaldoCreditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoFinal" Nullable="false" />
+          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
+          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
+          <Property Type="Double" Name="SaldoInicialNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitosCreditosNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitosNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoCreditosNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoFinalNaturaleza" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="VWCAJ_002">
+          <Key>
+            <PropertyRef Name="IdRow" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion_Caja" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdEmpresa_OGiro" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="co_FechaFactura" />
+            <PropertyRef Name="co_total" />
+            <PropertyRef Name="valor_retencion" />
+            <PropertyRef Name="valor_a_pagar" />
+            <PropertyRef Name="Valor_a_aplicar" />
+            <PropertyRef Name="Saldo_cont_al_periodo" />
+            <PropertyRef Name="Ingresos" />
+            <PropertyRef Name="Dif_x_pagar_o_cobrar" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="Fecha_ini" />
+            <PropertyRef Name="Fecha_fin" />
+            <PropertyRef Name="NombreCaja" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="SecuenciaCaja" />
+          </Key>
+          <Property Name="IdRow" Type="Int64" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdConciliacion_Caja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa_OGiro" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="co_factura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="co_total" Type="Double" Nullable="false" />
+          <Property Name="valor_retencion" Type="Double" Nullable="false" />
+          <Property Name="valor_a_pagar" Type="Double" Nullable="false" />
+          <Property Name="Valor_a_aplicar" Type="Double" Nullable="false" />
+          <Property Name="co_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Saldo_cont_al_periodo" Type="Double" Nullable="false" />
+          <Property Name="Ingresos" Type="Double" Nullable="false" />
+          <Property Name="Total_fact_vale" Type="Double" />
+          <Property Name="Dif_x_pagar_o_cobrar" Type="Double" Nullable="false" />
+          <Property Name="TIPO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_ini" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_fin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="valor_a_reponer" Type="Double" />
+          <Property Name="NombreCaja" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tm_descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SecuenciaCaja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="SecuenciaVale" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13893,39 +13897,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_003_balances" FunctionName="Model_reportes.Store.SPCONTA_003_balances">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_003_balances_Result">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
-                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
-                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
-                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
-                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
-                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
-                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
-                <ScalarProperty Name="DebitosSaldoInicial" ColumnName="DebitosSaldoInicial" />
-                <ScalarProperty Name="CreditosSaldoInicial" ColumnName="CreditosSaldoInicial" />
-                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
-                <ScalarProperty Name="Debitos" ColumnName="Debitos" />
-                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
-                <ScalarProperty Name="SaldoDebitosCreditos" ColumnName="SaldoDebitosCreditos" />
-                <ScalarProperty Name="SaldoDebitos" ColumnName="SaldoDebitos" />
-                <ScalarProperty Name="SaldoCreditos" ColumnName="SaldoCreditos" />
-                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
-                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
-                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
-                <ScalarProperty Name="SaldoInicialNaturaleza" ColumnName="SaldoInicialNaturaleza" />
-                <ScalarProperty Name="SaldoDebitosCreditosNaturaleza" ColumnName="SaldoDebitosCreditosNaturaleza" />
-                <ScalarProperty Name="SaldoDebitosNaturaleza" ColumnName="SaldoDebitosNaturaleza" />
-                <ScalarProperty Name="SaldoCreditosNaturaleza" ColumnName="SaldoCreditosNaturaleza" />
-                <ScalarProperty Name="SaldoFinalNaturaleza" ColumnName="SaldoFinalNaturaleza" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="VWROL_009">
             <EntityTypeMapping TypeName="Model_reportes.VWROL_009">
               <MappingFragment StoreEntitySet="VWROL_009">
@@ -14873,41 +14844,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VWCAJ_002">
-            <EntityTypeMapping TypeName="Model_reportes.VWCAJ_002">
-              <MappingFragment StoreEntitySet="VWCAJ_002">
-                <ScalarProperty Name="SecuenciaCaja" ColumnName="SecuenciaCaja" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
-                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
-                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
-                <ScalarProperty Name="NombreCaja" ColumnName="NombreCaja" />
-                <ScalarProperty Name="valor_a_reponer" ColumnName="valor_a_reponer" />
-                <ScalarProperty Name="Fecha_fin" ColumnName="Fecha_fin" />
-                <ScalarProperty Name="Fecha_ini" ColumnName="Fecha_ini" />
-                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
-                <ScalarProperty Name="Dif_x_pagar_o_cobrar" ColumnName="Dif_x_pagar_o_cobrar" />
-                <ScalarProperty Name="Total_fact_vale" ColumnName="Total_fact_vale" />
-                <ScalarProperty Name="Ingresos" ColumnName="Ingresos" />
-                <ScalarProperty Name="Saldo_cont_al_periodo" ColumnName="Saldo_cont_al_periodo" />
-                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
-                <ScalarProperty Name="Valor_a_aplicar" ColumnName="Valor_a_aplicar" />
-                <ScalarProperty Name="valor_a_pagar" ColumnName="valor_a_pagar" />
-                <ScalarProperty Name="valor_retencion" ColumnName="valor_retencion" />
-                <ScalarProperty Name="co_total" ColumnName="co_total" />
-                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
-                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
-                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
-                <ScalarProperty Name="IdEmpresa_OGiro" ColumnName="IdEmpresa_OGiro" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdRow" ColumnName="IdRow" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VWCAJ_002_ingresos">
             <EntityTypeMapping TypeName="Model_reportes.VWCAJ_002_ingresos">
               <MappingFragment StoreEntitySet="VWCAJ_002_ingresos">
@@ -15287,6 +15223,75 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_003_balances" FunctionName="Model_reportes.Store.SPCONTA_003_balances">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_003_balances_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
+                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
+                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
+                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
+                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
+                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
+                <ScalarProperty Name="DebitosSaldoInicial" ColumnName="DebitosSaldoInicial" />
+                <ScalarProperty Name="CreditosSaldoInicial" ColumnName="CreditosSaldoInicial" />
+                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
+                <ScalarProperty Name="Debitos" ColumnName="Debitos" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="SaldoDebitosCreditos" ColumnName="SaldoDebitosCreditos" />
+                <ScalarProperty Name="SaldoDebitos" ColumnName="SaldoDebitos" />
+                <ScalarProperty Name="SaldoCreditos" ColumnName="SaldoCreditos" />
+                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
+                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
+                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
+                <ScalarProperty Name="SaldoInicialNaturaleza" ColumnName="SaldoInicialNaturaleza" />
+                <ScalarProperty Name="SaldoDebitosCreditosNaturaleza" ColumnName="SaldoDebitosCreditosNaturaleza" />
+                <ScalarProperty Name="SaldoDebitosNaturaleza" ColumnName="SaldoDebitosNaturaleza" />
+                <ScalarProperty Name="SaldoCreditosNaturaleza" ColumnName="SaldoCreditosNaturaleza" />
+                <ScalarProperty Name="SaldoFinalNaturaleza" ColumnName="SaldoFinalNaturaleza" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="VWCAJ_002">
+            <EntityTypeMapping TypeName="Model_reportes.VWCAJ_002">
+              <MappingFragment StoreEntitySet="VWCAJ_002">
+                <ScalarProperty Name="SecuenciaVale" ColumnName="SecuenciaVale" />
+                <ScalarProperty Name="SecuenciaCaja" ColumnName="SecuenciaCaja" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
+                <ScalarProperty Name="NombreCaja" ColumnName="NombreCaja" />
+                <ScalarProperty Name="valor_a_reponer" ColumnName="valor_a_reponer" />
+                <ScalarProperty Name="Fecha_fin" ColumnName="Fecha_fin" />
+                <ScalarProperty Name="Fecha_ini" ColumnName="Fecha_ini" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="Dif_x_pagar_o_cobrar" ColumnName="Dif_x_pagar_o_cobrar" />
+                <ScalarProperty Name="Total_fact_vale" ColumnName="Total_fact_vale" />
+                <ScalarProperty Name="Ingresos" ColumnName="Ingresos" />
+                <ScalarProperty Name="Saldo_cont_al_periodo" ColumnName="Saldo_cont_al_periodo" />
+                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
+                <ScalarProperty Name="Valor_a_aplicar" ColumnName="Valor_a_aplicar" />
+                <ScalarProperty Name="valor_a_pagar" ColumnName="valor_a_pagar" />
+                <ScalarProperty Name="valor_retencion" ColumnName="valor_retencion" />
+                <ScalarProperty Name="co_total" ColumnName="co_total" />
+                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
+                <ScalarProperty Name="IdEmpresa_OGiro" ColumnName="IdEmpresa_OGiro" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdRow" ColumnName="IdRow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

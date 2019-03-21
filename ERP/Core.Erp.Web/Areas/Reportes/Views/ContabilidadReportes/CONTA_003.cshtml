@@ -93,9 +93,30 @@
                     <div class="col-md-3">
                         <div class="checkbox">
                             <div class="form-group">
-                                <label for="mostrar_saldos_en_0">@Html.CheckBoxFor(q => q.mostrar_saldos_en_0) Mostrar saldos en 0</label>
+                                @Html.DevExpress().CheckBoxFor(q => q.mostrar_saldos_en_0,
+                         settings =>
+                         {
+                             settings.Name = "mostrar_saldos_en_0";
+                             settings.Checked = false;
+                             settings.Text = "Mostrar saldos en 0";
+                         }
+                     ).GetHtml()
                             </div>
                         </div>                        
+                    </div>
+                    <div class="col-md-3">
+                        <div class="checkbox">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.MostrarSaldoAcumulado,
+                         settings =>
+                         {
+                             settings.Name = "MostrarSaldoAcumulado";
+                             settings.Checked = false;
+                             settings.Text = "Mostrar acumulado";
+                         }
+                     ).GetHtml()
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

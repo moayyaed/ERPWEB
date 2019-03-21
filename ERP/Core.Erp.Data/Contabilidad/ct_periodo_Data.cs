@@ -278,7 +278,7 @@ namespace Core.Erp.Data.Contabilidad
                             }
                             */
 
-                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "INV").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "INV" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                             if(CierreModulo != null)
                             {
                                 if (Fecha.Date <= CierreModulo.FechaFin)
@@ -303,7 +303,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de facturación";
                                 return false;
                             }
-                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "FAC").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "FAC" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                             if (CierreModulo != null)
                             {
                                 if (Fecha.Date <= CierreModulo.FechaFin)
@@ -329,7 +329,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "COMP").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "COMP" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -354,7 +354,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ACTF").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ACTF" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -369,7 +369,7 @@ namespace Core.Erp.Data.Contabilidad
                         {
 
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ROL").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ROL" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -412,7 +412,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CONTA").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CONTA" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -437,7 +437,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CAJ").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CAJ" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -462,7 +462,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "BAN").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "BAN" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -487,7 +487,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXC").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXC" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)
@@ -512,7 +512,7 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                         }
-                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXP").OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXP" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
                         {
                             if (Fecha.Date <= CierreModulo.FechaFin)

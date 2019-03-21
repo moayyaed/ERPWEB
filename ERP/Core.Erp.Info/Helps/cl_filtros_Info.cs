@@ -163,6 +163,7 @@ namespace Core.Erp.Info.Helps
         [DataType(DataType.Date, ErrorMessage = "El campo fecha fin debe ser una fecha en formato dd/MM/yyyy")]
         public DateTime fecha_fin { get; set; }
         public bool mostrar_saldos_en_0 { get; set; }
+        public bool MostrarSaldoAcumulado { get; set; }
         public int IdSucursal { get; set; }
         public cl_filtros_contabilidad_Info()
         {
