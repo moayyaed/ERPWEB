@@ -149,7 +149,7 @@
         });
     }
 
-       function GetUltimoDocumento() {
+    function GetUltimoDocumento() {
         var datos = {
             IdSucursal: $("#IdSucursal").val(),
             IdPuntoVta: $("#IdPuntoVta").val()
@@ -200,29 +200,29 @@
                 IdSucursal: $("#IdSucursal").val(),
                 IdCliente: IdCliente.GetValue(),
                 IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetDocumentosPorCobrar", "NotaDeDebitoFacturacion",new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                selectedIDs = "";
-                GridView_CruceND_x_cruzar.PerformCallback();
-                GridView_CruceND_x_cruzar.UnselectRows();
-                $("#FacturasModal").modal("show");
-            },
-            error: function (error) {
             }
-        });
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("GetDocumentosPorCobrar", "NotaDeDebitoFacturacion",new { Area = "Facturacion"})',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    selectedIDs = "";
+                    GridView_CruceND_x_cruzar.PerformCallback();
+                    GridView_CruceND_x_cruzar.UnselectRows();
+                    $("#FacturasModal").modal("show");
+                },
+                error: function (error) {
+                }
+            });
         }
     }
 
-        function AddFacturas() {
+    function AddFacturas() {
 
         var datos = {
             IDs: selectedIDs,
@@ -243,15 +243,15 @@
             error: function (error) {
             }
         });
-            selectedIDs = "";
-            GridView_CruceND_x_cruzar.PerformCallback();
-            GridView_CruceND_x_cruzar.UnselectRows();
-            GridView_CruceND.PerformCallback();
-            GridView_notaDebito_det.PerformCallback();
-            $("#FacturasModal").modal("hide");
+        selectedIDs = "";
+        GridView_CruceND_x_cruzar.PerformCallback();
+        GridView_CruceND_x_cruzar.UnselectRows();
+        GridView_CruceND.PerformCallback();
+        GridView_notaDebito_det.PerformCallback();
+        $("#FacturasModal").modal("hide");
     }
 
-     function VaciarListas() {
+    function VaciarListas() {
 
         var datos = {
             IdTransaccionSession: $("#IdTransaccionSession").val()
@@ -271,16 +271,23 @@
             error: function (error) {
             }
         });
-           GridView_CruceND.PerformCallback();
+        GridView_CruceND.PerformCallback();
     }
     function CrearModificarCliente() {
+        var location = GetPathServer();
         if (IdCliente.GetValue() > 0) {
-            var win = window.open(window.location.origin + "/FixedERP/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            var win = window.open(location + "/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
             win.focus();
         } else {
-            var win = window.open(window.location.origin + "/FixedERP/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
             win.focus();
         }
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/FacturacionReportes/FAC_008?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdNota="+@Model.IdNota, '_blank');
+        win.focus();
     }
 </script>
 
@@ -302,7 +309,15 @@
             </h4>
         </div>
     }
-
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
     <div class="modal fade" id="OpModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -342,8 +357,27 @@
     </div>
 
     <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-10 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","NotaDeDebitoFacturacion",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
-
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
@@ -358,14 +392,14 @@
                     @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdCliente">Cliente*</label>
                     @Html.Partial("_CmbCliente_NotaDebitoFacturacion", Model.IdCliente)
                     @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
                     <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">

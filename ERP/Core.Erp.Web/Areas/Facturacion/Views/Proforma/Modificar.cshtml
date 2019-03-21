@@ -15,6 +15,16 @@
     @Html.HiddenFor(q => q.IdProforma)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+
     <div class="modal fade" id="OpModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -96,6 +106,26 @@
     </div>
 
     <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-10 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Proforma",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
                 <div class="form-group">
@@ -111,14 +141,14 @@
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdCliente">Cliente*</label>
                     @Html.Partial("_CmbCliente_Proforma", Model.IdCliente)
                     @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
                     <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
@@ -395,7 +425,7 @@
         $('#pf_fecha_vcto').datepicker("update", moment(f, "DD-MM-YYYY").add(vida, 'days').format("DD/MM/YYYY"));
     }
 
-        function get_info_termino_pago() {
+    function get_info_termino_pago() {
         var datos = {
             IdTerminoPago: $("#IdTerminoPago").val()
         }
@@ -415,29 +445,29 @@
             }
         });
     }
-        function get_info_cliente() {
-            var tipo = IdCliente.GetValue();
+    function get_info_cliente() {
+        var tipo = IdCliente.GetValue();
 
-            var datos = {
-                IdCliente: tipo,
-                IdSucursal: $("#IdSucursal").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("get_info_cliente", "Proforma",new { Area = "Facturacion"})',
-                async: false,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#pf_atencion_a").val(data.info_persona.pe_nombreCompleto);
-                    $("#IdVendedor").val(data.IdVendedor);
-                },
-                error: function (error) {
-                    alert(error);
-                }
-            });
+        var datos = {
+            IdCliente: tipo,
+            IdSucursal: $("#IdSucursal").val()
         }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_cliente", "Proforma",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#pf_atencion_a").val(data.info_persona.pe_nombreCompleto);
+                $("#IdVendedor").val(data.IdVendedor);
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    }
 
     function MostrarModalDesbloqueo() {
         $("#ContraseniaAdministrador").val("");
@@ -529,7 +559,7 @@
         $("#ModalPrecios").modal("hide");
     }
 
-         function BuscarProducto(Secuencia) {
+    function BuscarProducto(Secuencia) {
         $("#Secuencia").text(Secuencia);
         var datos = {
             IdSucursal: $("#IdSucursal").val(),
@@ -554,5 +584,11 @@
             error: function (error) {
             }
         });
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/FacturacionReportes/FAC_006?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdProforma="+@Model.IdProforma+"&mostrar_imagen="+false, '_blank');
+        win.focus();
     }
 </script>

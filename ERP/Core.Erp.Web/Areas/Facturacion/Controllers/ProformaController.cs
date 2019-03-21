@@ -42,6 +42,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Index
@@ -201,10 +202,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             };
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -220,6 +223,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
             return View(model);
         }
 
@@ -241,7 +246,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             };
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, MensajeSuccess });
         }
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, decimal IdProforma = 0)
         {

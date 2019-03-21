@@ -281,12 +281,12 @@
     }
 
     function CrearModificarCliente() {
-        console.log("sdsad");
+        var location = GetPathServer();
         if (IdCliente.GetValue() > 0) {
-            var win = window.open(window.location.origin + "/FixedERP/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            var win = window.open(location + "/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
             win.focus();
         } else {
-            var win = window.open(window.location.origin + "/FixedERP/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
             win.focus();
         }
     }
@@ -364,14 +364,14 @@
                     @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdCliente">Cliente*</label>
                     @Html.Partial("_CmbCliente_NotaCrebitoFacturacion", Model.IdCliente)
                     @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
                     <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">

@@ -572,13 +572,14 @@
     }
 
     function CrearModificarCliente() {
+        var location = GetPathServer();
         if(IdCliente.GetValue() > 0)
         {
-            var win = window.open(window.location.origin + "/FixedERP/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            var win = window.open(location + "/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
              win.focus();
         }else
         {
-            var win = window.open(window.location.origin + "/FixedERP/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
              win.focus();
         }
     }

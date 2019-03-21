@@ -99,14 +99,14 @@
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdCliente">Cliente*</label>
                     @Html.Partial("_CmbCliente_Guia", Model.IdCliente)
                     @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
                     <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>

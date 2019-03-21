@@ -50,6 +50,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         fa_notaCreDeb_List Lista_Factura = new fa_notaCreDeb_List();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Index
@@ -469,9 +470,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             };
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdNota = model.IdNota, MensajeSuccess });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0, string MensajeSuccess = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -488,6 +491,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.lst_cruce = bus_cruce.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
             List_cruce.set_list(model.lst_cruce, model.IdTransaccionSession);
             cargar_combos(model);
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
             return View(model);
         }
 
@@ -517,7 +522,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             };
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdNota = model.IdNota, MensajeSuccess });
         }
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {

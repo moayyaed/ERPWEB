@@ -36,6 +36,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_factura_x_fa_guia_remision_Info_List List_rel = new fa_factura_x_fa_guia_remision_Info_List();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda cliente
@@ -166,7 +167,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     cargar_combos(model);
                     return View(model);
                 }
-                return RedirectToAction("Index");
+
+                MensajeSuccess = "Registro creado exitósamente";
+                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, MensajeSuccess });
             }
             catch (Exception ex)
             {
@@ -177,7 +180,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             }
         }
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdGuiaRemision=0)
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdGuiaRemision=0, string MensajeSuccess="")
         {
             bus_guia = new fa_guia_remision_Bus();
             #region Validar Session
@@ -194,6 +197,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             detalle_info.set_list(model.lst_detalle, model.IdTransaccionSession);
             List_rel.set_list(bus_detalle_x_factura.get_list(IdEmpresa, IdGuiaRemision), model.IdTransaccionSession);
             cargar_combos(model);
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
         [HttpPost]
@@ -224,8 +229,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     cargar_combos(model);
                     return View(model);
                 }
-                return RedirectToAction("Index");
 
+                MensajeSuccess = "Registro actualizado exitósamente";
+                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, MensajeSuccess });
             }
             catch (Exception ex)
             {

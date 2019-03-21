@@ -59,6 +59,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_NivelDescuento_Bus bus_nivelDescuento = new fa_NivelDescuento_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Index
