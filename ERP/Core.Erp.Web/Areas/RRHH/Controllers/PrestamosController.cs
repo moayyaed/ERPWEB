@@ -64,6 +64,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
         int IdEmpresa = 0;
         ro_prestamo_Info info = new ro_prestamo_Info();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region vistas
@@ -173,10 +174,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdPrestamo = model.IdPrestamo, MensajeSuccess });
         }
 
-        public ActionResult Modificar(decimal IdEmpleado, decimal IdPrestamo)
+        public ActionResult Modificar(decimal IdEmpleado, decimal IdPrestamo, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -191,6 +194,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos();
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
 
@@ -228,8 +232,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
 
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdPrestamo = model.IdPrestamo, MensajeSuccess });
         }
 
         public ActionResult Anular(decimal IdEmpleado, decimal IdPrestamo)

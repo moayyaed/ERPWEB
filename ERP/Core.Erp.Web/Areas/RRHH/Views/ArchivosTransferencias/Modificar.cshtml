@@ -6,11 +6,22 @@
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
+
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
             <h4>
                 <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
             </h4>
         </div>
     }
@@ -22,6 +33,27 @@
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdArchivo)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-10 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","ArchivosTransferencias",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -125,57 +157,57 @@
     function cargar_procesos() {
         $("#IdProceso").empty();
 
-                var datos = {
-                    IdBanco: $("#IdBanco").val()
-                }
+        var datos = {
+            IdBanco: $("#IdBanco").val()
+        }
 
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("get_list_procesos", "ProcesosBancariosPorEmpresa", new { Area = "General" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_list_procesos", "ProcesosBancariosPorEmpresa", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
 
-                        $.each(data, function (i, row) {
-                            $("#IdProceso").append("<option value=" + row.IdProceso + ">" + row.NombreProceso + "</option>");
+                $.each(data, function (i, row) {
+                    $("#IdProceso").append("<option value=" + row.IdProceso + ">" + row.NombreProceso + "</option>");
 
-                        });
-                    },
-                    error: function (error) {
-                    }
                 });
+            },
+            error: function (error) {
+            }
+        });
     };
 
 
 
     function cargar_tipo_liquidacion_nomina() {
         $("#IdNomina_TipoLiqui").empty();
-                var datos = {
-                    IdNomina: $("#IdNomina_Tipo").val()
-                }
+        var datos = {
+            IdNomina: $("#IdNomina_Tipo").val()
+        }
 
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
 
-                        $.each(data, function (i, row) {
-                            $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
-                        });
-                    },
-                    error: function (error) {
-                    }
+                $.each(data, function (i, row) {
+                    $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
                 });
+            },
+            error: function (error) {
+            }
+        });
     };
 
 
@@ -208,34 +240,36 @@
         });
     };
 
-            function cargar_empleados() {
-                var datos = {
-                    IdProceso: $("#IdProceso").val(),
-                    IdNomina_Tipo: $("#IdNomina_Tipo").val(),
-                    IdNomina_TipoLiqui: $("#IdNomina_TipoLiqui").val(),
-                    IdPeriodo: $("#IdPeriodo").val(),
-                    IdTransaccionSession: $("#IdTransaccionSession").val()
+    function cargar_empleados() {
+        var datos = {
+            IdProceso: $("#IdProceso").val(),
+            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+            IdNomina_TipoLiqui: $("#IdNomina_TipoLiqui").val(),
+            IdPeriodo: $("#IdPeriodo").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
 
-                }
+        }
 
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("CargarEmpleados", "ArchivosTransferencias", new { Area = "RRHH" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        GridViewPartial_archivo_transferencia_det.PerformCallback();
-                    },
-                    error: function (error) {
-                    }
-                });
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarEmpleados", "ArchivosTransferencias", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_archivo_transferencia_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
     };
 
-
-
-
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/RRHHReportes/ROL_020?IdEmpresa="+@Model.IdEmpresa+"&IdNomina_Tipo="+@Model.IdNominaTipo+"&IdNomina_TipoLiqui="+@Model.IdNomina+"&IdPeriodo="+@Model.IdPeriodo+"&IdSucursal="+@Model.IdSucursal+"&IdProceso="+@Model.IdProceso, '_blank');
+        win.focus();
+    }
 </script>

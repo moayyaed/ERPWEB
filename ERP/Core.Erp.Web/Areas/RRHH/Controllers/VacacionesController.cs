@@ -22,8 +22,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_historico_vacaciones_x_empleado_Info_list ro_historico_vacaciones_x_empleado_Info_list = new ro_historico_vacaciones_x_empleado_Info_list();
+        string MensajeSuccess = string.Empty;
         #endregion
-
 
         #region Metodos ComboBox bajo demanda
         tb_persona_Bus bus_persona = new tb_persona_Bus();
@@ -115,6 +115,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }*/
+
         #region acciones
         [HttpPost]
         public ActionResult Nuevo(ro_Solicitud_Vacaciones_x_empleado_Info info)
@@ -137,13 +138,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     info.Fecha_Desde = info.Fecha_Desde.Date;
                     info.Fecha_Hasta = info.Fecha_Hasta.Date;
                     mensaje = bus_solicitud.validar(info);
+
                     if (mensaje != "")
                     {
                         ViewBag.mensaje = mensaje;
                         cargar_combo();
                         return View(info);
                     }
+
                     info.IdEmpresa = GetIdEmpresa();
+
                     if (!bus_solicitud.guardarDB(info))
                     {
                         cargar_combo();
@@ -151,9 +155,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
                     else
                         info_historico.DiasTomados=info.Dias_a_disfrutar;
+
                     bus_vacaciones = new ro_historico_vacaciones_x_empleado_Bus();
-                        bus_vacaciones.ModificarBD(info_historico);
-                    return RedirectToAction("Index");
+                    bus_vacaciones.ModificarBD(info_historico);
+
+                    MensajeSuccess = "Registro creado exitósamente";
+                    return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, MensajeSuccess });
                 }
                 else
                     return View(info);
@@ -206,33 +213,39 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     info.Fecha_Desde = info.Fecha_Desde.Date;
                     info.Fecha_Hasta = info.Fecha_Hasta.Date;
                     mensaje = bus_solicitud.validar(info);
+
                     if (mensaje != "")
                     {
                         ViewBag.mensaje = mensaje;
                         cargar_combo();
                         return View(info);
                     }
+
                     info.IdEmpresa = GetIdEmpresa();
+
                     if (!bus_solicitud.modificarDB(info))
                     {
                         cargar_combo();
                         return View(info);
                     }
                     else
-                        return RedirectToAction("Index");
+                    {
+                        MensajeSuccess = "Registro actualizado exitósamente";
+                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, MensajeSuccess });
+                    }                        
                 }
                 else
                     return View(info);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
             }
         }
 
-        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdSolicitud = 0)
+        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdSolicitud = 0, string MensajeSuccess="")
         {
             try
             {
@@ -241,6 +254,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
                 cargar_combo();
                 ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(GetIdEmpresa(), IdEmpleado, IdSolicitud);
+                ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
                 return View(model);
 
             }
@@ -288,6 +303,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
         #endregion
+
         private int GetIdEmpresa()
         {
             try
