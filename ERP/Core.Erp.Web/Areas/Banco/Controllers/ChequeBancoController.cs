@@ -265,7 +265,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             #region Alerta
             var param = bus_param.get_info(IdEmpresa);
+            if(param!=null && param.CantidadChequesAlerta!=null && param.CantidadChequesAlerta>0)
+            {
 
+            }
             #endregion
             return View(model);
         }

@@ -285,5 +285,6 @@ namespace Core.Erp.Data.Banco
             }
         }
 
+
     }
 }
