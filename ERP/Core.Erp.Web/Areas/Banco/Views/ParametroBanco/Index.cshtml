@@ -47,6 +47,13 @@
                     @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CantidadChequesAlerta">Cantidad cheques alerta</label>
+                    @Html.TextBoxFor(q => q.CantidadChequesAlerta, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                    @Html.ValidationMessageFor(q => q.CantidadChequesAlerta, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="box-footer">

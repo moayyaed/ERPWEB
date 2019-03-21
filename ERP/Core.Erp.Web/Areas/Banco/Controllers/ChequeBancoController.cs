@@ -40,7 +40,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         cp_orden_pago_cancelaciones_PorCruzar ListPorCruzar = new cp_orden_pago_cancelaciones_PorCruzar();
         cp_orden_pago_cancelaciones_List List_op = new cp_orden_pago_cancelaciones_List();
         cp_SolicitudPago_Bus bus_solicitud = new cp_SolicitudPago_Bus();
-
+        ba_parametros_Bus bus_param = new ba_parametros_Bus();
         ba_Banco_Flujo_Det_List_Cheque List_Flujo = new ba_Banco_Flujo_Det_List_Cheque();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
         string MensajeSuccess = string.Empty;
@@ -262,6 +262,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_op.set_list(model.lst_det_canc_op, model.IdTransaccionSession);
             List_Flujo.set_list(model.list_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa,model.IdSucursal);
+
+            #region Alerta
+            var param = bus_param.get_info(IdEmpresa);
+
+            #endregion
             return View(model);
         }
 
