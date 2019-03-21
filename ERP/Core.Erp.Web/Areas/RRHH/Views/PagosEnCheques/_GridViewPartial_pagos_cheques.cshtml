@@ -119,9 +119,9 @@
         {
             column.SetDataItemTemplateContent(c =>
             {
-                if (Convert.ToString(DataBinder.Eval(c.DataItem, "estado")) == "A")
+                if (Convert.ToBoolean(DataBinder.Eval(c.DataItem, "estado")) == true)
                 {
-                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("get_archivo", "ArchivosTransferencias", new { Area = "RRHH", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdTransaccion = DataBinder.Eval(c.DataItem, "IdTransaccion") }, Request.Url.Scheme) + "');\"></span>");
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("get_archivo", "ArchivosTransferencias", new { Area = "RRHH", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdArchivo = DataBinder.Eval(c.DataItem, "IdTransaccion") }, Request.Url.Scheme) + "');\"></span>");
                 }
             });
             column.Width = Unit.Percentage(5);

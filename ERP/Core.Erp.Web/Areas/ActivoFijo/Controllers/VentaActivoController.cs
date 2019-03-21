@@ -23,6 +23,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         Af_Activo_fijo_Bus bus_fijo = new Af_Activo_fijo_Bus();
         ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
         string mensaje = string.Empty;
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Index
@@ -127,10 +128,12 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdVtaActivo = model.IdVtaActivo, MensajeSuccess });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdVtaActivo = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdVtaActivo = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -145,6 +148,8 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte == null ? 0 : Convert.ToInt32(model.IdTipoCbte), model.IdCbteCble == null ? 0 : Convert.ToDecimal(model.IdCbteCble));
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
             return View(model);
         }
         [HttpPost]
@@ -163,7 +168,9 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdVtaActivo = model.IdVtaActivo, MensajeSuccess });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdVtaActivo = 0)
