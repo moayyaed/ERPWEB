@@ -890,6 +890,12 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_014_Rpt.Designer.cs">
       <DependentUpon>CXP_014_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_015_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_015_Rpt.Designer.cs">
+      <DependentUpon>CXP_015_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -9962,6 +9968,7 @@
     <Content Include="Areas\RRHH\Views\AjusteBeneficiosSociales\_GridViewPartial_AjusteBeneficiosSociales.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_027.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCliente_Parametro.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_015.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10280,6 +10287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_014_Rpt.resx">
       <DependentUpon>CXP_014_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_015_Rpt.resx">
+      <DependentUpon>CXP_015_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_001_Rpt.resx">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>

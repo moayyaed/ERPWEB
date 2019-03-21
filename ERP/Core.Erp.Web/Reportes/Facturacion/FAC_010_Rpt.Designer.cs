@@ -839,13 +839,17 @@
             // 
             // xrTable2
             // 
+            this.xrTable2.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
+            | DevExpress.XtraPrinting.BorderSide.Right) 
+            | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 141.25F);
             this.xrTable2.Name = "xrTable2";
             this.xrTable2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow12,
             this.xrTableRow6,
             this.xrTableRow11});
-            this.xrTable2.SizeF = new System.Drawing.SizeF(412.2159F, 75.00002F);
+            this.xrTable2.SizeF = new System.Drawing.SizeF(300F, 75.00002F);
+            this.xrTable2.StylePriority.UseBorders = false;
             this.xrTable2.StylePriority.UseTextAlignment = false;
             this.xrTable2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
@@ -862,7 +866,7 @@
             this.xrTableCell47.Name = "xrTableCell47";
             this.xrTableCell47.StylePriority.UseFont = false;
             this.xrTableCell47.Text = "FACTURAS";
-            this.xrTableCell47.Weight = 2.7505597170435538D;
+            this.xrTableCell47.Weight = 2.0017859901588633D;
             // 
             // xrTableRow6
             // 
@@ -879,7 +883,7 @@
             this.xrTableCell35.Name = "xrTableCell35";
             this.xrTableCell35.StylePriority.UseFont = false;
             this.xrTableCell35.Text = "Validas";
-            this.xrTableCell35.Weight = 0.93541244752058794D;
+            this.xrTableCell35.Weight = 0.667261979750271D;
             // 
             // xrTableCell37
             // 
@@ -887,7 +891,7 @@
             this.xrTableCell37.Name = "xrTableCell37";
             this.xrTableCell37.StylePriority.UseFont = false;
             this.xrTableCell37.Text = "Anuladas";
-            this.xrTableCell37.Weight = 0.86859746420892558D;
+            this.xrTableCell37.Weight = 0.66726197975027091D;
             // 
             // xrTableCell38
             // 
@@ -895,7 +899,7 @@
             this.xrTableCell38.Name = "xrTableCell38";
             this.xrTableCell38.StylePriority.UseFont = false;
             this.xrTableCell38.Text = "Total ";
-            this.xrTableCell38.Weight = 0.9465498053140402D;
+            this.xrTableCell38.Weight = 0.667262030658321D;
             // 
             // xrTableRow11
             // 
@@ -909,12 +913,12 @@
             // xrTableCell39
             // 
             this.xrTableCell39.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FacturasEmitidas]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumCount([pe_nombreCompleto])")});
             this.xrTableCell39.Name = "xrTableCell39";
             xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell39.Summary = xrSummary5;
             this.xrTableCell39.Text = "xrTableCell39";
-            this.xrTableCell39.Weight = 0.93541244752058794D;
+            this.xrTableCell39.Weight = 0.667261979750271D;
             // 
             // xrTableCell40
             // 
@@ -922,13 +926,15 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FacturasAnuladas]")});
             this.xrTableCell40.Name = "xrTableCell40";
             this.xrTableCell40.Text = "xrTableCell40";
-            this.xrTableCell40.Weight = 0.86859746420892558D;
+            this.xrTableCell40.Weight = 0.66726197975027091D;
             // 
             // xrTableCell41
             // 
+            this.xrTableCell41.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FacturasEmitidas]")});
             this.xrTableCell41.Name = "xrTableCell41";
             this.xrTableCell41.Text = "xrTableCell41";
-            this.xrTableCell41.Weight = 0.9465498053140402D;
+            this.xrTableCell41.Weight = 0.667262030658321D;
             // 
             // detalle_firma_pago
             // 
