@@ -223,9 +223,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
         private void cargar_combos_det()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetListSinEmpresa(false);
             ViewBag.lst_sucursal = lst_sucursal;
         }
         [ValidateInput(false)]
