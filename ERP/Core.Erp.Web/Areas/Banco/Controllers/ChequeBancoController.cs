@@ -263,13 +263,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_Flujo.set_list(model.list_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa,model.IdSucursal);
 
-            #region Alerta
-            var param = bus_param.get_info(IdEmpresa);
-            if(param!=null && param.CantidadChequesAlerta!=null && param.CantidadChequesAlerta>0)
-            {
-
-            }
-            #endregion
             return View(model);
         }
 
@@ -494,6 +487,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public JsonResult GetNumCheque(int IdEmpresa = 0, int IdBanco = 0)
         {            
             var resultado = bus_talonario.get_ult_NumCheque_no_usado(IdEmpresa, IdBanco);
+
+            #region Alerta
+            var param = bus_param.get_info(IdEmpresa);
+            if (param != null && param.CantidadChequesAlerta != null && param.CantidadChequesAlerta > 0)
+            {
+                var lista = bus_talonario.GetCantidadTalonariosDisponibles(IdEmpresa, IdBanco);
+            }
+            #endregion
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
