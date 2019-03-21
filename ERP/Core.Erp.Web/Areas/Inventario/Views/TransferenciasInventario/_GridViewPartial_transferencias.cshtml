@@ -3,14 +3,8 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_transferencias";
         settings.CallbackRouteValues = new { Controller = "TransferenciasInventario", Action = "GridViewPartial_transferencias", IdSucursal = ViewBag.IdSucursal,fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
-
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "TransferenciasInventario", Action = "GridViewPartial_transferenciasAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "TransferenciasInventario", Action = "GridViewPartial_transferenciasUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "TransferenciasInventario", Action = "GridViewPartial_transferenciasDelete" };
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTransferencia";
-
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -113,9 +107,14 @@
 
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_007", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursalOrigen = DataBinder.Eval(c.DataItem, "IdSucursalOrigen"), IdBodegaOrigen = DataBinder.Eval(c.DataItem, "IdBodegaOrigen"), IdTransferencia = DataBinder.Eval(c.DataItem, "IdTransferencia") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
+        });
     });
-    if (ViewData["EditError"] != null){
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
 }
 @grid.Bind(Model).GetHtml()
