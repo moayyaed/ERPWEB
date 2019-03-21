@@ -34,6 +34,7 @@ namespace Core.Erp.Info.Helps
         public string IdTipoServicio { get; set; }
 
         public int[] IntArray { get; set; }
+        public bool mostrarSaldo0 { get; set; }
         #endregion
 
         #region filtros de RRHH

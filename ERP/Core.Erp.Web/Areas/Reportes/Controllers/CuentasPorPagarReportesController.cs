@@ -374,15 +374,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(true);
             CXP_015_Rpt report = new CXP_015_Rpt();
-            //report.p_IdEmpresa.Value = model.IdEmpresa;
-            //report.p_IdSucursal.Value = model.IdSucursal;
-            //report.p_IdProveedor.Value = model.IdProveedor;
-            //report.p_IdTipoServicio.Value = model.IdTipoServicio;
-            //report.p_mostrar_anulados.Value = model.mostrarAnulados;
-            //report.p_fecha_ini.Value = model.fecha_ini;
-            //report.p_fecha_fin.Value = model.fecha_fin;
-            //report.usuario = SessionFixed.IdUsuario;
-            //report.empresa = SessionFixed.NomEmpresa;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
             return View(model);
@@ -391,16 +389,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_015(cl_filtros_Info model)
         {
             CXP_015_Rpt report = new CXP_015_Rpt();
-            //report.p_IdEmpresa.Value = model.IdEmpresa;
-            //report.p_IdSucursal.Value = model.IdSucursal;
-            //report.p_IdProveedor.Value = model.IdProveedor;
-            //report.p_IdTipoServicio.Value = model.IdTipoServicio;
-            //report.p_mostrar_anulados.Value = model.mostrarAnulados;
-            //report.p_fecha_ini.Value = model.fecha_ini;
-            //report.p_fecha_fin.Value = model.fecha_fin;
-            //report.usuario = SessionFixed.IdUsuario;
-            //report.empresa = SessionFixed.NomEmpresa;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             cargar_combos(true);
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
             return View(model);
