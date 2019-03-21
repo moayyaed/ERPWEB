@@ -203,7 +203,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
-            report.p_IdContacto.Value = model.IdClienteContacto;
             report.p_fecha_corte.Value = model.fecha_corte;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();
@@ -219,7 +218,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
-            report.p_IdContacto.Value = model.IdClienteContacto;
             report.p_fecha_corte.Value = model.fecha_corte;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();

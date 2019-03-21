@@ -44,6 +44,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  SubtotalSinIVAConDscto = q.SubtotalSinIVAConDscto,
                                  ValorIVA = q.ValorIVA,
                                  Total = q.Total,
+                                 FacturasAnuladas = q.FacturasAnuladas,
+                                 FacturasEmitidas = q.FacturasEmitidas
                                  
                              }).ToList();
                 }
