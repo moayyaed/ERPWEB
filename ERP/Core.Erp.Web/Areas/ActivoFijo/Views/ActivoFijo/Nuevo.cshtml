@@ -12,11 +12,19 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "ActivoFijo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
     @Html.HiddenFor(q => q.IdEmpresa);
     @Html.HiddenFor(q => q.IdTransaccionSession);
     @Html.HiddenFor(q => q.Estado_Proceso);
     @Html.HiddenFor(q => q.IdActivoFijo, new { @id = "IdActivoFijo" });
-
 
     <div class="row">
         <div class="col-md-12">
@@ -41,7 +49,7 @@
                     @Html.ValidationMessageFor(q => q.Estado_Proceso, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
                 </div>
             </div>
-            <div class="col-md-offset-3 col-md-2">
+            <div class="col-md-offset-4 col-md-2">
                 <div class="form-group">
                     <label for="Af_fecha_compra">Fecha de compra</label>
                     <div class="input-group date">
@@ -105,11 +113,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="Af_Nombre">Nombre*</label>
                     @Html.TextBoxFor(q => q.Af_Nombre, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Af_Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Af_Nombre">Cantidad*</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -133,9 +148,6 @@
             </li>
             <li>
                 <a href="#tab_caracteristicas" aria-controls="caracteristicas" role="tab" data-toggle="tab">Características del activo</a>
-            </li>
-            <li>
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Distribución de depreciación</a>
             </li>
             <li>
                 <a href="#tab_encargado" aria-controls="encargado" role="tab" data-toggle="tab">Encargado</a>
@@ -239,7 +251,6 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_caracteristicas">
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-2">
@@ -272,7 +283,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="Af_NumPlaca">Número de placa</label>
+                                <label for="Af_NumPlaca">Número de serie</label>
                                 @Html.TextBoxFor(q => q.Af_NumPlaca, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(q => q.Af_NumPlaca, "", new { @class = "text-danger" })
                             </div>
@@ -282,31 +293,7 @@
 
             </div>
 
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
-
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Action("GridViewPartial_activo_fijo_ctacble")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-            </div>
-
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_encargado">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -329,22 +316,12 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             </div>
 
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_imagen">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-2">
-
-
-
                             <script type="text/javascript">
                                 function onUploadControlFileUploadComplete(s, e) {
                                     if (e.isValid)
@@ -371,31 +348,29 @@
                             </script>
                             <div class="uploadContainer">
                                 @Html.DevExpress().UploadControl(settings =>
-                           {
-                               settings.ShowProgressPanel = true;
-                               settings.CallbackRouteValues = new { Controller = "ActivoFijo", Action = "DragAndDropImageUpload" };
-                               settings.Name = "ucDragAndDrop";
-                               settings.UploadMode = UploadControlUploadMode.Auto;
-                               settings.AutoStartUpload = true;
-                               settings.Width = Unit.Percentage(100);
-                               settings.DialogTriggerID = "externalDropZone";
-                               settings.AdvancedModeSettings.EnableDragAndDrop = true;
-                               settings.AdvancedModeSettings.EnableFileList = false;
-                               settings.AdvancedModeSettings.EnableMultiSelect = false;
-                               settings.AdvancedModeSettings.ExternalDropZoneID = "externalDropZone";
-                               settings.AdvancedModeSettings.DropZoneText = "";
-                               settings.ValidationSettings.MaxFileSize = 4194304;
-                               settings.ValidationSettings.AllowedFileExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png" };
-                               settings.ValidationSettings.ErrorStyle.CssClass = "validationMessage";
-                               settings.ClientSideEvents.FilesUploadStart = "function(s,e){nombre_imagen();}";
+                               {
+                                   settings.ShowProgressPanel = true;
+                                   settings.CallbackRouteValues = new { Controller = "ActivoFijo", Action = "DragAndDropImageUpload" };
+                                   settings.Name = "ucDragAndDrop";
+                                   settings.UploadMode = UploadControlUploadMode.Auto;
+                                   settings.AutoStartUpload = true;
+                                   settings.Width = Unit.Percentage(100);
+                                   settings.DialogTriggerID = "externalDropZone";
+                                   settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                                   settings.AdvancedModeSettings.EnableFileList = false;
+                                   settings.AdvancedModeSettings.EnableMultiSelect = false;
+                                   settings.AdvancedModeSettings.ExternalDropZoneID = "externalDropZone";
+                                   settings.AdvancedModeSettings.DropZoneText = "";
+                                   settings.ValidationSettings.MaxFileSize = 4194304;
+                                   settings.ValidationSettings.AllowedFileExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png" };
+                                   settings.ValidationSettings.ErrorStyle.CssClass = "validationMessage";
+                                   settings.ClientSideEvents.FilesUploadStart = "function(s,e){nombre_imagen();}";
 
-                               settings.Styles.DropZone.CssClass = "uploadControlDropZone";
-                               settings.ClientSideEvents.DropZoneEnter = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', true); }";
-                               settings.ClientSideEvents.DropZoneLeave = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', false); }";
-                               settings.ClientSideEvents.FileUploadComplete = "onUploadControlFileUploadComplete";
-
-
-                           }).GetHtml()
+                                   settings.Styles.DropZone.CssClass = "uploadControlDropZone";
+                                   settings.ClientSideEvents.DropZoneEnter = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', true); }";
+                                   settings.ClientSideEvents.DropZoneLeave = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', false); }";
+                                   settings.ClientSideEvents.FileUploadComplete = "onUploadControlFileUploadComplete";
+                               }).GetHtml()
                             </div>
                             @Html.DevExpress().BinaryImage(
                                settings =>
@@ -422,18 +397,10 @@
 
                             </div>
 *@
-                            
-
                         </div>
-
-
-
-
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
     <div class="box-footer">

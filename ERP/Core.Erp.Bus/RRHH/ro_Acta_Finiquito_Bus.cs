@@ -24,7 +24,6 @@ namespace Core.Erp.Bus.RRHH
         ro_rol_detalle_x_rubro_acumulado_Bus bus_rubros_acumulados = new ro_rol_detalle_x_rubro_acumulado_Bus();
         ro_rubros_calculados_Bus bus_rubros_calculados = new ro_rubros_calculados_Bus();
         ro_rubros_calculados_Info info_rubros_calculados = new ro_rubros_calculados_Info();
-
         double sueldo = 0;
         int dias_trabajados = 0;
         double sueldo_base = 0;
@@ -509,7 +508,7 @@ namespace Core.Erp.Bus.RRHH
                     item.IdActaFiniquito = _Info.IdActaFiniquito;
                     item.Observacion = "Vacaciones no gozadas";
                     item.Valor =Math.Round( vacaciones+(sueldo_base/24), 2);
-                    item.IdRubro = "998";
+                    item.IdRubro = info_rubros_calculados.IdRubro_prov_vac;
                     lst_valores_x_indegnizacion.Add(item);
                 
                 return true;
@@ -531,7 +530,7 @@ namespace Core.Erp.Bus.RRHH
                 item.IdActaFiniquito = _Info.IdActaFiniquito;
                 item.Observacion = "Decima tercera remuneracón";
                 item.Valor =Math.Round( vacaciones,2);
-                item.IdRubro = info_rubros_calculados.IdRubro_prov_DIII;
+                item.IdRubro = info_rubros_calculados.IdRubro_DIII;
                 if (item.Valor != 0)
                     lst_valores_x_indegnizacion.Add(item);
 

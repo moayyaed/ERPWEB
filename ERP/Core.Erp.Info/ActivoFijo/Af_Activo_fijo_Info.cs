@@ -15,7 +15,8 @@ namespace Core.Erp.Info.ActivoFijo
         public int IdActivoFijo { get; set; }
         public string CodActivoFijo { get; set; }
         [Required(ErrorMessage = ("el campo nombre es obligatorio"))]
-        [StringLength(500, MinimumLength = 1, ErrorMessage = "el campo nombre debe tener mínimo 1 caracter y máximo 500")]  public string Af_Nombre { get; set; }
+        [StringLength(500, MinimumLength = 1, ErrorMessage = "el campo nombre debe tener mínimo 1 caracter y máximo 500")]
+        public string Af_Nombre { get; set; }
         public int IdActivoFijoTipo { get; set; }
         [Required(ErrorMessage = ("el campo catégoria es obligatorio"))]
         public int IdCategoriaAF { get; set; }
@@ -37,7 +38,9 @@ namespace Core.Erp.Info.ActivoFijo
         public string Af_observacion { get; set; }
         public string Af_NumPlaca { get; set; }
         public string Estado { get; set; }
+        [Required(ErrorMessage = ("el campo empleado encargado es obligatorio"))]
         public decimal IdEmpleadoEncargado { get; set; }
+        [Required(ErrorMessage = ("el campo empleado custodio es obligatorio"))]
         public decimal IdEmpleadoCustodio { get; set; }
         public string Af_Codigo_Barra { get; set; }
         public string Estado_Proceso { get; set; }
@@ -50,11 +53,11 @@ namespace Core.Erp.Info.ActivoFijo
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
         public bool EstadoBool { get; set; }
-       
+        [Required(ErrorMessage = ("el campo cantidad es obligatorio"))]
+        public int Cantidad { get; set; }
 
         //Campos que no existen en la tabla
         public string Estado_Proceso_nombre { get; set; }
-        public List<Af_Activo_fijo_CtaCble_Info> LstDet { get; set; }
         public string IdCtaCble { get; set; }
         public string pc_Cuenta { get; set; }
         public byte[] imagen_af { get; set; }

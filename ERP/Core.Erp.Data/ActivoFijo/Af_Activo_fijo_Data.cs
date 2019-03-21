@@ -41,7 +41,6 @@ namespace Core.Erp.Data.ActivoFijo
                 {
                     Lista.Add(new Af_Activo_fijo_Info
                     {
-
                         IdEmpresa = q.IdEmpresa,
                         IdActivoFijo = q.IdActivoFijo,
                         IdSucursal = q.IdSucursal,
@@ -102,7 +101,7 @@ namespace Core.Erp.Data.ActivoFijo
                                      IdActivoFijo = q.IdActivoFijo,
                                      Estado_Proceso = q.Estado_Proceso,
                                      Estado_Proceso_nombre = c.Descripcion,
-
+                                     Cantidad = q.Cantidad,
                                      EstadoBool = q.Estado == "A" ? true : false
 
                                  }).ToList();
@@ -120,7 +119,7 @@ namespace Core.Erp.Data.ActivoFijo
                                      IdActivoFijo = q.IdActivoFijo,
                                      Estado_Proceso = q.Estado_Proceso,
                                      Estado_Proceso_nombre = c.Descripcion,
-
+                                     Cantidad = q.Cantidad,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
@@ -173,8 +172,8 @@ namespace Core.Erp.Data.ActivoFijo
                         IdEmpleadoCustodio = Entity.IdEmpleadoCustodio,
                         IdEmpleadoEncargado = Entity.IdEmpleadoEncargado,
                         Estado_Proceso_nombre = Entity.Estado_Proceso,
-                        IdDepartamento = Entity.IdDepartamento
-                        
+                        IdDepartamento = Entity.IdDepartamento,
+                        Cantidad = Entity.Cantidad
 
                     };
                 }
@@ -246,9 +245,11 @@ namespace Core.Erp.Data.ActivoFijo
                         IdEmpleadoCustodio = info.IdEmpleadoCustodio,
                         IdEmpleadoEncargado = info.IdEmpleadoEncargado,
                         IdDepartamento = info.IdDepartamento,
+                        Cantidad = info.Cantidad,
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now                                                
                     };
+                    /*
                     if (info.LstDet.Count > 0)
                     {
                         foreach (var item in info.LstDet)
@@ -264,7 +265,7 @@ namespace Core.Erp.Data.ActivoFijo
 
                             });
                         }
-                    }
+                    }*/
                     Context.Af_Activo_fijo.Add(Entity);
                     Context.SaveChanges();
                 }
@@ -312,7 +313,8 @@ namespace Core.Erp.Data.ActivoFijo
                     Entity.IdEmpleadoCustodio = info.IdEmpleadoCustodio;
                     Entity.IdEmpleadoEncargado = info.IdEmpleadoEncargado;
                     Entity.IdDepartamento = info.IdDepartamento;
-
+                    Entity.Cantidad = info.Cantidad;
+                    /*
                     var detalle = Context.Af_Activo_fijo_CtaCble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdActivoFijo == info.IdActivoFijo);
                     Context.Af_Activo_fijo_CtaCble.RemoveRange(detalle);
                     if (info.LstDet.Count > 0)
@@ -330,7 +332,8 @@ namespace Core.Erp.Data.ActivoFijo
 
                             });
                         }
-                    }
+                    }*/
+
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
                     Context.SaveChanges();
@@ -532,10 +535,12 @@ namespace Core.Erp.Data.ActivoFijo
                                 IdEmpleadoCustodio = item.IdEmpleadoCustodio,
                                 IdEmpleadoEncargado = item.IdEmpleadoEncargado,
                                 IdDepartamento = item.IdDepartamento,
+                                Cantidad = item.Cantidad,
                                 IdUsuario = item.IdUsuario,
                                 Fecha_Transac = DateTime.Now
                             };
 
+                            /*
                             if (item.LstDet.Count > 0)
                             {
                                 foreach (var item_det in item.LstDet)
@@ -551,6 +556,8 @@ namespace Core.Erp.Data.ActivoFijo
                                     });
                                 }
                             }
+                            */
+
                             Context.Af_Activo_fijo.Add(Entity_activofijo);
                         }
                     }

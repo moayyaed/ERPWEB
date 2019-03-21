@@ -57,10 +57,13 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public List<ro_rol_Info> get_list_nominas_cerradas(int IdEmpresa)
+        public List<ro_rol_Info> get_list_nominas_cerradas(int IdEmpresa, int IdSucursal)
         {
             try
             {
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
                 List<ro_rol_Info> Lista = new List<ro_rol_Info>();
 
                 using (Entities_rrhh Context = new Entities_rrhh())
@@ -69,7 +72,10 @@ namespace Core.Erp.Data.RRHH
                              where ROL.IdEmpresa == IdEmpresa
                              && ROL.IdNominaTipoLiqui <= 2
                              && ROL.IdNominaTipoLiqui >= 1
+                             && ROL.IdSucursal>= IdSucursalIni
+                             && ROL.IdSucursal <= IdSucursalFin
                              && ROL.EstadoRol== "CERRADO"
+                             orderby ROL.IdRol descending
                              select new ro_rol_Info
                              {
                                  IdEmpresa = ROL.IdEmpresa,

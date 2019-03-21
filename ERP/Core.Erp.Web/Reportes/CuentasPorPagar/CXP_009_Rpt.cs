@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Info.Reportes.CuentasPorPagar;
 using Core.Erp.Bus.Reportes.CuentasPorPagar;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Erp.Web.Reportes.CuentasPorPagar
 {
@@ -40,10 +41,37 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             {
                 foreach (var item in IntArray)
                 {            
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, item, Fecha_ini, Fecha_fin, ref lst_resumen, mostrar_anulados));
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, item, Fecha_ini, Fecha_fin, mostrar_anulados));
                 }
-            }         
-               
+            }
+
+            var TdebitosxCta = (from q in lst_rpt
+                                /*where q.valor_Retenido > 0*/
+                                group q by new
+                                {
+                                    q.cod_Impuesto_SRI,
+                                    q.Impuesto,
+                                    q.por_Retencion_SRI,
+                                    q.co_descripcion
+                                } into grouping
+                               select new {
+                                   grouping.Key,
+                                   total_base_ret = grouping.Sum(p => p.base_retencion),
+                                   total_ret = grouping.Sum(p => p.valor_Retenido)
+                               }).ToList();
+
+            foreach (var item in TdebitosxCta)
+            {
+                lst_resumen.Add(new CXP_009_resumen_Info
+                {
+                    Base_Ret = item.total_base_ret,
+                    Cod_Sri = item.Key.cod_Impuesto_SRI,
+                    descripcion = item.Key.Impuesto + "." + item.Key.por_Retencion_SRI + " " + item.Key.co_descripcion,
+                    Tipo_Retencion = item.Key.Impuesto,
+                    Total_Ret = item.total_ret
+                });
+            }
+
             this.DataSource = lst_rpt;
         }
 

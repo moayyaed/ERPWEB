@@ -42,11 +42,11 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        public List<ro_rol_Info> get_list_nominas_cerradas(int IdEmpresa)
+        public List<ro_rol_Info> get_list_nominas_cerradas(int IdEmpresa, int IdSucursal)
         {
             try
             {
-                return odata.get_list_nominas_cerradas(IdEmpresa);
+                return odata.get_list_nominas_cerradas(IdEmpresa, IdSucursal);
             }
             catch (Exception)
             {
