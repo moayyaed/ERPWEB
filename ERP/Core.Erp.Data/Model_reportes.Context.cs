@@ -1285,5 +1285,34 @@ namespace Core.Erp.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXC_005_Result>("SPCXC_005", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idClienteIniParameter, idClienteFinParameter, fechaCorteParameter, mostrarSaldo0Parameter);
         }
+    
+        public virtual ObjectResult<SPCXP_015_Result> SPCXP_015(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaCorte)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            var idProveedorIniParameter = idProveedorIni.HasValue ?
+                new ObjectParameter("IdProveedorIni", idProveedorIni) :
+                new ObjectParameter("IdProveedorIni", typeof(decimal));
+    
+            var idProveedorFinParameter = idProveedorFin.HasValue ?
+                new ObjectParameter("IdProveedorFin", idProveedorFin) :
+                new ObjectParameter("IdProveedorFin", typeof(decimal));
+    
+            var fechaCorteParameter = fechaCorte.HasValue ?
+                new ObjectParameter("FechaCorte", fechaCorte) :
+                new ObjectParameter("FechaCorte", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_015_Result>("SPCXP_015", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idProveedorIniParameter, idProveedorFinParameter, fechaCorteParameter);
+        }
     }
 }

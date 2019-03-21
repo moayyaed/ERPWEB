@@ -48,27 +48,7 @@
                 <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Fecha inicio*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
-                           {
-                               settings.Name = "fecha_ini";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="">Fecha fin*</label>
+                            <label for="">Fecha corte*</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -84,31 +64,6 @@
                            }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="IdTipoServicio">Tipo de servicio</label>
-                            @Html.DevExpress().ComboBoxFor(q => q.IdTipoServicio, setting =>
-               {
-                   setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   setting.Properties.Items.Add("BIENES", "BIEN");
-                   setting.Properties.Items.Add("SERVICIOS", "SERVI");
-                   setting.Properties.Items.Add("MIXTO", "AMBAS");
-               }).GetHtml()
-                            @Html.ValidationMessageFor(q => q.IdTipoServicio, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="mostrarAnulados"></label>
-                            @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados, settings =>
-                           {
-                               settings.Name = "mostrarAnulados";
-                               settings.Text = "Mostrar anulados";
-                           }).GetHtml()
-                            @Html.ValidationMessageFor(q => q.mostrarAnulados, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

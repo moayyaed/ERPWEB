@@ -1720,6 +1720,9 @@
     <Compile Include="SPCXP_010_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="SPCXP_015_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="SPFAC_002_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
