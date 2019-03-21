@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Inventario.in_transferencia_Info
 @{
-    ViewBag.Title = "Anular registro";
+    ViewBag.Title = "Anular transferencia de inventario";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -11,20 +11,23 @@
 
 @using (Html.BeginForm("Anular", "TransferenciasInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransferencia)
     @Html.HiddenFor(q => q.IdSucursalOrigen)
-    @Html.HiddenFor(q => q.IdBodegaOrigen)
+    @Html.HiddenFor(q => q.IdSucursalDest)
+    @Html.HiddenFor(q => q.IdSucursal_Ing_Egr_Inven_Destino)
+    @Html.HiddenFor(q => q.IdSucursal_Ing_Egr_Inven_Origen)
 
-    if (ViewBag.mensaje != null)
-    {
-        <div class="alert alert-warning alert-dismissible">
-            <h4>
-                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
-            </h4>
-        </div>
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuDest)
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuOrig)
 
-    }
+    @Html.HiddenFor(q => q.IdNumMovi_Ing_Egr_Inven_Destino)
+    @Html.HiddenFor(q => q.IdNumMovi_Ing_Egr_Inven_Origen)
+
+
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -34,22 +37,22 @@
                     @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-offset-6 col-md-3">
                 <div class="form-group">
                     <label for="tr_fecha">Fecha</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q=> q.tr_fecha, settings =>
-                    {
-                        settings.Name = "tr_fecha";
-                        settings.Properties.UseMaskBehavior = true;
-                        settings.Properties.EditFormat = EditFormat.Date;
-                        settings.Properties.EditFormatString = "dd/MM/yyyy";
-                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                    }).GetHtml()
+                        @Html.DevExpress().DateEditFor(q => q.tr_fecha, settings =>
+                   {
+                       settings.Name = "tr_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.tr_fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -61,7 +64,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursalOrigen">Sucursal origen*</label>
-                    @Html.DropDownListFor(q => q.IdSucursalOrigen, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.DropDownListFor(q => q.IdSucursalOrigen, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdSucursalOrigen, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -72,18 +75,11 @@
                     @Html.ValidationMessageFor(q => q.IdBodegaOrigen, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <div class="form-group">
-                    <label for="IdMovi_inven_tipo_SucuOrig">Tipo movimiento origen*</label>
-                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo_SucuOrig, new SelectList(ViewBag.lst_tipo, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_SucuOrig, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="IdMovi_inven_tipo_SucuOrig">Motivo*</label>
-                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo_SucuOrig, new SelectList(ViewBag.lst_motivo, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control", @id = "IdMotivo_Inv" })
-                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_SucuOrig, "", new { @class = "text-danger" })
+                    <label for="IdNumMovi_Ing_Egr_Inven_Origen"># Movimiento</label>
+                    @Html.TextBoxFor(q => q.IdNumMovi_Ing_Egr_Inven_Origen, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdNumMovi_Ing_Egr_Inven_Origen, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -94,7 +90,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursalDest">Sucursal destino*</label>
-                    @Html.DropDownListFor(q => q.IdSucursalDest, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursalDest" })
+                    @Html.DropDownListFor(q => q.IdSucursalDest, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursalDest", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdSucursalDest, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -105,18 +101,12 @@
                     @Html.ValidationMessageFor(q => q.IdBodegaDest, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+
+            <div class="col-md-1">
                 <div class="form-group">
-                    <label for="IdMovi_inven_tipo_SucuDest">Tipo movimiento destino*</label>
-                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo_SucuDest, new SelectList(ViewBag.lst_tipo, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo_SucuDest", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_SucuDest, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="IdMovi_inven_tipo_SucuDest">Motivo destino*</label>
-                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo_SucuDest, new SelectList(ViewBag.lst_motivo, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control", @id = "IdMovi_inven_tipo_SucuDest" })
-                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_SucuDest, "", new { @class = "text-danger" })
+                    <label for="Codigo"># Movimiento</label>
+                    @Html.TextBoxFor(q => q.IdNumMovi_Ing_Egr_Inven_Destino, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdNumMovi_Ing_Egr_Inven_Destino, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -143,6 +133,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="box-footer">
         <button type="submit" class="btn btn-danger">Anular</button>

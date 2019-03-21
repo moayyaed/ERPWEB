@@ -20,9 +20,7 @@
 
     @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuDest)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuOrig)
-
-    @Html.HiddenFor(q => q.IdNumMovi_Ing_Egr_Inven_Destino)
-    @Html.HiddenFor(q => q.IdNumMovi_Ing_Egr_Inven_Origen)
+    
 
 
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
@@ -83,6 +81,13 @@
                     @Html.ValidationMessageFor(q => q.IdBodegaOrigen, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdNumMovi_Ing_Egr_Inven_Origen"># Movimiento</label>
+                    @Html.TextBoxFor(q => q.IdNumMovi_Ing_Egr_Inven_Origen, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdNumMovi_Ing_Egr_Inven_Origen, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
 
@@ -100,6 +105,13 @@
                     <label for="IdBodegaDest">Bodega destino</label>
                     @Html.DropDownListFor(q => q.IdBodegaDest, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodegaDest" })
                     @Html.ValidationMessageFor(q => q.IdBodegaDest, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="Codigo"># Movimiento</label>
+                    @Html.TextBoxFor(q => q.IdNumMovi_Ing_Egr_Inven_Destino, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdNumMovi_Ing_Egr_Inven_Destino, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

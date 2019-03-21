@@ -385,5 +385,55 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+
+
+        public List<tb_sucursal_Info> GetListSinEmpresa( bool mostrar_anulados)
+        {
+            try
+            {
+                List<tb_sucursal_Info> Lista;
+
+                using (Entities_general Context = new Entities_general())
+                {
+                    if (mostrar_anulados)
+                        Lista = (from q in Context.tb_sucursal
+                                 select new tb_sucursal_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdSucursal = q.IdSucursal,
+                                     Su_Descripcion = q.Su_Descripcion,
+                                     Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
+                                     Su_Ruc = q.Su_Ruc,
+                                     Estado = q.Estado,
+
+                                     EstadoBool = q.Estado == "A" ? true : false
+                                 }).ToList();
+                    else
+                        Lista = (from q in Context.tb_sucursal
+                               where  q.Estado == "A"
+                                 select new tb_sucursal_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdSucursal = q.IdSucursal,
+                                     Su_Descripcion = q.Su_Descripcion,
+                                     Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
+                                     Su_Ruc = q.Su_Ruc,
+                                     Estado = q.Estado,
+
+                                     EstadoBool = q.Estado == "A" ? true : false
+                                 }).ToList();
+                }
+
+                Lista.ForEach(v => { v.IdString = v.IdEmpresa.ToString("000") + v.IdSucursal.ToString("000"); });
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

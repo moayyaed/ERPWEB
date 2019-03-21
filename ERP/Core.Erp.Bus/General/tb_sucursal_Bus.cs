@@ -109,5 +109,19 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+
+        public List<tb_sucursal_Info> GetListSinEmpresa(bool mostrar_anulados)
+
+        {
+            try
+            {
+                return odata.GetListSinEmpresa(mostrar_anulados);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

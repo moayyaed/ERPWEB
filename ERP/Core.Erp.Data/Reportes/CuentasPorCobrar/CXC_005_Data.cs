@@ -7,7 +7,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 {
     public class CXC_005_Data
     {
-        public List<CXC_005_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCLiente, int IdContacto, DateTime? fecha_corte, bool mostrarSaldo0)
+        public List<CXC_005_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCLiente, DateTime? fecha_corte, bool mostrarSaldo0)
         {
             try
             {
@@ -16,13 +16,11 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 
                 decimal IdCliente_ini = IdCLiente;
                 decimal IdCliente_fin = IdCLiente == 0 ? 9999 : IdCLiente;
-
-                int IdContacto_ini = IdContacto;
-                int IdContacto_fin = IdContacto == 0 ? 9999 : IdContacto;
+                
                 List<CXC_005_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCXC_005(IdEmpresa, IdSucursal_ini, IdSucursal_fin, IdCliente_ini, IdCliente_fin, IdContacto_ini, IdContacto_fin, fecha_corte, mostrarSaldo0)
+                    Lista = (from q in Context.SPCXC_005(IdEmpresa, IdSucursal_ini, IdSucursal_fin, IdCliente_ini, IdCliente_fin, fecha_corte, mostrarSaldo0)
                              select new CXC_005_Info
                              {
                                 IdEmpresa = q.IdEmpresa,
