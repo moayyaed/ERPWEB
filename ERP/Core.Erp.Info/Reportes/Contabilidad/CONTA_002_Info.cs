@@ -23,5 +23,7 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public string cb_Observacion { get; set; }
         public string cb_Estado { get; set; }
         public string tc_TipoCbte { get; set; }
+        public Nullable<int> IdMes { get; set; }
+        public string smes { get; set; }
     }
 }
