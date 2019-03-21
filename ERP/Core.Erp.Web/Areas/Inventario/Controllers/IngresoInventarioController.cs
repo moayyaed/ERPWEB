@@ -30,7 +30,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_bodega_Bus bus_bodega;
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();        
+        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+        string MensajeSuccess = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -135,9 +136,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 cargar_combos(model);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro creado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdMovi_inven_tipo = model.IdMovi_inven_tipo, IdNumMovi= model.IdNumMovi, MensajeSuccess = MensajeSuccess });
         }
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0, string MensajeSuccess="")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -152,6 +155,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_in_Ing_Egr_Inven_det.set_list(model.lst_in_Ing_Egr_Inven_det,model.IdTransaccionSession);            
             cargar_combos(model);
+
+            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
             return View(model);
         }
         [HttpPost]
@@ -170,7 +175,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 cargar_combos(model);
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            MensajeSuccess = "Registro actualizado exitósamente";
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdMovi_inven_tipo = model.IdMovi_inven_tipo, IdNumMovi = model.IdNumMovi, MensajeSuccess = MensajeSuccess });
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
         {

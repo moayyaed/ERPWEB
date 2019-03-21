@@ -16,14 +16,14 @@
     @Html.HiddenFor(q => q.IdTransaccionSession, new { id = "IdTransaccionSession" })
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdVendedor">Vendedor*</label>
                     @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdVendedor" })
                     @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-2 col-md-2">
+            <div class="col-md-offset-4 col-md-2">
                 <div class="form-group">
                     <label for="">Fecha*</label>
                     <div class="input-group date">

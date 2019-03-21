@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-offset-2 col-md-2">
                 <div class="form-group">
                     <label for="">Fecha*</label>
                     <div class="input-group date">
@@ -64,12 +64,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-offset-2 col-md-2">
-                <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                     <i class="fa fa-print"></i>
                 </button>
-                &nbsp;&nbsp;
-                <a type="button" class="btn btn-primary" title="Nuevo" href="@Url.Action("Nuevo","LiquidacionComisiones",new { Area = "CuentasPorCobrar", IdEmpresa = Model.IdEmpresa },null)">
+            </div>
+            <div class="col-md-1">
+                <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","LiquidacionComisiones",new { Area = "CuentasPorCobrar", IdEmpresa = Model.IdEmpresa },null)">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>

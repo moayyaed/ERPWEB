@@ -17,6 +17,7 @@
     @Html.HiddenFor(q => q.IdNumMovi)
     @Html.HiddenFor(q => q.signo)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo)
+
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -25,6 +26,16 @@
             </h4>
         </div>
 
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
     }
     <div class="row">
         <div class="col-md-12">
@@ -35,7 +46,7 @@
                     @Html.ValidationMessageFor(q => q.CodMoviInven, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-7 col-md-2">
+            <div class="col-md-offset-5 col-md-2">
                 <div class="form-group">
                     <label for="">Fecha</label>
                     <div class="input-group date">
@@ -53,6 +64,22 @@
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
                     </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","EgresoInventario",new { Area = "Inventario", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -128,12 +155,12 @@
 
 <script type="text/javascript">
 
-        $(function () {
-            $("#IdSucursal").change(function () {
-                CargarBodega();
-            });
+    $(function () {
+        $("#IdSucursal").change(function () {
+            CargarBodega();
         });
-function CargarBodega() {
+    });
+    function CargarBodega() {
         $("#IdBodega").empty();
 
         var datos = {
@@ -151,12 +178,18 @@ function CargarBodega() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-            $.each(data, function (i, row) {
-            $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-            });
+                $.each(data, function (i, row) {
+                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
             },
             error: function (error) {
             }
-            });
+        });
     };
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/InventarioReportes/INV_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdMovi_inven_tipo="+@Model.IdMovi_inven_tipo+"&IdNumMovi="+@Model.IdNumMovi, '_blank');
+        win.focus();
+    }
 </script>

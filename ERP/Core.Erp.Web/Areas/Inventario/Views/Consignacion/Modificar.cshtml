@@ -25,6 +25,35 @@
         </div>
     }
 
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-10 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Consignacion",new { Area = "Inventario", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-10">
@@ -103,3 +132,11 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+
+<script type="text/javascript">
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/InventarioReportes/INV_014?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdConsignacion="+@Model.IdConsignacion, '_blank');
+        win.focus();
+    }
+</script>
