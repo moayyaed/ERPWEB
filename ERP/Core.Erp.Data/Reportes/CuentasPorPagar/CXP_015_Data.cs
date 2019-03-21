@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
   public class CXP_015_Data
     {
-        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte)
+        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0)
         {
             try
             {
