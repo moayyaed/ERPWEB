@@ -31,7 +31,6 @@ namespace Core.Erp.Data
         public double Valor { get; set; }
         public string Mes { get; set; }
         public decimal IdEmpleado { get; set; }
-        public System.DateTime pe_FechaFin1 { get; set; }
         public Nullable<System.DateTime> pe_fehca_inicio { get; set; }
     }
 }

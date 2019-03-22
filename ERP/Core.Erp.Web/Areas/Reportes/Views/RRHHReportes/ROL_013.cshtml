@@ -30,34 +30,34 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdProveedor">Empleado</label>
                             @Html.Partial("_CmbEmpleado_RRHH", Model.IdEmpleado)
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdRubro">Sucursal</label>
                             @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdNomina_Tipo">Nómina*</label>
                             @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
                             @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdNomina_TipoLiqui">Tipo liquidación de nómina*</label>
                             @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
                             @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="FechaInicio">Periodo*</label>
                             @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), new { @class = "form-control", @id = "IdPeriodo" })
