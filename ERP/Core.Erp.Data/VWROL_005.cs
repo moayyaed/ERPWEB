@@ -23,8 +23,8 @@ namespace Core.Erp.Data
         public System.DateTime FechaSalida { get; set; }
         public double UltimaRemuneracion { get; set; }
         public string Observacion { get; set; }
-        public double Ingresos { get; set; }
-        public double Egresos { get; set; }
+        public Nullable<double> Ingresos { get; set; }
+        public Nullable<double> Egresos { get; set; }
         public bool EsMujerEmbarazada { get; set; }
         public bool EsDirigenteSindical { get; set; }
         public bool EsPorDiscapacidad { get; set; }
@@ -39,5 +39,8 @@ namespace Core.Erp.Data
         public string pe_nombre { get; set; }
         public string ca_descripcion { get; set; }
         public string ru_descripcion { get; set; }
+        public string NombreCompleto { get; set; }
+        public string TipoTerminacion { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }

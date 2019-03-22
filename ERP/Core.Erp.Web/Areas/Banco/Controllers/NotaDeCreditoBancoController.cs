@@ -188,6 +188,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public ActionResult Nuevo(ba_Cbte_Ban_Info model)
         {
             model.list_det = List_Banco_Flujo_Det.get_list(model.IdTransaccionSession);
+            model.IdUsuario = SessionFixed.IdUsuario;
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -208,6 +209,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public ActionResult Modificar(ba_Cbte_Ban_Info model)
         {
             model.list_det = List_Banco_Flujo_Det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
