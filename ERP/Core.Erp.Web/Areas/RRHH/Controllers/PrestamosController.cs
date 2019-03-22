@@ -74,8 +74,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
+                IdEmpleado = 0
             };
             return View(model);
         }
@@ -87,12 +86,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
        
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_prestamos(DateTime? Fecha_ini, DateTime? Fecha_fin)
+        public ActionResult GridViewPartial_prestamos(decimal IdEmpleado)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
-            List<ro_prestamo_Info> model = bus_prestamos.get_list(IdEmpresa,Convert.ToDateTime( Fecha_ini),Convert.ToDateTime( Fecha_fin));
+            ViewBag.IdEmpleado = IdEmpleado == 0 ? 0 : IdEmpleado;
+            List<ro_prestamo_Info> model = bus_prestamos.get_list_prestamo(IdEmpresa, IdEmpleado);
             return PartialView("_GridViewPartial_prestamos", model);
         }
 

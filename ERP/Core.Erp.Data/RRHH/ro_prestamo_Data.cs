@@ -16,22 +16,17 @@ namespace Core.Erp.Data.RRHH
         cp_orden_pago_Data data_op = new cp_orden_pago_Data();
         ct_cbtecble_Data data_ct = new ct_cbtecble_Data();
 
-        public List<ro_prestamo_Info> get_list(int IdEmpresa, DateTime fechaInicio, DateTime fechaFin)
+        public List<ro_prestamo_Info> get_list_prestamo(int IdEmpresa, decimal IdEmpleado)
         {
             try
             {
-
-                DateTime fi = Convert.ToDateTime(fechaInicio.ToShortDateString());
-                DateTime ff = Convert.ToDateTime(fechaFin.ToShortDateString());
-
                 List<ro_prestamo_Info> Lista;
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Lista = (from q in Context.vwRo_Prestamo
                              where q.IdEmpresa == IdEmpresa
-                             && q.Fecha_registro>=fi
-                             &&q.Fecha_registro <= ff
+                             && q.IdEmpleado == IdEmpleado
                              select new ro_prestamo_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

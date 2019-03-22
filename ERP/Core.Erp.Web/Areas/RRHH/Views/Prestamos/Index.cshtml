@@ -31,48 +31,14 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                   
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Fecha inicio*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
-                           {
-                               settings.Name = "fecha_ini";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
-                            </div>
+                            <label for="">Empleado*</label>
+                            @Html.Partial("_CmbEmpleado_prestamos", Model.IdEmpleado)
+                            @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="">Fecha fin*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
-                           {
-                               settings.Name = "fecha_fin";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div>                      
             </div>
         </div>
         <!-- /.box-body -->
@@ -91,7 +57,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_prestamos", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_prestamos", new { IdEmpleado = Model.IdEmpleado})
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

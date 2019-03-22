@@ -136,7 +136,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdContrato_Tipo">Termino de terminación del contrato*</label>
+                    <label for="IdContrato_Tipo">Causa de terminación del contrato*</label>
                     @Html.DropDownListFor(q => q.IdCausaTerminacion, new SelectList(ViewBag.lst_tipo_terminacion, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "idterminacion" })
                     @Html.ValidationMessageFor(q => q.IdCausaTerminacion, "", new { @class = "text-danger" })
                 </div>
@@ -193,11 +193,18 @@
                     } else {
                         $("#IdContrato_Tipo").val(data.IdContrato_Tipo);
                         $("#IdContrato").val(data.IdContrato);
+                        var pad = "00"
+                        var mes_ingreso = data.mes_ing.toString();
+                        var mes_salida = data.mes_sal.toString();
 
+                        var mes_ing_format = pad.substring(0, pad.length - mes_ingreso.length) + mes_ingreso;
+                        var mes_sal_format = pad.substring(0, pad.length - mes_salida.length) + mes_salida;
 
-                        FechaIngreso.SetValue(new Date(data.anio_ing, data.mes_ing, data.dia_in));
-
-                        FechaSalida.SetValue(new Date(data.anio_sal, data.mes_sal, data.dia_sal));
+                        var fecha_inicio = data.anio_ing.toString() + "/" + mes_ing_format + "/" + data.dia_in.toString();
+                        var fecha_fin = data.anio_sal.toString() + "/" + mes_sal_format + "/" + data.dia_sal.toString();
+  
+                        FechaIngreso.SetValue(new Date(fecha_inicio));
+                        FechaSalida.SetValue(new Date(fecha_fin));
                         $("#Sueldo").val(data.Sueldo);
 
                     }

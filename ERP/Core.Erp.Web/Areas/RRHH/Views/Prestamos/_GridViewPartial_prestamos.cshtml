@@ -2,7 +2,7 @@
     @{
         var grid = Html.DevExpress().GridView(settings => {
             settings.Name = "GridView_prestamos";
-            settings.CallbackRouteValues = new { Controller = "Prestamos", Action = "GridViewPartial_prestamos", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin };
+            settings.CallbackRouteValues = new { Controller = "Prestamos", Action = "GridViewPartial_prestamos", IdEmpleado = ViewBag.IdEmpleado };
 
             settings.Width = Unit.Percentage(100);
             settings.KeyFieldName = "IdPrestamo";

@@ -139,7 +139,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdContrato_Tipo">Termino de terminación del contrato*</label>
+                    <label for="IdContrato_Tipo">Causa de terminación del contrato*</label>
                     @Html.DropDownListFor(q => q.IdCausaTerminacion, new SelectList(ViewBag.lst_tipo_terminacion, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "idterminacion" })
                     @Html.ValidationMessageFor(q => q.IdCausaTerminacion, "", new { @class = "text-danger" })
                 </div>
