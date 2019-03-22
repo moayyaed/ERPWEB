@@ -470,6 +470,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdNomina.Value = model.IdNomina;
             report.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
+            report.p_IdEmpleado.Value = model.IdEmpleado;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdPeriodo.Value = model.IdPeriodo;
             report.usuario = SessionFixed.IdUsuario.ToString();
@@ -484,6 +485,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdNomina.Value = model.IdNomina;
             report.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
+            report.p_IdEmpleado.Value = model.IdEmpleado;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdPeriodo.Value = model.IdPeriodo;
             report.usuario = SessionFixed.IdUsuario.ToString();

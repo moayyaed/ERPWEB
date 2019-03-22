@@ -30,6 +30,12 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="IdProveedor">Empleado</label>
+                            @Html.Partial("_CmbEmpleado_RRHH", Model.IdEmpleado)
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdRubro">Sucursal</label>

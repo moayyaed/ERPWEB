@@ -9,11 +9,11 @@ namespace Core.Erp.Bus.Reportes.RRHH
     {
         ROL_013_Data odata = new ROL_013_Data();
 
-        public List<ROL_013_Info> get_list(int IdEmpresa, int IdNomina,int IdNominaTipoLiqui, int IdSucursal, int IdPeriodo)
+        public List<ROL_013_Info> get_list(int IdEmpresa, int IdNomina,int IdNominaTipoLiqui, int IdSucursal, int IdPeriodo, decimal IdEmpleado)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdNomina, IdNominaTipoLiqui, IdSucursal, IdPeriodo);
+                return odata.get_list(IdEmpresa, IdNomina, IdNominaTipoLiqui, IdSucursal, IdPeriodo, IdEmpleado);
             }
             catch (Exception)
             {
