@@ -45,7 +45,6 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  Valor = q.Valor,
                                  Mes = q.Mes,
                                  IdEmpleado = q.IdEmpleado,
-                                 pe_FechaFin1 = q.pe_FechaFin1,
                                  pe_fehca_inicio = q.pe_fehca_inicio
                              }).ToList();
                 }
