@@ -79,7 +79,6 @@
             this.xrTableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell20 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.p_IdPrestamo = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
             this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
@@ -91,12 +90,13 @@
             this.lbl_fecha = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
@@ -152,6 +152,7 @@
             this.xrTableCell17.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Saldo]")});
             this.xrTableCell17.Name = "xrTableCell17";
+            this.xrTableCell17.TextFormatString = "{0:n2}";
             this.xrTableCell17.Weight = 0.56458005151905111D;
             // 
             // xrTableCell22
@@ -159,6 +160,7 @@
             this.xrTableCell22.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TotalCuota]")});
             this.xrTableCell22.Name = "xrTableCell22";
+            this.xrTableCell22.TextFormatString = "{0:n2}";
             this.xrTableCell22.Weight = 0.59988292893970141D;
             // 
             // xrTableCell23
@@ -166,7 +168,7 @@
             this.xrTableCell23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FechaPago]")});
             this.xrTableCell23.Name = "xrTableCell23";
-            this.xrTableCell23.TextFormatString = "{0:dd-MMM-yy}";
+            this.xrTableCell23.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell23.Weight = 0.7057097921564206D;
             // 
             // xrTableCell24
@@ -308,6 +310,7 @@
             this.xrTableCell14.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MontoSol]")});
             this.xrTableCell14.Name = "xrTableCell14";
+            this.xrTableCell14.TextFormatString = "{0:n2}";
             this.xrTableCell14.Weight = 1.4009331376139385D;
             // 
             // xrTableRow8
@@ -331,8 +334,9 @@
             // xrTableCell10
             // 
             this.xrTableCell10.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([EstadoPago]==\'CAN\', Sum([TotalCuota]), 0)")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TotalCobrado]")});
             this.xrTableCell10.Name = "xrTableCell10";
+            this.xrTableCell10.TextFormatString = "{0:n2}";
             this.xrTableCell10.Weight = 1.0076887869601767D;
             // 
             // xrTableCell26
@@ -346,8 +350,9 @@
             // xrTableCell27
             // 
             this.xrTableCell27.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MontoSol]- (Iif([EstadoPago]==\'CAN\', Sum([TotalCuota]), 0))")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MontoSol]-[TotalCobrado]")});
             this.xrTableCell27.Name = "xrTableCell27";
+            this.xrTableCell27.TextFormatString = "{0:n2}";
             this.xrTableCell27.Weight = 1.4009331376139385D;
             // 
             // xrTableRow9
@@ -373,7 +378,7 @@
             this.xrTableCell29.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Fecha_Transac]")});
             this.xrTableCell29.Name = "xrTableCell29";
-            this.xrTableCell29.TextFormatString = "{0:dd-MMM-yy}";
+            this.xrTableCell29.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell29.Weight = 1.0076887869601767D;
             // 
             // xrTableCell30
@@ -389,7 +394,7 @@
             this.xrTableCell31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Fecha_PriPago]")});
             this.xrTableCell31.Name = "xrTableCell31";
-            this.xrTableCell31.TextFormatString = "{0:dd-MMM-yy}";
+            this.xrTableCell31.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell31.Weight = 1.4009331376139385D;
             // 
             // xrTable1
@@ -565,11 +570,6 @@
             this.xrTableCell20.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell20.Weight = 1.559040153641335D;
             // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.RRHH.ROL_008_Info);
-            this.objectDataSource1.Name = "objectDataSource1";
-            // 
             // p_IdPrestamo
             // 
             this.p_IdPrestamo.Name = "p_IdPrestamo";
@@ -668,7 +668,7 @@
             this.lbl_fecha.StylePriority.UsePadding = false;
             this.lbl_fecha.StylePriority.UseTextAlignment = false;
             this.lbl_fecha.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.lbl_fecha.Weight = 2.239999933404714D;
+            this.lbl_fecha.Weight = 2.2933436898515D;
             // 
             // xrTableCell50
             // 
@@ -679,22 +679,27 @@
             this.xrTableCell50.Name = "xrTableCell50";
             this.xrTableCell50.StylePriority.UseBorders = false;
             this.xrTableCell50.StylePriority.UseFont = false;
-            this.xrTableCell50.Weight = 2.1866675378843965D;
+            this.xrTableCell50.Weight = 2.1333237814376105D;
             // 
             // xrPageInfo2
             // 
             this.xrPageInfo2.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrPageInfo2.Font = new System.Drawing.Font("Verdana", 7F);
-            this.xrPageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.xrPageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(0.001316979F, 0F);
             this.xrPageInfo2.Name = "xrPageInfo2";
             this.xrPageInfo2.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
-            this.xrPageInfo2.SizeF = new System.Drawing.SizeF(205F, 20F);
+            this.xrPageInfo2.SizeF = new System.Drawing.SizeF(199.9977F, 20F);
             this.xrPageInfo2.StylePriority.UseBorders = false;
             this.xrPageInfo2.StylePriority.UseFont = false;
             this.xrPageInfo2.StylePriority.UsePadding = false;
             this.xrPageInfo2.StylePriority.UseTextAlignment = false;
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrPageInfo2.TextFormatString = "Página {0} de {1}";
+            // 
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.RRHH.ROL_008_Info);
+            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // ROL_008_Rpt
             // 
@@ -720,8 +725,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }
