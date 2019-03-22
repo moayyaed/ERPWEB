@@ -44,7 +44,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  descuento_men_quin = q.descuento_men_quin,
                                  descuento_quincena = q.descuento_quincena,
                                  Fecha_PriPago = q.Fecha_PriPago,
-                                 Fecha_Transac = q.Fecha_Transac
+                                 Fecha_Transac = q.Fecha_Transac,
+                                 TotalCobrado = q.TotalCobrado
                              }).ToList();
                 }
                 return Lista;
