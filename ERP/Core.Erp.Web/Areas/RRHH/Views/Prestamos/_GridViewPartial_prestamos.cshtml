@@ -92,13 +92,25 @@
             });
 
             settings.Columns.Add("IdPrestamo","ID").Width=Unit.Percentage(5);
-            settings.Columns.Add("pe_nombre_completo","Empleado").Width = Unit.Percentage(20);
-            settings.Columns.Add("ru_descripcion", "Rubro").Width = Unit.Percentage(15);
-            settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(18);
+            settings.Columns.Add("pe_nombre_completo","Empleado").Width = Unit.Percentage(15);
+            settings.Columns.Add("ru_descripcion", "Rubro").Width = Unit.Percentage(10);
+            settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(15);            
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Fecha_Transac";
+                column.Caption = "Transacción";
+                column.Width = Unit.Percentage(8);
+                column.PropertiesEdit.DisplayFormatString = "d";
+                column.EditorProperties().DateEdit(sp =>
+                {
+                    column.PropertiesEdit.DisplayFormatString = "d";
+                    sp.Width = Unit.Percentage(100);
+                });
+            });
             settings.Columns.Add(column =>
             {
                 column.FieldName = "Fecha_PriPago";
-                column.Caption = "Fecha";
+                column.Caption = "1º Pago";
                 column.Width = Unit.Percentage(8);
                 column.PropertiesEdit.DisplayFormatString = "d";
                 column.EditorProperties().DateEdit(sp =>
@@ -121,8 +133,34 @@
 
                 });
             });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "TotalCobrado";
+                column.Caption = "$Abonado";
+                column.Width = Unit.Percentage(8);
+                column.EditorProperties().SpinEdit(sp =>
+                {
+                    sp.MinValue = 0;
+                    sp.MaxValue = 999999999;
+                    sp.Width = Unit.Percentage(100);
+                    column.PropertiesEdit.DisplayFormatString = "n2";
 
+                });
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Valor_pendiente";
+                column.Caption = "$Saldo";
+                column.Width = Unit.Percentage(8);
+                column.EditorProperties().SpinEdit(sp =>
+                {
+                    sp.MinValue = 0;
+                    sp.MaxValue = 999999999;
+                    sp.Width = Unit.Percentage(100);
+                    column.PropertiesEdit.DisplayFormatString = "n2";
 
+                });
+            });
 
             settings.Columns.Add(c =>
             {

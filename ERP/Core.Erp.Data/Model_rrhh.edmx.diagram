@@ -204,7 +204,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_empleado_novedad_det_ro_rubro_tipo" />
         <EntityTypeShape EntityType="Model_rrhh.ro_empleado" Width="1.5" PointX="28" PointY="19.375" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_datos_generales" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="Model_rrhh.vwRo_Prestamo" Width="1.5" PointX="17.75" PointY="28.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwRo_rol_detalle_saldo_por_pagar" Width="1.5" PointX="2.75" PointY="21.75" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_CargaFamiliar_ro_empleado" />
@@ -261,6 +260,7 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_rol_detalle_x_rubro_acumulado" Width="1.5" PointX="17.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_rrhh.ro_Comprobantes_Contables" Width="1.5" PointX="20.25" PointY="40.75" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Comprobantes_Contables_ro_rol" />
+        <EntityTypeShape EntityType="Model_rrhh.vwRo_Prestamo" Width="1.5" PointX="17.375" PointY="28.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

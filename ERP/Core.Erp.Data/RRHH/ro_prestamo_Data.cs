@@ -21,12 +21,15 @@ namespace Core.Erp.Data.RRHH
             try
             {
                 List<ro_prestamo_Info> Lista;
+                decimal IdEmpleadoIni = IdEmpleado;
+                decimal IdEmpleadoFin = IdEmpleado==0 ? 9999999999999999 : IdEmpleado;
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Lista = (from q in Context.vwRo_Prestamo
                              where q.IdEmpresa == IdEmpresa
-                             && q.IdEmpleado == IdEmpleado
+                             && q.IdEmpleado >= IdEmpleadoIni
+                             && q.IdEmpleado <= IdEmpleadoFin
                              select new ro_prestamo_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -50,8 +53,8 @@ namespace Core.Erp.Data.RRHH
                                  TotalCobrado=q.TotalCobrado,
                                  ru_descripcion=q.ru_descripcion,
                                  EstadoAprob = q.EstadoAprob,
-                                 EstadoBool = q.Estado
-
+                                 EstadoBool = q.Estado,
+                                 Fecha_Transac = q.Fecha_Transac
 
                              }).ToList();
 
