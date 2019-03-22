@@ -3489,6 +3489,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_008' no tiene definida ningu
           <Property Name="descuento_men_quin" Type="bit" Nullable="false" />
           <Property Name="Fecha_PriPago" Type="date" Nullable="false" />
           <Property Name="Fecha_Transac" Type="datetime" Nullable="false" />
+          <Property Name="TotalCobrado" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWROL_009' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6449,7 +6450,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
     [VWROL_008].[descuento_quincena] AS [descuento_quincena], 
     [VWROL_008].[descuento_men_quin] AS [descuento_men_quin], 
     [VWROL_008].[Fecha_PriPago] AS [Fecha_PriPago], 
-    [VWROL_008].[Fecha_Transac] AS [Fecha_Transac]
+    [VWROL_008].[Fecha_Transac] AS [Fecha_Transac], 
+    [VWROL_008].[TotalCobrado] AS [TotalCobrado]
     FROM [web].[VWROL_008] AS [VWROL_008]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWROL_009" EntityType="Self.VWROL_009" store:Type="Views" store:Schema="web">
@@ -11842,6 +11844,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <Property Name="descuento_men_quin" Type="Boolean" Nullable="false" />
           <Property Name="Fecha_PriPago" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Fecha_Transac" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TotalCobrado" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -15361,6 +15364,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_026' no tiene definida ningu
           <EntitySetMapping Name="VWROL_008">
             <EntityTypeMapping TypeName="Model_reportes.VWROL_008">
               <MappingFragment StoreEntitySet="VWROL_008">
+                <ScalarProperty Name="TotalCobrado" ColumnName="TotalCobrado" />
                 <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
                 <ScalarProperty Name="Fecha_PriPago" ColumnName="Fecha_PriPago" />
                 <ScalarProperty Name="descuento_men_quin" ColumnName="descuento_men_quin" />
