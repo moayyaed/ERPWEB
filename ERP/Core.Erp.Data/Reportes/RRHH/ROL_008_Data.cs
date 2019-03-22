@@ -42,7 +42,9 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  pe_nombre = q.pe_nombre,
                                  descuento_mensual = q.descuento_mensual,
                                  descuento_men_quin = q.descuento_men_quin,
-                                 descuento_quincena = q.descuento_quincena
+                                 descuento_quincena = q.descuento_quincena,
+                                 Fecha_PriPago = q.Fecha_PriPago,
+                                 Fecha_Transac = q.Fecha_Transac
                              }).ToList();
                 }
                 return Lista;

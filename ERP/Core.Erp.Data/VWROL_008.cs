@@ -36,5 +36,7 @@ namespace Core.Erp.Data
         public bool descuento_mensual { get; set; }
         public bool descuento_quincena { get; set; }
         public bool descuento_men_quin { get; set; }
+        public System.DateTime Fecha_PriPago { get; set; }
+        public System.DateTime Fecha_Transac { get; set; }
     }
 }

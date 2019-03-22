@@ -44,7 +44,11 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  pe_apellido = q.pe_apellido,
                                  pe_nombre = q.pe_nombre,
                                  ca_descripcion = q.ca_descripcion,
-                                 ru_descripcion = q.ru_descripcion
+                                 ru_descripcion = q.ru_descripcion,
+                                 IdEmpleado = q.IdEmpleado,
+                                 NombreCompleto = q.NombreCompleto,
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 TipoTerminacion = q.TipoTerminacion
                              }).ToList();
                 }
 

@@ -225,7 +225,7 @@ namespace Core.Erp.Data.Banco
                     IdSolicitudPago = info.IdSolicitudPago,
 
                     IdUsuario = info.IdUsuario,
-                    Fecha_Transac = info.Fecha_Transac,
+                    Fecha_Transac = DateTime.Now,
                 });
                 #endregion
 
