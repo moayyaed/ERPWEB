@@ -36,6 +36,8 @@ namespace Core.Erp.Data.Contabilidad
                     Context.generarATS(IdEmpresa, IdPeriodo, IdSucursalInicio, IdSucursalFin);
 
                     Migrar_ats(empresa_info.IdEmpresa,empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo);
+
+
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
@@ -272,6 +274,64 @@ namespace Core.Erp.Data.Contabilidad
 
             }
 
+        }
+
+        private void Migrar_ats_CCG(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin, int IdPeriodo)
+        {
+            try
+            {
+                Entity_Eventos db = new Entity_Eventos();
+                using (Entities_contabilidad Context = new Entities_contabilidad())
+                {/*
+                    var queryLinq = (from fac in db.Facturas
+                                     where fac.fecha >= FechaInicio
+                                     && fac.fecha <= FechaFin
+                                     && fac.bd_est == 1
+                                     && ((fac.nu_ced_ruc).Length > 9)
+                                     select new ATS_ventas
+                                     {
+                                         IdEmpresa = IdEmpresa,
+                                         IdPeriodo = IdPeriodo,
+                                         Secuencia = secuancia,
+                                         idCliente = item.cedulaRuc,
+                                         parteRel = "NO",
+                                         DenoCli = "",
+                                         tipoComprobante = "18",
+                                         tipoEm = "F",
+                                         numeroComprobantes = Convert.ToInt32(item.nu_comp),
+                                         baseNoGraIva = Convert.ToDecimal(item.valorBaseIva),
+                                         baseImponible = 0,
+                                         baseImpGrav = 0,
+                                         montoIva = 0,
+                                         montoIce = 0,
+                                         valorRetIva = 0,
+                                         valorRetRenta = 0,
+                                         formaPago = "01",
+                                         codEstab = "001",
+                                         ventasEstab = Convert.ToDecimal(item.valorBaseIva),
+                                         IdSucursal = 8,
+
+                                         tpIdCliente = fac.nu_ced_ruc.Length == 13 ? "04" : fac.nu_ced_ruc.Length == 10 ? "05" : "0",
+                                         idCliente = fac.nu_ced_ruc.Trim(),
+                                         parteRel = "NO",
+                                         tipoComprobante = "18",
+                                         tipoEm = "F",
+                                         numeroComprobantes = "1",
+                                         baseNoGraIva = "0.00",
+                                         baseImponible = "0.00",
+                                         baseImpGrav = (fac.subtotal).Value.ToString().Replace(",", ".").Trim(),
+                                         montoIva = fac.v_iva.Value.ToString().Replace(",", ".").Trim(),
+                                         montoIce = "0.00",
+                                         valorRetIva = "0.00",
+                                         valorRetRenta = "0.00",
+                                         formaPago = "01"
+                                     }).ToList();*/
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
         }
     }
 }
