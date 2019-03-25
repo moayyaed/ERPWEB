@@ -12,6 +12,8 @@
 
 <script type="text/javascript">
     $(function () {
+        $("#Error").hide();
+
         $("#IdBanco").change(function () {
             GetNumCheque();
             armar_diario();
@@ -221,7 +223,14 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cb_Cheque").val(data);
+                $("#cb_Cheque").val(data.NumCheque);
+                if (data.Error !="") {
+                    $("#Error").show();
+                    $("#msg").text(data.Error);
+                }
+                else {
+                    $("#Error").hide();
+                }
             },
             error: function (error) {
             }
@@ -416,6 +425,12 @@
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_cheque">
                 <div class="row">
+                    <div class="col-md-12">
+                        <label class="text-danger" id="msg"></label>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdBanco">Cuenta bancaria:*</label>
@@ -423,6 +438,7 @@
                             @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div class="col-md-offset-2 col-md-2">
                         <div class="form-group">
                             <label for="cb_Cheque"># Cheque:*</label>
@@ -456,61 +472,61 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_op">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdTipo_Persona">Tipo persona:*</label>
-                            @Html.DropDownListFor(q => q.IdTipo_Persona, new SelectList(ViewBag.lst_tipo_personas, "Key", "Value"), new { @class = "form-control", @id = "IdTipo_Persona" })
+                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_op">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="IdTipo_Persona">Tipo persona:*</label>
+                                    @Html.DropDownListFor(q => q.IdTipo_Persona, new SelectList(ViewBag.lst_tipo_personas, "Key", "Value"), new { @class = "form-control", @id = "IdTipo_Persona" })
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="IdEntidad">Beneficiario:*</label>
+                                    @Html.Partial("_CmbPersona_ChequeBanco", Model.IdEntidad)
+                                    @Html.ValidationMessageFor(q => q.IdEntidad, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="form-group">
-                            <label for="IdEntidad">Beneficiario:*</label>
-                            @Html.Partial("_CmbPersona_ChequeBanco", Model.IdEntidad)
-                            @Html.ValidationMessageFor(q => q.IdEntidad, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-offset-9 col-md-1">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(q => q.IdSolicitudPago, new { @Id = "IdSolicitudPago", @class = "form-control", @placeholder = "# Solicitud" })
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-primary form-control" id="btn_importar_solicitud" onclick="ImportarSolicitud();" title="Importar solicitud">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </div>
                         </div>
+                        <br />
+                        @Html.Action("GridViewPartial_cheque_op")
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
-                            <i class="fa fa-search"></i>
-                        </button>
+
+                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario">
+                        @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
                     </div>
-                    <div class="col-md-offset-9 col-md-1">
-                        <div class="form-group">
-                            @Html.TextBoxFor(q => q.IdSolicitudPago, new { @Id = "IdSolicitudPago", @class = "form-control", @placeholder = "# Solicitud" })
+
+                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_flujo">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
+                                    <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
+                                </button>
+                            </div>
                         </div>
+                        <br />
+                        @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "TipoFlujoBanco" })
                     </div>
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-primary form-control" id="btn_importar_solicitud" onclick="ImportarSolicitud();" title="Importar solicitud">
-                            <i class="fa fa-download"></i>
-                        </button>
-                    </div>
+
                 </div>
-                <br />
-                @Html.Action("GridViewPartial_cheque_op")
             </div>
-
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario">
-                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
-            </div>
-
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_flujo">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
-                            <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
-                        </button>
-                    </div>
-                </div>
-                <br />
-                @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "TipoFlujoBanco" })
-            </div>
-
-        </div>
-    </div>
 
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
