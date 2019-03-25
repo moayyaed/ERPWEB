@@ -1101,5 +1101,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult ROL_028(int IdEmpresa = 0, int Id_Rdep = 0)
+        {
+            ROL_028_Rpt model = new ROL_028_Rpt();
+            model.p_IdEmpresa.Value = IdEmpresa;
+            model.p_Id_Rdep.Value = Id_Rdep;
+
+            model.usuario = SessionFixed.IdUsuario.ToString();
+            model.empresa = SessionFixed.NomEmpresa.ToString();
+
+            return View(model);
+        }
     }
 }

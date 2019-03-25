@@ -86,8 +86,16 @@
         settings.Columns.Add("pe_anio", "Año").Width = Unit.Percentage(10);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(20);
         settings.Columns.Add("Descripcion", "Tipo de nómina").Width = Unit.Percentage(20);
-        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(35);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
 
+        settings.Columns.Add(column =>
+            {
+                column.SetDataItemTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_028", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(c.DataItem, "Id_Rdep") }, Request.Url.Scheme) + "');\"></span>");
+                });
+                column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            });
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -1352,6 +1352,12 @@
     <Compile Include="Reportes\RRHH\ROL_027_Rpt.Designer.cs">
       <DependentUpon>ROL_027_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\RRHH\ROL_028_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_028_Rpt.Designer.cs">
+      <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -9968,6 +9974,7 @@
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_027.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCliente_Parametro.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_015.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_028.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10517,6 +10524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_027_Rpt.resx">
       <DependentUpon>ROL_027_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_028_Rpt.resx">
+      <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
