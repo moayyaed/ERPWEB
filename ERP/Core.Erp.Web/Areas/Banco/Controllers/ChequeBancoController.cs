@@ -485,16 +485,22 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
 
         public JsonResult GetNumCheque(int IdEmpresa = 0, int IdBanco = 0)
-        {            
+        {
+            var error = "";
             var resultado = bus_talonario.get_ult_NumCheque_no_usado(IdEmpresa, IdBanco);
             #region Alerta
             var param = bus_param.get_info(IdEmpresa);
             if (param != null && param.CantidadChequesAlerta != null && param.CantidadChequesAlerta > 0)
             {
                 var lista = bus_talonario.GetCantidadTalonariosDisponibles(IdEmpresa, IdBanco);
+
+                if (lista <= param.CantidadChequesAlerta)
+                {
+                    error = "Cantidad de cheques disponibles: "+lista;
+                }
             }
             #endregion
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            return Json(new {NumCheque= resultado , Error = error }, JsonRequestBehavior.AllowGet);
         }
         public void vaciar_detalle(decimal IdTransaccionSession = 0)
         {
