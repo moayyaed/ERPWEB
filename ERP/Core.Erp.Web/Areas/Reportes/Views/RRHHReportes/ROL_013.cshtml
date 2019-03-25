@@ -29,7 +29,13 @@
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12">                    
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdRubro">Sucursal</label>
+                            @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdProveedor">Empleado</label>
@@ -38,30 +44,39 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="IdRubro">Sucursal</label>
-                            @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <div class="form-group">
                             <label for="IdNomina_Tipo">Nómina*</label>
                             @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
                             @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
                         </div>
-                    </div>
+                    </div>                    
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="IdNomina_TipoLiqui">Tipo liquidación de nómina*</label>
-                            @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
-                            @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
+                            <label for="FechaInicio">Fecha inicio*</label>
+                            @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                               {
+                                   settings.Name = "fecha_ini";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="FechaInicio">Periodo*</label>
-                            @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), new { @class = "form-control", @id = "IdPeriodo" })
-                            @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                            <label for="FechaInicio">Fecha fin*</label>
+                            @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                               {
+                                   settings.Name = "fecha_fin";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -98,18 +113,18 @@
 }
 <script>
     $(function () {
-        cargar_tipo_liquidacion_nomina();
-        cargar_periodos_x_nomina();
+        //cargar_tipo_liquidacion_nomina();
+        //cargar_periodos_x_nomina();
     });
 
-    $("#IdNomina_Tipo").change(function () {
-        cargar_tipo_liquidacion_nomina();
+    //$("#IdNomina_Tipo").change(function () {
+    //    cargar_tipo_liquidacion_nomina();
 
-    });
-    $("#IdNomina_TipoLiqui").change(function () {
-        $("#IdPeriodo").empty();
-        cargar_periodos_x_nomina();
-    });
+    //});
+    //$("#IdNomina_TipoLiqui").change(function () {
+    //    $("#IdPeriodo").empty();
+    //    cargar_periodos_x_nomina();
+    //});
 
 
     function cargar_tipo_liquidacion_nomina() {

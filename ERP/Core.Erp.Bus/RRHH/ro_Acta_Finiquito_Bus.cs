@@ -235,7 +235,6 @@ namespace Core.Erp.Bus.RRHH
                     item.Observacion = "Bonificación por Desahucio según Art.185";
                     item.Valor =Math.Round( totalRubroAcumulado,2);
                     item.IdRubro = info_parametro.IdRubro_acta_finiquito;
-                    item.IdRubro = info_parametro.IdRubro_acta_finiquito;
                     lst_valores_x_indegnizacion.Add(item);
                 }
 

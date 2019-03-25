@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_013_Data
     {
-        public List<ROL_013_Info> get_list(int IdEmpresa, int IdNomina, int IdNominaTipoLiqui, int IdSucursal, int IdPeriodo, decimal IdEmpleado)
+        public List<ROL_013_Info> get_list(int IdEmpresa, int IdNomina, int IdSucursal, DateTime FechaIni, DateTime FechaFin, decimal IdEmpleado)
         {
             try
             {
@@ -20,10 +20,10 @@ namespace Core.Erp.Data.Reportes.RRHH
                 decimal IdEmpleadoIni = IdEmpleado;
                 decimal IdEmpleadoFin = IdEmpleado == 0 ? 999999999 : IdEmpleado;
 
-                List<ROL_013_Info> Lista;
+                List<ROL_013_Info> Lista = new List<ROL_013_Info>();
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPROL_013(IdEmpresa, IdNomina, IdSucursalIni, IdSucursalFin, IdPeriodo).Where(q=>q.IdNominaTipoLiqui == IdNominaTipoLiqui).Where(q=> IdEmpleadoIni <= q.IdEmpleado
+                    /*Lista = Context.SPROL_013(IdEmpresa, IdNomina, IdSucursalIni, IdSucursalFin, FechaIni, FechaFin).Where(q=> IdEmpleadoIni <= q.IdEmpleado
                     && q.IdEmpleado <= IdEmpleadoFin)
                              .Select(q=> new ROL_013_Info
                               {
@@ -46,7 +46,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  Mes = q.Mes,
                                  IdEmpleado = q.IdEmpleado,
                                  pe_fehca_inicio = q.pe_fehca_inicio
-                             }).ToList();
+                             }).ToList();*/
                 }
                 return Lista;
             }

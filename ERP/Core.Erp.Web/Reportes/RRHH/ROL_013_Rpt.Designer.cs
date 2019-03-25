@@ -42,7 +42,7 @@
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdNomina = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_IdPeriodo = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_FechaIni = new DevExpress.XtraReports.Parameters.Parameter();
             this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell5 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -87,7 +87,6 @@
             this.lbl_fecha = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
-            this.p_IdNominaTipoLiqui = new DevExpress.XtraReports.Parameters.Parameter();
             this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
             this.xrTable8 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -97,6 +96,7 @@
             this.xrTableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell24 = new DevExpress.XtraReports.UI.XRTableCell();
             this.p_IdEmpleado = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_FechaFin = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -203,10 +203,10 @@
             this.p_IdNomina.Name = "p_IdNomina";
             this.p_IdNomina.Visible = false;
             // 
-            // p_IdPeriodo
+            // p_FechaIni
             // 
-            this.p_IdPeriodo.Name = "p_IdPeriodo";
-            this.p_IdPeriodo.Visible = false;
+            this.p_FechaIni.Name = "p_FechaIni";
+            this.p_FechaIni.Visible = false;
             // 
             // xrTable2
             // 
@@ -243,7 +243,7 @@
             // xrTableCell4
             // 
             this.xrTableCell4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[pe_fehca_inicio]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_FechaIni]")});
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell4.StylePriority.UsePadding = false;
@@ -264,7 +264,7 @@
             // xrTableCell6
             // 
             this.xrTableCell6.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[pe_FechaFin]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_FechaFin]")});
             this.xrTableCell6.Name = "xrTableCell6";
             this.xrTableCell6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell6.StylePriority.UsePadding = false;
@@ -671,11 +671,6 @@
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrPageInfo2.TextFormatString = "Página {0} de {1}";
             // 
-            // p_IdNominaTipoLiqui
-            // 
-            this.p_IdNominaTipoLiqui.Name = "p_IdNominaTipoLiqui";
-            this.p_IdNominaTipoLiqui.Visible = false;
-            // 
             // GroupHeader1
             // 
             this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -784,6 +779,11 @@
             this.p_IdEmpleado.Name = "p_IdEmpleado";
             this.p_IdEmpleado.Visible = false;
             // 
+            // p_FechaFin
+            // 
+            this.p_FechaFin.Name = "p_FechaFin";
+            this.p_FechaFin.Visible = false;
+            // 
             // ROL_013_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -805,10 +805,10 @@
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
             this.p_IdEmpresa,
             this.p_IdNomina,
-            this.p_IdPeriodo,
+            this.p_FechaIni,
             this.p_IdSucursal,
-            this.p_IdNominaTipoLiqui,
-            this.p_IdEmpleado});
+            this.p_IdEmpleado,
+            this.p_FechaFin});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.ROL_013_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
@@ -832,7 +832,7 @@
         private DevExpress.XtraReports.UI.BottomMarginBand BottomMargin;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpresa;
         public DevExpress.XtraReports.Parameters.Parameter p_IdNomina;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdPeriodo;
+        public DevExpress.XtraReports.Parameters.Parameter p_FechaIni;
         private DevExpress.XtraReports.UI.PageHeaderBand PageHeader;
         private DevExpress.XtraReports.UI.ReportFooterBand ReportFooter;
         private DevExpress.XtraReports.UI.XRTable xrTable1;
@@ -880,7 +880,6 @@
         private DevExpress.XtraReports.UI.XRPageInfo xrPageInfo2;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell12;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell13;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdNominaTipoLiqui;
         private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader1;
         private DevExpress.XtraReports.UI.XRTable xrTable8;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow10;
@@ -892,5 +891,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell4;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpleado;
+        public DevExpress.XtraReports.Parameters.Parameter p_FechaFin;
     }
 }

@@ -469,10 +469,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_013_Rpt report = new ROL_013_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdNomina.Value = model.IdNomina;
-            report.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
+            report.p_FechaIni.Value = model.fecha_ini;
             report.p_IdEmpleado.Value = model.IdEmpleado;
             report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdPeriodo.Value = model.IdPeriodo;
+            report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
@@ -484,10 +484,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_013_Rpt report = new ROL_013_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdNomina.Value = model.IdNomina;
-            report.p_IdNominaTipoLiqui.Value = model.IdTipoNomina;
+            report.p_FechaIni.Value = model.fecha_ini;
             report.p_IdEmpleado.Value = model.IdEmpleado;
             report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdPeriodo.Value = model.IdPeriodo;
+            report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
