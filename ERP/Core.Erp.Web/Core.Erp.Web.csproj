@@ -9517,7 +9517,6 @@
     <Content Include="Areas\Inventario\Views\Revision\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\Revision\_CmbProductoPadre_Revision.cshtml" />
     <Content Include="Areas\RRHH\Views\Prestamos\_CmbEmpleado_prestamos.cshtml" />
-    <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_vacaciones.cshtml" />
     <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_autoriza_vacaciones.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_CmbProducto_Compras.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_GridViewPartial_ordencompralocal_det.cshtml" />
