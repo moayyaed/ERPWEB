@@ -1550,6 +1550,9 @@
     <Compile Include="ro_Solicitud_Vacaciones_x_empleado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_SPROL_002.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
