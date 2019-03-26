@@ -50,5 +50,6 @@ namespace Core.Erp.Data
         public string IdCtaCble_x_pagar_empleado { get; set; }
         public int IdSucursal { get; set; }
         public System.DateTime Fecha_Transac { get; set; }
+        public string EstadoCancelacion { get; set; }
     }
 }

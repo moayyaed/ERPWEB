@@ -24,7 +24,6 @@ namespace Core.Erp.Data
             this.ro_EmpleadoNovedadCargaMasiva = new HashSet<ro_EmpleadoNovedadCargaMasiva>();
             this.ro_HorasProfesores_det = new HashSet<ro_HorasProfesores_det>();
             this.ro_rol_detalle = new HashSet<ro_rol_detalle>();
-            this.ro_prestamo = new HashSet<ro_prestamo>();
             this.ro_rubros_calculados = new HashSet<ro_rubros_calculados>();
             this.ro_rubros_calculados1 = new HashSet<ro_rubros_calculados>();
             this.ro_rubros_calculados2 = new HashSet<ro_rubros_calculados>();
@@ -43,6 +42,7 @@ namespace Core.Erp.Data
             this.ro_rubros_calculados15 = new HashSet<ro_rubros_calculados>();
             this.ro_rubros_calculados16 = new HashSet<ro_rubros_calculados>();
             this.ro_empleado_novedad_det = new HashSet<ro_empleado_novedad_det>();
+            this.ro_prestamo = new HashSet<ro_prestamo>();
         }
     
         public int IdEmpresa { get; set; }
@@ -82,7 +82,6 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_EmpleadoNovedadCargaMasiva> ro_EmpleadoNovedadCargaMasiva { get; set; }
         public virtual ICollection<ro_HorasProfesores_det> ro_HorasProfesores_det { get; set; }
         public virtual ICollection<ro_rol_detalle> ro_rol_detalle { get; set; }
-        public virtual ICollection<ro_prestamo> ro_prestamo { get; set; }
         public virtual ICollection<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public virtual ICollection<ro_rubros_calculados> ro_rubros_calculados1 { get; set; }
         public virtual ICollection<ro_rubros_calculados> ro_rubros_calculados2 { get; set; }
@@ -101,5 +100,6 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_rubros_calculados> ro_rubros_calculados15 { get; set; }
         public virtual ICollection<ro_rubros_calculados> ro_rubros_calculados16 { get; set; }
         public virtual ICollection<ro_empleado_novedad_det> ro_empleado_novedad_det { get; set; }
+        public virtual ICollection<ro_prestamo> ro_prestamo { get; set; }
     }
 }

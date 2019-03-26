@@ -54,8 +54,8 @@ namespace Core.Erp.Data.RRHH
                                  ru_descripcion=q.ru_descripcion,
                                  EstadoAprob = q.EstadoAprob,
                                  EstadoBool = q.Estado,
-                                 Fecha_Transac = q.Fecha_Transac
-
+                                 Fecha_Transac = q.Fecha_Transac,
+                                 EstadoCancelacion = q.EstadoCancelacion
                              }).ToList();
 
                 }

@@ -1295,7 +1295,7 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_015_Result>("SPCXP_015", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idProveedorIniParameter, idProveedorFinParameter, fechaCorteParameter, mostrarSaldo0Parameter);
         }
     
-        public virtual ObjectResult<SPROL_013_Result> SPROL_013(Nullable<int> idempresa, Nullable<int> idnomina, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin, Nullable<int> idPeriodo)
+        public virtual ObjectResult<SPROL_013_Result> SPROL_013(Nullable<int> idempresa, Nullable<int> idnomina, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin, Nullable<decimal> idEmpleadoInicio, Nullable<decimal> idEmpleadoFin, Nullable<int> idDivisionInicio, Nullable<int> idDivisionFin, Nullable<int> idAreaInicion, Nullable<int> idAreafin, Nullable<System.DateTime> fecha_inicio, Nullable<System.DateTime> fecha_fin)
         {
             var idempresaParameter = idempresa.HasValue ?
                 new ObjectParameter("idempresa", idempresa) :
@@ -1313,11 +1313,39 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdSucursalFin", idSucursalFin) :
                 new ObjectParameter("IdSucursalFin", typeof(int));
     
-            var idPeriodoParameter = idPeriodo.HasValue ?
-                new ObjectParameter("IdPeriodo", idPeriodo) :
-                new ObjectParameter("IdPeriodo", typeof(int));
+            var idEmpleadoInicioParameter = idEmpleadoInicio.HasValue ?
+                new ObjectParameter("IdEmpleadoInicio", idEmpleadoInicio) :
+                new ObjectParameter("IdEmpleadoInicio", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_013_Result>("SPROL_013", idempresaParameter, idnominaParameter, idSucursalInicioParameter, idSucursalFinParameter, idPeriodoParameter);
+            var idEmpleadoFinParameter = idEmpleadoFin.HasValue ?
+                new ObjectParameter("IdEmpleadoFin", idEmpleadoFin) :
+                new ObjectParameter("IdEmpleadoFin", typeof(decimal));
+    
+            var idDivisionInicioParameter = idDivisionInicio.HasValue ?
+                new ObjectParameter("IdDivisionInicio", idDivisionInicio) :
+                new ObjectParameter("IdDivisionInicio", typeof(int));
+    
+            var idDivisionFinParameter = idDivisionFin.HasValue ?
+                new ObjectParameter("IdDivisionFin", idDivisionFin) :
+                new ObjectParameter("IdDivisionFin", typeof(int));
+    
+            var idAreaInicionParameter = idAreaInicion.HasValue ?
+                new ObjectParameter("IdAreaInicion", idAreaInicion) :
+                new ObjectParameter("IdAreaInicion", typeof(int));
+    
+            var idAreafinParameter = idAreafin.HasValue ?
+                new ObjectParameter("IdAreafin", idAreafin) :
+                new ObjectParameter("IdAreafin", typeof(int));
+    
+            var fecha_inicioParameter = fecha_inicio.HasValue ?
+                new ObjectParameter("fecha_inicio", fecha_inicio) :
+                new ObjectParameter("fecha_inicio", typeof(System.DateTime));
+    
+            var fecha_finParameter = fecha_fin.HasValue ?
+                new ObjectParameter("fecha_fin", fecha_fin) :
+                new ObjectParameter("fecha_fin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_013_Result>("SPROL_013", idempresaParameter, idnominaParameter, idSucursalInicioParameter, idSucursalFinParameter, idEmpleadoInicioParameter, idEmpleadoFinParameter, idDivisionInicioParameter, idDivisionFinParameter, idAreaInicionParameter, idAreafinParameter, fecha_inicioParameter, fecha_finParameter);
         }
     }
 }

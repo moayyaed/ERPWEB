@@ -15,7 +15,6 @@ namespace Core.Erp.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
-
     public partial class Entities_rrhh : DbContext
     {
         public Entities_rrhh()
@@ -46,7 +45,6 @@ namespace Core.Erp.Data
         public DbSet<ro_empleado_x_titulos> ro_empleado_x_titulos { get; set; }
         public DbSet<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
         public DbSet<ro_Historico_Liquidacion_Vacaciones_Det> ro_Historico_Liquidacion_Vacaciones_Det { get; set; }
-        public DbSet<ro_historico_vacaciones_x_empleado> ro_historico_vacaciones_x_empleado { get; set; }
         public DbSet<ro_horario> ro_horario { get; set; }
         public DbSet<ro_horario_planificacion> ro_horario_planificacion { get; set; }
         public DbSet<ro_horario_planificacion_det> ro_horario_planificacion_det { get; set; }
@@ -59,7 +57,6 @@ namespace Core.Erp.Data
         public DbSet<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
         public DbSet<ro_periodo> ro_periodo { get; set; }
         public DbSet<ro_periodo_x_ro_Nomina_TipoLiqui> ro_periodo_x_ro_Nomina_TipoLiqui { get; set; }
-        public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
         public DbSet<ro_Tipo_Prestamo> ro_Tipo_Prestamo { get; set; }
         public DbSet<ro_turno> ro_turno { get; set; }
         public DbSet<vwRo_ActaFiniquito> vwRo_ActaFiniquito { get; set; }
@@ -132,7 +129,6 @@ namespace Core.Erp.Data
         public DbSet<ro_rubro_tipo> ro_rubro_tipo { get; set; }
         public DbSet<ro_rol> ro_rol { get; set; }
         public DbSet<vwro_rol> vwro_rol { get; set; }
-        public DbSet<ro_prestamo> ro_prestamo { get; set; }
         public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<ro_empleado_novedad_det> ro_empleado_novedad_det { get; set; }
         public DbSet<vwro_empleado_novedad_det> vwro_empleado_novedad_det { get; set; }
@@ -149,6 +145,10 @@ namespace Core.Erp.Data
         public DbSet<vwro_rol_detalle_x_rubro_acumulado> vwro_rol_detalle_x_rubro_acumulado { get; set; }
         public DbSet<ro_Comprobantes_Contables> ro_Comprobantes_Contables { get; set; }
         public DbSet<vwRo_Prestamo> vwRo_Prestamo { get; set; }
+        public DbSet<ro_historico_vacaciones_x_empleado> ro_historico_vacaciones_x_empleado { get; set; }
+        public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
+        public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
+        public DbSet<ro_prestamo> ro_prestamo { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

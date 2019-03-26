@@ -54,6 +54,18 @@
                     @Html.ValidationMessageFor(q => q.CantidadChequesAlerta, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="es_AcreditaHorasExtras"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.PermitirSobreGiro, settings =>
+                           {
+                               settings.Name = "PermitirSobreGiro";
+                               settings.Text = "Permitir SobreGiro";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.PermitirSobreGiro, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="box-footer">

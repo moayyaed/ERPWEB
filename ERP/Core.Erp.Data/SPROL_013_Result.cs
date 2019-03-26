@@ -14,23 +14,22 @@ namespace Core.Erp.Data
     public partial class SPROL_013_Result
     {
         public int IdEmpresa { get; set; }
-        public int IdNomina_Tipo { get; set; }
-        public int IdNominaTipoLiqui { get; set; }
-        public string ca_descripcion { get; set; }
-        public string de_descripcion { get; set; }
-        public string Descripcion { get; set; }
-        public Nullable<System.DateTime> em_fechaIngaRol { get; set; }
-        public Nullable<int> IdArea { get; set; }
-        public int IdDepartamento { get; set; }
-        public Nullable<int> IdDivision { get; set; }
-        public Nullable<double> Sueldo { get; set; }
-        public string Empleado { get; set; }
-        public string em_codigo { get; set; }
-        public System.DateTime pe_FechaFin { get; set; }
-        public int Prestamos { get; set; }
-        public double Valor { get; set; }
-        public string Mes { get; set; }
+        public decimal IdRol { get; set; }
         public decimal IdEmpleado { get; set; }
-        public Nullable<System.DateTime> pe_fehca_inicio { get; set; }
+        public Nullable<int> IdArea { get; set; }
+        public Nullable<int> IdDivision { get; set; }
+        public string IdRubro { get; set; }
+        public double Provision { get; set; }
+        public string Estado { get; set; }
+        public Nullable<int> IdSucursal { get; set; }
+        public string em_codigo { get; set; }
+        public string de_descripcion { get; set; }
+        public string Su_Descripcion { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public string Division { get; set; }
+        public string Area { get; set; }
+        public string Mes { get; set; }
+        public decimal Prestamo { get; set; }
+        public double Sueldo { get; set; }
     }
 }

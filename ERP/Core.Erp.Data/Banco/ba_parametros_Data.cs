@@ -51,6 +51,7 @@ namespace Core.Erp.Data.Banco
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
                             IdUsuario = info.IdUsuario,
                             FechaTransac = DateTime.Now,
+                            PermitirSobreGiro = info.PermitirSobreGiro,
                             CantidadChequesAlerta = info.CantidadChequesAlerta
 
                         };
@@ -61,6 +62,7 @@ namespace Core.Erp.Data.Banco
                         Entity.CiudadDefaultParaCrearCheques = info.CiudadDefaultParaCrearCheques;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
                         Entity.CantidadChequesAlerta = info.CantidadChequesAlerta;
+                        Entity.PermitirSobreGiro = info.PermitirSobreGiro;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.FechaUltMod = DateTime.Now;
                     }
