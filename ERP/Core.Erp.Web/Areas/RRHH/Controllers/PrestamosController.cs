@@ -86,7 +86,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
        
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_prestamos(decimal IdEmpleado)
+        public ActionResult GridViewPartial_prestamos(decimal IdEmpleado=0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.IdEmpleado = IdEmpleado == 0 ? 0 : IdEmpleado;
