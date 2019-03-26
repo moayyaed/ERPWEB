@@ -37,7 +37,8 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                                  cb_Observacion = q.cb_Observacion,
                                  tc_TipoCbte = q.tc_TipoCbte,
                                  IdMes = q.IdMes,
-                                 smes = q.smes
+                                 smes = q.smes,
+                                 IdAnio = q.cb_Fecha.Year
                              }).ToList();
                 }
                 return Lista;
