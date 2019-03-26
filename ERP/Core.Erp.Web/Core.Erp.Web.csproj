@@ -9395,7 +9395,7 @@
     <Content Include="Areas\Facturacion\Views\CatalogoTipoFacturacion\Anular.cshtml" />
     <Content Include="Areas\Facturacion\Views\CatalogoTipoFacturacion\_GridViewPartial_catalogotipo_fa.cshtml" />
     <Content Include="Areas\Facturacion\Views\GuiaRemision\_GridViewPartial_Facturas_x_guia.cshtml" />
-    <Content Include="Areas\RRHH\Views\Vacaciones\_cmb_vacaciones.cshtml" />
+    <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_vacaciones.cshtml" />
     <Content Include="Areas\Inventario\Views\DevolucionInventario\_GridViewPartial_devolucion_det_x_cruzar.cshtml" />
     <Content Include="Areas\Inventario\Views\DevolucionInventario\_GridViewPartial_devolucion_det.cshtml" />
     <Content Include="Areas\Facturacion\Views\CatalogoFacturacion\_GridViewPartial_catalogo_fa.cshtml" />
