@@ -14,13 +14,13 @@ namespace Core.Erp.Data.Reportes.Inventario
             try
             {
                 int IdSucursal_ini = IdSucursal;
-                int IdSucursal_fin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdSucursal_fin = IdSucursal == 0 ? 999999 : IdSucursal;
                 int IdBodega_ini = IdBodega;
-                int IdBodega_fin = IdBodega == 0 ? 9999 : IdBodega;
+                int IdBodega_fin = IdBodega == 0 ? 999999 : IdBodega;
                 decimal IdProducto_ini = IdProducto;
-                decimal IdProducto_fin = IdProducto == 0 ? 9999 : IdProducto;
+                decimal IdProducto_fin = IdProducto == 0 ? 999999999 : IdProducto;
                 int IdMarca_ini = IdMarca;
-                int IdMarca_fin = IdMarca == 0 ? 99999 : IdMarca;
+                int IdMarca_fin = IdMarca == 0 ? 9999999 : IdMarca;
 
                 List<INV_003_Info> Lista=null;
                 using (Entities_reportes Context = new Entities_reportes())

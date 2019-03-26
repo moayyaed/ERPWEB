@@ -178,8 +178,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_corte.Value = model.fecha_fin;
             report.p_mostrar_stock_0.Value = model.mostrar_saldos_en_0;
             report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.p_AgruparPorID.Value = model.mostrar_detallado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
 
             ViewBag.Report = report;
             return View(model);
@@ -200,10 +201,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_stock_0.Value = model.mostrar_saldos_en_0;
             report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
             report.p_IdMarca.Value = model.IdMarca;
+            report.p_AgruparPorID.Value = model.mostrar_detallado;
             cargar_combos(model);
 
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
 
             ViewBag.Report = report;
             return View(model);
