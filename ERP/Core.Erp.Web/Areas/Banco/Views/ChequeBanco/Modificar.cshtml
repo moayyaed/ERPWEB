@@ -12,6 +12,8 @@
 
 <script type="text/javascript">
     $(function() {
+        $("#Error").hide();
+
         $("#IdSucursal").change(function () {
             GetListBancoPorSucursal();
         });
@@ -20,6 +22,7 @@
             actualizarGridDetFlujo();
         });
 
+        GetNumCheque();
         actualizarGridDetFlujo();
     })
 
@@ -207,7 +210,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cb_Cheque").val(data);
+                //$("#cb_Cheque").val(data.NumCheque);
+                $("#msg").text(data.Error);
             },
             error: function (error) {
             }
@@ -446,6 +450,11 @@
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_cheque">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="text-danger" id="msg"></label>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

@@ -224,13 +224,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#cb_Cheque").val(data.NumCheque);
-                if (data.Error !="") {
-                    $("#Error").show();
-                    $("#msg").text(data.Error);
-                }
-                else {
-                    $("#Error").hide();
-                }
+                $("#msg").text(data.Error);
             },
             error: function (error) {
             }
@@ -429,7 +423,6 @@
                         <label class="text-danger" id="msg"></label>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
