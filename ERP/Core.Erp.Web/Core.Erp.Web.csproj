@@ -9395,7 +9395,7 @@
     <Content Include="Areas\Facturacion\Views\CatalogoTipoFacturacion\Anular.cshtml" />
     <Content Include="Areas\Facturacion\Views\CatalogoTipoFacturacion\_GridViewPartial_catalogotipo_fa.cshtml" />
     <Content Include="Areas\Facturacion\Views\GuiaRemision\_GridViewPartial_Facturas_x_guia.cshtml" />
-    <Content Include="Areas\RRHH\Views\Vacaciones\_cmb_vacaciones.cshtml" />
+    <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_vacaciones.cshtml" />
     <Content Include="Areas\Inventario\Views\DevolucionInventario\_GridViewPartial_devolucion_det_x_cruzar.cshtml" />
     <Content Include="Areas\Inventario\Views\DevolucionInventario\_GridViewPartial_devolucion_det.cshtml" />
     <Content Include="Areas\Facturacion\Views\CatalogoFacturacion\_GridViewPartial_catalogo_fa.cshtml" />
@@ -9517,7 +9517,6 @@
     <Content Include="Areas\Inventario\Views\Revision\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\Revision\_CmbProductoPadre_Revision.cshtml" />
     <Content Include="Areas\RRHH\Views\Prestamos\_CmbEmpleado_prestamos.cshtml" />
-    <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_vacaciones.cshtml" />
     <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_autoriza_vacaciones.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_CmbProducto_Compras.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_GridViewPartial_ordencompralocal_det.cshtml" />
@@ -9975,6 +9974,7 @@
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCliente_Parametro.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_015.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_028.cshtml" />
+    <Content Include="Areas\RRHH\Views\Vacaciones\_GridViewPartial_solicitud_vacaciones_det.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
