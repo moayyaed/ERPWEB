@@ -122,6 +122,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 balance = "ER"
             };
             model.IdAnio = model.fecha_fin.Year;
+            model.MostrarSaldoAcumulado = true;
             cargar_combos(model.IdEmpresa);
             CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
