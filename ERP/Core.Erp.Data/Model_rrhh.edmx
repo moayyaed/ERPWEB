@@ -1428,6 +1428,23 @@
           <Property Name="Gozadas_Pgadas" Type="bit" Nullable="false" />
           <Property Name="Canceladas" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa_sol" />
+            <PropertyRef Name="IdEmpleado_sol" />
+            <PropertyRef Name="IdSolicitud" />
+            <PropertyRef Name="IdEmpresa_vaca" />
+            <PropertyRef Name="IdEmpleado_vaca" />
+            <PropertyRef Name="IdVacacion" />
+          </Key>
+          <Property Name="IdEmpresa_sol" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado_sol" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdSolicitud" Type="int" Nullable="false" />
+          <Property Name="IdEmpresa_vaca" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado_vaca" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdVacacion" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="ro_tabla_Impu_Renta">
           <Key>
             <PropertyRef Name="AnioFiscal" />
@@ -5038,19 +5055,35 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
           <End Role="ro_historico_vacaciones_x_empleado" Type="Self.ro_historico_vacaciones_x_empleado" Multiplicity="1" />
-          <End Role="ro_Solicitud_Vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado" Multiplicity="*" />
+          <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ro_historico_vacaciones_x_empleado">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdEmpleado" />
               <PropertyRef Name="IdVacacion" />
             </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado">
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa_vaca" />
+              <PropertyRef Name="IdEmpleado_vaca" />
+              <PropertyRef Name="IdVacacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
+          <End Role="ro_Solicitud_Vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
+          <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdVacacion" />
+              <PropertyRef Name="IdSolicitud" />
+            </Principal>
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa_sol" />
+              <PropertyRef Name="IdEmpleado_vaca" />
+              <PropertyRef Name="IdSolicitud" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5248,6 +5281,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="ro_SancionesPorMarcaciones_det" EntityType="Self.ro_SancionesPorMarcaciones_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_SancionesPorMarcaciones_x_novedad" EntityType="Self.ro_SancionesPorMarcaciones_x_novedad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado" EntityType="Self.ro_Solicitud_Vacaciones_x_empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntityType="Self.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_tabla_Impu_Renta" EntityType="Self.ro_tabla_Impu_Renta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_tipo_gastos_personales" EntityType="Self.ro_tipo_gastos_personales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_tipo_gastos_personales_tabla_valores_x_anio" EntityType="Self.ro_tipo_gastos_personales_tabla_valores_x_anio" Schema="dbo" store:Type="Tables" />
@@ -6758,9 +6792,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
           </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
             <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
             <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_tipo_gastos_personales_tabla_valores_x_anio_ro_tipo_gastos_personales" Association="Self.FK_ro_tipo_gastos_personales_tabla_valores_x_anio_ro_tipo_gastos_personales">
             <End Role="ro_tipo_gastos_personales" EntitySet="ro_tipo_gastos_personales" />
@@ -7130,8 +7168,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="Gozadas_Pagadas" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones_Det" Relationship="Self.FK_ro_Historico_Liquidacion_Vacaciones_Det_ro_Historico_Liquidacion_Vacaciones" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_Historico_Liquidacion_Vacaciones_Det" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Self.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
         </EntityType>
         <EntityType Name="ro_Historico_Liquidacion_Vacaciones_Det">
           <Key>
@@ -7150,24 +7188,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="Total_Vacaciones" Type="Double" Nullable="false" />
           <Property Name="Valor_Cancelar" Type="Double" Nullable="false" />
           <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Self.FK_ro_Historico_Liquidacion_Vacaciones_Det_ro_Historico_Liquidacion_Vacaciones" FromRole="ro_Historico_Liquidacion_Vacaciones_Det" ToRole="ro_Historico_Liquidacion_Vacaciones" />
-        </EntityType>
-        <EntityType Name="ro_historico_vacaciones_x_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdVacacion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo_Inicio" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo_Fin" Type="Int32" Nullable="false" />
-          <Property Name="FechaIni" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DiasGanado" Type="Int32" Nullable="false" />
-          <Property Name="DiasTomados" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Self.FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" FromRole="ro_historico_vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_historico_vacaciones_x_empleado" ToRole="ro_empleado" />
         </EntityType>
         <EntityType Name="ro_horario">
           <Key>
@@ -7451,46 +7471,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_periodo" Relationship="Self.FK_ro_periodo_x_ro_Nomina_TipoLiqui_ro_periodo" FromRole="ro_periodo_x_ro_Nomina_TipoLiqui" ToRole="ro_periodo" />
           <NavigationProperty Name="ro_archivos_bancos_generacion" Relationship="Model_rrhh.FK_ro_archivos_bancos_generacion_ro_periodo_x_ro_Nomina_TipoLiqui" FromRole="ro_periodo_x_ro_Nomina_TipoLiqui" ToRole="ro_archivos_bancos_generacion" />
           <NavigationProperty Name="ro_rol" Relationship="Model_rrhh.FK_ro_rol_ro_periodo_x_ro_Nomina_TipoLiqui" FromRole="ro_periodo_x_ro_Nomina_TipoLiqui" ToRole="ro_rol" />
-        </EntityType>
-        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdSolicitud" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
-          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado_aprue" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
-          <Property Name="IdEmpleado_remp" Type="Decimal" Precision="9" Scale="0" />
-          <Property Name="IdEstadoAprobacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AnioServicio" Type="Int32" Nullable="false" />
-          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
-          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
-          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
-          <Property Name="Anio_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Anio_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Observacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario_Anu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="nom_pc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Gozadas_Pgadas" Type="Boolean" Nullable="false" />
-          <Property Name="Canceladas" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Self.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_Historico_Liquidacion_Vacaciones" />
-          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Self.FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_empleado" />
         </EntityType>
         <EntityType Name="ro_Tipo_Prestamo">
           <Key>
@@ -7959,38 +7939,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
-          <End Role="ro_Solicitud_Vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
-          <End Role="ro_Historico_Liquidacion_Vacaciones" Type="Self.ro_Historico_Liquidacion_Vacaciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
-            </Principal>
-            <Dependent Role="ro_Historico_Liquidacion_Vacaciones">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
-          <End Role="ro_historico_vacaciones_x_empleado" Type="Self.ro_historico_vacaciones_x_empleado" Multiplicity="1" />
-          <End Role="ro_Solicitud_Vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdVacacion" />
-            </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdVacacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ro_horario_planificacion_ro_horario">
           <End Role="ro_horario" Type="Self.ro_horario" Multiplicity="1" />
           <End Role="ro_horario_planificacion_det" Type="Self.ro_horario_planificacion_det" Multiplicity="*" />
@@ -8190,7 +8138,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="ro_empleado_x_titulos" EntityType="Self.ro_empleado_x_titulos" />
           <EntitySet Name="ro_Historico_Liquidacion_Vacaciones" EntityType="Self.ro_Historico_Liquidacion_Vacaciones" />
           <EntitySet Name="ro_Historico_Liquidacion_Vacaciones_Det" EntityType="Self.ro_Historico_Liquidacion_Vacaciones_Det" />
-          <EntitySet Name="ro_historico_vacaciones_x_empleado" EntityType="Self.ro_historico_vacaciones_x_empleado" />
           <EntitySet Name="ro_horario" EntityType="Self.ro_horario" />
           <EntitySet Name="ro_horario_planificacion" EntityType="Self.ro_horario_planificacion" />
           <EntitySet Name="ro_horario_planificacion_det" EntityType="Self.ro_horario_planificacion_det" />
@@ -8203,7 +8150,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="ro_participacion_utilidad_empleado" EntityType="Self.ro_participacion_utilidad_empleado" />
           <EntitySet Name="ro_periodo" EntityType="Self.ro_periodo" />
           <EntitySet Name="ro_periodo_x_ro_Nomina_TipoLiqui" EntityType="Self.ro_periodo_x_ro_Nomina_TipoLiqui" />
-          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado" EntityType="Self.ro_Solicitud_Vacaciones_x_empleado" />
           <EntitySet Name="ro_Tipo_Prestamo" EntityType="Self.ro_Tipo_Prestamo" />
           <EntitySet Name="ro_turno" EntityType="Self.ro_turno" />
           <EntitySet Name="vwRo_ActaFiniquito" EntityType="Self.vwRo_ActaFiniquito" />
@@ -8257,14 +8203,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <AssociationSet Name="FK_ro_Historico_Liquidacion_Vacaciones_Det_ro_Historico_Liquidacion_Vacaciones" Association="Self.FK_ro_Historico_Liquidacion_Vacaciones_Det_ro_Historico_Liquidacion_Vacaciones">
             <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
             <End Role="ro_Historico_Liquidacion_Vacaciones_Det" EntitySet="ro_Historico_Liquidacion_Vacaciones_Det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" Association="Self.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
-            <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
-            <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_horario_planificacion_ro_horario" Association="Self.FK_ro_horario_planificacion_ro_horario">
             <End Role="ro_horario" EntitySet="ro_horario" />
@@ -8800,10 +8738,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
           </AssociationSet>
-          <AssociationSet Name="FK_ro_historico_vacaciones_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado">
-            <End Role="ro_empleado" EntitySet="ro_empleado" />
-            <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
-          </AssociationSet>
           <AssociationSet Name="FK_ro_horario_planificacion_ro_empleado" Association="Model_rrhh.FK_ro_horario_planificacion_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_horario_planificacion_det" EntitySet="ro_horario_planificacion_det" />
@@ -8847,10 +8781,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <AssociationSet Name="FK_ro_SancionesPorMarcaciones_det_ro_empleado" Association="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_SancionesPorMarcaciones_det" EntitySet="ro_SancionesPorMarcaciones_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
-            <End Role="ro_empleado" EntitySet="ro_empleado" />
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
           </AssociationSet>
           <FunctionImport Name="spROL_DecimosCSV" ReturnType="Collection(Model_rrhh.spROL_DecimosCSV_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
@@ -8944,6 +8874,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_Comprobantes_Contables" EntitySet="ro_Comprobantes_Contables" />
           </AssociationSet>
           <EntitySet Name="vwRo_Prestamo" EntityType="Model_rrhh.vwRo_Prestamo" />
+          <EntitySet Name="ro_historico_vacaciones_x_empleado" EntityType="Model_rrhh.ro_historico_vacaciones_x_empleado" />
+          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado" EntityType="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" />
+          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntityType="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+          <AssociationSet Name="FK_ro_historico_vacaciones_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
+            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
+            <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
+            <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
+            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -11685,7 +11638,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_EmpleadoFoto" Relationship="Model_rrhh.FK_ro_EmpleadoFoto_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoFoto" />
           <NavigationProperty Name="ro_EmpleadoNovedadCargaMasiva_det" Relationship="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoNovedadCargaMasiva_det" />
           <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado" FromRole="ro_empleado" ToRole="ro_Historico_Liquidacion_Vacaciones" />
-          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
           <NavigationProperty Name="ro_horario_planificacion_det" Relationship="Model_rrhh.FK_ro_horario_planificacion_ro_empleado" FromRole="ro_empleado" ToRole="ro_horario_planificacion_det" />
           <NavigationProperty Name="ro_HorasProfesores_det" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_HorasProfesores_det" />
           <NavigationProperty Name="ro_marcaciones_x_empleado" Relationship="Model_rrhh.FK_ro_marcaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_marcaciones_x_empleado" />
@@ -11697,10 +11649,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_empleado" FromRole="ro_empleado" ToRole="ro_prestamo" />
           <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle" />
           <NavigationProperty Name="ro_SancionesPorMarcaciones_det" Relationship="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_SancionesPorMarcaciones_det" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
           <NavigationProperty Name="ro_archivos_bancos_generacion_x_empleado" Relationship="Model_rrhh.FK_ro_archivos_bancos_generacion_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_archivos_bancos_generacion_x_empleado" />
           <NavigationProperty Name="ro_rdep_det" Relationship="Model_rrhh.FK_ro_rdep_ro_empleado" FromRole="ro_empleado" ToRole="ro_rdep_det" />
           <NavigationProperty Name="ro_rol_detalle_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
         </EntityType>
         <EntityType Name="vwro_empleado_datos_generales">
           <Key>
@@ -12197,20 +12150,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_historico_vacaciones_x_empleado_ro_empleado">
-          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_historico_vacaciones_x_empleado" Role="ro_historico_vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Principal>
-            <Dependent Role="ro_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ro_horario_planificacion_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
           <End Type="Model_rrhh.ro_horario_planificacion_det" Role="ro_horario_planificacion_det" Multiplicity="*" />
@@ -12360,20 +12299,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               <PropertyRef Name="IdEmpleado" />
             </Principal>
             <Dependent Role="ro_SancionesPorMarcaciones_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
-          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdEmpleado" />
             </Dependent>
@@ -12817,6 +12742,159 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="Fecha_Transac" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="ro_historico_vacaciones_x_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdVacacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo_Inicio" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo_Fin" Type="Int32" Nullable="false" />
+          <Property Name="FechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DiasGanado" Type="Int32" Nullable="false" />
+          <Property Name="DiasTomados" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_historico_vacaciones_x_empleado" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" FromRole="ro_historico_vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+        </EntityType>
+        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdSolicitud" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
+          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado_aprue" Type="Decimal" Nullable="false" Precision="9" Scale="0" />
+          <Property Name="IdEmpleado_remp" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AnioServicio" Type="Int32" Nullable="false" />
+          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
+          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
+          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
+          <Property Name="Anio_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Anio_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario_Anu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="nom_pc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Gozadas_Pgadas" Type="Boolean" Nullable="false" />
+          <Property Name="Canceladas" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_Historico_Liquidacion_Vacaciones" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+        </EntityType>
+        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa_sol" />
+            <PropertyRef Name="IdEmpleado_sol" />
+            <PropertyRef Name="IdSolicitud" />
+            <PropertyRef Name="IdEmpresa_vaca" />
+            <PropertyRef Name="IdEmpleado_vaca" />
+            <PropertyRef Name="IdVacacion" />
+          </Key>
+          <Property Name="IdEmpresa_sol" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado_sol" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa_vaca" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado_vaca" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
+        </EntityType>
+        <Association Name="FK_ro_historico_vacaciones_x_empleado_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_historico_vacaciones_x_empleado" Role="ro_historico_vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Historico_Liquidacion_Vacaciones" Role="ro_Historico_Liquidacion_Vacaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+              <PropertyRef Name="IdSolicitud" />
+            </Principal>
+            <Dependent Role="ro_Historico_Liquidacion_Vacaciones">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+              <PropertyRef Name="IdSolicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
+          <End Type="Model_rrhh.ro_historico_vacaciones_x_empleado" Role="ro_historico_vacaciones_x_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+              <PropertyRef Name="IdVacacion" />
+            </Principal>
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa_vaca" />
+              <PropertyRef Name="IdEmpleado_vaca" />
+              <PropertyRef Name="IdVacacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+              <PropertyRef Name="IdSolicitud" />
+            </Principal>
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa_sol" />
+              <PropertyRef Name="IdEmpleado_vaca" />
+              <PropertyRef Name="IdSolicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13145,21 +13223,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ro_historico_vacaciones_x_empleado">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_historico_vacaciones_x_empleado">
-              <MappingFragment StoreEntitySet="ro_historico_vacaciones_x_empleado">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
-                <ScalarProperty Name="IdPeriodo_Inicio" ColumnName="IdPeriodo_Inicio" />
-                <ScalarProperty Name="IdPeriodo_Fin" ColumnName="IdPeriodo_Fin" />
-                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-                <ScalarProperty Name="DiasGanado" ColumnName="DiasGanado" />
-                <ScalarProperty Name="DiasTomados" ColumnName="DiasTomados" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ro_horario">
             <EntityTypeMapping TypeName="Model_rrhh.ro_horario">
               <MappingFragment StoreEntitySet="ro_horario">
@@ -13388,42 +13451,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
                 <ScalarProperty Name="Procesado" ColumnName="Procesado" />
                 <ScalarProperty Name="Contabilizado" ColumnName="Contabilizado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado">
-              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
-                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
-                <ScalarProperty Name="IdEmpleado_aprue" ColumnName="IdEmpleado_aprue" />
-                <ScalarProperty Name="IdEmpleado_remp" ColumnName="IdEmpleado_remp" />
-                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="AnioServicio" ColumnName="AnioServicio" />
-                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
-                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
-                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
-                <ScalarProperty Name="Anio_Desde" ColumnName="Anio_Desde" />
-                <ScalarProperty Name="Anio_Hasta" ColumnName="Anio_Hasta" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
-                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdUsuario_Anu" ColumnName="IdUsuario_Anu" />
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="Gozadas_Pgadas" ColumnName="Gozadas_Pgadas" />
-                <ScalarProperty Name="Canceladas" ColumnName="Canceladas" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -15458,6 +15485,70 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
                 <ScalarProperty Name="IdPrestamo" ColumnName="IdPrestamo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_historico_vacaciones_x_empleado">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_historico_vacaciones_x_empleado">
+              <MappingFragment StoreEntitySet="ro_historico_vacaciones_x_empleado">
+                <ScalarProperty Name="DiasTomados" ColumnName="DiasTomados" />
+                <ScalarProperty Name="DiasGanado" ColumnName="DiasGanado" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
+                <ScalarProperty Name="IdPeriodo_Fin" ColumnName="IdPeriodo_Fin" />
+                <ScalarProperty Name="IdPeriodo_Inicio" ColumnName="IdPeriodo_Inicio" />
+                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado">
+              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado">
+                <ScalarProperty Name="Canceladas" ColumnName="Canceladas" />
+                <ScalarProperty Name="Gozadas_Pgadas" ColumnName="Gozadas_Pgadas" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuario_Anu" ColumnName="IdUsuario_Anu" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="Anio_Hasta" ColumnName="Anio_Hasta" />
+                <ScalarProperty Name="Anio_Desde" ColumnName="Anio_Desde" />
+                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
+                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
+                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
+                <ScalarProperty Name="AnioServicio" ColumnName="AnioServicio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
+                <ScalarProperty Name="IdEmpleado_remp" ColumnName="IdEmpleado_remp" />
+                <ScalarProperty Name="IdEmpleado_aprue" ColumnName="IdEmpleado_aprue" />
+                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
+                <ScalarProperty Name="IdEmpleado_vaca" ColumnName="IdEmpleado_vaca" />
+                <ScalarProperty Name="IdEmpresa_vaca" ColumnName="IdEmpresa_vaca" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
+                <ScalarProperty Name="IdEmpleado_sol" ColumnName="IdEmpleado_sol" />
+                <ScalarProperty Name="IdEmpresa_sol" ColumnName="IdEmpresa_sol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
