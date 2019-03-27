@@ -42,6 +42,8 @@ namespace Core.Erp.Info.RRHH
         public DateTime Fecha_Retorno { get; set; }
         public bool Gozadas_Pgadas { get; set; }
         public string empleado { get; set; }
+        public System.DateTime Anio_Desde { get; set; }
+        public System.DateTime Anio_Hasta { get; set; }
         public List< ro_Historico_Liquidacion_Vacaciones_Det_Info> detalle{ get; set; }
         public ro_Historico_Liquidacion_Vacaciones_Info()
         {

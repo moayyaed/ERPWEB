@@ -137,6 +137,8 @@ namespace Core.Erp.Bus.RRHH
                     info.Fecha_Desde = info_solicitud.Fecha_Desde;
                     info.Fecha_Hasta = info_solicitud.Fecha_Hasta;
                     info.Fecha_Retorno = info_solicitud.Fecha_Retorno;
+                    info.Anio_Desde = info_solicitud.Anio_Desde;
+                    info_solicitud.Anio_Hasta = info_solicitud.Anio_Hasta;
                     while (info_solicitud.Anio_Desde<info_solicitud.Anio_Hasta)
                     {
                         double valor_provision = 0;
