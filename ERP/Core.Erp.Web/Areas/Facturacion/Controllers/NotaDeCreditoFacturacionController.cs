@@ -44,9 +44,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_tipo_nota_x_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
         fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_nota_x_empresa_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
-
         #region Index
         public ActionResult Index()
         {
@@ -81,7 +80,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_NotaCrebitoFacturacion", model);
         }
         #endregion
-
         #region Metodos ComboBox bajo demanda cliente
         public ActionResult CmbCliente_NotaCredito()
         {
@@ -97,7 +95,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
         #endregion
-
         #region Metodos ComboBox bajo demanda producto
         public ActionResult ChangeValuePartial(decimal value = 0)
         {
@@ -118,7 +115,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
-
         #region Json
         public JsonResult cargar_contactos(decimal IdCliente = 0)
         {
@@ -213,7 +209,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region Grillas de cruce
         public ActionResult GridViewPartial_CruceNC_x_cruzar()
         {
@@ -270,7 +265,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         #endregion
-
         #region funciones del detalle
 
         public ActionResult GridViewPartial_LoteCreditoFacturacion()
@@ -324,7 +318,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_NotaCrebitoFacturacion_det", model);
         }
         #endregion
-
         #region Metodos
         private void cargar_combos(fa_notaCreDeb_Info model)
         {
@@ -429,7 +422,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return true;
         }
         #endregion
-
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
@@ -483,11 +475,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             };
-
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega=model.IdBodega, IdNota=model.IdNota, MensajeSuccess });
+           return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega=model.IdBodega, IdNota=model.IdNota, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -504,7 +494,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.lst_cruce = bus_cruce.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
             List_cruce.set_list(model.lst_cruce, model.IdTransaccionSession);
             cargar_combos(model);
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             return View(model);
         }
@@ -536,8 +527,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdNota = model.IdNota, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdNota = model.IdNota, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {
@@ -573,7 +563,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
     }
-
     public class fa_notaCreDeb_det_List
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
@@ -648,7 +637,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
         }
     }
-
     public class fa_notaCreDeb_x_fa_factura_NotaDeb_List
     {
         string variable = "fa_notaCreDeb_x_fa_factura_NotaDeb_Info";

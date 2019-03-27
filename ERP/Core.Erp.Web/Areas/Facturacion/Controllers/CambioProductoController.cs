@@ -28,9 +28,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_CambioProductoDetFacturas_List List_det_facturas;
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo;
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
-
         #region Constructor
         public CambioProductoController()
         {
@@ -44,7 +43,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             bus_periodo = new ct_periodo_Bus();
         }
         #endregion
-
         #region Metodos ComboBox bajo demanda producto
         public ActionResult CmbProducto_CambioProducto()
         {
@@ -61,7 +59,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
-
         #region Index
         public ActionResult Index()
         {
@@ -104,7 +101,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_CambioProducto", model);
         }
         #endregion
-
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
@@ -145,11 +141,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 CargarCombosAccion(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }
-
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCambio = model.IdCambio, MensajeSuccess });
+           return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCambio = model.IdCambio, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdCambio = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdCambio = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -169,7 +163,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.LstDet = bus_CambioProductoDet.GetList(model.IdEmpresa, model.IdSucursal, model.IdBodega, model.IdCambio);
             List_det.set_list(model.LstDet, model.IdTransaccionSession);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 
@@ -190,9 +186,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 return View(model);
             }
-
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCambio = model.IdCambio, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCambio = model.IdCambio, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdCambio = 0)
@@ -229,7 +223,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-
         #region Metodos
         private void CargarCombosAccion(int IdEmpresa, int IdSucursal)
         {
@@ -265,7 +258,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return true;
         }
         #endregion
-
         #region Json
         public JsonResult CargarBodega(int IdEmpresa = 0, int IdSucursal = 0)
         {
@@ -290,7 +282,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region Metodos del detalle
         public ActionResult GridViewPartial_CambioProductoDet()
         {
@@ -346,7 +337,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
     }
-
     public class fa_CambioProductoDet_List
     {
         string Variable = "fa_CambioProductoDet_Info";
@@ -389,7 +379,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
         }
     }
-
     public class fa_CambioProductoDetFacturas_List
     {
         string Variable = "fa_CambioProductoDetFacturas";

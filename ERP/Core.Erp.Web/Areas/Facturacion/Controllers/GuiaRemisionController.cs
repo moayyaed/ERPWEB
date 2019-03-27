@@ -36,9 +36,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_factura_x_fa_guia_remision_Info_List List_rel = new fa_factura_x_fa_guia_remision_Info_List();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
-
         #region Metodos ComboBox bajo demanda cliente
         public ActionResult CmbCliente_Guia()
         {
@@ -54,7 +53,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
         #endregion
-
         #region vistas
 
         public ActionResult Index()
@@ -111,7 +109,27 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return true;
         }
         #endregion
+        #region Metodos
+        private void cargar_combos(fa_guia_remision_Info model)
+        {
+            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
+            ViewBag.lst_sucursal = lst_sucursal;
 
+            var lst_punto_venta = bus_punto_venta.get_list(model.IdEmpresa, model.IdSucursal, false);
+            ViewBag.lst_punto_venta = lst_punto_venta;
+
+            var lst_transportista = bus_transportista.get_list(model.IdEmpresa, false);
+            ViewBag.lst_transportista = lst_transportista;
+
+            var lst_contacto = bus_contacto.get_list(model.IdEmpresa, model.IdCliente);
+            ViewBag.lst_contacto = lst_contacto;
+
+            var lst_tipo_traslado = bus_catalogo.get_list(14, false);
+            ViewBag.lst_tipo_traslado = lst_tipo_traslado;
+
+        }
+
+        #endregion
         #region acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
@@ -168,8 +186,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     return View(model);
                 }
 
-                MensajeSuccess = "Registro creado exitósamente";
-                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, MensajeSuccess });
+                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, Exito = true });
             }
             catch (Exception ex)
             {
@@ -180,7 +197,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             }
         }
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdGuiaRemision=0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdGuiaRemision=0, bool Exito = false)
         {
             bus_guia = new fa_guia_remision_Bus();
             #region Validar Session
@@ -198,7 +215,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             List_rel.set_list(bus_detalle_x_factura.get_list(IdEmpresa, IdGuiaRemision), model.IdTransaccionSession);
             cargar_combos(model);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
             return View(model);
         }
         [HttpPost]
@@ -231,7 +249,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 }
 
                 MensajeSuccess = "Registro actualizado exitósamente";
-                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, MensajeSuccess });
+                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, Exito = true });
             }
             catch (Exception ex)
             {
@@ -285,7 +303,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
         }
         #endregion
-
         #region Json
       
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
@@ -401,8 +418,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
-
         #region funciones del detalle
 
         [HttpPost, ValidateInput(false)]
@@ -433,29 +448,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var model = detalle_info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_guias_remision_det", model);
         }
-        #endregion
-
-        private void cargar_combos(fa_guia_remision_Info model)
-        {
-            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
-            ViewBag.lst_sucursal = lst_sucursal;
-
-            var lst_punto_venta = bus_punto_venta.get_list(model.IdEmpresa, model.IdSucursal, false);
-            ViewBag.lst_punto_venta = lst_punto_venta;
-
-            var lst_transportista = bus_transportista.get_list(model.IdEmpresa, false);
-            ViewBag.lst_transportista = lst_transportista;
-
-            var lst_contacto = bus_contacto.get_list(model.IdEmpresa, model.IdCliente);
-            ViewBag.lst_contacto = lst_contacto;
-
-            var lst_tipo_traslado = bus_catalogo.get_list(14,false);
-            ViewBag.lst_tipo_traslado = lst_tipo_traslado;
-
-        }
-       
+        #endregion             
     }
-
     public class fa_guia_remision_det_Info_lst
     {
         string Variable = "fa_guia_remision_det_Info";
@@ -490,7 +484,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
         }
     }
-
     public class fa_factura_x_fa_guia_remision_Info_List
     {
         string Variable = "fa_factura_x_fa_guia_remision_Info";
