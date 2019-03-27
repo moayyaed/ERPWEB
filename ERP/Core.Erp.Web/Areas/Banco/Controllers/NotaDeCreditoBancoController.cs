@@ -32,7 +32,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_TipoFlujo_Bus bus_tipo = new ba_TipoFlujo_Bus();
         ba_Banco_Flujo_Det_NotaCredito_List List_Banco_Flujo_Det = new ba_Banco_Flujo_Det_NotaCredito_List();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_Cbte_Ban_x_ba_TipoFlujo = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Metodos ComboBox bajo demanda flujo
         public ActionResult CmbFlujo_ND_C()
@@ -201,9 +201,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }
-
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess });
+            
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
         [HttpPost]
         public ActionResult Modificar(ba_Cbte_Ban_Info model)
@@ -223,10 +222,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0, string MensajeSuccess = "")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -244,7 +242,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_ct.set_list(model.lst_det_ct,model.IdTransaccionSession);
             cargar_combos(IdEmpresa, model.IdSucursal);
             SessionFixed.TipoPersona = model.IdTipo_Persona;
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
         public ActionResult Anular(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0)

@@ -31,7 +31,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         string mensaje = string.Empty;
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         cxc_cobro_tipo_Bus bus_cobro = new cxc_cobro_tipo_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Index
@@ -210,11 +210,10 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             #endregion
             
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
         
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -232,7 +231,8 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, IdTipocbte, IdCbteCble);
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
-            ViewBag.MensajeSuccess = MensajeSuccess=="" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             cargar_combos(IdEmpresa);
 
@@ -257,15 +257,14 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            model.IdUsuarioUltMod = Session["IdUsuario"].ToString();
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_caja_mov.modificarDB(model))
             {
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, MensajeSuccess= MensajeSuccess });
+            
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0 , int IdTipocbte = 0, decimal IdCbteCble = 0)
@@ -302,7 +301,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         [HttpPost]
         public ActionResult Anular(caj_Caja_Movimiento_Info model)
         {
-            model.IdUsuario_Anu = Session["IdUsuario"].ToString();
+            model.IdUsuario_Anu = SessionFixed.IdUsuario;
             if (!bus_caja_mov.anularDB(model))
             {
                 cargar_combos(model.IdEmpresa);

@@ -39,7 +39,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_pago_det_Info_list lis_cp_orden_pago_det_Info = new cp_orden_pago_det_Info_list();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
 
@@ -230,8 +230,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 if (bus_orden_pago.guardarDB(model))
                 {
                     //return RedirectToAction("Index");
-                    MensajeSuccess = "Registro creado exitósamente";
-                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdOrdenPago = model.IdOrdenPago, MensajeSuccess });
+                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdOrdenPago = model.IdOrdenPago, Exito = true });
                 }                 
                 else
                 {
@@ -243,7 +242,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdOrdenPago = 0, string MensajeSuccess = "")
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdOrdenPago = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -265,7 +264,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             comprobante_contable_fp.set_list(model.info_comprobante.lst_ct_cbtecble_det,model.IdTransaccionSession);
             lis_cp_orden_pago_det_Info.set_list(model.detalle, model.IdTransaccionSession);
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             return View(model);
         }
@@ -323,8 +324,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 if (bus_orden_pago.modificarDB(model))
                 {
                     //return RedirectToAction("Index");
-                    MensajeSuccess = "Registro actualizado exitósamente";
-                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdOrdenPago = model.IdOrdenPago, MensajeSuccess });
+                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdOrdenPago = model.IdOrdenPago, Exito = true });
                 }
                 else
                 {
