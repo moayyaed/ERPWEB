@@ -172,10 +172,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_rol_ro_periodo_x_ro_Nomina_TipoLiqui" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rol_detalle_ro_rol" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_rol" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_prestamo" Width="1.5" PointX="22.25" PointY="75.25" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_catalogo" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_detalle_ro_prestamo" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" />
         <EntityTypeShape EntityType="Model_rrhh.ro_rubros_calculados" Width="1.5" PointX="11.25" PointY="81.875" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" />
@@ -235,7 +231,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rol_detalle_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_rol_detalle" Width="1.5" PointX="25.375" PointY="11.75" />
@@ -263,6 +258,11 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_prestamo" Width="1.5" PointX="30.25" PointY="51.75" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_catalogo" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_detalle_ro_prestamo" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

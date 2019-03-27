@@ -25,5 +25,6 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public string tc_TipoCbte { get; set; }
         public Nullable<int> IdMes { get; set; }
         public string smes { get; set; }
+        public int IdAnio { get; set; }
     }
 }

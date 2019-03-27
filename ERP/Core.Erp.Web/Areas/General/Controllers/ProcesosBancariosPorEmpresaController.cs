@@ -2,7 +2,6 @@
 using Core.Erp.Info.Banco;
 
 using Core.Erp.Bus.General;
-using Core.Erp.Info.Banco;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;

@@ -88,7 +88,7 @@
                 });
                 c.Settings.AllowDragDrop = DefaultBoolean.False;
                 c.Settings.AllowSort = DefaultBoolean.False;
-                c.Width = Unit.Pixel(125);
+                c.Width = Unit.Pixel(100);
             });
 
             settings.Columns.Add("IdPrestamo","ID").Width=Unit.Percentage(5);
@@ -99,7 +99,7 @@
             {
                 column.FieldName = "Fecha_Transac";
                 column.Caption = "Transacción";
-                column.Width = Unit.Percentage(8);
+                column.Width = Unit.Percentage(9);
                 column.PropertiesEdit.DisplayFormatString = "d";
                 column.EditorProperties().DateEdit(sp =>
                 {
@@ -111,7 +111,7 @@
             {
                 column.FieldName = "Fecha_PriPago";
                 column.Caption = "1º Pago";
-                column.Width = Unit.Percentage(8);
+                column.Width = Unit.Percentage(9);
                 column.PropertiesEdit.DisplayFormatString = "d";
                 column.EditorProperties().DateEdit(sp =>
                 {
@@ -123,7 +123,7 @@
             {
                 column.FieldName = "MontoSol";
                 column.Caption = "$Monto";
-                column.Width = Unit.Percentage(8);
+                column.Width = Unit.Percentage(7);
                 column.EditorProperties().SpinEdit(sp =>
                 {
                     sp.MinValue = 0;
@@ -137,7 +137,7 @@
             {
                 column.FieldName = "TotalCobrado";
                 column.Caption = "$Abonado";
-                column.Width = Unit.Percentage(8);
+                column.Width = Unit.Percentage(7);
                 column.EditorProperties().SpinEdit(sp =>
                 {
                     sp.MinValue = 0;
@@ -151,7 +151,7 @@
             {
                 column.FieldName = "Valor_pendiente";
                 column.Caption = "$Saldo";
-                column.Width = Unit.Percentage(8);
+                column.Width = Unit.Percentage(7);
                 column.EditorProperties().SpinEdit(sp =>
                 {
                     sp.MinValue = 0;
@@ -161,13 +161,13 @@
 
                 });
             });
-
+            settings.Columns.Add("EstadoCancelacion", "Est Canc").Width = Unit.Percentage(6);
             settings.Columns.Add(c =>
             {
                 c.Caption = "Aplicar";
                 c.SetDataItemTemplateContent(tc =>
                 {
-                    if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoAprob")) == "PEND"  && Convert.ToInt32(DataBinder.Eval(tc.DataItem, "TotalCobrado")) == 0)
+                    if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoAprob")) == "APROB"  && Convert.ToInt32(DataBinder.Eval(tc.DataItem, "Valor_pendiente")) > 0)
                     {
                         ViewContext.Writer.Write(
                              Html.ActionLink("Abono", "Abono", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdPrestamo = DataBinder.Eval(tc.DataItem, "IdPrestamo") },

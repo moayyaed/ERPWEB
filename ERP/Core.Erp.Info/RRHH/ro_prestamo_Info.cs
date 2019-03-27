@@ -59,7 +59,7 @@ namespace Core.Erp.Info.RRHH
         public string IdCtaCble_x_pagar_empleado { get; set; }
 
         public string rub_ctacon { get; set; }
-
+        public string EstadoCancelacion { get; set; }
 
         public List<ro_prestamo_detalle_Info> lst_detalle { get; set; }
 

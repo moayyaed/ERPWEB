@@ -46,7 +46,31 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Fecha fin*</label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrar_saldos_en_0, settings =>
+                           {
+                               settings.Name = "mostrar_saldos_en_0";
+                               settings.Text = "Mostrar saldo 0";
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.mostrar_saldos_en_0, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrar_agrupado, settings =>
+                           {
+                               settings.Name = "mostrar_agrupado";
+                               settings.Text = "Mostrar agrupado";
+                           }).GetHtml()
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrar_detallado, settings =>
+                           {
+                               settings.Name = "mostrar_detallado";
+                               settings.Text = "Ordenar por ID";
+                           }).GetHtml()                            
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha corte*</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -63,15 +87,7 @@
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="mostrar_saldos_en_0">@Html.CheckBoxFor(q => q.mostrar_saldos_en_0) Mostrar stock 0</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="mostrar_agrupado">@Html.CheckBoxFor(q => q.mostrar_agrupado) Mostrar agrupado</label>
-                        </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <div class="row">
@@ -83,7 +99,7 @@
                             @Html.ValidationMessageFor(q => q.IdProductoPadre, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdMarca">Marca</label>
                             @Html.DropDownListFor(q => q.IdMarca, new SelectList(ViewBag.lst_marca, "IdMarca", "Descripcion"), new { @class = "form-control", @id = "IdMarca" })

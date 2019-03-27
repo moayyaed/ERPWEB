@@ -212,6 +212,7 @@
           <Property Name="CiudadDefaultParaCrearCheques" Type="varchar" MaxLength="25" />
           <Property Name="DiasTransaccionesAFuturo" Type="int" Nullable="false" />
           <Property Name="CantidadChequesAlerta" Type="int" />
+          <Property Name="PermitirSobreGiro" Type="bit" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="FechaTransac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
@@ -2118,6 +2119,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="CiudadDefaultParaCrearCheques" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
           <Property Name="CantidadChequesAlerta" Type="Int32" />
+          <Property Name="PermitirSobreGiro" Type="Boolean" />
           <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FechaTransac" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -2612,6 +2614,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
                 <ScalarProperty Name="FechaTransac" ColumnName="FechaTransac" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="PermitirSobreGiro" ColumnName="PermitirSobreGiro" />
                 <ScalarProperty Name="CantidadChequesAlerta" ColumnName="CantidadChequesAlerta" />
                 <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
                 <ScalarProperty Name="CiudadDefaultParaCrearCheques" ColumnName="CiudadDefaultParaCrearCheques" />

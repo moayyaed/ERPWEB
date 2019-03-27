@@ -31,7 +31,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                    {
                        IdEmpresa = q.IdEmpresa,
                        IdProveedor = q.IdProveedor,
-                       IdSucursal = q.IdSucursal,
+                       IdSucursal = q.IdSucursal,                       
                        aut_doc_Modificar = q.aut_doc_Modificar,
                        BseImpNoObjDeIva = q.BseImpNoObjDeIva,
                        ConvenioTributacion = q.ConvenioTributacion,
@@ -77,7 +77,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                        pe_nombreCompleto = q.pe_nombreCompleto,
                        pe_razonSocial = q.pe_razonSocial,
                        ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
-                       Tipodoc_a_Modificar = q.Tipodoc_a_Modificar
+                       Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
+                       Su_Descripcion = q.Su_Descripcion
                    }).ToList();
                     }
                    else
@@ -139,7 +140,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                        pe_nombreCompleto = q.pe_nombreCompleto,
                        pe_razonSocial = q.pe_razonSocial,
                        ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
-                       Tipodoc_a_Modificar = q.Tipodoc_a_Modificar
+                       Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
+                       Su_Descripcion = q.Su_Descripcion
                    }).ToList();
                     }
                 }

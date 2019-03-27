@@ -1106,7 +1106,7 @@
             this.xrTableCell29.StylePriority.UseBorders = false;
             this.xrTableCell29.StylePriority.UsePadding = false;
             this.xrTableCell29.StylePriority.UseTextAlignment = false;
-            xrSummary9.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary9.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell29.Summary = xrSummary9;
             this.xrTableCell29.Text = "SubtotalIVA";
             this.xrTableCell29.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1123,7 +1123,7 @@
             this.xrTableCell30.StylePriority.UseBorders = false;
             this.xrTableCell30.StylePriority.UsePadding = false;
             this.xrTableCell30.StylePriority.UseTextAlignment = false;
-            xrSummary10.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary10.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell30.Summary = xrSummary10;
             this.xrTableCell30.Text = "Subt.SinIVA";
             this.xrTableCell30.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1140,7 +1140,7 @@
             this.xrTableCell40.StylePriority.UseBorders = false;
             this.xrTableCell40.StylePriority.UsePadding = false;
             this.xrTableCell40.StylePriority.UseTextAlignment = false;
-            xrSummary11.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary11.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell40.Summary = xrSummary11;
             this.xrTableCell40.Text = "xrTableCell26";
             this.xrTableCell40.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1157,7 +1157,7 @@
             this.xrTableCell41.StylePriority.UseBorders = false;
             this.xrTableCell41.StylePriority.UsePadding = false;
             this.xrTableCell41.StylePriority.UseTextAlignment = false;
-            xrSummary12.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary12.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell41.Summary = xrSummary12;
             this.xrTableCell41.Text = "Total";
             this.xrTableCell41.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1174,7 +1174,7 @@
             this.xrTableCell42.StylePriority.UseBorders = false;
             this.xrTableCell42.StylePriority.UsePadding = false;
             this.xrTableCell42.StylePriority.UseTextAlignment = false;
-            xrSummary13.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary13.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell42.Summary = xrSummary13;
             this.xrTableCell42.Text = "Retención";
             this.xrTableCell42.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1191,7 +1191,7 @@
             this.xrTableCell43.StylePriority.UseBorders = false;
             this.xrTableCell43.StylePriority.UsePadding = false;
             this.xrTableCell43.StylePriority.UseTextAlignment = false;
-            xrSummary14.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary14.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell43.Summary = xrSummary14;
             this.xrTableCell43.Text = "N/C";
             this.xrTableCell43.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1208,7 +1208,7 @@
             this.xrTableCell44.StylePriority.UseBorders = false;
             this.xrTableCell44.StylePriority.UsePadding = false;
             this.xrTableCell44.StylePriority.UseTextAlignment = false;
-            xrSummary15.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary15.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell44.Summary = xrSummary15;
             this.xrTableCell44.Text = "Abono";
             this.xrTableCell44.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
@@ -1225,7 +1225,7 @@
             this.xrTableCell45.StylePriority.UseBorders = false;
             this.xrTableCell45.StylePriority.UsePadding = false;
             this.xrTableCell45.StylePriority.UseTextAlignment = false;
-            xrSummary16.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            xrSummary16.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
             this.xrTableCell45.Summary = xrSummary16;
             this.xrTableCell45.Text = "Saldo";
             this.xrTableCell45.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;

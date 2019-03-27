@@ -113,7 +113,6 @@ namespace Core.Erp.Data
         public DbSet<VWCAJ_002_ValesNoConciliados> VWCAJ_002_ValesNoConciliados { get; set; }
         public DbSet<VWROL_021> VWROL_021 { get; set; }
         public DbSet<VWROL_002> VWROL_002 { get; set; }
-        public DbSet<VWCXP_014> VWCXP_014 { get; set; }
         public DbSet<VWFAC_014> VWFAC_014 { get; set; }
         public DbSet<VWCXC_008> VWCXC_008 { get; set; }
         public DbSet<VWROL_026> VWROL_026 { get; set; }
@@ -121,6 +120,7 @@ namespace Core.Erp.Data
         public DbSet<VWROL_005> VWROL_005 { get; set; }
         public DbSet<VWROL_008> VWROL_008 { get; set; }
         public DbSet<VWROL_028> VWROL_028 { get; set; }
+        public DbSet<VWCXP_014> VWCXP_014 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
