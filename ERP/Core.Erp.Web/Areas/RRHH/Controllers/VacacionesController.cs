@@ -22,7 +22,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_historico_vacaciones_x_empleado_Info_list ro_historico_vacaciones_x_empleado_Info_list = new ro_historico_vacaciones_x_empleado_Info_list();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -146,8 +146,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     bus_vacaciones = new ro_historico_vacaciones_x_empleado_Bus();
                     bus_vacaciones.ModificarBD(info_historico);
 
-                    MensajeSuccess = "Registro creado exitósamente";
-                    return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, MensajeSuccess });
+                    return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, Exito = true });
                 
 
             }
@@ -217,22 +216,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
                     else
                     {
-                        MensajeSuccess = "Registro actualizado exitósamente";
-                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, MensajeSuccess });
+                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, Exito = true });
                     }                        
                 }
                 else
                     return View(info);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 throw;
             }
         }
 
-        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdSolicitud = 0, string MensajeSuccess="")
+        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdSolicitud = 0, bool Exito = false)
         {
             try
             {
@@ -241,7 +239,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
                 cargar_combo();
                 ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(GetIdEmpresa(), IdEmpleado, IdSolicitud);
-                ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+                if (Exito)
+                    ViewBag.MensajeSuccess = MensajeSuccess;
 
                 return View(model);
 

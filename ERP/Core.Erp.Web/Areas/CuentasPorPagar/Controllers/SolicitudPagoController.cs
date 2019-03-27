@@ -24,7 +24,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         cp_SolicitudPagoDet_Bus bus_pago_Det = new cp_SolicitudPagoDet_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
 
@@ -110,12 +110,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, Exito = true });
 
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdSolicitud = 0, string MensajeSuccess = "")
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdSolicitud = 0, bool Exito = false)
         {
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             cp_SolicitudPago_Info model = bus_solicitud.GetInfo(IdEmpresa, IdSolicitud);
@@ -123,7 +122,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return RedirectToAction("Index");
             cargar_combos(IdEmpresa);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 
@@ -137,8 +138,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdSolicitud = 0)

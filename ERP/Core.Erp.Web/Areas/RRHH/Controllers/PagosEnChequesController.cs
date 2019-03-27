@@ -24,7 +24,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_Parametros_Bus bus_parametro = new ro_Parametros_Bus();
         cp_orden_pago_tipo_x_empresa_Bus bus_tipo_op = new cp_orden_pago_tipo_x_empresa_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Vistas
@@ -149,12 +149,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }
-
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTransaccion = model.IdTransaccion, MensajeSuccess });
+            
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTransaccion = model.IdTransaccion, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdTransaccion = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdTransaccion = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -169,7 +168,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.detalle = bus_pago_detalle.get_list(IdEmpresa, IdTransaccion);
             ro_NominasPagosCheques_det_Info_list.set_list(model.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
             cargar_combos(model.IdNomina_Tipo);
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             return View(model);
         }
@@ -192,8 +192,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTransaccion = model.IdTransaccion, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTransaccion = model.IdTransaccion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdTransaccion = 0)

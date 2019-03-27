@@ -26,7 +26,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         public ConsignacionController()
@@ -178,11 +178,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdConsignacion=0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdConsignacion=0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -200,7 +199,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.lst_producto_consignacion = bus_consignacion_det.GetList(model.IdEmpresa, Convert.ToInt32(model.IdConsignacion));
             in_ConsignacionDet_List.set_list(model.lst_producto_consignacion, model.IdTransaccionSession);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             CargarCombosAccion(model.IdEmpresa, model.IdSucursal);
             return View(model);
         }
@@ -223,8 +224,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdConsignacion = 0)
