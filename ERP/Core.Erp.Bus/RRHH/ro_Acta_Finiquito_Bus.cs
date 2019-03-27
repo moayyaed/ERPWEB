@@ -57,7 +57,6 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                int secuencia = 1;
                 info_contrato = bus_contrato.get_info_contato_a_liquidar(info.IdEmpresa,info.IdEmpleado);
                 odata = new ro_Acta_Finiquito_Data();
                 info.Ingresos = info.lst_detalle.Where(v => v.Valor > 0).Sum(v => v.Valor);
@@ -65,8 +64,7 @@ namespace Core.Erp.Bus.RRHH
                 info.IdContrato = info_contrato.IdContrato;
                 if ( odata.guardarDB(info))
                 {
-                    info.lst_detalle.ForEach(v => { v.IdEmpresa = info.IdEmpresa; v.IdEmpleado = info.IdEmpleado; v.IdActaFiniquito = info.IdActaFiniquito; v.IdSecuencia = secuencia++; });
-                    return odata_detalle.guardarDB(info.lst_detalle);
+                    return true;
                 }
                 else
                     return false;
@@ -81,16 +79,13 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                int secuencia = 1;
                 odata = new ro_Acta_Finiquito_Data();
                 info.Ingresos = info.lst_detalle.Where(v => v.Valor > 0).Sum(v => v.Valor);
                 info.Egresos = info.lst_detalle.Where(v => v.Valor < 0).Sum(v => v.Valor);
                 if (odata.modificarDB(info))
                 {
-                    odata_detalle.eliminarDB(info);
 
-                    info.lst_detalle.ForEach(v => { v.IdEmpresa = info.IdEmpresa; v.IdEmpleado = info.IdEmpleado; v.IdActaFiniquito = info.IdActaFiniquito; v.IdSecuencia = secuencia++; if (v.Observacion == null) { v.Observacion = ""; } });
-                  return  odata_detalle.guardarDB(info.lst_detalle);
+                    return true;
                 }
                 return false;
             }

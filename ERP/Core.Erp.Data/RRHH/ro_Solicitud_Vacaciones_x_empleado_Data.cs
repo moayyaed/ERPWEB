@@ -172,7 +172,7 @@ namespace Core.Erp.Data.RRHH
                         ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado add = new ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
                         {
                             IdEmpresa_sol=info.IdEmpresa,
-                            IdEmpleado_sol =info.IdSolicitud,
+                            IdEmpleado_sol =info.IdEmpleado,
                             IdSolicitud=info.IdSolicitud,
 
                             IdEmpresa_vaca=info.IdEmpresa,
@@ -243,7 +243,7 @@ namespace Core.Erp.Data.RRHH
                         ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado add = new ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
                         {
                             IdEmpresa_sol = info.IdEmpresa,
-                            IdEmpleado_sol = info.IdSolicitud,
+                            IdEmpleado_sol = info.IdEmpleado,
                             IdSolicitud = info.IdSolicitud,
 
                             IdEmpresa_vaca = info.IdEmpresa,

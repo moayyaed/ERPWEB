@@ -201,7 +201,7 @@ namespace Core.Erp.Data.RRHH
                              && c.IdSolicitud==IdSolicitud
 
                              && c.IdEmpresa_sol==q.IdEmpresa
-                             && c.IdEmpresa_sol==q.IdEmpleado
+                             && c.IdEmpleado_sol==q.IdEmpleado
                              && c.IdVacacion==q.IdVacacion
                              select new ro_historico_vacaciones_x_empleado_Info
                                     {

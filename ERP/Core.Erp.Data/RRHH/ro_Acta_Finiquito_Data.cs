@@ -119,6 +119,7 @@ namespace Core.Erp.Data.RRHH
         {
             try
             {
+                int secuencia = 1;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     ro_Acta_Finiquito Entity = new ro_Acta_Finiquito
@@ -132,7 +133,7 @@ namespace Core.Erp.Data.RRHH
                         FechaIngreso = info.FechaIngreso.Date,
                         FechaSalida = info.FechaSalida.Date,
                         UltimaRemuneracion = info.UltimaRemuneracion,
-                        Observacion = info.Observacion,
+                        Observacion = (info.Observacion)==null?" ":info.Observacion,
                         Ingresos = info.Ingresos,
                         Egresos = info.Egresos,
                         IdCodSectorial = info.IdCodSectorial,
@@ -148,6 +149,21 @@ namespace Core.Erp.Data.RRHH
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now
                     };
                     Context.ro_Acta_Finiquito.Add(Entity);
+
+                    foreach (var item in info.lst_detalle)
+                    {
+                        ro_Acta_Finiquito_Detalle Entity_det = new ro_Acta_Finiquito_Detalle
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdActaFiniquito = info.IdActaFiniquito,
+                            IdSecuencia = secuencia,
+                            IdRubro = item.IdRubro,
+                            Valor = item.Valor,
+                            Observacion = (item.Observacion) == null ? " " : item.Observacion,
+                        };
+                        Context.ro_Acta_Finiquito_Detalle.Add(Entity_det);
+                        secuencia++;
+                    }
                     Context.SaveChanges();
                 }
                 return true;
@@ -162,6 +178,7 @@ namespace Core.Erp.Data.RRHH
         {
             try
             {
+                int secuencia = 1;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     ro_Acta_Finiquito Entity = Context.ro_Acta_Finiquito.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdEmpleado == info.IdEmpleado && q.IdActaFiniquito == info.IdActaFiniquito);
@@ -175,9 +192,28 @@ namespace Core.Erp.Data.RRHH
                     Entity.EsDirigenteSindical = info.EsDirigenteSindical;
                     Entity.EsPorDiscapacidad = info.EsPorDiscapacidad;
                     Entity.EsPorEnfermedadNoProfesional = info.EsPorEnfermedadNoProfesional;
+                    Entity.IdCausaTerminacion = info.IdCausaTerminacion;
+
                     Entity.UltimaRemuneracion = info.UltimaRemuneracion;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                    
                     Entity.Fecha_UltMod = info.Fecha_UltMod = DateTime.Now;
+                    var detalle = Context.ro_Acta_Finiquito_Detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdActaFiniquito == info.IdActaFiniquito);
+                    Context.ro_Acta_Finiquito_Detalle.RemoveRange(detalle);
+                    foreach (var item in info.lst_detalle)
+                    {
+                        ro_Acta_Finiquito_Detalle Entity_det = new ro_Acta_Finiquito_Detalle
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdActaFiniquito = info.IdActaFiniquito,
+                            IdSecuencia = secuencia,
+                            IdRubro = item.IdRubro,
+                            Valor = item.Valor,
+                            Observacion = (item.Observacion)==null?" ": item.Observacion,
+                        };
+                        Context.ro_Acta_Finiquito_Detalle.Add(Entity_det);
+                        secuencia++;
+                    }
                     Context.SaveChanges();
                 }
 
