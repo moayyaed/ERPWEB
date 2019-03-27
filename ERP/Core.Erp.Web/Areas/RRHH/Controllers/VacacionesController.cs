@@ -235,10 +235,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
-                ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
+                
                 cargar_combo();
                 ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(GetIdEmpresa(), IdEmpleado, IdSolicitud);
+                lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
+                ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
                 if (Exito)
                     ViewBag.MensajeSuccess = MensajeSuccess;
 
