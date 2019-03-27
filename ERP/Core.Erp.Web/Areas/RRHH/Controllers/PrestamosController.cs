@@ -64,7 +64,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
         int IdEmpresa = 0;
         ro_prestamo_Info info = new ro_prestamo_Info();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region vistas
@@ -173,11 +173,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdPrestamo = model.IdPrestamo, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdPrestamo = model.IdPrestamo, Exito = true });
         }
 
-        public ActionResult Modificar(decimal IdEmpleado, decimal IdPrestamo, string MensajeSuccess="")
+        public ActionResult Modificar(decimal IdEmpleado, decimal IdPrestamo, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -192,7 +191,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos();
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 
@@ -231,8 +233,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdPrestamo = model.IdPrestamo, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdPrestamo = model.IdPrestamo, Exito = true });
         }
 
         public ActionResult Anular(decimal IdEmpleado, decimal IdPrestamo)
