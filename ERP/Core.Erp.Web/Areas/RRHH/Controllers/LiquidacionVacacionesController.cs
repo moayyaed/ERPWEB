@@ -23,6 +23,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Historico_Liquidacion_Vacaciones_Det_Info_lst ro_Historico_Liquidacion_Vacaciones_Det_Info = new ro_Historico_Liquidacion_Vacaciones_Det_Info_lst();
         ro_Historico_Liquidacion_Vacaciones_Info info_liquidacion = new ro_Historico_Liquidacion_Vacaciones_Info();
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
+
+
         string MensajeSuccess = string.Empty;
 
         public static int IdSolicitud { get; set; }
@@ -161,17 +163,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                ro_Historico_Liquidacion_Vacaciones_Info info = new ro_Historico_Liquidacion_Vacaciones_Info
+                ro_Historico_Liquidacion_Vacaciones_Info model = new ro_Historico_Liquidacion_Vacaciones_Info
                 {
                   
                 };
-                IdEmpresa = GetIdEmpresa();
-                info = bus_liquidacion.obtener_valores(IdEmpresa, IdEmpleado, IdSolicitud);
-                IdSolicitud = info.IdSolicitud;
-                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(info.detalle);
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var  info_solicitud = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
+                model = bus_liquidacion.obtener_valores(info_solicitud);
+                IdSolicitud = model.IdSolicitud;
+                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.detalle);
 
                 cargar_combo();
-                return View(info);
+                return View(model);
 
             }
             catch (Exception)
@@ -330,9 +333,23 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return PartialView("_GridViewPartial_vacaciones_liquidadas_det", model.detalle);
         }
 
+        public JsonResult get_list_vacaciones(DateTime? Anio_Desde, DateTime? Anio_Hasta, decimal IdEmpleado = 0, decimal IdSolicitud=0)
+        {
+            IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var info_solicitud = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
+            info_solicitud.Anio_Desde = Convert.ToDateTime(Anio_Desde);
+            info_solicitud.Anio_Hasta = Convert.ToDateTime(Anio_Hasta);
+            var  model = bus_liquidacion.obtener_valores(info_solicitud);
+            if (model != null)
+            {
+                
+                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.detalle);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
         }
+    }
 
-
+   
 
     public class ro_Historico_Liquidacion_Vacaciones_Det_Info_lst
     {

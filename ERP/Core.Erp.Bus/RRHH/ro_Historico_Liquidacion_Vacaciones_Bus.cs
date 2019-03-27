@@ -118,13 +118,12 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }      
-       public ro_Historico_Liquidacion_Vacaciones_Info obtener_valores(int IdEmpresa, decimal IdEmpleado, decimal IdSolicitud)
+       public ro_Historico_Liquidacion_Vacaciones_Info obtener_valores(ro_Solicitud_Vacaciones_x_empleado_Info info_solicitud)
         {
             try
             {
                 int secuancia = 1;
-                info = new ro_Historico_Liquidacion_Vacaciones_Info();
-                info_solicitud = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
+               
                 if (info_solicitud == null)
                     return new ro_Historico_Liquidacion_Vacaciones_Info();
                 else
@@ -138,11 +137,12 @@ namespace Core.Erp.Bus.RRHH
                     info.Fecha_Hasta = info_solicitud.Fecha_Hasta;
                     info.Fecha_Retorno = info_solicitud.Fecha_Retorno;
                     info.Anio_Desde = info_solicitud.Anio_Desde;
+                    info.Anio_Hasta = info_solicitud.Anio_Hasta;
                     info_solicitud.Anio_Hasta = info_solicitud.Anio_Hasta;
                     while (info_solicitud.Anio_Desde<info_solicitud.Anio_Hasta)
                     {
                         double valor_provision = 0;
-                        valor_provision = bus_rubros_acumulados.get_vac_x_mes_x_anio(IdEmpresa, info.IdEmpleado, info_solicitud.Anio_Desde.Year, info_solicitud.Anio_Desde.Month);
+                        valor_provision = bus_rubros_acumulados.get_vac_x_mes_x_anio(info_solicitud.IdEmpresa, info.IdEmpleado, info_solicitud.Anio_Desde.Year, info_solicitud.Anio_Desde.Month);
                         ro_Historico_Liquidacion_Vacaciones_Det_Info info_det = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
                         info_det.Anio = info_solicitud.Anio_Desde.Year;
                         info_det.Mes = info_solicitud.Anio_Desde.Month;

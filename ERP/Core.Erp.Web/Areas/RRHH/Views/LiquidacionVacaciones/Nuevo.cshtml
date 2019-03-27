@@ -144,6 +144,8 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){get_detalle_vacaciones();}";
+
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Anio_Desde, "", new { @class = "text-danger" })
                     </div>
@@ -165,6 +167,8 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){get_detalle_vacaciones();}";
+
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Anio_Hasta, "", new { @class = "text-danger" })
                     </div>
@@ -225,6 +229,31 @@
     }
 }
 <script>
-   
+
+    function get_detalle_vacaciones() {
+        var datos = {
+           
+            Anio_Desde: Anio_Desde.GetValue(),
+            Anio_Hasta: Anio_Hasta.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdSolicitud: $("#IdSolicitud").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_list_vacaciones", "LiquidacionVacaciones", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_vacaciones_liquidadas_det.PerformCallback();
+
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>
 

@@ -36,27 +36,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="Empleado">Empleado*</label>
                     @Html.Partial("_CmbEmpleado_vaca", Model.IdEmpleado)
                     @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="IdImprimir"></label>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="IdNuevo"></label>
-                <div class="form-group">
-                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","LiquidacionVacaciones",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa },null)">
-                        <i class="fa fa-plus"></i>
-                    </a>
                 </div>
             </div>
         </div>
@@ -66,27 +50,77 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
-                    <label for="Fecha_Desde">Fecha desde*</label>
-                    @Html.TextBoxFor(q => q.Fecha_Desde, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "FechaInicio", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
+                    <label for="Fecha_PriPago">Fecha desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Desde, settings =>
+                   {
+                       settings.Name = "Fecha_Desde";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Enabled = false;
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
+
+
+
+            <div class="col-md-2">
                 <div class="form-group">
-                    <label for="Fecha_Hasta">Fecha hasta*</label>
-                    @Html.TextBoxFor(q => q.Fecha_Hasta, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "FechaFin", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
+                    <label for="Fecha_PriPago">Fecha hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Hasta, settings =>
+                   {
+                       settings.Name = "Fecha_Hasta";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Enabled = false;
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
+
+            <div class="col-md-2">
                 <div class="form-group">
-                    <label for="Fecha_Retorno">Fecha retorno*</label>
-                    @Html.TextBoxFor(q => q.Fecha_Retorno, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "FechaRetorno", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.Fecha_Retorno, "", new { @class = "text-danger" })
+                    <label for="Fecha_PriPago">Fecha retorno*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Retorno, settings =>
+                   {
+                       settings.Name = "Fecha_Retorno";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Enabled = false;
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Retorno, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
+
+
             <div class="col-md-2">
                 <div class="form-group">
                     <div class="form-group">
@@ -106,21 +140,68 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Periodo desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Anio_Desde, settings =>
+                   {
+                       settings.Name = "Anio_Desde";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){get_detalle_vacaciones();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Anio_Desde, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Periodo hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Anio_Hasta, settings =>
+                   {
+                       settings.Name = "Anio_Hasta";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){get_detalle_vacaciones();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Anio_Hasta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Dias_q_Corresponde">Días corresponde</label>
                     @Html.TextBoxFor(q => q.Dias_q_Corresponde, new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.Dias_q_Corresponde, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Dias_a_disfrutar">Días tomados*</label>
                     @Html.TextBoxFor(q => q.Dias_a_disfrutar, new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.Dias_a_disfrutar, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Fecha_Retorno">Días pendientes*</label>
                     @Html.TextBoxFor(q => q.Dias_pendiente, new { @class = "form-control", @disabled = "disabled" })
@@ -150,6 +231,7 @@
             </div>
         </div>
     </div>
+
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","LiquidacionVacaciones",new { Area = "RRHH" },null)">Cancelar</a>
@@ -159,20 +241,31 @@
     }
 }
 <script>
-    $(function () {
+    function get_detalle_vacaciones() {
+        var datos = {
 
-        //Date picker
-        $('#FechaInicio').datepicker({
-            autoclose: true
-        })
+            Anio_Desde: Anio_Desde.GetValue(),
+            Anio_Hasta: Anio_Hasta.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdSolicitud: $("#IdSolicitud").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_list_vacaciones", "LiquidacionVacaciones", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_vacaciones_liquidadas_det.PerformCallback();
 
-        $('#FechaFin').datepicker({
-            autoclose: true
-        })
-        $('#FechaRetorno').datepicker({
-            autoclose: true
-        })
-    })
+            },
+            error: function (error) {
+            }
+        });
+    };
 
     function Imprimir() {
         var location = GetPathServer();
