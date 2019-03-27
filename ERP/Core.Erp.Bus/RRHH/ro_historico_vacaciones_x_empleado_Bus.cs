@@ -43,7 +43,30 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        public List<ro_historico_vacaciones_x_empleado_Info> get_lst_vaciones_x_empleado(int IdEmpresa, decimal IdEmpleado)
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list_periodo_con_saldo(int IdEmpresa, decimal IdEmpleado)
+        {
+            try
+            {
+                return odata.get_list_periodo_con_saldo(IdEmpresa, IdEmpleado);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list(int IdEmpresa, decimal IdEmpleado, decimal IdSolicitud)
+        {
+            try
+            {
+                return odata.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<ro_historico_vacaciones_x_empleado_Info> calcular_vacaciones(int IdEmpresa, decimal IdEmpleado)
         {
             try
             {
@@ -298,29 +321,5 @@ namespace Core.Erp.Bus.RRHH
 
         }
 
-        public List<ro_historico_vacaciones_x_empleado_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
-        {
-            try
-            {
-                return odata.get_list_bajo_demanda(args, IdEmpresa);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public ro_historico_vacaciones_x_empleado_Info get_info_bajo_demanda(int IdEmpresa, ListEditItemRequestedByValueEventArgs args)
-        {
-            try
-            {
-                return odata.get_info_bajo_demanda(IdEmpresa,args);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

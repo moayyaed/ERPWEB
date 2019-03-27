@@ -165,13 +165,39 @@ namespace Core.Erp.Data.RRHH
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now.Date
                     };
                     Context.ro_Solicitud_Vacaciones_x_empleado.Add(Entity);
-                    ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
-                      && q.IdEmpleado == info.IdEmpleado
-                      && q.IdVacacion == info.IdVacacion);
-                    Entity_his.DiasTomados = info.Dias_a_disfrutar;
-                    if (Entity_his == null)
-                        return false;
+
+                    #region Historico
+                    foreach (var item in info.lst_vacaciones)
+                    {
+                        ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado add = new ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
+                        {
+                            IdEmpresa_sol=info.IdEmpresa,
+                            IdEmpleado_sol =info.IdSolicitud,
+                            IdSolicitud=info.IdSolicitud,
+
+                            IdEmpresa_vaca=info.IdEmpresa,
+                            IdEmpleado_vaca=info.IdEmpleado,
+                            IdVacacion=item.IdVacacion
+                        };
+                        Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);
+                       
+                    }
                     Context.SaveChanges();
+
+                    foreach(var item in info.lst_vacaciones)
+                    {
+                        ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
+                       && q.IdEmpleado == info.IdEmpleado
+                       && q.IdVacacion == item.IdVacacion);
+                        Entity_his.DiasTomados = item.DiasTomados;
+                        if (Entity_his == null)
+                            return false;
+                    }
+
+                   
+                    #endregion
+
+                    
                 }
                 return true;
             }
@@ -205,17 +231,46 @@ namespace Core.Erp.Data.RRHH
                          Entity.Fecha_Retorno = info.Fecha_Retorno;
                          Entity.Observacion = info.Observacion;
                          Entity.Gozadas_Pgadas = info.Gozadas_Pgadas;
-                        Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
-                        Entity.Fecha_UltMod = info.Fecha_UltMod = DateTime.Now;
+                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                         Entity.Fecha_UltMod = info.Fecha_UltMod = DateTime.Now;
 
-                    ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
-                   && q.IdEmpleado == info.IdEmpleado
-                   && q.IdVacacion == info.IdVacacion);
-                    Entity_his.DiasTomados = info.Dias_a_disfrutar;
-             
-                    if (Entity_his == null)
-                        return false;
+
+                    #region Historico
+                    var lst_det = Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Where(v=>v.IdEmpresa_sol==info.IdEmpresa && v.IdSolicitud==info.IdSolicitud && v.IdEmpresa_sol==info.IdEmpleado);
+                    Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.RemoveRange(lst_det);
+                    foreach (var item in info.lst_vacaciones)
+                    {
+                        ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado add = new ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
+                        {
+                            IdEmpresa_sol = info.IdEmpresa,
+                            IdEmpleado_sol = info.IdSolicitud,
+                            IdSolicitud = info.IdSolicitud,
+
+                            IdEmpresa_vaca = info.IdEmpresa,
+                            IdEmpleado_vaca = info.IdEmpleado,
+                            IdVacacion = item.IdVacacion
+                        };
+                        Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);
+
+                    }
                     Context.SaveChanges();
+
+                    foreach (var item in info.lst_vacaciones)
+                    {
+                        ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
+                       && q.IdEmpleado == info.IdEmpleado
+                       && q.IdVacacion == item.IdVacacion);
+                        Entity_his.DiasTomados = item.DiasTomados;
+                        Context.SaveChanges();
+
+                        if (Entity_his == null)
+                            return false;
+                    }
+
+
+                    #endregion
+
+
 
                 }
 
@@ -241,14 +296,30 @@ namespace Core.Erp.Data.RRHH
                     Entity.Estado = info.Estado = "I";
                     Entity.IdUsuario_Anu = info.IdUsuario_Anu;
                     Entity.FechaAnulacion = info.FechaAnulacion = DateTime.Now;
-                    ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
-                      && q.IdEmpleado == info.IdEmpleado
-                      && q.IdVacacion == info.IdVacacion);
-                    Entity_his.DiasTomados = 0;
 
-                    if (Entity_his == null)
-                        return false;
+
+                    #region Historico
+                    var lst_det = Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Where(v => v.IdEmpresa_sol == info.IdEmpresa && v.IdSolicitud == info.IdSolicitud && v.IdEmpresa_sol == info.IdEmpleado);
+                    Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.RemoveRange(lst_det);
+                    
                     Context.SaveChanges();
+
+                    foreach (var item in info.lst_vacaciones)
+                    {
+                        ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
+                       && q.IdEmpleado == info.IdEmpleado
+                       && q.IdVacacion == item.IdVacacion);
+                        Entity_his.DiasTomados = 0;
+                        Context.SaveChanges();
+
+                        if (Entity_his == null)
+                            return false;
+                    }
+
+
+                    #endregion
+
+
                 }
 
                 return true;

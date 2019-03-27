@@ -84,14 +84,16 @@
                             <i class="fa fa-calendar"></i>
                         </div>
                         @Html.DevExpress().DateEditFor(q => q.Fecha_Desde, settings =>
-                       {
-                           settings.Name = "Fecha_Desde";
-                           settings.Properties.UseMaskBehavior = true;
-                           settings.Properties.EditFormat = EditFormat.Date;
-                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       }).GetHtml()
+                   {
+                       settings.Name = "Fecha_Desde";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_perioos();}";
+
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -105,14 +107,16 @@
                             <i class="fa fa-calendar"></i>
                         </div>
                         @Html.DevExpress().DateEditFor(q => q.Fecha_Hasta, settings =>
-                       {
-                           settings.Name = "Fecha_Hasta";
-                           settings.Properties.UseMaskBehavior = true;
-                           settings.Properties.EditFormat = EditFormat.Date;
-                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       }).GetHtml()
+                   {
+                       settings.Name = "Fecha_Hasta";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_perioos();}";
+
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -165,6 +169,19 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="GridViewPartial_prestamos_det">Detalle prestamos*</label>
+                    @Html.Action("GridViewPartial_solicitud_vacaciones_det")
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 
 
@@ -180,6 +197,13 @@
 
 
 <script>
+    
+    $(function () {
+        calcular_vacaciones();
+       
+    });
+
+
     function calcular_vacaciones()
     {
         var datos = {
@@ -188,7 +212,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("get_list_vacaciones", "Vacaciones", new { Area = "RRHH" })',
+            url: '@Url.Action("calculat_vacaciones", "Vacaciones", new { Area = "RRHH" })',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -204,6 +228,32 @@
             }
         });
     };
+
+    function get_perioos() {
+        var datos = {
+            FechaDesde:Fecha_Desde.GetValue(),
+            FechaHasta:Fecha_Hasta.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_list_vacaciones", "Vacaciones", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_solicitud_vacaciones_det.PerformCallback();
+
+            },
+            error: function (error) {
+            }
+        });
+    };
+
 
     function Imprimir() {
         var location = GetPathServer();

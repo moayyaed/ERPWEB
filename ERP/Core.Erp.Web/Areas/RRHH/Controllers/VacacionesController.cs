@@ -52,16 +52,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             int model = new int();
             return PartialView("_cmb_vacaciones", model);
         }
-        public List<ro_historico_vacaciones_x_empleado_Info> get_list_bajo_demanda_periodo(ListEditItemsRequestedByFilterConditionEventArgs args)
-        {
-            return bus_vacaciones.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
-        }
-        public ro_historico_vacaciones_x_empleado_Info get_info_bajo_demanda_periodo(ListEditItemRequestedByValueEventArgs args)
-        {
-            return bus_vacaciones.get_info_bajo_demanda(Convert.ToInt32(SessionFixed.IdEmpresa), args);
-        }
+       
         #endregion
-        int IdEmpresa = 0;
         public ActionResult Index()
         {
             cl_filtros_Info model = new cl_filtros_Info
@@ -85,7 +77,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
                 ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
 
@@ -99,22 +91,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-       /* public ActionResult cmb_vacaciones()
+        public ActionResult GridViewPartial_solicitud_vacaciones_det()
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
-                List<ro_historico_vacaciones_x_empleado_Info> model = new List<ro_historico_vacaciones_x_empleado_Info>();
-                model=ro_historico_vacaciones_x_empleado_Info_list.get_list();
-                
-                return PartialView("_cmb_vacaciones", model);
+              var model=  ro_historico_vacaciones_x_empleado_Info_list.get_list();
+                return PartialView("_GridViewPartial_solicitud_vacaciones_det", model);
             }
             catch (Exception)
             {
 
                 throw;
             }
-        }*/
+        }
 
         #region acciones
         [HttpPost]
@@ -123,22 +112,20 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
-                if (ModelState.IsValid)
-                {
+               
                     string mensaje = "";
                     ro_historico_vacaciones_x_empleado_Info info_historico = null;
                     lst_vacaciones =ro_historico_vacaciones_x_empleado_Info_list.get_list();
-                    info_historico = lst_vacaciones.Where(v => v.IdVacacion == info.IdVacacion).FirstOrDefault();
+                    info_historico = lst_vacaciones.FirstOrDefault();
                     info.Dias_a_disfrutar = Convert.ToInt32((info.Fecha_Hasta.AddDays(1) - info.Fecha_Desde).TotalDays);
-                    info.Dias_q_Corresponde = info_historico.DiasGanado;
-                    info.Dias_pendiente = info_historico.DiasGanado - info.Dias_a_disfrutar;
+                    info.Dias_q_Corresponde = info.Dias_a_disfrutar;
+                    info.Dias_pendiente = 0;
                     info.Anio_Desde = info_historico.FechaIni.Date;
                     info.Anio_Hasta = info_historico.FechaFin.Date;
-                    info.IdVacacion = info_historico.IdVacacion;
                     info.Fecha_Desde = info.Fecha_Desde.Date;
                     info.Fecha_Hasta = info.Fecha_Hasta.Date;
                     mensaje = bus_solicitud.validar(info);
-
+                    info.lst_vacaciones = lst_vacaciones;
                     if (mensaje != "")
                     {
                         ViewBag.mensaje = mensaje;
@@ -161,9 +148,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                     MensajeSuccess = "Registro creado exitósamente";
                     return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdSolicitud = info.IdSolicitud, MensajeSuccess });
-                }
-                else
-                    return View(info);
+                
 
             }
             catch (Exception)
@@ -182,6 +167,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     Fecha_Hasta = DateTime.Now,
                     Fecha_Retorno = DateTime.Now
                 };
+                ro_historico_vacaciones_x_empleado_Info_list.set_list(new List<ro_historico_vacaciones_x_empleado_Info>());
                 cargar_combo();
                 return View(info);
 
@@ -213,6 +199,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     info.Fecha_Desde = info.Fecha_Desde.Date;
                     info.Fecha_Hasta = info.Fecha_Hasta.Date;
                     mensaje = bus_solicitud.validar(info);
+                    info.lst_vacaciones = lst_vacaciones;
 
                     if (mensaje != "")
                     {
@@ -249,8 +236,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
-                lst_vacaciones = bus_vacaciones.get_lst_vaciones_x_empleado(IdEmpresa, IdEmpleado);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
                 ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
                 cargar_combo();
                 ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(GetIdEmpresa(), IdEmpleado, IdSolicitud);
@@ -289,8 +276,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
 
-                IdEmpresa = GetIdEmpresa();
-                lst_vacaciones = bus_vacaciones.get_lst_vaciones_x_empleado(IdEmpresa, IdEmpleado);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
                 ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
 
                 cargar_combo();
@@ -322,18 +309,39 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         private void cargar_combo()
         {
-            IdEmpresa = GetIdEmpresa();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.lst_empleado = bus_empleado.get_list_combo(IdEmpresa);
             ViewBag.lst_vacaciones = lst_vacaciones;
         }
-        public JsonResult get_list_vacaciones(decimal IdEmpleado)
+        public JsonResult calculat_vacaciones(decimal IdEmpleado)
         {
-            IdEmpresa = GetIdEmpresa();
-             bus_vacaciones.get_lst_vaciones_x_empleado(IdEmpresa, IdEmpleado);// recalculando vacaciones
-            lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado);
-            ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones);
-
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            bus_vacaciones.calcular_vacaciones(IdEmpresa, IdEmpleado);// recalculando vacaciones
            return Json(lst_vacaciones, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult get_list_vacaciones( DateTime ? FechaDesde, DateTime?FechaHasta, decimal IdEmpleado = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int Dias_a_disfrutar = Convert.ToInt32((Convert.ToDateTime( FechaHasta).AddDays(1) -Convert.ToDateTime( FechaDesde)).TotalDays);
+            var lista_vacaciones_pemdientes = bus_vacaciones.get_list_periodo_con_saldo(IdEmpresa, IdEmpleado);
+            List<ro_historico_vacaciones_x_empleado_Info> lista_tmp = new List<ro_historico_vacaciones_x_empleado_Info>();
+            if (lista_vacaciones_pemdientes != null)
+            {
+                while (Dias_a_disfrutar > 0)
+                {
+                  var item=  lista_vacaciones_pemdientes.FirstOrDefault();
+                    if (Dias_a_disfrutar >= (item.DiasGanado - item.DiasTomados))
+                        item.DiasTomados = (item.DiasGanado - item.DiasTomados);
+                    else
+                        item.DiasTomados = Dias_a_disfrutar;
+                    lista_tmp.Add(item);
+                    Dias_a_disfrutar = Dias_a_disfrutar- item.DiasTomados;
+                    lista_vacaciones_pemdientes.Remove(item);
+                }
+            }
+            ro_historico_vacaciones_x_empleado_Info_list.set_list(lista_tmp);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         [ValidateInput(false)]
         public ActionResult GridLookupPartial_vacaciones()

@@ -147,36 +147,36 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-
-        #region Combo bajo demanda
-        public List<ro_historico_vacaciones_x_empleado_Info> get_list(int IdEmpresa, int skip, int take, string filter)
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list_periodo_con_saldo(int IdEmpresa, decimal IdEmpleado)
         {
+            List<ro_historico_vacaciones_x_empleado_Info> lst = new List<ro_historico_vacaciones_x_empleado_Info>();
             try
             {
-                List<ro_historico_vacaciones_x_empleado_Info> Lista = new List<ro_historico_vacaciones_x_empleado_Info>();
-
-                Entities_rrhh context_g = new Entities_rrhh();
-
-                var lstg = context_g.ro_historico_vacaciones_x_empleado.Where(q => q.IdEmpresa == IdEmpresa && (q.IdPeriodo_Inicio.ToString() + " " + q.IdPeriodo_Fin).Contains(filter)).OrderBy(q => q.IdEmpleado).Skip(skip).Take(take).Where(q=>q.DiasGanado >= q.DiasTomados);
-                foreach (var q in lstg)
+                using (Entities_rrhh contex = new Entities_rrhh())
                 {
-                    Lista.Add(new ro_historico_vacaciones_x_empleado_Info
+                    var consultar = from q in contex.ro_historico_vacaciones_x_empleado
+                                    where q.IdEmpleado == IdEmpleado &&
+                                    q.IdEmpresa == IdEmpresa
+                                    && q.DiasTomados>=q.DiasTomados
+                                    orderby q.FechaIni ascending
+                                    select q;
+                    foreach (var item in consultar)
                     {
-                        IdEmpresa = q.IdEmpresa,
-                        IdPeriodo_Inicio = q.IdPeriodo_Inicio,
-                        IdPeriodo_Fin = q.IdPeriodo_Fin,
-                        DiasGanado = q.DiasGanado,
-                        DiasTomados = q.DiasTomados,
-                        FechaFin = q.FechaFin,
-                        FechaIni = q.FechaIni,
-                        IdEmpleado = q.IdEmpleado,
-                        IdVacacion = q.IdVacacion
-
-                    });
+                        ro_historico_vacaciones_x_empleado_Info info = new ro_historico_vacaciones_x_empleado_Info();
+                        info.IdEmpresa = item.IdEmpresa;
+                        info.IdEmpleado = item.IdEmpleado;
+                        info.IdVacacion = item.IdVacacion;
+                        info.IdPeriodo_Inicio = item.IdPeriodo_Inicio;
+                        info.IdPeriodo_Fin = item.IdPeriodo_Fin;
+                        info.FechaIni = item.FechaIni;
+                        info.FechaFin = item.FechaFin;
+                        info.DiasGanado = item.DiasGanado;
+                        info.DiasTomados = item.DiasTomados;
+                        lst.Add(info);
+                    }
                 }
 
-                context_g.Dispose();
-                return Lista;
+                return lst;
             }
             catch (Exception)
             {
@@ -184,50 +184,50 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public ro_historico_vacaciones_x_empleado_Info get_info_demanda(int IdEmpresa, int value)
+
+
+        public List<ro_historico_vacaciones_x_empleado_Info> get_list(int IdEmpresa, decimal IdEmpleado, decimal IdSolicitud)
         {
-            ro_historico_vacaciones_x_empleado_Info info = new ro_historico_vacaciones_x_empleado_Info();
-            using (Entities_rrhh Contex = new Entities_rrhh())
+            List<ro_historico_vacaciones_x_empleado_Info> lst = new List<ro_historico_vacaciones_x_empleado_Info>();
+            try
             {
-                info = (from q in Contex.ro_historico_vacaciones_x_empleado
-                        where q.IdEmpresa == IdEmpresa
-                        && q.IdPeriodo_Inicio == value
-                        && q.IdPeriodo_Fin == value
-                        select new ro_historico_vacaciones_x_empleado_Info
-                        {
-                            IdEmpresa = q.IdEmpresa,
-                            IdPeriodo_Inicio = q.IdPeriodo_Inicio,
-                            IdPeriodo_Fin = q.IdPeriodo_Fin,
-                            DiasGanado = q.DiasGanado,
-                            DiasTomados = q.DiasTomados,
-                            FechaFin = q.FechaFin,
-                            FechaIni = q.FechaIni,
-                            IdEmpleado = q.IdEmpleado,
-                            IdVacacion = q.IdVacacion
-                        }).FirstOrDefault();
+                using (Entities_rrhh contex = new Entities_rrhh())
+                {
+                    lst = (from q in contex.ro_historico_vacaciones_x_empleado
+                             join c in contex.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
+                             on q.IdEmpresa equals c.IdEmpresa_sol
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdEmpleado == IdEmpleado
+                             && c.IdSolicitud==IdSolicitud
+
+                             && c.IdEmpresa_sol==q.IdEmpresa
+                             && c.IdEmpresa_sol==q.IdEmpleado
+                             && c.IdVacacion==q.IdVacacion
+                             select new ro_historico_vacaciones_x_empleado_Info
+                                    {
+
+                                        IdEmpresa = q.IdEmpresa,
+                                        IdEmpleado = q.IdEmpleado,
+                                        IdVacacion = q.IdVacacion,
+                                        IdPeriodo_Inicio = q.IdPeriodo_Inicio,
+                                        IdPeriodo_Fin = q.IdPeriodo_Fin,
+                                        FechaIni = q.FechaIni,
+                                        FechaFin = q.FechaFin,
+                                        DiasGanado = q.DiasGanado,
+                                        DiasTomados = q.DiasTomados
+
+                                    }).ToList();
+                             
+                }
+
+                return lst;
             }
-            return info;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
-
-
-        public List<ro_historico_vacaciones_x_empleado_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
-        {
-            var skip = args.BeginIndex;
-            var take = args.EndIndex - args.BeginIndex + 1;
-            List<ro_historico_vacaciones_x_empleado_Info> Lista = new List<ro_historico_vacaciones_x_empleado_Info>();
-            Lista = get_list(IdEmpresa, skip, take, args.Filter);
-            return Lista;
-        }
-
-        public ro_historico_vacaciones_x_empleado_Info get_info_bajo_demanda(int IdEmpresa, ListEditItemRequestedByValueEventArgs args)
-        {
-            decimal id;
-            if (args.Value == null || !decimal.TryParse(args.Value.ToString(), out id))
-                return null;
-            return get_info_demanda(IdEmpresa, (int)args.Value);
-        }
-
-        #endregion
 
     }
 }
