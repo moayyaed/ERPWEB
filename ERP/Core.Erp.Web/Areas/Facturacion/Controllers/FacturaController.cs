@@ -59,9 +59,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_NivelDescuento_Bus bus_nivelDescuento = new fa_NivelDescuento_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
-
         #region Index
         public ActionResult Index()
         {
@@ -96,7 +95,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_factura", model);
         }
         #endregion
-
         #region Metodos ComboBox bajo demanda cliente
         public ActionResult CmbCliente_Factura()
         {
@@ -112,7 +110,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
         #endregion
-
         #region Metodos ComboBox bajo demanda producto
         public ActionResult ChangeValuePartial(decimal value = 0)
         {
@@ -132,7 +129,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
-
         #region Metodos
         private void cargar_combos(fa_factura_Info model)
         {
@@ -324,7 +320,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return true;
         }
         #endregion
-
         #region Json
         public JsonResult AutorizarSRI(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdCbteVta)
         {
@@ -713,7 +708,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         #endregion
-
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
@@ -766,10 +760,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
             //return RedirectToAction("Index");
-            string MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, MensajeSuccess  = MensajeSuccess});
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string MensajeSuccess = "")
+        public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -789,7 +782,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             List_det.set_list(model.lst_det,model.IdTransaccionSession);            
             List_cuotas.set_list(model.lst_cuota, model.IdTransaccionSession);
             cargar_combos(model);
-            ViewBag.MensajeSuccess = string.IsNullOrEmpty(MensajeSuccess) ? null : MensajeSuccess;
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
             return View(model);
         }
 
@@ -813,9 +808,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             };
-            //return RedirectToAction("Index");
-            string MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, MensajeSuccess = MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0)
         {
@@ -860,7 +853,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-
         #region Cuotas
         public ActionResult GridViewPartial_factura_cuotas()
         {
@@ -883,7 +875,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_factura_cuotas", model);
         }
         #endregion
-
         #region funciones del detalle
 
         public ActionResult GridViewPartial_LoteFactura()
@@ -997,7 +988,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_factura_det", model);
         }
         #endregion
-
         #region Detalle de proforma
         [ValidateInput(false)]
         public ActionResult GridViewPartial_PFactura_det()
@@ -1042,7 +1032,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
     }
-
     public class fa_factura_det_List
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
@@ -1110,7 +1099,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
         }
     }
-
     public class fa_cuotas_x_doc_List
     {
         string variable = "fa_cuotas_x_doc_Info";
