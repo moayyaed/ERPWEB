@@ -20,7 +20,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         cxc_liquidacion_comisiones_det_Bus bus_det = new cxc_liquidacion_comisiones_det_Bus();
         cxc_liquidacion_det_List List_det = new cxc_liquidacion_det_List();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
         public ActionResult Index()
@@ -85,11 +85,10 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdLiquidacion = model.IdLiquidacion, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdLiquidacion = model.IdLiquidacion, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdLiquidacion = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdLiquidacion = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -106,7 +105,9 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 
@@ -122,8 +123,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdLiquidacion = model.IdLiquidacion, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdLiquidacion = model.IdLiquidacion, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, decimal IdLiquidacion = 0)
         {

@@ -30,7 +30,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -193,11 +193,10 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte = 0, decimal IdCbteCble = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte = 0, decimal IdCbteCble = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -214,7 +213,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 
@@ -235,8 +236,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdTipoCbte = 0, decimal IdCbteCble = 0)

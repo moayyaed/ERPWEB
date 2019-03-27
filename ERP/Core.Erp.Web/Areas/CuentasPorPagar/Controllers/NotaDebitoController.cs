@@ -48,7 +48,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string mensaje = string.Empty;
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Metodos ComboBox bajo demanda flujo
         ba_TipoFlujo_Bus bus_tipo = new ba_TipoFlujo_Bus();
@@ -316,12 +316,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte_Nota = model.IdTipoCbte_Nota, IdCbteCble_Nota = model.IdCbteCble_Nota, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte_Nota = model.IdTipoCbte_Nota, IdCbteCble_Nota = model.IdCbteCble_Nota, Exito = true });
 
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte_Nota = 0, decimal IdCbteCble_Nota = 0, string MensajeSuccess = "")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte_Nota = 0, decimal IdCbteCble_Nota = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -339,7 +338,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cargar_combos(IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
             cargar_combos_detalle();
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
 
@@ -364,8 +365,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte_Nota = model.IdTipoCbte_Nota, IdCbteCble_Nota = model.IdCbteCble_Nota, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte_Nota = model.IdTipoCbte_Nota, IdCbteCble_Nota = model.IdCbteCble_Nota, Exito = true });
 
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdTipoCbte_Nota = 0, decimal IdCbteCble_Nota = 0)

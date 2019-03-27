@@ -32,7 +32,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_codigo_SRI_Bus bus_codigo_ret = new cp_codigo_SRI_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region vistas
         public ActionResult Index()
@@ -185,8 +185,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
                 if (bus_retencion.guardarDB(model))
                 {
-                    MensajeSuccess = "Registro creado exitósamente";
-                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdRetencion = model.IdRetencion, MensajeSuccess });
+                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdRetencion = model.IdRetencion, Exito = true });
                 }
                 else
                 {
@@ -197,7 +196,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 }
             }
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdRetencion = 0, string MensajeSuccess = "")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdRetencion = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -220,7 +219,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             var lista = bus_codigo_ret.get_list_cod_ret(false, IdEmpresa);
             lst_codigo_retencion.set_list(lista);
 
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
         [HttpPost]
@@ -273,8 +274,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
                 if (bus_retencion.modificarDB(model))
                 {
-                    MensajeSuccess = "Registro actualizado exitósamente";
-                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdRetencion = model.IdRetencion, MensajeSuccess });
+                    return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdRetencion = model.IdRetencion, Exito = true });
                 }
                 else
                 {
