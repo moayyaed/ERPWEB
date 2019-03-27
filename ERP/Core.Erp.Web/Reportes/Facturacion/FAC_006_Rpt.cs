@@ -7,6 +7,7 @@ using Core.Erp.Bus.Reportes.Facturacion;
 using Core.Erp.Info.Reportes.Facturacion;
 using System.Collections.Generic;
 using Core.Erp.Info.General;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Facturacion
 {
@@ -28,6 +29,12 @@ namespace Core.Erp.Web.Reportes.Facturacion
             List<FAC_006_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdProforma, false, false);
             
             this.DataSource = lst_rpt;
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var empresa = bus_empresa.get_info(IdEmpresa);
+            lbl_empresa.Text = empresa.em_nombre;
+            ImageConverter obj = new ImageConverter();
+            logo.Image = (Image)obj.ConvertFrom(empresa.em_logo);
         }
     }
 }

@@ -42,9 +42,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
-        string MensajeSuccess = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
-
         #region Index
         public ActionResult Index()
         {
@@ -76,7 +75,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         #endregion
-
         #region Metodos ComboBox bajo demanda cliente
         public ActionResult CmbCliente_Proforma()
         {
@@ -92,7 +90,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
         #endregion
-
         #region Metodos ComboBox bajo demanda producto
         public ActionResult ChangeValuePartial(decimal value = 0)
         {
@@ -113,8 +110,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
+        #region Metodos
 
-        #region acciones
         private bool validar(fa_proforma_Info i_validar, ref string msg)
         {
             i_validar.IdEntidad = i_validar.IdCliente;
@@ -124,7 +121,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 msg = "No ha ingresado registros en el detalle de la proforma";
                 return false;
             }
-            if (i_validar.lst_det.Where(q=>q.pd_cantidad == 0).Count() > 0)
+            if (i_validar.lst_det.Where(q => q.pd_cantidad == 0).Count() > 0)
             {
                 msg = "Existen registros con cantidad 0 en el detalle de la proforma";
                 return false;
@@ -144,13 +141,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
-            
+
             var lst_bodega = bus_bodega.get_list(IdEmpresa, false);
             ViewBag.lst_bodega = lst_bodega;
-            
+
             var lst_vendedor = bus_vendedor.get_list(IdEmpresa, false);
             ViewBag.lst_vendedor = lst_vendedor;
-            
+
             var lst_pago = bus_pago.get_list(false);
             ViewBag.lst_pago = lst_pago;
 
@@ -160,6 +157,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_formapago = bus_catalogo.get_list((int)cl_enumeradores.eTipoCatalogoFact.FormaDePago, false);
             ViewBag.lst_formapago = lst_formapago;
         }
+        #endregion
+        #region acciones
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
             #region Validar Session
@@ -202,12 +201,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             };
-
-            MensajeSuccess = "Registro creado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, MensajeSuccess });
+           return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, string MensajeSuccess="")
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -223,7 +220,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
-            ViewBag.MensajeSuccess = MensajeSuccess == "" ? null : MensajeSuccess;
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             return View(model);
         }
@@ -247,8 +246,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
 
-            MensajeSuccess = "Registro actualizado exitósamente";
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, MensajeSuccess });
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, decimal IdProforma = 0)
         {
@@ -282,7 +280,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-
         #region json
         public JsonResult cargar_bodega(int IdEmpresa = 0, int IdSucursal = 0)
         {
