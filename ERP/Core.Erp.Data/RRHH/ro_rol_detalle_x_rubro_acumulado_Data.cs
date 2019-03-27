@@ -52,7 +52,7 @@ namespace Core.Erp.Data.RRHH
                                        & r.IdEmpleado == IdEmpleado
                                         &p.pe_anio==Anio
                                         && p.pe_mes==mes
-                                       && r.IdRubro == "295"
+                                       && r.IdRubro == "18"
                                        && r.Estado == "PEN"
                                  select r.Valor);
                     if (datos.Count() > 0)

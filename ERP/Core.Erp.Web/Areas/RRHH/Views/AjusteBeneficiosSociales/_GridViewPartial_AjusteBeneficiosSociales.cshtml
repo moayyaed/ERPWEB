@@ -55,7 +55,20 @@
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
 
-        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(70);        
+        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(55);
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_FechaFin";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(15);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
         settings.Columns.Add("Valor", "Valor").Width = Unit.Percentage(10);
         settings.Columns.Add("ValorAjustado", "Valor Ajustado").Width = Unit.Percentage(10);
 
