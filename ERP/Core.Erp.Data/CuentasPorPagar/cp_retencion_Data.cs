@@ -162,9 +162,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
                         IdRetencion = info.IdRetencion = get_id(info.IdEmpresa),
                         CodDocumentoTipo = info.CodDocumentoTipo,
-                        serie1 = info_documento.Establecimiento,
-                        serie2 = info_documento.PuntoEmision,
-                        NumRetencion = info_documento.NumDocumento,
+                        serie1 = info.serie1 = info_documento.Establecimiento,
+                        serie2 = info.serie2 = info_documento.PuntoEmision,
+                        NumRetencion = info.NumRetencion = info_documento.NumDocumento,
                         NAutorizacion = info.NAutorizacion,
                         observacion = info.observacion,
                         fecha = info.fecha.Date,
@@ -237,6 +237,15 @@ namespace Core.Erp.Data.CuentasPorPagar
                     var contact = Context.cp_retencion.FirstOrDefault(minfo => minfo.IdEmpresa == info.IdEmpresa && minfo.IdRetencion == info.IdRetencion);
                     if (contact != null)
                     {
+                        if (string.IsNullOrEmpty(contact.NumRetencion))
+                        {
+                            tb_sis_Documento_Tipo_Talonario_Data odata_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                            var info_documento = odata_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), info.serie1, info.serie2);
+                            contact.serie1 = info.serie1 = info_documento.Establecimiento;
+                            contact.serie2 = info.serie2 = info_documento.PuntoEmision;
+                            contact.NumRetencion = info.NumRetencion = info_documento.NumDocumento;
+                        }
+
                         contact.observacion = info.observacion;
                         contact.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         contact.Fecha_UltMod = info.Fecha_UltMod;
