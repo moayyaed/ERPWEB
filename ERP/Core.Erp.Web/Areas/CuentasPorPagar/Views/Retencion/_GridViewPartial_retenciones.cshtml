@@ -99,6 +99,7 @@
         });
         settings.Columns.Add(column =>
         {
+            column.Caption = "Pre-impreso";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CXP_012", "CuentasPorPagarReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdRetencion = DataBinder.Eval(c.DataItem, "IdRetencion").ToString() }, Request.Url.Scheme) + "');\"></span>");
@@ -107,6 +108,7 @@
         });
         settings.Columns.Add(column =>
         {
+            column.Caption = "RIDE";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CXP_013", "CuentasPorPagarReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdRetencion = DataBinder.Eval(c.DataItem, "IdRetencion").ToString() }, Request.Url.Scheme) + "');\"></span>");
