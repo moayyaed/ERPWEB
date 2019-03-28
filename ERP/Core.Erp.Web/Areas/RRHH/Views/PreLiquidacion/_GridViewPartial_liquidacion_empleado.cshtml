@@ -120,21 +120,7 @@
         });
 
 
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "#";
-            column.Width = Unit.Percentage(10);
-            column.SetDataItemTemplateContent(container =>
-            {
-                if (Convert.ToString(DataBinder.Eval(container.DataItem, "EstadoContrato")) != "ECT_LIQ")
-                {
-                    ViewContext.Writer.Write(
-                      Html.ActionLink("Liquidar A.F", "Liquidar", new { IdActaFiniquito = DataBinder.Eval(container.DataItem, "IdActaFiniquito") },
-                          new { onclick = "return confirm('¿Está seguro de que desea liquidar el registro?')" })
-                  );
-                }
-            });
-        });
+       
 
         settings.Columns.Add(column =>
         {
