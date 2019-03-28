@@ -345,7 +345,7 @@ namespace Core.Erp.Data.RRHH
                              //on cont.IdContrato_Tipo equals cat.CodCatalogo
                              where cont.IdEmpresa == IdEmpresa
                              && emp.IdEmpleado == IdEmpleado
-                             && cont.EstadoContrato== "ECT_PLQ"
+                             && cont.EstadoContrato!= "ECT_LIQ"
                              && cont.Estado=="A"
                              select new ro_contrato_Info
                              {
