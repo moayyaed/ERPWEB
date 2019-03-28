@@ -18,6 +18,48 @@ namespace Core.Erp.Data.RRHH
                 {
                     Lista = (from q in Context.vwRo_ActaFiniquito
                              where q.IdEmpresa == IdEmpresa
+                             && q.EstadoContrato!= "ECT_ACT"
+                             select new ro_Acta_Finiquito_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdActaFiniquito = q.IdActaFiniquito,
+                                 IdEmpleado = q.IdEmpleado,
+                                 ca_descripcion = q.ca_descripcion,
+                                 Contrato = q.Contrato,
+                                 pe_nombre_completo = q.pe_apellido + "" + q.pe_nombre,
+                                 em_codigo = q.em_codigo,
+                                 FechaIngreso = q.FechaIngreso,
+                                 FechaSalida = q.FechaSalida,
+                                 Ingresos = q.Ingresos,
+                                 Egresos = q.Egresos,
+                                 EstadoContrato = q.EstadoContrato,
+                                 Contrato_tipo = q.CodCatalogo,
+
+                                 EstadoBool = q.EstadoActa == "A" ? true : false
+                             }).ToList();
+
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<ro_Acta_Finiquito_Info> get_list_pre_liquidacion(int IdEmpresa)
+        {
+            try
+            {
+                List<ro_Acta_Finiquito_Info> Lista;
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    Lista = (from q in Context.vwRo_ActaFiniquito
+                             where q.IdEmpresa == IdEmpresa
+                             && q.EstadoContrato == "ECT_ACT"
                              select new ro_Acta_Finiquito_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

@@ -82,7 +82,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
 
-            List<ro_Acta_Finiquito_Info> model = bus_acta_finiquito.get_list(IdEmpresa);
+            List<ro_Acta_Finiquito_Info> model = bus_acta_finiquito.get_list_pre_liquidacion(IdEmpresa);
             return PartialView("_GridViewPartial_liquidacion_empleado", model);
         }
         private void cargar_combos()

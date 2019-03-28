@@ -41,6 +41,20 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+
+
+        public List<ro_Acta_Finiquito_Info> get_list_pre_liquidacion(int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_list_pre_liquidacion(IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ro_Acta_Finiquito_Info get_info(int IdEmpresa , decimal IdActaFiniquito)
         {
             try
