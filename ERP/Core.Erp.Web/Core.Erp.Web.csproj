@@ -471,6 +471,7 @@
     <Compile Include="Areas\RRHH\Controllers\PeriodosPorNominaController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PeriodosPorNominasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PermisoEmpleadoController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\PreLiquidacionController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PrestamosAprobacionController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PrestamosConsultasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PrestamosController.cs" />
@@ -9002,7 +9003,6 @@
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\ACTF_003.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_002.cshtml" />
     <Content Include="Areas\Reportes\Views\CajaReportes\CAJ_001.cshtml" />
-    <Content Include="Areas\RRHH\Views\ActaFiniquito\Index2.cshtml" />
     <Content Include="Areas\RRHH\Views\ActaFiniquito\Liquidar.cshtml" />
     <Content Include="Areas\RRHH\Views\ProcesarRol\AbrirPeriodo.cshtml" />
     <Content Include="Areas\RRHH\Views\ProcesarRol\CerrarPeriodo.cshtml" />
@@ -9981,6 +9981,13 @@
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_015.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_028.cshtml" />
     <Content Include="Areas\RRHH\Views\Vacaciones\_GridViewPartial_solicitud_vacaciones_det.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\_GridViewPartial_liquidacion_empleado_det.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\_GridViewPartial_liquidacion_empleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\PreLiquidacion\_CmbEmpleado_acta.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
