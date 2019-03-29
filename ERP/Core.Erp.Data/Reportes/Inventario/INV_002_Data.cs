@@ -48,7 +48,9 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  nom_presentacion = q.nom_presentacion,
                                  signo = q.signo,
                                  tm_descripcion = q.tm_descripcion,
-                                 NomUsuario = q.NomUsuario
+                                 NomUsuario = q.NomUsuario,
+                                 IdResponsable = q.IdResponsable,
+                                 pe_nombreCompleto = q.pe_nombreCompleto
                              }).ToList();
                 }
                 return Lista;

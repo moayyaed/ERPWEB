@@ -20,8 +20,8 @@ namespace Core.Erp.Info.Reportes.Inventario
         public string bo_Descripcion { get; set; }
         public string IdUnidadMedida_sinConversion { get; set; }
         public string Descripcion { get; set; }
-        public double dm_cantidad_sinConversion { get; set; }
-        public Nullable<double> mv_costo_sinConversion { get; set; }
+        public Nullable<double> dm_cantidad_sinConversion { get; set; }
+        public double mv_costo_sinConversion { get; set; }
         public string cm_observacion { get; set; }
         public string CodMoviInven { get; set; }
         public System.DateTime cm_fecha { get; set; }
@@ -34,5 +34,7 @@ namespace Core.Erp.Info.Reportes.Inventario
         public string signo { get; set; }
         public string tm_descripcion { get; set; }
         public string NomUsuario { get; set; }
+        public Nullable<decimal> IdResponsable { get; set; }
+        public string pe_nombreCompleto { get; set; }
     }
 }
