@@ -59,15 +59,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
         public ActionResult Index()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info
             {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
+                IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                IdCausaTerminacion = "CTL_02"
+
             };
+            model.lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>();
+            lst_detalle.set_list(model.lst_detalle);
+            cargar_combos();
+            cargar_combos_detalle();
             return View(model);
         }
+        /*
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
@@ -84,14 +88,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             List<ro_Acta_Finiquito_Info> model = bus_acta_finiquito.get_list_pre_liquidacion(IdEmpresa);
             return PartialView("_GridViewPartial_liquidacion_empleado", model);
-        }
-        private void cargar_combos()
-        {
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            ViewBag.lst_empleado = bus_empleado.get_list_combo_liquidar(IdEmpresa);
-            ViewBag.lst_tipo_contrato = bus_catalogo.get_list_x_tipo(2);
-            ViewBag.lst_tipo_terminacion = bus_catalogo.get_list_x_tipo(24);
-
         }
         public ActionResult Nuevo()
         {
@@ -183,6 +179,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             return RedirectToAction("Index");
         }
+        */
         [ValidateInput(false)]
         public ActionResult GridViewPartial_liquidacion_empleado_det()
         {
@@ -193,6 +190,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 model.lst_detalle = lst_detalle.get_list();
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
+        }
+        private void cargar_combos()
+        {
+            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            ViewBag.lst_empleado = bus_empleado.get_list_combo_liquidar(IdEmpresa);
+            ViewBag.lst_tipo_contrato = bus_catalogo.get_list_x_tipo(2);
+            ViewBag.lst_tipo_terminacion = bus_catalogo.get_list_x_tipo(24);
+
         }
         private void cargar_combos_detalle()
         {
@@ -282,7 +287,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-
+        /*
         public ActionResult Liquidar(decimal IdActaFiniquito)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
@@ -313,8 +318,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
             return RedirectToAction("Index");
-
-        }
+        }*/
 
     }
 

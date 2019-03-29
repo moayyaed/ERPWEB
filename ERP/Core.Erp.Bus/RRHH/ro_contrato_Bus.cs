@@ -64,6 +64,7 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
+
                 return odata.guardarDB(info);
             }
             catch (Exception)
@@ -80,7 +81,7 @@ namespace Core.Erp.Bus.RRHH
                 bool bandera = true;
                 if(info.EstadoContrato==cl_enumeradores.eEstadoContratoRRHH.ECT_PLQ.ToString())
                 {
-                    bandera= data_empleado.modificar_estadoDB(info.IdEmpresa, info.IdEmpleado, cl_enumeradores.eEstadoEmpleadoRRHH.EST_PLQ.ToString(), info.FechaFin.Date);
+                    bandera= data_empleado.modificar_estadoDB(info.IdEmpresa, info.IdEmpleado, cl_enumeradores.eEstadoEmpleadoRRHH.EST_PLQ.ToString(), info.FechaInicio.Date, info.FechaFin.Date);
                 }
 
                 bandera= odata.modificarDB(info);

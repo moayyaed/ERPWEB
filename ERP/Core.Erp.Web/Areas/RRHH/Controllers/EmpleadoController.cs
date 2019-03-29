@@ -84,7 +84,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                em_status = ""
             };
             cargar_combos(model.IdEmpresa);
             return View(model);
@@ -99,13 +100,25 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
+
+            var lst_estado_empleado = bus_catalogorrhh.get_list_x_tipo(25);            
+            lst_estado_empleado.Add(new Info.RRHH.ro_catalogo_Info
+            {
+                CodCatalogo = "",
+                ca_descripcion = "Todos"
+
+            });
+
+            ViewBag.lst_estado_empleado = lst_estado_empleado;
+
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_empleados(int IdSucursal = 0)
+        public ActionResult GridViewPartial_empleados(int IdSucursal = 0, string em_status="")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.IdSucursal = IdSucursal;
-            var model = bus_empleado.get_list(IdEmpresa,  IdSucursal, true);
+            ViewBag.em_status = em_status;
+            var model = bus_empleado.get_list(IdEmpresa,  IdSucursal, em_status, true);
             return PartialView("_GridViewPartial_empleados", model);
            
         }        

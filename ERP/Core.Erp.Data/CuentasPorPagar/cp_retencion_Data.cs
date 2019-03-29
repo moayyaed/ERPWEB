@@ -50,6 +50,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  Estado = item.Estado,
                                  pe_nombreCompleto=item.pe_nombreCompleto,
                                  fecha = item.fecha,
+                                 NAutorizacion = item.NAutorizacion,
                                  EstadoBool = item.Estado == "A" ? true : false
 
                              }).ToList();

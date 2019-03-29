@@ -84,51 +84,96 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public List<ro_empleado_Info> get_list(int IdEmpresa, int IdSucursal, bool mostrar_anulados)
+        public List<ro_empleado_Info> get_list(int IdEmpresa, int IdSucursal, string em_status, bool mostrar_anulados)
         {
             try
             {
+
                 List<ro_empleado_Info> Lista;
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.vwro_empleados_consulta
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdSucursal == IdSucursal
-                                 select new ro_empleado_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdEmpleado = q.IdEmpleado,
-                                     IdPersona=q.IdPersona,
-                                     pe_cedulaRuc=q.pe_cedulaRuc,
-                                     em_estado = q.em_estado,
-                                     em_status=q.em_status,
-                                     Empleado=q.Empleado,
-                                     em_codigo=q.em_codigo,
-                                     em_fechaIngaRol=q.em_fechaIngaRol,
+                    if (em_status=="")
+                    {
+                        if (mostrar_anulados)
+                            Lista = (from q in Context.vwro_empleados_consulta
+                                     where q.IdEmpresa == IdEmpresa
+                                     && q.IdSucursal == IdSucursal
+                                     select new ro_empleado_Info
+                                     {
+                                         IdEmpresa = q.IdEmpresa,
+                                         IdEmpleado = q.IdEmpleado,
+                                         IdPersona = q.IdPersona,
+                                         pe_cedulaRuc = q.pe_cedulaRuc,
+                                         em_estado = q.em_estado,
+                                         em_status = q.em_status,
+                                         Empleado = q.Empleado,
+                                         em_codigo = q.em_codigo,
+                                         em_fechaIngaRol = q.em_fechaIngaRol,
+                                         EstadoBool = q.em_estado == "A" ? true : false
+                                     }).ToList();
+                        else
+                            Lista = (from q in Context.vwro_empleados_consulta
+                                     where q.IdEmpresa == IdEmpresa
+                                     && q.IdSucursal == IdSucursal
+                                     && q.em_estado == "A"
+                                     select new ro_empleado_Info
+                                     {
+                                         IdEmpresa = q.IdEmpresa,
+                                         IdEmpleado = q.IdEmpleado,
+                                         IdPersona = q.IdPersona,
+                                         pe_cedulaRuc = q.pe_cedulaRuc,
+                                         em_estado = q.em_estado,
+                                         em_status = q.em_status,
+                                         Empleado = q.Empleado,
+                                         em_codigo = q.em_codigo,
+                                         em_fechaIngaRol = q.em_fechaIngaRol,
 
-                                     EstadoBool = q.em_estado == "A" ? true : false
-                                 }).ToList();
+                                         EstadoBool = q.em_estado == "A" ? true : false
+                                     }).ToList();
+                    }
                     else
-                        Lista = (from q in Context.vwro_empleados_consulta
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdSucursal == IdSucursal
-                                 && q.em_estado == "A"
-                                 select new ro_empleado_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdEmpleado = q.IdEmpleado,
-                                     IdPersona = q.IdPersona,
-                                     pe_cedulaRuc = q.pe_cedulaRuc,
-                                     em_estado = q.em_estado,
-                                     em_status = q.em_status,
-                                     Empleado = q.Empleado,
-                                     em_codigo = q.em_codigo,
-                                     em_fechaIngaRol = q.em_fechaIngaRol,
+                    {
+                        if (mostrar_anulados)
+                            Lista = (from q in Context.vwro_empleados_consulta
+                                     where q.IdEmpresa == IdEmpresa
+                                     && q.IdSucursal == IdSucursal
+                                     && q.em_status == em_status
+                                     select new ro_empleado_Info
+                                     {
+                                         IdEmpresa = q.IdEmpresa,
+                                         IdEmpleado = q.IdEmpleado,
+                                         IdPersona = q.IdPersona,
+                                         pe_cedulaRuc = q.pe_cedulaRuc,
+                                         em_estado = q.em_estado,
+                                         em_status = q.em_status,
+                                         Empleado = q.Empleado,
+                                         em_codigo = q.em_codigo,
+                                         em_fechaIngaRol = q.em_fechaIngaRol,
+                                         EstadoBool = q.em_estado == "A" ? true : false
+                                     }).ToList();
+                        else
+                            Lista = (from q in Context.vwro_empleados_consulta
+                                     where q.IdEmpresa == IdEmpresa
+                                     && q.IdSucursal == IdSucursal
+                                     && q.em_status == em_status
+                                     && q.em_estado == "A"
+                                     select new ro_empleado_Info
+                                     {
+                                         IdEmpresa = q.IdEmpresa,
+                                         IdEmpleado = q.IdEmpleado,
+                                         IdPersona = q.IdPersona,
+                                         pe_cedulaRuc = q.pe_cedulaRuc,
+                                         em_estado = q.em_estado,
+                                         em_status = q.em_status,
+                                         Empleado = q.Empleado,
+                                         em_codigo = q.em_codigo,
+                                         em_fechaIngaRol = q.em_fechaIngaRol,
 
-                                     EstadoBool = q.em_estado == "A" ? true : false
-                                 }).ToList();
+                                         EstadoBool = q.em_estado == "A" ? true : false
+                                     }).ToList();
+                    }
+                    
                 }
 
                 return Lista;
@@ -627,7 +672,7 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public bool modificar_estadoDB(int IdEmpresa, decimal IdEmpleado, string em_status, DateTime fecha_salida)
+        public bool modificar_estadoDB(int IdEmpresa, decimal IdEmpleado, string em_status, DateTime fecha_ingreso, DateTime fecha_salida)
         {
             try
             {
@@ -636,8 +681,11 @@ namespace Core.Erp.Data.RRHH
                     ro_empleado Entity = Context.ro_empleado.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdEmpleado == IdEmpleado);
                     if (Entity == null)
                         return false;
+
                     Entity.em_status = em_status;
-                    Entity.em_fechaSalida = fecha_salida;
+                    //Entity.em_fechaIngaRol = fecha_ingreso;
+                    //Entity.em_fechaSalida = fecha_salida;
+
                     Context.SaveChanges();
                 }
 
