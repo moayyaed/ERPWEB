@@ -10,6 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -159,7 +160,7 @@
     function get_info()
     {
         var datos = {
-            IdEmpleado: IdEmpleado.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue()            
         }
             $.ajax({
                 type: 'POST',
@@ -196,11 +197,10 @@
             });
         }
 
-</script>
-<script>
     function Procesar_Liqui()
             {
         var datos = {
+                        IdEmpleado: IdEmpleado.GetValue(),
                         FechaIngreso: FechaIngreso.GetValue(),
                         FechaSalida: FechaSalida.GetValue(),
                         IdEmpleado: IdEmpleado.GetValue(),
@@ -223,7 +223,7 @@
                     contentType: 'application/json; charset=utf-8',
                     success: function (data)
                     {
-
+                        console.log(data);
                         GridView_liquidacion_empleado_det.PerformCallback();
 
                     },
@@ -231,5 +231,36 @@
                     {
                     }
                     });
-};
+    };
+
+    function capturar_info_pantalla() {
+        var datos = {
+            FechaIngreso: FechaIngreso.GetValue(),
+            FechaSalida: FechaSalida.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdContrato_Tipo: $("#IdContrato_Tipo").val(),
+            UltimaRemuneracion: $("#Sueldo").val(),
+            EsMujerEmbarazada: EsMujerEmbarazada.GetValue(),
+            EsPorDiscapacidad: EsPorDiscapacidad.GetValue(),
+            EsDirigenteSindical: EsDirigenteSindical.GetValue(),
+            EsPorEnfermedadNoProfesional: EsPorEnfermedadNoProfesional.GetValue(),
+            IdCausaTerminacion: $("#idterminacion").val(),
+            Observacion: $("#Observacion").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("capturar_info_pantalla", "PreLiquidacion",new { Area = "RRHH"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+
+            }
+    });
+    }
 </script>
