@@ -14,6 +14,7 @@ using Core.Erp.Info.Reportes.RRHH;
 using Core.Erp.Bus.Reportes.RRHH;
 using Core.Erp.Web.Areas.Reportes.Views.RRHHReportes;
 using Core.Erp.Bus.Contabilidad;
+using System.Web;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
 {
@@ -1112,6 +1113,27 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.empresa = SessionFixed.NomEmpresa.ToString();
 
             return View(model);
+        }
+    }
+
+    public class preliquidacion_List
+    {
+        string Variable = "ROL_005_Info";
+        public List<ROL_005_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ROL_005_Info> list = new List<ROL_005_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ROL_005_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ROL_005_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 }

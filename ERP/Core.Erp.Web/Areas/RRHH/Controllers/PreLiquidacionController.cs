@@ -62,11 +62,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info
             {
                 IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdCausaTerminacion = "CTL_02"
 
             };
             model.lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>();
-            lst_detalle.set_list(model.lst_detalle);
+            lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos();
             cargar_combos_detalle();
             return View(model);
@@ -184,10 +185,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_liquidacion_empleado_det()
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             if (model.lst_detalle.Count == 0)
-                model.lst_detalle = lst_detalle.get_list();
+                model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -222,9 +225,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             if (ModelState.IsValid)
-                lst_detalle.AddRow(info_det);
+                lst_detalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -246,17 +249,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             if (ModelState.IsValid)
-                lst_detalle.UpdateRow(info_det);
+                lst_detalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Acta_Finiquito_Detalle_Info info_det)
         {
-            lst_detalle.DeleteRow(info_det.IdSecuencia);
+            lst_detalle.DeleteRow(info_det.IdSecuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -283,7 +286,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             info = bus_acta_finiquito.ObtenerIndemnizacion(info);
 
-            lst_detalle.set_list(info.lst_detalle);
+            lst_detalle.set_list(info.lst_detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return Json("", JsonRequestBehavior.AllowGet);
         }
 

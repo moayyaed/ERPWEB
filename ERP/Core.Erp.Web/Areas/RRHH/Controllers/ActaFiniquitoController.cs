@@ -98,11 +98,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info
             {
                 IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
-               IdCausaTerminacion= "CTL_02"
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdCausaTerminacion = "CTL_02"
 
             };
             model.lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>();
-            lst_detalle.set_list(model.lst_detalle);
+            lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos();
             cargar_combos_detalle();
             return View(model);
@@ -110,10 +111,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Nuevo(ro_Acta_Finiquito_Info model)
         {
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(model.IdTransaccionSession);
             if (model.lst_detalle == null || model.lst_detalle.Count() == 0)
             {
                 ViewBag.mensaje = "No existe detalle para la novedad";
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos();
                 return View(model);
             }
@@ -121,6 +123,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_acta_finiquito.guardarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos();
                 return View(model);
             }
@@ -132,8 +135,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_Acta_Finiquito_Info model = bus_acta_finiquito.get_info(IdEmpresa, IdActaFiniquito);
             if (model == null)
                 return RedirectToAction("Index");
+
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdActaFiniquito);
-            lst_detalle.set_list(model.lst_detalle);
+
+            lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos_detalle();
             cargar_combos();
             return View(model);
@@ -141,7 +149,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Modificar(ro_Acta_Finiquito_Info model)
         {
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(model.IdTransaccionSession);
             if (model.lst_detalle == null || model.lst_detalle.Count() == 0)
             {
                 ViewBag.mensaje = "No existe detalle para la planificación";
@@ -152,6 +160,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_acta_finiquito.modificarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos();
                 return View(model);
             }
@@ -164,21 +173,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_Acta_Finiquito_Info model = bus_acta_finiquito.get_info(IdEmpresa, IdActaFiniquito);
             if (model == null)
                 return RedirectToAction("Index");
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdActaFiniquito);
-            lst_detalle.set_list(model.lst_detalle);
+            lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos();
             return View(model);
         }
         [HttpPost]
         public ActionResult Anular(ro_Acta_Finiquito_Info model)
         {
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(model.IdTransaccionSession);
 
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_acta_finiquito.anularDB(model))
             {
                 cargar_combos();
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                model.lst_detalle = bus_detalle.get_list(model.IdEmpresa, model.IdActaFiniquito);
+                lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -187,10 +201,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_liquidacion_empleado_det()
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             if (model.lst_detalle.Count == 0)
-                model.lst_detalle = lst_detalle.get_list();
+                model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -217,9 +234,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }   
 
             if (ModelState.IsValid)
-                lst_detalle.AddRow(info_det);
+                lst_detalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -241,17 +258,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             if (ModelState.IsValid)
-                lst_detalle.UpdateRow(info_det);
+                lst_detalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Acta_Finiquito_Detalle_Info info_det)
         {
-            lst_detalle.DeleteRow(info_det.IdSecuencia);
+            lst_detalle.DeleteRow(info_det.IdSecuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -278,7 +295,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             info = bus_acta_finiquito.ObtenerIndemnizacion(info);
 
-            lst_detalle.set_list(info.lst_detalle);
+            lst_detalle.set_list(info.lst_detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
@@ -290,7 +307,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (model == null)
                 return RedirectToAction("Index");
             model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdActaFiniquito);
-            lst_detalle.set_list(model.lst_detalle);
+            lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos_detalle();
             cargar_combos();
             return View(model);
@@ -298,7 +315,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Liquidar(ro_Acta_Finiquito_Info model)
         {
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(model.IdTransaccionSession);
             if (model.lst_detalle == null || model.lst_detalle.Count() == 0)
             {
                 ViewBag.mensaje = "No existe detalle para la planificación";
@@ -323,42 +340,45 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
     public class ro_Acta_Finiquito_Detalle_lst
     {
-        public List<ro_Acta_Finiquito_Detalle_Info> get_list()
+        string Variable = "lst_detalle";
+        public List<ro_Acta_Finiquito_Detalle_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session["lst_detalle"] == null)
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ro_Acta_Finiquito_Detalle_Info> list = new List<ro_Acta_Finiquito_Detalle_Info>();
 
-                HttpContext.Current.Session["lst_detalle"] = list;
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
             return (List<ro_Acta_Finiquito_Detalle_Info>)HttpContext.Current.Session["lst_detalle"];
         }
 
-        public void set_list(List<ro_Acta_Finiquito_Detalle_Info> list)
+        public void set_list(List<ro_Acta_Finiquito_Detalle_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session["lst_detalle"] = list;
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
-        public void AddRow(ro_Acta_Finiquito_Detalle_Info info_det)
+        public void AddRow(ro_Acta_Finiquito_Detalle_Info info_det, decimal IdTransaccionSession)
         {
-            List<ro_Acta_Finiquito_Detalle_Info> list = get_list();
+            List<ro_Acta_Finiquito_Detalle_Info> list = get_list(IdTransaccionSession);
             info_det.IdSecuencia = list.Count == 0 ? 1 : list.Max(q => q.IdSecuencia) + 1;
             list.Add(info_det);
         }
 
-        public void UpdateRow(ro_Acta_Finiquito_Detalle_Info info_det)
+        public void UpdateRow(ro_Acta_Finiquito_Detalle_Info info_det, decimal IdTransaccionSession)
         {
-            ro_Acta_Finiquito_Detalle_Info edited_info = get_list().Where(m => m.IdSecuencia == info_det.IdSecuencia).First();
+            ro_Acta_Finiquito_Detalle_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdSecuencia == info_det.IdSecuencia).First();
             edited_info.IdActaFiniquito = info_det.IdActaFiniquito;
             edited_info.IdRubro = info_det.IdRubro;
             edited_info.Valor = info_det.Valor;
             edited_info.Observacion = info_det.Observacion;
         }
 
-        public void DeleteRow(int Secuencia)
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
-            List<ro_Acta_Finiquito_Detalle_Info> list = get_list();
+            List<ro_Acta_Finiquito_Detalle_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.IdSecuencia == Secuencia).First());
         }
     }
+
+
 
