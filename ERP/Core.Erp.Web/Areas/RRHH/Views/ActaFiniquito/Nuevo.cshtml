@@ -10,31 +10,13 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "ActaFiniquito", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-
+    @Html.HiddenFor(q=>q.IdTransaccionSession)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdRubro">Empleado*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdEmpleado, settings =>
-               {
-                   settings.Name = "IdEmpleado";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("pe_cedulaRuc", "Cedula").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("Empleado", "Nombres").Width = System.Web.UI.WebControls.Unit.Percentage(70);
-
-                   //Campo ID
-                   settings.Properties.ValueField = "IdEmpleado";
-                   settings.Properties.ValueType = typeof(decimal);
-                   settings.Properties.TextField = "Empleado";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info();}";
-
-               }).BindList(ViewBag.lst_empleado).GetHtml()
+                    @Html.Partial("_CmbEmpleado_acta", Model.IdEmpleado)
                     @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -137,7 +119,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdContrato_Tipo">Causa de terminación del contrato*</label>
-                    @Html.DropDownListFor(q => q.IdCausaTerminacion, new SelectList(ViewBag.lst_tipo_terminacion, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "idterminacion" })
+                    @Html.DropDownListFor(q => q.IdCausaTerminacion, new SelectList(ViewBag.lst_tipo_terminacion, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "IdCausaTerminacion" })
                     @Html.ValidationMessageFor(q => q.IdCausaTerminacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -158,7 +140,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="GridViewPartial_liquidacion_empleado_det">Detalle Acta finiquito</label>
+                    <label for="">Detalle Acta finiquito</label>
                     @Html.Action("GridViewPartial_liquidacion_empleado_det")
                 </div>
             </div>
@@ -173,7 +155,37 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+<script>
+    function Procesar_Liqui() {
+        var datos = {
+            FechaIngreso: FechaIngreso.GetValue(),
+            FechaSalida: FechaSalida.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue(),
+            UltimaRemuneracion: $("#Sueldo").val(),
+            idterminacion: $("#IdCausaTerminacion").val(),
+            EsMujerEmbarazada: EsMujerEmbarazada.GetValue(),
+            EsDirigenteSindical: EsDirigenteSindical.GetValue(),
+            EsPorDiscapacidad: EsPorDiscapacidad.GetValue(),
+            EsPorEnfermedadNoProfesional: EsPorEnfermedadNoProfesional.GetValue()
 
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Procesar","ActaFiniquito", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_liquidacion_empleado_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>
 <script>
     function get_info()
     {
@@ -214,41 +226,4 @@
                 }
             });
         }
-
-</script>
-<script>
-    function Procesar_Liqui()
-            {
-        var datos = {
-                        FechaIngreso: FechaIngreso.GetValue(),
-                        FechaSalida: FechaSalida.GetValue(),
-                        IdEmpleado: IdEmpleado.GetValue(),
-                        UltimaRemuneracion: $("#Sueldo").val(),
-                        idterminacion: $("#idterminacion").val(),
-                        EsMujerEmbarazada: EsMujerEmbarazada.GetValue(),
-                        EsDirigenteSindical: EsDirigenteSindical.GetValue(),
-                        EsPorDiscapacidad: EsPorDiscapacidad.GetValue(),
-                        EsPorEnfermedadNoProfesional: EsPorEnfermedadNoProfesional.GetValue()
-
-                }
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("Procesar","ActaFiniquito", new { Area = "RRHH" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data)
-                    {
-
-                        GridView_liquidacion_empleado_det.PerformCallback();
-
-                    },
-                    error: function (error)
-                    {
-                    }
-                    });
-};
 </script>

@@ -81,8 +81,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
-
-            List<ro_Acta_Finiquito_Info> model = bus_acta_finiquito.get_list(IdEmpresa);
+            var  model = bus_acta_finiquito.get_list(IdEmpresa);
             return PartialView("_GridViewPartial_liquidacion_empleado", model);
         }
         private void cargar_combos()
@@ -99,13 +98,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdCausaTerminacion = "CTL_02"
+                IdCausaTerminacion = "CTL_02",
+                lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>()
 
             };
-            model.lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>();
             lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos();
-            cargar_combos_detalle();
             return View(model);
         }
         [HttpPost]
@@ -200,14 +198,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_liquidacion_empleado_det()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-
-            ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            //if (model.lst_detalle.Count == 0)
-            //    model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            var model = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -340,7 +332,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
     public class ro_Acta_Finiquito_Detalle_lst
     {
-        string Variable = "lst_detalle";
+        string Variable = "ro_Acta_Finiquito_Detalle_Info";
         public List<ro_Acta_Finiquito_Detalle_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
