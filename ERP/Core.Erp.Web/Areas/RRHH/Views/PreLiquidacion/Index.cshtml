@@ -148,6 +148,7 @@
     </div>
     <div class="box-footer">
         <button type="button" onclick="Procesar_Liqui()" class="btn btn-primary" id="btnprocesar">Procesar</button>
+        <button type="button" onclick="capturar_info_pantalla()" class="btn btn-default" id="capturar">Imprimir</button>
         @*<a class="btn btn-default" href="@Url.Action("ROL_021","RRHHReportes",new { Area = "Reportes" },null)" target="_blank">Imprimir</a>*@
         @*<a class="btn btn-default" href="@Url.Action("Index","PreLiquidacion",new { Area = "RRHH" },null)">Cancelar</a>*@
     </div>
@@ -256,7 +257,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
+                var win = window.open(window.location.origin +"/Reportes/RRHHReportes/ROL_005?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdActaFiniquito="+@Model.IdActaFiniquito+"&IdTransaccionSession="+@Model.IdTransaccionSession, '_blank');
+                win.focus();
             },
             error: function (error) {
 

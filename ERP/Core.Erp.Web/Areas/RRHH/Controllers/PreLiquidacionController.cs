@@ -27,6 +27,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_contrato_Bus bus_contrato = new ro_contrato_Bus();
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
+        ro_cargo_Bus bus_cargo = new ro_cargo_Bus();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ro_Acta_Finiquito_Info info = new ro_Acta_Finiquito_Info();
         int IdEmpresa = 0;
         #endregion
@@ -84,38 +86,57 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
-            var info_contrato = bus_contrato.get_info_contrato_empleado(IdEmpresa, IdEmpleado);
-            //var info_terminacion = bus_catalogo.get_info(IdEmpresa, IdCausaTerminacion);
+            var info_contrato = bus_contrato.get_info_contrato_empleado(IdEmpresa, IdEmpleado);            
+            var info_empleado = bus_empleado.get_info(IdEmpresa, IdEmpleado);
+            var info_sucursal = bus_sucursal.get_info(IdEmpresa, info_empleado.IdSucursal);
+            var info_cargo = bus_cargo.get_info(IdEmpresa, Convert.ToInt32(info_empleado.IdCargo));
+            var info_terminacion = bus_catalogo.get_info(IdEmpresa, IdCausaTerminacion);
 
             var lst_detalle_pantalla = lst_detalle.get_list(IdTransaccionSession);
-            
+
+            List<ROL_005_Info> lista_rpte = new List<ROL_005_Info>();
 
             foreach (var item in lst_detalle_pantalla)
             {
                 ROL_005_Info info_reporte = new ROL_005_Info();
+                var info_rubro = bus_rubro.get_info(IdEmpresa, item.IdRubro);
 
                 info_reporte.IdEmpresa = IdEmpresa;
                 info_reporte.IdActaFiniquito = 0;
                 info_reporte.IdEmpleado = IdEmpleado;
+                info_reporte.pe_apellido = info_empleado.pe_apellido;
+                info_reporte.pe_nombre = info_empleado.pe_nombre;
+                info_reporte.pe_cedulaRuc = info_empleado.pe_cedulaRuc;
+                info_reporte.ca_descripcion = info_cargo.ca_descripcion;
+                info_reporte.UltimaRemuneracion = UltimaRemuneracion;
                 info_reporte.IdCausaTerminacion = IdCausaTerminacion;
+                info_reporte.TipoTerminacion = info_terminacion.ca_descripcion;
                 info_reporte.IdContrato = info_contrato.IdContrato;
                 info_reporte.FechaIngreso = Convert.ToDateTime(FechaIngreso);
                 info_reporte.FechaSalida = Convert.ToDateTime(FechaSalida);
                 info_reporte.Observacion = Observacion;
+                info_reporte.Su_Descripcion = info_sucursal.Su_Descripcion;
                 info_reporte.EsMujerEmbarazada = EsMujerEmbarazada;
                 info_reporte.EsDirigenteSindical = EsDirigenteSindical;
                 info_reporte.EsPorDiscapacidad = EsPorDiscapacidad;
-                info_reporte.EsPorEnfermedadNoProfesional = EsPorEnfermedadNoProfesional;
-                //info_reporte.TipoTerminacion = info_terminacion.ca_descripcion;
+                info_reporte.EsPorEnfermedadNoProfesional = EsPorEnfermedadNoProfesional;               
+                info_reporte.ru_descripcion = info_rubro.ru_descripcion;
 
-                
+                if (info_rubro.ru_tipo == "I")
+                {
+                    info_reporte.Ingresos = item.Valor;
+                }
+                else
+                {
+                    info_reporte.Egresos = item.Valor;
+                }
+
+                info_reporte.DescripcionDetalle = item.Observacion;
+
+                lista_rpte.Add(info_reporte);                
             }
 
-
-            //if (bus_factura.modificarEstadoAutorizacion(IdEmpresa, IdEmpleado))
-            //    retorno = "Autorización exitosa";
-
-
+            lst_rol_005.set_list(lista_rpte, IdTransaccionSession);
             return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion

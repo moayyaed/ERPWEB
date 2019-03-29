@@ -120,6 +120,37 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
+        public ro_catalogo_Info get_info(int IdEmpresa, string CodCatalogo)
+        {
+            try
+            {
+                ro_catalogo_Info info = new ro_catalogo_Info();
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    ro_catalogo Entity = Context.ro_catalogo.FirstOrDefault(q => q.CodCatalogo == CodCatalogo);
+                    if (Entity == null) return null;
+
+                    info = new ro_catalogo_Info
+                    {
+                        CodCatalogo = Entity.CodCatalogo,
+                        IdCatalogo = Entity.IdCatalogo,
+                        ca_descripcion = Entity.ca_descripcion,
+                        IdTipoCatalogo = Entity.IdTipoCatalogo,
+                        ca_estado = Entity.ca_estado,
+                        ca_orden = Entity.ca_orden
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public int get_id(int IdTipoCatalogo)
         {
             try

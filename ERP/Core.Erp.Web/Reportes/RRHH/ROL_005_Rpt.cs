@@ -23,12 +23,16 @@ namespace Core.Erp.Web.Reportes.RRHH
             lbl_fecha.Text = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
             lbl_empresa.Text = empresa;
             lbl_usuario.Text = usuario;
-            int IdEmpresa = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
-            decimal IdActaFiniquito = p_IdActaFiniquito.Value == null ? 0 : Convert.ToDecimal(p_IdActaFiniquito.Value);
+            int IdEmpresa = string.IsNullOrEmpty( p_IdEmpresa.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
+            decimal IdActaFiniquito = string.IsNullOrEmpty(p_IdActaFiniquito.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdActaFiniquito.Value);
 
-            ROL_005_Bus bus_rpt = new ROL_005_Bus();
-            List<ROL_005_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdActaFiniquito);
-            this.DataSource = lst_rpt;
+            if (IdEmpresa>0)
+            {
+                ROL_005_Bus bus_rpt = new ROL_005_Bus();
+                List<ROL_005_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdActaFiniquito);
+                this.DataSource = lst_rpt;
+            }
+            
         }
     }
 }
