@@ -9988,6 +9988,7 @@
     <Content Include="Areas\RRHH\Views\PreLiquidacion\_GridViewPartial_liquidacion_empleado_det.cshtml" />
     <Content Include="Areas\RRHH\Views\PreLiquidacion\_GridViewPartial_liquidacion_empleado.cshtml" />
     <Content Include="Areas\RRHH\Views\PreLiquidacion\_CmbEmpleado_acta.cshtml" />
+    <Content Include="Areas\Inventario\Views\EgresoInventario\_CmbPersona_EgresoInv.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

@@ -39,15 +39,15 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q=> q.cm_fecha, settings =>
-                    {
-                        settings.Name = "cm_fecha";
-                        settings.Properties.UseMaskBehavior = true;
-                        settings.Properties.EditFormat = EditFormat.Date;
-                        settings.Properties.EditFormatString = "dd/MM/yyyy";
-                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                    }).GetHtml()
+                        @Html.DevExpress().DateEditFor(q => q.cm_fecha, settings =>
+                   {
+                       settings.Name = "cm_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -88,38 +88,50 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="cm_observacion">Observación</label>
-                    @Html.TextAreaFor(q => q.cm_observacion, new { @class = "form-control", @rows = 3 })
-                    @Html.ValidationMessageFor(q => q.cm_observacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-
-                    @Html.Action("GridViewPartial_egr_inv_det")
-
-
+                    <label for="IdResponsable">Responsable</label>
+                    @Html.Partial("_CmbPersona_EgresoInv", Model.IdResponsable)
+                    @Html.ValidationMessageFor(q => q.IdResponsable, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="cm_observacion">Observación</label>
+                            @Html.TextAreaFor(q => q.cm_observacion, new { @class = "form-control", @rows = 3 })
+                            @Html.ValidationMessageFor(q => q.cm_observacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","EgresoInventario",new { Area = "Inventario" },null)">Cancelar</a>
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            @Html.Action("GridViewPartial_egr_inv_det")
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a class="btn btn-default" href="@Url.Action("Index","EgresoInventario",new { Area = "Inventario" },null)">Cancelar</a>
+            </div>
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
 }
 
 
