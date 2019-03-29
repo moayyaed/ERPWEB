@@ -45,6 +45,24 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
+        #region Metodos ComboBox bajo demanda persona
+        tb_persona_Bus bus_persona = new tb_persona_Bus();
+        public ActionResult CmbPersona_EgresoInv()
+        {
+            //SessionFixed.TipoPersona = Request.Params["IdTipoPersona"] != null ? Request.Params["IdTipoPersona"].ToString() : SessionFixed.TipoPersona;
+            decimal model = new decimal();
+            return PartialView("_CmbPersona_EgresoInv", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda_persona(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), "PERSONA");
+        }
+        public tb_persona_Info get_info_bajo_demanda_persona(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), "PERSONA");
+        }
+        #endregion
+
 
         #region vistas
         [ValidateInput(false)]
