@@ -1,5 +1,4 @@
 @using System.Web.UI.WebControls;
-@model Core.Erp.Info.RRHH.ro_Acta_Finiquito_Info
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_liquidacion_empleado_det";
@@ -77,9 +76,8 @@
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
         settings.Settings.ShowFooter = true;
 
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
-    if (ViewData["EditError"] != null){
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
+
 }
-@grid.Bind(Model.lst_detalle).GetHtml()
+@grid.Bind(Model).GetHtml()
