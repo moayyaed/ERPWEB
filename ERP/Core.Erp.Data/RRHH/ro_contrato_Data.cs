@@ -217,6 +217,12 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    ro_empleado Entity_Empleado = Context.ro_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdEmpleado == info.IdEmpleado);
+                    if (Entity_Empleado == null)
+                        return false;
+
+                    Entity_Empleado.em_fechaIngaRol = info.FechaInicio.Date;
+
                     ro_contrato Entity = new ro_contrato
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -235,6 +241,7 @@ namespace Core.Erp.Data.RRHH
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now
                     };
                     Context.ro_contrato.Add(Entity);
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -265,6 +272,14 @@ namespace Core.Erp.Data.RRHH
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.EstadoContrato = info.EstadoContrato;
                     Entity.Fecha_UltMod = info.Fecha_UltMod = DateTime.Now;
+
+                    ro_empleado Entity_Empleado = Context.ro_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdEmpleado == info.IdEmpleado);
+                    if (Entity_Empleado == null)
+                        return false;
+
+                    Entity_Empleado.em_fechaIngaRol = info.FechaInicio.Date;
+                    Entity_Empleado.em_fechaSalida = info.FechaFin.Date;
+
                     Context.SaveChanges();
                 }
 

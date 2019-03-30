@@ -11,6 +11,8 @@ using Core.Erp.Info.General;
 using DevExpress.Web;
 using Core.Erp.Web.Helps;
 using Core.Erp.Info.Helps;
+using Core.Erp.Web.Areas.Reportes.Controllers;
+using Core.Erp.Info.Reportes.RRHH;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -20,9 +22,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Acta_Finiquito_Bus bus_acta_finiquito = new ro_Acta_Finiquito_Bus();
         ro_Acta_Finiquito_Detalle_Bus bus_detalle = new ro_Acta_Finiquito_Detalle_Bus();
         ro_Acta_Finiquito_Detalle_lst lst_detalle = new ro_Acta_Finiquito_Detalle_lst();
+        preliquidacion_List lst_rol_005 = new preliquidacion_List();
         ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
+        ro_contrato_Bus bus_contrato = new ro_contrato_Bus();
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
+        ro_cargo_Bus bus_cargo = new ro_cargo_Bus();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ro_Acta_Finiquito_Info info = new ro_Acta_Finiquito_Info();
         int IdEmpresa = 0;
         #endregion
@@ -59,15 +65,82 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
         public ActionResult Index()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info
             {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
+                IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdCausaTerminacion = "CTL_02"
+
             };
+            model.lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>();
+            lst_detalle.set_list(model.lst_detalle, model.IdTransaccionSession);
+            cargar_combos();
+            cargar_combos_detalle();
             return View(model);
         }
+
+        #region JSON
+        public JsonResult capturar_info_pantalla(DateTime? FechaIngreso, DateTime? FechaSalida, int IdEmpleado=0, string IdContrato_Tipo="", float UltimaRemuneracion=0,
+            bool EsMujerEmbarazada= false, bool EsPorDiscapacidad=false, bool EsDirigenteSindical= false, bool EsPorEnfermedadNoProfesional=false, 
+            string IdCausaTerminacion="", string Observacion="", decimal IdTransaccionSession=0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            var info_contrato = bus_contrato.get_info_contrato_empleado(IdEmpresa, IdEmpleado);            
+            var info_empleado = bus_empleado.get_info(IdEmpresa, IdEmpleado);
+            var info_sucursal = bus_sucursal.get_info(IdEmpresa, info_empleado.IdSucursal);
+            var info_cargo = bus_cargo.get_info(IdEmpresa, Convert.ToInt32(info_empleado.IdCargo));
+            var info_terminacion = bus_catalogo.get_info(IdEmpresa, IdCausaTerminacion);
+
+            var lst_detalle_pantalla = lst_detalle.get_list(IdTransaccionSession);
+
+            List<ROL_005_Info> lista_rpte = new List<ROL_005_Info>();
+
+            foreach (var item in lst_detalle_pantalla)
+            {
+                ROL_005_Info info_reporte = new ROL_005_Info();
+                var info_rubro = bus_rubro.get_info(IdEmpresa, item.IdRubro);
+
+                info_reporte.IdEmpresa = IdEmpresa;
+                info_reporte.IdActaFiniquito = 0;
+                info_reporte.IdEmpleado = IdEmpleado;
+                info_reporte.pe_apellido = info_empleado.pe_apellido;
+                info_reporte.pe_nombre = info_empleado.pe_nombre;
+                info_reporte.pe_cedulaRuc = info_empleado.pe_cedulaRuc;
+                info_reporte.ca_descripcion = info_cargo.ca_descripcion;
+                info_reporte.UltimaRemuneracion = UltimaRemuneracion;
+                info_reporte.IdCausaTerminacion = IdCausaTerminacion;
+                info_reporte.TipoTerminacion = info_terminacion.ca_descripcion;
+                info_reporte.IdContrato = info_contrato.IdContrato;
+                info_reporte.FechaIngreso = Convert.ToDateTime(FechaIngreso);
+                info_reporte.FechaSalida = Convert.ToDateTime(FechaSalida);
+                info_reporte.Observacion = Observacion;
+                info_reporte.Su_Descripcion = info_sucursal.Su_Descripcion;
+                info_reporte.EsMujerEmbarazada = EsMujerEmbarazada;
+                info_reporte.EsDirigenteSindical = EsDirigenteSindical;
+                info_reporte.EsPorDiscapacidad = EsPorDiscapacidad;
+                info_reporte.EsPorEnfermedadNoProfesional = EsPorEnfermedadNoProfesional;               
+                info_reporte.ru_descripcion = info_rubro.ru_descripcion;
+
+                if (info_rubro.ru_tipo == "I")
+                {
+                    info_reporte.Ingresos = item.Valor;
+                }
+                else
+                {
+                    info_reporte.Egresos = item.Valor;
+                }
+
+                info_reporte.DescripcionDetalle = item.Observacion;
+
+                lista_rpte.Add(info_reporte);                
+            }
+
+            lst_rol_005.set_list(lista_rpte, IdTransaccionSession);
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        /*
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
@@ -84,14 +157,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             List<ro_Acta_Finiquito_Info> model = bus_acta_finiquito.get_list_pre_liquidacion(IdEmpresa);
             return PartialView("_GridViewPartial_liquidacion_empleado", model);
-        }
-        private void cargar_combos()
-        {
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            ViewBag.lst_empleado = bus_empleado.get_list_combo_liquidar(IdEmpresa);
-            ViewBag.lst_tipo_contrato = bus_catalogo.get_list_x_tipo(2);
-            ViewBag.lst_tipo_terminacion = bus_catalogo.get_list_x_tipo(24);
-
         }
         public ActionResult Nuevo()
         {
@@ -183,16 +248,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             return RedirectToAction("Index");
         }
+        */
         [ValidateInput(false)]
         public ActionResult GridViewPartial_liquidacion_empleado_det()
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
-            if (model.lst_detalle.Count == 0)
-                model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //if (model.lst_detalle.Count == 0)
+            //    model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
+        }
+        private void cargar_combos()
+        {
+            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            ViewBag.lst_empleado = bus_empleado.get_list_combo_liquidar(IdEmpresa);
+            ViewBag.lst_tipo_contrato = bus_catalogo.get_list_x_tipo(2);
+            ViewBag.lst_tipo_terminacion = bus_catalogo.get_list_x_tipo(24);
+
         }
         private void cargar_combos_detalle()
         {
@@ -217,9 +293,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             if (ModelState.IsValid)
-                lst_detalle.AddRow(info_det);
+                lst_detalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -241,17 +317,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
 
             if (ModelState.IsValid)
-                lst_detalle.UpdateRow(info_det);
+                lst_detalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Acta_Finiquito_Detalle_Info info_det)
         {
-            lst_detalle.DeleteRow(info_det.IdSecuencia);
+            lst_detalle.DeleteRow(info_det.IdSecuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
-            model.lst_detalle = lst_detalle.get_list();
+            model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
         }
@@ -278,11 +354,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             info = bus_acta_finiquito.ObtenerIndemnizacion(info);
 
-            lst_detalle.set_list(info.lst_detalle);
+            lst_detalle.set_list(info.lst_detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-
+        /*
         public ActionResult Liquidar(decimal IdActaFiniquito)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
@@ -313,8 +389,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
             return RedirectToAction("Index");
-
-        }
+        }*/
 
     }
 

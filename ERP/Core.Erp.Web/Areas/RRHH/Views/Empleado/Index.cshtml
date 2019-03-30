@@ -38,6 +38,13 @@
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Estado*</label>
+                            @Html.DropDownListFor(q => q.em_status, new SelectList(ViewBag.lst_estado_empleado, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "em_status" })
+                            @Html.ValidationMessageFor(q => q.em_status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,7 +70,7 @@
                 </div>
             </div>
 
-            @Html.Action("GridViewPartial_empleados", new {IdSucursal = Model.IdSucursal})
+            @Html.Action("GridViewPartial_empleados", new {IdSucursal = Model.IdSucursal, em_status= Model.em_status})
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

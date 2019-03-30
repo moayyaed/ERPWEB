@@ -158,16 +158,21 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_empleado_proyeccion_gastos Entity = Context.ro_empleado_proyeccion_gastos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTransaccion == info.IdTransaccion);
-                    if (Entity == null)
-                        return false;
-                    Entity.estado = info.estado = false;
-                    Entity.Fecha_UltAnu = info.Fecha_UltAnu = DateTime.Now;
-                    Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                    //ro_empleado_proyeccion_gastos Entity = Context.ro_empleado_proyeccion_gastos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTransaccion == info.IdTransaccion);
 
+                    //ro_empleado_proyeccion_gastos_det EntityDet = Context.ro_empleado_proyeccion_gastos_det.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTransaccion == info.IdTransaccion);
+                    //if (Entity == null)
+                    //    return false;
+                    //Entity.estado = info.estado = false;
+                    //Entity.Fecha_UltAnu = info.Fecha_UltAnu = DateTime.Now;
+                    //Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
 
-                   
-                    Context.SaveChanges();
+                    var sql_cab = "delete from ro_empleado_proyeccion_gastos_det where IdEmpresa ="+ info.IdEmpresa+ " and IdTransaccion = "+info.IdTransaccion;
+                    var sql_det = "delete from ro_empleado_proyeccion_gastos where IdEmpresa =" + info.IdEmpresa + " and IdTransaccion = " + info.IdTransaccion;
+
+                    Context.Database.ExecuteSqlCommand(sql_cab);
+                    Context.Database.ExecuteSqlCommand(sql_det);
+                    //Context.SaveChanges();
                 }
 
                 return true;

@@ -22,8 +22,7 @@
         settings.Properties.Columns.Add("pe_nombreCompleto", "Empleado", 70);
         settings.Properties.FilterMinLength = 3;
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info();}";
-
-        
+     
     })
     .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.ActaFiniquitoController().get_list_bajo_demanda, new Core.Erp.Web.Areas.RRHH.Controllers.ActaFiniquitoController().get_info_bajo_demanda)
     .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_Acta_Finiquito_Info) ? "" : (Model == 0 ? "" : Model));

@@ -55,6 +55,13 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToString(e.GetValue("NAutorizacion")) != null)
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+        };
         settings.Columns.Add(c =>
         {
             c.Caption = "#";

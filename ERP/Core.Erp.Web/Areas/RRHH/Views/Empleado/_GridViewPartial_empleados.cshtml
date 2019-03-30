@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_empleados";
-        settings.CallbackRouteValues = new { Controller = "Empleado", Action = "GridViewPartial_empleados", IdSucursal = ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "Empleado", Action = "GridViewPartial_empleados", IdSucursal = ViewBag.IdSucursal, em_status = ViewBag.em_status };
 
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdEmpleado";
@@ -121,7 +121,7 @@
                 }).Render();
             });
         });
-      
+
     });
 }
 @grid.Bind(Model).GetHtml()

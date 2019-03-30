@@ -44,6 +44,19 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
+        public ro_catalogo_Info get_info(int IdEmpresa, string CodCatalogo)
+        {
+            try
+            {
+                return odata.get_info(IdEmpresa, CodCatalogo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(ro_catalogo_Info info)
         {
             try

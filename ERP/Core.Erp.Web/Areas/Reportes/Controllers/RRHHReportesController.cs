@@ -14,6 +14,7 @@ using Core.Erp.Info.Reportes.RRHH;
 using Core.Erp.Bus.Reportes.RRHH;
 using Core.Erp.Web.Areas.Reportes.Views.RRHHReportes;
 using Core.Erp.Bus.Contabilidad;
+using System.Web;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
 {
@@ -27,7 +28,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         ro_Nomina_Tipoliquiliqui_Bus bus_nomina_tipo = new ro_Nomina_Tipoliquiliqui_Bus();
         ro_periodo_x_ro_Nomina_TipoLiqui_Bus bus_periodo_x_nominas = new ro_periodo_x_ro_Nomina_TipoLiqui_Bus();
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
-
+        preliquidacion_List preliquidacion_list = new preliquidacion_List();
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
 
@@ -196,13 +197,22 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.empresa = SessionFixed.NomEmpresa.ToString();
             return View(model);
         }
-        public ActionResult ROL_005(decimal IdActaFiniquito = 0)
+        public ActionResult ROL_005(decimal IdActaFiniquito = 0, decimal IdTransaccionSession=0)
         {
             ROL_005_Rpt model = new ROL_005_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
-            model.p_IdActaFiniquito.Value = IdActaFiniquito;
-            model.usuario = SessionFixed.IdUsuario.ToString();
-            model.empresa = SessionFixed.NomEmpresa.ToString();
+            if (IdTransaccionSession>0)
+            {
+                model.DataSource = preliquidacion_list.get_list(IdTransaccionSession);
+            }
+            else
+            {
+                model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+                model.p_IdActaFiniquito.Value = IdActaFiniquito;
+            }
+            
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa;
+
             return View(model);
         }
         public ActionResult ROL_006( decimal IdEmpleado = 0)
@@ -1112,6 +1122,27 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.empresa = SessionFixed.NomEmpresa.ToString();
 
             return View(model);
+        }
+    }
+
+    public class preliquidacion_List
+    {
+        string Variable = "ROL_005_Info";
+        public List<ROL_005_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ROL_005_Info> list = new List<ROL_005_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ROL_005_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ROL_005_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 }

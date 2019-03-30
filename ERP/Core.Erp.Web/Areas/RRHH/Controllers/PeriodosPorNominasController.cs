@@ -73,6 +73,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             List_det.UpdateRow(IdPeriodo, Convert.ToInt32(SessionFixed.IdTransaccionSessionActual));
         }
         #endregion
+
         #region Json
         public JsonResult guardar(int IdEmpresa = 0,int IdNomina_Tipo=0,int IdNomina_TipoLiqui=0)
         {
@@ -110,7 +111,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             ro_periodo_x_ro_Nomina_TipoLiqui_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdPeriodo == IdPeriodo).FirstOrDefault();
             if (edited_info != null)
+            {
                 edited_info.seleccionado = !edited_info.seleccionado;
+                //edited_info.Procesado = "N";
+            }
+                
         }
     }
 }
