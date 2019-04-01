@@ -247,6 +247,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             contact.NumRetencion = info.NumRetencion = info_documento.NumDocumento;
                         }
 
+                        contact.fecha = info.fecha;
                         contact.observacion = info.observacion;
                         contact.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         contact.Fecha_UltMod = info.Fecha_UltMod;
