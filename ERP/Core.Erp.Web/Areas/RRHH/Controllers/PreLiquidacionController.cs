@@ -104,8 +104,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info_reporte.IdEmpresa = IdEmpresa;
                 info_reporte.IdActaFiniquito = 0;
                 info_reporte.IdEmpleado = IdEmpleado;
-                info_reporte.pe_apellido = info_empleado.pe_apellido;
-                info_reporte.pe_nombre = info_empleado.pe_nombre;
+                info_reporte.NombreCompleto = info_empleado.pe_apellido+" "+ info_empleado.pe_nombre;
                 info_reporte.pe_cedulaRuc = info_empleado.pe_cedulaRuc;
                 info_reporte.ca_descripcion = info_cargo.ca_descripcion;
                 info_reporte.UltimaRemuneracion = UltimaRemuneracion;
@@ -121,18 +120,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info_reporte.EsPorDiscapacidad = EsPorDiscapacidad;
                 info_reporte.EsPorEnfermedadNoProfesional = EsPorEnfermedadNoProfesional;               
                 info_reporte.ru_descripcion = info_rubro.ru_descripcion;
+                info_reporte.liquido= item.Valor;
 
                 if (info_rubro.ru_tipo == "I")
                 {
                     info_reporte.Ingresos = item.Valor;
+                    info_reporte.Egresos = 0;
                 }
                 else
                 {
+                    info_reporte.Ingresos = 0;
                     info_reporte.Egresos = item.Valor;
                 }
 
                 info_reporte.DescripcionDetalle = item.Observacion;
-
+                
                 lista_rpte.Add(info_reporte);                
             }
 

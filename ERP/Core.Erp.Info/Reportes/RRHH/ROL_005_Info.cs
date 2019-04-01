@@ -36,5 +36,6 @@ namespace Core.Erp.Info.Reportes.RRHH
         public string NombreCompleto { get; set; }
         public string TipoTerminacion { get; set; }
         public string Su_Descripcion { get; set; }
+        public double liquido { get; set; }
     }
 }
