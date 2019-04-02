@@ -407,7 +407,19 @@ namespace Core.Erp.Bus.RRHH
             try
             {
                 ct_cbtecble_Info info_diario=new ct_cbtecble_Info();
-                info_diario.lst_ct_cbtecble_det = info.lst_sueldo_x_pagar;
+
+                info_diario.lst_ct_cbtecble_det = (from q in info.lst_sueldo_x_pagar
+                                                   group q by new
+                                                   {
+                                                       q.IdCtaCble
+                                                   } into g
+                                                   select new ct_cbtecble_det_Info
+                                                   {
+                                                       IdCtaCble = g.Key.IdCtaCble,
+                                                       dc_Valor = g.Sum(q=> q.dc_Valor)
+                                                   }).ToList();
+                info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
+                //info_diario.lst_ct_cbtecble_det = info.lst_sueldo_x_pagar;
                 info_diario.IdEmpresa = info.IdEmpresa;
                 info_diario.IdTipoCbte = TipoComprobante;
                 info_diario.cb_Fecha = info.Fechacontabilizacion;
@@ -435,7 +447,18 @@ namespace Core.Erp.Bus.RRHH
             try
             {
                 ct_cbtecble_Info info_diario = new ct_cbtecble_Info();
-                info_diario.lst_ct_cbtecble_det = info.lst_provisiones;
+                info_diario.lst_ct_cbtecble_det = (from q in info.lst_provisiones
+                                                   group q by new
+                                                   {
+                                                       q.IdCtaCble
+                                                   } into g
+                                                   select new ct_cbtecble_det_Info
+                                                   {
+                                                       IdCtaCble = g.Key.IdCtaCble,
+                                                       dc_Valor = g.Sum(q => q.dc_Valor)
+                                                   }).ToList();
+                info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
+                //info_diario.lst_ct_cbtecble_det = info.lst_provisiones;
                 info_diario.IdEmpresa = info.IdEmpresa;
                 info_diario.IdTipoCbte = TipoComprobante;
                 info_diario.cb_Fecha = info.Fechacontabilizacion;
