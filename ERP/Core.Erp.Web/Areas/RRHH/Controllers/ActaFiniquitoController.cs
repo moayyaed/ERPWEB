@@ -230,7 +230,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
             model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
-            return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
+            return PartialView("_GridViewPartial_liquidacion_empleado_det", model.lst_detalle);
         }
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Acta_Finiquito_Detalle_Info info_det)
@@ -254,7 +254,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info();
             model.lst_detalle = lst_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
-            return PartialView("_GridViewPartial_liquidacion_empleado_det", model);
+            return PartialView("_GridViewPartial_liquidacion_empleado_det", model.lst_detalle);
         }
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Acta_Finiquito_Detalle_Info info_det)
         {
