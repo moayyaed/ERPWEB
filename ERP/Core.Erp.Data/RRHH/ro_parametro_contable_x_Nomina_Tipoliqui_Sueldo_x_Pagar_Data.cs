@@ -35,6 +35,7 @@ namespace Core.Erp.Data.RRHH
 
                 }
                 Lista.ForEach(v=>v.Secuencia= Secuencia++);
+                Lista.ForEach(q => q.IdString = q.IdNomina.ToString("000") + q.IdNominaTipo.ToString("000"));
                 return Lista;
             }
             catch (Exception)

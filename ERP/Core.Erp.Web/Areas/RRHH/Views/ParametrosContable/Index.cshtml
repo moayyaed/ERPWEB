@@ -10,15 +10,12 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
 <script>
-
-
     function OnSelectedNominaChanged() {
         GridViewPartial_cta_contable_sueldo_pagar.GetEditor("IdNominaTipo").PerformCallback();
     }
     function NominaComboBox_BeginCallback(s, e) {
         e.customArgs["IdNomina"] = IdNomina.GetValue();
     }
-
 </script>
 
 @using (Html.BeginForm("Index", "ParametrosContable", FormMethod.Post, new { @class = "form", @role = "form" }))

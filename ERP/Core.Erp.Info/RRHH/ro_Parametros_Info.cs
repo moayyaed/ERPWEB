@@ -49,6 +49,8 @@ namespace Core.Erp.Info.RRHH
             lst_cta_x_sueldo_pagar = new List<ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info>();
             lst_cta_x_provisiones = new List<ro_Config_Param_contable_Info>();
         }
+
+        public string IdString { get; set; }
     }
 
    

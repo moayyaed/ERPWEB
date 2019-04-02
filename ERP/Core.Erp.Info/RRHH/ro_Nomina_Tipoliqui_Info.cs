@@ -27,6 +27,10 @@ namespace Core.Erp.Info.RRHH
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string Descripcion { get; set; }
+        #region Campos que no existen en la tabla
+        public string IdString { get; set; }
+
+        #endregion
 
     }
 }

@@ -22,5 +22,6 @@ namespace Core.Erp.Info.RRHH
 
 
         public string pc_Cuenta { get; set; }
+        public string IdString { get; set; }
     }
 }

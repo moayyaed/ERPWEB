@@ -55,6 +55,7 @@ namespace Core.Erp.Data.RRHH
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
+                Lista.ForEach(q => q.IdString = q.IdNomina_Tipo.ToString("000") + q.IdNomina_TipoLiqui.ToString("000"));
 
                 return Lista;
             }
@@ -85,6 +86,7 @@ namespace Core.Erp.Data.RRHH
                                  }).ToList();
                    
                 }
+                Lista.ForEach(q => q.IdString = q.IdNomina_Tipo.ToString("000") + q.IdNomina_TipoLiqui.ToString("000"));
 
                 return Lista;
             }

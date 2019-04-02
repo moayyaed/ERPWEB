@@ -6,24 +6,27 @@
         settings.Name = "GridViewPartial_cta_contable_sueldo_pagar";
         settings.CallbackRouteValues = new { Controller = "ParametrosContable", Action = "GridViewPartial_cta_contable_sueldo_pagar" };
 
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ParametrosContable", Action = "EditingUpdate_cta_sueldo" };
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ParametrosContable", Action = "EditingNew_cta_sueldo" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ParametrosContable", Action = "EditingDelete_cta_sueldo" };
 
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsBehavior.ConfirmDelete = true;
-        settings.Width = Unit.Percentage(100);
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowEditButton = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
 
-
-        settings.KeyFieldName = "Secuencia";
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
 
         settings.SettingsPager.Visible = true;
-        settings.Settings.ShowGroupPanel = true;
-        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
         //Configuracion responsive
@@ -32,7 +35,6 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
-
 
 
 
@@ -47,7 +49,7 @@
         {
             column.FieldName = "IdNomina";
             column.Caption = "Nomina";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(30);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -57,18 +59,28 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdNominaTipo";
-            column.Caption = "Tipo Liquidacion nomina";
+            column.FieldName = "DescripcionProcesoNomina";
+            column.Caption = "Tipo liquidación nómina";
+            column.Width = Unit.Percentage(35);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Visible = false;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdString";
+            column.Caption = "Tipo liquidación nómina";
             column.Width = Unit.Percentage(35);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
             {
                 p.CallbackRouteValues = new { Controller = "ParametrosContable", Action = "CargarNomina", Area = "RRHH" };
+                p.ValueField = "IdString";
                 p.TextField = "DescripcionProcesoNomina";
-                p.ValueField = "IdNomina_TipoLiqui";
-                p.ValueType = typeof(int);
+                p.TextFormatString = "{0}";
+                p.Columns.Add("DescripcionProcesoNomina", "Tipo liquidación nómina");
+                p.ValueType = typeof(string);
                 //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
-               // p.BindList(ViewBag.lst_nomina_tipo);
+                p.BindList(ViewBag.lst_nomina_tipo);
                 p.ClientSideEvents.BeginCallback = "NominaComboBox_BeginCallback";
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
