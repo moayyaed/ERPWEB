@@ -14,14 +14,17 @@ namespace Core.Erp.Data.CuentasPorPagar
             try
             {
                 List<cp_orden_pago_Info> Lista;
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
                     Lista = (from q in Context.vwcp_orden_pago
                              where IdEmpresa == q.IdEmpresa
-                             && q.Fecha>=Fecha_ini
+                             && Fecha_ini <= q.Fecha
                              && q.Fecha <= Fecha_fin
-                             && q.IdSucursal == IdSucursal
+                             && IdSucursalIni <= q.IdSucursal
+                             && q.IdSucursal <= IdSucursalFin
                              orderby q.IdOrdenPago descending
                              select new cp_orden_pago_Info
                              {

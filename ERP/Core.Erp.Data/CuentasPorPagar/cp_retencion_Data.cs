@@ -379,5 +379,26 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
+        public bool ModificarEstadoAutorizacion(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
+        {
+            try
+            {
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    var Entity = Context.cp_retencion.Where(q => q.IdEmpresa == IdEmpresa && q.IdTipoCbte_Ogiro == IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == IdCbteCble_Ogiro).FirstOrDefault();
+                    if (Entity != null)
+                    {
+                        Entity.aprobada_enviar_sri = true;
+                        Context.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

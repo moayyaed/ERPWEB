@@ -62,7 +62,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return View(model);
         }
 
-        public ActionResult GridViewPartial_ordenes_pagos(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal)
+        public ActionResult GridViewPartial_ordenes_pagos(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
@@ -134,6 +134,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             try
             {
                 var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                lst_sucursal.Add(new tb_sucursal_Info
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = 0,
+                    Su_Descripcion = "TODAS"
+                });
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)

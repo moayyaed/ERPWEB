@@ -571,5 +571,78 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult FAC_015()
+        {
+
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+            cargar_combos(model);
+            FAC_015_Rpt report = new FAC_015_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult FAC_015(cl_filtros_facturacion_Info model)
+        {
+            FAC_015_Rpt report = new FAC_015_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model);
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+
+        public ActionResult FAC_016()
+        {
+
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+            cargar_combos(model);
+            FAC_016_Rpt report = new FAC_016_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult FAC_016(cl_filtros_facturacion_Info model)
+        {
+            FAC_016_Rpt report = new FAC_016_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model);
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }

@@ -72,7 +72,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.PROVEE.ToString());
         }
-        #endregion
 
         public ActionResult CmbCuenta_Deuda()
         {
@@ -87,6 +86,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
+        #endregion
+
 
         #region Metodos ComboBox bajo demanda flujo
         ba_TipoFlujo_Bus bus_tipo = new ba_TipoFlujo_Bus();
@@ -675,6 +676,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #endregion
 
         #region json
+        public JsonResult AutorizarSRI(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
+        {
+            string retorno = string.Empty;
+
+            if (bus_retencion.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro))
+                retorno = "Autorización exitosa";
+            
+            return Json(retorno, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult ValidarCompraSucursales(int IdEmpresa = 0, decimal IdProveedor = 0)
         {
             string retorno = string.Empty;

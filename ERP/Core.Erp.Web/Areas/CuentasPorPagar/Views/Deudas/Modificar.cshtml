@@ -27,6 +27,35 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script src="~/Scripts/ScriptsGenerales.js"></script>
+<script type="text/javascript">
+    function ImprimirRIDE() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasporPagarReportes/CXP_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdRetencion="+@Model.info_retencion.IdRetencion, '_blank');
+        win.focus();
+    }
+    function AutorizarSRI() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTipoCbte_Ogiro: $("#IdTipoCbte_Ogiro").val(),
+            IdCbteCble_Ogiro: $("#IdCbteCble_Ogiro").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AutorizarSRI", "Deudas",new { Area = "CuentasPorPagar"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert("Solicitud de autorización enviada exitósamente, por favor espere a que sea procesada por el SRI para imprimir el RIDE");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
 
 @using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -47,7 +76,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-10 col-md-1">
+            <div class="col-md-offset-4 col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="ImprimirRIDE();" title="Imprimir RIDE">
+                    <i class="fa fa-print"></i>  RIDE
+                </button>
+            </div>
+
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
+                    <i class="fa fa-send"></i>  SRI
+                </button>
+            </div>
+            <div class="col-md-offset-6 col-md-1">
                 <label for="IdImprimir"></label>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
