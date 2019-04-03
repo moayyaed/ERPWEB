@@ -208,6 +208,8 @@ namespace Core.Erp.Info.Helps
 
         public int IdAnio { get; set; }
         public string IdCobro_tipo { get; set; }
+        public int[] IntArray { get; set; }
+
         public cl_filtros_facturacion_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);

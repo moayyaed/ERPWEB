@@ -582,6 +582,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(model);
             FAC_015_Rpt report = new FAC_015_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdAnio.Value = model.IdAnio;
@@ -594,6 +595,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_015(cl_filtros_facturacion_Info model)
         {
             FAC_015_Rpt report = new FAC_015_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdAnio.Value = model.IdAnio;

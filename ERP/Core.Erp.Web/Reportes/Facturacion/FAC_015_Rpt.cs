@@ -13,6 +13,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
         public FAC_015_Rpt()
         {
             InitializeComponent();
@@ -30,8 +31,25 @@ namespace Core.Erp.Web.Reportes.Facturacion
 
             FAC_015_Bus bus_rpt = new FAC_015_Bus();
             List<FAC_015_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdAnio);
-
+            if (IntArray != null)
+            {
+                foreach (var item in IntArray)
+                {
+                    lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, item, IdAnio));
+                }
+            }
             this.DataSource = lst_rpt;
+        }
+
+        private void xrPivotGrid1_FieldValueDisplayText(object sender, DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs e)
+        {
+            if (e.ValueType == DevExpress.XtraPivotGrid.PivotGridValueType.GrandTotal)
+            {
+                if (e.IsColumn)
+                    e.DisplayText = "Total";
+                else
+                    e.DisplayText = "Total";
+            }
         }
     }
 }
