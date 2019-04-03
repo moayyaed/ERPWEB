@@ -57,7 +57,7 @@
         };
         settings.HtmlRowPrepared = (s, e) =>
         {
-            if (Convert.ToString(e.GetValue("NAutorizacion")) != null)
+            if (!string.IsNullOrEmpty(Convert.ToString(e.GetValue("NAutorizacion"))))
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
             }
