@@ -385,6 +385,7 @@
     <Compile Include="Reportes\Facturacion\FAC_012_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_014_Info.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_015_Info.cs" />
     <Compile Include="Reportes\Importacion\IMP_002_gastos_Info.cs" />
     <Compile Include="Reportes\Importacion\IMP_001_Info.cs" />
     <Compile Include="Reportes\Importacion\IMP_002_Info.cs" />
