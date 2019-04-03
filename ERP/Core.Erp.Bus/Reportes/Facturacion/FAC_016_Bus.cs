@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Bus.Reportes.Facturacion
 {
-    public class FAC_015_Bus
+    public class FAC_016_Bus
     {
-        FAC_015_Data odata = new FAC_015_Data();
-        public List<FAC_015_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        FAC_016_Data odata = new FAC_016_Data();
+        public List<FAC_016_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {

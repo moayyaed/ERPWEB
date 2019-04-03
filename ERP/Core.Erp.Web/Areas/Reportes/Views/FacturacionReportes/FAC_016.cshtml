@@ -2,7 +2,7 @@
 @model Core.Erp.Info.Helps.cl_filtros_facturacion_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "FAC_015";
+    ViewBag.Title = "FAC_016";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -39,7 +39,7 @@
     }
 </script>
 
-@using (Html.BeginForm("FAC_015", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("FAC_016", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
     <div class="box">

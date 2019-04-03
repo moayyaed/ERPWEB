@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Data.Reportes.Facturacion
 {
-    public class FAC_015_Data
+    public class FAC_016_Data
     {
-        public List<FAC_015_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        public List<FAC_016_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
-                List<FAC_015_Info> Lista;
+                List<FAC_016_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPFAC_015(IdEmpresa, IdSucursal, fecha_ini, fecha_fin).Select(q => new FAC_015_Info
+                    Lista = Context.SPFAC_016(IdEmpresa, IdSucursal, fecha_ini, fecha_fin).Select(q => new FAC_016_Info
                     {
-                        IdEmpresa  = q.IdEmpresa,
+                        IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
                         ANIO = q.ANIO,
-                        MES = q.MES,
-                        NomMes = q.NomMes,
                         Su_Descripcion = q.Su_Descripcion,
-                        vt_total = q.vt_total
+                        vt_total = q.vt_total,
+                        DescripcionSemana = q.DescripcionSemana,
+                        Semana = q.Semana
                     }).ToList();
                 }
                 return Lista;
@@ -35,5 +35,6 @@ namespace Core.Erp.Data.Reportes.Facturacion
                 throw;
             }
         }
+
     }
 }
