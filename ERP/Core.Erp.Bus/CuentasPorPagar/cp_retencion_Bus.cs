@@ -300,5 +300,19 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
+
+        public bool ModificarEstadoAutorizacion(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
+
+        {
+            try
+            {
+                return odata.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
