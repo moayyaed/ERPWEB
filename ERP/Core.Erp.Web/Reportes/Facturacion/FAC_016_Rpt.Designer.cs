@@ -107,7 +107,7 @@
             this.pivotGridField1,
             this.pivotGridField2,
             this.pivotGridField3});
-            this.xrPivotGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 50F);
+            this.xrPivotGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 44.27083F);
             this.xrPivotGrid1.Name = "xrPivotGrid1";
             this.xrPivotGrid1.OptionsPrint.FilterSeparatorBarPadding = 3;
             this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(325F, 63.54166F);
@@ -134,6 +134,8 @@
             this.pivotGridField3.Area = DevExpress.XtraPivotGrid.PivotArea.DataArea;
             this.pivotGridField3.AreaIndex = 0;
             this.pivotGridField3.Caption = "Total";
+            this.pivotGridField3.CellFormat.FormatString = "n2";
+            this.pivotGridField3.CellFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.pivotGridField3.FieldName = "vt_total";
             this.pivotGridField3.Name = "pivotGridField3";
             // 
