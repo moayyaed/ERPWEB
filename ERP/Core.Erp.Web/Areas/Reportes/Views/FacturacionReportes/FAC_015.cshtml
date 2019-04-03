@@ -2,13 +2,13 @@
 @model Core.Erp.Info.Helps.cl_filtros_facturacion_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "FAC_014";
+    ViewBag.Title = "FAC_015";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
     }
 }
-@using (Html.BeginForm("FAC_014", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("FAC_015", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
     <div class="box">
@@ -30,44 +30,19 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Fecha inicio*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
-                           {
-                               settings.Name = "fecha_ini";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
-                            </div>
+                            <label for="IdSucursal">Sucursal</label>
+                            @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                            @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Fecha fin*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
-                           {
-                               settings.Name = "fecha_fin";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
-                            </div>
+                            <label for="IdAnio">Año</label>
+                            @Html.TextBoxFor(q => q.IdAnio, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdAnio, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

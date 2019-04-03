@@ -10378,6 +10378,9 @@
     <EmbeddedResource Include="Reportes\Facturacion\FAC_014_Rpt.resx">
       <DependentUpon>FAC_014_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_015_Rpt.resx">
+      <DependentUpon>FAC_015_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Importacion\IMP_002_gastos_Rpt.resx">
       <DependentUpon>IMP_002_gastos_Rpt.cs</DependentUpon>
     </EmbeddedResource>
