@@ -86,7 +86,11 @@ namespace Core.Erp.Bus.General
         {
             try
             {
-                return odata.get_info_ultimo_no_usado(IdEmpresa, CodDocumentoTipo, IdSucursal);
+                tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+                tb_sucursal_Info info_sucursal = new tb_sucursal_Info();
+                info_sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
+
+                return odata.get_info_ultimo_no_usado(IdEmpresa, CodDocumentoTipo, IdSucursal, info_sucursal.Su_CodigoEstablecimiento);
             }
             catch (Exception)
             {

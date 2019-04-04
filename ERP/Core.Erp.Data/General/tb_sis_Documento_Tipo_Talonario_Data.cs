@@ -199,8 +199,8 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado(int IdEmpresa, string CodDocumentoTipo, int IdSucursal)
-        {
+        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado(int IdEmpresa, string CodDocumentoTipo, int IdSucursal, string Su_CodigoEstablecimiento)
+        {            
             try
             {
                 tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info();
@@ -210,6 +210,7 @@ namespace Core.Erp.Data.General
                              where A.IdEmpresa == IdEmpresa
                              && A.CodDocumentoTipo == CodDocumentoTipo
                              && A.IdSucursal==IdSucursal
+                             && A.Establecimiento == Su_CodigoEstablecimiento
                              && A.Usado == false
                              && A.Estado == "A"
                              select A.NumDocumento).Min();
@@ -219,6 +220,7 @@ namespace Core.Erp.Data.General
                         var querry = from A in Context.tb_sis_Documento_Tipo_Talonario
                                      where A.IdEmpresa == IdEmpresa
                                      //&& A.PuntoEmision == puntoemision 
+                                     && A.Establecimiento == Su_CodigoEstablecimiento
                                      && A.CodDocumentoTipo == CodDocumentoTipo
                                      && A.Usado == false
                                      && A.NumDocumento == UltRegistro
