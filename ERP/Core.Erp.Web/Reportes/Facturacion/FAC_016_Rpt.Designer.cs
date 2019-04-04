@@ -194,7 +194,7 @@
             this.xrTableCell1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.xrTableCell1.StylePriority.UseFont = false;
             this.xrTableCell1.StylePriority.UsePadding = false;
-            this.xrTableCell1.Text = "VENTAS SEMANAS POR SUCURSAL";
+            this.xrTableCell1.Text = "\tVENTAS SEMANALES POR SUCURSAL";
             this.xrTableCell1.Weight = 1.9973365590670773D;
             // 
             // PageFooter

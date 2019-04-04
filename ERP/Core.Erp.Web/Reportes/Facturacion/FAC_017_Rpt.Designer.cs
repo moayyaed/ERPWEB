@@ -1,6 +1,6 @@
 ﻿namespace Core.Erp.Web.Reportes.Facturacion
 {
-    partial class FAC_015_Rpt
+    partial class FAC_017_Rpt
     {
         /// <summary>
         /// Required designer variable.
@@ -32,9 +32,6 @@
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
-            this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_IdSucursal = new DevExpress.XtraReports.Parameters.Parameter();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
             this.xrPivotGrid1 = new DevExpress.XtraReports.UI.XRPivotGrid();
             this.pivotGridField1 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
@@ -55,11 +52,14 @@
             this.lbl_fecha = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell117 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
+            this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_IdMarca = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
@@ -84,33 +84,16 @@
             this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Facturacion.FAC_015_Info);
-            this.objectDataSource1.Name = "objectDataSource1";
-            // 
-            // p_IdEmpresa
-            // 
-            this.p_IdEmpresa.Name = "p_IdEmpresa";
-            this.p_IdEmpresa.Visible = false;
-            // 
-            // p_IdSucursal
-            // 
-            this.p_IdSucursal.Name = "p_IdSucursal";
-            this.p_IdSucursal.Visible = false;
-            // 
             // PageHeader
             // 
             this.PageHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrPivotGrid1,
             this.xrTable1});
-            this.PageHeader.HeightF = 138.5417F;
+            this.PageHeader.HeightF = 100F;
             this.PageHeader.Name = "PageHeader";
             // 
             // xrPivotGrid1
             // 
-            this.xrPivotGrid1.AnchorHorizontal = ((DevExpress.XtraReports.UI.HorizontalAnchorStyles)((DevExpress.XtraReports.UI.HorizontalAnchorStyles.Left | DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right)));
-            this.xrPivotGrid1.AnchorVertical = ((DevExpress.XtraReports.UI.VerticalAnchorStyles)((DevExpress.XtraReports.UI.VerticalAnchorStyles.Top | DevExpress.XtraReports.UI.VerticalAnchorStyles.Bottom)));
             this.xrPivotGrid1.Appearance.Cell.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.xrPivotGrid1.Appearance.CustomTotalCell.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.xrPivotGrid1.Appearance.FieldHeader.Font = new System.Drawing.Font("Tahoma", 8.25F);
@@ -124,22 +107,19 @@
             this.pivotGridField1,
             this.pivotGridField2,
             this.pivotGridField3});
-            this.xrPivotGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 79.6875F);
+            this.xrPivotGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 44.27083F);
             this.xrPivotGrid1.Name = "xrPivotGrid1";
             this.xrPivotGrid1.OptionsPrint.FilterSeparatorBarPadding = 3;
-            this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(325F, 58.85417F);
+            this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(344.5F, 55.72917F);
             this.xrPivotGrid1.FieldValueDisplayText += new System.EventHandler<DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs>(this.xrPivotGrid1_FieldValueDisplayText);
             // 
             // pivotGridField1
             // 
             this.pivotGridField1.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             this.pivotGridField1.AreaIndex = 0;
-            this.pivotGridField1.Caption = "Sucursal";
-            this.pivotGridField1.FieldName = "Su_Descripcion";
-            this.pivotGridField1.MinWidth = 100;
+            this.pivotGridField1.Caption = "Grupo";
+            this.pivotGridField1.FieldName = "MarcaDescripcion";
             this.pivotGridField1.Name = "pivotGridField1";
-            this.pivotGridField1.Options.ShowGrandTotal = false;
-            this.pivotGridField1.Options.ShowTotals = false;
             // 
             // pivotGridField2
             // 
@@ -148,9 +128,6 @@
             this.pivotGridField2.Caption = "Mes";
             this.pivotGridField2.FieldName = "NomMes";
             this.pivotGridField2.Name = "pivotGridField2";
-            this.pivotGridField2.Options.ShowGrandTotal = false;
-            this.pivotGridField2.Options.ShowTotals = false;
-            this.pivotGridField2.Width = 116;
             // 
             // pivotGridField3
             // 
@@ -159,11 +136,8 @@
             this.pivotGridField3.Caption = "Total";
             this.pivotGridField3.CellFormat.FormatString = "n2";
             this.pivotGridField3.CellFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.pivotGridField3.EmptyCellText = "0.00";
-            this.pivotGridField3.EmptyValueText = "0.00";
             this.pivotGridField3.FieldName = "vt_total";
             this.pivotGridField3.Name = "pivotGridField3";
-            this.pivotGridField3.UnboundFieldName = "pivotGridField3";
             // 
             // xrTable1
             // 
@@ -203,7 +177,7 @@
             this.FAC_010.Font = new System.Drawing.Font("Verdana", 6F);
             this.FAC_010.Name = "FAC_010";
             this.FAC_010.StylePriority.UseFont = false;
-            this.FAC_010.Text = "FAC_015";
+            this.FAC_010.Text = "FAC_017";
             this.FAC_010.Weight = 0.25531852051736292D;
             // 
             // xrTableRow2
@@ -220,7 +194,7 @@
             this.xrTableCell1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.xrTableCell1.StylePriority.UseFont = false;
             this.xrTableCell1.StylePriority.UsePadding = false;
-            this.xrTableCell1.Text = "VENTAS ANUALES POR SUCURSAL";
+            this.xrTableCell1.Text = "VENTAS MENSUALES POR GRUPO";
             this.xrTableCell1.Weight = 1.9973365590670773D;
             // 
             // PageFooter
@@ -341,6 +315,16 @@
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrPageInfo2.TextFormatString = "Página {0} de {1}";
             // 
+            // p_IdEmpresa
+            // 
+            this.p_IdEmpresa.Name = "p_IdEmpresa";
+            this.p_IdEmpresa.Visible = false;
+            // 
+            // p_IdMarca
+            // 
+            this.p_IdMarca.Name = "p_IdMarca";
+            this.p_IdMarca.Visible = false;
+            // 
             // p_fecha_ini
             // 
             this.p_fecha_ini.Name = "p_fecha_ini";
@@ -351,7 +335,12 @@
             this.p_fecha_fin.Name = "p_fecha_fin";
             this.p_fecha_fin.Visible = false;
             // 
-            // FAC_015_Rpt
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Facturacion.FAC_017_Info);
+            this.objectDataSource1.Name = "objectDataSource1";
+            // 
+            // FAC_017_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
             this.Detail,
@@ -368,14 +357,14 @@
             this.PaperKind = System.Drawing.Printing.PaperKind.A4;
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
             this.p_IdEmpresa,
-            this.p_IdSucursal,
+            this.p_IdMarca,
             this.p_fecha_ini,
             this.p_fecha_fin});
             this.Version = "17.2";
-            this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_015_Rpt_BeforePrint);
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
+            this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_017_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }
@@ -385,9 +374,6 @@
         private DevExpress.XtraReports.UI.DetailBand Detail;
         private DevExpress.XtraReports.UI.TopMarginBand TopMargin;
         private DevExpress.XtraReports.UI.BottomMarginBand BottomMargin;
-        private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdEmpresa;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdSucursal;
         private DevExpress.XtraReports.UI.PageHeaderBand PageHeader;
         private DevExpress.XtraReports.UI.PageFooterBand PageFooter;
         private DevExpress.XtraReports.UI.XRTable xrTable1;
@@ -396,7 +382,6 @@
         private DevExpress.XtraReports.UI.XRTableCell FAC_010;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow2;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
-        private DevExpress.XtraReports.UI.XRPivotGrid xrPivotGrid1;
         private DevExpress.XtraReports.UI.XRTable xrTable12;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow10;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell47;
@@ -405,10 +390,14 @@
         private DevExpress.XtraReports.UI.XRTableCell lbl_fecha;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell117;
         private DevExpress.XtraReports.UI.XRPageInfo xrPageInfo2;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdEmpresa;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdMarca;
+        public DevExpress.XtraReports.Parameters.Parameter p_fecha_ini;
+        public DevExpress.XtraReports.Parameters.Parameter p_fecha_fin;
+        private DevExpress.XtraReports.UI.XRPivotGrid xrPivotGrid1;
+        private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
         private DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField pivotGridField1;
         private DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField pivotGridField2;
         private DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField pivotGridField3;
-        public DevExpress.XtraReports.Parameters.Parameter p_fecha_ini;
-        public DevExpress.XtraReports.Parameters.Parameter p_fecha_fin;
     }
 }
