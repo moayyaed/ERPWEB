@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.Facturacion;
 using Core.Erp.Info.Reportes.Facturacion;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Erp.Web.Reportes.Facturacion
 {
@@ -39,7 +40,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
                     lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, item, fecha_ini, fecha_fin));
                 }
             }
-            this.DataSource = lst_rpt;
+            this.DataSource = lst_rpt.OrderBy(q=>q.ANIO).ThenBy(q=>q.Semana).ToList();
         }
 
         private void xrPivotGrid1_FieldValueDisplayText(object sender, DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs e)
