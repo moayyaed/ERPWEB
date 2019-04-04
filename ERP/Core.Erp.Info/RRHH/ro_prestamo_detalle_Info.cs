@@ -23,7 +23,6 @@ namespace Core.Erp.Info.RRHH
 
         #region campo vista
         public double ValorAplicado { get; set; }
-
         #endregion
 
     }

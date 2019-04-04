@@ -29,7 +29,6 @@ namespace Core.Erp.Info.RRHH
 
         public int NumCuotas { get; set; }
         public System.DateTime Fecha_PriPago { get; set; }
-        [StringLength(50, MinimumLength = 4, ErrorMessage = "La observación debe tener mínimo 4 caracteres y máximo 250")]
         [Required(ErrorMessage = "El campo observación es obligatorio")]
         public string Observacion { get; set; }
         public string IdUsuario { get; set; }

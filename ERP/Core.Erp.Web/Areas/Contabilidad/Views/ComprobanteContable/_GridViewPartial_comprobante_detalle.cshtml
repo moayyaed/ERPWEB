@@ -11,7 +11,7 @@
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
-        
+
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ComprobanteContable", Action = "EditingAddNew", Area = "Contabilidad" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ComprobanteContable", Action = "EditingUpdate", Area = "Contabilidad" };
@@ -109,6 +109,19 @@
                 sp.MaxValue = 999999999;
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dc_Valor_haber";
+            column.Caption = "Haber";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
         /*
         settings.Columns.Add(column =>
         {
@@ -125,7 +138,7 @@
         */
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe").DisplayFormat = "Debe {0:c2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber").DisplayFormat = "Haber {0:c2}";
-        
+
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 

@@ -348,7 +348,7 @@ namespace Core.Erp.Data.RRHH
                         ro_prestamo_detalle Entity_det = Context.ro_prestamo_detalle.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdPrestamo == info.IdPrestamo
                         && q.NumCuota == item.NumCuota);
                         Entity_det.EstadoPago = item.EstadoPago;
-                        Entity_det.TotalCuota = item.ValorAplicado;
+                        Entity_det.Saldo = Entity_det.Saldo - item.ValorAplicado;
                         Context.SaveChanges();
 
                     }

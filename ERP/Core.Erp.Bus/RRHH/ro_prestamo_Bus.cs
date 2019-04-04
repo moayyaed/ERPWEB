@@ -66,6 +66,7 @@ namespace Core.Erp.Bus.RRHH
                 ro_prestamo_Info info_ = new ro_prestamo_Info();
                 info_= odata.get_info(IdEmpresa, IdEmpleado, IdPrestamo);
                 info_.lst_detalle = odata_det.get_list(IdEmpresa, IdPrestamo);
+
                 return info_;
             }
             catch (Exception)

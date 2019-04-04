@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_prestamo_Info
 
 @{
-    ViewBag.Title = "Anular prestamo";
+    ViewBag.Title = "Abono de prestamo";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -40,19 +40,19 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Valor">Monto solicitado*</label>
-                    @Html.TextBoxFor(q => q.MontoSol, new { @class = "form-control", @id = "MontoSol", })
+                    @Html.TextBoxFor(q => q.MontoSol, new { @class = "form-control", @id = "MontoSol", @readonly= "readonly" })
                     @Html.ValidationMessageFor(q => q.MontoSol, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="Valor">Saldo*</label>
-                    @Html.TextBoxFor(q => q.Valor_pendiente, new { @class = "form-control", @id = "Valor_pendiente", })
+                    <label for="Valor">Saldo Pendiente*</label>
+                    @Html.TextBoxFor(q => q.Valor_pendiente, new { @class = "form-control", @id = "Valor_pendiente", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.Valor_pendiente, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            @*<div class="col-md-2">
                 <div class="form-group">
                     <label for="Valor">Valor aplicar*</label>
                     @Html.TextBoxFor(q => q.Monto_aplicado, new { @class = "form-control", @id = "Monto_aplicado", })
@@ -65,7 +65,7 @@
                         <button type="button" onclick="Generar();" id="btnconsultar" class="btn btn-primary">Aplicar</button>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
             <div class="row">

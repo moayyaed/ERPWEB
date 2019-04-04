@@ -170,8 +170,7 @@
                     if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoAprob")) == "APROB"  && Convert.ToInt32(DataBinder.Eval(tc.DataItem, "Valor_pendiente")) > 0)
                     {
                         ViewContext.Writer.Write(
-                             Html.ActionLink("Abono", "Abono", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdPrestamo = DataBinder.Eval(tc.DataItem, "IdPrestamo") },
-                                new { onclick = "return confirm('¿Está seguro de que desea aplicar abono al prestamos?')" })
+                             Html.ActionLink("Abono", "Abono", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdPrestamo = DataBinder.Eval(tc.DataItem, "IdPrestamo") })
                         );
                     }
 

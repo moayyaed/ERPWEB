@@ -286,7 +286,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return RedirectToAction("Index");
             model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdPrestamo);
             if(model.lst_detalle.Count()>0)
-            model.Valor_pendiente = model.lst_detalle.Sum(v=>v.TotalCuota);
+            model.Valor_pendiente = model.lst_detalle.Where(v=> v.EstadoPago=="PEN").Sum(v=>v.TotalCuota);
             Lis_ro_prestamo_detalle_lst.set_list(model.lst_detalle, model.IdTransaccionSession);
             cargar_combos();
             return View(model);
@@ -340,6 +340,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
 
+        #endregion
+
+        #region funciones del detalle Abono
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AbonoEditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_prestamo_detalle_Info info_det)
+        {
+            if (ModelState.IsValid)
+                Lis_ro_prestamo_detalle_lst.AbonoUpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = Lis_ro_prestamo_detalle_lst.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
+            return PartialView("_GridViewPartial_prestamos_abono_det", model);
+        }
         #endregion
 
         #region cargar combo validaciones
@@ -416,12 +428,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             foreach (var item in detalle)
             {
-              if(Monto_aplicado > item.TotalCuota)
+              if(Monto_aplicado >= item.TotalCuota)
                 {
-                    item.ValorAplicado = item.TotalCuota;
-                    Monto_aplicado = Monto_aplicado - item.TotalCuota;
+                    if(item.EstadoPago == "PEN")
+                    {
+                        item.ValorAplicado = item.TotalCuota;
+                        Monto_aplicado = Monto_aplicado - item.TotalCuota;
 
-                    item.EstadoPago = "ABO";
+                        if (item.TotalCuota == item.ValorAplicado)
+                        {
+                            item.EstadoPago = "CAN";
+                        }
+                            
+                    }                                            
                 }
               else
                 {
@@ -477,6 +496,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             List<ro_prestamo_detalle_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.NumCuota == NumCuota).First());
+        }
+
+        public void AbonoUpdateRow(ro_prestamo_detalle_Info info_det, decimal IdTransaccionSession)
+        {
+            ro_prestamo_detalle_Info edited_info = get_list(IdTransaccionSession).Where(m => m.NumCuota == info_det.NumCuota).First();
+            edited_info.EstadoPago = info_det.EstadoPago;
         }
     }
 

@@ -30,9 +30,8 @@ namespace Core.Erp.Data.RRHH
                                  FechaPago = q.FechaPago,
                                  EstadoPago = q.EstadoPago,
                                  Observacion_det=q.Observacion_det,
-                                 IdNominaTipoLiqui = q.IdNominaTipoLiqui
+                                 IdNominaTipoLiqui = q.IdNominaTipoLiqui                                 
                              }).ToList();
-
                 }
 
                 return Lista;
