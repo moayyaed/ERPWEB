@@ -150,15 +150,24 @@
             // 
             // pivotGridField1
             // 
+            this.pivotGridField1.Appearance.Cell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.CustomTotalCell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldHeader.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValue.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValueGrandTotal.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValueTotal.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.GrandTotalCell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.TotalCell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
             this.pivotGridField1.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             this.pivotGridField1.AreaIndex = 0;
             this.pivotGridField1.Caption = "Sucursal";
             this.pivotGridField1.ColumnValueLineCount = 4;
             this.pivotGridField1.FieldName = "Su_Descripcion";
-            this.pivotGridField1.MinWidth = 100;
+            this.pivotGridField1.MinWidth = 85;
             this.pivotGridField1.Name = "pivotGridField1";
             this.pivotGridField1.Options.ShowGrandTotal = false;
             this.pivotGridField1.Options.ShowTotals = false;
+            this.pivotGridField1.Width = 85;
             // 
             // pivotGridField2
             // 
