@@ -40,6 +40,9 @@
             this.pivotGridField1 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.pivotGridField2 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.pivotGridField3 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldANIO = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldMES = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldIdSucursal = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
             this.lbl_empresa = new DevExpress.XtraReports.UI.XRTableCell();
@@ -62,9 +65,6 @@
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
-            this.fieldANIO = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
-            this.fieldMES = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
-            this.fieldIdSucursal = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).BeginInit();
@@ -183,6 +183,30 @@
             this.pivotGridField3.FieldName = "vt_total";
             this.pivotGridField3.Name = "pivotGridField3";
             this.pivotGridField3.UnboundFieldName = "pivotGridField3";
+            // 
+            // fieldANIO
+            // 
+            this.fieldANIO.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
+            this.fieldANIO.AreaIndex = 0;
+            this.fieldANIO.FieldName = "ANIO";
+            this.fieldANIO.Name = "fieldANIO";
+            this.fieldANIO.Visible = false;
+            // 
+            // fieldMES
+            // 
+            this.fieldMES.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
+            this.fieldMES.AreaIndex = 0;
+            this.fieldMES.FieldName = "MES";
+            this.fieldMES.Name = "fieldMES";
+            this.fieldMES.Visible = false;
+            // 
+            // fieldIdSucursal
+            // 
+            this.fieldIdSucursal.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
+            this.fieldIdSucursal.AreaIndex = 0;
+            this.fieldIdSucursal.FieldName = "IdSucursal";
+            this.fieldIdSucursal.Name = "fieldIdSucursal";
+            this.fieldIdSucursal.Visible = false;
             // 
             // xrTable1
             // 
@@ -434,30 +458,6 @@
             // 
             this.p_fecha_fin.Name = "p_fecha_fin";
             this.p_fecha_fin.Visible = false;
-            // 
-            // fieldANIO
-            // 
-            this.fieldANIO.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.fieldANIO.AreaIndex = 0;
-            this.fieldANIO.FieldName = "ANIO";
-            this.fieldANIO.Name = "fieldANIO";
-            this.fieldANIO.Visible = false;
-            // 
-            // fieldMES
-            // 
-            this.fieldMES.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.fieldMES.AreaIndex = 0;
-            this.fieldMES.FieldName = "MES";
-            this.fieldMES.Name = "fieldMES";
-            this.fieldMES.Visible = false;
-            // 
-            // fieldIdSucursal
-            // 
-            this.fieldIdSucursal.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
-            this.fieldIdSucursal.AreaIndex = 0;
-            this.fieldIdSucursal.FieldName = "IdSucursal";
-            this.fieldIdSucursal.Name = "fieldIdSucursal";
-            this.fieldIdSucursal.Visible = false;
             // 
             // FAC_015_Rpt
             // 

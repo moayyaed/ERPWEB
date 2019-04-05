@@ -390,6 +390,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (model.info_retencion.detalle.Count() > 0)
             {
+                var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
+                if(sucu != null)
+                {
+                    model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
+                    model.info_retencion.serie2 = "001";
+                }
+
                 model.info_retencion.detalle.ForEach(item =>
                 {
                     cp_codigo_SRI_Info info_ = bus_sri.get_info(model.IdEmpresa, item.IdCodigo_SRI);
