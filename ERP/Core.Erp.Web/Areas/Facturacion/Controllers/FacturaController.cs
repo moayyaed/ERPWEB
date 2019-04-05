@@ -308,7 +308,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 Cantidad = q.vt_cantidad,
                 tp_manejaInven = q.tp_manejaInven,
                 CantidadAnterior = q.CantidadAnterior,
-                SeDestribuye = (bool)q.se_distribuye
+                SeDestribuye = q.se_distribuye ?? false
             }).ToList();
 
             if (!bus_producto.validar_stock(lst_validar, ref msg))
