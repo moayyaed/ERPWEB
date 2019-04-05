@@ -913,7 +913,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.se_distribuye = producto.se_distribuye;
-                    info_det.tp_manejaInven = bus_producto_tipo.get_info(IdEmpresa, producto.IdProductoTipo).tp_ManejaInven;
+                    info_det.tp_manejaInven = producto.tp_ManejaInven;
                     info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
                     var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
                     if (cliente != null)
@@ -943,7 +943,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] fa_factura_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             decimal IdCliente = Convert.ToDecimal(SessionFixed.IdEntidad);
             int IdNivelDescuento = Convert.ToInt32(SessionFixed.IdNivelDescuento);
             if (info_det != null && info_det.IdProducto != 0)
@@ -952,7 +952,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (producto != null)
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
-                    info_det.tp_manejaInven = bus_producto_tipo.get_info(IdEmpresa, producto.IdProductoTipo).tp_ManejaInven;
+                    info_det.tp_manejaInven = producto.tp_ManejaInven;
                     info_det.se_distribuye = producto.se_distribuye;
                     info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
                     var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);

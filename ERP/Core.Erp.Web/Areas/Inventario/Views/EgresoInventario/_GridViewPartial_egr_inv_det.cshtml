@@ -13,7 +13,7 @@
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "EgresoInventario", Action = "EditingDelete", Area = "Inventario" };
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
@@ -45,7 +45,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(40);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -62,13 +62,11 @@
             });
         });
 
-
-
          settings.Columns.Add(column =>
          {
              column.FieldName = "IdUnidadMedida_sinConversion";
              column.Caption = "Unidad de medida";
-             column.Width = Unit.Percentage(60);
+             column.Width = Unit.Percentage(20);
              column.EditorProperties().ComboBox(p =>
              {
                  p.Columns.Add("descripcion", "Descripción").Width = Unit.Percentage(100);
@@ -82,7 +80,7 @@
         {
             column.FieldName = "dm_cantidad_sinConversion";
             column.Caption = "cantidad";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(20);
 
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";

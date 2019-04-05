@@ -24,6 +24,9 @@ namespace Core.Erp.Info.Inventario
 
         #region Campos que no existen en la tabla
         public string pr_descripcion { get; set; }
+        public string tp_ManejaInven { get; set; }
+        public bool se_distribuye { get; set; }
+        public double CantidadAnterior { get; set; }
         #endregion
     }
 }

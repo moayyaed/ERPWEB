@@ -235,7 +235,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] in_Ing_Egr_Inven_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
                 if (info_det.IdProducto != 0)
                 {
@@ -245,6 +245,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
+                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
+                        info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
             if (info_det.dm_cantidad_sinConversion > 0)
@@ -257,7 +259,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] in_Ing_Egr_Inven_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
                 if (info_det.IdProducto != 0)
                 {
@@ -267,6 +269,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
+                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
+                        info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
             if (info_det.dm_cantidad_sinConversion > 0)
@@ -432,7 +436,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             info_det.IdUnidadMedida = info_det.IdUnidadMedida;
             info_det.mv_costo_sinConversion = info_det.mv_costo_sinConversion;
             info_det.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
-
             list.Add(info_det);
         }
 
@@ -445,7 +448,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             edited_info.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
             edited_info.pr_descripcion = info_det.pr_descripcion;
             edited_info.IdProducto = info_det.IdProducto;
-
+            edited_info.tp_ManejaInven = info_det.tp_ManejaInven;
+            edited_info.se_distribuye = info_det.se_distribuye;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

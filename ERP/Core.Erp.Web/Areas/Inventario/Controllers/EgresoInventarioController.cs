@@ -45,6 +45,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
+
         #region Metodos ComboBox bajo demanda persona
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         public ActionResult CmbPersona_EgresoInv()
@@ -62,7 +63,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), "PERSONA");
         }
         #endregion
-
 
         #region vistas
         [ValidateInput(false)]
@@ -264,6 +264,26 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             {
                 return false;
             }
+            #region ValidarStock
+
+            var lst_validar = i_validar.lst_in_Ing_Egr_Inven_det.Select(q => new in_Producto_Stock_Info
+            {
+                IdEmpresa = i_validar.IdEmpresa,
+                IdSucursal = i_validar.IdSucursal,
+                IdBodega = i_validar.IdBodega ?? 0,
+                IdProducto = q.IdProducto,
+                pr_descripcion = q.pr_descripcion,
+                Cantidad = q.dm_cantidad_sinConversion,
+                tp_manejaInven = q.tp_ManejaInven,
+                CantidadAnterior = q.CantidadAnterior,
+                SeDestribuye = q.se_distribuye
+            }).ToList();
+
+            if (!bus_producto.validar_stock(lst_validar, ref msg))
+            {
+                return false;
+            }
+            #endregion
             return true;
         }
         private void cargar_combos(in_Ing_Egr_Inven_Info model)
@@ -290,7 +310,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] in_Ing_Egr_Inven_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
                 if (info_det.IdProducto != 0)
                 {
@@ -300,6 +320,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
+                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
+                        info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
             if(info_det.dm_cantidad_sinConversion>0 && info_det.IdProducto!=0)
@@ -311,8 +333,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] in_Ing_Egr_Inven_det_Info info_det)
-        {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+        {            
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
                 if (info_det.IdProducto != 0)
                 {
@@ -322,6 +344,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
+                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
+                        info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
             if (info_det.dm_cantidad_sinConversion > 0)

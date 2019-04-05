@@ -304,7 +304,7 @@ namespace Core.Erp.Data.Inventario
 
                 using (Entities_inventario Context = new Entities_inventario())
                 {
-                    in_Producto Entity = Context.in_Producto.Include("in_presentacion").Include("in_categorias").FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdProducto == IdProducto);
+                    in_Producto Entity = Context.in_Producto.Include("in_presentacion").Include("in_categorias").Include("in_ProductoTipo").FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdProducto == IdProducto);
                     if (Entity == null) return null;
                     info = new in_Producto_Info
                     {
@@ -340,7 +340,8 @@ namespace Core.Erp.Data.Inventario
                         pr_imagen=Entity.pr_imagen,
                         IdCtaCtble_Inve = Entity.in_categorias.IdCtaCtble_Inve,
                         pr_descripcion_combo = Entity.pr_descripcion,
-                        ca_descripcion = Entity.in_categorias.ca_Categoria                        
+                        ca_descripcion = Entity.in_categorias.ca_Categoria,
+                        tp_ManejaInven =  Entity.in_ProductoTipo.tp_ManejaInven                        
                     };
                 }
 

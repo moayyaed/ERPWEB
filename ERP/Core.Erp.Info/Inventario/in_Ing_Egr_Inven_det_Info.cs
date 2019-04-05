@@ -41,8 +41,8 @@ namespace Core.Erp.Info.Inventario
         public string Motivo_Aprobacion { get; set; }
         public double dm_cantidad_sinConversion { get; set; }
         public string IdUnidadMedida_sinConversion { get; set; }
-        [Required(ErrorMessage = ("El campo costo es obligatorio"))]
-        public Nullable<double> mv_costo_sinConversion { get; set; }
+        //[Required(ErrorMessage = ("El campo costo es obligatorio"))]
+        public double mv_costo_sinConversion { get; set; }
         public Nullable<int> IdMotivo_Inv { get; set; }
 
 
@@ -55,6 +55,9 @@ namespace Core.Erp.Info.Inventario
 
         #region Campos de factura        
         public fa_factura_det_x_in_Ing_Egr_Inven_det_Info RelacionDetalleFactura { get; set; }
+        public bool se_distribuye { get; set; }
+        public string tp_ManejaInven { get; set; }
+        public double CantidadAnterior { get; set; }
         #endregion
     }
 }

@@ -30,7 +30,6 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_distribucion_det" Width="1.5" PointX="5.75" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_distribucion_x_distribuir" Width="1.5" PointX="16.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Transferencias" Width="1.5" PointX="2.75" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_det" Width="1.5" PointX="7.75" PointY="19.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_det_x_devolver" Width="1.5" PointX="18.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_por_devolver" Width="1.5" PointX="8.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Composicion" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />

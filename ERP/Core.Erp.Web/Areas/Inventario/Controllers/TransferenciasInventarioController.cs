@@ -231,7 +231,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] in_transferencia_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
                 if (info_det.IdProducto != 0)
                 {
@@ -240,6 +240,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
+                        info_det.se_distribuye = info_producto.se_distribuye;
+                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                     }
                 }
 
@@ -253,7 +255,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] in_transferencia_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
                 if (info_det.IdProducto != 0)
                 {
@@ -262,6 +264,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
+                        info_det.se_distribuye = info_producto.se_distribuye;
+                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                     }
                 }
 
@@ -315,6 +319,28 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             {
                 return false;
             }
+
+            #region ValidarStock
+
+            var lst_validar = i_validar.list_detalle.Select(q => new in_Producto_Stock_Info
+            {
+                IdEmpresa = i_validar.IdEmpresa,
+                IdSucursal = i_validar.IdSucursalOrigen,
+                IdBodega = i_validar.IdBodegaOrigen,
+                IdProducto = q.IdProducto,
+                pr_descripcion = q.pr_descripcion,
+                Cantidad = q.dt_cantidad,
+                tp_manejaInven = q.tp_ManejaInven,
+                CantidadAnterior = q.CantidadAnterior,
+                SeDestribuye = q.se_distribuye
+            }).ToList();
+
+            if (!bus_producto.validar_stock(lst_validar, ref msg))
+            {
+                return false;
+            }
+            #endregion
+
             return true;
         }
         #endregion
@@ -357,6 +383,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             info_det.IdProducto = info_det.IdProducto;
             info_det.IdUnidadMedida = info_det.IdUnidadMedida;
             info_det.dt_cantidad = info_det.dt_cantidad;
+            info_det.tp_ManejaInven = info_det.tp_ManejaInven;
+            info_det.se_distribuye = info_det.se_distribuye;
             list.Add(info_det);
         }
 
@@ -366,7 +394,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             edited_info.IdProducto = info_det.IdProducto;
             edited_info.IdUnidadMedida = info_det.IdUnidadMedida;
             edited_info.dt_cantidad = info_det.dt_cantidad;
-
+            edited_info.tp_ManejaInven = info_det.tp_ManejaInven;
+            edited_info.se_distribuye = info_det.se_distribuye;
         }
 
         public void DeleteRow(int dt_secuencia, decimal IdTransaccionSession)

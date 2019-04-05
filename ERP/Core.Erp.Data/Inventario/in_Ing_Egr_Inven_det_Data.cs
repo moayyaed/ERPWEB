@@ -14,49 +14,50 @@ namespace Core.Erp.Data.Inventario
                 List<in_Ing_Egr_Inven_det_Info> Lista;
                 using (Entities_inventario Context = new Entities_inventario())
                 {
-                    Lista = (from q in Context.vwin_Ing_Egr_Inven_det
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdEmpresa==IdEmpresa
-                             && q.IdSucursal == IdSucursal
-                             && q.IdMovi_inven_tipo == IdMovi_inven_tipo
-                             && q.IdNumMovi == IdNumMovi
+                    Lista = (from d in Context.in_Ing_Egr_Inven_det
+                             join p in Context.in_Producto
+                             on new { d.IdEmpresa, d.IdProducto } equals new { p.IdEmpresa, p.IdProducto }
+                             join c in Context.in_ProductoTipo
+                             on new { p.IdEmpresa, p.IdProductoTipo } equals new { c.IdEmpresa, c.IdProductoTipo }
+                             where d.IdEmpresa == IdEmpresa && d.IdSucursal == IdSucursal
+                             && d.IdMovi_inven_tipo == IdMovi_inven_tipo && d.IdNumMovi == IdNumMovi
                              select new in_Ing_Egr_Inven_det_Info
                              {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdSucursal = q.IdSucursal,
-                                 IdMovi_inven_tipo = q.IdMovi_inven_tipo,
-                                 IdNumMovi = q.IdNumMovi,
-                                 IdBodega = q.IdBodega,
-                                 dm_cantidad = q.dm_cantidad,
-                                 dm_observacion = q.dm_observacion,
-                                 IdMotivo_Inv = q.IdMotivo_Inv,
-                                 IdEstadoAproba = q.IdEstadoAproba,
-                                 IdOrdenCompra = q.IdOrdenCompra,
-                                 IdProducto = q.IdProducto,
-                                 IdUnidadMedida = q.IdUnidadMedida,
-                                 IdPunto_cargo = q.IdPunto_cargo,
-                                 IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                                 mv_costo = q.mv_costo,
-                                 Secuencia = q.Secuencia,
+                                 IdEmpresa = d.IdEmpresa,
+                                 IdSucursal = d.IdSucursal,
+                                 IdMovi_inven_tipo = d.IdMovi_inven_tipo,
+                                 IdNumMovi = d.IdNumMovi,
+                                 IdBodega = d.IdBodega,
+                                 dm_cantidad = d.dm_cantidad,
+                                 dm_observacion = d.dm_observacion,
+                                 IdMotivo_Inv = d.IdMotivo_Inv,
+                                 IdEstadoAproba = d.IdEstadoAproba,
+                                 IdOrdenCompra = d.IdOrdenCompra,
+                                 IdProducto = d.IdProducto,
+                                 IdUnidadMedida = d.IdUnidadMedida,
+                                 IdPunto_cargo = d.IdPunto_cargo,
+                                 IdPunto_cargo_grupo = d.IdPunto_cargo_grupo,
+                                 mv_costo = d.mv_costo,
+                                 Secuencia = d.Secuencia,
 
-                                 IdSucursal_inv = q.IdSucursal_inv,
-                                 IdSucursal_oc = q.IdSucursal_oc,
-                                 IdEmpresa_inv = q.IdEmpresa_inv,
-                                 IdEmpresa_oc = q.IdEmpresa_oc,
-                                 IdBodega_inv = q.IdBodega_inv,
-                                 IdMovi_inven_tipo_inv = q.IdMovi_inven_tipo_inv,
-                                 IdNumMovi_inv = q.IdNumMovi_inv,
-                                 dm_cantidad_sinConversion = q.dm_cantidad_sinConversion,
-                                 IdUnidadMedida_sinConversion = q.IdUnidadMedida_sinConversion,
-                                 mv_costo_sinConversion = q.mv_costo_sinConversion,
-                                 secuencia_inv = q.secuencia_inv,
-                                 Secuencia_oc = q.Secuencia_oc,
-                                 pr_descripcion = q.pr_descripcion,
-
-                                 lote_fecha_vcto = q.lote_fecha_vcto,
-                                 lote_num_lote = q.lote_num_lote,
-                                 nom_presentacion = q.nom_presentacion
-
+                                 IdSucursal_inv = d.IdSucursal_inv,
+                                 IdSucursal_oc = d.IdSucursal_oc,
+                                 IdEmpresa_inv = d.IdEmpresa_inv,
+                                 IdEmpresa_oc = d.IdEmpresa_oc,
+                                 IdBodega_inv = d.IdBodega_inv,
+                                 IdMovi_inven_tipo_inv = d.IdMovi_inven_tipo_inv,
+                                 IdNumMovi_inv = d.IdNumMovi_inv,
+                                 dm_cantidad_sinConversion = d.dm_cantidad_sinConversion,
+                                 IdUnidadMedida_sinConversion = d.IdUnidadMedida_sinConversion,
+                                 mv_costo_sinConversion = d.mv_costo_sinConversion ?? 0,
+                                 secuencia_inv = d.secuencia_inv,
+                                 Secuencia_oc = d.Secuencia_oc,
+                                 pr_descripcion = p.pr_descripcion,
+                                 CantidadAnterior = d.dm_cantidad_sinConversion,
+                                 lote_fecha_vcto = p.lote_fecha_vcto,
+                                 lote_num_lote = p.lote_num_lote,
+                                 se_distribuye = p.se_distribuye ?? false,
+                                 tp_ManejaInven = c.tp_ManejaInven
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -110,7 +111,7 @@ namespace Core.Erp.Data.Inventario
                         IdNumMovi_inv = Entity.IdNumMovi_inv,
                         dm_cantidad_sinConversion =Entity.dm_cantidad_sinConversion,
                         IdUnidadMedida_sinConversion = Entity.IdUnidadMedida_sinConversion,
-                        mv_costo_sinConversion = Entity.mv_costo_sinConversion,
+                        mv_costo_sinConversion = Entity.mv_costo_sinConversion ?? 0,
                         secuencia_inv = Entity.secuencia_inv,
                         Secuencia_oc = Entity.Secuencia_oc
                         

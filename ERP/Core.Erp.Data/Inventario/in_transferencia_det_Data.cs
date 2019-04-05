@@ -19,8 +19,9 @@ namespace Core.Erp.Data.Inventario
                 {
                     Lista = (from q in Context.in_Producto
                               join p in Context.in_transferencia_det
-
                               on new {q.IdEmpresa, q.IdProducto}equals new {p.IdEmpresa,p.IdProducto}
+                              join t in Context.in_ProductoTipo
+                              on new { q.IdEmpresa, q.IdProductoTipo} equals new { t.IdEmpresa, t.IdProductoTipo}
                              where q.IdEmpresa == IdEmpresa
                            && p.IdSucursalOrigen == IdSucursal
                            && p.IdBodegaOrigen == IdBodega
@@ -41,7 +42,10 @@ namespace Core.Erp.Data.Inventario
                                  IdUnidadMedida = p.IdUnidadMedida,
                                  IdPunto_cargo_grupo = p.IdPunto_cargo_grupo,
                                  IdPunto_cargo = p.IdPunto_cargo,
-                                 pr_descripcion=q.pr_descripcion
+                                 pr_descripcion=q.pr_descripcion,
+                                 tp_ManejaInven = t.tp_ManejaInven,
+                                 se_distribuye = q.se_distribuye ?? false,
+                                 CantidadAnterior = p.dt_cantidad
                              }).ToList();
 
                 }
