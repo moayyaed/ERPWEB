@@ -31,6 +31,19 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+
+        public List<ro_catalogo_Info> get_list_x_tipo(int IdTipoCatalogo, bool MostrarAnulados)
+        {
+            try
+            {
+                return odata.get_list_x_tipo(IdTipoCatalogo, MostrarAnulados);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ro_catalogo_Info get_info(int IdEmpresa, int IdCargo)
         {
             try

@@ -365,7 +365,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             ViewBag.lst_tipo_nomina = bus_nomina_tipo.get_list(IdEmpresa, false).Where(v=>v.IdNomina_Tipo==1).ToList();
-            ViewBag.lst_catalogo = bus_catalogo.get_list_x_tipo(16);
+            ViewBag.lst_catalogo = bus_catalogo.get_list_x_tipo(16, false);
         }
 
         private bool validar(ro_prestamo_Info model)

@@ -109,19 +109,6 @@
                 sp.MaxValue = 999999999;
             });
         });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "dc_Valor_haber";
-            column.Caption = "Haber";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(15);
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-            });
-        });
         /*
         settings.Columns.Add(column =>
         {

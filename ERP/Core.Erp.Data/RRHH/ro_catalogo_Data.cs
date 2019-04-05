@@ -89,6 +89,59 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
+        public List<ro_catalogo_Info> get_list_x_tipo(int IdTipoCatalogo, bool MostrarAnulados)
+        {
+            try
+            {
+                List<ro_catalogo_Info> Lista;
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    if (MostrarAnulados == true)
+                    {
+                        Lista = (from q in Context.ro_catalogo
+                                 where q.IdTipoCatalogo == IdTipoCatalogo
+                                 select new ro_catalogo_Info
+                                 {
+                                     CodCatalogo = q.CodCatalogo,
+                                     IdCatalogo = q.IdCatalogo,
+                                     ca_descripcion = q.ca_descripcion,
+                                     IdTipoCatalogo = q.IdTipoCatalogo,
+                                     ca_estado = q.ca_estado,
+                                     ca_orden = q.ca_orden,
+
+                                     EstadoBool = q.ca_estado == "A" ? true : false
+                                 }).ToList();
+                    }
+                    else{
+                        Lista = (from q in Context.ro_catalogo
+                                 where q.IdTipoCatalogo == IdTipoCatalogo
+                                 && q.ca_estado == "A"
+                                 select new ro_catalogo_Info
+                                 {
+                                     CodCatalogo = q.CodCatalogo,
+                                     IdCatalogo = q.IdCatalogo,
+                                     ca_descripcion = q.ca_descripcion,
+                                     IdTipoCatalogo = q.IdTipoCatalogo,
+                                     ca_estado = q.ca_estado,
+                                     ca_orden = q.ca_orden,
+
+                                     EstadoBool = q.ca_estado == "A" ? true : false
+                                 }).ToList();
+                    }
+                    
+
+                }
+
+                return Lista;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ro_catalogo_Info get_info(int IdTipoCatalogo, int IdCatalogo)
         {
             try
