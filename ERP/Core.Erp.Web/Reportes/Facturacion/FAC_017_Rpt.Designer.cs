@@ -37,6 +37,8 @@
             this.pivotGridField1 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.pivotGridField2 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.pivotGridField3 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldANIO = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldMES = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
             this.lbl_empresa = new DevExpress.XtraReports.UI.XRTableCell();
@@ -62,8 +64,6 @@
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
-            this.fieldANIO = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
-            this.fieldMES = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
@@ -124,11 +124,20 @@
             this.xrPivotGrid1.OptionsView.ShowColumnHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowDataHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowFilterHeaders = false;
+            this.xrPivotGrid1.OptionsView.ShowGrandTotalsForSingleValues = true;
             this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(344.5F, 55.72917F);
             this.xrPivotGrid1.FieldValueDisplayText += new System.EventHandler<DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs>(this.xrPivotGrid1_FieldValueDisplayText);
             // 
             // pivotGridField1
             // 
+            this.pivotGridField1.Appearance.Cell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.CustomTotalCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValue.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValueGrandTotal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValueTotal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.GrandTotalCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.TotalCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.pivotGridField1.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             this.pivotGridField1.AreaIndex = 0;
             this.pivotGridField1.Caption = "Grupo";
@@ -153,6 +162,22 @@
             this.pivotGridField3.EmptyValueText = "0.00";
             this.pivotGridField3.FieldName = "vt_total";
             this.pivotGridField3.Name = "pivotGridField3";
+            // 
+            // fieldANIO
+            // 
+            this.fieldANIO.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
+            this.fieldANIO.AreaIndex = 0;
+            this.fieldANIO.FieldName = "ANIO";
+            this.fieldANIO.Name = "fieldANIO";
+            this.fieldANIO.Visible = false;
+            // 
+            // fieldMES
+            // 
+            this.fieldMES.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
+            this.fieldMES.AreaIndex = 1;
+            this.fieldMES.FieldName = "MES";
+            this.fieldMES.Name = "fieldMES";
+            this.fieldMES.Visible = false;
             // 
             // xrTable1
             // 
@@ -419,22 +444,6 @@
             // 
             this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Facturacion.FAC_017_Info);
             this.objectDataSource1.Name = "objectDataSource1";
-            // 
-            // fieldANIO
-            // 
-            this.fieldANIO.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.fieldANIO.AreaIndex = 0;
-            this.fieldANIO.FieldName = "ANIO";
-            this.fieldANIO.Name = "fieldANIO";
-            this.fieldANIO.Visible = false;
-            // 
-            // fieldMES
-            // 
-            this.fieldMES.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.fieldMES.AreaIndex = 1;
-            this.fieldMES.FieldName = "MES";
-            this.fieldMES.Name = "fieldMES";
-            this.fieldMES.Visible = false;
             // 
             // FAC_017_Rpt
             // 

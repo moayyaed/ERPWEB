@@ -37,6 +37,8 @@
             this.pivotGridField1 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.pivotGridField2 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.pivotGridField3 = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldANIO = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
+            this.fieldIdSucursal = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
             this.lbl_empresa = new DevExpress.XtraReports.UI.XRTableCell();
@@ -62,9 +64,6 @@
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
-            this.fieldANIO = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
-            this.fieldSemana = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
-            this.fieldIdSucursal = new DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
@@ -117,7 +116,6 @@
             this.pivotGridField2,
             this.pivotGridField3,
             this.fieldANIO,
-            this.fieldSemana,
             this.fieldIdSucursal});
             this.xrPivotGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 85.10416F);
             this.xrPivotGrid1.Name = "xrPivotGrid1";
@@ -125,11 +123,20 @@
             this.xrPivotGrid1.OptionsView.ShowColumnHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowDataHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowFilterHeaders = false;
+            this.xrPivotGrid1.OptionsView.ShowGrandTotalsForSingleValues = true;
             this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(325F, 83.54166F);
             this.xrPivotGrid1.FieldValueDisplayText += new System.EventHandler<DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs>(this.xrPivotGrid1_FieldValueDisplayText);
             // 
             // pivotGridField1
             // 
+            this.pivotGridField1.Appearance.Cell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.CustomTotalCell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldHeader.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValue.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValueGrandTotal.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.FieldValueTotal.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.GrandTotalCell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
+            this.pivotGridField1.Appearance.TotalCell.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
             this.pivotGridField1.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             this.pivotGridField1.AreaIndex = 0;
             this.pivotGridField1.Caption = "Sucursal";
@@ -140,7 +147,7 @@
             // pivotGridField2
             // 
             this.pivotGridField2.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.pivotGridField2.AreaIndex = 1;
+            this.pivotGridField2.AreaIndex = 0;
             this.pivotGridField2.Caption = "Semana";
             this.pivotGridField2.FieldName = "DescripcionSemana";
             this.pivotGridField2.Name = "pivotGridField2";
@@ -155,6 +162,22 @@
             this.pivotGridField3.EmptyValueText = "0.00";
             this.pivotGridField3.FieldName = "vt_total";
             this.pivotGridField3.Name = "pivotGridField3";
+            // 
+            // fieldANIO
+            // 
+            this.fieldANIO.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
+            this.fieldANIO.AreaIndex = 0;
+            this.fieldANIO.FieldName = "ANIO";
+            this.fieldANIO.Name = "fieldANIO";
+            this.fieldANIO.Visible = false;
+            // 
+            // fieldIdSucursal
+            // 
+            this.fieldIdSucursal.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
+            this.fieldIdSucursal.AreaIndex = 0;
+            this.fieldIdSucursal.FieldName = "IdSucursal";
+            this.fieldIdSucursal.Name = "fieldIdSucursal";
+            this.fieldIdSucursal.Visible = false;
             // 
             // xrTable1
             // 
@@ -422,30 +445,6 @@
             this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Facturacion.FAC_016_Info);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
-            // fieldANIO
-            // 
-            this.fieldANIO.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.fieldANIO.AreaIndex = 0;
-            this.fieldANIO.FieldName = "ANIO";
-            this.fieldANIO.Name = "fieldANIO";
-            this.fieldANIO.Visible = false;
-            // 
-            // fieldSemana
-            // 
-            this.fieldSemana.Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-            this.fieldSemana.AreaIndex = 0;
-            this.fieldSemana.Caption = "#";
-            this.fieldSemana.FieldName = "Semana";
-            this.fieldSemana.Name = "fieldSemana";
-            // 
-            // fieldIdSucursal
-            // 
-            this.fieldIdSucursal.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
-            this.fieldIdSucursal.AreaIndex = 0;
-            this.fieldIdSucursal.FieldName = "IdSucursal";
-            this.fieldIdSucursal.Name = "fieldIdSucursal";
-            this.fieldIdSucursal.Visible = false;
-            // 
             // FAC_016_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -511,7 +510,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell5;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell2;
         private DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField fieldANIO;
-        private DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField fieldSemana;
         private DevExpress.XtraReports.UI.PivotGrid.XRPivotGridField fieldIdSucursal;
     }
 }
