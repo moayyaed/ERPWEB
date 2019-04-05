@@ -23,11 +23,13 @@ namespace Core.Erp.Info.Inventario
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
+        #endregion
+
+        #region Campos que no existen en la tabla
+        public bool Seleccionado { get; set; }
         #endregion
     }
 }

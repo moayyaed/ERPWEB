@@ -11,6 +11,7 @@ using Core.Erp.Web.Reportes.Facturacion;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -23,6 +24,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         fa_factura_Bus bus_factura = new fa_factura_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+        in_Marca_Bus bus_marca = new in_Marca_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
 
         #region Metodos ComboBox bajo demanda
@@ -117,9 +120,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         private void cargar_FAC010(cl_filtros_facturacion_Info model)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             lst_sucursal.Add(new tb_sucursal_Info
@@ -141,8 +145,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         private void cargar_combos(cl_filtros_facturacion_Info model)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             lst_sucursal.Add(new tb_sucursal_Info
             {
@@ -150,20 +154,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Su_Descripcion = "Todas"
             });
             ViewBag.lst_sucursal = lst_sucursal;
-
-            fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
-            var lst_cliente = bus_cliente.get_list(IdEmpresa, false);
-            ViewBag.lst_cliente = lst_cliente;
-
-            fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
-            var lst_contacto = bus_contacto.get_list(IdEmpresa, model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente));
-            lst_contacto.Add(new Info.Facturacion.fa_cliente_contactos_Info
-            {
-                IdContacto = 0,
-                Nombres = "Todos"
-            });
-            ViewBag.lst_contacto = lst_contacto;
-
+            
             fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
             var lst_vendedor = bus_vendedor.get_list(IdEmpresa, false);
             lst_vendedor.Add(new Info.Facturacion.fa_Vendedor_Info
@@ -173,15 +164,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_vendedor = lst_vendedor;
 
-            fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
-            var lst_proforma = bus_proforma.get_list(IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
-            lst_proforma.Add(new Info.Facturacion.fa_proforma_Info
-            {
-                IdProforma = 0,
-                pf_codigo = "Todos"
-            });
-            ViewBag.lst_proforma = lst_proforma;
-
             fa_cliente_tipo_Bus bus_cliente_tipo = new fa_cliente_tipo_Bus();
             var lst_cliente_tipo = bus_cliente_tipo.get_list(IdEmpresa, false);
             lst_cliente_tipo.Add(new Info.Facturacion.fa_cliente_tipo_Info
@@ -190,13 +172,26 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Descripcion_tip_cliente = "Todos"
             });
             ViewBag.lst_cliente_tipo = lst_cliente_tipo;
-
-            in_Marca_Bus bus_marca = new in_Marca_Bus();
-            var lst_marca = bus_marca.get_list(IdEmpresa, false);
-            ViewBag.lst_marca = lst_marca;
-
+        }
+        private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
+        {
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            foreach (var item in lst_sucursal)
+            {
+                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+            }
+            ViewBag.lst_sucursal = lst_sucursal;
         }
 
+        private void cargar_marca_check(int IdEmpresa , int[] intArray)
+        {
+            var lst_marca = bus_marca.get_list(IdEmpresa, false);
+            foreach (var item in lst_marca)
+            {
+                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdMarca).Count() > 0 ? true : false);
+            }
+            ViewBag.lst_marca = lst_marca;
+        }
 
         public ActionResult FAC_001()
         {
@@ -287,7 +282,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
         public JsonResult cargar_cliente(decimal IdCliente = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
             var resultado = bus_contacto.get_list(IdEmpresa, IdCliente);
             resultado.Add(new Info.Facturacion.fa_cliente_contactos_Info
@@ -328,7 +323,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_004(int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {
             FAC_004_Rpt model = new FAC_004_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBodega.Value = IdBodega;
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdNota.Value = IdNota;
@@ -379,7 +374,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_006(int IdSucursal = 0, decimal IdProforma = 0, bool mostrar_imagen = false)
         {  
             FAC_006_Rpt model = new FAC_006_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdProforma.Value = IdProforma;
             model.RequestParameters = false;
@@ -410,7 +405,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_008(int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {
             FAC_008_Rpt model = new FAC_008_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBodega.Value = IdBodega;
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdNota.Value = IdNota;
@@ -423,7 +418,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_009(int IdSucursal = 0, int IdBodega = 0, decimal IdGuiaRemision = 0)
         {
             FAC_009_Rpt model = new FAC_009_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBodega.Value = IdBodega;
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdGuiaRemision.Value = IdGuiaRemision;
@@ -449,8 +444,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_IdCatalogo_FormaPago.Value = model.IdCatalogo_FormaPago;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
 
             ViewBag.Report = report;
             return View(model);
@@ -467,8 +462,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_FAC010(model);
 
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
 
             ViewBag.Report = report;
             return View(model);
@@ -489,8 +484,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fechaFin.Value = model.fecha_fin;
             report.p_mostrarAnulados.Value = model.mostrarAnulados;
             report.p_mostrar_observacion_completa.Value = model.mostrar_observacion_completa;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -505,8 +500,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrarAnulados.Value = model.mostrarAnulados;
             report.p_mostrar_observacion_completa.Value = model.mostrar_observacion_completa;
             cargar_combos(model);
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -559,8 +554,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -571,8 +566,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -585,15 +580,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+
             FAC_015_Rpt report = new FAC_015_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -606,9 +602,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
-            cargar_combos(model);
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);
         }
@@ -622,15 +618,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             FAC_016_Rpt report = new FAC_016_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -643,9 +639,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
-            cargar_combos(model);
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);
         }
@@ -658,15 +654,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model);
+            cargar_marca_check(model.IdEmpresa, model.IntArray);
             FAC_017_Rpt report = new FAC_017_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdMarca.Value = model.IdMarca;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
@@ -679,9 +675,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdMarca.Value = model.IdMarca;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
-            cargar_combos(model);
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_marca_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);
         }

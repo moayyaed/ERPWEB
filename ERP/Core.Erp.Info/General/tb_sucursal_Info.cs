@@ -32,8 +32,6 @@ namespace Core.Erp.Info.General
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string MotiAnula { get; set; }
@@ -42,8 +40,13 @@ namespace Core.Erp.Info.General
         public string IdCtaCble_vtaIVA0 { get; set; }
         public string IdCtaCble_vtaIVA { get; set; }
 
+        #region Campos que no existen en la tabla
         public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> ListaNivelDescuento { get; set; }
         public string IdString { get; set; }
+        public bool Seleccionado { get; set; }
+        #endregion
+
+
 
     }
 }
