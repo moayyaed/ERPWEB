@@ -145,6 +145,7 @@
             this.xrPivotGrid1.OptionsView.ShowColumnHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowDataHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowFilterHeaders = false;
+            this.xrPivotGrid1.OptionsView.ShowGrandTotalsForSingleValues = true;
             this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(325F, 89.6875F);
             this.xrPivotGrid1.FieldValueDisplayText += new System.EventHandler<DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs>(this.xrPivotGrid1_FieldValueDisplayText);
             // 
@@ -163,11 +164,10 @@
             this.pivotGridField1.Caption = "Sucursal";
             this.pivotGridField1.ColumnValueLineCount = 4;
             this.pivotGridField1.FieldName = "Su_Descripcion";
-            this.pivotGridField1.MinWidth = 85;
+            this.pivotGridField1.MinWidth = 100;
             this.pivotGridField1.Name = "pivotGridField1";
             this.pivotGridField1.Options.ShowGrandTotal = false;
             this.pivotGridField1.Options.ShowTotals = false;
-            this.pivotGridField1.Width = 85;
             // 
             // pivotGridField2
             // 
