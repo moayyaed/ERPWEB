@@ -128,6 +128,9 @@
     <Compile Include="ATS_ventas.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="ATS_ventas_eventos.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Banco\ba_Banco_Cuenta_Data.cs" />
     <Compile Include="Banco\ba_Banco_Cuenta_x_tb_sucursal_Data.cs" />
     <Compile Include="Banco\ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Data.cs" />

@@ -50,6 +50,7 @@ namespace Core.Erp.Data
         public DbSet<ATS_exportaciones> ATS_exportaciones { get; set; }
         public DbSet<ATS_retenciones> ATS_retenciones { get; set; }
         public DbSet<ATS_ventas> ATS_ventas { get; set; }
+        public DbSet<ATS_ventas_eventos> ATS_ventas_eventos { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

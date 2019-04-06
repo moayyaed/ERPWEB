@@ -358,6 +358,36 @@
           <Property Name="ivaComp" Type="numeric" Precision="20" Scale="2" Nullable="false" />
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
+        <EntityType Name="ATS_ventas_eventos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdPeriodo" Type="int" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="tpIdCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="idCliente" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="parteRel" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="tipoCliente" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="DenoCli" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="tipoComprobante" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="tipoEm" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="numeroComprobantes" Type="int" Nullable="false" />
+          <Property Name="baseNoGraIva" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="baseImponible" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="baseImpGrav" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="montoIva" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="montoIce" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="valorRetIva" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="valorRetRenta" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="formaPago" Type="varchar" MaxLength="2" />
+          <Property Name="codEstab" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ventasEstab" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="ivaComp" Type="numeric" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" />
+        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_cbtecble">
@@ -713,6 +743,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ATS_exportaciones" EntityType="Self.ATS_exportaciones" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ATS_retenciones" EntityType="Self.ATS_retenciones" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ATS_ventas" EntityType="Self.ATS_ventas" Schema="EntidadRegulatoria" store:Type="Tables" />
+          <EntitySet Name="ATS_ventas_eventos" EntityType="Self.ATS_ventas_eventos" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="vwct_cbtecble" EntityType="Self.vwct_cbtecble" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwct_cbtecble].[IdEmpresa] AS [IdEmpresa], 
@@ -1101,6 +1132,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ATS_exportaciones" EntityType="Model_contabilidad.ATS_exportaciones" />
           <EntitySet Name="ATS_retenciones" EntityType="Model_contabilidad.ATS_retenciones" />
           <EntitySet Name="ATS_ventas" EntityType="Model_contabilidad.ATS_ventas" />
+          <EntitySet Name="ATS_ventas_eventos" EntityType="Model_contabilidad.ATS_ventas_eventos" />
         </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -1640,6 +1672,36 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="ivaComp" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
+        <EntityType Name="ATS_ventas_eventos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="tpIdCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="idCliente" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="parteRel" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="tipoCliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DenoCli" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="tipoComprobante" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="tipoEm" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="numeroComprobantes" Type="Int32" Nullable="false" />
+          <Property Name="baseNoGraIva" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="baseImponible" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="baseImpGrav" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="montoIva" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="montoIce" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="valorRetIva" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="valorRetRenta" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="formaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="codEstab" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ventasEstab" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="ivaComp" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="IdSucursal" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2043,6 +2105,35 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ATS_ventas">
             <EntityTypeMapping TypeName="Model_contabilidad.ATS_ventas">
               <MappingFragment StoreEntitySet="ATS_ventas">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="ivaComp" ColumnName="ivaComp" />
+                <ScalarProperty Name="ventasEstab" ColumnName="ventasEstab" />
+                <ScalarProperty Name="codEstab" ColumnName="codEstab" />
+                <ScalarProperty Name="formaPago" ColumnName="formaPago" />
+                <ScalarProperty Name="valorRetRenta" ColumnName="valorRetRenta" />
+                <ScalarProperty Name="valorRetIva" ColumnName="valorRetIva" />
+                <ScalarProperty Name="montoIce" ColumnName="montoIce" />
+                <ScalarProperty Name="montoIva" ColumnName="montoIva" />
+                <ScalarProperty Name="baseImpGrav" ColumnName="baseImpGrav" />
+                <ScalarProperty Name="baseImponible" ColumnName="baseImponible" />
+                <ScalarProperty Name="baseNoGraIva" ColumnName="baseNoGraIva" />
+                <ScalarProperty Name="numeroComprobantes" ColumnName="numeroComprobantes" />
+                <ScalarProperty Name="tipoEm" ColumnName="tipoEm" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="DenoCli" ColumnName="DenoCli" />
+                <ScalarProperty Name="tipoCliente" ColumnName="tipoCliente" />
+                <ScalarProperty Name="parteRel" ColumnName="parteRel" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="tpIdCliente" ColumnName="tpIdCliente" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATS_ventas_eventos">
+            <EntityTypeMapping TypeName="Model_contabilidad.ATS_ventas_eventos">
+              <MappingFragment StoreEntitySet="ATS_ventas_eventos">
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="ivaComp" ColumnName="ivaComp" />
                 <ScalarProperty Name="ventasEstab" ColumnName="ventasEstab" />
