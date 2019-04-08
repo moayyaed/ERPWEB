@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.RRHH.ro_empleado_novedad_Info
 @{
-    ViewBag.Title = "Anular novedad";
+    ViewBag.Title = ("Anular novedad" + " con ID #" + @Model.IdNovedad);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
