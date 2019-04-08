@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_nota_DebCre_Info
 @{
-    ViewBag.Title = "Anular nota de débito";
+    ViewBag.Title = ("Anular nota de débito" + " con ID #" + @Model.IdCbteCble_Nota);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

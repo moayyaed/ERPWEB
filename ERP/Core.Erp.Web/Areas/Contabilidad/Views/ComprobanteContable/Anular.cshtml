@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Contabilidad.ct_cbtecble_Info
 @{
-    ViewBag.Title = "Anular comprobante contable";
+    ViewBag.Title = ("Anular comprobante contable" + " con ID #" + @Model.IdCbteCble);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

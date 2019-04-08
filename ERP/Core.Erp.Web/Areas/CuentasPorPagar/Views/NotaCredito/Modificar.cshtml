@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_nota_DebCre_Info
 @{
-    ViewBag.Title = "Modificar nota de crédito";
+    ViewBag.Title = ("Modificar nota de crédito" + " con ID #" + @Model.IdCbteCble_Nota);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

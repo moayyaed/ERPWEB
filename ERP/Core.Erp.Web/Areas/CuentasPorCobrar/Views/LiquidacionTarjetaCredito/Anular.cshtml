@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_LiquidacionTarjeta_Info
 @{
-    ViewBag.Title = "Anular liquidación de tarjeta de crédito";
+    ViewBag.Title = ("Anular liquidación de tarjeta de crédito" + " con ID #" + @Model.IdLiquidacion);
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {

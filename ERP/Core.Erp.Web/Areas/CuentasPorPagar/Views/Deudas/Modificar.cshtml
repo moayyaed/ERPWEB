@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info
 @{
-    ViewBag.Title = "Modificar deuda";
+    ViewBag.Title = ("Modificar factura por proveedor" + " con ID #" + @Model.IdCbteCble_Ogiro);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

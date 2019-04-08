@@ -2,7 +2,7 @@
 @{
                 /**/
 
-                ViewBag.Title = "Anular deuda";
+                ViewBag.Title = ("Anular factura por proveedor" + " con ID #" + @Model.IdCbteCble_Ogiro);
                 if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
                 {
                     Response.Redirect("~/Account/Login");

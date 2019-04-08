@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_proforma_Info
 @{
-    ViewBag.Title = "Anular proforma";
+    ViewBag.Title = ("Anular proforma" + " con ID #" + @Model.IdProforma);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

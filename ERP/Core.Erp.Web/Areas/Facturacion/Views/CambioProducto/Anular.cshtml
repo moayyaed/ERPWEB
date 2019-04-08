@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_CambioProducto_Info
 @{
-    ViewBag.Title = "Anular cambio";
+    ViewBag.Title = ("Anular cambio" + " con ID #" + @Model.IdCambio);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

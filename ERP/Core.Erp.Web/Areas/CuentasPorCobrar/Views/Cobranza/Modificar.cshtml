@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_cobro_Info
 @{
-    ViewBag.Title = "Modificar cobro";
+    ViewBag.Title = ("Modificar cobro" + " con ID #" + @Model.IdCobro);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

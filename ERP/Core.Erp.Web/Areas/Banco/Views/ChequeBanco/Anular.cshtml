@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Banco.ba_Cbte_Ban_Info
 @{
-    ViewBag.Title = "Anular cheque";
+    ViewBag.Title = ("Anular cheque" + " con ID #" + @Model.IdCbteCble);
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {

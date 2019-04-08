@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Inventario.in_transferencia_Info
 @{
-    ViewBag.Title = "Anular transferencia de inventario";
+    ViewBag.Title = ("Anular transferencia de inventario" + " con ID #" + @Model.IdTransferencia);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

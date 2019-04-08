@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_retencion_Info
 @{
-    ViewBag.Title = "Modificar retención";
+    ViewBag.Title = ("Modificar retención" + " con ID #" + @Model.IdRetencion);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

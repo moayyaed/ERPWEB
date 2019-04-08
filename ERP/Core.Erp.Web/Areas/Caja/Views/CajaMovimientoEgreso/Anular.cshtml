@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Caja.caj_Caja_Movimiento_Info
 @{
-    ViewBag.Title = "Anular egreso";
+    ViewBag.Title = ("Anular egreso" + " con ID #" + @Model.IdCbteCble);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

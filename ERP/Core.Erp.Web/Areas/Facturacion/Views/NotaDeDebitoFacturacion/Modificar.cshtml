@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_notaCreDeb_Info
 @{
-    ViewBag.Title = "Modificar nota de débito";
+    ViewBag.Title = ("Modificar nota de débito" + " con ID #" + @Model.IdNota);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

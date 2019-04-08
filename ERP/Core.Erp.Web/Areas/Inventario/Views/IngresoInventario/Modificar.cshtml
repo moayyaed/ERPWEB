@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Inventario.in_Ing_Egr_Inven_Info
 @{
-    ViewBag.Title = "Modificar ingreso";
+    ViewBag.Title = ("Modificar ingreso" + " con ID #" + @Model.IdNumMovi);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");

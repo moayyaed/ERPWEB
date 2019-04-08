@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_factura_Info
 @{
-    ViewBag.Title = "Anular factura";
+    ViewBag.Title = ("Anular factura" + " con ID #" + @Model.IdCbteVta);
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
