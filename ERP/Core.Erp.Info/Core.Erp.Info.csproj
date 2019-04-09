@@ -61,7 +61,9 @@
     <Compile Include="Banco\ba_CatalogoTipo_Info.cs" />
     <Compile Include="Banco\ba_Catalogo_Info.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_Info.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Info.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_x_ba_TipoFlujo_Info.cs" />
+    <Compile Include="Banco\ba_Conciliacion_det_Info.cs" />
     <Compile Include="Banco\ba_Conciliacion_det_IngEgr_Info.cs" />
     <Compile Include="Banco\ba_Conciliacion_Info.cs" />
     <Compile Include="Banco\ba_parametros_Info.cs" />

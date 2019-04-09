@@ -52,5 +52,6 @@ namespace Core.Erp.Data
         public DbSet<vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar> vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar { get; set; }
         public DbSet<ba_Banco_Cuenta> ba_Banco_Cuenta { get; set; }
         public DbSet<ba_parametros> ba_parametros { get; set; }
+        public DbSet<ba_Conciliacion_det> ba_Conciliacion_det { get; set; }
     }
 }

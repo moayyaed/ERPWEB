@@ -17,6 +17,7 @@ namespace Core.Erp.Data
         public ba_Conciliacion()
         {
             this.ba_Conciliacion_det_IngEgr = new HashSet<ba_Conciliacion_det_IngEgr>();
+            this.ba_Conciliacion_det = new HashSet<ba_Conciliacion_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -44,5 +45,6 @@ namespace Core.Erp.Data
         public virtual ba_Catalogo ba_Catalogo { get; set; }
         public virtual ICollection<ba_Conciliacion_det_IngEgr> ba_Conciliacion_det_IngEgr { get; set; }
         public virtual ba_Banco_Cuenta ba_Banco_Cuenta { get; set; }
+        public virtual ICollection<ba_Conciliacion_det> ba_Conciliacion_det { get; set; }
     }
 }

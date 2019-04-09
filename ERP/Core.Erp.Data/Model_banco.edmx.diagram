@@ -51,6 +51,8 @@
         <AssociationConnector Association="Model_banco.FK_ba_Talonario_cheques_x_banco_ba_Banco_Cuenta" />
         <AssociationConnector Association="Model_banco.FK_ba_TipoFlujo_Movimiento_ba_Banco_Cuenta" />
         <EntityTypeShape EntityType="Model_banco.ba_parametros" Width="1.5" PointX="9.375" PointY="15.75" />
+        <EntityTypeShape EntityType="Model_banco.ba_Conciliacion_det" Width="1.5" PointX="8.25" PointY="21.75" />
+        <AssociationConnector Association="Model_banco.FK_ba_Conciliacion_det_ba_Conciliacion" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

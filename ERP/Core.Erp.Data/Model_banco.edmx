@@ -179,6 +179,23 @@
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="250" />
           <Property Name="co_Observacion" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="ba_Conciliacion_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdConciliacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdTipocbte" Type="int" Nullable="false" />
+          <Property Name="tipo_IngEgr" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Referencia" Type="varchar" MaxLength="50" />
+          <Property Name="Seleccionado" Type="bit" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Valor" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="ba_Conciliacion_det_IngEgr">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -775,6 +792,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ba_Conciliacion_det_ba_Conciliacion">
+          <End Role="ba_Conciliacion" Type="Self.ba_Conciliacion" Multiplicity="1" />
+          <End Role="ba_Conciliacion_det" Type="Self.ba_Conciliacion_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Conciliacion">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion" />
+            </Principal>
+            <Dependent Role="ba_Conciliacion_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ba_Conciliacion_det_IngEgr_ba_Conciliacion">
           <End Role="ba_Conciliacion" Type="Self.ba_Conciliacion" Multiplicity="1" />
           <End Role="ba_Conciliacion_det_IngEgr" Type="Self.ba_Conciliacion_det_IngEgr" Multiplicity="*" />
@@ -883,6 +914,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySet Name="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" EntityType="Self.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Cbte_Ban_x_ba_TipoFlujo" EntityType="Self.ba_Cbte_Ban_x_ba_TipoFlujo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Conciliacion" EntityType="Self.ba_Conciliacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ba_Conciliacion_det" EntityType="Self.ba_Conciliacion_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Conciliacion_det_IngEgr" EntityType="Self.ba_Conciliacion_det_IngEgr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_parametros" EntityType="Self.ba_parametros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Talonario_cheques_x_banco" EntityType="Self.ba_Talonario_cheques_x_banco" Schema="dbo" store:Type="Tables" />
@@ -1103,6 +1135,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_Catalogo" EntitySet="ba_Catalogo" />
             <End Role="ba_Conciliacion" EntitySet="ba_Conciliacion" />
           </AssociationSet>
+          <AssociationSet Name="FK_ba_Conciliacion_det_ba_Conciliacion" Association="Self.FK_ba_Conciliacion_det_ba_Conciliacion">
+            <End Role="ba_Conciliacion" EntitySet="ba_Conciliacion" />
+            <End Role="ba_Conciliacion_det" EntitySet="ba_Conciliacion_det" />
+          </AssociationSet>
           <AssociationSet Name="FK_ba_Conciliacion_det_IngEgr_ba_Conciliacion" Association="Self.FK_ba_Conciliacion_det_IngEgr_ba_Conciliacion">
             <End Role="ba_Conciliacion" EntitySet="ba_Conciliacion" />
             <End Role="ba_Conciliacion_det_IngEgr" EntitySet="ba_Conciliacion_det_IngEgr" />
@@ -1227,6 +1263,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <NavigationProperty Name="ba_Catalogo" Relationship="Self.FK_ba_Conciliacion_ba_Catalogo" FromRole="ba_Conciliacion" ToRole="ba_Catalogo" />
           <NavigationProperty Name="ba_Conciliacion_det_IngEgr" Relationship="Self.FK_ba_Conciliacion_det_IngEgr_ba_Conciliacion" FromRole="ba_Conciliacion" ToRole="ba_Conciliacion_det_IngEgr" />
           <NavigationProperty Name="ba_Banco_Cuenta" Relationship="Model_banco.FK_ba_Conciliacion_ba_Banco_Cuenta" FromRole="ba_Conciliacion" ToRole="ba_Banco_Cuenta" />
+          <NavigationProperty Name="ba_Conciliacion_det" Relationship="Model_banco.FK_ba_Conciliacion_det_ba_Conciliacion" FromRole="ba_Conciliacion" ToRole="ba_Conciliacion_det" />
         </EntityType>
         <EntityType Name="ba_Conciliacion_det_IngEgr">
           <Key>
@@ -1569,6 +1606,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_TipoFlujo_Movimiento" EntitySet="ba_TipoFlujo_Movimiento" />
           </AssociationSet>
           <EntitySet Name="ba_parametros" EntityType="Model_banco.ba_parametros" />
+          <EntitySet Name="ba_Conciliacion_det" EntityType="Model_banco.ba_Conciliacion_det" />
+          <AssociationSet Name="FK_ba_Conciliacion_det_ba_Conciliacion" Association="Model_banco.FK_ba_Conciliacion_det_ba_Conciliacion">
+            <End Role="ba_Conciliacion" EntitySet="ba_Conciliacion" />
+            <End Role="ba_Conciliacion_det" EntitySet="ba_Conciliacion_det" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="vwba_Cbte_Ban">
           <Key>
@@ -2125,6 +2167,38 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ba_Conciliacion_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdConciliacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdTipocbte" Type="Int32" Nullable="false" />
+          <Property Name="tipo_IngEgr" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Seleccionado" Type="Boolean" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="ba_Conciliacion" Relationship="Model_banco.FK_ba_Conciliacion_det_ba_Conciliacion" FromRole="ba_Conciliacion_det" ToRole="ba_Conciliacion" />
+        </EntityType>
+        <Association Name="FK_ba_Conciliacion_det_ba_Conciliacion">
+          <End Type="Model_banco.ba_Conciliacion" Role="ba_Conciliacion" Multiplicity="1" />
+          <End Type="Model_banco.ba_Conciliacion_det" Role="ba_Conciliacion_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Conciliacion">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion" />
+            </Principal>
+            <Dependent Role="ba_Conciliacion_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2618,6 +2692,22 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="CantidadChequesAlerta" ColumnName="CantidadChequesAlerta" />
                 <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
                 <ScalarProperty Name="CiudadDefaultParaCrearCheques" ColumnName="CiudadDefaultParaCrearCheques" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ba_Conciliacion_det">
+            <EntityTypeMapping TypeName="Model_banco.ba_Conciliacion_det">
+              <MappingFragment StoreEntitySet="ba_Conciliacion_det">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Seleccionado" ColumnName="Seleccionado" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="tipo_IngEgr" ColumnName="tipo_IngEgr" />
+                <ScalarProperty Name="IdTipocbte" ColumnName="IdTipocbte" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

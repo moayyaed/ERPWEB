@@ -60,8 +60,10 @@
     <Compile Include="Banco\ba_CatalogoTipo_Bus.cs" />
     <Compile Include="Banco\ba_Catalogo_Bus.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_Bus.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_x_ba_TipoFlujo_Bus.cs" />
     <Compile Include="Banco\ba_Conciliacion_Bus.cs" />
+    <Compile Include="Banco\ba_Conciliacion_det_Bus.cs" />
     <Compile Include="Banco\ba_Conciliacion_det_IngEgr_Bus.cs" />
     <Compile Include="Banco\ba_parametros_Bus.cs" />
     <Compile Include="Banco\ba_Talonario_cheques_x_banco_Bus.cs" />
