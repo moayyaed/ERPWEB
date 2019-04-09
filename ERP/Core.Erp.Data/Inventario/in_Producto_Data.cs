@@ -1047,39 +1047,21 @@ namespace Core.Erp.Data.Inventario
 
                 Entities_inventario Context = new Entities_inventario();
 
-                var lst = (from
-                          p in Context.vwin_Producto_PorSucursal
-                           where p.IdEmpresa == IdEmpresa
+                Lista = Context.vwin_Producto_PorSucursal.Where(p=> p.IdEmpresa == IdEmpresa
                            && p.IdSucursal == IdSucursal
-                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)
-                           select new
+                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)).Select(p=>  new in_Producto_Info
                            {
-                               p.IdEmpresa,
-                               p.IdProducto,
-                               p.pr_descripcion,
-                               p.ca_Categoria,
-                               p.precio_1,
-                               p.Stock
+                               IdEmpresa = p.IdEmpresa,
+                                IdProducto = p.IdProducto,
+                                pr_descripcion = p.pr_descripcion,
+                                nom_categoria = p.ca_Categoria,
+                                precio_1 = p.precio_1 ?? 0,
+                                stock = p.Stock ?? 0
                            })
                              .OrderBy(p => p.IdProducto)
                              .Skip(skip)
                              .Take(take)
                              .ToList();
-
-
-                foreach (var q in lst)
-                {
-                    Lista.Add(new in_Producto_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        IdProducto = q.IdProducto,
-                        pr_descripcion = q.pr_descripcion,
-                        nom_categoria = q.ca_Categoria,
-                        precio_1 = (double)q.precio_1,
-                        stock = (double)q.Stock
-                    });
-                }
-
                 Context.Dispose();
                 Lista = get_list_nombre_combo(Lista);
                 return Lista;
