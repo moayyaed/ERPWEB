@@ -39,7 +39,7 @@ namespace Core.Erp.Info.Banco
         public List<ba_Conciliacion_det_IngEgr_Info> lst_det { get; set; }
         public double co_SaldoConciliado { get; set; }
         public double co_Diferencia { get; set; }
-        public List<ba_Conciliacion_det_Info> Lista_detalle { get; set; }
+        public List<ba_Conciliacion_det_Info> List_detalle { get; set; }
         #endregion
 
     }

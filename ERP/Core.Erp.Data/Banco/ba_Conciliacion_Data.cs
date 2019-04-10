@@ -163,9 +163,9 @@ namespace Core.Erp.Data.Banco
                                 cbte.IdEstado_cheque_cat = "ESTCBCOB";
                         }
                     }
-                    if(info.Lista_detalle.Count()>0)
+                    if(info.List_detalle.Count()>0)
                     {
-                        foreach (var item in info.Lista_detalle)
+                        foreach (var item in info.List_detalle)
                         {
                             Context.ba_Conciliacion_det.Add(new ba_Conciliacion_det
                             {
@@ -234,6 +234,25 @@ namespace Core.Erp.Data.Banco
                             var cbte = Context.ba_Cbte_Ban.Where(q => q.IdEmpresa == info.IdEmpresa && item.IdTipocbte == q.IdTipocbte && q.IdCbteCble == item.IdCbteCble).FirstOrDefault();
                             if (cbte != null)
                                 cbte.IdEstado_cheque_cat = "ESTCBCOB";
+                        }
+                    }
+                    if (info.List_detalle.Count() > 0)
+                    {
+                        foreach (var item in info.List_detalle)
+                        {
+                            Context.ba_Conciliacion_det.Add(new ba_Conciliacion_det
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdConciliacion = info.IdConciliacion,
+                                IdTipocbte = item.IdTipocbte,
+                                Fecha = item.Fecha,
+                                Observacion = item.Observacion,
+                                Referencia = item.Referencia,
+                                Secuencia = item.Secuencia,
+                                Seleccionado = item.Seleccionado,
+                                tipo_IngEgr = item.tipo_IngEgr,
+                                Valor = item.Valor
+                            });
                         }
                     }
                     Context.SaveChanges();

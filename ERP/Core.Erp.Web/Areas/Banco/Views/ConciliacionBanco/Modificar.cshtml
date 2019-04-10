@@ -249,19 +249,59 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_por_aprobar" aria-controls="vales" role="tab" data-toggle="tab">Por aprobar</a>
+                <a href="#tab_contables" aria-controls="vales" role="tab" data-toggle="tab">Registros contables</a>
             </li>
             <li>
-                <a href="#tab_aprobados" aria-controls="vales" role="tab" data-toggle="tab">Aprobados</a>
+                <a href="#tab_adicionales" aria-controls="vales" role="tab" data-toggle="tab">Registros adicionales</a>
             </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_por_aprobar">
-                @Html.Action("GridViewPartial_ConciliacionBanco_x_cruzar")
-            </div>
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_contables">
 
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_aprobados">
-                @Html.Action("GridViewPartial_ConciliacionBanco_det")
+                <div id="Tabs" role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tab_por_aprobar" aria-controls="vales" role="tab" data-toggle="tab">Por aprobar</a>
+                        </li>
+                        <li>
+                            <a href="#tab_aprobados" aria-controls="vales" role="tab" data-toggle="tab">Aprobados</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="padding-top: 20px">
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_por_aprobar">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        @Html.Action("GridViewPartial_ConciliacionBanco_x_cruzar")
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_aprobados">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        @Html.Action("GridViewPartial_ConciliacionBanco_det")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adicionales">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+
+                            @Html.Action("GridViewPartial_banco_conciliacion_det")
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

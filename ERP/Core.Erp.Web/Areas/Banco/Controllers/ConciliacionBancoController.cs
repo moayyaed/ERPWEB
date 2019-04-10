@@ -113,9 +113,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 co_Fecha = DateTime.Now.Date,
                 IdPeriodo = Convert.ToInt32(DateTime.Now.Date.AddMonths(-1).ToString("yyyyMM")),
                 lst_det = new List<ba_Conciliacion_det_IngEgr_Info>(),
-                Lista_detalle = new List<ba_Conciliacion_det_Info>()
+                List_detalle = new List<ba_Conciliacion_det_Info>()
             };
-            Lista_detalle.set_list(model.Lista_detalle, model.IdTransaccionSession);
+            Lista_detalle.set_list(model.List_detalle, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
             model.IdBanco = IdBanco;
 
@@ -130,7 +130,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         [HttpPost]
         public ActionResult Nuevo(ba_Conciliacion_Info model)
         {
-            model.Lista_detalle = Lista_detalle.get_list(model.IdTransaccionSession); 
+            model.List_detalle = Lista_detalle.get_list(model.IdTransaccionSession); 
             if (!validar(model,ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -208,6 +208,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return RedirectToAction("Index");
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.lst_det = bus_det.get_list(IdEmpresa, IdConciliacion);
+            model.List_detalle = bus_detalle_con.GetList(model.IdEmpresa, model.IdConciliacion);
+            Lista_detalle.set_list(model.List_detalle, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);            
             var bco = bus_banco_cuenta.get_info(IdEmpresa, model.IdBanco);
             var periodo = bus_periodo.get_info(IdEmpresa, model.IdPeriodo);
@@ -219,6 +221,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         [HttpPost]
         public ActionResult Modificar(ba_Conciliacion_Info model)
         {
+            model.List_detalle = Lista_detalle.get_list(model.IdTransaccionSession);
+
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -298,35 +302,34 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public ActionResult GridViewPartial_banco_conciliacion_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             cargar_combos_Detalle();
             var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_banco_conciliacion_det", model);
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ba_Conciliacion_det_Info info_det)
+        public ActionResult EditingAddNew_det([ModelBinder(typeof(DevExpressEditorsBinder))] ba_Conciliacion_det_Info info_det)
         {
             if (ModelState.IsValid)
-                Lista_detalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                Lista_detalle.AddRow_det(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_Detalle();
             return PartialView("_GridViewPartial_banco_conciliacion_det", model);
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ba_Conciliacion_det_Info info_det)
+        public ActionResult EditingUpdate_det([ModelBinder(typeof(DevExpressEditorsBinder))] ba_Conciliacion_det_Info info_det)
         {
 
             if (ModelState.IsValid)
-                Lista_detalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                Lista_detalle.UpdateRow_det(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_Detalle();
             return PartialView("_GridViewPartial_banco_conciliacion_det", model);
         }
-        public ActionResult EditingDelete(int Secuencia)
+        public ActionResult EditingDelete_det(int Secuencia)
         {
-            Lista_detalle.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            Lista_detalle.DeleteRow_det(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_Detalle();
             return PartialView("_GridViewPartial_banco_conciliacion_det", model);
@@ -391,14 +394,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
-        public void AddRow(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
+        public void AddRow_det(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
         {
             List<ba_Conciliacion_det_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
             list.Add(info_det);
         }
 
-        public void UpdateRow(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
+        public void UpdateRow_det(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
         {
             ba_Conciliacion_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
             edited_info.IdEmpresa = info_det.IdEmpresa;
@@ -411,7 +414,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             edited_info.Fecha = info_det.Fecha;
         }
 
-        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
+        public void DeleteRow_det(int Secuencia, decimal IdTransaccionSession)
         {
             List<ba_Conciliacion_det_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
