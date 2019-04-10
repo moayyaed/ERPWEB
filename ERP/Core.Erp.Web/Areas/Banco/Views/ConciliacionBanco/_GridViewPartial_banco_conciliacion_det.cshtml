@@ -37,26 +37,13 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["Seleccionado"] = true;
+            e.NewValues["Fecha"] = DateTime.Now.Date;
         };
         settings.Columns.Add(column =>
         {
-            column.FieldName = "tipo_IngEgr";
-            column.Caption = "Tipo";
-            column.Width = Unit.Percentage(50);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("CodTipoCbteBan", "Descripción").Width = Unit.Percentage(100);
-                p.TextField = "CodTipoCbteBan";
-                p.ValueField = "IdTipoCbteCble";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.lst_tipo;
-            });
-        });
-        settings.Columns.Add(column =>
-        {
             column.FieldName = "IdTipocbte";
-            column.Caption = "Tipo cbte";
-            column.Width = Unit.Percentage(50);
+            column.Caption = "Tipo";
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("CodTipoCbteBan", "Descripción").Width = Unit.Percentage(100);
@@ -65,27 +52,18 @@
                 p.ValueType = typeof(int);
                 p.DataSource = ViewBag.lst_tipo;
             });
-            column.Visible = false;
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.Width = Unit.Percentage(40);
-            column.FieldName = "Observacion";
-            column.Caption = "Observación";
         });
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(10);
-            column.FieldName = "Valor";
-            column.Caption = "Valor";
-            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.FieldName = "Referencia";
+            column.Caption = "Referencia";
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
             column.Caption = "Fecha";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().DateEdit(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -93,6 +71,26 @@
                 p.EditFormatString = "dd/MM/yyyy";
             });
         });
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Valor";
+            column.Caption = "Valor";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(30);
+            column.FieldName = "Observacion";
+            column.Caption = "Observación";
+            column.EditorProperties().Memo(q =>
+            {
+
+            });
+        });
+
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -104,6 +102,7 @@
             {
             });
         });
+        settings.ClientSideEvents.EndCallback = "function(s,e){ Calcular();}";
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
     });

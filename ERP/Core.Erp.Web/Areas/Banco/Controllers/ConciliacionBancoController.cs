@@ -278,8 +278,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             ba_Conciliacion_valores_Info resultado = new ba_Conciliacion_valores_Info
             {
-                co_totalIng = Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero),
-                co_totalEgr = Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero)
+                co_totalIng = Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) + (double) Math.Round(Lista_detalle.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),
+                co_totalEgr = Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) - (double) Math.Round(Lista_detalle.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)
             };
             resultado.co_SaldoConciliado = Math.Round(co_SaldoBanco_anterior + resultado.co_totalIng + resultado.co_totalEgr,2,MidpointRounding.AwayFromZero);
             resultado.co_Diferencia = Math.Round(resultado.co_SaldoConciliado - co_SaldoBanco_EstCta,2,MidpointRounding.AwayFromZero);
@@ -377,9 +377,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
     public class ba_Conciliacion_det_List
     {
         string Variable = "ba_Conciliacion_det_Info";
+        ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus bus_tipo = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus();
+
         public List<ba_Conciliacion_det_Info> get_list(decimal IdTransaccionSession)
         {
-
             if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ba_Conciliacion_det_Info> list = new List<ba_Conciliacion_det_Info>();
@@ -398,20 +399,28 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             List<ba_Conciliacion_det_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            var tipo = bus_tipo.GetList(Convert.ToInt32(SessionFixed.IdEmpresa)).Where(q=> q.IdTipoCbteCble == info_det.IdTipocbte).FirstOrDefault();
+            if (tipo != null)
+            {
+                info_det.tipo_IngEgr = tipo.Tipo_DebCred == "C" ? "+" : "-";
+            }
             list.Add(info_det);
         }
 
         public void UpdateRow_det(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
         {
             ba_Conciliacion_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
-            edited_info.IdEmpresa = info_det.IdEmpresa;
-            edited_info.IdConciliacion = info_det.IdConciliacion;
-            edited_info.Secuencia = info_det.Secuencia;
-            edited_info.IdTipocbte = info_det.Secuencia;
-            edited_info.tipo_IngEgr = info_det.tipo_IngEgr;
-            edited_info.Observacion = info_det.Observacion;
-            edited_info.Valor = info_det.Valor;
+            edited_info.IdTipocbte = info_det.IdTipocbte;
+            var tipo = bus_tipo.GetList(Convert.ToInt32(SessionFixed.IdEmpresa)).Where(q => q.IdTipoCbteCble == info_det.IdTipocbte).FirstOrDefault();
+            if (tipo != null)
+            {
+                edited_info.tipo_IngEgr = tipo.Tipo_DebCred == "C" ? "+" : "-";
+            }
+            edited_info.Referencia = info_det.Referencia;
             edited_info.Fecha = info_det.Fecha;
+            edited_info.Valor = info_det.Valor;
+            edited_info.Observacion = info_det.Observacion;            
+            edited_info.Seleccionado = info_det.Seleccionado;
         }
 
         public void DeleteRow_det(int Secuencia, decimal IdTransaccionSession)
