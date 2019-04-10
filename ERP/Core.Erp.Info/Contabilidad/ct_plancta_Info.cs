@@ -21,6 +21,7 @@ namespace Core.Erp.Info.Contabilidad
         public bool EstadoBool { get; set; }
         public string pc_EsMovimiento { get; set; }
         public string pc_clave_corta { get; set; }
+        
 
         #region Campos de auditoria
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
@@ -36,5 +37,7 @@ namespace Core.Erp.Info.Contabilidad
         public string pc_Cuenta_padre { get; set; }
         public bool pc_EsMovimiento_bool { get; set; }
         public int IdCtaCble_int { get; set; }
+        public int Secuencia { get; set; }
+
     }
 }

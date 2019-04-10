@@ -14,6 +14,7 @@ namespace Core.Erp.Info.Helps
         [DataType(DataType.Date, ErrorMessage = "El campo fecha fin debe ser una fecha en formato dd/MM/yyyy")]
         public DateTime fecha_fin { get; set; }
         public string IdCtaCble { get; set; }
+        public string IdCtaCbleFin { get; set; }
         public bool mostrarAnulados { get; set; }
         public bool mostrar_observacion_completa { get; set; }
         

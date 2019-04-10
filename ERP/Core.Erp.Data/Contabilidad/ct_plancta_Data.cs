@@ -509,5 +509,41 @@ namespace Core.Erp.Data.Contabilidad
             }
         }
 
+        public List<ct_plancta_Info> get_list_rango_cta(int IdEmpresa, string IdCtaCbleIni, string IdCtaCbleFin)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(IdCtaCbleIni))
+                    return new List<ct_plancta_Info>();
+
+                var sec = 1;
+                List<ct_plancta_Info> Lista = new List<ct_plancta_Info>();
+                List<ct_plancta_Info> lst = new List<ct_plancta_Info>();
+
+                var IdCtaCbleFin_ = string.IsNullOrEmpty(IdCtaCbleFin) ? IdCtaCbleIni : IdCtaCbleFin;
+
+                Entities_contabilidad Context = new Entities_contabilidad();
+
+                if (IdCtaCbleIni != "" && IdCtaCbleFin_!="")
+                {
+                    lst = Context.ct_plancta.Where(q => q.IdEmpresa == IdEmpresa && q.pc_EsMovimiento == "S").Select(q => new ct_plancta_Info { IdEmpresa = q.IdEmpresa, IdCtaCble = q.IdCtaCble }).ToList();
+                }
+
+                lst.ForEach(q => q.Secuencia = sec++);
+
+                var SecuenciaInicio = lst.Where(q=>q.IdCtaCble == IdCtaCbleIni).FirstOrDefault().Secuencia;
+                var SecuenciaFin = lst.Where(q => q.IdCtaCble == IdCtaCbleFin_).FirstOrDefault().Secuencia;
+
+                Lista = lst.Where(q => q.Secuencia >= SecuenciaInicio && q.Secuencia <= SecuenciaFin).ToList();
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

@@ -23,6 +23,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             return PartialView("_CmbCuenta_contable_Conta", model);
         }
+
+        public ActionResult CmbCuenta_contable_ContaFin()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+
+            return PartialView("_CmbCuenta_contable_ContaFin", model);
+        }
+
         public List<ct_plancta_Info> get_list_bajo_demanda_cta(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
@@ -83,12 +91,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdCtaCble = "",
+                IdCtaCbleFin = "",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             cargar_combos(model.IdEmpresa);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
+            report.p_IdCtaCbleFin.Value = model.IdCtaCbleFin;
             report.p_fechaIni.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -103,6 +113,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             CONTA_002_Rpt report = new CONTA_002_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
+            report.p_IdCtaCbleFin.Value = model.IdCtaCbleFin;
             report.p_fechaIni.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -119,10 +130,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNivel = 6,
-                balance = "ER"
+                balance = "ER",
             };
+
             model.IdAnio = model.fecha_fin.Year;
-            model.MostrarSaldoAcumulado = true;
+            model.MostrarSaldoAcumulado = false;
             cargar_combos(model.IdEmpresa);
             CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;

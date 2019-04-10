@@ -101,6 +101,8 @@
             this.xrTableCell31 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell37 = new DevExpress.XtraReports.UI.XRTableCell();
             this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.p_IdCtaCbleFin = new DevExpress.XtraReports.Parameters.Parameter();
+            this.GroupHeader2 = new DevExpress.XtraReports.UI.GroupHeaderBand();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -279,10 +281,8 @@
             // 
             this.PageHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.lbl_imagen,
-            this.xrTable2,
-            this.xrTable1,
-            this.xrTable3});
-            this.PageHeader.HeightF = 132.4167F;
+            this.xrTable1});
+            this.PageHeader.HeightF = 62.41665F;
             this.PageHeader.Name = "PageHeader";
             // 
             // lbl_imagen
@@ -294,7 +294,7 @@
             // 
             // xrTable2
             // 
-            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 62.41665F);
+            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.xrTable2.Name = "xrTable2";
             this.xrTable2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTable2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
@@ -482,7 +482,7 @@
             | DevExpress.XtraPrinting.BorderSide.Right) 
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTable3.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
-            this.xrTable3.LocationFloat = new DevExpress.Utils.PointFloat(0F, 112.4166F);
+            this.xrTable3.LocationFloat = new DevExpress.Utils.PointFloat(0F, 50F);
             this.xrTable3.Name = "xrTable3";
             this.xrTable3.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow4});
@@ -846,6 +846,22 @@
             this.GroupHeader1.HeightF = 25F;
             this.GroupHeader1.Name = "GroupHeader1";
             // 
+            // p_IdCtaCbleFin
+            // 
+            this.p_IdCtaCbleFin.Name = "p_IdCtaCbleFin";
+            this.p_IdCtaCbleFin.Visible = false;
+            // 
+            // GroupHeader2
+            // 
+            this.GroupHeader2.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrTable3,
+            this.xrTable2});
+            this.GroupHeader2.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("IdCtaCble", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            this.GroupHeader2.HeightF = 70F;
+            this.GroupHeader2.Level = 1;
+            this.GroupHeader2.Name = "GroupHeader2";
+            // 
             // CONTA_002_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -855,7 +871,8 @@
             this.PageHeader,
             this.ReportFooter,
             this.PageFooter,
-            this.GroupHeader1});
+            this.GroupHeader1,
+            this.GroupHeader2});
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
@@ -869,7 +886,8 @@
             this.p_IdCtaCble,
             this.p_fechaIni,
             this.p_fechaFin,
-            this.p_IdSucursal});
+            this.p_IdSucursal,
+            this.p_IdCtaCbleFin});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CONTA_002_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
@@ -956,5 +974,7 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell31;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell37;
         private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader1;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdCtaCbleFin;
+        private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader2;
     }
 }
