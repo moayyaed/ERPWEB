@@ -13,6 +13,7 @@ namespace Core.Erp.Data.Banco
         {
             try
             {
+                int Secuencia = 1;
                 List<ba_Conciliacion_det_Info> Lista;
                 using (Entities_banco Context = new Entities_banco())
                 {
@@ -30,6 +31,7 @@ namespace Core.Erp.Data.Banco
                         IdTipocbte = q.IdTipocbte,
                     }).ToList();
                 }
+                Lista.ForEach(v => { v.Secuencia = Secuencia++; });
                 return Lista;
             }
             catch (Exception)

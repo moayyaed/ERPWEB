@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.Banco;
+﻿using DevExpress.Web.Mvc;
+using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Info.Banco;
 using Core.Erp.Info.Helps;
@@ -23,6 +24,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string mensaje = string.Empty;
         int IdBanco = 0;
+
+        ba_Conciliacion_det_Bus bus_detalle_con = new ba_Conciliacion_det_Bus();
+        ba_Conciliacion_det_List Lista_detalle = new ba_Conciliacion_det_List();
         #endregion
 
         #region Index
@@ -109,8 +113,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 co_Fecha = DateTime.Now.Date,
                 IdPeriodo = Convert.ToInt32(DateTime.Now.Date.AddMonths(-1).ToString("yyyyMM")),
                 lst_det = new List<ba_Conciliacion_det_IngEgr_Info>(),
+                Lista_detalle = new List<ba_Conciliacion_det_Info>()
             };
-            
+            Lista_detalle.set_list(model.Lista_detalle, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
             model.IdBanco = IdBanco;
 
@@ -124,7 +129,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         [HttpPost]
         public ActionResult Nuevo(ba_Conciliacion_Info model)
-        {            
+        {
+            model.Lista_detalle = Lista_detalle.get_list(model.IdTransaccionSession); 
             if (!validar(model,ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -276,6 +282,57 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+        #region Detalle
+
+        private void cargar_combos_Detalle()
+        {
+            ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus bus_tipo = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus();
+            var lst_tipo = bus_tipo.GetList(Convert.ToInt32(SessionFixed.IdEmpresa));
+            ViewBag.lst_tipo = lst_tipo;
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_banco_conciliacion_det()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            cargar_combos_Detalle();
+            var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_banco_conciliacion_det", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ba_Conciliacion_det_Info info_det)
+        {
+            if (ModelState.IsValid)
+                Lista_detalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_Detalle();
+            return PartialView("_GridViewPartial_banco_conciliacion_det", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ba_Conciliacion_det_Info info_det)
+        {
+
+            if (ModelState.IsValid)
+                Lista_detalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_Detalle();
+            return PartialView("_GridViewPartial_banco_conciliacion_det", model);
+        }
+        public ActionResult EditingDelete(int Secuencia)
+        {
+            Lista_detalle.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = Lista_detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_Detalle();
+            return PartialView("_GridViewPartial_banco_conciliacion_det", model);
+        }
+
+        #endregion
     }
 
     public class ba_Conciliacion_valores_Info
@@ -313,4 +370,52 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 edited_info.seleccionado = !edited_info.seleccionado;
         }
     }
+
+    public class ba_Conciliacion_det_List
+    {
+        string Variable = "ba_Conciliacion_det_Info";
+        public List<ba_Conciliacion_det_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Conciliacion_det_Info> list = new List<ba_Conciliacion_det_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Conciliacion_det_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Conciliacion_det_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
+        {
+            List<ba_Conciliacion_det_Info> list = get_list(IdTransaccionSession);
+            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            list.Add(info_det);
+        }
+
+        public void UpdateRow(ba_Conciliacion_det_Info info_det, decimal IdTransaccionSession)
+        {
+            ba_Conciliacion_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            edited_info.IdEmpresa = info_det.IdEmpresa;
+            edited_info.IdConciliacion = info_det.IdConciliacion;
+            edited_info.Secuencia = info_det.Secuencia;
+            edited_info.IdTipocbte = info_det.Secuencia;
+            edited_info.tipo_IngEgr = info_det.tipo_IngEgr;
+            edited_info.Observacion = info_det.Observacion;
+            edited_info.Valor = info_det.Valor;
+            edited_info.Fecha = info_det.Fecha;
+        }
+
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
+        {
+            List<ba_Conciliacion_det_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+        }
+    }
+
 }
