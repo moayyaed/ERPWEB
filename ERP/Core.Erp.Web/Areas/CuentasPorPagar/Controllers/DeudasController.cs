@@ -239,7 +239,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             var lst_doc_tipo = bus_tipo_documento.get_list(false);
             ViewBag.lst_doc_tipo = lst_doc_tipo;
 
-            var lst_sucursales = bus_sucursal.get_list(model.IdEmpresa, false);
+            var lst_sucursales = bus_sucursal.GetList(model.IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursales = lst_sucursales;
 
             var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
@@ -267,7 +267,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         private void cargar_combos_consulta()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursal = lst_sucursal;
         }
 

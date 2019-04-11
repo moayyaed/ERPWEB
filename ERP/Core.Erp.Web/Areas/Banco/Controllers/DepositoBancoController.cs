@@ -59,7 +59,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         private void cargar_combos_consulta()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             lst_sucursal.Add(new tb_sucursal_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -99,13 +99,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Metodos
         private void cargar_combos(int IdEmpresa, int IdSucursal)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            lst_sucursal.Add(new tb_sucursal_Info
-            {
-                IdEmpresa = IdEmpresa,
-                IdSucursal = 0,
-                Su_Descripcion = "Todos"
-            });
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_banco_cuenta = bus_banco_cuenta.get_list(IdEmpresa, IdSucursal, false);

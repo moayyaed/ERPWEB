@@ -56,7 +56,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
 
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             lst_sucursal.Add(new tb_sucursal_Info
             {
                 IdEmpresa = IdEmpresa,

@@ -95,7 +95,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         private void cargar_combos_sucursal()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursales = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursales = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
+            lst_sucursales.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursales = lst_sucursales;
         }
 

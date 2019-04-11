@@ -119,7 +119,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         private void cargar_combos_sucursal()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursales = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursales = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
+            lst_sucursales.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
             ViewBag.lst_sucursales = lst_sucursales;
         }
 
@@ -158,7 +164,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             var lst_paises = bus_pais.get_list();
             ViewBag.lst_paises = lst_paises;
 
-            var lst_sucursales = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursales = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursales = lst_sucursales;
             if (IdProveedor != 0)
             {
