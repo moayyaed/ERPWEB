@@ -225,7 +225,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, Convert.ToInt32(model.IdSucursal), ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;
@@ -292,7 +292,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, Convert.ToInt32(model.IdSucursal), ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;

@@ -81,7 +81,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             try
             {
-                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)
