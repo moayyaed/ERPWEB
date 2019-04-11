@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.General;
+﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
@@ -26,6 +27,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -201,6 +203,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
 
             CargarCombosAccion(model.IdEmpresa, model.IdSucursal);
             return View(model);
@@ -244,6 +254,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_ConsignacionDet_List.set_list(model.lst_producto_consignacion, model.IdTransaccionSession);
 
             CargarCombosAccion(model.IdEmpresa, model.IdSucursal);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
         [HttpPost]

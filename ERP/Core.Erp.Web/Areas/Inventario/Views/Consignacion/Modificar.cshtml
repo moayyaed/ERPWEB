@@ -124,7 +124,10 @@
         </div>
     </div>
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
         <a class="btn btn-default" href="@Url.Action("Index","Consignacion",new { Area = "Inventario" },null)">Cancelar</a>
     </div>
 

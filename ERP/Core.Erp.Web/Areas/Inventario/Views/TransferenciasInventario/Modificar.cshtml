@@ -8,6 +8,85 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    $(function () {
+        CargarBodegaOrigen();
+        $("#IdSucursalOrigen").change(function () {
+            CargarBodegaOrigen();
+        });
+
+        CargarBodegaDestino();
+        $("#IdSucursalDest").change(function () {
+            CargarBodegaDestino();
+        });
+    });
+
+    function CargarBodegaOrigen() {
+        $("#IdBodegaOrigen").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursalOrigen").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "TransferenciasInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodegaOrigen").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+    $(function () {
+        $("#IdSucursalDest").change(function () {
+            CargarBodegaDestino();
+        });
+    });
+
+    function CargarBodegaDestino() {
+        $("#IdBodegaDest").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursalDest").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "TransferenciasInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodegaDest").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location + "/Reportes/InventarioReportes/INV_007?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursalOrigen=" +@Model.IdSucursalOrigen +"&IdBodegaOrigen=" +@Model.IdBodegaOrigen +"&IdTransferencia=" +@Model.IdTransferencia +"&mostrar_imagen=" + false, '_blank');
+        win.focus();
+    }
+</script>
 
 @using (Html.BeginForm("Modificar", "TransferenciasInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -21,9 +100,18 @@
     @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuDest)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuOrig)
     
-
-
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
     if (ViewBag.MensajeSuccess != null)
     {
         <div class="alert alert-success alert-dismissible">
@@ -157,7 +245,10 @@
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
         <a class="btn btn-default" href="@Url.Action("Index","TransferenciasInventario",new { Area = "Inventario" },null)">Cancelar</a>
     </div>
     @section Scripts {
@@ -167,82 +258,3 @@
 
 
 
-<script type="text/javascript">
-    $(function () {
-        CargarBodegaOrigen();
-        $("#IdSucursalOrigen").change(function () {
-            CargarBodegaOrigen();
-        });
-
-        CargarBodegaDestino();
-        $("#IdSucursalDest").change(function () {
-            CargarBodegaDestino();
-        });
-    });
-
-    function CargarBodegaOrigen() {
-        $("#IdBodegaOrigen").empty();
-
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursalOrigen").val()
-        }
-
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("CargarBodega", "TransferenciasInventario", new { Area = "Inventario" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdBodegaOrigen").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-                });
-            },
-            error: function (error) {
-            }
-        });
-    };
-
-
-    $(function () {
-        $("#IdSucursalDest").change(function () {
-            CargarBodegaDestino();
-        });
-    });
-
-    function CargarBodegaDestino() {
-        $("#IdBodegaDest").empty();
-
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursalDest").val()
-        }
-
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("CargarBodega", "TransferenciasInventario", new { Area = "Inventario" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdBodegaDest").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-                });
-            },
-            error: function (error) {
-            }
-        });
-    };
-    function Imprimir() {
-        var location = GetPathServer();
-        var win = window.open(location + "/Reportes/InventarioReportes/INV_007?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursalOrigen=" +@Model.IdSucursalOrigen +"&IdBodegaOrigen=" +@Model.IdBodegaOrigen +"&IdTransferencia=" +@Model.IdTransferencia +"&mostrar_imagen=" + false, '_blank');
-        win.focus();
-    }
-</script>

@@ -125,20 +125,6 @@
     @Html.HiddenFor(q => q.IdCbteVta, new { @id = "IdCbteVta" })
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
-    if (ViewBag.MensajeSuccess != null)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-success alert-dismissible">
-                    <h4>
-                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
-                    </h4>
-                </div>
-            </div>
-        </div>
-    }
-
     if (ViewBag.mensaje != null)
     {
         <div class="row">
@@ -154,6 +140,20 @@
         </div>
 
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+
+  
 
     <div class="row">
         <div class="col-md-12">
@@ -579,8 +579,11 @@
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Factura",new { Area = "Facturacion" },null)">Cancelar</a>
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        } 
+                <a class="btn btn-default" href="@Url.Action("Index","Factura",new { Area = "Facturacion" },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
