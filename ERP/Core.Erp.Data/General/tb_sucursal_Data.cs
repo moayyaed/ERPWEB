@@ -74,8 +74,6 @@ namespace Core.Erp.Data.General
             return info;
         }
 
-
-
         public tb_sucursal_Info get_info(int IdEmpresa, int IdSucursal)
         {
             tb_sucursal_Info info = new tb_sucursal_Info();
@@ -385,8 +383,6 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
-
-
 
         public List<tb_sucursal_Info> GetListSinEmpresa( bool mostrar_anulados)
         {
