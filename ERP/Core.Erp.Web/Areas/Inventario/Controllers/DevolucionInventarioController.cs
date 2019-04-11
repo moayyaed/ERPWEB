@@ -126,6 +126,15 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdDev_Inven);
             List_det.set_list(model.lst_det);
             cargar_combos(IdEmpresa);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.FAC, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
         [HttpPost]
@@ -154,6 +163,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdDev_Inven);
             List_det.set_list(model.lst_det);
             cargar_combos(IdEmpresa);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.FAC, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
         [HttpPost]

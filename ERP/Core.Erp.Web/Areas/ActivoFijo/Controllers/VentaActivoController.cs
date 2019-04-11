@@ -10,6 +10,7 @@ using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Web.Helps;
+using Core.Erp.Info.Helps;
 
 namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
 {
@@ -23,6 +24,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         Af_Activo_fijo_Bus bus_fijo = new Af_Activo_fijo_Bus();
         ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
         string mensaje = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -149,7 +151,14 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             cargar_combos(IdEmpresa);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
-
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_Venta, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
         [HttpPost]
@@ -187,6 +196,14 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte == null ? 0 : Convert.ToInt32(model.IdTipoCbte), model.IdCbteCble == null ? 0 : Convert.ToDecimal(model.IdCbteCble));
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_Venta, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
         [HttpPost]

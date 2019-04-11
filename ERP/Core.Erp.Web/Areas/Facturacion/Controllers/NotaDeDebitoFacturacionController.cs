@@ -484,7 +484,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             cargar_combos(model);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
-           return View(model);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.no_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+            return View(model);
         }
 
         [HttpPost]
@@ -533,6 +541,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.lst_cruce = bus_cruce.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
             List_cruce.set_list(model.lst_cruce, model.IdTransaccionSession);
             cargar_combos(model);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.no_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
 

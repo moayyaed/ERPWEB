@@ -8,261 +8,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Modificar", "Proforma", FormMethod.Post, new { @class = "form", @role = "form" }))
-{
-    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
-    @Html.HiddenFor(q => q.IdSucursal)
-    @Html.HiddenFor(q => q.IdProforma)
-    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
-    if (ViewBag.MensajeSuccess != null)
-    {
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4>
-                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
-            </h4>
-        </div>
-    }
-
-    <div class="modal fade" id="OpModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Lotes disponibles</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Action("GridViewPartial_LoteProforma")
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="modal fade" id="ModalDesbloqueo" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ingrese la contraseña de desbloqueo</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group has-feedback">
-                                @Html.PasswordFor(q => q.ContraseniaAdministrador, new { @class = "form-control", @placeholder = "Contraseña desbloqueo", @id = "ContraseniaAdministrador" })
-                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary" onclick="Desbloquear();">Desbloquear</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="ModalPrecios" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Linea #<label id="Secuencia">0</label></h4>
-                </div>
-                <div class="modal-body">
-
-                    <div class="col-md-6 form-group">
-                        <label for="txtPrecio">Precio</label>
-                        <input type="text" id="txtPrecio" class="form-control" />
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="txtPorDescuento">% Descuento</label>
-                        <input type="text" id="txtPorDescuento" class="form-control" />
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="chk_aplicar_todo"><input type="checkbox" id="chk_aplicar_todo" value="true|false" /> Aplicar descuento a toda la proforma</label>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-primary" onclick="ModificarLinea();">Aceptar</button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-offset-10 col-md-1">
-                <label for="IdImprimir"></label>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="IdNuevo"></label>
-                <div class="form-group">
-                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Proforma",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
-                        <i class="fa fa-plus"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdSucursal">Sucursal*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
-                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdBodega">Bodega*</label>
-                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_descripcion"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label for="IdCliente">Cliente*</label>
-                    @Html.Partial("_CmbCliente_Proforma", Model.IdCliente)
-                    @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdCliente"></label>
-                    <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="pf_atencion_a">Atención a</label>
-                    @Html.TextBoxFor(q => q.pf_atencion_a, new { @class = "form-control", @id = "pf_atencion_a" })
-                    @Html.ValidationMessageFor(q => q.pf_atencion_a, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdCatalogo_FormaPago">Forma de pago*</label>
-                    @Html.DropDownListFor(q => q.IdCatalogo_FormaPago, new SelectList(ViewBag.lst_formapago, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdCatalogo_FormaPago" })
-                    @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdNivel">Nivel Descuento*</label>
-                    @Html.DropDownListFor(q => q.IdNivel, new SelectList(ViewBag.lst_NivelDescuento, "IdNivel", "Descripcion"), new { @class = "form-control", @id = "IdNivel" })
-                    @Html.ValidationMessageFor(q => q.IdNivel, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdTerminoPago">Termino pago*</label>
-                    @Html.DropDownListFor(q => q.IdTerminoPago, new SelectList(ViewBag.lst_pago, "IdTerminoPago", "nom_TerminoPago"), new { @class = "form-control", @id = "IdTerminoPago" })
-                    @Html.ValidationMessageFor(q => q.IdTerminoPago, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdVendedor">Vendedor*</label>
-                    @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdVendedor" })
-                    @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="pf_fecha">Fecha*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.TextBoxFor(q => q.pf_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha" })
-                        @Html.ValidationMessageFor(q => q.pf_fecha, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="pf_plazo">Plazo*</label>
-                    @Html.TextBoxFor(q => q.pf_plazo, new { @class = "form-control", @id = "pf_plazo" })
-                    @Html.ValidationMessageFor(q => q.pf_plazo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="pf_fecha_vcto">Vencimiento*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.TextBoxFor(q => q.pf_fecha_vcto, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha_vcto" })
-                        @Html.ValidationMessageFor(q => q.pf_fecha_vcto, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="pf_observacion">Observación</label>
-                    @Html.TextBoxFor(q => q.pf_observacion, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.pf_observacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>  
-      <div class="col-md-12">
-        <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
-            <i class="fa fa-lock"></i> Desbloquear
-        </button>
-        <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
-    </div>
-    <br />
-    <br />
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                @Html.Action("GridViewPartial_proforma_det")
-            </div>
-        </div>
-    </div>
-
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
-}
 <script>
     $(function () {
 
@@ -592,3 +337,271 @@
         win.focus();
     }
 </script>
+
+@using (Html.BeginForm("Modificar", "Proforma", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.IdProforma)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="modal fade" id="OpModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lotes disponibles</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_LoteProforma")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="ModalDesbloqueo" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ingrese la contraseña de desbloqueo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group has-feedback">
+                                @Html.PasswordFor(q => q.ContraseniaAdministrador, new { @class = "form-control", @placeholder = "Contraseña desbloqueo", @id = "ContraseniaAdministrador" })
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary" onclick="Desbloquear();">Desbloquear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalPrecios" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Linea #<label id="Secuencia">0</label></h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-md-6 form-group">
+                        <label for="txtPrecio">Precio</label>
+                        <input type="text" id="txtPrecio" class="form-control" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="txtPorDescuento">% Descuento</label>
+                        <input type="text" id="txtPorDescuento" class="form-control" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="chk_aplicar_todo"><input type="checkbox" id="chk_aplicar_todo" value="true|false" /> Aplicar descuento a toda la proforma</label>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" onclick="ModificarLinea();">Aceptar</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-10 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Proforma",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBodega">Bodega*</label>
+                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="IdCliente">Cliente*</label>
+                    @Html.Partial("_CmbCliente_Proforma", Model.IdCliente)
+                    @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdCliente"></label>
+                    <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pf_atencion_a">Atención a</label>
+                    @Html.TextBoxFor(q => q.pf_atencion_a, new { @class = "form-control", @id = "pf_atencion_a" })
+                    @Html.ValidationMessageFor(q => q.pf_atencion_a, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCatalogo_FormaPago">Forma de pago*</label>
+                    @Html.DropDownListFor(q => q.IdCatalogo_FormaPago, new SelectList(ViewBag.lst_formapago, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdCatalogo_FormaPago" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdNivel">Nivel Descuento*</label>
+                    @Html.DropDownListFor(q => q.IdNivel, new SelectList(ViewBag.lst_NivelDescuento, "IdNivel", "Descripcion"), new { @class = "form-control", @id = "IdNivel" })
+                    @Html.ValidationMessageFor(q => q.IdNivel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdTerminoPago">Termino pago*</label>
+                    @Html.DropDownListFor(q => q.IdTerminoPago, new SelectList(ViewBag.lst_pago, "IdTerminoPago", "nom_TerminoPago"), new { @class = "form-control", @id = "IdTerminoPago" })
+                    @Html.ValidationMessageFor(q => q.IdTerminoPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdVendedor">Vendedor*</label>
+                    @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdVendedor" })
+                    @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="pf_fecha">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(q => q.pf_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha" })
+                        @Html.ValidationMessageFor(q => q.pf_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="pf_plazo">Plazo*</label>
+                    @Html.TextBoxFor(q => q.pf_plazo, new { @class = "form-control", @id = "pf_plazo" })
+                    @Html.ValidationMessageFor(q => q.pf_plazo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="pf_fecha_vcto">Vencimiento*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(q => q.pf_fecha_vcto, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha_vcto" })
+                        @Html.ValidationMessageFor(q => q.pf_fecha_vcto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pf_observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.pf_observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.pf_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>  
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
+            <i class="fa fa-lock"></i> Desbloquear
+        </button>
+        <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
+    </div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_proforma_det")
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
+
+        <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

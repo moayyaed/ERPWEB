@@ -67,8 +67,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         private bool validar(ba_Conciliacion_Info i_validar, ref string msg)
         {
-            i_validar.co_totalIng = Math.Round(List_det.get_list(i_validar.IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.seleccionado == true).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero);
-            i_validar.co_totalEgr = Math.Round(List_det.get_list(i_validar.IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.seleccionado == true).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero);
+            i_validar.co_totalIng = Math.Round(Math.Round(List_det.get_list(i_validar.IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.seleccionado == true).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)Math.Round(Lista_detalle.get_list(i_validar.IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero), 2);
+            i_validar.co_totalEgr = Math.Round(Math.Round(List_det.get_list(i_validar.IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.seleccionado == true).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) - (double)Math.Round(Lista_detalle.get_list(i_validar.IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero), 2);
             i_validar.co_SaldoConciliado = Math.Round(i_validar.co_SaldoBanco_anterior + i_validar.co_totalIng + i_validar.co_totalEgr, 2, MidpointRounding.AwayFromZero);
             i_validar.co_Diferencia = Math.Round(i_validar.co_SaldoConciliado - i_validar.co_SaldoBanco_EstCta, 2, MidpointRounding.AwayFromZero);
 
