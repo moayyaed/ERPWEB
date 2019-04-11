@@ -165,6 +165,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
 
             return View(model);
         }
@@ -207,6 +215,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             CargarCombosAccion(model.IdEmpresa, model.IdSucursal);
             model.LstDet = bus_CambioProductoDet.GetList(model.IdEmpresa, model.IdSucursal, model.IdBodega, model.IdCambio);
             List_det.set_list(model.LstDet, model.IdTransaccionSession);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
 

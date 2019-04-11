@@ -36,6 +36,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_factura_x_fa_guia_remision_Info_List List_rel = new fa_factura_x_fa_guia_remision_Info_List();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+        string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Metodos ComboBox bajo demanda cliente
@@ -217,6 +218,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
         [HttpPost]
@@ -276,6 +286,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             detalle_info.set_list(bus_detalle.get_list(IdEmpresa, IdGuiaRemision), model.IdTransaccionSession);
             List_rel.set_list(bus_detalle_x_factura.get_list(IdEmpresa, IdGuiaRemision), model.IdTransaccionSession);
             cargar_combos(model);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
 
