@@ -2,6 +2,7 @@
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Info.ActivoFijo;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.Helps;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using System;
@@ -24,7 +25,8 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         ct_plancta_Bus bus_cuenta = new ct_plancta_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
-        #endregion
+               ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+ #endregion
 
         #region Index
         public ActionResult Index()
@@ -45,7 +47,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #region Metodos
         private bool validar(Af_Mej_Baj_Activo_Info i_validar, ref string msg)
         {
-            if(i_validar.lst_ct_cbtecble_det.Count == 0)
+            if (i_validar.lst_ct_cbtecble_det.Count == 0)
             {
                 mensaje = "Debe ingresar registros en el detalle, por favor verifique";
                 return false;
@@ -155,6 +157,14 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             cargar_combos(IdEmpresa);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_MejBaj, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
 
             return View(model);
         }
@@ -193,6 +203,15 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte == null ? 0 : Convert.ToInt32(model.IdTipoCbte), model.IdCbteCble == null ? 0 : Convert.ToDecimal(model.IdCbteCble));
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_MejBaj, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
         [HttpPost]

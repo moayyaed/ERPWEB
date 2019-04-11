@@ -9,6 +9,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script>
+    function OnSelectedCtaCbleChanged() {
+        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
+    }
+    function GrupoComboBox_BeginCallback(s, e) {
+        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
+        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
+    }
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location + "/Reportes/ActivoFijoReportes/ACTF_003?IdEmpresa=" +@Model.IdEmpresa +"&IdRetiroActivo=" +@Model.IdRetiroActivo, '_blank');
+        win.focus();
+    }
+</script>
+
 @using (Html.BeginForm("Modificar", "RetiroActivo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdRetiroActivo)
@@ -27,6 +42,15 @@
         </div>
 
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -36,7 +60,7 @@
                     @Html.ValidationMessageFor(q => q.Cod_Ret_Activo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-8 col-md-2">
+            <div class="col-md-offset-6 col-md-2">
                 <div class="form-group">
                     <label for="">Fecha de retiro</label>
                     <div class="input-group date">
@@ -54,6 +78,23 @@
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha_Retiro, "", new { @class = "text-danger" })
                     </div>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","RetiroActivo",new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -177,7 +218,10 @@
         </div>
     </div>
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
         <a class="btn btn-default" href="@Url.Action("Index", "RetiroActivo", new { Area = "ActivoFijo" }, null)">Cancelar</a>
     </div>
 
@@ -185,12 +229,3 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-<script>
-    function OnSelectedCtaCbleChanged() {
-        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
-    }
-    function GrupoComboBox_BeginCallback(s, e) {
-        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
-        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
-    }
-</script>
