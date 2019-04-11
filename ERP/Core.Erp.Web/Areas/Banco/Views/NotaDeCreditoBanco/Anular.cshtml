@@ -309,7 +309,10 @@ function GetListBancoPorSucursal() {
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-danger">Anular</button>
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-danger">Anular</button>
+        }        
         <a class="btn btn-default" href="@Url.Action("Index", "NotaDeCreditoBanco", new { Area = "Banco" }, null)">Cancelar</a>
     </div>
     @section Scripts {

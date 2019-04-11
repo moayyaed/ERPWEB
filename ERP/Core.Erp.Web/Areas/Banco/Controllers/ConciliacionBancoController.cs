@@ -278,8 +278,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             ba_Conciliacion_valores_Info resultado = new ba_Conciliacion_valores_Info
             {
-                co_totalIng = Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) + (double) Math.Round(Lista_detalle.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),
-                co_totalEgr = Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) - (double) Math.Round(Lista_detalle.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)
+                co_totalIng = Math.Round(Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) + (double) Math.Round(Lista_detalle.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "+" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),2),
+                co_totalEgr = Math.Round(Math.Round(List_det.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.seleccionado == true).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) - (double) Math.Round(Lista_detalle.get_list(IdTransaccionSession).Where(q => q.tipo_IngEgr == "-" && q.Seleccionado == true).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),2)
             };
             resultado.co_SaldoConciliado = Math.Round(co_SaldoBanco_anterior + resultado.co_totalIng + resultado.co_totalEgr,2,MidpointRounding.AwayFromZero);
             resultado.co_Diferencia = Math.Round(resultado.co_SaldoConciliado - co_SaldoBanco_EstCta,2,MidpointRounding.AwayFromZero);
