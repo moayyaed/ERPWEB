@@ -76,7 +76,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             var lst_cuentas = bus_plancta.get_list(IdEmpresa, false, false);
             ViewBag.lst_cuentas = lst_cuentas;
 
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_responsable = bus_usuario.get_list(false);

@@ -42,10 +42,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             cargar_combos();
             return View(model);
         }
+
         private void cargar_combos()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             lst_sucursal.Add(new tb_sucursal_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -93,12 +94,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_cobranza_ret( DateTime? fecha_ini , DateTime? fecha_fin, int IdSucursal = 0)
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             ViewBag.IdSucursal = IdSucursal;
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<cxc_cobro_Info> model =  bus_cobro.get_list_para_retencion(IdEmpresa, IdSucursal, Convert.ToDateTime(fecha_ini), Convert.ToDateTime(fecha_fin));
-            cargar_combos_det();
+            var model =  bus_cobro.get_list_para_retencion(IdEmpresa, IdSucursal, Convert.ToDateTime(fecha_ini), Convert.ToDateTime(fecha_fin));
             return PartialView("_GridViewPartial_cobranza_ret", model);
         }
         #endregion

@@ -116,7 +116,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             var lst_tipo_orden_pago = bus_orden_pago_tipo.get_list(IdEmpresa);
             ViewBag.lst_tipo_orden_pago = lst_tipo_orden_pago;
 
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             //var lst_tipo_personas = bus_persona_tipo.get_list();
@@ -134,7 +134,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             try
             {
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
                 lst_sucursal.Add(new tb_sucursal_Info
                 {
                     IdEmpresa = IdEmpresa,

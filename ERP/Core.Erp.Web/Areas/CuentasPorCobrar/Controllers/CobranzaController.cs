@@ -76,7 +76,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         private void cargar_combos_consulta()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             lst_sucursal.Add(new tb_sucursal_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -87,7 +87,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         }
         private void cargar_combos(int IdEmpresa, int IdSucursal)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_caja = bus_caja.get_list(IdEmpresa, false);
