@@ -11,6 +11,7 @@ using Core.Erp.Web.Helps;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.General;
 using DevExpress.Web;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -28,6 +29,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         List<ro_rubro_tipo_Info> lst_rubros = new List<ro_rubro_tipo_Info>();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
+        string mensaje = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         int IdEmpresa = 0;
         #endregion
@@ -220,6 +223,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -277,6 +289,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return RedirectToAction("Index");
             model.lst_novedad_det = bus_novedad_detalle_bus.get_list(IdEmpresa, IdEmpleado, IdNovedad);
             ro_empleado_novedad_det_lst.set_list(model.lst_novedad_det, model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos(model.IdNomina_Tipo);
             return View(model);
         }

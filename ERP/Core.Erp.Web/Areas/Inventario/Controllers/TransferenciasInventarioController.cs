@@ -54,14 +54,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(Convert.ToInt32( SessionFixed.IdEmpresa));
+            CargarCombosConsulta(Convert.ToInt32( SessionFixed.IdEmpresa));
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
+            CargarCombosConsulta(Convert.ToInt32(SessionFixed.IdEmpresa));
 
             return View(model);
         }
@@ -312,6 +312,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var lst_unidad = bus_unidad.get_list(false);
             ViewBag.lst_unidad = lst_unidad;
         }
+        private void CargarCombosConsulta(int IdEmpresa)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
+
         private void cargar_combos(int IdEmpresa)
         {
             in_movi_inven_tipo_Bus bus_tipo = new in_movi_inven_tipo_Bus();
@@ -323,7 +330,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.lst_motivo = lst_motivo;
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();

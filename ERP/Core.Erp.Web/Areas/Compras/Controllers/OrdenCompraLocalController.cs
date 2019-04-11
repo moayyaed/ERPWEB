@@ -80,13 +80,13 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model.IdEmpresa);
+            CargarCombosConsulta(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            cargar_combos(model.IdEmpresa);
+            CargarCombosConsulta(model.IdEmpresa);
             return View(model);
         }
 
@@ -99,6 +99,13 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
             var model = bus_ordencompra.get_list(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true);
             return PartialView("_GridViewPartial_ordencompralocal", model);
+        }
+
+        private void CargarCombosConsulta(int IdEmpresa)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
+            ViewBag.lst_sucursal = lst_sucursal;
         }
 
         private void cargar_combos(int IdEmpresa)
@@ -115,7 +122,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             var lst_comprador = bus_comprador.get_list(IdEmpresa,false);
             ViewBag.lst_comprador = lst_comprador;
 
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_dep = bus_departamento.get_list(IdEmpresa, false);

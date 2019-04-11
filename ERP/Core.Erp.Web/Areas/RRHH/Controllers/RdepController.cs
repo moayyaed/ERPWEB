@@ -55,7 +55,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                var lst_Sucursal = bus_Sucursal.get_list(IdEmpresa, false);
+                var lst_Sucursal = bus_Sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_Sucursal = lst_Sucursal;
 
                 var lst_Anio = bus_anio.get_list(false);

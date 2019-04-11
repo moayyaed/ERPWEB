@@ -275,7 +275,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             var lst_proceso = bus_procesos_bancarios.get_list(IdEmpresa, false);
             ViewBag.lst_proceso = lst_proceso;
 
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> lst_periodos = new List<ro_periodo_x_ro_Nomina_TipoLiqui_Info>();
@@ -285,15 +285,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         private void cargar_combos_consulta()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-
-            lst_sucursal.Add(new tb_sucursal_Info
-            {
-                IdEmpresa = IdEmpresa,
-                IdSucursal = 0,
-                Su_Descripcion = "TODOS"
-            });
-
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
         }
         #endregion

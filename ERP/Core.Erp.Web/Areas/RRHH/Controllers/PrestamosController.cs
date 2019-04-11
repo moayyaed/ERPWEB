@@ -11,6 +11,7 @@ using Core.Erp.Info.General;
 using DevExpress.Web;
 using Core.Erp.Web.Helps;
 using Core.Erp.Info.Helps;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -65,6 +66,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         int IdEmpresa = 0;
         ro_prestamo_Info info = new ro_prestamo_Info();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        string mensaje = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         #endregion
 
         #region vistas
@@ -195,6 +198,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -251,6 +263,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return RedirectToAction("Index");
             model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdPrestamo);
             Lis_ro_prestamo_detalle_lst.set_list(model.lst_detalle,model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos();
             return View(model);
         }

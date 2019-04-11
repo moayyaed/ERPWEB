@@ -17,6 +17,7 @@ using System.Web.Mvc;
 using ExcelDataReader;
 using Core.Erp.Info.General;
 using DevExpress.Web;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -34,7 +35,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         List<ro_rubro_tipo_Info> lst_rubros = new List<ro_rubro_tipo_Info>();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ro_empleado_info_list empleado_info_list = new ro_empleado_info_list();
-
+        string mensaje = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         int IdEmpresa = 0;
         #endregion
         
@@ -130,6 +132,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return RedirectToAction("Index");
             model.detalle = bus_novedad_detalle_bus.get_list(IdEmpresa,  IdCarga);
             detalle.set_list(model.detalle);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.FechaCarga, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos();
             return View(model);
         }
@@ -158,7 +170,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.lst_nomina = bus_nomina.get_list(IdEmpresa, false);
             ViewBag.lst_nomina_tipo = bus_nomina_tipo.get_list(IdEmpresa, 1);
-            ViewBag.lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            ViewBag.lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
 
             ViewBag.lst_rubro = bus_rubro.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
         }

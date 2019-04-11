@@ -65,7 +65,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         private void cargar_combos(int IdEmpresa)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
@@ -321,7 +321,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #region Metodos
         private void cargar_combos(fa_notaCreDeb_Info model)
         {
-            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_punto_venta = bus_punto_venta.get_list(model.IdEmpresa, model.IdSucursal, false);

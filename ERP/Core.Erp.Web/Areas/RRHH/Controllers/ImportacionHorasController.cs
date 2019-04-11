@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.General;
+﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.General;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Data.RRHH;
 using Core.Erp.Info.General;
@@ -33,7 +34,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_empleado_info_list empleado_info_list = new ro_empleado_info_list();
 
         ro_rubro_tipo_Info_list ro_rubro_tipo_Info_list = new ro_rubro_tipo_Info_list();
-
+        string mensaje = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         int IdEmpresa = 0;
         #endregion
 
@@ -163,6 +165,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return RedirectToAction("Index");
             model.detalle = bus_novedad_detalle_bus.get_list(IdEmpresa, IdCarga);
             detalle.set_list(model.detalle);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.FechaCarga, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos();
             return View(model);
         }

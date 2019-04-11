@@ -81,7 +81,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             try
             {
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)
@@ -242,7 +242,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #region Metodos
         private void CargarCombosAccion(int IdEmpresa, int IdSucursal)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_bodega = bus_bodega.get_list(IdEmpresa, IdSucursal, false);

@@ -57,14 +57,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             try
             {
-                var lst_Sucursal = bus_Sucursal.get_list(IdEmpresa, false);
-
-                lst_Sucursal.Add(new Info.General.tb_sucursal_Info
-                {
-                    IdSucursal = 0,
-                    Su_Descripcion = "TODAS"
-                });
-
+                var lst_Sucursal = bus_Sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
                 ViewBag.lst_Sucursal = lst_Sucursal;
             }
             catch (Exception)
@@ -76,7 +69,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             try
             {
-                var lst_Sucursal = bus_Sucursal.get_list(IdEmpresa, false);
+                var lst_Sucursal = bus_Sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_Sucursal = lst_Sucursal;
 
                 var lst_Modulo = bus_modulo.get_list();

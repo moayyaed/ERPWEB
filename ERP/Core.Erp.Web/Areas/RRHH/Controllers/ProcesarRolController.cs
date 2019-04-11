@@ -438,7 +438,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_nomina = lista_nomina;
                 ViewBag.lst_nomina_tipo = lst_nomina_tipo;
                 ViewBag.lst_periodos = lst_periodos;
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_sucursal = lst_sucursal;
 
                 
@@ -455,12 +455,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-                lst_sucursal.Add(new Info.General.tb_sucursal_Info
-                {
-                    IdSucursal = 0,
-                    Su_Descripcion = "Todos"
-                });
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
 
                 ViewBag.lst_sucursal = lst_sucursal;
             }

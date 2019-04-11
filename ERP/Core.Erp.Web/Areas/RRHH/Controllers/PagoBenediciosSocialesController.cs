@@ -163,7 +163,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
                 ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
-                var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_sucursal = lst_sucursal;
 
               var  lista_nomina = bus_nomina.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
@@ -181,7 +181,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-                var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
                 ViewBag.lst_sucursal = lst_sucursal;
             }
             catch (Exception)

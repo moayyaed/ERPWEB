@@ -91,7 +91,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_nomina = lista_nomina;
                 ViewBag.lst_nomina_tipo = lst_nomina_tipo;
                 ViewBag.lst_periodos = lst_periodos;
-                ViewBag.lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+                ViewBag.lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
 
 
             }

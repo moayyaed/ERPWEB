@@ -75,13 +75,7 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
         {
             try
             {
-                var lst_Sucursal = bus_Sucursal.get_list(IdEmpresa, false);
-
-                lst_Sucursal.Add(new Info.General.tb_sucursal_Info
-                {
-                    IdSucursal = 0,
-                    Su_Descripcion = "Todos"
-                });
+                var lst_Sucursal = bus_Sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
                 ViewBag.lst_Sucursal = lst_Sucursal;
 
                 var lst_Periodo = bus_Periodo.GetList(IdEmpresa, false, false);
@@ -102,7 +96,7 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
         {
             try
             {
-                var lst_Sucursal = bus_Sucursal.get_list(IdEmpresa, false);
+                var lst_Sucursal = bus_Sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_Sucursal = lst_Sucursal;
 
                 var lst_Periodo = bus_Periodo.GetList(IdEmpresa, false, false);

@@ -81,12 +81,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         public void CargarCombosConsulta(int IdEmpresa)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            lst_sucursal.Add(new Info.General.tb_sucursal_Info
-            {
-                IdSucursal = 0,
-                Su_Descripcion = "Todos"
-            });
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
@@ -132,7 +127,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             var lst_tipo_comprobante = bus_tipo_comprobante.get_list(IdEmpresa, false);
             ViewBag.lst_tipo_comprobante = lst_tipo_comprobante;
 
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
         }
 

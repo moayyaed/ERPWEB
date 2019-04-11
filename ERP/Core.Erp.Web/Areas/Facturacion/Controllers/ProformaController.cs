@@ -52,13 +52,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model.IdEmpresa);
+            CargarCombosConsulta(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            cargar_combos(model.IdEmpresa);
+            CargarCombosConsulta(model.IdEmpresa);
             return View(model);
         }
 
@@ -137,9 +137,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             return true;
         }
+        private void CargarCombosConsulta(int IdEmpresa)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
         private void cargar_combos(int IdEmpresa)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_bodega = bus_bodega.get_list(IdEmpresa, false);

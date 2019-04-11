@@ -31,7 +31,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         private void CargarCombos(int IdEmpresa)
         {
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
         }
 

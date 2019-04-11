@@ -41,7 +41,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #endregion
         private void cargar_combos(int IdEmpresa)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_bodega = bus_bodega.get_list(IdEmpresa, false);

@@ -37,13 +37,13 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model.IdEmpresa);
+            cargar_combos_consulta(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            cargar_combos(model.IdEmpresa);
+            cargar_combos_consulta(model.IdEmpresa);
             return View(model);
         }
         [ValidateInput(false)]
@@ -58,9 +58,14 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
         }
         #endregion
         #region Metodos
+        private void cargar_combos_consulta(int IdEmpresa)
+        {
+            var lst_sucursal_consulta = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
+            ViewBag.lst_sucursal_consulta = lst_sucursal_consulta;
+        }
         private void cargar_combos(int IdEmpresa)
         {
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
             var lst_bodega = bus_bodega.get_list(IdEmpresa, false);
             ViewBag.lst_bodega = lst_bodega;

@@ -56,7 +56,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Cargar Combos
         private void cargar_combos(in_transferencia_Info model)
         {
-            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
 
             var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
