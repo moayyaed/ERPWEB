@@ -9,6 +9,7 @@ using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Erp.Info.Helps;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 {
@@ -20,6 +21,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         cxc_liquidacion_comisiones_det_Bus bus_det = new cxc_liquidacion_comisiones_det_Bus();
         cxc_liquidacion_det_List List_det = new cxc_liquidacion_det_List();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -108,6 +111,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -140,6 +152,16 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdLiquidacion);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 

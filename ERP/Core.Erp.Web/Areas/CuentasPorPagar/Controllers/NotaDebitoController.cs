@@ -341,6 +341,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cn_fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -378,6 +387,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 model.info_comrobante.lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>();
             Lis_ct_cbtecble_det_List_nd.set_list(model.info_comrobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cn_fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos_detalle();
             return View(model);
         }

@@ -40,6 +40,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        string mensaje = string.Empty;
         #endregion
         #region Index
 
@@ -274,6 +275,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -359,6 +369,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             Session["lst_detalle"] = model.detalle;
             comprobante_contable_fp.set_list( model.info_comprobante.lst_ct_cbtecble_det,model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 

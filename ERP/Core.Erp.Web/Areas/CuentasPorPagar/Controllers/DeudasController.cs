@@ -55,6 +55,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_codigo_SRI_Bus bus_sri = new cp_codigo_SRI_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        string mensaje = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -498,6 +499,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.co_FechaFactura, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -619,6 +629,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.co_FechaFactura, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
 
             cargar_combos(model);
             cargar_combos_detalle();

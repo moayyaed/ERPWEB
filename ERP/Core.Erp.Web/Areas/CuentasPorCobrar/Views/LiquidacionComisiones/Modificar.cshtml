@@ -24,6 +24,15 @@
     @Html.HiddenFor(q => q.IdLiquidacion, new { id = "IdLiquidacion" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { id = "IdTransaccionSession" })
 
+    if (@ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
     if (ViewBag.MensajeSuccess != null)
     {
         <div class="alert alert-success alert-dismissible">
@@ -100,7 +109,10 @@
     </div>
 
     <div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
         <button type="submit" class="btn btn-primary">Guardar</button>
+    }
         <a class="btn btn-default" href="@Url.Action("Index","LiquidacionComisiones", new {  Area = "CuentasPorCobrar"  },null)">Cancelar</a>
     </div>
     @section Scripts {

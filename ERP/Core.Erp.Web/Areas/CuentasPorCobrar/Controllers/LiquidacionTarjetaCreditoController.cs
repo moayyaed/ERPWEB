@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Bus.Banco;
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.CuentasPorCobrar;
@@ -27,6 +28,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         cxc_LiquidacionTarjeta_x_cxc_cobro_List Lista_LiquidacionTarjeta_x_cxc_cobro = new cxc_LiquidacionTarjeta_x_cxc_cobro_List();
         cxc_LiquidacionTarjeta_x_cxc_cobro_pendientes_List Lista_Liquidacion_x_cobro_pendiente = new cxc_LiquidacionTarjeta_x_cxc_cobro_pendientes_List();
         string mensaje = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -262,6 +264,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos(IdEmpresa, model.IdSucursal);
             return View(model);
         }
@@ -301,6 +312,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             Lista_LiquidacionTarjetaDet.set_list(bus_LiquidacionTarjetaDet.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
             Lista_LiquidacionTarjeta_x_cxc_cobro.set_list(bus_LiquidacionTarjeta_cxc_cobro.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
 
             cargar_combos(IdEmpresa, model.IdSucursal);
             return View(model);

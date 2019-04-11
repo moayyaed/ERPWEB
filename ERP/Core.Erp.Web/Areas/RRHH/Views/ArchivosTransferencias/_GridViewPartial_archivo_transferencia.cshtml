@@ -131,7 +131,7 @@
         {
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_020", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdNominaTipo = DataBinder.Eval(c.DataItem, "IdNominaTipo").ToString(), IdNomina = DataBinder.Eval(c.DataItem, "IdNomina").ToString(), IdPeriodo = DataBinder.Eval(c.DataItem, "IdPeriodo").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal").ToString(), IdProceso = DataBinder.Eval(c.DataItem, "IdProceso").ToString() }, Request.Url.Scheme) + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_020", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdTipoNomina = DataBinder.Eval(c.DataItem, "IdNominaTipo").ToString(), IdNomina = DataBinder.Eval(c.DataItem, "IdNomina").ToString(), IdPeriodo = DataBinder.Eval(c.DataItem, "IdPeriodo").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal").ToString(), IdProceso = DataBinder.Eval(c.DataItem, "IdProceso").ToString() }, Request.Url.Scheme) + "');\"></span>");
 
             });
             column.Width = Unit.Percentage(5);

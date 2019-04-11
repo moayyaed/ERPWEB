@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.Caja;
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.CuentasPorCobrar;
@@ -31,6 +32,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         ba_Banco_Cuenta_Bus bus_banco_cuenta = new ba_Banco_Cuenta_Bus();
         cxc_cobro_det_Bus bus_det = new cxc_cobro_det_Bus();
         cxc_cobro_det_List list_det = new cxc_cobro_det_List();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -264,6 +266,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cr_fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -304,6 +315,16 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             list_det.set_list(model.lst_det, model.IdTransaccionSession);
             model.IdEntidad = model.IdCliente;
             cargar_combos(IdEmpresa, model.IdSucursal);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cr_fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 

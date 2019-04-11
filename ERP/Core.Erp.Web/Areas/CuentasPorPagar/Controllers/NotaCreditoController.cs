@@ -37,7 +37,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         cp_orden_pago_cancelaciones_List List_op = new cp_orden_pago_cancelaciones_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
-
+        string mensaje = string.Empty;
         cp_orden_pago_cancelaciones_List List_op_det = new cp_orden_pago_cancelaciones_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -222,6 +222,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cn_fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
         [HttpPost]
@@ -276,6 +285,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             List_op.set_list(bus_orden_pago_cancelaciones.get_list_x_pago(IdEmpresa, IdTipoCbte_Nota, IdCbteCble_Nota, SessionFixed.IdUsuario),model.IdTransaccionSession);
             List_op_det.set_list(bus_orden_pago_cancelaciones.get_list_x_pago(model.IdEmpresa, model.IdTipoCbte_Nota, model.IdCbteCble_Nota, SessionFixed.IdUsuario), model.IdTransaccionSession);
             cargar_combos(IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cn_fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos_detalle();
             return View(model);
         }

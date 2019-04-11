@@ -559,7 +559,10 @@
         </div>
     </div>
     <div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
         <button type="submit" class="btn btn-danger">Anular</button>
+    }
         <a class="btn btn-default" href="@Url.Action("Index","Deudas",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
     @section Scripts {

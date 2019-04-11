@@ -14,7 +14,8 @@ using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Bus.SeguridadAcceso;
 using DevExpress.Web;
 using Core.Erp.Bus.Inventario;
-    
+using Core.Erp.Bus.Contabilidad;
+
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
     public class SolicitudPagoController : Controller
@@ -24,6 +25,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         cp_SolicitudPagoDet_Bus bus_pago_Det = new cp_SolicitudPagoDet_Bus();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -125,6 +128,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -146,6 +158,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_SolicitudPago_Info model = bus_solicitud.GetInfo(IdEmpresa, IdSolicitud);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos(IdEmpresa);
             return View(model);
         }

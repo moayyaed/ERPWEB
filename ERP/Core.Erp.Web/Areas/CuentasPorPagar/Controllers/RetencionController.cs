@@ -33,6 +33,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        string mensaje = string.Empty;
         #endregion
         #region vistas
         public ActionResult Index()
@@ -222,6 +223,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
         [HttpPost]
@@ -300,12 +310,23 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             Session["info_param_op"] = bus_parametros.get_info(IdEmpresa);
             cp_retencion_Info model = new cp_retencion_Info();
             model = bus_retencion.get_info(IdEmpresa, IdRetencion);
+            model.IdSucursal = model.info_comprobante.IdSucursal;
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_ct_cbtecble_det_List.set_list(model.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.detalle, model.IdTransaccionSession);
 
             var lista = bus_codigo_ret.get_list_cod_ret(false, IdEmpresa);
             lst_codigo_retencion.set_list(lista);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
         [HttpPost]

@@ -184,6 +184,16 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             list_vale.set_list(model.lst_det_vale, model.IdTransaccionSession);
             model.lst_det_ing = bus_ing.get_list_ingresos_x_conciliar(IdEmpresa, model.Fecha_fin, model.IdCaja);
             list_ing.set_list(model.lst_det_ing, model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos(IdEmpresa);
             return View(model);
         }

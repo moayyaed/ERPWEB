@@ -36,12 +36,20 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-10 col-md-1">
+            <div class="col-md-offset-9 col-md-1">
                 <label for="IdImprimir"></label>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
                     </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimirtxt"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("get_archivo","ArchivosTransferencias",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa, IdArchivo =Model.IdArchivo },null)">
+                        <i class="fa fa-download"></i>
+                    </a>
                 </div>
             </div>
             <div class="col-md-1">
@@ -269,7 +277,7 @@
 
     function Imprimir() {
         var location = GetPathServer();
-        var win = window.open(location +"/Reportes/RRHHReportes/ROL_020?IdEmpresa="+@Model.IdEmpresa+"&IdNomina_Tipo="+@Model.IdNominaTipo+"&IdNomina_TipoLiqui="+@Model.IdNomina+"&IdPeriodo="+@Model.IdPeriodo+"&IdSucursal="+@Model.IdSucursal+"&IdProceso="+@Model.IdProceso, '_blank');
+        var win = window.open(location +"/Reportes/RRHHReportes/ROL_020?IdEmpresa="+@Model.IdEmpresa+"&IdTipoNomina="+@Model.IdNominaTipo+"&IdNomina="+@Model.IdNomina+"&IdPeriodo="+@Model.IdPeriodo+"&IdSucursal="+@Model.IdSucursal+"&IdProceso="+@Model.IdProceso, '_blank');
         win.focus();
     }
 </script>

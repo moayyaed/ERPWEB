@@ -734,14 +734,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
-        public ActionResult ROL_020()
+        public ActionResult ROL_020(int IdEmpresa=0, int IdTipoNomina=0, int IdNomina=0, int IdPeriodo=0, int IdSucursal=0, int IdProceso=0)
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdProceso = 1
-
+                IdEmpresa = IdEmpresa == 0 ? Convert.ToInt32(SessionFixed.IdEmpresa) : IdEmpresa,
+                IdSucursal = IdSucursal==0 ? Convert.ToInt32(SessionFixed.IdSucursal): IdSucursal,
+                IdProceso = IdProceso==0 ? 1 : IdProceso,
+                IdTipoNomina = IdTipoNomina,
+                IdNomina = IdNomina,
+                IdPeriodo = IdPeriodo
             };
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
             ROL_020_Rpt reporte = new ROL_020_Rpt();

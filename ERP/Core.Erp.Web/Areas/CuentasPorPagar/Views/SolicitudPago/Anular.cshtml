@@ -6,6 +6,15 @@
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
@@ -97,7 +106,10 @@
     </div>
 
     <div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
         <button type="submit" class="btn btn-danger">Anular</button>
+    }
         <a class="btn btn-default" href="@Url.Action("Index","SolicitudPago",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
     @section Scripts {

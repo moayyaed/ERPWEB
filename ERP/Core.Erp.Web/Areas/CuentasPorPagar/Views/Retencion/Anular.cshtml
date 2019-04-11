@@ -6,7 +6,8 @@
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
-    if (ViewBag.mensaje != null)
+
+    if (@ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
             <h4>
@@ -32,7 +33,7 @@
     @Html.HiddenFor(q => q.co_subtotal_iva)
     @Html.HiddenFor(q => q.co_subtotal_siniva)
     @Html.HiddenFor(q => q.co_baseImponible)
-
+    @Html.HiddenFor(q => q.IdSucursal)
 
     <div class="row">
         <div class="col-md-12">
@@ -204,7 +205,10 @@
         </div>
     </div>
     <div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
         <button type="submit" class="btn btn-danger">Anular</button>
+    }
         <a class="btn btn-default" href="@Url.Action("Index","Retencion",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
     @section Scripts {

@@ -328,7 +328,10 @@
     <div class="box-footer">
         @if (!String.IsNullOrEmpty(Model.IdCobro_tipo))
         {
+            if (ViewBag.MostrarBoton ?? false)
+            {
             <button type="submit" class="btn btn-primary">Guardar</button>
+            }
         }
         <a class="btn btn-default" href="@Url.Action("Index", "Cobranza", new { Area = "CuentasPorCobrar" }, null)">Cancelar</a>
     </div>

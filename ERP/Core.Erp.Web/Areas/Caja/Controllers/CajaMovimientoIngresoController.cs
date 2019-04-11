@@ -31,6 +31,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         string mensaje = string.Empty;
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         cxc_cobro_tipo_Bus bus_cobro = new cxc_cobro_tipo_Bus();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -234,6 +235,15 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos(IdEmpresa);
 
             if (!bus_caja_mov.ValidarMovimientoModificar(IdEmpresa, IdTipocbte, IdCbteCble, "+"))
@@ -294,6 +304,15 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
             else
                 ViewBag.NoMostrarBotones = false;
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
 
             return View(model);
         }
