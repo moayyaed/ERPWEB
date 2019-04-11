@@ -236,6 +236,9 @@ namespace Core.Erp.Data.Banco
                                 cbte.IdEstado_cheque_cat = "ESTCBCOB";
                         }
                     }
+                    var lstd = Context.ba_Conciliacion_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion == info.IdConciliacion);
+                    Context.ba_Conciliacion_det.RemoveRange(lstd);
+
                     if (info.List_detalle.Count() > 0)
                     {
                         foreach (var item in info.List_detalle)
