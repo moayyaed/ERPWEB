@@ -182,7 +182,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="IdMarca">Grupo*</label>
+                                    <label for="IdMarca">Familia*</label>
                                     @Html.DropDownListFor(q => q.IdMarca, new SelectList(ViewBag.lst_marca, "IdMarca", "Descripcion"), new { @class = "form-control", @id = "IdMarca" })
                                     @Html.ValidationMessageFor(q => q.IdMarca, "", new { @class = "text-danger" })
                                 </div>
