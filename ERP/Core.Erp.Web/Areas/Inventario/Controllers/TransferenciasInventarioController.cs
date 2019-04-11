@@ -163,6 +163,15 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             cargar_combos(IdEmpresa);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.tr_fecha, cl_enumeradores.eModulo.INV, model.IdSucursalOrigen, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             return View(model);
         }
 
@@ -208,6 +217,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.list_detalle = bus_tras_detalle.get_list(IdEmpresa, IdSucursalOrigen, IdBodegaOrigen, IdTransferencia);
             List_in_transferencia_det.set_list(model.list_detalle, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.tr_fecha, cl_enumeradores.eModulo.INV, model.IdSucursalOrigen, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             return View(model);
         }
 
