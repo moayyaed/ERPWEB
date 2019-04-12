@@ -345,7 +345,7 @@
             // xrTableCell8
             // 
             this.xrTableCell8.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_IdSucursal]==0, \'TODAS\', [Su_Descripcion])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Su_Descripcion]")});
             this.xrTableCell8.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell8.Name = "xrTableCell8";
             this.xrTableCell8.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
@@ -383,6 +383,7 @@
             this.xrTableCell31.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell31.StylePriority.UseFont = false;
             this.xrTableCell31.StylePriority.UsePadding = false;
+            this.xrTableCell31.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell31.Weight = 1.5466667328405417D;
             // 
             // xrTableCell35
@@ -409,6 +410,7 @@
             this.xrTableCell37.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell37.Name = "xrTableCell37";
             this.xrTableCell37.StylePriority.UseFont = false;
+            this.xrTableCell37.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell37.Weight = 0.90666666666666651D;
             // 
             // xrTable1

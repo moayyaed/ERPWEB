@@ -26,5 +26,7 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public Nullable<int> IdMes { get; set; }
         public string smes { get; set; }
         public int IdAnio { get; set; }
+        public int IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }

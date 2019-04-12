@@ -7,6 +7,7 @@ using Core.Erp.Web.Reportes.Contabilidad;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -61,11 +62,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            lst_sucursal.Add(new Info.General.tb_sucursal_Info
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
+        private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            foreach (var item in lst_sucursal)
             {
-                IdSucursal = 0,
-                Su_Descripcion = "TODOS"
-            });
+                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+            }
             ViewBag.lst_sucursal = lst_sucursal;
         }
         private void cargar_nivel()
@@ -94,8 +100,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCtaCbleFin = "",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model.IdEmpresa);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
             report.p_IdCtaCbleFin.Value = model.IdCtaCbleFin;
@@ -111,6 +118,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CONTA_002(cl_filtros_Info model)
         {
             CONTA_002_Rpt report = new CONTA_002_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
             report.p_IdCtaCbleFin.Value = model.IdCtaCbleFin;
@@ -119,7 +127,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos(model.IdEmpresa);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);
         }
@@ -133,10 +141,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 balance = "ER",
             };
 
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             model.IdAnio = model.fecha_fin.Year;
             model.MostrarSaldoAcumulado = false;
             cargar_combos(model.IdEmpresa);
             CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdAnio.Value = model.IdAnio;
             report.p_fechaIni.Value = model.fecha_ini;
@@ -162,6 +172,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if (model.balance == "BG")
             {
                 CONTA_003_BG_Rpt report = new CONTA_003_BG_Rpt();
+                report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
                 report.p_fechaIni.Value = model.fecha_ini;
@@ -180,6 +191,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if (model.balance == "ER")
             {
                 CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
+                report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
                 report.p_fechaIni.Value = model.fecha_ini;
@@ -199,6 +211,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if (string.IsNullOrEmpty(model.balance))
             {
                 CONTA_003_BC_Rpt report = new CONTA_003_BC_Rpt();
+                report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
                 report.p_fechaIni.Value = model.fecha_ini;

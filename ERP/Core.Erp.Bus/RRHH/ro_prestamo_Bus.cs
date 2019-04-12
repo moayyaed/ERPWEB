@@ -176,11 +176,20 @@ namespace Core.Erp.Bus.RRHH
                     ro_prestamo_detalle_Info item = new ro_prestamo_detalle_Info();
 
                     if (i == 1)
-                    { item.FechaPago = fecha_pago;
+                    {
+                        var fecha_pago_sgte = fecha_pago;
+                        int fin_mes = DateTime.DaysInMonth(fecha_pago_sgte.Year, fecha_pago_sgte.Month);
+                        fecha_pago = new DateTime(fecha_pago_sgte.Year, fecha_pago_sgte.Month, fin_mes);
                     }
-                    else { fecha_pago = fecha_pago.AddMonths(1); }
-                   
-                        item.FechaPago = info.Fecha_PriPago;
+                    else
+                    {
+                        var fecha_pago_sgte = fecha_pago.AddMonths(1);
+                        int fin_mes = DateTime.DaysInMonth(fecha_pago_sgte.Year, fecha_pago_sgte.Month);
+
+                        fecha_pago = new DateTime(fecha_pago_sgte.Year, fecha_pago_sgte.Month, fin_mes);
+                    }
+
+                    item.FechaPago = info.Fecha_PriPago;
                         item.NumCuota = i;
                         item.TotalCuota = valor_cuota;
                         item.Saldo = info.MontoSol;
@@ -233,9 +242,13 @@ namespace Core.Erp.Bus.RRHH
 
                     if (i == 1)
                     {
-                        item.FechaPago = fecha_pago;
+                        //item.FechaPago = fecha_pago;
+                        fecha_pago = new DateTime(fecha_pago.Year, fecha_pago.Month, 15);
                     }
-                    else { fecha_pago = fecha_pago.AddMonths(1); }
+                    else {
+                        var fecha_pago_sgte = fecha_pago.AddMonths(1);
+                        fecha_pago = new DateTime(fecha_pago_sgte.Year, fecha_pago_sgte.Month, 15);
+                    }
 
                     item.FechaPago = info.Fecha_PriPago;
                     item.NumCuota = i;
@@ -279,23 +292,23 @@ namespace Core.Erp.Bus.RRHH
 
                     if(i==1)
                     {
-                        fecha_pago = info.Fecha_PriPago; 
+                        //fecha_pago = info.Fecha_PriPago; 
+                        fecha_pago = new DateTime(fecha_pago.Year, fecha_pago.Month, 15);
                     }
                     else
                     {
-                        fecha_pago = fecha_pago.AddDays(15);
+                        fecha_pago = fecha_pago.AddDays(1);
                     }
                     if (fecha_pago.Day > 15)
                     {
-                        if (fecha_pago.Month != 2)
-                            fecha_pago = Convert.ToDateTime("30/" + fecha_pago.Month.ToString() + "/" + fecha_pago.Year.ToString());
-                        else
-                            fecha_pago = Convert.ToDateTime("28/" + fecha_pago.Month.ToString() + "/" + fecha_pago.Year.ToString());
-
+                        int fin_mes = DateTime.DaysInMonth(fecha_pago.Year, fecha_pago.Month);
+                        fecha_pago = new DateTime(fecha_pago.Year, fecha_pago.Month, fin_mes);
+                        //fecha_pago = Convert.ToDateTime(fin_mes + fecha_pago.Month.ToString() + "/" + fecha_pago.Year.ToString());
                     }
                     else
                     {
-                        fecha_pago = Convert.ToDateTime("15/" + fecha_pago.Month.ToString() + "/" + fecha_pago.Year.ToString());
+                        fecha_pago = new DateTime(fecha_pago.Year, fecha_pago.Month, 15);
+                        //fecha_pago = Convert.ToDateTime("15/" + fecha_pago.Month.ToString() + "/" + fecha_pago.Year.ToString());
                     }
 
                     item.FechaPago = info.Fecha_PriPago;

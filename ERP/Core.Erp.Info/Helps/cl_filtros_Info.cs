@@ -172,6 +172,8 @@ namespace Core.Erp.Info.Helps
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
             fecha_fin = DateTime.Now.Date;
         }
+
+        public int[] IntArray { get; set; }
     }
 
     public class cl_filtros_facturacion_Info

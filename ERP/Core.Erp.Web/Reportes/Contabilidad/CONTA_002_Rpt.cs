@@ -14,6 +14,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
         public CONTA_002_Rpt()
         {
             InitializeComponent();
@@ -32,6 +33,13 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             CONTA_002_Bus bus_rpt = new CONTA_002_Bus();
             List<CONTA_002_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdCtaCble, IdCtaCbleFin, IdSucursal, fechaIni, fechaFin);
+            if (IntArray != null)
+            {
+                foreach (var item in IntArray)
+                {
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdCtaCble, IdCtaCbleFin, item, fechaIni, fechaFin));
+                }
+            }
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

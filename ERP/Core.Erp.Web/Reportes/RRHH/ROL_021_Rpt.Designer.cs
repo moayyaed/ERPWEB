@@ -1008,7 +1008,7 @@
             this.xrPivotGrid1.OptionsView.ShowRowHeaders = false;
             this.xrPivotGrid1.OptionsView.ShowTotalsForSingleValues = true;
             this.xrPivotGrid1.Scripts.OnCustomRowHeight = "xrPivotGrid1_CustomRowHeight";
-            this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(622.7917F, 166.875F);
+            this.xrPivotGrid1.SizeF = new System.Drawing.SizeF(622.7917F, 167.7083F);
             this.xrPivotGrid1.FieldValueDisplayText += new System.EventHandler<DevExpress.XtraReports.UI.PivotGrid.PivotFieldDisplayTextEventArgs>(this.xrPivotGrid1_FieldValueDisplayText);
             this.xrPivotGrid1.PrintFieldValue += new System.EventHandler<DevExpress.XtraReports.UI.PivotGrid.CustomExportFieldValueEventArgs>(this.xrPivotGrid1_PrintFieldValue);
             // 

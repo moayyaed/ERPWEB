@@ -264,7 +264,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
-            #region Validacion Periodo
+            #region Validacion Periodo BAN
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+            #region Validacion Periodo CXC
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
             {
@@ -313,7 +321,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             Lista_LiquidacionTarjetaDet.set_list(bus_LiquidacionTarjetaDet.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
             Lista_LiquidacionTarjeta_x_cxc_cobro.set_list(bus_LiquidacionTarjeta_cxc_cobro.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
 
-            #region Validacion Periodo
+            #region Validacion Periodo BAN
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+            #region Validacion Periodo CXC
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
             {
@@ -321,7 +337,6 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
-
             cargar_combos(IdEmpresa, model.IdSucursal);
             return View(model);
         }

@@ -194,8 +194,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 ro_rol_Info model = bus_rol.get_info(IdEmpresa, IdNomina_Tipo, IdNomina_TipoLiqui, IdPeriodo, IdRol);
                 ViewBag.FechaCorte = DateTime.Now;
-                return View(model);
 
+                return View(model);
             }
             catch (Exception)
             {

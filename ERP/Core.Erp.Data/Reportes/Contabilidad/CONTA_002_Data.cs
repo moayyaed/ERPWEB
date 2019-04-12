@@ -48,7 +48,9 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                                      tc_TipoCbte = q.tc_TipoCbte,
                                      IdMes = q.IdMes,
                                      smes = q.smes,
-                                     IdAnio = q.cb_Fecha.Year
+                                     IdAnio = q.cb_Fecha.Year,
+                                     IdSucursal = q.IdSucursal,
+                                     Su_Descripcion = q.Su_Descripcion
                                  }).ToList();
 
                         ListaReporte.AddRange(Lista);
