@@ -33,8 +33,11 @@ namespace Core.Erp.Web.Reportes.Facturacion
             var empresa = bus_empresa.get_info(IdEmpresa);
             lbl_empresa.Text = empresa.em_nombre;
 
-            ImageConverter obj = new ImageConverter();
-            logo.Image = (Image)obj.ConvertFrom(empresa.em_logo);
+            if (empresa != null && empresa.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                logo.Image = (Image)obj.ConvertFrom(empresa.em_logo);
+            }
         }
     }
 }

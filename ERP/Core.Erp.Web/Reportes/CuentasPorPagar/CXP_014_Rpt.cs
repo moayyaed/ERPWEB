@@ -41,8 +41,11 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             var emp = bus_empresa.get_info(IdEmpresa);
             //lbl_empresa.Text = emp.RazonSocial;
 
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
 
             CXP_014_Bus bus_rpt = new CXP_014_Bus();
             List<CXP_014_Info> lst_rpt = new List<CXP_014_Info>();            

@@ -35,8 +35,11 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             lbl_ruc.Text = empresa.em_ruc;
             lbl_direccion.Text = empresa.em_direccion;
 
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(empresa.em_logo);
+            if (empresa != null && empresa.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(empresa.em_logo);
+            }
         }
     }
 }
