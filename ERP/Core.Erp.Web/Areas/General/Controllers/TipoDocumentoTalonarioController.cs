@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Bus.General;
+using Core.Erp.Bus.Facturacion;
 using Core.Erp.Info.General;
 using Core.Erp.Web.Helps;
 using System;
@@ -159,7 +160,12 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
             return Json(NumeroDocumento, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetInfoEstablecimiento(int IdEmpresa = 0, int IdSucursal = 0)
+        {
+            var resultado = bus_sucursal.get_info(IdEmpresa, IdSucursal);
 
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

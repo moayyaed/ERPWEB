@@ -9,6 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
 @using (Html.BeginForm("Nuevo", "TipoDocumentoTalonario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
@@ -56,6 +57,7 @@
                    settings.Properties.ValueType = typeof(int);
                    settings.Properties.TextField = "Su_Descripcion";
                    settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){GetInfoEstablecimiento()}";
 
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                }).BindList(ViewBag.lst_sucursal).GetHtml()
@@ -169,6 +171,8 @@
 }
 
 <script>
+    get_NumeroDocumentoInicial();
+
     $(function () {
         ocultar_mostrar_div_autorizacion();
         
@@ -255,6 +259,25 @@
     }
 
 
+    function GetInfoEstablecimiento() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: IdSucursal.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfoEstablecimiento", "TipoDocumentoTalonario", new { Area = "General"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Establecimiento").val(data.Su_CodigoEstablecimiento);
+            },
+            error: function (error) {
 
-
+            }
+        });
+    }
+    
 </script>
