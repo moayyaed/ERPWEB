@@ -54,28 +54,59 @@ namespace Core.Erp.Web.Areas.General.Controllers
         {
             decimal documento_inicial = Convert.ToDecimal(model.NumDocumento);
             decimal documento_final = Convert.ToDecimal(model.Documentofinal);
-            for (decimal i = documento_inicial; i < documento_final; i++)
+            //for (decimal i = documento_inicial; i < documento_final; i++)
+            //{
+            //    tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info
+            //    {
+            //        IdEmpresa = model.IdEmpresa,
+            //        CodDocumentoTipo = model.CodDocumentoTipo,
+            //        Establecimiento = model.Establecimiento,
+            //        PuntoEmision = model.PuntoEmision,
+            //        NumDocumento = i.ToString("000000000"),
+            //       es_Documento_Electronico = model.es_Documento_Electronico,
+            //       FechaCaducidad = model.FechaCaducidad,
+            //       IdSucursal = model.IdSucursal,
+            //       NumAutorizacion = model.NumAutorizacion,
+            //       Usado = model.Usado,                    
+            //    };
+            //    if (!bus_talonario.guardarDB(info))
+            //    {
+            //        cargar_combos(model.IdEmpresa);
+            //        return View(model);
+            //    }
+            //}           
+            int length = model.NumDocumento.Length;
+            string relleno = string.Empty;
+            for (int i = 0; i < length; i++)
             {
+                relleno += "0";
+            }
+            decimal secuencia = documento_inicial;
+            for (decimal i = documento_inicial; i < documento_final + 1; i++)
+            {
+
                 tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info
                 {
                     IdEmpresa = model.IdEmpresa,
                     CodDocumentoTipo = model.CodDocumentoTipo,
+                    NumDocumento = secuencia.ToString(relleno),
                     Establecimiento = model.Establecimiento,
                     PuntoEmision = model.PuntoEmision,
-                    NumDocumento = i.ToString("000000000"),
-                   es_Documento_Electronico = model.es_Documento_Electronico,
-                   FechaCaducidad = model.FechaCaducidad,
-                   IdSucursal = model.IdSucursal,
-                   NumAutorizacion = model.NumAutorizacion,
-                   Usado = model.Usado,                    
+                    EstadoBool = model.EstadoBool,
+                    Estado = model.EstadoBool == true ? "A" : "I",
+                    Usado = model.Usado,
+                    es_Documento_Electronico = model.es_Documento_Electronico,
+                    FechaCaducidad = model.FechaCaducidad,
+                    IdSucursal = model.IdSucursal,
+                    NumAutorizacion = model.NumAutorizacion,
                 };
                 if (!bus_talonario.guardarDB(info))
                 {
                     cargar_combos(model.IdEmpresa);
                     return View(model);
                 }
-            }           
-
+                secuencia++;
+            }
             return RedirectToAction("Index");
         }
 

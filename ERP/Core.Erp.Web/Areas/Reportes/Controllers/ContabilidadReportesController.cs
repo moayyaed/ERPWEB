@@ -7,6 +7,7 @@ using Core.Erp.Web.Reportes.Contabilidad;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -68,6 +69,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_sucursal = lst_sucursal;
         }
+        private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            foreach (var item in lst_sucursal)
+            {
+                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+            }
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
         private void cargar_nivel()
         {
             Dictionary<int, string> lst_nivel = new Dictionary<int, string>();
@@ -94,8 +105,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCtaCbleFin = "",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
-            cargar_combos(model.IdEmpresa);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
             report.p_IdCtaCbleFin.Value = model.IdCtaCbleFin;
@@ -111,6 +123,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CONTA_002(cl_filtros_Info model)
         {
             CONTA_002_Rpt report = new CONTA_002_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
             report.p_IdCtaCbleFin.Value = model.IdCtaCbleFin;
@@ -119,7 +132,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos(model.IdEmpresa);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);
         }

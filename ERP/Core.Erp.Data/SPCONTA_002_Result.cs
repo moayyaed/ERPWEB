@@ -30,5 +30,7 @@ namespace Core.Erp.Data
         public string tc_TipoCbte { get; set; }
         public Nullable<int> IdMes { get; set; }
         public string smes { get; set; }
+        public int IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }
