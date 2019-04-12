@@ -93,8 +93,11 @@ namespace Core.Erp.Web.Reportes.RRHH
                 tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
                 var emp = bus_empresa.get_info(IdEmpresa);
                 lbl_empresa.Text = emp.em_nombre;
-                ImageConverter obj = new ImageConverter();
-                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                if (emp != null && emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
             }
             catch (Exception)
             {

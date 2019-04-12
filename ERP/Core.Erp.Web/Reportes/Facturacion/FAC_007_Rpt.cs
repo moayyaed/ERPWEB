@@ -43,8 +43,11 @@ namespace Core.Erp.Web.Reportes.Facturacion
             lbl_correo.Text = empresa.em_Email;
             lbl_ruc.Text = empresa.em_ruc;
 
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(empresa.em_logo);
+            if (empresa != null && empresa.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(empresa.em_logo);
+            }
         }
     }
 }

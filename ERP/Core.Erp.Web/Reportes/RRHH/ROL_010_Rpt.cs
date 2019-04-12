@@ -37,8 +37,11 @@ namespace Core.Erp.Web.Reportes.RRHH
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
             lbl_empresa.Text = emp.em_nombre;
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
 
             ROL_010_Bus bus_rpt = new ROL_010_Bus();
             List<ROL_010_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdDivision, IdArea, IdTipoNomina, em_status, Ubicacion);

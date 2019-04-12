@@ -52,10 +52,13 @@ namespace Core.Erp.Web.Reportes.RRHH
                 {
                     lbl_sucursal.Text = "";
                 }
-                
 
-                ImageConverter obj = new ImageConverter();
-                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+
+                if (emp != null && emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
             }
             catch (Exception)
             {
