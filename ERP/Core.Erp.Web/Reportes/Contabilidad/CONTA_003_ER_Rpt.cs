@@ -39,12 +39,12 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             string Sucursal = "";
             if (IntArray != null)
             {
-                foreach (var item in IntArray)
+                for (int i = 0; i < IntArray.Count(); i++)
                 {
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, item, MostrarSaldoAcumulado));
-                    Sucursal += bus_sucursal.get_info(IdEmpresa, item).Su_Descripcion + " ,";
-                    lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, IntArray[i], MostrarSaldoAcumulado));
+                    Sucursal += bus_sucursal.get_info(IdEmpresa, IntArray[i]).Su_Descripcion + (IntArray.Count() - 1 == i ? "" : ", ");                    
                 }
+                lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             }
 
             var ListaReporte = (from q in lst_rpt
@@ -54,7 +54,9 @@ namespace Core.Erp.Web.Reportes.Contabilidad
                                     q.pc_Cuenta,
                                     q.EsCuentaMovimiento,
                                     q.gc_GrupoCble,                                   
-                                    q.Su_Descripcion
+                                    q.Su_Descripcion,
+                                    q.IdGrupoCble,
+                                    q.gc_Orden
                                 } into ListaAgrupada
                                 select new
                                 {
@@ -62,17 +64,22 @@ namespace Core.Erp.Web.Reportes.Contabilidad
                                     pc_Cuenta = ListaAgrupada.Key.pc_Cuenta,
                                     EsCuentaMovimiento = ListaAgrupada.Key.EsCuentaMovimiento,
                                     gc_GrupoCble = ListaAgrupada.Key.gc_GrupoCble,
+                                    IdGrupoCble = ListaAgrupada.Key.IdGrupoCble,
                                     Su_Descripcion = ListaAgrupada.Key.Su_Descripcion,
-                                    SaldoFinalNaturaleza = ListaAgrupada.Sum(p => p.SaldoFinalNaturaleza)
+                                    SaldoFinalNaturaleza = ListaAgrupada.Sum(p => p.SaldoFinalNaturaleza),
+                                    SaldoFinal = ListaAgrupada.Sum(p => p.SaldoFinal),
+                                    gc_Orden = ListaAgrupada.Key.gc_Orden
                                 }).ToList();
 
             this.DataSource = ListaReporte;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }
