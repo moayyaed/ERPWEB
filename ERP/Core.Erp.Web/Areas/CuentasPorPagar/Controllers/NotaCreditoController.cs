@@ -337,13 +337,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             Lis_ct_cbtecble_det_List_nc.delete_detail_New_details(info_proveedor, info_parametro, cn_subtotal_iva, cn_subtotal_siniva, valoriva, total, observacion, IdTransaccionSession);
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        public JsonResult Buscar_op(int IdEmpresa , decimal IdProveedor, decimal IdTransaccionSession = 0)
+        public JsonResult Buscar_op(int IdEmpresa , decimal IdProveedor, decimal IdTransaccionSession = 0, int IdSucursal = 0)
         {
             try
             {
                 string IdTipo_op = cl_enumeradores.eTipoOrdenPago.FACT_PROVEE.ToString();
                 string IdUsuario = SessionFixed.IdUsuario;
-                List_op_det.set_list(bus_orden_pago_cancelaciones.get_list_con_saldo(IdEmpresa, 0, "PROVEE", IdProveedor, "", IdUsuario, false), IdTransaccionSession);
+                List_op_det.set_list(bus_orden_pago_cancelaciones.get_list_con_saldo(IdEmpresa, 0, "PROVEE", IdProveedor, "", IdUsuario, false, IdSucursal), IdTransaccionSession);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

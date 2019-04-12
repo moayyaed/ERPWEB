@@ -370,10 +370,14 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         #endregion
 
         #region Json
-        public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, string IdTipoPersona = "", decimal IdEntidad = 0)
+        public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, string IdTipoPersona = "", decimal IdEntidad = 0, int IdCaja = 0)
         {
-            var lst = bus_cancelaciones.get_list_con_saldo(IdEmpresa, 0, IdTipoPersona, IdEntidad, "APRO", SessionFixed.IdUsuario, false);
-            ListPorCruzar.set_list(lst, IdTransaccionSession);
+            var i_caja = bus_caja.get_info(IdEmpresa, IdCaja);
+            if (i_caja != null)
+            {
+                var lst = bus_cancelaciones.get_list_con_saldo(IdEmpresa, 0, IdTipoPersona, IdEntidad, "APRO", SessionFixed.IdUsuario, false, i_caja.IdSucursal);
+                ListPorCruzar.set_list(lst, IdTransaccionSession);
+            }
 
             return Json("", JsonRequestBehavior.AllowGet);
         }

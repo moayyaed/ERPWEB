@@ -20,11 +20,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
             }
 
         }
-        public List<cp_orden_pago_cancelaciones_Info> get_list_con_saldo(int IdEmpresa, decimal IdPersona, string IdTipo_Persona, decimal IdEntidad, string IdEstado_Aprobacion, string IdUsuario, bool mostrar_saldo_0)
+        public List<cp_orden_pago_cancelaciones_Info> get_list_con_saldo(int IdEmpresa, decimal IdPersona, string IdTipo_Persona, decimal IdEntidad, string IdEstado_Aprobacion, string IdUsuario, bool mostrar_saldo_0, int IdSucursal)
         {
             try
             {
-                return odata.get_list_con_saldo(IdEmpresa, IdPersona, IdTipo_Persona, IdEntidad, IdEstado_Aprobacion, IdUsuario, mostrar_saldo_0);
+                return odata.get_list_con_saldo(IdEmpresa, IdPersona, IdTipo_Persona, IdEntidad, IdEstado_Aprobacion, IdUsuario, mostrar_saldo_0, IdSucursal);
             }
             catch (Exception)
             {

@@ -53,11 +53,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
-        public List<cp_orden_pago_det_Info> Get_List_orden_pago_con_saldo(int IdEmpresa, string IdTipo_op, decimal IdProveedor, string IdEstado_Aprobacion, string IdUsuario)
+        public List<cp_orden_pago_det_Info> Get_List_orden_pago_con_saldo(int IdEmpresa, string IdTipo_op, decimal IdProveedor, string IdEstado_Aprobacion, string IdUsuario, int IdSucursal)
         {
             try
             {
-                return oData.Get_List_orden_pago_con_saldo(IdEmpresa,IdTipo_op, IdProveedor, IdEstado_Aprobacion, IdUsuario);
+                return oData.Get_List_orden_pago_con_saldo(IdEmpresa,IdTipo_op, IdProveedor, IdEstado_Aprobacion, IdUsuario,  IdSucursal);
             }
             catch (Exception)
             {

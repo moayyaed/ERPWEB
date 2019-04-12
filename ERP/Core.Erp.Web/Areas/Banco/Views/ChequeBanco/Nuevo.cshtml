@@ -109,6 +109,7 @@
             IdTipoPersona: $("#IdTipo_Persona").val(),
             IdEntidad: IdEntidad.GetValue(),
             IdSolicitudPago: $("#IdSolicitudPago").val(),
+            IdSucursal: $("#IdSucursal").val(),
         }
         $.ajax({
             type: 'POST',
@@ -356,7 +357,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal:*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>      

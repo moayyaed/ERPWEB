@@ -36,6 +36,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Banco_Flujo_Det_List_Deposito List_Flujo = new ba_Banco_Flujo_Det_List_Deposito();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        cp_orden_pago_cancelaciones_PorCruzar ListPorCruzar = new cp_orden_pago_cancelaciones_PorCruzar();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -401,15 +402,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Grillas
         public ActionResult GridViewPartial_DebitoBanco_op_x_cruzar()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            SessionFixed.TipoPersona = Request.Params["IdTipo_Persona"] != null ? Request.Params["IdTipo_Persona"].ToString() : SessionFixed.TipoPersona;
-            SessionFixed.IdEntidad = !string.IsNullOrEmpty(Request.Params["Entidad"]) ? Request.Params["Entidad"].ToString() : "0";
-            decimal IdEntidad = Convert.ToInt32(SessionFixed.IdEntidad);
-            List<cp_orden_pago_cancelaciones_Info> model;
-            if (IdEntidad == 0)
-                model = new List<cp_orden_pago_cancelaciones_Info>();
-            else
-                model = bus_cancelaciones.get_list_con_saldo(IdEmpresa, 0, SessionFixed.TipoPersona, IdEntidad, "APRO", SessionFixed.IdUsuario, false);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListPorCruzar.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_DebitoBanco_op_x_cruzar", model);
         }
 
@@ -421,23 +415,19 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EditingAddNew(string IDs = "", decimal IdTransaccionSession = 0)
+        public ActionResult EditingAddNew(string IDs = "", decimal IdTransaccionSession = 0, int IdEmpresa = 0)
         {
             if (IDs != "")
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                decimal IdEntidad = Convert.ToDecimal(SessionFixed.IdEntidad);
-                List<cp_orden_pago_cancelaciones_Info> lst_x_cruzar;
-                if (IdEntidad == 0)
-                    lst_x_cruzar = new List<cp_orden_pago_cancelaciones_Info>();
-                else
-                    lst_x_cruzar = bus_cancelaciones.get_list_con_saldo(IdEmpresa, 0, SessionFixed.TipoPersona, IdEntidad, "APRO", SessionFixed.IdUsuario, false);
+                var lst_x_cruzar = ListPorCruzar.get_list(IdTransaccionSession);
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
                     var info_det = lst_x_cruzar.Where(q => q.IdOrdenPago_op == Convert.ToInt32(item)).FirstOrDefault();
                     if (info_det != null)
+                    {
                         List_op.AddRow(info_det, IdTransaccionSession);
+                    }
                 }
             }
             var model = List_op.get_list(IdTransaccionSession);

@@ -468,9 +468,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         #region Json
 
-        public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, string IdTipoPersona = "", decimal IdEntidad = 0)
+        public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, string IdTipoPersona = "", decimal IdEntidad = 0, int IdSucursal = 0)
         {
-            var lst = bus_cancelaciones.get_list_con_saldo(IdEmpresa, 0, IdTipoPersona, IdEntidad, "APRO", SessionFixed.IdUsuario, false);
+            var lst = bus_cancelaciones.get_list_con_saldo(IdEmpresa, 0, IdTipoPersona, IdEntidad, "APRO", SessionFixed.IdUsuario, false, IdSucursal);
             ListPorCruzar.set_list(lst, IdTransaccionSession);
 
             return Json("", JsonRequestBehavior.AllowGet);

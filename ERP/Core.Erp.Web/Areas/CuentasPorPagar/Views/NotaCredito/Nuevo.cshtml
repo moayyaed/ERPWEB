@@ -91,7 +91,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursales, "IdSucursal", "Su_descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursales, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -576,9 +576,9 @@ function Buscar_op() {
     var datos = {
         IdProveedor: IdProveedor.GetValue(),
         IdEmpresa: $("#IdEmpresa").val(),
-        IdTransaccionSession: $("#IdTransaccionSession").val()
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
 
-
+        IdSucursal: $("#IdSucursal").val()
     }
     $.ajax({
         type: 'POST',

@@ -137,14 +137,39 @@ function GetListBancoPorSucursal() {
     }
     function MostrarModal() {
         selectedIDs = "";
-        GridView_DebitoBanco_op_x_cruzar.PerformCallback();
-        GridView_DebitoBanco_op_x_cruzar.UnselectRows();
-        $("#OpModal").modal("show");
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdTipoPersona: $("#IdTipo_Persona").val(),
+            IdEntidad: IdEntidad.GetValue(),
+            IdSolicitudPago: $("#IdSolicitudPago").val(),
+            IdSucursal: $("#IdSucursal").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListPorCruzar", "ChequeBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_DebitoBanco_op_x_cruzar.PerformCallback();
+                GridView_DebitoBanco_op_x_cruzar.UnselectRows();
+                $("#OpModal").modal("show");
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddOP() {
         var datos = {
-            IDs: selectedIDs
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
         }
         $.ajax({
             type: 'POST',
@@ -224,7 +249,7 @@ function GetListBancoPorSucursal() {
     }
 
     function Imprimir() {
-        var location = GetPathServer();        
+        var location = GetPathServer();
         var win = window.open(location +"/Reportes/BancoReportes/BAN_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
         win.focus();
     }
@@ -298,7 +323,7 @@ function GetListBancoPorSucursal() {
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal:*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>

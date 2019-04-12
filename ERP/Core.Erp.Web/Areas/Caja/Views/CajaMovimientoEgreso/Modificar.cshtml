@@ -61,6 +61,7 @@
             IdTransaccionSession: $("#IdTransaccionSession").val(),
             IdTipoPersona: $("#IdTipoPersona").val(),
             IdEntidad: IdEntidad.GetValue(),
+            IdCaja: $("#IdCaja").val()
         }
         $.ajax({
             type: 'POST',
@@ -305,22 +306,19 @@
 
     </div>
 
-    if ((@ViewBag.NoMostrarBotones ?? true) == false)
-    {
+    
         <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        }
+            if ((@ViewBag.NoMostrarBotones ?? true) == false)
+            {
+                @if (ViewBag.MostrarBoton ?? false)
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                }
+            }        
             <a class="btn btn-default" href="@Url.Action("Index", "CajaMovimientoEgreso", new { Area = "Caja" }, null)">Cancelar</a>
         </div>
-    }
-    else
-    {
-        <div class="box-footer">            
-            <a class="btn btn-default" href="@Url.Action("Index", "CajaMovimientoEgreso", new { Area = "Caja" }, null)">Cancelar</a>
-        </div>
-    }
+    
+    
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }

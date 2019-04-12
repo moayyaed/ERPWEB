@@ -211,13 +211,12 @@ namespace Core.Erp.Data.Inventario
                             secuencia_inv = item.secuencia_inv,
 
                             dm_cantidad_sinConversion = Math.Abs(item.dm_cantidad_sinConversion) * (info.signo == "-" ? -1 : 1),
-                            dm_cantidad = Math.Abs(item.dm_cantidad_sinConversion) * (info.signo == "-" ? -1 : 1),
-
-                            IdUnidadMedida  = (item.IdUnidadMedida_sinConversion) ==null? "UNID":item.IdUnidadMedida_sinConversion,
                             IdUnidadMedida_sinConversion = (item.IdUnidadMedida_sinConversion) == null ? "UNID" : item.IdUnidadMedida_sinConversion,
+                            mv_costo_sinConversion = item.mv_costo_sinConversion,
 
-                            mv_costo_sinConversion = (item.mv_costo_sinConversion) == null ? 0 : item.mv_costo_sinConversion,
-                            mv_costo = (item.mv_costo_sinConversion) == null ? 0 : Convert.ToDouble(item.mv_costo_sinConversion),
+                            IdUnidadMedida = (item.IdUnidadMedida_sinConversion) == null ? "UNID" : item.IdUnidadMedida_sinConversion,
+                            dm_cantidad = Math.Abs(item.dm_cantidad_sinConversion) * (info.signo == "-" ? -1 : 1),
+                            mv_costo = item.mv_costo_sinConversion,
 
                         };
                         Context.in_Ing_Egr_Inven_det.Add(entity_det);
@@ -656,7 +655,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool ReContabilizar(int IdEmpresa, int IdSucursal, int IdMovi_inven_tipo, decimal IdNumMovi, string Observacion, DateTime Fecha)
         {
             try
@@ -738,7 +736,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public List<in_Ing_Egr_Inven_Info> BuscarMovimientos(int IdEmpresa, DateTime FechaInicio, DateTime FechaFin, string TipoMovimiento)
         {
             try
