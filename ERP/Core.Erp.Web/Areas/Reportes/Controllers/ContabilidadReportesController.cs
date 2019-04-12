@@ -56,10 +56,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         private void cargar_combos(int IdEmpresa)
         {
-            ct_plancta_Bus bus_cta = new ct_plancta_Bus();
-            var lst_cta = bus_cta.get_list(IdEmpresa, false, false);
-            ViewBag.lst_cta = lst_cta;
-
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
@@ -144,7 +140,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             model.IdAnio = model.fecha_fin.Year;
             model.MostrarSaldoAcumulado = false;
-            cargar_combos(model.IdEmpresa);
             CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
@@ -169,6 +164,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CONTA_003(cl_filtros_contabilidad_Info model)
         {
             model.IdAnio = model.fecha_fin.Year;
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+
             if (model.balance == "BG")
             {
                 CONTA_003_BG_Rpt report = new CONTA_003_BG_Rpt();
@@ -227,7 +224,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.RequestParameters = false;
                 ViewBag.Report = report;
             }
-            cargar_combos(model.IdEmpresa);
             cargar_nivel();
             return View(model);
         }
