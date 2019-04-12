@@ -4,6 +4,7 @@ using Core.Erp.Info.Reportes.Contabilidad;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Core.Erp.Web.Reportes.Contabilidad
 {
@@ -11,7 +12,9 @@ namespace Core.Erp.Web.Reportes.Contabilidad
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
-
+        public int[] IntArray { get; set; }
+        List<CONTA_003_balances_Info> lst_rpt = new List<CONTA_003_balances_Info>();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         public CONTA_003_ER_Rpt()
         {
             InitializeComponent();
@@ -33,8 +36,37 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             bool MostrarSaldoAcumulado = string.IsNullOrEmpty(p_MostrarSaldoAcumulado.Value.ToString()) ? false : Convert.ToBoolean(p_MostrarSaldoAcumulado.Value);
             CONTA_003_balances_Bus bus_rpt = new CONTA_003_balances_Bus();
-            List<CONTA_003_balances_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance,IdSucursal, MostrarSaldoAcumulado);
-            this.DataSource = lst_rpt;
+            string Sucursal = "";
+            if (IntArray != null)
+            {
+                foreach (var item in IntArray)
+                {
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, item, MostrarSaldoAcumulado));
+                    Sucursal += bus_sucursal.get_info(IdEmpresa, item).Su_Descripcion + " ,";
+                    lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
+                }
+            }
+
+            var ListaReporte = (from q in lst_rpt
+                                group q by new
+                                {
+                                    q.IdCtaCble,
+                                    q.pc_Cuenta,
+                                    q.EsCuentaMovimiento,
+                                    q.gc_GrupoCble,                                   
+                                    q.Su_Descripcion
+                                } into ListaAgrupada
+                                select new
+                                {
+                                    IdCtaCble = ListaAgrupada.Key.IdCtaCble,
+                                    pc_Cuenta = ListaAgrupada.Key.pc_Cuenta,
+                                    EsCuentaMovimiento = ListaAgrupada.Key.EsCuentaMovimiento,
+                                    gc_GrupoCble = ListaAgrupada.Key.gc_GrupoCble,
+                                    Su_Descripcion = ListaAgrupada.Key.Su_Descripcion,
+                                    SaldoFinalNaturaleza = ListaAgrupada.Sum(p => p.SaldoFinalNaturaleza)
+                                }).ToList();
+
+            this.DataSource = ListaReporte;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);

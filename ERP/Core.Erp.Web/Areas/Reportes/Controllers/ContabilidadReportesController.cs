@@ -62,11 +62,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            lst_sucursal.Add(new Info.General.tb_sucursal_Info
-            {
-                IdSucursal = 0,
-                Su_Descripcion = "TODOS"
-            });
             ViewBag.lst_sucursal = lst_sucursal;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
@@ -146,10 +141,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 balance = "ER",
             };
 
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             model.IdAnio = model.fecha_fin.Year;
             model.MostrarSaldoAcumulado = false;
             cargar_combos(model.IdEmpresa);
             CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdAnio.Value = model.IdAnio;
             report.p_fechaIni.Value = model.fecha_ini;
@@ -175,6 +172,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if (model.balance == "BG")
             {
                 CONTA_003_BG_Rpt report = new CONTA_003_BG_Rpt();
+                report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
                 report.p_fechaIni.Value = model.fecha_ini;
@@ -193,6 +191,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if (model.balance == "ER")
             {
                 CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
+                report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
                 report.p_fechaIni.Value = model.fecha_ini;
@@ -212,6 +211,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if (string.IsNullOrEmpty(model.balance))
             {
                 CONTA_003_BC_Rpt report = new CONTA_003_BC_Rpt();
+                report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
                 report.p_fechaIni.Value = model.fecha_ini;
