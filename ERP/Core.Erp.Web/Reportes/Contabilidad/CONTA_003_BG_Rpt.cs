@@ -45,12 +45,12 @@ namespace Core.Erp.Web.Reportes.Contabilidad
 
             if (IntArray != null)
             {
-                foreach (var item in IntArray)
+                for (int i = 0; i < IntArray.Count(); i++)
                 {
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, item, MostrarSaldoAcumulado));
-                    Sucursal += bus_sucursal.get_info(IdEmpresa, item).Su_Descripcion+" ,";
-                    lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, IntArray[i], MostrarSaldoAcumulado));
+                    Sucursal += bus_sucursal.get_info(IdEmpresa, IntArray[i]).Su_Descripcion + (IntArray.Count() - 1 == i ? "" : ", ");
                 }
+                lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             }
 
             var ListaReporte = (from q in lst_rpt
@@ -59,6 +59,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
                                     q.IdCtaCble,
                                     q.pc_Cuenta,
                                     q.Su_Descripcion,
+                                    q.IdGrupoCble,
                                     q.gc_GrupoCble,
                                     q.EsCuentaMovimiento
                                 } into ListaAgrupada
@@ -66,6 +67,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
                                 {
                                     IdCtaCble = ListaAgrupada.Key.IdCtaCble,
                                     pc_Cuenta = ListaAgrupada.Key.pc_Cuenta,
+                                    IdGrupoCble = ListaAgrupada.Key.IdGrupoCble,
                                     gc_GrupoCble = ListaAgrupada.Key.gc_GrupoCble,
                                     Su_Descripcion = ListaAgrupada.Key.Su_Descripcion,
                                     EsCuentaMovimiento = ListaAgrupada.Key.EsCuentaMovimiento,
@@ -76,9 +78,11 @@ namespace Core.Erp.Web.Reportes.Contabilidad
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }

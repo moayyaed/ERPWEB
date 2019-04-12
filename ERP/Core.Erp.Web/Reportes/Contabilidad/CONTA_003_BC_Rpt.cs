@@ -43,40 +43,51 @@ namespace Core.Erp.Web.Reportes.Contabilidad
 
             if (IntArray != null)
             {
-                foreach (var item in IntArray)
+                for (int i = 0; i < IntArray.Count(); i++)
                 {
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, item, MostrarSaldoAcumulado));
-                    Sucursal += bus_sucursal.get_info(IdEmpresa, item).Su_Descripcion + " ,";
-                    lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, IntArray[i], MostrarSaldoAcumulado));
+                    Sucursal += bus_sucursal.get_info(IdEmpresa, IntArray[i]).Su_Descripcion + (IntArray.Count() - 1 == i ? "" : ", ");
                 }
+                lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             }
 
             var ListaReporte = (from q in lst_rpt
+                                orderby q.IdCtaCble
                                 group q by new
                                 {
                                     q.IdCtaCble,
                                     q.pc_Cuenta,
-                                    q.Su_Descripcion
-                                } into ListaAgrupada
+                                    q.Su_Descripcion,
+                                    q.EsCuentaMovimiento,
+                                    q.IdGrupoCble
+                                } 
+                                into ListaAgrupada                                
                                 select new
                                 {
                                     IdCtaCble = ListaAgrupada.Key.IdCtaCble,
                                     pc_Cuenta = ListaAgrupada.Key.pc_Cuenta,
                                     Su_Descripcion = ListaAgrupada.Key.Su_Descripcion,
+                                    IdGrupoCble = ListaAgrupada.Key.IdGrupoCble,
+                                    EsCuentaMovimiento = ListaAgrupada.Key.EsCuentaMovimiento,
                                     SaldoInicialNaturaleza = ListaAgrupada.Sum(p => p.SaldoInicialNaturaleza),
                                     SaldoDebitosNaturaleza = ListaAgrupada.Sum(p => p.SaldoDebitosNaturaleza),
                                     SaldoCreditosNaturaleza = ListaAgrupada.Sum(p => p.SaldoCreditosNaturaleza),
-                                    SaldoFinalNaturaleza = ListaAgrupada.Sum(p => p.SaldoFinalNaturaleza)
+                                    SaldoFinalNaturaleza = ListaAgrupada.Sum(p => p.SaldoFinalNaturaleza),
+                                    SaldoInicial = ListaAgrupada.Sum(p => p.SaldoInicial),
+                                    Debitos = ListaAgrupada.Sum(p => p.Debitos),
+                                    Creditos = ListaAgrupada.Sum(p => p.Creditos),
+                                    SaldoFinal = ListaAgrupada.Sum(p => p.SaldoFinal)
                                 }).ToList();
 
             this.DataSource = ListaReporte;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
-
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }
