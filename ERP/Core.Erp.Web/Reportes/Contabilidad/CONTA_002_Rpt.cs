@@ -32,7 +32,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             DateTime fechaFin = p_fechaFin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fechaFin.Value);
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             CONTA_002_Bus bus_rpt = new CONTA_002_Bus();
-            List<CONTA_002_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdCtaCble, IdCtaCbleFin, IdSucursal, fechaIni, fechaFin);
+            List<CONTA_002_Info> lst_rpt = new List<CONTA_002_Info>();
             if (IntArray != null)
             {
                 foreach (var item in IntArray)
