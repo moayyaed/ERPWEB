@@ -28,6 +28,7 @@ namespace Core.Erp.Data.RRHH
                                  && emp.IdSucursal >= IdSucursalIni
                                  && emp.IdSucursal <= IdSucursalfin
                                  && emp.IdEmpresa==IdEmpresa
+                                 && cat.IdTipoCatalogo == 2
                                  select new ro_contrato_Info
                                  {
                                      IdEmpresa = cont.IdEmpresa,
