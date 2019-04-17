@@ -109,6 +109,7 @@ namespace Core.Erp.Info.RRHH
 
         public bool GozaMasDeQuinceDiasVaciones { get; set; }
         public double DiasVacaciones { get; set; }
+        public Nullable<int> IdSucursalContabilizacion { get; set; }
 
 
         #region datos personas
