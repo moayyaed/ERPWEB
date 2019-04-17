@@ -72,5 +72,10 @@ namespace Core.Erp.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generarATS", idempresaParameter, idPeriodoParameter, idSucursalInicioParameter, idSucursalFinParameter);
         }
+    
+        public virtual int SPATS_MigrarEventos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPATS_MigrarEventos");
+        }
     }
 }

@@ -321,11 +321,16 @@ namespace Core.Erp.Data.Contabilidad
                 
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
+                    var lst_ccg = Context.ATS_ventas_eventos.ToList();
+                    Context.ATS_ventas_eventos.RemoveRange(lst_ccg);
+
                     int Secuencia = Context.ATS_ventas.Max(q => q.Secuencia) + 1;
                        queryLinq.ForEach(q => q.Secuencia = Secuencia++);
                     Context.ATS_ventas_eventos.RemoveRange(Context.ATS_ventas_eventos.ToList());
                     Context.ATS_ventas_eventos.AddRange(queryLinq);
                     Context.SaveChanges();
+
+                    Context.SPATS_MigrarEventos();
                 }
             }
             catch (Exception ex)

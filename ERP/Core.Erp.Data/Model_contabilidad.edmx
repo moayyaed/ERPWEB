@@ -718,6 +718,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SPATS_MigrarEventos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="generarATS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EntidadRegulatoria">
           <Parameter Name="idempresa" Type="int" Mode="In" />
           <Parameter Name="idPeriodo" Type="int" Mode="In" />
@@ -1133,6 +1134,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ATS_retenciones" EntityType="Model_contabilidad.ATS_retenciones" />
           <EntitySet Name="ATS_ventas" EntityType="Model_contabilidad.ATS_ventas" />
           <EntitySet Name="ATS_ventas_eventos" EntityType="Model_contabilidad.ATS_ventas_eventos" />
+          <FunctionImport Name="SPATS_MigrarEventos" />
         </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -2160,6 +2162,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPATS_MigrarEventos" FunctionName="Model_contabilidad.Store.SPATS_MigrarEventos" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
