@@ -169,6 +169,9 @@
             <li>
                 <a href="#tb_info_jornada" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Jornada por empleado</a>
             </li>
+            <li>
+                <a href="#tb_info_contable" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Contabilidad</a>
+            </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content" style="padding-top: 20px">
@@ -442,24 +445,6 @@
                  
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IdCtaCble_Emplea">Cuenta contable por cobrar*</label>
-                                @Html.Partial("_CmbEmpleado_CtaCon", Model.IdCtaCble_Emplea)
-                                @Html.ValidationMessageFor(q => q.IdCtaCble_Emplea, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IdCtaCble_x_pagar_empleado">Cuenta contable por pagar*</label>
-                                @Html.Partial("_CmbEmpleado_CtaCon_x_pagar", Model.IdCtaCble_x_pagar_empleado)
-                                @Html.ValidationMessageFor(q => q.IdCtaCble_x_pagar_empleado, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                     </div>
 
@@ -836,6 +821,49 @@
                             </div>
                         </div>
                     </div>
+            <div role="tabpanel" class="tab-pane" id="tb_info_contable">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdSucursal">Sucursal*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdSucursalContabilizacion, settings =>
+                               {
+                                   settings.Name = "IdSucursalContabilizacion";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                   settings.Properties.Columns.Add("IdSucursal", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("Su_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                                   //Campo ID
+                                   settings.Properties.ValueField = "IdSucursal";
+                                   settings.Properties.ValueType = typeof(int);
+                                   settings.Properties.TextField = "Su_Descripcion";
+                                   //Boton para seleccionar ningun registro
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               }).BindList(ViewBag.lst_sucursal).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdSucursalContabilizacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Emplea">Cuenta contable por cobrar*</label>
+                                @Html.Partial("_CmbEmpleado_CtaCon", Model.IdCtaCble_Emplea)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Emplea, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdCtaCble_x_pagar_empleado">Cuenta contable por pagar*</label>
+                                @Html.Partial("_CmbEmpleado_CtaCon_x_pagar", Model.IdCtaCble_x_pagar_empleado)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_x_pagar_empleado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
                 </div>
     </div>
