@@ -1440,6 +1440,9 @@
     <Compile Include="ro_empleado_x_rubro_acumulado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_empleado_x_rubro_acumulado_detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_empleado_x_titulos.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>

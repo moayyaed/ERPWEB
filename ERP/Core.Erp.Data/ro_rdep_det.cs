@@ -47,7 +47,7 @@ namespace Core.Erp.Data
         public Nullable<double> BaseImponibleGravada { get; set; }
         public Nullable<double> IngresosGravadorPorEsteEmpleador { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_rdep ro_rdep { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

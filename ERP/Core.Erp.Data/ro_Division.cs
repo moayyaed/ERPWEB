@@ -17,7 +17,6 @@ namespace Core.Erp.Data
         public ro_Division()
         {
             this.ro_area = new HashSet<ro_area>();
-            this.ro_empleado = new HashSet<ro_empleado>();
         }
     
         public int IdEmpresa { get; set; }
@@ -35,6 +34,5 @@ namespace Core.Erp.Data
         public string MotiAnula { get; set; }
     
         public virtual ICollection<ro_area> ro_area { get; set; }
-        public virtual ICollection<ro_empleado> ro_empleado { get; set; }
     }
 }

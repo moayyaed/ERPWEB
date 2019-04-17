@@ -17,7 +17,6 @@ namespace Core.Erp.Data
         public ro_cargo()
         {
             this.ro_Acta_Finiquito = new HashSet<ro_Acta_Finiquito>();
-            this.ro_empleado = new HashSet<ro_empleado>();
         }
     
         public int IdEmpresa { get; set; }
@@ -36,6 +35,5 @@ namespace Core.Erp.Data
         public Nullable<bool> considera_pago_utilidad { get; set; }
     
         public virtual ICollection<ro_Acta_Finiquito> ro_Acta_Finiquito { get; set; }
-        public virtual ICollection<ro_empleado> ro_empleado { get; set; }
     }
 }

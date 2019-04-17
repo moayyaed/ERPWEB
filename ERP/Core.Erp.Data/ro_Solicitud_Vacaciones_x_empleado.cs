@@ -51,8 +51,8 @@ namespace Core.Erp.Data
         public bool Gozadas_Pgadas { get; set; }
         public bool Canceladas { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ICollection<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
         public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }
