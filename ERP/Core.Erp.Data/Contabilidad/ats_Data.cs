@@ -283,11 +283,14 @@ namespace Core.Erp.Data.Contabilidad
             {
                 if (IdSucursal != 8)
                     return;
+                FechaInicio = FechaInicio.Date;
+                var FechaFin1 = FechaFin.Date.AddDays(1);
+
                 Entity_Eventos db = new Entity_Eventos();
                 
                     var queryLinq = (from fac in db.Facturas
                                      where fac.fecha >= FechaInicio
-                                     && fac.fecha <= FechaFin
+                                     && fac.fecha <= FechaFin1
                                      && fac.bd_est == 1
                                      && ((fac.nu_ced_ruc).Length > 9)
                                      group fac by new
@@ -313,7 +316,7 @@ namespace Core.Erp.Data.Contabilidad
                                          valorRetRenta = 0,
                                          formaPago = "01",
                                          codEstab = "001",
-                                         ventasEstab = g.Sum(q => q.total ?? 0),
+                                         ventasEstab = g.Sum(q => q.subtotal ?? 0),
                                          IdSucursal = 8,
                                          tpIdCliente = g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
                                          tipoCliente = g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
