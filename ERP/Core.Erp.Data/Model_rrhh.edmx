@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model_rrhh.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model_rrhh.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ro_Acta_Finiquito">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2078,26 +2078,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado' n
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vwro_empleado_x_rubro_acumulado_detalle">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdRubro" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdRubroContabilizacion" />
-            <PropertyRef Name="IdJornada" />
-            <PropertyRef Name="ru_descripcion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdRubro" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="IdRubroContabilizacion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdJornada" Type="int" Nullable="false" />
-          <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -5271,988 +5251,1065 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="ro_rdep" EntityType="Self.ro_rdep" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ro_rdep_det" EntityType="Self.ro_rdep_det" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="vwRo_ActaFiniquito" EntityType="Self.vwRo_ActaFiniquito" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwRo_ActaFiniquito].[NombreCompleto] AS [NombreCompleto], 
-    [vwRo_ActaFiniquito].[Identificacion] AS [Identificacion], 
-    [vwRo_ActaFiniquito].[IdEmpresa] AS [IdEmpresa], 
-    [vwRo_ActaFiniquito].[IdActaFiniquito] AS [IdActaFiniquito], 
-    [vwRo_ActaFiniquito].[IdEmpleado] AS [IdEmpleado], 
-    [vwRo_ActaFiniquito].[IdCausaTerminacion] AS [IdCausaTerminacion], 
-    [vwRo_ActaFiniquito].[FechaIngreso] AS [FechaIngreso], 
-    [vwRo_ActaFiniquito].[FechaSalida] AS [FechaSalida], 
-    [vwRo_ActaFiniquito].[UltimaRemuneracion] AS [UltimaRemuneracion], 
-    [vwRo_ActaFiniquito].[ObservacionFiniquito] AS [ObservacionFiniquito], 
-    [vwRo_ActaFiniquito].[Ingresos] AS [Ingresos], 
-    [vwRo_ActaFiniquito].[Egresos] AS [Egresos], 
-    [vwRo_ActaFiniquito].[EstadoActa] AS [EstadoActa], 
-    [vwRo_ActaFiniquito].[IdCodSectorial] AS [IdCodSectorial], 
-    [vwRo_ActaFiniquito].[EsMujerEmbarazada] AS [EsMujerEmbarazada], 
-    [vwRo_ActaFiniquito].[EsDirigenteSindical] AS [EsDirigenteSindical], 
-    [vwRo_ActaFiniquito].[EsPorDiscapacidad] AS [EsPorDiscapacidad], 
-    [vwRo_ActaFiniquito].[EsPorEnfermedadNoProfesional] AS [EsPorEnfermedadNoProfesional], 
-    [vwRo_ActaFiniquito].[pe_apellido] AS [pe_apellido], 
-    [vwRo_ActaFiniquito].[pe_nombre] AS [pe_nombre], 
-    [vwRo_ActaFiniquito].[em_codigo] AS [em_codigo], 
-    [vwRo_ActaFiniquito].[IdTipoCbte] AS [IdTipoCbte], 
-    [vwRo_ActaFiniquito].[IdOrdenPago] AS [IdOrdenPago], 
-    [vwRo_ActaFiniquito].[IdCbteCble] AS [IdCbteCble], 
-    [vwRo_ActaFiniquito].[ca_descripcion] AS [ca_descripcion], 
-    [vwRo_ActaFiniquito].[Contrato] AS [Contrato], 
-    [vwRo_ActaFiniquito].[CodCatalogo] AS [CodCatalogo], 
-    [vwRo_ActaFiniquito].[EstadoContrato] AS [EstadoContrato]
-    FROM [dbo].[vwRo_ActaFiniquito] AS [vwRo_ActaFiniquito]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwRo_ActaFiniquito].[NombreCompleto] AS [NombreCompleto],
+              [vwRo_ActaFiniquito].[Identificacion] AS [Identificacion],
+              [vwRo_ActaFiniquito].[IdEmpresa] AS [IdEmpresa],
+              [vwRo_ActaFiniquito].[IdActaFiniquito] AS [IdActaFiniquito],
+              [vwRo_ActaFiniquito].[IdEmpleado] AS [IdEmpleado],
+              [vwRo_ActaFiniquito].[IdCausaTerminacion] AS [IdCausaTerminacion],
+              [vwRo_ActaFiniquito].[FechaIngreso] AS [FechaIngreso],
+              [vwRo_ActaFiniquito].[FechaSalida] AS [FechaSalida],
+              [vwRo_ActaFiniquito].[UltimaRemuneracion] AS [UltimaRemuneracion],
+              [vwRo_ActaFiniquito].[ObservacionFiniquito] AS [ObservacionFiniquito],
+              [vwRo_ActaFiniquito].[Ingresos] AS [Ingresos],
+              [vwRo_ActaFiniquito].[Egresos] AS [Egresos],
+              [vwRo_ActaFiniquito].[EstadoActa] AS [EstadoActa],
+              [vwRo_ActaFiniquito].[IdCodSectorial] AS [IdCodSectorial],
+              [vwRo_ActaFiniquito].[EsMujerEmbarazada] AS [EsMujerEmbarazada],
+              [vwRo_ActaFiniquito].[EsDirigenteSindical] AS [EsDirigenteSindical],
+              [vwRo_ActaFiniquito].[EsPorDiscapacidad] AS [EsPorDiscapacidad],
+              [vwRo_ActaFiniquito].[EsPorEnfermedadNoProfesional] AS [EsPorEnfermedadNoProfesional],
+              [vwRo_ActaFiniquito].[pe_apellido] AS [pe_apellido],
+              [vwRo_ActaFiniquito].[pe_nombre] AS [pe_nombre],
+              [vwRo_ActaFiniquito].[em_codigo] AS [em_codigo],
+              [vwRo_ActaFiniquito].[IdTipoCbte] AS [IdTipoCbte],
+              [vwRo_ActaFiniquito].[IdOrdenPago] AS [IdOrdenPago],
+              [vwRo_ActaFiniquito].[IdCbteCble] AS [IdCbteCble],
+              [vwRo_ActaFiniquito].[ca_descripcion] AS [ca_descripcion],
+              [vwRo_ActaFiniquito].[Contrato] AS [Contrato],
+              [vwRo_ActaFiniquito].[CodCatalogo] AS [CodCatalogo],
+              [vwRo_ActaFiniquito].[EstadoContrato] AS [EstadoContrato]
+              FROM [dbo].[vwRo_ActaFiniquito] AS [vwRo_ActaFiniquito]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_archivos_bancos_generacion" EntityType="Self.vwro_archivos_bancos_generacion" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_archivos_bancos_generacion].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_archivos_bancos_generacion].[IdArchivo] AS [IdArchivo], 
-    [vwro_archivos_bancos_generacion].[IdNomina] AS [IdNomina], 
-    [vwro_archivos_bancos_generacion].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_archivos_bancos_generacion].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_archivos_bancos_generacion].[IdCuentaBancaria] AS [IdCuentaBancaria], 
-    [vwro_archivos_bancos_generacion].[IdProceso] AS [IdProceso], 
-    [vwro_archivos_bancos_generacion].[Descripcion] AS [Descripcion], 
-    [vwro_archivos_bancos_generacion].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_archivos_bancos_generacion].[pe_FechaIni] AS [pe_FechaIni], 
-    [vwro_archivos_bancos_generacion].[pe_FechaFin] AS [pe_FechaFin], 
-    [vwro_archivos_bancos_generacion].[NombreProceso] AS [NombreProceso], 
-    [vwro_archivos_bancos_generacion].[estado] AS [estado], 
-    [vwro_archivos_bancos_generacion].[IdProceso_bancario_tipo] AS [IdProceso_bancario_tipo], 
-    [vwro_archivos_bancos_generacion].[IdSucursal] AS [IdSucursal], 
-    [vwro_archivos_bancos_generacion].[Su_Descripcion] AS [Su_Descripcion]
-    FROM [dbo].[vwro_archivos_bancos_generacion] AS [vwro_archivos_bancos_generacion]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_archivos_bancos_generacion].[IdEmpresa] AS [IdEmpresa],
+              [vwro_archivos_bancos_generacion].[IdArchivo] AS [IdArchivo],
+              [vwro_archivos_bancos_generacion].[IdNomina] AS [IdNomina],
+              [vwro_archivos_bancos_generacion].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_archivos_bancos_generacion].[IdPeriodo] AS [IdPeriodo],
+              [vwro_archivos_bancos_generacion].[IdCuentaBancaria] AS [IdCuentaBancaria],
+              [vwro_archivos_bancos_generacion].[IdProceso] AS [IdProceso],
+              [vwro_archivos_bancos_generacion].[Descripcion] AS [Descripcion],
+              [vwro_archivos_bancos_generacion].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_archivos_bancos_generacion].[pe_FechaIni] AS [pe_FechaIni],
+              [vwro_archivos_bancos_generacion].[pe_FechaFin] AS [pe_FechaFin],
+              [vwro_archivos_bancos_generacion].[NombreProceso] AS [NombreProceso],
+              [vwro_archivos_bancos_generacion].[estado] AS [estado],
+              [vwro_archivos_bancos_generacion].[IdProceso_bancario_tipo] AS [IdProceso_bancario_tipo],
+              [vwro_archivos_bancos_generacion].[IdSucursal] AS [IdSucursal],
+              [vwro_archivos_bancos_generacion].[Su_Descripcion] AS [Su_Descripcion]
+              FROM [dbo].[vwro_archivos_bancos_generacion] AS [vwro_archivos_bancos_generacion]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_archivos_bancos_generacion_x_empleado" EntityType="Self.vwro_archivos_bancos_generacion_x_empleado" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdArchivo] AS [IdArchivo], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdNomina] AS [IdNomina], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_archivos_bancos_generacion_x_empleado].[Valor] AS [Valor], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_archivos_bancos_generacion_x_empleado].[pagacheque] AS [pagacheque], 
-    [vwro_archivos_bancos_generacion_x_empleado].[em_tipoCta] AS [em_tipoCta], 
-    [vwro_archivos_bancos_generacion_x_empleado].[em_NumCta] AS [em_NumCta], 
-    [vwro_archivos_bancos_generacion_x_empleado].[pe_apellido] AS [pe_apellido], 
-    [vwro_archivos_bancos_generacion_x_empleado].[pe_nombre] AS [pe_nombre], 
-    [vwro_archivos_bancos_generacion_x_empleado].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_archivos_bancos_generacion_x_empleado].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdTipoDocumento] AS [IdTipoDocumento], 
-    [vwro_archivos_bancos_generacion_x_empleado].[IdSucursal] AS [IdSucursal], 
-    [vwro_archivos_bancos_generacion_x_empleado].[Secuencia] AS [Secuencia]
-    FROM [dbo].[vwro_archivos_bancos_generacion_x_empleado] AS [vwro_archivos_bancos_generacion_x_empleado]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_archivos_bancos_generacion_x_empleado].[IdEmpresa] AS [IdEmpresa],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdArchivo] AS [IdArchivo],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdNomina] AS [IdNomina],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdPeriodo] AS [IdPeriodo],
+              [vwro_archivos_bancos_generacion_x_empleado].[Valor] AS [Valor],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdEmpleado] AS [IdEmpleado],
+              [vwro_archivos_bancos_generacion_x_empleado].[pagacheque] AS [pagacheque],
+              [vwro_archivos_bancos_generacion_x_empleado].[em_tipoCta] AS [em_tipoCta],
+              [vwro_archivos_bancos_generacion_x_empleado].[em_NumCta] AS [em_NumCta],
+              [vwro_archivos_bancos_generacion_x_empleado].[pe_apellido] AS [pe_apellido],
+              [vwro_archivos_bancos_generacion_x_empleado].[pe_nombre] AS [pe_nombre],
+              [vwro_archivos_bancos_generacion_x_empleado].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_archivos_bancos_generacion_x_empleado].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdTipoDocumento] AS [IdTipoDocumento],
+              [vwro_archivos_bancos_generacion_x_empleado].[IdSucursal] AS [IdSucursal],
+              [vwro_archivos_bancos_generacion_x_empleado].[Secuencia] AS [Secuencia]
+              FROM [dbo].[vwro_archivos_bancos_generacion_x_empleado] AS [vwro_archivos_bancos_generacion_x_empleado]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_combo" EntityType="Self.vwro_empleado_combo" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_combo].[Empleado] AS [Empleado], 
-    [vwro_empleado_combo].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_combo].[em_status] AS [em_status], 
-    [vwro_empleado_combo].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_combo].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_combo].[IdNomina] AS [IdNomina], 
-    [vwro_empleado_combo].[IdSucursal] AS [IdSucursal], 
-    [vwro_empleado_combo].[Pago_por_horas] AS [Pago_por_horas], 
-    [vwro_empleado_combo].[Valor_horas_vespertina] AS [Valor_horas_vespertina], 
-    [vwro_empleado_combo].[Valor_horas_matutino] AS [Valor_horas_matutino], 
-    [vwro_empleado_combo].[Tiene_ingresos_compartidos] AS [Tiene_ingresos_compartidos], 
-    [vwro_empleado_combo].[Valor_maximo_horas_vesp] AS [Valor_maximo_horas_vesp], 
-    [vwro_empleado_combo].[Valor_maximo_horas_mat] AS [Valor_maximo_horas_mat], 
-    [vwro_empleado_combo].[Valor_horas_brigada] AS [Valor_horas_brigada], 
-    [vwro_empleado_combo].[GozaMasDeQuinceDiasVaciones] AS [GozaMasDeQuinceDiasVaciones], 
-    [vwro_empleado_combo].[DiasVacaciones] AS [DiasVacaciones], 
-    [vwro_empleado_combo].[Valor_hora_adicionales] AS [Valor_hora_adicionales], 
-    [vwro_empleado_combo].[Valor_hora_control_salida] AS [Valor_hora_control_salida]
-    FROM [dbo].[vwro_empleado_combo] AS [vwro_empleado_combo]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_combo].[Empleado] AS [Empleado],
+              [vwro_empleado_combo].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_combo].[em_status] AS [em_status],
+              [vwro_empleado_combo].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_combo].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_combo].[IdNomina] AS [IdNomina],
+              [vwro_empleado_combo].[IdSucursal] AS [IdSucursal],
+              [vwro_empleado_combo].[Pago_por_horas] AS [Pago_por_horas],
+              [vwro_empleado_combo].[Valor_horas_vespertina] AS [Valor_horas_vespertina],
+              [vwro_empleado_combo].[Valor_horas_matutino] AS [Valor_horas_matutino],
+              [vwro_empleado_combo].[Tiene_ingresos_compartidos] AS [Tiene_ingresos_compartidos],
+              [vwro_empleado_combo].[Valor_maximo_horas_vesp] AS [Valor_maximo_horas_vesp],
+              [vwro_empleado_combo].[Valor_maximo_horas_mat] AS [Valor_maximo_horas_mat],
+              [vwro_empleado_combo].[Valor_horas_brigada] AS [Valor_horas_brigada],
+              [vwro_empleado_combo].[GozaMasDeQuinceDiasVaciones] AS [GozaMasDeQuinceDiasVaciones],
+              [vwro_empleado_combo].[DiasVacaciones] AS [DiasVacaciones],
+              [vwro_empleado_combo].[Valor_hora_adicionales] AS [Valor_hora_adicionales],
+              [vwro_empleado_combo].[Valor_hora_control_salida] AS [Valor_hora_control_salida]
+              FROM [dbo].[vwro_empleado_combo] AS [vwro_empleado_combo]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_datos_generales" EntityType="Self.vwro_empleado_datos_generales" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_datos_generales].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_datos_generales].[IdEmpleado_Supervisor] AS [IdEmpleado_Supervisor], 
-    [vwro_empleado_datos_generales].[IdPersona] AS [IdPersona], 
-    [vwro_empleado_datos_generales].[IdSucursal] AS [IdSucursal], 
-    [vwro_empleado_datos_generales].[IdTipoEmpleado] AS [IdTipoEmpleado], 
-    [vwro_empleado_datos_generales].[em_codigo] AS [em_codigo], 
-    [vwro_empleado_datos_generales].[Codigo_Biometrico] AS [Codigo_Biometrico], 
-    [vwro_empleado_datos_generales].[em_lugarNacimiento] AS [em_lugarNacimiento], 
-    [vwro_empleado_datos_generales].[em_CarnetIees] AS [em_CarnetIees], 
-    [vwro_empleado_datos_generales].[em_cedulaMil] AS [em_cedulaMil], 
-    [vwro_empleado_datos_generales].[em_fechaSalida] AS [em_fechaSalida], 
-    [vwro_empleado_datos_generales].[em_fechaIngaRol] AS [em_fechaIngaRol], 
-    [vwro_empleado_datos_generales].[em_tipoCta] AS [em_tipoCta], 
-    [vwro_empleado_datos_generales].[em_NumCta] AS [em_NumCta], 
-    [vwro_empleado_datos_generales].[em_estado] AS [em_estado], 
-    [vwro_empleado_datos_generales].[IdCodSectorial] AS [IdCodSectorial], 
-    [vwro_empleado_datos_generales].[IdDepartamento] AS [IdDepartamento], 
-    [vwro_empleado_datos_generales].[IdTipoSangre] AS [IdTipoSangre], 
-    [vwro_empleado_datos_generales].[IdCargo] AS [IdCargo], 
-    [vwro_empleado_datos_generales].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea], 
-    [vwro_empleado_datos_generales].[IdCiudad] AS [IdCiudad], 
-    [vwro_empleado_datos_generales].[em_mail] AS [em_mail], 
-    [vwro_empleado_datos_generales].[IdTipoLicencia] AS [IdTipoLicencia], 
-    [vwro_empleado_datos_generales].[IdBanco] AS [IdBanco], 
-    [vwro_empleado_datos_generales].[IdArea] AS [IdArea], 
-    [vwro_empleado_datos_generales].[IdDivision] AS [IdDivision], 
-    [vwro_empleado_datos_generales].[por_discapacidad] AS [por_discapacidad], 
-    [vwro_empleado_datos_generales].[carnet_conadis] AS [carnet_conadis], 
-    [vwro_empleado_datos_generales].[talla_pant] AS [talla_pant], 
-    [vwro_empleado_datos_generales].[talla_camisa] AS [talla_camisa], 
-    [vwro_empleado_datos_generales].[talla_zapato] AS [talla_zapato], 
-    [vwro_empleado_datos_generales].[em_status] AS [em_status], 
-    [vwro_empleado_datos_generales].[IdCondicionDiscapacidadSRI] AS [IdCondicionDiscapacidadSRI], 
-    [vwro_empleado_datos_generales].[IdTipoIdentDiscapacitadoSustitutoSRI] AS [IdTipoIdentDiscapacitadoSustitutoSRI], 
-    [vwro_empleado_datos_generales].[IdentDiscapacitadoSustitutoSRI] AS [IdentDiscapacitadoSustitutoSRI], 
-    [vwro_empleado_datos_generales].[IdAplicaConvenioDobleImposicionSRI] AS [IdAplicaConvenioDobleImposicionSRI], 
-    [vwro_empleado_datos_generales].[IdTipoResidenciaSRI] AS [IdTipoResidenciaSRI], 
-    [vwro_empleado_datos_generales].[IdTipoSistemaSalarioNetoSRI] AS [IdTipoSistemaSalarioNetoSRI], 
-    [vwro_empleado_datos_generales].[es_AcreditaHorasExtras] AS [es_AcreditaHorasExtras], 
-    [vwro_empleado_datos_generales].[IdTipoAnticipo] AS [IdTipoAnticipo], 
-    [vwro_empleado_datos_generales].[ValorAnticipo] AS [ValorAnticipo], 
-    [vwro_empleado_datos_generales].[CodigoSectorial] AS [CodigoSectorial], 
-    [vwro_empleado_datos_generales].[em_AnticipoSueldo] AS [em_AnticipoSueldo], 
-    [vwro_empleado_datos_generales].[Marca_Biometrico] AS [Marca_Biometrico], 
-    [vwro_empleado_datos_generales].[IdHorario] AS [IdHorario], 
-    [vwro_empleado_datos_generales].[pe_Naturaleza] AS [pe_Naturaleza], 
-    [vwro_empleado_datos_generales].[pe_nombre] AS [pe_nombre], 
-    [vwro_empleado_datos_generales].[IdTipoDocumento] AS [IdTipoDocumento], 
-    [vwro_empleado_datos_generales].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_datos_generales].[pe_direccion] AS [pe_direccion], 
-    [vwro_empleado_datos_generales].[pe_telfono_Contacto] AS [pe_telfono_Contacto], 
-    [vwro_empleado_datos_generales].[pe_celular] AS [pe_celular], 
-    [vwro_empleado_datos_generales].[pe_correo] AS [pe_correo], 
-    [vwro_empleado_datos_generales].[pe_sexo] AS [pe_sexo], 
-    [vwro_empleado_datos_generales].[IdEstadoCivil] AS [IdEstadoCivil], 
-    [vwro_empleado_datos_generales].[pe_fechaNacimiento] AS [pe_fechaNacimiento], 
-    [vwro_empleado_datos_generales].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwro_empleado_datos_generales].[de_descripcion] AS [de_descripcion], 
-    [vwro_empleado_datos_generales].[ca_descripcion] AS [ca_descripcion], 
-    [vwro_empleado_datos_generales].[Descripcion] AS [Descripcion], 
-    [vwro_empleado_datos_generales].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_datos_generales].[pe_apellido] AS [pe_apellido], 
-    [vwro_empleado_datos_generales].[Tiene_ingresos_compartidos] AS [Tiene_ingresos_compartidos], 
-    [vwro_empleado_datos_generales].[Pago_por_horas] AS [Pago_por_horas], 
-    [vwro_empleado_datos_generales].[Valor_horas_vespertina] AS [Valor_horas_vespertina], 
-    [vwro_empleado_datos_generales].[Valor_horas_matutino] AS [Valor_horas_matutino], 
-    [vwro_empleado_datos_generales].[Valor_maximo_horas_vesp] AS [Valor_maximo_horas_vesp], 
-    [vwro_empleado_datos_generales].[Valor_maximo_horas_mat] AS [Valor_maximo_horas_mat], 
-    [vwro_empleado_datos_generales].[Valor_horas_brigada] AS [Valor_horas_brigada], 
-    [vwro_empleado_datos_generales].[GozaMasDeQuinceDiasVaciones] AS [GozaMasDeQuinceDiasVaciones], 
-    [vwro_empleado_datos_generales].[DiasVacaciones] AS [DiasVacaciones], 
-    [vwro_empleado_datos_generales].[IdEmpleadoPAdre] AS [IdEmpleadoPAdre], 
-    [vwro_empleado_datos_generales].[Valor_hora_adicionales] AS [Valor_hora_adicionales], 
-    [vwro_empleado_datos_generales].[Valor_hora_control_salida] AS [Valor_hora_control_salida], 
-    [vwro_empleado_datos_generales].[CodCatalogo_Ubicacion] AS [CodCatalogo_Ubicacion], 
-    [vwro_empleado_datos_generales].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado], 
-    [vwro_empleado_datos_generales].[IdSucursalContabilizacion] AS [IdSucursalContabilizacion]
-    FROM [dbo].[vwro_empleado_datos_generales] AS [vwro_empleado_datos_generales]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_datos_generales].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_datos_generales].[IdEmpleado_Supervisor] AS [IdEmpleado_Supervisor],
+              [vwro_empleado_datos_generales].[IdPersona] AS [IdPersona],
+              [vwro_empleado_datos_generales].[IdSucursal] AS [IdSucursal],
+              [vwro_empleado_datos_generales].[IdTipoEmpleado] AS [IdTipoEmpleado],
+              [vwro_empleado_datos_generales].[em_codigo] AS [em_codigo],
+              [vwro_empleado_datos_generales].[Codigo_Biometrico] AS [Codigo_Biometrico],
+              [vwro_empleado_datos_generales].[em_lugarNacimiento] AS [em_lugarNacimiento],
+              [vwro_empleado_datos_generales].[em_CarnetIees] AS [em_CarnetIees],
+              [vwro_empleado_datos_generales].[em_cedulaMil] AS [em_cedulaMil],
+              [vwro_empleado_datos_generales].[em_fechaSalida] AS [em_fechaSalida],
+              [vwro_empleado_datos_generales].[em_fechaIngaRol] AS [em_fechaIngaRol],
+              [vwro_empleado_datos_generales].[em_tipoCta] AS [em_tipoCta],
+              [vwro_empleado_datos_generales].[em_NumCta] AS [em_NumCta],
+              [vwro_empleado_datos_generales].[em_estado] AS [em_estado],
+              [vwro_empleado_datos_generales].[IdCodSectorial] AS [IdCodSectorial],
+              [vwro_empleado_datos_generales].[IdDepartamento] AS [IdDepartamento],
+              [vwro_empleado_datos_generales].[IdTipoSangre] AS [IdTipoSangre],
+              [vwro_empleado_datos_generales].[IdCargo] AS [IdCargo],
+              [vwro_empleado_datos_generales].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea],
+              [vwro_empleado_datos_generales].[IdCiudad] AS [IdCiudad],
+              [vwro_empleado_datos_generales].[em_mail] AS [em_mail],
+              [vwro_empleado_datos_generales].[IdTipoLicencia] AS [IdTipoLicencia],
+              [vwro_empleado_datos_generales].[IdBanco] AS [IdBanco],
+              [vwro_empleado_datos_generales].[IdArea] AS [IdArea],
+              [vwro_empleado_datos_generales].[IdDivision] AS [IdDivision],
+              [vwro_empleado_datos_generales].[por_discapacidad] AS [por_discapacidad],
+              [vwro_empleado_datos_generales].[carnet_conadis] AS [carnet_conadis],
+              [vwro_empleado_datos_generales].[talla_pant] AS [talla_pant],
+              [vwro_empleado_datos_generales].[talla_camisa] AS [talla_camisa],
+              [vwro_empleado_datos_generales].[talla_zapato] AS [talla_zapato],
+              [vwro_empleado_datos_generales].[em_status] AS [em_status],
+              [vwro_empleado_datos_generales].[IdCondicionDiscapacidadSRI] AS [IdCondicionDiscapacidadSRI],
+              [vwro_empleado_datos_generales].[IdTipoIdentDiscapacitadoSustitutoSRI] AS [IdTipoIdentDiscapacitadoSustitutoSRI],
+              [vwro_empleado_datos_generales].[IdentDiscapacitadoSustitutoSRI] AS [IdentDiscapacitadoSustitutoSRI],
+              [vwro_empleado_datos_generales].[IdAplicaConvenioDobleImposicionSRI] AS [IdAplicaConvenioDobleImposicionSRI],
+              [vwro_empleado_datos_generales].[IdTipoResidenciaSRI] AS [IdTipoResidenciaSRI],
+              [vwro_empleado_datos_generales].[IdTipoSistemaSalarioNetoSRI] AS [IdTipoSistemaSalarioNetoSRI],
+              [vwro_empleado_datos_generales].[es_AcreditaHorasExtras] AS [es_AcreditaHorasExtras],
+              [vwro_empleado_datos_generales].[IdTipoAnticipo] AS [IdTipoAnticipo],
+              [vwro_empleado_datos_generales].[ValorAnticipo] AS [ValorAnticipo],
+              [vwro_empleado_datos_generales].[CodigoSectorial] AS [CodigoSectorial],
+              [vwro_empleado_datos_generales].[em_AnticipoSueldo] AS [em_AnticipoSueldo],
+              [vwro_empleado_datos_generales].[Marca_Biometrico] AS [Marca_Biometrico],
+              [vwro_empleado_datos_generales].[IdHorario] AS [IdHorario],
+              [vwro_empleado_datos_generales].[pe_Naturaleza] AS [pe_Naturaleza],
+              [vwro_empleado_datos_generales].[pe_nombre] AS [pe_nombre],
+              [vwro_empleado_datos_generales].[IdTipoDocumento] AS [IdTipoDocumento],
+              [vwro_empleado_datos_generales].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_datos_generales].[pe_direccion] AS [pe_direccion],
+              [vwro_empleado_datos_generales].[pe_telfono_Contacto] AS [pe_telfono_Contacto],
+              [vwro_empleado_datos_generales].[pe_celular] AS [pe_celular],
+              [vwro_empleado_datos_generales].[pe_correo] AS [pe_correo],
+              [vwro_empleado_datos_generales].[pe_sexo] AS [pe_sexo],
+              [vwro_empleado_datos_generales].[IdEstadoCivil] AS [IdEstadoCivil],
+              [vwro_empleado_datos_generales].[pe_fechaNacimiento] AS [pe_fechaNacimiento],
+              [vwro_empleado_datos_generales].[Su_Descripcion] AS [Su_Descripcion],
+              [vwro_empleado_datos_generales].[de_descripcion] AS [de_descripcion],
+              [vwro_empleado_datos_generales].[ca_descripcion] AS [ca_descripcion],
+              [vwro_empleado_datos_generales].[Descripcion] AS [Descripcion],
+              [vwro_empleado_datos_generales].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_datos_generales].[pe_apellido] AS [pe_apellido],
+              [vwro_empleado_datos_generales].[Tiene_ingresos_compartidos] AS [Tiene_ingresos_compartidos],
+              [vwro_empleado_datos_generales].[Pago_por_horas] AS [Pago_por_horas],
+              [vwro_empleado_datos_generales].[Valor_horas_vespertina] AS [Valor_horas_vespertina],
+              [vwro_empleado_datos_generales].[Valor_horas_matutino] AS [Valor_horas_matutino],
+              [vwro_empleado_datos_generales].[Valor_maximo_horas_vesp] AS [Valor_maximo_horas_vesp],
+              [vwro_empleado_datos_generales].[Valor_maximo_horas_mat] AS [Valor_maximo_horas_mat],
+              [vwro_empleado_datos_generales].[Valor_horas_brigada] AS [Valor_horas_brigada],
+              [vwro_empleado_datos_generales].[GozaMasDeQuinceDiasVaciones] AS [GozaMasDeQuinceDiasVaciones],
+              [vwro_empleado_datos_generales].[DiasVacaciones] AS [DiasVacaciones],
+              [vwro_empleado_datos_generales].[IdEmpleadoPAdre] AS [IdEmpleadoPAdre],
+              [vwro_empleado_datos_generales].[Valor_hora_adicionales] AS [Valor_hora_adicionales],
+              [vwro_empleado_datos_generales].[Valor_hora_control_salida] AS [Valor_hora_control_salida],
+              [vwro_empleado_datos_generales].[CodCatalogo_Ubicacion] AS [CodCatalogo_Ubicacion],
+              [vwro_empleado_datos_generales].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado],
+              [vwro_empleado_datos_generales].[IdSucursalContabilizacion] AS [IdSucursalContabilizacion]
+              FROM [dbo].[vwro_empleado_datos_generales] AS [vwro_empleado_datos_generales]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_Novedad" EntityType="Self.vwro_empleado_Novedad" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_Novedad].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_Novedad].[IdNovedad] AS [IdNovedad], 
-    [vwro_empleado_Novedad].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_Novedad].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_empleado_Novedad].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_empleado_Novedad].[Fecha] AS [Fecha], 
-    [vwro_empleado_Novedad].[pe_apellido] AS [pe_apellido], 
-    [vwro_empleado_Novedad].[pe_nombre] AS [pe_nombre], 
-    [vwro_empleado_Novedad].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_Novedad].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_empleado_Novedad].[Descripcion] AS [Descripcion], 
-    [vwro_empleado_Novedad].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_empleado_Novedad].[Estado] AS [Estado], 
-    [vwro_empleado_Novedad].[Observacion] AS [Observacion], 
-    [vwro_empleado_Novedad].[IdSucursal] AS [IdSucursal]
-    FROM [dbo].[vwro_empleado_Novedad] AS [vwro_empleado_Novedad]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_Novedad].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_Novedad].[IdNovedad] AS [IdNovedad],
+              [vwro_empleado_Novedad].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_Novedad].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_empleado_Novedad].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_empleado_Novedad].[Fecha] AS [Fecha],
+              [vwro_empleado_Novedad].[pe_apellido] AS [pe_apellido],
+              [vwro_empleado_Novedad].[pe_nombre] AS [pe_nombre],
+              [vwro_empleado_Novedad].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_Novedad].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_empleado_Novedad].[Descripcion] AS [Descripcion],
+              [vwro_empleado_Novedad].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_empleado_Novedad].[Estado] AS [Estado],
+              [vwro_empleado_Novedad].[Observacion] AS [Observacion],
+              [vwro_empleado_Novedad].[IdSucursal] AS [IdSucursal]
+              FROM [dbo].[vwro_empleado_Novedad] AS [vwro_empleado_Novedad]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_novedad_det" EntityType="Self.vwro_empleado_novedad_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_novedad_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_novedad_det].[IdNovedad] AS [IdNovedad], 
-    [vwro_empleado_novedad_det].[Secuencia] AS [Secuencia], 
-    [vwro_empleado_novedad_det].[Observacion] AS [Observacion], 
-    [vwro_empleado_novedad_det].[IdRubro] AS [IdRubro], 
-    [vwro_empleado_novedad_det].[FechaPago] AS [FechaPago], 
-    [vwro_empleado_novedad_det].[Valor] AS [Valor], 
-    [vwro_empleado_novedad_det].[EstadoCobro] AS [EstadoCobro], 
-    [vwro_empleado_novedad_det].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_empleado_novedad_det].[rub_codigo] AS [rub_codigo], 
-    [vwro_empleado_novedad_det].[CantidadHoras] AS [CantidadHoras]
-    FROM [dbo].[vwro_empleado_novedad_det] AS [vwro_empleado_novedad_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_novedad_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_novedad_det].[IdNovedad] AS [IdNovedad],
+              [vwro_empleado_novedad_det].[Secuencia] AS [Secuencia],
+              [vwro_empleado_novedad_det].[Observacion] AS [Observacion],
+              [vwro_empleado_novedad_det].[IdRubro] AS [IdRubro],
+              [vwro_empleado_novedad_det].[FechaPago] AS [FechaPago],
+              [vwro_empleado_novedad_det].[Valor] AS [Valor],
+              [vwro_empleado_novedad_det].[EstadoCobro] AS [EstadoCobro],
+              [vwro_empleado_novedad_det].[ru_descripcion] AS [ru_descripcion],
+              [vwro_empleado_novedad_det].[rub_codigo] AS [rub_codigo],
+              [vwro_empleado_novedad_det].[CantidadHoras] AS [CantidadHoras]
+              FROM [dbo].[vwro_empleado_novedad_det] AS [vwro_empleado_novedad_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_Empleado_Novedades" EntityType="Self.vwro_Empleado_Novedades" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_Empleado_Novedades].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_Empleado_Novedades].[Fecha] AS [Fecha], 
-    [vwro_Empleado_Novedades].[IdUsuario] AS [IdUsuario], 
-    [vwro_Empleado_Novedades].[Fecha_Transac] AS [Fecha_Transac], 
-    [vwro_Empleado_Novedades].[IdUsuarioUltMod] AS [IdUsuarioUltMod], 
-    [vwro_Empleado_Novedades].[Fecha_UltAnu] AS [Fecha_UltAnu], 
-    [vwro_Empleado_Novedades].[IdUsuarioUltAnu] AS [IdUsuarioUltAnu], 
-    [vwro_Empleado_Novedades].[MotiAnula] AS [MotiAnula], 
-    [vwro_Empleado_Novedades].[Estado] AS [Estado], 
-    [vwro_Empleado_Novedades].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_Empleado_Novedades].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_Empleado_Novedades].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_Empleado_Novedades].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_Empleado_Novedades].[em_codigo] AS [em_codigo], 
-    [vwro_Empleado_Novedades].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_Empleado_Novedades].[descripcion_tiponomina] AS [descripcion_tiponomina], 
-    [vwro_Empleado_Novedades].[pe_apellido] AS [pe_apellido], 
-    [vwro_Empleado_Novedades].[pe_nombre] AS [pe_nombre], 
-    [vwro_Empleado_Novedades].[ca_descripcion] AS [ca_descripcion], 
-    [vwro_Empleado_Novedades].[em_status] AS [em_status], 
-    [vwro_Empleado_Novedades].[Observacion] AS [Observacion], 
-    [vwro_Empleado_Novedades].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwro_Empleado_Novedades].[IdSucursal] AS [IdSucursal]
-    FROM [dbo].[vwro_Empleado_Novedades] AS [vwro_Empleado_Novedades]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_Empleado_Novedades].[IdEmpleado] AS [IdEmpleado],
+              [vwro_Empleado_Novedades].[Fecha] AS [Fecha],
+              [vwro_Empleado_Novedades].[IdUsuario] AS [IdUsuario],
+              [vwro_Empleado_Novedades].[Fecha_Transac] AS [Fecha_Transac],
+              [vwro_Empleado_Novedades].[IdUsuarioUltMod] AS [IdUsuarioUltMod],
+              [vwro_Empleado_Novedades].[Fecha_UltAnu] AS [Fecha_UltAnu],
+              [vwro_Empleado_Novedades].[IdUsuarioUltAnu] AS [IdUsuarioUltAnu],
+              [vwro_Empleado_Novedades].[MotiAnula] AS [MotiAnula],
+              [vwro_Empleado_Novedades].[Estado] AS [Estado],
+              [vwro_Empleado_Novedades].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_Empleado_Novedades].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_Empleado_Novedades].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_Empleado_Novedades].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_Empleado_Novedades].[em_codigo] AS [em_codigo],
+              [vwro_Empleado_Novedades].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_Empleado_Novedades].[descripcion_tiponomina] AS [descripcion_tiponomina],
+              [vwro_Empleado_Novedades].[pe_apellido] AS [pe_apellido],
+              [vwro_Empleado_Novedades].[pe_nombre] AS [pe_nombre],
+              [vwro_Empleado_Novedades].[ca_descripcion] AS [ca_descripcion],
+              [vwro_Empleado_Novedades].[em_status] AS [em_status],
+              [vwro_Empleado_Novedades].[Observacion] AS [Observacion],
+              [vwro_Empleado_Novedades].[Su_Descripcion] AS [Su_Descripcion],
+              [vwro_Empleado_Novedades].[IdSucursal] AS [IdSucursal]
+              FROM [dbo].[vwro_Empleado_Novedades] AS [vwro_Empleado_Novedades]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_x_division_x_area" EntityType="Self.vwro_empleado_x_division_x_area" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_division_x_area].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_division_x_area].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_division_x_area].[Secuencia] AS [Secuencia], 
-    [vwro_empleado_x_division_x_area].[IDividion] AS [IDividion], 
-    [vwro_empleado_x_division_x_area].[IdArea] AS [IdArea], 
-    [vwro_empleado_x_division_x_area].[Porcentaje] AS [Porcentaje], 
-    [vwro_empleado_x_division_x_area].[Observacion] AS [Observacion], 
-    [vwro_empleado_x_division_x_area].[AreaDescripcion] AS [AreaDescripcion], 
-    [vwro_empleado_x_division_x_area].[DivisionDescripcion] AS [DivisionDescripcion], 
-    [vwro_empleado_x_division_x_area].[CargaGasto] AS [CargaGasto]
-    FROM [dbo].[vwro_empleado_x_division_x_area] AS [vwro_empleado_x_division_x_area]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_x_division_x_area].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_x_division_x_area].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_x_division_x_area].[Secuencia] AS [Secuencia],
+              [vwro_empleado_x_division_x_area].[IDividion] AS [IDividion],
+              [vwro_empleado_x_division_x_area].[IdArea] AS [IdArea],
+              [vwro_empleado_x_division_x_area].[Porcentaje] AS [Porcentaje],
+              [vwro_empleado_x_division_x_area].[Observacion] AS [Observacion],
+              [vwro_empleado_x_division_x_area].[AreaDescripcion] AS [AreaDescripcion],
+              [vwro_empleado_x_division_x_area].[DivisionDescripcion] AS [DivisionDescripcion],
+              [vwro_empleado_x_division_x_area].[CargaGasto] AS [CargaGasto]
+              FROM [dbo].[vwro_empleado_x_division_x_area] AS [vwro_empleado_x_division_x_area]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_x_jornada" EntityType="Self.vwro_empleado_x_jornada" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_jornada].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_jornada].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_jornada].[Empleado] AS [Empleado], 
-    [vwro_empleado_x_jornada].[em_status] AS [em_status], 
-    [vwro_empleado_x_jornada].[IdNomina] AS [IdNomina], 
-    [vwro_empleado_x_jornada].[IdSucursal] AS [IdSucursal], 
-    [vwro_empleado_x_jornada].[Pago_por_horas] AS [Pago_por_horas], 
-    [vwro_empleado_x_jornada].[Valor_horas_matutino] AS [Valor_horas_matutino], 
-    [vwro_empleado_x_jornada].[Valor_horas_vespertina] AS [Valor_horas_vespertina], 
-    [vwro_empleado_x_jornada].[Valor_horas_brigada] AS [Valor_horas_brigada], 
-    [vwro_empleado_x_jornada].[Valor_hora_control_salida] AS [Valor_hora_control_salida], 
-    [vwro_empleado_x_jornada].[Valor_hora_adicionales] AS [Valor_hora_adicionales], 
-    [vwro_empleado_x_jornada].[pe_cedulaRuc] AS [pe_cedulaRuc]
-    FROM [dbo].[vwro_empleado_x_jornada] AS [vwro_empleado_x_jornada]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_x_jornada].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_x_jornada].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_x_jornada].[Empleado] AS [Empleado],
+              [vwro_empleado_x_jornada].[em_status] AS [em_status],
+              [vwro_empleado_x_jornada].[IdNomina] AS [IdNomina],
+              [vwro_empleado_x_jornada].[IdSucursal] AS [IdSucursal],
+              [vwro_empleado_x_jornada].[Pago_por_horas] AS [Pago_por_horas],
+              [vwro_empleado_x_jornada].[Valor_horas_matutino] AS [Valor_horas_matutino],
+              [vwro_empleado_x_jornada].[Valor_horas_vespertina] AS [Valor_horas_vespertina],
+              [vwro_empleado_x_jornada].[Valor_horas_brigada] AS [Valor_horas_brigada],
+              [vwro_empleado_x_jornada].[Valor_hora_control_salida] AS [Valor_hora_control_salida],
+              [vwro_empleado_x_jornada].[Valor_hora_adicionales] AS [Valor_hora_adicionales],
+              [vwro_empleado_x_jornada].[pe_cedulaRuc] AS [pe_cedulaRuc]
+              FROM [dbo].[vwro_empleado_x_jornada] AS [vwro_empleado_x_jornada]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_x_ro_rubro" EntityType="Self.vwro_empleado_x_ro_rubro" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_ro_rubro].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_ro_rubro].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_empleado_x_ro_rubro].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_empleado_x_ro_rubro].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_ro_rubro].[IdRubro] AS [IdRubro], 
-    [vwro_empleado_x_ro_rubro].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_x_ro_rubro].[pe_apellido] AS [pe_apellido], 
-    [vwro_empleado_x_ro_rubro].[pe_nombre] AS [pe_nombre], 
-    [vwro_empleado_x_ro_rubro].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_empleado_x_ro_rubro].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_empleado_x_ro_rubro].[Descripcion] AS [Descripcion], 
-    [vwro_empleado_x_ro_rubro].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_empleado_x_ro_rubro].[Valor] AS [Valor], 
-    [vwro_empleado_x_ro_rubro].[IdRubroFijo] AS [IdRubroFijo], 
-    [vwro_empleado_x_ro_rubro].[FechaInicio] AS [FechaInicio], 
-    [vwro_empleado_x_ro_rubro].[FechaFin] AS [FechaFin], 
-    [vwro_empleado_x_ro_rubro].[es_indifinido] AS [es_indifinido]
-    FROM [dbo].[vwro_empleado_x_ro_rubro] AS [vwro_empleado_x_ro_rubro]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_x_ro_rubro].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_x_ro_rubro].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_empleado_x_ro_rubro].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_empleado_x_ro_rubro].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_x_ro_rubro].[IdRubro] AS [IdRubro],
+              [vwro_empleado_x_ro_rubro].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_x_ro_rubro].[pe_apellido] AS [pe_apellido],
+              [vwro_empleado_x_ro_rubro].[pe_nombre] AS [pe_nombre],
+              [vwro_empleado_x_ro_rubro].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_empleado_x_ro_rubro].[ru_descripcion] AS [ru_descripcion],
+              [vwro_empleado_x_ro_rubro].[Descripcion] AS [Descripcion],
+              [vwro_empleado_x_ro_rubro].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_empleado_x_ro_rubro].[Valor] AS [Valor],
+              [vwro_empleado_x_ro_rubro].[IdRubroFijo] AS [IdRubroFijo],
+              [vwro_empleado_x_ro_rubro].[FechaInicio] AS [FechaInicio],
+              [vwro_empleado_x_ro_rubro].[FechaFin] AS [FechaFin],
+              [vwro_empleado_x_ro_rubro].[es_indifinido] AS [es_indifinido]
+              FROM [dbo].[vwro_empleado_x_ro_rubro] AS [vwro_empleado_x_ro_rubro]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_x_rubro_acumulado" EntityType="Self.vwro_empleado_x_rubro_acumulado" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_rubro_acumulado].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_rubro_acumulado].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_rubro_acumulado].[IdRubro] AS [IdRubro], 
-    [vwro_empleado_x_rubro_acumulado].[Fec_Inicio_Acumulacion] AS [Fec_Inicio_Acumulacion], 
-    [vwro_empleado_x_rubro_acumulado].[Fec_Fin_Acumulacion] AS [Fec_Fin_Acumulacion], 
-    [vwro_empleado_x_rubro_acumulado].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_empleado_x_rubro_acumulado].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_empleado_x_rubro_acumulado].[pe_apellido] AS [pe_apellido], 
-    [vwro_empleado_x_rubro_acumulado].[pe_nombre] AS [pe_nombre], 
-    [vwro_empleado_x_rubro_acumulado].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_x_rubro_acumulado].[em_codigo] AS [em_codigo]
-    FROM [dbo].[vwro_empleado_x_rubro_acumulado] AS [vwro_empleado_x_rubro_acumulado]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vwro_empleado_x_rubro_acumulado_detalle" EntityType="Self.vwro_empleado_x_rubro_acumulado_detalle" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_rubro_acumulado_detalle].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_rubro_acumulado_detalle].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_rubro_acumulado_detalle].[IdRubro] AS [IdRubro], 
-    [vwro_empleado_x_rubro_acumulado_detalle].[Secuencia] AS [Secuencia], 
-    [vwro_empleado_x_rubro_acumulado_detalle].[IdRubroContabilizacion] AS [IdRubroContabilizacion], 
-    [vwro_empleado_x_rubro_acumulado_detalle].[IdJornada] AS [IdJornada], 
-    [vwro_empleado_x_rubro_acumulado_detalle].[ru_descripcion] AS [ru_descripcion]
-    FROM [dbo].[vwro_empleado_x_rubro_acumulado_detalle] AS [vwro_empleado_x_rubro_acumulado_detalle]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_x_rubro_acumulado].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_x_rubro_acumulado].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_x_rubro_acumulado].[IdRubro] AS [IdRubro],
+              [vwro_empleado_x_rubro_acumulado].[Fec_Inicio_Acumulacion] AS [Fec_Inicio_Acumulacion],
+              [vwro_empleado_x_rubro_acumulado].[Fec_Fin_Acumulacion] AS [Fec_Fin_Acumulacion],
+              [vwro_empleado_x_rubro_acumulado].[ru_descripcion] AS [ru_descripcion],
+              [vwro_empleado_x_rubro_acumulado].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_empleado_x_rubro_acumulado].[pe_apellido] AS [pe_apellido],
+              [vwro_empleado_x_rubro_acumulado].[pe_nombre] AS [pe_nombre],
+              [vwro_empleado_x_rubro_acumulado].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_x_rubro_acumulado].[em_codigo] AS [em_codigo]
+              FROM [dbo].[vwro_empleado_x_rubro_acumulado] AS [vwro_empleado_x_rubro_acumulado]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_x_titulos" EntityType="Self.vwro_empleado_x_titulos" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_titulos].[CodCatalogo] AS [CodCatalogo], 
-    [vwro_empleado_x_titulos].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_titulos].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_titulos].[Secuencia] AS [Secuencia], 
-    [vwro_empleado_x_titulos].[fecha] AS [fecha], 
-    [vwro_empleado_x_titulos].[Observacion] AS [Observacion], 
-    [vwro_empleado_x_titulos].[em_codigo] AS [em_codigo], 
-    [vwro_empleado_x_titulos].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_x_titulos].[pe_apellido] AS [pe_apellido], 
-    [vwro_empleado_x_titulos].[pe_nombre] AS [pe_nombre], 
-    [vwro_empleado_x_titulos].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_empleado_x_titulos].[institucion] AS [institucion], 
-    [vwro_empleado_x_titulos].[titulo] AS [titulo], 
-    [vwro_empleado_x_titulos].[IdInstitucion] AS [IdInstitucion], 
-    [vwro_empleado_x_titulos].[IdTitulo] AS [IdTitulo], 
-    [vwro_empleado_x_titulos].[estado] AS [estado]
-    FROM [dbo].[vwro_empleado_x_titulos] AS [vwro_empleado_x_titulos]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_x_titulos].[CodCatalogo] AS [CodCatalogo],
+              [vwro_empleado_x_titulos].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_x_titulos].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_x_titulos].[Secuencia] AS [Secuencia],
+              [vwro_empleado_x_titulos].[fecha] AS [fecha],
+              [vwro_empleado_x_titulos].[Observacion] AS [Observacion],
+              [vwro_empleado_x_titulos].[em_codigo] AS [em_codigo],
+              [vwro_empleado_x_titulos].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_x_titulos].[pe_apellido] AS [pe_apellido],
+              [vwro_empleado_x_titulos].[pe_nombre] AS [pe_nombre],
+              [vwro_empleado_x_titulos].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_empleado_x_titulos].[institucion] AS [institucion],
+              [vwro_empleado_x_titulos].[titulo] AS [titulo],
+              [vwro_empleado_x_titulos].[IdInstitucion] AS [IdInstitucion],
+              [vwro_empleado_x_titulos].[IdTitulo] AS [IdTitulo],
+              [vwro_empleado_x_titulos].[estado] AS [estado]
+              FROM [dbo].[vwro_empleado_x_titulos] AS [vwro_empleado_x_titulos]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_EmpleadoNovedadCargaMasiva" EntityType="Self.vwro_EmpleadoNovedadCargaMasiva" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdCarga] AS [IdCarga], 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdNomina] AS [IdNomina], 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdSucursal] AS [IdSucursal], 
-    [vwro_EmpleadoNovedadCargaMasiva].[FechaCarga] AS [FechaCarga], 
-    [vwro_EmpleadoNovedadCargaMasiva].[Observacion] AS [Observacion], 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdRubro] AS [IdRubro], 
-    [vwro_EmpleadoNovedadCargaMasiva].[IdUsuario] AS [IdUsuario], 
-    [vwro_EmpleadoNovedadCargaMasiva].[Estado] AS [Estado], 
-    [vwro_EmpleadoNovedadCargaMasiva].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_EmpleadoNovedadCargaMasiva].[Descripcion] AS [Descripcion], 
-    [vwro_EmpleadoNovedadCargaMasiva].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina]
-    FROM [dbo].[vwro_EmpleadoNovedadCargaMasiva] AS [vwro_EmpleadoNovedadCargaMasiva]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_EmpleadoNovedadCargaMasiva].[IdEmpresa] AS [IdEmpresa],
+              [vwro_EmpleadoNovedadCargaMasiva].[IdCarga] AS [IdCarga],
+              [vwro_EmpleadoNovedadCargaMasiva].[IdNomina] AS [IdNomina],
+              [vwro_EmpleadoNovedadCargaMasiva].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_EmpleadoNovedadCargaMasiva].[IdSucursal] AS [IdSucursal],
+              [vwro_EmpleadoNovedadCargaMasiva].[FechaCarga] AS [FechaCarga],
+              [vwro_EmpleadoNovedadCargaMasiva].[Observacion] AS [Observacion],
+              [vwro_EmpleadoNovedadCargaMasiva].[IdRubro] AS [IdRubro],
+              [vwro_EmpleadoNovedadCargaMasiva].[IdUsuario] AS [IdUsuario],
+              [vwro_EmpleadoNovedadCargaMasiva].[Estado] AS [Estado],
+              [vwro_EmpleadoNovedadCargaMasiva].[ru_descripcion] AS [ru_descripcion],
+              [vwro_EmpleadoNovedadCargaMasiva].[Descripcion] AS [Descripcion],
+              [vwro_EmpleadoNovedadCargaMasiva].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina]
+              FROM [dbo].[vwro_EmpleadoNovedadCargaMasiva] AS [vwro_EmpleadoNovedadCargaMasiva]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_EmpleadoNovedadCargaMasiva_det" EntityType="Self.vwro_EmpleadoNovedadCargaMasiva_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[IdCarga] AS [IdCarga], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[Secuencia] AS [Secuencia], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[IdEmpresa_nov] AS [IdEmpresa_nov], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[IdNovedad] AS [IdNovedad], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[Observacion] AS [Observacion], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[em_codigo] AS [em_codigo], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[pe_apellido] AS [pe_apellido], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[pe_nombre] AS [pe_nombre], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_EmpleadoNovedadCargaMasiva_det].[Valor] AS [Valor]
-    FROM [dbo].[vwro_EmpleadoNovedadCargaMasiva_det] AS [vwro_EmpleadoNovedadCargaMasiva_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_EmpleadoNovedadCargaMasiva_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[IdCarga] AS [IdCarga],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[Secuencia] AS [Secuencia],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[IdEmpresa_nov] AS [IdEmpresa_nov],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[IdNovedad] AS [IdNovedad],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[Observacion] AS [Observacion],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[IdEmpleado] AS [IdEmpleado],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[em_codigo] AS [em_codigo],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[pe_apellido] AS [pe_apellido],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[pe_nombre] AS [pe_nombre],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_EmpleadoNovedadCargaMasiva_det].[Valor] AS [Valor]
+              FROM [dbo].[vwro_EmpleadoNovedadCargaMasiva_det] AS [vwro_EmpleadoNovedadCargaMasiva_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleados_consulta" EntityType="Self.vwro_empleados_consulta" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_empleados_consulta].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleados_consulta].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleados_consulta].[IdPersona] AS [IdPersona], 
-    [vwro_empleados_consulta].[ca_descripcion] AS [ca_descripcion], 
-    [vwro_empleados_consulta].[Empleado] AS [Empleado], 
-    [vwro_empleados_consulta].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleados_consulta].[em_estado] AS [em_estado], 
-    [vwro_empleados_consulta].[em_status] AS [em_status], 
-    [vwro_empleados_consulta].[em_codigo] AS [em_codigo], 
-    [vwro_empleados_consulta].[em_fechaIngaRol] AS [em_fechaIngaRol], 
-    [vwro_empleados_consulta].[IdSucursal] AS [IdSucursal], 
-    [vwro_empleados_consulta].[Su_Descripcion] AS [Su_Descripcion]
-    FROM [dbo].[vwro_empleados_consulta] AS [vwro_empleados_consulta]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleados_consulta].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleados_consulta].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleados_consulta].[IdPersona] AS [IdPersona],
+              [vwro_empleados_consulta].[ca_descripcion] AS [ca_descripcion],
+              [vwro_empleados_consulta].[Empleado] AS [Empleado],
+              [vwro_empleados_consulta].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleados_consulta].[em_estado] AS [em_estado],
+              [vwro_empleados_consulta].[em_status] AS [em_status],
+              [vwro_empleados_consulta].[em_codigo] AS [em_codigo],
+              [vwro_empleados_consulta].[em_fechaIngaRol] AS [em_fechaIngaRol],
+              [vwro_empleados_consulta].[IdSucursal] AS [IdSucursal],
+              [vwro_empleados_consulta].[Su_Descripcion] AS [Su_Descripcion]
+              FROM [dbo].[vwro_empleados_consulta] AS [vwro_empleados_consulta]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_Historico_Liquidacion_Vacaciones" EntityType="Self.vwro_Historico_Liquidacion_Vacaciones" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_Historico_Liquidacion_Vacaciones].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_Historico_Liquidacion_Vacaciones].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_Historico_Liquidacion_Vacaciones].[IdLiquidacion] AS [IdLiquidacion], 
-    [vwro_Historico_Liquidacion_Vacaciones].[pe_apellido] AS [pe_apellido], 
-    [vwro_Historico_Liquidacion_Vacaciones].[pe_nombre] AS [pe_nombre], 
-    [vwro_Historico_Liquidacion_Vacaciones].[ValorCancelado] AS [ValorCancelado], 
-    [vwro_Historico_Liquidacion_Vacaciones].[FechaPago] AS [FechaPago], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Observaciones] AS [Observaciones], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Dias_q_Corresponde] AS [Dias_q_Corresponde], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Dias_a_disfrutar] AS [Dias_a_disfrutar], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Dias_pendiente] AS [Dias_pendiente], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Periodo] AS [Periodo], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Estado] AS [Estado], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Anio_Desde] AS [Anio_Desde], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Anio_Hasta] AS [Anio_Hasta], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Desde] AS [Fecha_Desde], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Hasta] AS [Fecha_Hasta], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Retorno] AS [Fecha_Retorno]
-    FROM [dbo].[vwro_Historico_Liquidacion_Vacaciones] AS [vwro_Historico_Liquidacion_Vacaciones]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_Historico_Liquidacion_Vacaciones].[IdEmpresa] AS [IdEmpresa],
+              [vwro_Historico_Liquidacion_Vacaciones].[IdEmpleado] AS [IdEmpleado],
+              [vwro_Historico_Liquidacion_Vacaciones].[IdLiquidacion] AS [IdLiquidacion],
+              [vwro_Historico_Liquidacion_Vacaciones].[pe_apellido] AS [pe_apellido],
+              [vwro_Historico_Liquidacion_Vacaciones].[pe_nombre] AS [pe_nombre],
+              [vwro_Historico_Liquidacion_Vacaciones].[ValorCancelado] AS [ValorCancelado],
+              [vwro_Historico_Liquidacion_Vacaciones].[FechaPago] AS [FechaPago],
+              [vwro_Historico_Liquidacion_Vacaciones].[Observaciones] AS [Observaciones],
+              [vwro_Historico_Liquidacion_Vacaciones].[Dias_q_Corresponde] AS [Dias_q_Corresponde],
+              [vwro_Historico_Liquidacion_Vacaciones].[Dias_a_disfrutar] AS [Dias_a_disfrutar],
+              [vwro_Historico_Liquidacion_Vacaciones].[Dias_pendiente] AS [Dias_pendiente],
+              [vwro_Historico_Liquidacion_Vacaciones].[Periodo] AS [Periodo],
+              [vwro_Historico_Liquidacion_Vacaciones].[Estado] AS [Estado],
+              [vwro_Historico_Liquidacion_Vacaciones].[Anio_Desde] AS [Anio_Desde],
+              [vwro_Historico_Liquidacion_Vacaciones].[Anio_Hasta] AS [Anio_Hasta],
+              [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Desde] AS [Fecha_Desde],
+              [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Hasta] AS [Fecha_Hasta],
+              [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Retorno] AS [Fecha_Retorno]
+              FROM [dbo].[vwro_Historico_Liquidacion_Vacaciones] AS [vwro_Historico_Liquidacion_Vacaciones]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_horario_planificacion_det" EntityType="Self.vwro_horario_planificacion_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_horario_planificacion_det].[Secuencia] AS [Secuencia], 
-    [vwro_horario_planificacion_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_horario_planificacion_det].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_horario_planificacion_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_horario_planificacion_det].[pe_apellido] AS [pe_apellido], 
-    [vwro_horario_planificacion_det].[pe_nombre] AS [pe_nombre], 
-    [vwro_horario_planificacion_det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_horario_planificacion_det].[ca_descripcion] AS [ca_descripcion], 
-    [vwro_horario_planificacion_det].[ar_descripcion] AS [ar_descripcion], 
-    [vwro_horario_planificacion_det].[di_descripcion] AS [di_descripcion], 
-    [vwro_horario_planificacion_det].[de_descripcion] AS [de_descripcion], 
-    [vwro_horario_planificacion_det].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwro_horario_planificacion_det].[IdNomina] AS [IdNomina], 
-    [vwro_horario_planificacion_det].[IdSucursal] AS [IdSucursal], 
-    [vwro_horario_planificacion_det].[IdDepartamento] AS [IdDepartamento], 
-    [vwro_horario_planificacion_det].[IdArea] AS [IdArea], 
-    [vwro_horario_planificacion_det].[IdDivision] AS [IdDivision], 
-    [vwro_horario_planificacion_det].[IdCargo] AS [IdCargo], 
-    [vwro_horario_planificacion_det].[IdPlanificacion] AS [IdPlanificacion], 
-    [vwro_horario_planificacion_det].[IdHorario] AS [IdHorario], 
-    [vwro_horario_planificacion_det].[fecha] AS [fecha], 
-    [vwro_horario_planificacion_det].[IdCalendario] AS [IdCalendario]
-    FROM [dbo].[vwro_horario_planificacion_det] AS [vwro_horario_planificacion_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_horario_planificacion_det].[Secuencia] AS [Secuencia],
+              [vwro_horario_planificacion_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_horario_planificacion_det].[IdEmpleado] AS [IdEmpleado],
+              [vwro_horario_planificacion_det].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_horario_planificacion_det].[pe_apellido] AS [pe_apellido],
+              [vwro_horario_planificacion_det].[pe_nombre] AS [pe_nombre],
+              [vwro_horario_planificacion_det].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_horario_planificacion_det].[ca_descripcion] AS [ca_descripcion],
+              [vwro_horario_planificacion_det].[ar_descripcion] AS [ar_descripcion],
+              [vwro_horario_planificacion_det].[di_descripcion] AS [di_descripcion],
+              [vwro_horario_planificacion_det].[de_descripcion] AS [de_descripcion],
+              [vwro_horario_planificacion_det].[Su_Descripcion] AS [Su_Descripcion],
+              [vwro_horario_planificacion_det].[IdNomina] AS [IdNomina],
+              [vwro_horario_planificacion_det].[IdSucursal] AS [IdSucursal],
+              [vwro_horario_planificacion_det].[IdDepartamento] AS [IdDepartamento],
+              [vwro_horario_planificacion_det].[IdArea] AS [IdArea],
+              [vwro_horario_planificacion_det].[IdDivision] AS [IdDivision],
+              [vwro_horario_planificacion_det].[IdCargo] AS [IdCargo],
+              [vwro_horario_planificacion_det].[IdPlanificacion] AS [IdPlanificacion],
+              [vwro_horario_planificacion_det].[IdHorario] AS [IdHorario],
+              [vwro_horario_planificacion_det].[fecha] AS [fecha],
+              [vwro_horario_planificacion_det].[IdCalendario] AS [IdCalendario]
+              FROM [dbo].[vwro_horario_planificacion_det] AS [vwro_horario_planificacion_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_HorasProfesores" EntityType="Self.vwro_HorasProfesores" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_HorasProfesores].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_HorasProfesores].[IdCarga] AS [IdCarga], 
-    [vwro_HorasProfesores].[IdNomina] AS [IdNomina], 
-    [vwro_HorasProfesores].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_HorasProfesores].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_HorasProfesores].[FechaCarga] AS [FechaCarga], 
-    [vwro_HorasProfesores].[Observacion] AS [Observacion], 
-    [vwro_HorasProfesores].[Estado] AS [Estado], 
-    [vwro_HorasProfesores].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_HorasProfesores].[Descripcion] AS [Descripcion]
-    FROM [dbo].[vwro_HorasProfesores] AS [vwro_HorasProfesores]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_HorasProfesores].[IdEmpresa] AS [IdEmpresa],
+              [vwro_HorasProfesores].[IdCarga] AS [IdCarga],
+              [vwro_HorasProfesores].[IdNomina] AS [IdNomina],
+              [vwro_HorasProfesores].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_HorasProfesores].[IdPeriodo] AS [IdPeriodo],
+              [vwro_HorasProfesores].[FechaCarga] AS [FechaCarga],
+              [vwro_HorasProfesores].[Observacion] AS [Observacion],
+              [vwro_HorasProfesores].[Estado] AS [Estado],
+              [vwro_HorasProfesores].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_HorasProfesores].[Descripcion] AS [Descripcion]
+              FROM [dbo].[vwro_HorasProfesores] AS [vwro_HorasProfesores]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_HorasProfesores_det" EntityType="Self.vwro_HorasProfesores_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_HorasProfesores_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_HorasProfesores_det].[IdCarga] AS [IdCarga], 
-    [vwro_HorasProfesores_det].[Secuencia] AS [Secuencia], 
-    [vwro_HorasProfesores_det].[IdRubro] AS [IdRubro], 
-    [vwro_HorasProfesores_det].[IdEmpresa_nov] AS [IdEmpresa_nov], 
-    [vwro_HorasProfesores_det].[IdNovedad] AS [IdNovedad], 
-    [vwro_HorasProfesores_det].[Observacion] AS [Observacion], 
-    [vwro_HorasProfesores_det].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_HorasProfesores_det].[NumHoras] AS [NumHoras], 
-    [vwro_HorasProfesores_det].[rub_codigo] AS [rub_codigo], 
-    [vwro_HorasProfesores_det].[ru_codRolGen] AS [ru_codRolGen], 
-    [vwro_HorasProfesores_det].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_HorasProfesores_det].[em_codigo] AS [em_codigo], 
-    [vwro_HorasProfesores_det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_HorasProfesores_det].[pe_apellido] AS [pe_apellido], 
-    [vwro_HorasProfesores_det].[pe_nombre] AS [pe_nombre], 
-    [vwro_HorasProfesores_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_HorasProfesores_det].[IdSucursal] AS [IdSucursal], 
-    [vwro_HorasProfesores_det].[ValorHora] AS [ValorHora], 
-    [vwro_HorasProfesores_det].[Valor] AS [Valor]
-    FROM [dbo].[vwro_HorasProfesores_det] AS [vwro_HorasProfesores_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_HorasProfesores_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_HorasProfesores_det].[IdCarga] AS [IdCarga],
+              [vwro_HorasProfesores_det].[Secuencia] AS [Secuencia],
+              [vwro_HorasProfesores_det].[IdRubro] AS [IdRubro],
+              [vwro_HorasProfesores_det].[IdEmpresa_nov] AS [IdEmpresa_nov],
+              [vwro_HorasProfesores_det].[IdNovedad] AS [IdNovedad],
+              [vwro_HorasProfesores_det].[Observacion] AS [Observacion],
+              [vwro_HorasProfesores_det].[IdEmpleado] AS [IdEmpleado],
+              [vwro_HorasProfesores_det].[NumHoras] AS [NumHoras],
+              [vwro_HorasProfesores_det].[rub_codigo] AS [rub_codigo],
+              [vwro_HorasProfesores_det].[ru_codRolGen] AS [ru_codRolGen],
+              [vwro_HorasProfesores_det].[ru_descripcion] AS [ru_descripcion],
+              [vwro_HorasProfesores_det].[em_codigo] AS [em_codigo],
+              [vwro_HorasProfesores_det].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_HorasProfesores_det].[pe_apellido] AS [pe_apellido],
+              [vwro_HorasProfesores_det].[pe_nombre] AS [pe_nombre],
+              [vwro_HorasProfesores_det].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_HorasProfesores_det].[IdSucursal] AS [IdSucursal],
+              [vwro_HorasProfesores_det].[ValorHora] AS [ValorHora],
+              [vwro_HorasProfesores_det].[Valor] AS [Valor]
+              FROM [dbo].[vwro_HorasProfesores_det] AS [vwro_HorasProfesores_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_marcaciones_x_empleado" EntityType="Self.vwro_marcaciones_x_empleado" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_marcaciones_x_empleado].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_marcaciones_x_empleado].[IdRegistro] AS [IdRegistro], 
-    [vwro_marcaciones_x_empleado].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_marcaciones_x_empleado].[IdTipoMarcaciones] AS [IdTipoMarcaciones], 
-    [vwro_marcaciones_x_empleado].[es_Hora] AS [es_Hora], 
-    [vwro_marcaciones_x_empleado].[es_fechaRegistro] AS [es_fechaRegistro], 
-    [vwro_marcaciones_x_empleado].[nom_compl_empleado] AS [nom_compl_empleado], 
-    [vwro_marcaciones_x_empleado].[Motivo_Anu] AS [Motivo_Anu], 
-    [vwro_marcaciones_x_empleado].[Estado] AS [Estado], 
-    [vwro_marcaciones_x_empleado].[Observacion] AS [Observacion], 
-    [vwro_marcaciones_x_empleado].[IdUsuario] AS [IdUsuario], 
-    [vwro_marcaciones_x_empleado].[Fecha_Transac] AS [Fecha_Transac], 
-    [vwro_marcaciones_x_empleado].[pe_apellido] AS [pe_apellido], 
-    [vwro_marcaciones_x_empleado].[pe_nombre] AS [pe_nombre], 
-    [vwro_marcaciones_x_empleado].[em_codigo] AS [em_codigo], 
-    [vwro_marcaciones_x_empleado].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_marcaciones_x_empleado].[cargo] AS [cargo], 
-    [vwro_marcaciones_x_empleado].[ma_descripcion] AS [ma_descripcion]
-    FROM [dbo].[vwro_marcaciones_x_empleado] AS [vwro_marcaciones_x_empleado]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_marcaciones_x_empleado].[IdEmpresa] AS [IdEmpresa],
+              [vwro_marcaciones_x_empleado].[IdRegistro] AS [IdRegistro],
+              [vwro_marcaciones_x_empleado].[IdEmpleado] AS [IdEmpleado],
+              [vwro_marcaciones_x_empleado].[IdTipoMarcaciones] AS [IdTipoMarcaciones],
+              [vwro_marcaciones_x_empleado].[es_Hora] AS [es_Hora],
+              [vwro_marcaciones_x_empleado].[es_fechaRegistro] AS [es_fechaRegistro],
+              [vwro_marcaciones_x_empleado].[nom_compl_empleado] AS [nom_compl_empleado],
+              [vwro_marcaciones_x_empleado].[Motivo_Anu] AS [Motivo_Anu],
+              [vwro_marcaciones_x_empleado].[Estado] AS [Estado],
+              [vwro_marcaciones_x_empleado].[Observacion] AS [Observacion],
+              [vwro_marcaciones_x_empleado].[IdUsuario] AS [IdUsuario],
+              [vwro_marcaciones_x_empleado].[Fecha_Transac] AS [Fecha_Transac],
+              [vwro_marcaciones_x_empleado].[pe_apellido] AS [pe_apellido],
+              [vwro_marcaciones_x_empleado].[pe_nombre] AS [pe_nombre],
+              [vwro_marcaciones_x_empleado].[em_codigo] AS [em_codigo],
+              [vwro_marcaciones_x_empleado].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_marcaciones_x_empleado].[cargo] AS [cargo],
+              [vwro_marcaciones_x_empleado].[ma_descripcion] AS [ma_descripcion]
+              FROM [dbo].[vwro_marcaciones_x_empleado] AS [vwro_marcaciones_x_empleado]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_marcaciones_x_planificacion_horario" EntityType="Self.vwro_marcaciones_x_planificacion_horario" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_marcaciones_x_planificacion_horario].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_marcaciones_x_planificacion_horario].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_marcaciones_x_planificacion_horario].[IdSucursal] AS [IdSucursal], 
-    [vwro_marcaciones_x_planificacion_horario].[IdHorario] AS [IdHorario], 
-    [vwro_marcaciones_x_planificacion_horario].[IdCalendadrio] AS [IdCalendadrio], 
-    [vwro_marcaciones_x_planificacion_horario].[Sueldo] AS [Sueldo], 
-    [vwro_marcaciones_x_planificacion_horario].[IdNomina] AS [IdNomina], 
-    [vwro_marcaciones_x_planificacion_horario].[pe_nombre] AS [pe_nombre], 
-    [vwro_marcaciones_x_planificacion_horario].[pe_apellido] AS [pe_apellido], 
-    [vwro_marcaciones_x_planificacion_horario].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_marcaciones_x_planificacion_horario].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_marcaciones_x_planificacion_horario].[em_codigo] AS [em_codigo], 
-    [vwro_marcaciones_x_planificacion_horario].[time_entrada1] AS [time_entrada1], 
-    [vwro_marcaciones_x_planificacion_horario].[time_salida1] AS [time_salida1], 
-    [vwro_marcaciones_x_planificacion_horario].[es_fechaRegistro] AS [es_fechaRegistro], 
-    [vwro_marcaciones_x_planificacion_horario].[HoraIni] AS [HoraIni], 
-    [vwro_marcaciones_x_planificacion_horario].[HoraFin] AS [HoraFin]
-    FROM [dbo].[vwro_marcaciones_x_planificacion_horario] AS [vwro_marcaciones_x_planificacion_horario]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_marcaciones_x_planificacion_horario].[IdEmpresa] AS [IdEmpresa],
+              [vwro_marcaciones_x_planificacion_horario].[IdEmpleado] AS [IdEmpleado],
+              [vwro_marcaciones_x_planificacion_horario].[IdSucursal] AS [IdSucursal],
+              [vwro_marcaciones_x_planificacion_horario].[IdHorario] AS [IdHorario],
+              [vwro_marcaciones_x_planificacion_horario].[IdCalendadrio] AS [IdCalendadrio],
+              [vwro_marcaciones_x_planificacion_horario].[Sueldo] AS [Sueldo],
+              [vwro_marcaciones_x_planificacion_horario].[IdNomina] AS [IdNomina],
+              [vwro_marcaciones_x_planificacion_horario].[pe_nombre] AS [pe_nombre],
+              [vwro_marcaciones_x_planificacion_horario].[pe_apellido] AS [pe_apellido],
+              [vwro_marcaciones_x_planificacion_horario].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_marcaciones_x_planificacion_horario].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_marcaciones_x_planificacion_horario].[em_codigo] AS [em_codigo],
+              [vwro_marcaciones_x_planificacion_horario].[time_entrada1] AS [time_entrada1],
+              [vwro_marcaciones_x_planificacion_horario].[time_salida1] AS [time_salida1],
+              [vwro_marcaciones_x_planificacion_horario].[es_fechaRegistro] AS [es_fechaRegistro],
+              [vwro_marcaciones_x_planificacion_horario].[HoraIni] AS [HoraIni],
+              [vwro_marcaciones_x_planificacion_horario].[HoraFin] AS [HoraFin]
+              FROM [dbo].[vwro_marcaciones_x_planificacion_horario] AS [vwro_marcaciones_x_planificacion_horario]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_nomina_sin_percebir_sueldo" EntityType="Self.vwro_nomina_sin_percebir_sueldo" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_nomina_sin_percebir_sueldo].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_nomina_sin_percebir_sueldo].[IdRol] AS [IdRol], 
-    [vwro_nomina_sin_percebir_sueldo].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_nomina_sin_percebir_sueldo].[IdRubro] AS [IdRubro], 
-    [vwro_nomina_sin_percebir_sueldo].[Valor] AS [Valor], 
-    [vwro_nomina_sin_percebir_sueldo].[IdSucursal] AS [IdSucursal], 
-    [vwro_nomina_sin_percebir_sueldo].[em_codigo] AS [em_codigo], 
-    [vwro_nomina_sin_percebir_sueldo].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_nomina_sin_percebir_sueldo].[pe_apellido] AS [pe_apellido], 
-    [vwro_nomina_sin_percebir_sueldo].[pe_nombre] AS [pe_nombre], 
-    [vwro_nomina_sin_percebir_sueldo].[pe_nombreCompleto] AS [pe_nombreCompleto]
-    FROM [dbo].[vwro_nomina_sin_percebir_sueldo] AS [vwro_nomina_sin_percebir_sueldo]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_nomina_sin_percebir_sueldo].[IdEmpresa] AS [IdEmpresa],
+              [vwro_nomina_sin_percebir_sueldo].[IdRol] AS [IdRol],
+              [vwro_nomina_sin_percebir_sueldo].[IdEmpleado] AS [IdEmpleado],
+              [vwro_nomina_sin_percebir_sueldo].[IdRubro] AS [IdRubro],
+              [vwro_nomina_sin_percebir_sueldo].[Valor] AS [Valor],
+              [vwro_nomina_sin_percebir_sueldo].[IdSucursal] AS [IdSucursal],
+              [vwro_nomina_sin_percebir_sueldo].[em_codigo] AS [em_codigo],
+              [vwro_nomina_sin_percebir_sueldo].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_nomina_sin_percebir_sueldo].[pe_apellido] AS [pe_apellido],
+              [vwro_nomina_sin_percebir_sueldo].[pe_nombre] AS [pe_nombre],
+              [vwro_nomina_sin_percebir_sueldo].[pe_nombreCompleto] AS [pe_nombreCompleto]
+              FROM [dbo].[vwro_nomina_sin_percebir_sueldo] AS [vwro_nomina_sin_percebir_sueldo]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_nomina_x_horas_extras_aprobadas" EntityType="Self.vwro_nomina_x_horas_extras_aprobadas" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdHorasExtras] AS [IdHorasExtras], 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui], 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_nomina_x_horas_extras_aprobadas].[Valor25] AS [Valor25], 
-    [vwro_nomina_x_horas_extras_aprobadas].[Valor50] AS [Valor50], 
-    [vwro_nomina_x_horas_extras_aprobadas].[Valor100] AS [Valor100], 
-    [vwro_nomina_x_horas_extras_aprobadas].[IdSucursal] AS [IdSucursal]
-    FROM [dbo].[vwro_nomina_x_horas_extras_aprobadas] AS [vwro_nomina_x_horas_extras_aprobadas]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_nomina_x_horas_extras_aprobadas].[IdEmpresa] AS [IdEmpresa],
+              [vwro_nomina_x_horas_extras_aprobadas].[IdHorasExtras] AS [IdHorasExtras],
+              [vwro_nomina_x_horas_extras_aprobadas].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_nomina_x_horas_extras_aprobadas].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui],
+              [vwro_nomina_x_horas_extras_aprobadas].[IdPeriodo] AS [IdPeriodo],
+              [vwro_nomina_x_horas_extras_aprobadas].[IdEmpleado] AS [IdEmpleado],
+              [vwro_nomina_x_horas_extras_aprobadas].[Valor25] AS [Valor25],
+              [vwro_nomina_x_horas_extras_aprobadas].[Valor50] AS [Valor50],
+              [vwro_nomina_x_horas_extras_aprobadas].[Valor100] AS [Valor100],
+              [vwro_nomina_x_horas_extras_aprobadas].[IdSucursal] AS [IdSucursal]
+              FROM [dbo].[vwro_nomina_x_horas_extras_aprobadas] AS [vwro_nomina_x_horas_extras_aprobadas]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_nomina_x_horas_extras_det" EntityType="Self.vwro_nomina_x_horas_extras_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_nomina_x_horas_extras_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_nomina_x_horas_extras_det].[IdHorasExtras] AS [IdHorasExtras], 
-    [vwro_nomina_x_horas_extras_det].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_nomina_x_horas_extras_det].[IdCalendario] AS [IdCalendario], 
-    [vwro_nomina_x_horas_extras_det].[IdTurno] AS [IdTurno], 
-    [vwro_nomina_x_horas_extras_det].[IdHorario] AS [IdHorario], 
-    [vwro_nomina_x_horas_extras_det].[FechaRegistro] AS [FechaRegistro], 
-    [vwro_nomina_x_horas_extras_det].[time_entrada1] AS [time_entrada1], 
-    [vwro_nomina_x_horas_extras_det].[time_entrada2] AS [time_entrada2], 
-    [vwro_nomina_x_horas_extras_det].[time_salida1] AS [time_salida1], 
-    [vwro_nomina_x_horas_extras_det].[time_salida2] AS [time_salida2], 
-    [vwro_nomina_x_horas_extras_det].[hora_extra25] AS [hora_extra25], 
-    [vwro_nomina_x_horas_extras_det].[hora_extra50] AS [hora_extra50], 
-    [vwro_nomina_x_horas_extras_det].[hora_extra100] AS [hora_extra100], 
-    [vwro_nomina_x_horas_extras_det].[hora_atraso] AS [hora_atraso], 
-    [vwro_nomina_x_horas_extras_det].[hora_temprano] AS [hora_temprano], 
-    [vwro_nomina_x_horas_extras_det].[hora_trabajada] AS [hora_trabajada], 
-    [vwro_nomina_x_horas_extras_det].[es_HorasExtrasAutorizadas] AS [es_HorasExtrasAutorizadas], 
-    [vwro_nomina_x_horas_extras_det].[Horario] AS [Horario], 
-    [vwro_nomina_x_horas_extras_det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_nomina_x_horas_extras_det].[pe_apellido] AS [pe_apellido], 
-    [vwro_nomina_x_horas_extras_det].[pe_nombre] AS [pe_nombre], 
-    [vwro_nomina_x_horas_extras_det].[tu_descripcion] AS [tu_descripcion], 
-    [vwro_nomina_x_horas_extras_det].[ca_descripcion] AS [ca_descripcion], 
-    [vwro_nomina_x_horas_extras_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_nomina_x_horas_extras_det].[Valor25] AS [Valor25], 
-    [vwro_nomina_x_horas_extras_det].[Valor50] AS [Valor50], 
-    [vwro_nomina_x_horas_extras_det].[Valor100] AS [Valor100], 
-    [vwro_nomina_x_horas_extras_det].[Sueldo_base] AS [Sueldo_base]
-    FROM [dbo].[vwro_nomina_x_horas_extras_det] AS [vwro_nomina_x_horas_extras_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_nomina_x_horas_extras_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_nomina_x_horas_extras_det].[IdHorasExtras] AS [IdHorasExtras],
+              [vwro_nomina_x_horas_extras_det].[IdEmpleado] AS [IdEmpleado],
+              [vwro_nomina_x_horas_extras_det].[IdCalendario] AS [IdCalendario],
+              [vwro_nomina_x_horas_extras_det].[IdTurno] AS [IdTurno],
+              [vwro_nomina_x_horas_extras_det].[IdHorario] AS [IdHorario],
+              [vwro_nomina_x_horas_extras_det].[FechaRegistro] AS [FechaRegistro],
+              [vwro_nomina_x_horas_extras_det].[time_entrada1] AS [time_entrada1],
+              [vwro_nomina_x_horas_extras_det].[time_entrada2] AS [time_entrada2],
+              [vwro_nomina_x_horas_extras_det].[time_salida1] AS [time_salida1],
+              [vwro_nomina_x_horas_extras_det].[time_salida2] AS [time_salida2],
+              [vwro_nomina_x_horas_extras_det].[hora_extra25] AS [hora_extra25],
+              [vwro_nomina_x_horas_extras_det].[hora_extra50] AS [hora_extra50],
+              [vwro_nomina_x_horas_extras_det].[hora_extra100] AS [hora_extra100],
+              [vwro_nomina_x_horas_extras_det].[hora_atraso] AS [hora_atraso],
+              [vwro_nomina_x_horas_extras_det].[hora_temprano] AS [hora_temprano],
+              [vwro_nomina_x_horas_extras_det].[hora_trabajada] AS [hora_trabajada],
+              [vwro_nomina_x_horas_extras_det].[es_HorasExtrasAutorizadas] AS [es_HorasExtrasAutorizadas],
+              [vwro_nomina_x_horas_extras_det].[Horario] AS [Horario],
+              [vwro_nomina_x_horas_extras_det].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_nomina_x_horas_extras_det].[pe_apellido] AS [pe_apellido],
+              [vwro_nomina_x_horas_extras_det].[pe_nombre] AS [pe_nombre],
+              [vwro_nomina_x_horas_extras_det].[tu_descripcion] AS [tu_descripcion],
+              [vwro_nomina_x_horas_extras_det].[ca_descripcion] AS [ca_descripcion],
+              [vwro_nomina_x_horas_extras_det].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_nomina_x_horas_extras_det].[Valor25] AS [Valor25],
+              [vwro_nomina_x_horas_extras_det].[Valor50] AS [Valor50],
+              [vwro_nomina_x_horas_extras_det].[Valor100] AS [Valor100],
+              [vwro_nomina_x_horas_extras_det].[Sueldo_base] AS [Sueldo_base]
+              FROM [dbo].[vwro_nomina_x_horas_extras_det] AS [vwro_nomina_x_horas_extras_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_NominasPagosCheques" EntityType="Self.vwro_NominasPagosCheques" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_NominasPagosCheques].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_NominasPagosCheques].[IdTransaccion] AS [IdTransaccion], 
-    [vwro_NominasPagosCheques].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_NominasPagosCheques].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_NominasPagosCheques].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_NominasPagosCheques].[Observacion] AS [Observacion], 
-    [vwro_NominasPagosCheques].[Estado] AS [Estado], 
-    [vwro_NominasPagosCheques].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_NominasPagosCheques].[Descripcion] AS [Descripcion], 
-    [vwro_NominasPagosCheques].[pe_FechaIni] AS [pe_FechaIni], 
-    [vwro_NominasPagosCheques].[pe_FechaFin] AS [pe_FechaFin]
-    FROM [dbo].[vwro_NominasPagosCheques] AS [vwro_NominasPagosCheques]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_NominasPagosCheques].[IdEmpresa] AS [IdEmpresa],
+              [vwro_NominasPagosCheques].[IdTransaccion] AS [IdTransaccion],
+              [vwro_NominasPagosCheques].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_NominasPagosCheques].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_NominasPagosCheques].[IdPeriodo] AS [IdPeriodo],
+              [vwro_NominasPagosCheques].[Observacion] AS [Observacion],
+              [vwro_NominasPagosCheques].[Estado] AS [Estado],
+              [vwro_NominasPagosCheques].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_NominasPagosCheques].[Descripcion] AS [Descripcion],
+              [vwro_NominasPagosCheques].[pe_FechaIni] AS [pe_FechaIni],
+              [vwro_NominasPagosCheques].[pe_FechaFin] AS [pe_FechaFin]
+              FROM [dbo].[vwro_NominasPagosCheques] AS [vwro_NominasPagosCheques]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_NominasPagosCheques_det" EntityType="Self.vwro_NominasPagosCheques_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_NominasPagosCheques_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_NominasPagosCheques_det].[IdTransaccion] AS [IdTransaccion], 
-    [vwro_NominasPagosCheques_det].[Secuencia] AS [Secuencia], 
-    [vwro_NominasPagosCheques_det].[IdSucursal] AS [IdSucursal], 
-    [vwro_NominasPagosCheques_det].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_NominasPagosCheques_det].[Observacion] AS [Observacion], 
-    [vwro_NominasPagosCheques_det].[Valor] AS [Valor], 
-    [vwro_NominasPagosCheques_det].[IdEmpresa_op] AS [IdEmpresa_op], 
-    [vwro_NominasPagosCheques_det].[IdOrdenPago] AS [IdOrdenPago], 
-    [vwro_NominasPagosCheques_det].[em_codigo] AS [em_codigo], 
-    [vwro_NominasPagosCheques_det].[em_tipoCta] AS [em_tipoCta], 
-    [vwro_NominasPagosCheques_det].[em_NumCta] AS [em_NumCta], 
-    [vwro_NominasPagosCheques_det].[pe_apellido] AS [pe_apellido], 
-    [vwro_NominasPagosCheques_det].[pe_nombre] AS [pe_nombre], 
-    [vwro_NominasPagosCheques_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_NominasPagosCheques_det].[IdPersona] AS [IdPersona], 
-    [vwro_NominasPagosCheques_det].[IdEmpresa_dc] AS [IdEmpresa_dc], 
-    [vwro_NominasPagosCheques_det].[IdTipoCbte] AS [IdTipoCbte], 
-    [vwro_NominasPagosCheques_det].[IdCbteCble] AS [IdCbteCble], 
-    [vwro_NominasPagosCheques_det].[Secuancia_op] AS [Secuancia_op], 
-    [vwro_NominasPagosCheques_det].[Estado] AS [Estado]
-    FROM [dbo].[vwro_NominasPagosCheques_det] AS [vwro_NominasPagosCheques_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_NominasPagosCheques_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_NominasPagosCheques_det].[IdTransaccion] AS [IdTransaccion],
+              [vwro_NominasPagosCheques_det].[Secuencia] AS [Secuencia],
+              [vwro_NominasPagosCheques_det].[IdSucursal] AS [IdSucursal],
+              [vwro_NominasPagosCheques_det].[IdEmpleado] AS [IdEmpleado],
+              [vwro_NominasPagosCheques_det].[Observacion] AS [Observacion],
+              [vwro_NominasPagosCheques_det].[Valor] AS [Valor],
+              [vwro_NominasPagosCheques_det].[IdEmpresa_op] AS [IdEmpresa_op],
+              [vwro_NominasPagosCheques_det].[IdOrdenPago] AS [IdOrdenPago],
+              [vwro_NominasPagosCheques_det].[em_codigo] AS [em_codigo],
+              [vwro_NominasPagosCheques_det].[em_tipoCta] AS [em_tipoCta],
+              [vwro_NominasPagosCheques_det].[em_NumCta] AS [em_NumCta],
+              [vwro_NominasPagosCheques_det].[pe_apellido] AS [pe_apellido],
+              [vwro_NominasPagosCheques_det].[pe_nombre] AS [pe_nombre],
+              [vwro_NominasPagosCheques_det].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_NominasPagosCheques_det].[IdPersona] AS [IdPersona],
+              [vwro_NominasPagosCheques_det].[IdEmpresa_dc] AS [IdEmpresa_dc],
+              [vwro_NominasPagosCheques_det].[IdTipoCbte] AS [IdTipoCbte],
+              [vwro_NominasPagosCheques_det].[IdCbteCble] AS [IdCbteCble],
+              [vwro_NominasPagosCheques_det].[Secuancia_op] AS [Secuancia_op],
+              [vwro_NominasPagosCheques_det].[Estado] AS [Estado]
+              FROM [dbo].[vwro_NominasPagosCheques_det] AS [vwro_NominasPagosCheques_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar" EntityType="Self.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdNomina] AS [IdNomina], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdCtaCble] AS [IdCtaCble], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[Observacion] AS [Observacion], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdTipoFlujo] AS [IdTipoFlujo], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[Descripcion] AS [Descripcion], 
-    [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[pc_Cuenta] AS [pc_Cuenta]
-    FROM [dbo].[vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar] AS [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdEmpresa] AS [IdEmpresa],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdNomina] AS [IdNomina],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdCtaCble] AS [IdCtaCble],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[Observacion] AS [Observacion],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[IdTipoFlujo] AS [IdTipoFlujo],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[Descripcion] AS [Descripcion],
+              [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar].[pc_Cuenta] AS [pc_Cuenta]
+              FROM [dbo].[vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar] AS [vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_participacion_utilidad" EntityType="Self.vwro_participacion_utilidad" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_participacion_utilidad].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_participacion_utilidad].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_participacion_utilidad].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_participacion_utilidad].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_participacion_utilidad].[Cerrado] AS [Cerrado], 
-    [vwro_participacion_utilidad].[Procesado] AS [Procesado], 
-    [vwro_participacion_utilidad].[pe_FechaIni] AS [pe_FechaIni], 
-    [vwro_participacion_utilidad].[pe_FechaFin] AS [pe_FechaFin], 
-    [vwro_participacion_utilidad].[Descripcion] AS [Descripcion], 
-    [vwro_participacion_utilidad].[UtilidadDerechoIndividual] AS [UtilidadDerechoIndividual], 
-    [vwro_participacion_utilidad].[UtilidadCargaFamiliar] AS [UtilidadCargaFamiliar], 
-    [vwro_participacion_utilidad].[Expr1] AS [Expr1], 
-    [vwro_participacion_utilidad].[IdNominaTipo_liq] AS [IdNominaTipo_liq], 
-    [vwro_participacion_utilidad].[IdNomina] AS [IdNomina], 
-    [vwro_participacion_utilidad].[IdUtilidad] AS [IdUtilidad], 
-    [vwro_participacion_utilidad].[Estado] AS [Estado]
-    FROM [dbo].[vwro_participacion_utilidad] AS [vwro_participacion_utilidad]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_participacion_utilidad].[IdEmpresa] AS [IdEmpresa],
+              [vwro_participacion_utilidad].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_participacion_utilidad].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_participacion_utilidad].[IdPeriodo] AS [IdPeriodo],
+              [vwro_participacion_utilidad].[Cerrado] AS [Cerrado],
+              [vwro_participacion_utilidad].[Procesado] AS [Procesado],
+              [vwro_participacion_utilidad].[pe_FechaIni] AS [pe_FechaIni],
+              [vwro_participacion_utilidad].[pe_FechaFin] AS [pe_FechaFin],
+              [vwro_participacion_utilidad].[Descripcion] AS [Descripcion],
+              [vwro_participacion_utilidad].[UtilidadDerechoIndividual] AS [UtilidadDerechoIndividual],
+              [vwro_participacion_utilidad].[UtilidadCargaFamiliar] AS [UtilidadCargaFamiliar],
+              [vwro_participacion_utilidad].[Expr1] AS [Expr1],
+              [vwro_participacion_utilidad].[IdNominaTipo_liq] AS [IdNominaTipo_liq],
+              [vwro_participacion_utilidad].[IdNomina] AS [IdNomina],
+              [vwro_participacion_utilidad].[IdUtilidad] AS [IdUtilidad],
+              [vwro_participacion_utilidad].[Estado] AS [Estado]
+              FROM [dbo].[vwro_participacion_utilidad] AS [vwro_participacion_utilidad]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_participacion_utilidad_empleado" EntityType="Self.vwro_participacion_utilidad_empleado" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_participacion_utilidad_empleado].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_participacion_utilidad_empleado].[IdUtilidad] AS [IdUtilidad], 
-    [vwro_participacion_utilidad_empleado].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_participacion_utilidad_empleado].[DiasTrabajados] AS [DiasTrabajados], 
-    [vwro_participacion_utilidad_empleado].[CargasFamiliares] AS [CargasFamiliares], 
-    [vwro_participacion_utilidad_empleado].[ValorIndividual] AS [ValorIndividual], 
-    [vwro_participacion_utilidad_empleado].[ValorCargaFamiliar] AS [ValorCargaFamiliar], 
-    [vwro_participacion_utilidad_empleado].[ValorExedenteIESS] AS [ValorExedenteIESS], 
-    [vwro_participacion_utilidad_empleado].[ValorTotal] AS [ValorTotal], 
-    [vwro_participacion_utilidad_empleado].[IdNomina] AS [IdNomina], 
-    [vwro_participacion_utilidad_empleado].[IdNominaTipo_liq] AS [IdNominaTipo_liq], 
-    [vwro_participacion_utilidad_empleado].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_participacion_utilidad_empleado].[Estado] AS [Estado], 
-    [vwro_participacion_utilidad_empleado].[ca_descripcion] AS [ca_descripcion], 
-    [vwro_participacion_utilidad_empleado].[pe_apellido] AS [pe_apellido], 
-    [vwro_participacion_utilidad_empleado].[pe_nombre] AS [pe_nombre], 
-    [vwro_participacion_utilidad_empleado].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_participacion_utilidad_empleado].[em_status] AS [em_status], 
-    [vwro_participacion_utilidad_empleado].[em_fechaIngaRol] AS [em_fechaIngaRol], 
-    [vwro_participacion_utilidad_empleado].[em_fecha_ingreso] AS [em_fecha_ingreso], 
-    [vwro_participacion_utilidad_empleado].[em_fechaSalida] AS [em_fechaSalida], 
-    [vwro_participacion_utilidad_empleado].[UtilidadDerechoIndividual] AS [UtilidadDerechoIndividual], 
-    [vwro_participacion_utilidad_empleado].[UtilidadCargaFamiliar] AS [UtilidadCargaFamiliar]
-    FROM [dbo].[vwro_participacion_utilidad_empleado] AS [vwro_participacion_utilidad_empleado]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_participacion_utilidad_empleado].[IdEmpresa] AS [IdEmpresa],
+              [vwro_participacion_utilidad_empleado].[IdUtilidad] AS [IdUtilidad],
+              [vwro_participacion_utilidad_empleado].[IdEmpleado] AS [IdEmpleado],
+              [vwro_participacion_utilidad_empleado].[DiasTrabajados] AS [DiasTrabajados],
+              [vwro_participacion_utilidad_empleado].[CargasFamiliares] AS [CargasFamiliares],
+              [vwro_participacion_utilidad_empleado].[ValorIndividual] AS [ValorIndividual],
+              [vwro_participacion_utilidad_empleado].[ValorCargaFamiliar] AS [ValorCargaFamiliar],
+              [vwro_participacion_utilidad_empleado].[ValorExedenteIESS] AS [ValorExedenteIESS],
+              [vwro_participacion_utilidad_empleado].[ValorTotal] AS [ValorTotal],
+              [vwro_participacion_utilidad_empleado].[IdNomina] AS [IdNomina],
+              [vwro_participacion_utilidad_empleado].[IdNominaTipo_liq] AS [IdNominaTipo_liq],
+              [vwro_participacion_utilidad_empleado].[IdPeriodo] AS [IdPeriodo],
+              [vwro_participacion_utilidad_empleado].[Estado] AS [Estado],
+              [vwro_participacion_utilidad_empleado].[ca_descripcion] AS [ca_descripcion],
+              [vwro_participacion_utilidad_empleado].[pe_apellido] AS [pe_apellido],
+              [vwro_participacion_utilidad_empleado].[pe_nombre] AS [pe_nombre],
+              [vwro_participacion_utilidad_empleado].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_participacion_utilidad_empleado].[em_status] AS [em_status],
+              [vwro_participacion_utilidad_empleado].[em_fechaIngaRol] AS [em_fechaIngaRol],
+              [vwro_participacion_utilidad_empleado].[em_fecha_ingreso] AS [em_fecha_ingreso],
+              [vwro_participacion_utilidad_empleado].[em_fechaSalida] AS [em_fechaSalida],
+              [vwro_participacion_utilidad_empleado].[UtilidadDerechoIndividual] AS [UtilidadDerechoIndividual],
+              [vwro_participacion_utilidad_empleado].[UtilidadCargaFamiliar] AS [UtilidadCargaFamiliar]
+              FROM [dbo].[vwro_participacion_utilidad_empleado] AS [vwro_participacion_utilidad_empleado]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRo_Prestamo" EntityType="Self.vwRo_Prestamo" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwRo_Prestamo].[IdEmpresa] AS [IdEmpresa], 
-    [vwRo_Prestamo].[IdPrestamo] AS [IdPrestamo], 
-    [vwRo_Prestamo].[IdEmpleado] AS [IdEmpleado], 
-    [vwRo_Prestamo].[pe_nombre] AS [pe_nombre], 
-    [vwRo_Prestamo].[pe_apellido] AS [pe_apellido], 
-    [vwRo_Prestamo].[IdRubro] AS [IdRubro], 
-    [vwRo_Prestamo].[ru_descripcion] AS [ru_descripcion], 
-    [vwRo_Prestamo].[Estado] AS [Estado], 
-    [vwRo_Prestamo].[Fecha] AS [Fecha], 
-    [vwRo_Prestamo].[MontoSol] AS [MontoSol], 
-    [vwRo_Prestamo].[TotalCobrado] AS [TotalCobrado], 
-    [vwRo_Prestamo].[Valor_pendiente] AS [Valor_pendiente], 
-    [vwRo_Prestamo].[NumCuotas] AS [NumCuotas], 
-    [vwRo_Prestamo].[Fecha_PriPago] AS [Fecha_PriPago], 
-    [vwRo_Prestamo].[Observacion] AS [Observacion], 
-    [vwRo_Prestamo].[MotiAnula] AS [MotiAnula], 
-    [vwRo_Prestamo].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwRo_Prestamo].[IdTipoPersona] AS [IdTipoPersona], 
-    [vwRo_Prestamo].[IdPersona] AS [IdPersona], 
-    [vwRo_Prestamo].[IdTipoCbte] AS [IdTipoCbte], 
-    [vwRo_Prestamo].[IdCbteCble] AS [IdCbteCble], 
-    [vwRo_Prestamo].[IdOrdenPago] AS [IdOrdenPago], 
-    [vwRo_Prestamo].[descuento_mensual] AS [descuento_mensual], 
-    [vwRo_Prestamo].[descuento_quincena] AS [descuento_quincena], 
-    [vwRo_Prestamo].[descuento_men_quin] AS [descuento_men_quin], 
-    [vwRo_Prestamo].[EstadoAprob] AS [EstadoAprob], 
-    [vwRo_Prestamo].[IdUsuarioAprueba] AS [IdUsuarioAprueba], 
-    [vwRo_Prestamo].[Fecha_registro] AS [Fecha_registro], 
-    [vwRo_Prestamo].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea], 
-    [vwRo_Prestamo].[rub_ctacon] AS [rub_ctacon], 
-    [vwRo_Prestamo].[GeneraOP] AS [GeneraOP], 
-    [vwRo_Prestamo].[IdEmpresa_op] AS [IdEmpresa_op], 
-    [vwRo_Prestamo].[IdEmpresa_dc] AS [IdEmpresa_dc], 
-    [vwRo_Prestamo].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado], 
-    [vwRo_Prestamo].[IdSucursal] AS [IdSucursal], 
-    [vwRo_Prestamo].[Fecha_Transac] AS [Fecha_Transac], 
-    [vwRo_Prestamo].[EstadoCancelacion] AS [EstadoCancelacion]
-    FROM [dbo].[vwRo_Prestamo] AS [vwRo_Prestamo]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwRo_Prestamo].[IdEmpresa] AS [IdEmpresa],
+              [vwRo_Prestamo].[IdPrestamo] AS [IdPrestamo],
+              [vwRo_Prestamo].[IdEmpleado] AS [IdEmpleado],
+              [vwRo_Prestamo].[pe_nombre] AS [pe_nombre],
+              [vwRo_Prestamo].[pe_apellido] AS [pe_apellido],
+              [vwRo_Prestamo].[IdRubro] AS [IdRubro],
+              [vwRo_Prestamo].[ru_descripcion] AS [ru_descripcion],
+              [vwRo_Prestamo].[Estado] AS [Estado],
+              [vwRo_Prestamo].[Fecha] AS [Fecha],
+              [vwRo_Prestamo].[MontoSol] AS [MontoSol],
+              [vwRo_Prestamo].[TotalCobrado] AS [TotalCobrado],
+              [vwRo_Prestamo].[Valor_pendiente] AS [Valor_pendiente],
+              [vwRo_Prestamo].[NumCuotas] AS [NumCuotas],
+              [vwRo_Prestamo].[Fecha_PriPago] AS [Fecha_PriPago],
+              [vwRo_Prestamo].[Observacion] AS [Observacion],
+              [vwRo_Prestamo].[MotiAnula] AS [MotiAnula],
+              [vwRo_Prestamo].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwRo_Prestamo].[IdTipoPersona] AS [IdTipoPersona],
+              [vwRo_Prestamo].[IdPersona] AS [IdPersona],
+              [vwRo_Prestamo].[IdTipoCbte] AS [IdTipoCbte],
+              [vwRo_Prestamo].[IdCbteCble] AS [IdCbteCble],
+              [vwRo_Prestamo].[IdOrdenPago] AS [IdOrdenPago],
+              [vwRo_Prestamo].[descuento_mensual] AS [descuento_mensual],
+              [vwRo_Prestamo].[descuento_quincena] AS [descuento_quincena],
+              [vwRo_Prestamo].[descuento_men_quin] AS [descuento_men_quin],
+              [vwRo_Prestamo].[EstadoAprob] AS [EstadoAprob],
+              [vwRo_Prestamo].[IdUsuarioAprueba] AS [IdUsuarioAprueba],
+              [vwRo_Prestamo].[Fecha_registro] AS [Fecha_registro],
+              [vwRo_Prestamo].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea],
+              [vwRo_Prestamo].[rub_ctacon] AS [rub_ctacon],
+              [vwRo_Prestamo].[GeneraOP] AS [GeneraOP],
+              [vwRo_Prestamo].[IdEmpresa_op] AS [IdEmpresa_op],
+              [vwRo_Prestamo].[IdEmpresa_dc] AS [IdEmpresa_dc],
+              [vwRo_Prestamo].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado],
+              [vwRo_Prestamo].[IdSucursal] AS [IdSucursal],
+              [vwRo_Prestamo].[Fecha_Transac] AS [Fecha_Transac],
+              [vwRo_Prestamo].[EstadoCancelacion] AS [EstadoCancelacion]
+              FROM [dbo].[vwRo_Prestamo] AS [vwRo_Prestamo]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_rol" EntityType="Self.vwro_rol" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_rol].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_rol].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_rol].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui], 
-    [vwro_rol].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_rol].[Observacion] AS [Observacion], 
-    [vwro_rol].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_rol].[Cerrado] AS [Cerrado], 
-    [vwro_rol].[Procesado] AS [Procesado], 
-    [vwro_rol].[Contabilizado] AS [Contabilizado], 
-    [vwro_rol].[Descripcion] AS [Descripcion], 
-    [vwro_rol].[pe_FechaIni] AS [pe_FechaIni], 
-    [vwro_rol].[pe_FechaFin] AS [pe_FechaFin], 
-    [vwro_rol].[IdRol] AS [IdRol], 
-    [vwro_rol].[Expr1] AS [Expr1], 
-    [vwro_rol].[Su_CodigoEstablecimiento] AS [Su_CodigoEstablecimiento], 
-    [vwro_rol].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwro_rol].[IdSucursal] AS [IdSucursal], 
-    [vwro_rol].[EstadoRol] AS [EstadoRol]
-    FROM [dbo].[vwro_rol] AS [vwro_rol]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_rol].[IdEmpresa] AS [IdEmpresa],
+              [vwro_rol].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_rol].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui],
+              [vwro_rol].[IdPeriodo] AS [IdPeriodo],
+              [vwro_rol].[Observacion] AS [Observacion],
+              [vwro_rol].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_rol].[Cerrado] AS [Cerrado],
+              [vwro_rol].[Procesado] AS [Procesado],
+              [vwro_rol].[Contabilizado] AS [Contabilizado],
+              [vwro_rol].[Descripcion] AS [Descripcion],
+              [vwro_rol].[pe_FechaIni] AS [pe_FechaIni],
+              [vwro_rol].[pe_FechaFin] AS [pe_FechaFin],
+              [vwro_rol].[IdRol] AS [IdRol],
+              [vwro_rol].[Expr1] AS [Expr1],
+              [vwro_rol].[Su_CodigoEstablecimiento] AS [Su_CodigoEstablecimiento],
+              [vwro_rol].[Su_Descripcion] AS [Su_Descripcion],
+              [vwro_rol].[IdSucursal] AS [IdSucursal],
+              [vwro_rol].[EstadoRol] AS [EstadoRol]
+              FROM [dbo].[vwro_rol] AS [vwro_rol]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_rol_detalle" EntityType="Self.vwro_rol_detalle" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_rol_detalle].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_rol_detalle].[IdRol] AS [IdRol], 
-    [vwro_rol_detalle].[IdSucursal] AS [IdSucursal], 
-    [vwro_rol_detalle].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_rol_detalle].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui], 
-    [vwro_rol_detalle].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_rol_detalle].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_rol_detalle].[IdRubro] AS [IdRubro], 
-    [vwro_rol_detalle].[Valor] AS [Valor], 
-    [vwro_rol_detalle].[ru_tipo] AS [ru_tipo], 
-    [vwro_rol_detalle].[rub_ctacon] AS [rub_ctacon], 
-    [vwro_rol_detalle].[pc_CuentaRubro] AS [pc_CuentaRubro], 
-    [vwro_rol_detalle].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea], 
-    [vwro_rol_detalle].[pc_CuentaEmple] AS [pc_CuentaEmple], 
-    [vwro_rol_detalle].[IdDivision] AS [IdDivision], 
-    [vwro_rol_detalle].[IdArea] AS [IdArea], 
-    [vwro_rol_detalle].[IdDepartamento] AS [IdDepartamento], 
-    [vwro_rol_detalle].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_rol_detalle].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_rol_detalle].[rub_provision] AS [rub_provision], 
-    [vwro_rol_detalle].[rub_ContPorEmpleado] AS [rub_ContPorEmpleado]
-    FROM [dbo].[vwro_rol_detalle] AS [vwro_rol_detalle]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_rol_detalle].[IdEmpresa] AS [IdEmpresa],
+              [vwro_rol_detalle].[IdRol] AS [IdRol],
+              [vwro_rol_detalle].[IdSucursal] AS [IdSucursal],
+              [vwro_rol_detalle].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_rol_detalle].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui],
+              [vwro_rol_detalle].[IdPeriodo] AS [IdPeriodo],
+              [vwro_rol_detalle].[IdEmpleado] AS [IdEmpleado],
+              [vwro_rol_detalle].[IdRubro] AS [IdRubro],
+              [vwro_rol_detalle].[Valor] AS [Valor],
+              [vwro_rol_detalle].[ru_tipo] AS [ru_tipo],
+              [vwro_rol_detalle].[rub_ctacon] AS [rub_ctacon],
+              [vwro_rol_detalle].[pc_CuentaRubro] AS [pc_CuentaRubro],
+              [vwro_rol_detalle].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea],
+              [vwro_rol_detalle].[pc_CuentaEmple] AS [pc_CuentaEmple],
+              [vwro_rol_detalle].[IdDivision] AS [IdDivision],
+              [vwro_rol_detalle].[IdArea] AS [IdArea],
+              [vwro_rol_detalle].[IdDepartamento] AS [IdDepartamento],
+              [vwro_rol_detalle].[ru_descripcion] AS [ru_descripcion],
+              [vwro_rol_detalle].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_rol_detalle].[rub_provision] AS [rub_provision],
+              [vwro_rol_detalle].[rub_ContPorEmpleado] AS [rub_ContPorEmpleado]
+              FROM [dbo].[vwro_rol_detalle] AS [vwro_rol_detalle]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRo_rol_detalle_saldo_por_pagar" EntityType="Self.vwRo_rol_detalle_saldo_por_pagar" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdEmpresa] AS [IdEmpresa], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdRol] AS [IdRol], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdPeriodo] AS [IdPeriodo], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdEmpleado] AS [IdEmpleado], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdRubro] AS [IdRubro], 
-    [vwRo_rol_detalle_saldo_por_pagar].[ValorGanado] AS [ValorGanado], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdSucursal] AS [IdSucursal], 
-    [vwRo_rol_detalle_saldo_por_pagar].[em_codigo] AS [em_codigo], 
-    [vwRo_rol_detalle_saldo_por_pagar].[pe_apellido] AS [pe_apellido], 
-    [vwRo_rol_detalle_saldo_por_pagar].[pe_nombre] AS [pe_nombre], 
-    [vwRo_rol_detalle_saldo_por_pagar].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwRo_rol_detalle_saldo_por_pagar].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwRo_rol_detalle_saldo_por_pagar].[ValorCancelado] AS [ValorCancelado], 
-    [vwRo_rol_detalle_saldo_por_pagar].[Saldo] AS [Saldo], 
-    [vwRo_rol_detalle_saldo_por_pagar].[em_NumCta] AS [em_NumCta], 
-    [vwRo_rol_detalle_saldo_por_pagar].[em_tipoCta] AS [em_tipoCta], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdPersona] AS [IdPersona], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea], 
-    [vwRo_rol_detalle_saldo_por_pagar].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado]
-    FROM [dbo].[vwRo_rol_detalle_saldo_por_pagar] AS [vwRo_rol_detalle_saldo_por_pagar]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwRo_rol_detalle_saldo_por_pagar].[IdEmpresa] AS [IdEmpresa],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdRol] AS [IdRol],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdNominaTipo] AS [IdNominaTipo],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdPeriodo] AS [IdPeriodo],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdEmpleado] AS [IdEmpleado],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdRubro] AS [IdRubro],
+              [vwRo_rol_detalle_saldo_por_pagar].[ValorGanado] AS [ValorGanado],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdSucursal] AS [IdSucursal],
+              [vwRo_rol_detalle_saldo_por_pagar].[em_codigo] AS [em_codigo],
+              [vwRo_rol_detalle_saldo_por_pagar].[pe_apellido] AS [pe_apellido],
+              [vwRo_rol_detalle_saldo_por_pagar].[pe_nombre] AS [pe_nombre],
+              [vwRo_rol_detalle_saldo_por_pagar].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwRo_rol_detalle_saldo_por_pagar].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwRo_rol_detalle_saldo_por_pagar].[ValorCancelado] AS [ValorCancelado],
+              [vwRo_rol_detalle_saldo_por_pagar].[Saldo] AS [Saldo],
+              [vwRo_rol_detalle_saldo_por_pagar].[em_NumCta] AS [em_NumCta],
+              [vwRo_rol_detalle_saldo_por_pagar].[em_tipoCta] AS [em_tipoCta],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdPersona] AS [IdPersona],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdCtaCble_Emplea] AS [IdCtaCble_Emplea],
+              [vwRo_rol_detalle_saldo_por_pagar].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado]
+              FROM [dbo].[vwRo_rol_detalle_saldo_por_pagar] AS [vwRo_rol_detalle_saldo_por_pagar]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_rol_detalle_x_rubro_acumulado" EntityType="Self.vwro_rol_detalle_x_rubro_acumulado" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_rol_detalle_x_rubro_acumulado].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_rol_detalle_x_rubro_acumulado].[IdRol] AS [IdRol], 
-    [vwro_rol_detalle_x_rubro_acumulado].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_rol_detalle_x_rubro_acumulado].[IdRubro] AS [IdRubro], 
-    [vwro_rol_detalle_x_rubro_acumulado].[Valor] AS [Valor], 
-    [vwro_rol_detalle_x_rubro_acumulado].[IdSucursal] AS [IdSucursal], 
-    [vwro_rol_detalle_x_rubro_acumulado].[pe_FechaIni] AS [pe_FechaIni], 
-    [vwro_rol_detalle_x_rubro_acumulado].[pe_FechaFin] AS [pe_FechaFin], 
-    [vwro_rol_detalle_x_rubro_acumulado].[Empleado] AS [Empleado], 
-    [vwro_rol_detalle_x_rubro_acumulado].[IdNominaTipo] AS [IdNominaTipo]
-    FROM [dbo].[vwro_rol_detalle_x_rubro_acumulado] AS [vwro_rol_detalle_x_rubro_acumulado]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_rol_detalle_x_rubro_acumulado].[IdEmpresa] AS [IdEmpresa],
+              [vwro_rol_detalle_x_rubro_acumulado].[IdRol] AS [IdRol],
+              [vwro_rol_detalle_x_rubro_acumulado].[IdEmpleado] AS [IdEmpleado],
+              [vwro_rol_detalle_x_rubro_acumulado].[IdRubro] AS [IdRubro],
+              [vwro_rol_detalle_x_rubro_acumulado].[Valor] AS [Valor],
+              [vwro_rol_detalle_x_rubro_acumulado].[IdSucursal] AS [IdSucursal],
+              [vwro_rol_detalle_x_rubro_acumulado].[pe_FechaIni] AS [pe_FechaIni],
+              [vwro_rol_detalle_x_rubro_acumulado].[pe_FechaFin] AS [pe_FechaFin],
+              [vwro_rol_detalle_x_rubro_acumulado].[Empleado] AS [Empleado],
+              [vwro_rol_detalle_x_rubro_acumulado].[IdNominaTipo] AS [IdNominaTipo]
+              FROM [dbo].[vwro_rol_detalle_x_rubro_acumulado] AS [vwro_rol_detalle_x_rubro_acumulado]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_rubro_tipo" EntityType="Self.vwro_rubro_tipo" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_rubro_tipo].[IdRubro] AS [IdRubro], 
-    [vwro_rubro_tipo].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_rubro_tipo].[IdEmpresa] AS [IdEmpresa]
-    FROM [dbo].[vwro_rubro_tipo] AS [vwro_rubro_tipo]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_rubro_tipo].[IdRubro] AS [IdRubro],
+              [vwro_rubro_tipo].[ru_descripcion] AS [ru_descripcion],
+              [vwro_rubro_tipo].[IdEmpresa] AS [IdEmpresa]
+              FROM [dbo].[vwro_rubro_tipo] AS [vwro_rubro_tipo]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_SancionesPorMarcaciones" EntityType="Self.vwro_SancionesPorMarcaciones" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_SancionesPorMarcaciones].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_SancionesPorMarcaciones].[IdAjuste] AS [IdAjuste], 
-    [vwro_SancionesPorMarcaciones].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_SancionesPorMarcaciones].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_SancionesPorMarcaciones].[FechaInicio] AS [FechaInicio], 
-    [vwro_SancionesPorMarcaciones].[Observacion] AS [Observacion], 
-    [vwro_SancionesPorMarcaciones].[Estado] AS [Estado], 
-    [vwro_SancionesPorMarcaciones].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina], 
-    [vwro_SancionesPorMarcaciones].[Descripcion] AS [Descripcion], 
-    [vwro_SancionesPorMarcaciones].[FechaFin] AS [FechaFin], 
-    [vwro_SancionesPorMarcaciones].[FechaNovedades] AS [FechaNovedades]
-    FROM [dbo].[vwro_SancionesPorMarcaciones] AS [vwro_SancionesPorMarcaciones]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_SancionesPorMarcaciones].[IdEmpresa] AS [IdEmpresa],
+              [vwro_SancionesPorMarcaciones].[IdAjuste] AS [IdAjuste],
+              [vwro_SancionesPorMarcaciones].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_SancionesPorMarcaciones].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_SancionesPorMarcaciones].[FechaInicio] AS [FechaInicio],
+              [vwro_SancionesPorMarcaciones].[Observacion] AS [Observacion],
+              [vwro_SancionesPorMarcaciones].[Estado] AS [Estado],
+              [vwro_SancionesPorMarcaciones].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina],
+              [vwro_SancionesPorMarcaciones].[Descripcion] AS [Descripcion],
+              [vwro_SancionesPorMarcaciones].[FechaFin] AS [FechaFin],
+              [vwro_SancionesPorMarcaciones].[FechaNovedades] AS [FechaNovedades]
+              FROM [dbo].[vwro_SancionesPorMarcaciones] AS [vwro_SancionesPorMarcaciones]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_SancionesPorMarcaciones_det" EntityType="Self.vwro_SancionesPorMarcaciones_det" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_SancionesPorMarcaciones_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_SancionesPorMarcaciones_det].[IdAjuste] AS [IdAjuste], 
-    [vwro_SancionesPorMarcaciones_det].[Secuencia] AS [Secuencia], 
-    [vwro_SancionesPorMarcaciones_det].[IdCalendario] AS [IdCalendario], 
-    [vwro_SancionesPorMarcaciones_det].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_SancionesPorMarcaciones_det].[IdSucursal] AS [IdSucursal], 
-    [vwro_SancionesPorMarcaciones_det].[Minutos] AS [Minutos], 
-    [vwro_SancionesPorMarcaciones_det].[Observacion] AS [Observacion], 
-    [vwro_SancionesPorMarcaciones_det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_SancionesPorMarcaciones_det].[pe_apellido] AS [pe_apellido], 
-    [vwro_SancionesPorMarcaciones_det].[pe_nombre] AS [pe_nombre], 
-    [vwro_SancionesPorMarcaciones_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_SancionesPorMarcaciones_det].[em_codigo] AS [em_codigo], 
-    [vwro_SancionesPorMarcaciones_det].[EsHoraIngreso] AS [EsHoraIngreso], 
-    [vwro_SancionesPorMarcaciones_det].[HoraIngreso] AS [HoraIngreso], 
-    [vwro_SancionesPorMarcaciones_det].[EsHoraSalida] AS [EsHoraSalida], 
-    [vwro_SancionesPorMarcaciones_det].[FechaRegistro] AS [FechaRegistro], 
-    [vwro_SancionesPorMarcaciones_det].[HoraSalio] AS [HoraSalio]
-    FROM [dbo].[vwro_SancionesPorMarcaciones_det] AS [vwro_SancionesPorMarcaciones_det]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_SancionesPorMarcaciones_det].[IdEmpresa] AS [IdEmpresa],
+              [vwro_SancionesPorMarcaciones_det].[IdAjuste] AS [IdAjuste],
+              [vwro_SancionesPorMarcaciones_det].[Secuencia] AS [Secuencia],
+              [vwro_SancionesPorMarcaciones_det].[IdCalendario] AS [IdCalendario],
+              [vwro_SancionesPorMarcaciones_det].[IdEmpleado] AS [IdEmpleado],
+              [vwro_SancionesPorMarcaciones_det].[IdSucursal] AS [IdSucursal],
+              [vwro_SancionesPorMarcaciones_det].[Minutos] AS [Minutos],
+              [vwro_SancionesPorMarcaciones_det].[Observacion] AS [Observacion],
+              [vwro_SancionesPorMarcaciones_det].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_SancionesPorMarcaciones_det].[pe_apellido] AS [pe_apellido],
+              [vwro_SancionesPorMarcaciones_det].[pe_nombre] AS [pe_nombre],
+              [vwro_SancionesPorMarcaciones_det].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_SancionesPorMarcaciones_det].[em_codigo] AS [em_codigo],
+              [vwro_SancionesPorMarcaciones_det].[EsHoraIngreso] AS [EsHoraIngreso],
+              [vwro_SancionesPorMarcaciones_det].[HoraIngreso] AS [HoraIngreso],
+              [vwro_SancionesPorMarcaciones_det].[EsHoraSalida] AS [EsHoraSalida],
+              [vwro_SancionesPorMarcaciones_det].[FechaRegistro] AS [FechaRegistro],
+              [vwro_SancionesPorMarcaciones_det].[HoraSalio] AS [HoraSalio]
+              FROM [dbo].[vwro_SancionesPorMarcaciones_det] AS [vwro_SancionesPorMarcaciones_det]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_SancionesPorMarcaciones_x_novedad" EntityType="Self.vwro_SancionesPorMarcaciones_x_novedad" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdAjuste] AS [IdAjuste], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[Secuencia] AS [Secuencia], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdNovedad] AS [IdNovedad], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdEmpresa_nov] AS [IdEmpresa_nov], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[Valor] AS [Valor], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[FechaPago] AS [FechaPago], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[em_codigo] AS [em_codigo], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[pe_apellido] AS [pe_apellido], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[pe_nombre] AS [pe_nombre], 
-    [vwro_SancionesPorMarcaciones_x_novedad].[pe_nombreCompleto] AS [pe_nombreCompleto]
-    FROM [dbo].[vwro_SancionesPorMarcaciones_x_novedad] AS [vwro_SancionesPorMarcaciones_x_novedad]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdEmpresa] AS [IdEmpresa],
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdAjuste] AS [IdAjuste],
+              [vwro_SancionesPorMarcaciones_x_novedad].[Secuencia] AS [Secuencia],
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdNovedad] AS [IdNovedad],
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdEmpresa_nov] AS [IdEmpresa_nov],
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdEmpleado] AS [IdEmpleado],
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_SancionesPorMarcaciones_x_novedad].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui],
+              [vwro_SancionesPorMarcaciones_x_novedad].[Valor] AS [Valor],
+              [vwro_SancionesPorMarcaciones_x_novedad].[FechaPago] AS [FechaPago],
+              [vwro_SancionesPorMarcaciones_x_novedad].[em_codigo] AS [em_codigo],
+              [vwro_SancionesPorMarcaciones_x_novedad].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_SancionesPorMarcaciones_x_novedad].[pe_apellido] AS [pe_apellido],
+              [vwro_SancionesPorMarcaciones_x_novedad].[pe_nombre] AS [pe_nombre],
+              [vwro_SancionesPorMarcaciones_x_novedad].[pe_nombreCompleto] AS [pe_nombreCompleto]
+              FROM [dbo].[vwro_SancionesPorMarcaciones_x_novedad] AS [vwro_SancionesPorMarcaciones_x_novedad]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRo_Solicitud_Vacaciones" EntityType="Self.vwRo_Solicitud_Vacaciones" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vwRo_Solicitud_Vacaciones].[IdEmpresa] AS [IdEmpresa], 
-    [vwRo_Solicitud_Vacaciones].[IdSolicitud] AS [IdSolicitud], 
-    [vwRo_Solicitud_Vacaciones].[Fecha] AS [Fecha], 
-    [vwRo_Solicitud_Vacaciones].[IdEmpleado] AS [IdEmpleado], 
-    [vwRo_Solicitud_Vacaciones].[AnioServicio] AS [AnioServicio], 
-    [vwRo_Solicitud_Vacaciones].[Dias_q_Corresponde] AS [Dias_q_Corresponde], 
-    [vwRo_Solicitud_Vacaciones].[Dias_a_disfrutar] AS [Dias_a_disfrutar], 
-    [vwRo_Solicitud_Vacaciones].[Dias_pendiente] AS [Dias_pendiente], 
-    [vwRo_Solicitud_Vacaciones].[Anio_Desde] AS [Anio_Desde], 
-    [vwRo_Solicitud_Vacaciones].[Anio_Hasta] AS [Anio_Hasta], 
-    [vwRo_Solicitud_Vacaciones].[Fecha_Desde] AS [Fecha_Desde], 
-    [vwRo_Solicitud_Vacaciones].[Fecha_Hasta] AS [Fecha_Hasta], 
-    [vwRo_Solicitud_Vacaciones].[Fecha_Retorno] AS [Fecha_Retorno], 
-    [vwRo_Solicitud_Vacaciones].[Observacion] AS [Observacion], 
-    [vwRo_Solicitud_Vacaciones].[IdUsuario_Anu] AS [IdUsuario_Anu], 
-    [vwRo_Solicitud_Vacaciones].[Estado] AS [Estado], 
-    [vwRo_Solicitud_Vacaciones].[IdEstadoAprobacion] AS [IdEstadoAprobacion], 
-    [vwRo_Solicitud_Vacaciones].[pe_apellido] AS [pe_apellido], 
-    [vwRo_Solicitud_Vacaciones].[pe_nombre] AS [pe_nombre], 
-    [vwRo_Solicitud_Vacaciones].[IdEmpleado_aprue] AS [IdEmpleado_aprue], 
-    [vwRo_Solicitud_Vacaciones].[IdEmpleado_remp] AS [IdEmpleado_remp], 
-    [vwRo_Solicitud_Vacaciones].[Gozadas_Pgadas] AS [Gozadas_Pgadas], 
-    [vwRo_Solicitud_Vacaciones].[Canceladas] AS [Canceladas], 
-    [vwRo_Solicitud_Vacaciones].[IdVacacion] AS [IdVacacion], 
-    [vwRo_Solicitud_Vacaciones].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwRo_Solicitud_Vacaciones].[em_codigo] AS [em_codigo], 
-    [vwRo_Solicitud_Vacaciones].[IdLiquidacion] AS [IdLiquidacion], 
-    [vwRo_Solicitud_Vacaciones].[Estado_liquidacion] AS [Estado_liquidacion]
-    FROM [dbo].[vwRo_Solicitud_Vacaciones] AS [vwRo_Solicitud_Vacaciones]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwRo_Solicitud_Vacaciones].[IdEmpresa] AS [IdEmpresa],
+              [vwRo_Solicitud_Vacaciones].[IdSolicitud] AS [IdSolicitud],
+              [vwRo_Solicitud_Vacaciones].[Fecha] AS [Fecha],
+              [vwRo_Solicitud_Vacaciones].[IdEmpleado] AS [IdEmpleado],
+              [vwRo_Solicitud_Vacaciones].[AnioServicio] AS [AnioServicio],
+              [vwRo_Solicitud_Vacaciones].[Dias_q_Corresponde] AS [Dias_q_Corresponde],
+              [vwRo_Solicitud_Vacaciones].[Dias_a_disfrutar] AS [Dias_a_disfrutar],
+              [vwRo_Solicitud_Vacaciones].[Dias_pendiente] AS [Dias_pendiente],
+              [vwRo_Solicitud_Vacaciones].[Anio_Desde] AS [Anio_Desde],
+              [vwRo_Solicitud_Vacaciones].[Anio_Hasta] AS [Anio_Hasta],
+              [vwRo_Solicitud_Vacaciones].[Fecha_Desde] AS [Fecha_Desde],
+              [vwRo_Solicitud_Vacaciones].[Fecha_Hasta] AS [Fecha_Hasta],
+              [vwRo_Solicitud_Vacaciones].[Fecha_Retorno] AS [Fecha_Retorno],
+              [vwRo_Solicitud_Vacaciones].[Observacion] AS [Observacion],
+              [vwRo_Solicitud_Vacaciones].[IdUsuario_Anu] AS [IdUsuario_Anu],
+              [vwRo_Solicitud_Vacaciones].[Estado] AS [Estado],
+              [vwRo_Solicitud_Vacaciones].[IdEstadoAprobacion] AS [IdEstadoAprobacion],
+              [vwRo_Solicitud_Vacaciones].[pe_apellido] AS [pe_apellido],
+              [vwRo_Solicitud_Vacaciones].[pe_nombre] AS [pe_nombre],
+              [vwRo_Solicitud_Vacaciones].[IdEmpleado_aprue] AS [IdEmpleado_aprue],
+              [vwRo_Solicitud_Vacaciones].[IdEmpleado_remp] AS [IdEmpleado_remp],
+              [vwRo_Solicitud_Vacaciones].[Gozadas_Pgadas] AS [Gozadas_Pgadas],
+              [vwRo_Solicitud_Vacaciones].[Canceladas] AS [Canceladas],
+              [vwRo_Solicitud_Vacaciones].[IdVacacion] AS [IdVacacion],
+              [vwRo_Solicitud_Vacaciones].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwRo_Solicitud_Vacaciones].[em_codigo] AS [em_codigo],
+              [vwRo_Solicitud_Vacaciones].[IdLiquidacion] AS [IdLiquidacion],
+              [vwRo_Solicitud_Vacaciones].[Estado_liquidacion] AS [Estado_liquidacion]
+              FROM [dbo].[vwRo_Solicitud_Vacaciones] AS [vwRo_Solicitud_Vacaciones]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwrdep_IngrEgr_x_Empleado" EntityType="Self.vwrdep_IngrEgr_x_Empleado" store:Type="Views" store:Schema="EntidadRegulatoria">
-            <DefiningQuery>SELECT 
-    [vwrdep_IngrEgr_x_Empleado].[IdEmpresa] AS [IdEmpresa], 
-    [vwrdep_IngrEgr_x_Empleado].[Id_Rdep] AS [Id_Rdep], 
-    [vwrdep_IngrEgr_x_Empleado].[IdSucursal] AS [IdSucursal], 
-    [vwrdep_IngrEgr_x_Empleado].[pe_anio] AS [pe_anio], 
-    [vwrdep_IngrEgr_x_Empleado].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwrdep_IngrEgr_x_Empleado].[Su_CodigoEstablecimiento] AS [Su_CodigoEstablecimiento], 
-    [vwrdep_IngrEgr_x_Empleado].[Observacion] AS [Observacion], 
-    [vwrdep_IngrEgr_x_Empleado].[Estado] AS [Estado], 
-    [vwrdep_IngrEgr_x_Empleado].[Secuencia] AS [Secuencia], 
-    [vwrdep_IngrEgr_x_Empleado].[IdEmpleado] AS [IdEmpleado], 
-    [vwrdep_IngrEgr_x_Empleado].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwrdep_IngrEgr_x_Empleado].[pe_nombre] AS [pe_nombre], 
-    [vwrdep_IngrEgr_x_Empleado].[pe_apellido] AS [pe_apellido], 
-    [vwrdep_IngrEgr_x_Empleado].[Sueldo] AS [Sueldo], 
-    [vwrdep_IngrEgr_x_Empleado].[FondosReserva] AS [FondosReserva], 
-    [vwrdep_IngrEgr_x_Empleado].[DecimoTercerSueldo] AS [DecimoTercerSueldo], 
-    [vwrdep_IngrEgr_x_Empleado].[DecimoCuartoSueldo] AS [DecimoCuartoSueldo], 
-    [vwrdep_IngrEgr_x_Empleado].[Vacaciones] AS [Vacaciones], 
-    [vwrdep_IngrEgr_x_Empleado].[AportePErsonal] AS [AportePErsonal], 
-    [vwrdep_IngrEgr_x_Empleado].[GastoAlimentacion] AS [GastoAlimentacion], 
-    [vwrdep_IngrEgr_x_Empleado].[GastoEucacion] AS [GastoEucacion], 
-    [vwrdep_IngrEgr_x_Empleado].[GastoSalud] AS [GastoSalud], 
-    [vwrdep_IngrEgr_x_Empleado].[GastoVestimenta] AS [GastoVestimenta], 
-    [vwrdep_IngrEgr_x_Empleado].[GastoVivienda] AS [GastoVivienda], 
-    [vwrdep_IngrEgr_x_Empleado].[Utilidades] AS [Utilidades], 
-    [vwrdep_IngrEgr_x_Empleado].[IngresoVarios] AS [IngresoVarios], 
-    [vwrdep_IngrEgr_x_Empleado].[IngresoPorOtrosEmpleaodres] AS [IngresoPorOtrosEmpleaodres], 
-    [vwrdep_IngrEgr_x_Empleado].[IessPorOtrosEmpleadores] AS [IessPorOtrosEmpleadores], 
-    [vwrdep_IngrEgr_x_Empleado].[ValorImpuestoPorEsteEmplador] AS [ValorImpuestoPorEsteEmplador], 
-    [vwrdep_IngrEgr_x_Empleado].[ValorImpuestoPorOtroEmplador] AS [ValorImpuestoPorOtroEmplador], 
-    [vwrdep_IngrEgr_x_Empleado].[ExoneraionPorDiscapacidad] AS [ExoneraionPorDiscapacidad], 
-    [vwrdep_IngrEgr_x_Empleado].[ExoneracionPorTerceraEdad] AS [ExoneracionPorTerceraEdad], 
-    [vwrdep_IngrEgr_x_Empleado].[OtrosIngresosRelacionDependencia] AS [OtrosIngresosRelacionDependencia], 
-    [vwrdep_IngrEgr_x_Empleado].[ImpuestoRentaCausado] AS [ImpuestoRentaCausado], 
-    [vwrdep_IngrEgr_x_Empleado].[ValorImpuestoRetenidoTrabajador] AS [ValorImpuestoRetenidoTrabajador], 
-    [vwrdep_IngrEgr_x_Empleado].[ImpuestoRentaAsumidoPorEsteEmpleador] AS [ImpuestoRentaAsumidoPorEsteEmpleador], 
-    [vwrdep_IngrEgr_x_Empleado].[BaseImponibleGravada] AS [BaseImponibleGravada], 
-    [vwrdep_IngrEgr_x_Empleado].[IngresosGravadorPorEsteEmpleador] AS [IngresosGravadorPorEsteEmpleador]
-    FROM [EntidadRegulatoria].[vwrdep_IngrEgr_x_Empleado] AS [vwrdep_IngrEgr_x_Empleado]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwrdep_IngrEgr_x_Empleado].[IdEmpresa] AS [IdEmpresa],
+              [vwrdep_IngrEgr_x_Empleado].[Id_Rdep] AS [Id_Rdep],
+              [vwrdep_IngrEgr_x_Empleado].[IdSucursal] AS [IdSucursal],
+              [vwrdep_IngrEgr_x_Empleado].[pe_anio] AS [pe_anio],
+              [vwrdep_IngrEgr_x_Empleado].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwrdep_IngrEgr_x_Empleado].[Su_CodigoEstablecimiento] AS [Su_CodigoEstablecimiento],
+              [vwrdep_IngrEgr_x_Empleado].[Observacion] AS [Observacion],
+              [vwrdep_IngrEgr_x_Empleado].[Estado] AS [Estado],
+              [vwrdep_IngrEgr_x_Empleado].[Secuencia] AS [Secuencia],
+              [vwrdep_IngrEgr_x_Empleado].[IdEmpleado] AS [IdEmpleado],
+              [vwrdep_IngrEgr_x_Empleado].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwrdep_IngrEgr_x_Empleado].[pe_nombre] AS [pe_nombre],
+              [vwrdep_IngrEgr_x_Empleado].[pe_apellido] AS [pe_apellido],
+              [vwrdep_IngrEgr_x_Empleado].[Sueldo] AS [Sueldo],
+              [vwrdep_IngrEgr_x_Empleado].[FondosReserva] AS [FondosReserva],
+              [vwrdep_IngrEgr_x_Empleado].[DecimoTercerSueldo] AS [DecimoTercerSueldo],
+              [vwrdep_IngrEgr_x_Empleado].[DecimoCuartoSueldo] AS [DecimoCuartoSueldo],
+              [vwrdep_IngrEgr_x_Empleado].[Vacaciones] AS [Vacaciones],
+              [vwrdep_IngrEgr_x_Empleado].[AportePErsonal] AS [AportePErsonal],
+              [vwrdep_IngrEgr_x_Empleado].[GastoAlimentacion] AS [GastoAlimentacion],
+              [vwrdep_IngrEgr_x_Empleado].[GastoEucacion] AS [GastoEucacion],
+              [vwrdep_IngrEgr_x_Empleado].[GastoSalud] AS [GastoSalud],
+              [vwrdep_IngrEgr_x_Empleado].[GastoVestimenta] AS [GastoVestimenta],
+              [vwrdep_IngrEgr_x_Empleado].[GastoVivienda] AS [GastoVivienda],
+              [vwrdep_IngrEgr_x_Empleado].[Utilidades] AS [Utilidades],
+              [vwrdep_IngrEgr_x_Empleado].[IngresoVarios] AS [IngresoVarios],
+              [vwrdep_IngrEgr_x_Empleado].[IngresoPorOtrosEmpleaodres] AS [IngresoPorOtrosEmpleaodres],
+              [vwrdep_IngrEgr_x_Empleado].[IessPorOtrosEmpleadores] AS [IessPorOtrosEmpleadores],
+              [vwrdep_IngrEgr_x_Empleado].[ValorImpuestoPorEsteEmplador] AS [ValorImpuestoPorEsteEmplador],
+              [vwrdep_IngrEgr_x_Empleado].[ValorImpuestoPorOtroEmplador] AS [ValorImpuestoPorOtroEmplador],
+              [vwrdep_IngrEgr_x_Empleado].[ExoneraionPorDiscapacidad] AS [ExoneraionPorDiscapacidad],
+              [vwrdep_IngrEgr_x_Empleado].[ExoneracionPorTerceraEdad] AS [ExoneracionPorTerceraEdad],
+              [vwrdep_IngrEgr_x_Empleado].[OtrosIngresosRelacionDependencia] AS [OtrosIngresosRelacionDependencia],
+              [vwrdep_IngrEgr_x_Empleado].[ImpuestoRentaCausado] AS [ImpuestoRentaCausado],
+              [vwrdep_IngrEgr_x_Empleado].[ValorImpuestoRetenidoTrabajador] AS [ValorImpuestoRetenidoTrabajador],
+              [vwrdep_IngrEgr_x_Empleado].[ImpuestoRentaAsumidoPorEsteEmpleador] AS [ImpuestoRentaAsumidoPorEsteEmpleador],
+              [vwrdep_IngrEgr_x_Empleado].[BaseImponibleGravada] AS [BaseImponibleGravada],
+              [vwrdep_IngrEgr_x_Empleado].[IngresosGravadorPorEsteEmpleador] AS [IngresosGravadorPorEsteEmpleador]
+              FROM [EntidadRegulatoria].[vwrdep_IngrEgr_x_Empleado] AS [vwrdep_IngrEgr_x_Empleado]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_ArchivosIess" EntityType="Self.vwro_ArchivosIess" store:Type="Views" store:Schema="EntidadRegulatoria">
-            <DefiningQuery>SELECT 
-    [vwro_ArchivosIess].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_ArchivosIess].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_ArchivosIess].[IdRubro] AS [IdRubro], 
-    [vwro_ArchivosIess].[Orden] AS [Orden], 
-    [vwro_ArchivosIess].[Valor] AS [Valor], 
-    [vwro_ArchivosIess].[rub_visible_reporte] AS [rub_visible_reporte], 
-    [vwro_ArchivosIess].[Observacion] AS [Observacion], 
-    [vwro_ArchivosIess].[IdSucursal] AS [IdSucursal], 
-    [vwro_ArchivosIess].[em_codigo] AS [em_codigo], 
-    [vwro_ArchivosIess].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_ArchivosIess].[pe_apellido] AS [pe_apellido], 
-    [vwro_ArchivosIess].[pe_nombre] AS [pe_nombre], 
-    [vwro_ArchivosIess].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_ArchivosIess].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_ArchivosIess].[IdNominaTipo] AS [IdNominaTipo], 
-    [vwro_ArchivosIess].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui], 
-    [vwro_ArchivosIess].[IdPeriodo] AS [IdPeriodo], 
-    [vwro_ArchivosIess].[Sueldo] AS [Sueldo]
-    FROM [EntidadRegulatoria].[vwro_ArchivosIess] AS [vwro_ArchivosIess]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_ArchivosIess].[IdEmpresa] AS [IdEmpresa],
+              [vwro_ArchivosIess].[IdEmpleado] AS [IdEmpleado],
+              [vwro_ArchivosIess].[IdRubro] AS [IdRubro],
+              [vwro_ArchivosIess].[Orden] AS [Orden],
+              [vwro_ArchivosIess].[Valor] AS [Valor],
+              [vwro_ArchivosIess].[rub_visible_reporte] AS [rub_visible_reporte],
+              [vwro_ArchivosIess].[Observacion] AS [Observacion],
+              [vwro_ArchivosIess].[IdSucursal] AS [IdSucursal],
+              [vwro_ArchivosIess].[em_codigo] AS [em_codigo],
+              [vwro_ArchivosIess].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_ArchivosIess].[pe_apellido] AS [pe_apellido],
+              [vwro_ArchivosIess].[pe_nombre] AS [pe_nombre],
+              [vwro_ArchivosIess].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_ArchivosIess].[ru_descripcion] AS [ru_descripcion],
+              [vwro_ArchivosIess].[IdNominaTipo] AS [IdNominaTipo],
+              [vwro_ArchivosIess].[IdNominaTipoLiqui] AS [IdNominaTipoLiqui],
+              [vwro_ArchivosIess].[IdPeriodo] AS [IdPeriodo],
+              [vwro_ArchivosIess].[Sueldo] AS [Sueldo]
+              FROM [EntidadRegulatoria].[vwro_ArchivosIess] AS [vwro_ArchivosIess]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_rdep" EntityType="Self.vwro_rdep" store:Type="Views" store:Schema="EntidadRegulatoria">
-            <DefiningQuery>SELECT 
-    [vwro_rdep].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_rdep].[Id_Rdep] AS [Id_Rdep], 
-    [vwro_rdep].[IdSucursal] AS [IdSucursal], 
-    [vwro_rdep].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwro_rdep].[pe_anio] AS [pe_anio], 
-    [vwro_rdep].[IdNomina_Tipo] AS [IdNomina_Tipo], 
-    [vwro_rdep].[Descripcion] AS [Descripcion], 
-    [vwro_rdep].[Observacion] AS [Observacion], 
-    [vwro_rdep].[Estado] AS [Estado]
-    FROM [EntidadRegulatoria].[vwro_rdep] AS [vwro_rdep]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_rdep].[IdEmpresa] AS [IdEmpresa],
+              [vwro_rdep].[Id_Rdep] AS [Id_Rdep],
+              [vwro_rdep].[IdSucursal] AS [IdSucursal],
+              [vwro_rdep].[Su_Descripcion] AS [Su_Descripcion],
+              [vwro_rdep].[pe_anio] AS [pe_anio],
+              [vwro_rdep].[IdNomina_Tipo] AS [IdNomina_Tipo],
+              [vwro_rdep].[Descripcion] AS [Descripcion],
+              [vwro_rdep].[Observacion] AS [Observacion],
+              [vwro_rdep].[Estado] AS [Estado]
+              FROM [EntidadRegulatoria].[vwro_rdep] AS [vwro_rdep]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_x_Proyeccion_Gastos_Personales" EntityType="Self.vwro_empleado_x_Proyeccion_Gastos_Personales" store:Type="Views" store:Schema="web">
-            <DefiningQuery>SELECT 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[IdEmpresa] AS [IdEmpresa], 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[IdTransaccion] AS [IdTransaccion], 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[IdEmpleado] AS [IdEmpleado], 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[AnioFiscal] AS [AnioFiscal], 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwro_empleado_x_Proyeccion_Gastos_Personales].[estado] AS [estado]
-    FROM [web].[vwro_empleado_x_Proyeccion_Gastos_Personales] AS [vwro_empleado_x_Proyeccion_Gastos_Personales]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[IdEmpresa] AS [IdEmpresa],
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[IdTransaccion] AS [IdTransaccion],
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[IdEmpleado] AS [IdEmpleado],
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[AnioFiscal] AS [AnioFiscal],
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[pe_cedulaRuc] AS [pe_cedulaRuc],
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[pe_nombreCompleto] AS [pe_nombreCompleto],
+              [vwro_empleado_x_Proyeccion_Gastos_Personales].[estado] AS [estado]
+              FROM [web].[vwro_empleado_x_Proyeccion_Gastos_Personales] AS [vwro_empleado_x_Proyeccion_Gastos_Personales]
+            </DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_ro_Acta_Finiquito_Detalle_ro_Acta_Finiquito" Association="Self.FK_ro_Acta_Finiquito_Detalle_ro_Acta_Finiquito">
             <End Role="ro_Acta_Finiquito" EntitySet="ro_Acta_Finiquito" />
@@ -6779,7 +6836,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_tipo_gastos_personales_tabla_valores_x_anio" EntitySet="ro_tipo_gastos_personales_tabla_valores_x_anio" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model_rrhh" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -6935,7 +6993,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_contrato1" Relationship="Model_rrhh.FK_ro_contrato_ro_catalogo1" FromRole="ro_catalogo" ToRole="ro_contrato" />
           <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_prestamo" />
-          </EntityType>
+        </EntityType>
         <EntityType Name="ro_catalogoTipo">
           <Key>
             <PropertyRef Name="IdTipoCatalogo" />
@@ -7080,8 +7138,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="Fec_Inicio_Acumulacion" Type="DateTime" Precision="3" />
           <Property Name="Fec_Fin_Acumulacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_empleado" />
           <NavigationProperty Name="ro_empleado_x_rubro_acumulado_detalle" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_empleado_x_rubro_acumulado_detalle" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_empleado" />
         </EntityType>
         <EntityType Name="ro_empleado_x_titulos">
           <Key>
@@ -8695,6 +8753,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_prestamo" EntitySet="ro_prestamo" />
           </AssociationSet>
+          <EntitySet Name="ro_empleado_x_rubro_acumulado_detalle" EntityType="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" />
+          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado">
+            <End Role="ro_empleado_x_rubro_acumulado" EntitySet="ro_empleado_x_rubro_acumulado" />
+            <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada">
+            <End Role="ro_jornada" EntitySet="ro_jornada" />
+            <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
+          </AssociationSet>
           <EntitySet Name="ro_empleado" EntityType="Model_rrhh.ro_empleado" />
           <AssociationSet Name="FK_ro_Acta_Finiquito_ro_empleado" Association="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
@@ -8832,22 +8903,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
           </AssociationSet>
-          <EntitySet Name="vwro_empleado_x_rubro_acumulado_detalle" EntityType="Model_rrhh.vwro_empleado_x_rubro_acumulado_detalle" />
-          <EntitySet Name="ro_empleado_x_rubro_acumulado_detalle" EntityType="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" />
-          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado">
-            <End Role="ro_empleado_x_rubro_acumulado" EntitySet="ro_empleado_x_rubro_acumulado" />
-            <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada">
-            <End Role="ro_jornada" EntitySet="ro_jornada" />
-            <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
-          </AssociationSet>
           <EntitySet Name="vwro_empleado_datos_generales" EntityType="Model_rrhh.vwro_empleado_datos_generales" />
-          </EntityContainer>
+        </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
@@ -8929,7 +8986,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="MotiAnula" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado" FromRole="ro_permiso_x_empleado" ToRole="ro_empleado" />
           <NavigationProperty Name="ro_empleado1" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" FromRole="ro_permiso_x_empleado" ToRole="ro_empleado" />
-          </EntityType>
+        </EntityType>
         <EntityType Name="ro_empleado_x_ro_rubro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -10530,7 +10587,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_empleado_novedad_det" Relationship="Model_rrhh.FK_ro_empleado_novedad_det_ro_empleado_Novedad" FromRole="ro_empleado_Novedad" ToRole="ro_empleado_novedad_det" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_empleado_Novedad_ro_empleado" FromRole="ro_empleado_Novedad" ToRole="ro_empleado" />
           <NavigationProperty Name="ro_empleado1" Relationship="Model_rrhh.FK_ro_empleado_Novedad_ro_empleado1" FromRole="ro_empleado_Novedad" ToRole="ro_empleado" />
-          </EntityType>
+        </EntityType>
         <EntityType Name="vwro_empleado_Novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -11406,109 +11463,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwro_empleado_datos_generales">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdTipoEmpleado" />
-            <PropertyRef Name="em_lugarNacimiento" />
-            <PropertyRef Name="em_estado" />
-            <PropertyRef Name="IdDepartamento" />
-            <PropertyRef Name="por_discapacidad" />
-            <PropertyRef Name="es_AcreditaHorasExtras" />
-            <PropertyRef Name="Marca_Biometrico" />
-            <PropertyRef Name="pe_Naturaleza" />
-            <PropertyRef Name="IdTipoDocumento" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="de_descripcion" />
-            <PropertyRef Name="ca_descripcion" />
-            <PropertyRef Name="Descripcion" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="Tiene_ingresos_compartidos" />
-            <PropertyRef Name="Pago_por_horas" />
-            <PropertyRef Name="GozaMasDeQuinceDiasVaciones" />
-            <PropertyRef Name="DiasVacaciones" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado_Supervisor" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoEmpleado" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo_Biometrico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_lugarNacimiento" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="em_CarnetIees" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="em_cedulaMil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
-          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="em_tipoCta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="em_NumCta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="em_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="IdCodSectorial" Type="Int32" />
-          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoSangre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdCargo" Type="Int32" />
-          <Property Name="IdCtaCble_Emplea" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCiudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="em_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoLicencia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdBanco" Type="Int32" />
-          <Property Name="IdArea" Type="Int32" />
-          <Property Name="IdDivision" Type="Int32" />
-          <Property Name="por_discapacidad" Type="Double" Nullable="false" />
-          <Property Name="carnet_conadis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="talla_pant" Type="Double" />
-          <Property Name="talla_camisa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="talla_zapato" Type="Double" />
-          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdCondicionDiscapacidadSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoIdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdAplicaConvenioDobleImposicionSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoResidenciaSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoSistemaSalarioNetoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="es_AcreditaHorasExtras" Type="Boolean" Nullable="false" />
-          <Property Name="IdTipoAnticipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ValorAnticipo" Type="Double" />
-          <Property Name="CodigoSectorial" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="em_AnticipoSueldo" Type="Double" />
-          <Property Name="Marca_Biometrico" Type="Boolean" Nullable="false" />
-          <Property Name="IdHorario" Type="Int32" />
-          <Property Name="pe_Naturaleza" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="pe_telfono_Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_sexo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoCivil" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pe_fechaNacimiento" Type="DateTime" Precision="3" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="de_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Tiene_ingresos_compartidos" Type="Boolean" Nullable="false" />
-          <Property Name="Pago_por_horas" Type="Boolean" Nullable="false" />
-          <Property Name="Valor_horas_vespertina" Type="Double" />
-          <Property Name="Valor_horas_matutino" Type="Double" />
-          <Property Name="Valor_maximo_horas_vesp" Type="Double" />
-          <Property Name="Valor_maximo_horas_mat" Type="Double" />
-          <Property Name="Valor_horas_brigada" Type="Double" />
-          <Property Name="GozaMasDeQuinceDiasVaciones" Type="Boolean" Nullable="false" />
-          <Property Name="DiasVacaciones" Type="Double" Nullable="false" />
-          <Property Name="IdEmpleadoPAdre" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Valor_hora_adicionales" Type="Double" />
-          <Property Name="Valor_hora_control_salida" Type="Double" />
-          <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursalContabilizacion" Type="Int32" />
-        </EntityType>
         <EntityType Name="vwRo_rol_detalle_saldo_por_pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12154,6 +12108,67 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ro_empleado_x_rubro_acumulado_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdRubro" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdRubroContabilizacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdJornada" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado_x_rubro_acumulado_detalle" ToRole="ro_empleado_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_jornada" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada" FromRole="ro_empleado_x_rubro_acumulado_detalle" ToRole="ro_jornada" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo" FromRole="ro_empleado_x_rubro_acumulado_detalle" ToRole="ro_rubro_tipo" />
+        </EntityType>
+        <Association Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado">
+          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado" Role="ro_empleado_x_rubro_acumulado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Role="ro_empleado_x_rubro_acumulado_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado_x_rubro_acumulado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_empleado_x_rubro_acumulado_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada">
+          <End Type="Model_rrhh.ro_jornada" Role="ro_jornada" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Role="ro_empleado_x_rubro_acumulado_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_jornada">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdJornada" />
+            </Principal>
+            <Dependent Role="ro_empleado_x_rubro_acumulado_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdJornada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Role="ro_empleado_x_rubro_acumulado_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_empleado_x_rubro_acumulado_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubroContabilizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="ro_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12740,85 +12755,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwro_empleado_x_rubro_acumulado_detalle">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdRubro" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdRubroContabilizacion" />
-            <PropertyRef Name="IdJornada" />
-            <PropertyRef Name="ru_descripcion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdRubroContabilizacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdJornada" Type="Int32" Nullable="false" />
-          <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ro_empleado_x_rubro_acumulado_detalle">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdRubro" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdRubroContabilizacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdJornada" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado_x_rubro_acumulado_detalle" ToRole="ro_empleado_x_rubro_acumulado" />
-          <NavigationProperty Name="ro_jornada" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada" FromRole="ro_empleado_x_rubro_acumulado_detalle" ToRole="ro_jornada" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo" FromRole="ro_empleado_x_rubro_acumulado_detalle" ToRole="ro_rubro_tipo" />
-        </EntityType>
-        <Association Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado">
-          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado" Role="ro_empleado_x_rubro_acumulado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Role="ro_empleado_x_rubro_acumulado_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado_x_rubro_acumulado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_empleado_x_rubro_acumulado_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada">
-          <End Type="Model_rrhh.ro_jornada" Role="ro_jornada" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Role="ro_empleado_x_rubro_acumulado_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_jornada">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdJornada" />
-            </Principal>
-            <Dependent Role="ro_empleado_x_rubro_acumulado_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdJornada" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Role="ro_empleado_x_rubro_acumulado_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_empleado_x_rubro_acumulado_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubroContabilizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="vwro_empleado_datos_generales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12922,7 +12858,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IdSucursalContabilizacion" Type="Int32" />
         </EntityType>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -15016,89 +14952,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwro_empleado_datos_generales">
-            <EntityTypeMapping TypeName="Model_rrhh.vwro_empleado_datos_generales">
-              <MappingFragment StoreEntitySet="vwro_empleado_datos_generales">
-                <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
-                <ScalarProperty Name="IdCtaCble_x_pagar_empleado" ColumnName="IdCtaCble_x_pagar_empleado" />
-                <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
-                <ScalarProperty Name="Valor_hora_control_salida" ColumnName="Valor_hora_control_salida" />
-                <ScalarProperty Name="Valor_hora_adicionales" ColumnName="Valor_hora_adicionales" />
-                <ScalarProperty Name="IdEmpleadoPAdre" ColumnName="IdEmpleadoPAdre" />
-                <ScalarProperty Name="DiasVacaciones" ColumnName="DiasVacaciones" />
-                <ScalarProperty Name="GozaMasDeQuinceDiasVaciones" ColumnName="GozaMasDeQuinceDiasVaciones" />
-                <ScalarProperty Name="Valor_horas_brigada" ColumnName="Valor_horas_brigada" />
-                <ScalarProperty Name="Valor_maximo_horas_mat" ColumnName="Valor_maximo_horas_mat" />
-                <ScalarProperty Name="Valor_maximo_horas_vesp" ColumnName="Valor_maximo_horas_vesp" />
-                <ScalarProperty Name="Valor_horas_matutino" ColumnName="Valor_horas_matutino" />
-                <ScalarProperty Name="Valor_horas_vespertina" ColumnName="Valor_horas_vespertina" />
-                <ScalarProperty Name="Pago_por_horas" ColumnName="Pago_por_horas" />
-                <ScalarProperty Name="Tiene_ingresos_compartidos" ColumnName="Tiene_ingresos_compartidos" />
-                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
-                <ScalarProperty Name="de_descripcion" ColumnName="de_descripcion" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="pe_fechaNacimiento" ColumnName="pe_fechaNacimiento" />
-                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
-                <ScalarProperty Name="pe_sexo" ColumnName="pe_sexo" />
-                <ScalarProperty Name="pe_correo" ColumnName="pe_correo" />
-                <ScalarProperty Name="pe_celular" ColumnName="pe_celular" />
-                <ScalarProperty Name="pe_telfono_Contacto" ColumnName="pe_telfono_Contacto" />
-                <ScalarProperty Name="pe_direccion" ColumnName="pe_direccion" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
-                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
-                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
-                <ScalarProperty Name="IdHorario" ColumnName="IdHorario" />
-                <ScalarProperty Name="Marca_Biometrico" ColumnName="Marca_Biometrico" />
-                <ScalarProperty Name="em_AnticipoSueldo" ColumnName="em_AnticipoSueldo" />
-                <ScalarProperty Name="CodigoSectorial" ColumnName="CodigoSectorial" />
-                <ScalarProperty Name="ValorAnticipo" ColumnName="ValorAnticipo" />
-                <ScalarProperty Name="IdTipoAnticipo" ColumnName="IdTipoAnticipo" />
-                <ScalarProperty Name="es_AcreditaHorasExtras" ColumnName="es_AcreditaHorasExtras" />
-                <ScalarProperty Name="IdTipoSistemaSalarioNetoSRI" ColumnName="IdTipoSistemaSalarioNetoSRI" />
-                <ScalarProperty Name="IdTipoResidenciaSRI" ColumnName="IdTipoResidenciaSRI" />
-                <ScalarProperty Name="IdAplicaConvenioDobleImposicionSRI" ColumnName="IdAplicaConvenioDobleImposicionSRI" />
-                <ScalarProperty Name="IdentDiscapacitadoSustitutoSRI" ColumnName="IdentDiscapacitadoSustitutoSRI" />
-                <ScalarProperty Name="IdTipoIdentDiscapacitadoSustitutoSRI" ColumnName="IdTipoIdentDiscapacitadoSustitutoSRI" />
-                <ScalarProperty Name="IdCondicionDiscapacidadSRI" ColumnName="IdCondicionDiscapacidadSRI" />
-                <ScalarProperty Name="em_status" ColumnName="em_status" />
-                <ScalarProperty Name="talla_zapato" ColumnName="talla_zapato" />
-                <ScalarProperty Name="talla_camisa" ColumnName="talla_camisa" />
-                <ScalarProperty Name="talla_pant" ColumnName="talla_pant" />
-                <ScalarProperty Name="carnet_conadis" ColumnName="carnet_conadis" />
-                <ScalarProperty Name="por_discapacidad" ColumnName="por_discapacidad" />
-                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
-                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
-                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
-                <ScalarProperty Name="IdTipoLicencia" ColumnName="IdTipoLicencia" />
-                <ScalarProperty Name="em_mail" ColumnName="em_mail" />
-                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
-                <ScalarProperty Name="IdCtaCble_Emplea" ColumnName="IdCtaCble_Emplea" />
-                <ScalarProperty Name="IdCargo" ColumnName="IdCargo" />
-                <ScalarProperty Name="IdTipoSangre" ColumnName="IdTipoSangre" />
-                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
-                <ScalarProperty Name="IdCodSectorial" ColumnName="IdCodSectorial" />
-                <ScalarProperty Name="em_estado" ColumnName="em_estado" />
-                <ScalarProperty Name="em_NumCta" ColumnName="em_NumCta" />
-                <ScalarProperty Name="em_tipoCta" ColumnName="em_tipoCta" />
-                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
-                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
-                <ScalarProperty Name="em_cedulaMil" ColumnName="em_cedulaMil" />
-                <ScalarProperty Name="em_CarnetIees" ColumnName="em_CarnetIees" />
-                <ScalarProperty Name="em_lugarNacimiento" ColumnName="em_lugarNacimiento" />
-                <ScalarProperty Name="Codigo_Biometrico" ColumnName="Codigo_Biometrico" />
-                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
-                <ScalarProperty Name="IdTipoEmpleado" ColumnName="IdTipoEmpleado" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="IdEmpleado_Supervisor" ColumnName="IdEmpleado_Supervisor" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwRo_rol_detalle_saldo_por_pagar">
             <EntityTypeMapping TypeName="Model_rrhh.vwRo_rol_detalle_saldo_por_pagar">
               <MappingFragment StoreEntitySet="vwRo_rol_detalle_saldo_por_pagar">
@@ -15508,6 +15361,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ro_empleado_x_rubro_acumulado_detalle">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle">
+              <MappingFragment StoreEntitySet="ro_empleado_x_rubro_acumulado_detalle">
+                <ScalarProperty Name="IdJornada" ColumnName="IdJornada" />
+                <ScalarProperty Name="IdRubroContabilizacion" ColumnName="IdRubroContabilizacion" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ro_empleado">
             <EntityTypeMapping TypeName="Model_rrhh.ro_empleado">
               <MappingFragment StoreEntitySet="ro_empleado">
@@ -15582,27 +15447,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwro_empleado_x_rubro_acumulado_detalle">
-            <EntityTypeMapping TypeName="Model_rrhh.vwro_empleado_x_rubro_acumulado_detalle">
-              <MappingFragment StoreEntitySet="vwro_empleado_x_rubro_acumulado_detalle">
-                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
-                <ScalarProperty Name="IdJornada" ColumnName="IdJornada" />
-                <ScalarProperty Name="IdRubroContabilizacion" ColumnName="IdRubroContabilizacion" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ro_empleado_x_rubro_acumulado_detalle">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle">
-              <MappingFragment StoreEntitySet="ro_empleado_x_rubro_acumulado_detalle">
-                <ScalarProperty Name="IdJornada" ColumnName="IdJornada" />
-                <ScalarProperty Name="IdRubroContabilizacion" ColumnName="IdRubroContabilizacion" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
           <EntitySetMapping Name="vwro_empleado_datos_generales">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_empleado_datos_generales">
               <MappingFragment StoreEntitySet="vwro_empleado_datos_generales">
