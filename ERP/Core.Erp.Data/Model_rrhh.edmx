@@ -8586,7 +8586,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_empleado_novedad_det" EntitySet="ro_empleado_novedad_det" />
           </AssociationSet>
-          <EntitySet Name="vwro_empleado_datos_generales" EntityType="Model_rrhh.vwro_empleado_datos_generales" />
           <EntitySet Name="vwRo_rol_detalle_saldo_por_pagar" EntityType="Model_rrhh.vwRo_rol_detalle_saldo_por_pagar" />
           <FunctionImport Name="spROL_DecimosCSV" ReturnType="Collection(Model_rrhh.spROL_DecimosCSV_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
@@ -8847,6 +8846,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_empleado_x_rubro_acumulado_detalle" EntitySet="ro_empleado_x_rubro_acumulado_detalle" />
           </AssociationSet>
+          <EntitySet Name="vwro_empleado_datos_generales" EntityType="Model_rrhh.vwro_empleado_datos_generales" />
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12819,6 +12819,109 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwro_empleado_datos_generales">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdTipoEmpleado" />
+            <PropertyRef Name="em_lugarNacimiento" />
+            <PropertyRef Name="em_estado" />
+            <PropertyRef Name="IdDepartamento" />
+            <PropertyRef Name="por_discapacidad" />
+            <PropertyRef Name="es_AcreditaHorasExtras" />
+            <PropertyRef Name="Marca_Biometrico" />
+            <PropertyRef Name="pe_Naturaleza" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="de_descripcion" />
+            <PropertyRef Name="ca_descripcion" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="Tiene_ingresos_compartidos" />
+            <PropertyRef Name="Pago_por_horas" />
+            <PropertyRef Name="GozaMasDeQuinceDiasVaciones" />
+            <PropertyRef Name="DiasVacaciones" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado_Supervisor" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoEmpleado" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Biometrico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_lugarNacimiento" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="em_CarnetIees" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="em_cedulaMil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
+          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
+          <Property Name="em_tipoCta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="em_NumCta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="em_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdCodSectorial" Type="Int32" />
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoSangre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCargo" Type="Int32" />
+          <Property Name="IdCtaCble_Emplea" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCiudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="em_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoLicencia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdBanco" Type="Int32" />
+          <Property Name="IdArea" Type="Int32" />
+          <Property Name="IdDivision" Type="Int32" />
+          <Property Name="por_discapacidad" Type="Double" Nullable="false" />
+          <Property Name="carnet_conadis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="talla_pant" Type="Double" />
+          <Property Name="talla_camisa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="talla_zapato" Type="Double" />
+          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCondicionDiscapacidadSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoIdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdAplicaConvenioDobleImposicionSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoResidenciaSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoSistemaSalarioNetoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="es_AcreditaHorasExtras" Type="Boolean" Nullable="false" />
+          <Property Name="IdTipoAnticipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ValorAnticipo" Type="Double" />
+          <Property Name="CodigoSectorial" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="em_AnticipoSueldo" Type="Double" />
+          <Property Name="Marca_Biometrico" Type="Boolean" Nullable="false" />
+          <Property Name="IdHorario" Type="Int32" />
+          <Property Name="pe_Naturaleza" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="pe_telfono_Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_sexo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoCivil" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pe_fechaNacimiento" Type="DateTime" Precision="3" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="de_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tiene_ingresos_compartidos" Type="Boolean" Nullable="false" />
+          <Property Name="Pago_por_horas" Type="Boolean" Nullable="false" />
+          <Property Name="Valor_horas_vespertina" Type="Double" />
+          <Property Name="Valor_horas_matutino" Type="Double" />
+          <Property Name="Valor_maximo_horas_vesp" Type="Double" />
+          <Property Name="Valor_maximo_horas_mat" Type="Double" />
+          <Property Name="Valor_horas_brigada" Type="Double" />
+          <Property Name="GozaMasDeQuinceDiasVaciones" Type="Boolean" Nullable="false" />
+          <Property Name="DiasVacaciones" Type="Double" Nullable="false" />
+          <Property Name="IdEmpleadoPAdre" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Valor_hora_adicionales" Type="Double" />
+          <Property Name="Valor_hora_control_salida" Type="Double" />
+          <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursalContabilizacion" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15500,6 +15603,85 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
                 <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+          <EntitySetMapping Name="vwro_empleado_datos_generales">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_empleado_datos_generales">
+              <MappingFragment StoreEntitySet="vwro_empleado_datos_generales">
+                <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
+                <ScalarProperty Name="IdCtaCble_x_pagar_empleado" ColumnName="IdCtaCble_x_pagar_empleado" />
+                <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
+                <ScalarProperty Name="Valor_hora_control_salida" ColumnName="Valor_hora_control_salida" />
+                <ScalarProperty Name="Valor_hora_adicionales" ColumnName="Valor_hora_adicionales" />
+                <ScalarProperty Name="IdEmpleadoPAdre" ColumnName="IdEmpleadoPAdre" />
+                <ScalarProperty Name="DiasVacaciones" ColumnName="DiasVacaciones" />
+                <ScalarProperty Name="GozaMasDeQuinceDiasVaciones" ColumnName="GozaMasDeQuinceDiasVaciones" />
+                <ScalarProperty Name="Valor_horas_brigada" ColumnName="Valor_horas_brigada" />
+                <ScalarProperty Name="Valor_maximo_horas_mat" ColumnName="Valor_maximo_horas_mat" />
+                <ScalarProperty Name="Valor_maximo_horas_vesp" ColumnName="Valor_maximo_horas_vesp" />
+                <ScalarProperty Name="Valor_horas_matutino" ColumnName="Valor_horas_matutino" />
+                <ScalarProperty Name="Valor_horas_vespertina" ColumnName="Valor_horas_vespertina" />
+                <ScalarProperty Name="Pago_por_horas" ColumnName="Pago_por_horas" />
+                <ScalarProperty Name="Tiene_ingresos_compartidos" ColumnName="Tiene_ingresos_compartidos" />
+                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
+                <ScalarProperty Name="de_descripcion" ColumnName="de_descripcion" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="pe_fechaNacimiento" ColumnName="pe_fechaNacimiento" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="pe_sexo" ColumnName="pe_sexo" />
+                <ScalarProperty Name="pe_correo" ColumnName="pe_correo" />
+                <ScalarProperty Name="pe_celular" ColumnName="pe_celular" />
+                <ScalarProperty Name="pe_telfono_Contacto" ColumnName="pe_telfono_Contacto" />
+                <ScalarProperty Name="pe_direccion" ColumnName="pe_direccion" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="IdHorario" ColumnName="IdHorario" />
+                <ScalarProperty Name="Marca_Biometrico" ColumnName="Marca_Biometrico" />
+                <ScalarProperty Name="em_AnticipoSueldo" ColumnName="em_AnticipoSueldo" />
+                <ScalarProperty Name="CodigoSectorial" ColumnName="CodigoSectorial" />
+                <ScalarProperty Name="ValorAnticipo" ColumnName="ValorAnticipo" />
+                <ScalarProperty Name="IdTipoAnticipo" ColumnName="IdTipoAnticipo" />
+                <ScalarProperty Name="es_AcreditaHorasExtras" ColumnName="es_AcreditaHorasExtras" />
+                <ScalarProperty Name="IdTipoSistemaSalarioNetoSRI" ColumnName="IdTipoSistemaSalarioNetoSRI" />
+                <ScalarProperty Name="IdTipoResidenciaSRI" ColumnName="IdTipoResidenciaSRI" />
+                <ScalarProperty Name="IdAplicaConvenioDobleImposicionSRI" ColumnName="IdAplicaConvenioDobleImposicionSRI" />
+                <ScalarProperty Name="IdentDiscapacitadoSustitutoSRI" ColumnName="IdentDiscapacitadoSustitutoSRI" />
+                <ScalarProperty Name="IdTipoIdentDiscapacitadoSustitutoSRI" ColumnName="IdTipoIdentDiscapacitadoSustitutoSRI" />
+                <ScalarProperty Name="IdCondicionDiscapacidadSRI" ColumnName="IdCondicionDiscapacidadSRI" />
+                <ScalarProperty Name="em_status" ColumnName="em_status" />
+                <ScalarProperty Name="talla_zapato" ColumnName="talla_zapato" />
+                <ScalarProperty Name="talla_camisa" ColumnName="talla_camisa" />
+                <ScalarProperty Name="talla_pant" ColumnName="talla_pant" />
+                <ScalarProperty Name="carnet_conadis" ColumnName="carnet_conadis" />
+                <ScalarProperty Name="por_discapacidad" ColumnName="por_discapacidad" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdTipoLicencia" ColumnName="IdTipoLicencia" />
+                <ScalarProperty Name="em_mail" ColumnName="em_mail" />
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="IdCtaCble_Emplea" ColumnName="IdCtaCble_Emplea" />
+                <ScalarProperty Name="IdCargo" ColumnName="IdCargo" />
+                <ScalarProperty Name="IdTipoSangre" ColumnName="IdTipoSangre" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="IdCodSectorial" ColumnName="IdCodSectorial" />
+                <ScalarProperty Name="em_estado" ColumnName="em_estado" />
+                <ScalarProperty Name="em_NumCta" ColumnName="em_NumCta" />
+                <ScalarProperty Name="em_tipoCta" ColumnName="em_tipoCta" />
+                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
+                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
+                <ScalarProperty Name="em_cedulaMil" ColumnName="em_cedulaMil" />
+                <ScalarProperty Name="em_CarnetIees" ColumnName="em_CarnetIees" />
+                <ScalarProperty Name="em_lugarNacimiento" ColumnName="em_lugarNacimiento" />
+                <ScalarProperty Name="Codigo_Biometrico" ColumnName="Codigo_Biometrico" />
+                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
+                <ScalarProperty Name="IdTipoEmpleado" ColumnName="IdTipoEmpleado" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdEmpleado_Supervisor" ColumnName="IdEmpleado_Supervisor" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

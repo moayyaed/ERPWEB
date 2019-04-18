@@ -123,14 +123,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
-
-            tb_sucursal_Info info_suc = new tb_sucursal_Info()
-            {
-                IdSucursal = 0,
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                Su_Descripcion = "TODAS"
-           };
-            lst_sucursal.Add(info_suc);
+            lst_sucursal.Where(q => q.IdSucursal == Convert.ToInt32(SessionFixed.IdSucursal)).FirstOrDefault().Seleccionado = true;
             ViewBag.lst_sucursal = lst_sucursal;
 
         }

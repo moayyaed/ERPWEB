@@ -164,6 +164,9 @@
             <li>
                 <a href="#tb_info_jornada" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Jornada por empleado</a>
             </li>
+            <li>
+                <a href="#tb_info_contable" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Contabilidad</a>
+            </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content" style="padding-top: 20px">
@@ -435,26 +438,9 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IdCtaCble_Emplea">Cuenta contable por cobrar*</label>
-                                @Html.Partial("_CmbEmpleado_CtaCon", Model.IdCtaCble_Emplea)
-                                @Html.ValidationMessageFor(q => q.IdCtaCble_Emplea, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IdCtaCble_x_pagar_empleado">Cuenta contable por pagar*</label>
-                                @Html.Partial("_CmbEmpleado_CtaCon_x_pagar", Model.IdCtaCble_x_pagar_empleado)
-                                @Html.ValidationMessageFor(q => q.IdCtaCble_x_pagar_empleado, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
-            
+
             <div role="tabpanel" class="tab-pane" id="tb_info_nomina">
 
 
@@ -553,7 +539,7 @@
                             }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
                             </div>
-                        </div>                     
+                        </div>
 
                         <div class="col-md-2">
                             <div class="form-group">
@@ -818,7 +804,6 @@
             </div>
 
 
-
             <div role="tabpanel" class="tab-pane" id="tb_info_jornada">
                 <div class="row">
                     <div class="col-md-12">
@@ -833,175 +818,217 @@
             </div>
 
 
+            <div role="tabpanel" class="tab-pane" id="tb_info_contable">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdSucursal">Sucursal*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdSucursalContabilizacion, settings =>
+                               {
+                                   settings.Name = "IdSucursalContabilizacion";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                   settings.Properties.Columns.Add("IdSucursal", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("Su_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                                   //Campo ID
+                                   settings.Properties.ValueField = "IdSucursal";
+                                   settings.Properties.ValueType = typeof(int);
+                                   settings.Properties.TextField = "Su_Descripcion";
+                                   //Boton para seleccionar ningun registro
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               }).BindList(ViewBag.lst_sucursal).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdSucursalContabilizacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
 
-        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Emplea">Cuenta contable por cobrar*</label>
+                                @Html.Partial("_CmbEmpleado_CtaCon", Model.IdCtaCble_Emplea)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Emplea, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdCtaCble_x_pagar_empleado">Cuenta contable por pagar*</label>
+                                @Html.Partial("_CmbEmpleado_CtaCon_x_pagar", Model.IdCtaCble_x_pagar_empleado)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_x_pagar_empleado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                </div>
+
         </div>
-    </div>
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index", "Empleado", new { Area ="RRHH" }, null)">Cancelar</a>
-    </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a class="btn btn-default" href="@Url.Action("Index", "Empleado", new { Area ="RRHH" }, null)">Cancelar</a>
+                </div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap_imagenes.css")" />
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap_imagenes.css")" />
 
-    }
-
-}
-
-
-<script>
-    $(function () {
-        $("#error_documento").hide();
-        mostrar_horas();
-        mostrar_ingreso_compartido();
-        dias_vacaciones();
-    })
-
-    $("#pe_cedulaRuc").blur(function () {
-        Validar_cedula_ruc();
-    });
-
-    $("#pe_cedulaRuc").keyup(function () {
-        validar();
-    });
-
-    function OnBeginCallback(s, e) {
-        e.customArgs["IdDivision"] = IdDivision.GetValue();
-    }
-
-    function OnSelectedDivisionChanged() {
-        GridViewPartial_IngresoCompartido.GetEditor("IdArea_det").PerformCallback();
-    }
-    function AreaComboBox_BeginCallback(s, e) {
-        e.customArgs["IdDivision_det"] = IDividion_det.GetValue();
-    }
-
-    function mostrar_ingreso_compartido() {
-        var IngresoCompartido = Tiene_ingresos_compartidos.GetValue();
-        if (IngresoCompartido == true) {
-            $("#ingreso_compartido").show();
-        }
-        else {
-            $("#ingreso_compartido").hide();
-        }
-    }
-
-    function validar() {
-        var tipo_doc = $("#IdTipoDocumento").val();
-        var cedula = $("#pe_cedulaRuc").val();
-
-        if (tipo_doc == "RUC") {
-            if (cedula.length > 13) {
-                var len = $("#pe_cedulaRuc").val();
-                len = len.substring(0, 13);
-                $("#pe_cedulaRuc").val(len);
-            }
-
-        }
-        else
-            if (tipo_doc == "CED") {
-                if (cedula.length > 10) {
-                    var len = $("#pe_cedulaRuc").val();
-                    len = len.substring(0, 10);
-                    $("#pe_cedulaRuc").val(len);
                 }
-            }
-    }
 
-    function mostrar_horas() {
-        var Pago = Pago_por_horas.GetValue();
-
-        if (Pago == true) {
-            $("#DivPagoHoras").show();
-        }
-        else {
-            $("#DivPagoHoras").hide();
-        }
-    };
+                }
 
 
-    function dias_vacaciones() {
-        var dias = GozaMasDeQuinceDiasVaciones.GetValue();
-        if (dias == true) {
-            $("#Divdias").show();
-        }
-        else {
-            $("#Divdias").hide();
-        }
-    };
+                <script>
+                    $(function () {
+                        $("#error_documento").hide();
+                        mostrar_horas();
+                        mostrar_ingreso_compartido();
+                        dias_vacaciones();
+                    })
 
-    function nombre_imagen() {
-        var datos = {
-            IdEmpresa: $("#IdActivoFijo").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("nombre_imagen", "Empleado", new { Area = "RRHH" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-            },
-            error: function (error) {
-            }
-        });
-    }
-    function actualizar_div() {
-        var datos = {
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("nombre_imagen", "Empleado", new { Area = "RRHH" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
+                    $("#pe_cedulaRuc").blur(function () {
+                        Validar_cedula_ruc();
+                    });
 
+                    $("#pe_cedulaRuc").keyup(function () {
+                        validar();
+                    });
 
-                //$("#uploadedImage").load();
-              //  $("#uploadedImage").attr("src",//Url.Content(Core.Erp.Web.Helps.SessionFixed.NombreImagen));
-
-            },
-            error: function (error) {
+                    function OnBeginCallback(s, e) {
+                        e.customArgs["IdDivision"] = IdDivision.GetValue();
                     }
-                });
-    }
 
-    function Validar_cedula_ruc() {
-        var datos = {
-            tipo_documento: $("#IdTipoDocumento").val(),
-            cedula_ruc: $("#pe_cedulaRuc").val(),
-        }
+                    function OnSelectedDivisionChanged() {
+                        GridViewPartial_IngresoCompartido.GetEditor("IdArea_det").PerformCallback();
+                    }
+                    function AreaComboBox_BeginCallback(s, e) {
+                        e.customArgs["IdDivision_det"] = IDividion_det.GetValue();
+                    }
 
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Validar_cedula_ruc", "Persona", new { Area = "General" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                console.log(data);
-                if (data.isValid == true) {
-                    $("#error_documento").hide();
-                }
-                else {
-                    $("#error_documento").show();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    };
-</script>
+                    function mostrar_ingreso_compartido() {
+                        var IngresoCompartido = Tiene_ingresos_compartidos.GetValue();
+                        if (IngresoCompartido == true) {
+                            $("#ingreso_compartido").show();
+                        }
+                        else {
+                            $("#ingreso_compartido").hide();
+                        }
+                    }
+
+                    function validar() {
+                        var tipo_doc = $("#IdTipoDocumento").val();
+                        var cedula = $("#pe_cedulaRuc").val();
+
+                        if (tipo_doc == "RUC") {
+                            if (cedula.length > 13) {
+                                var len = $("#pe_cedulaRuc").val();
+                                len = len.substring(0, 13);
+                                $("#pe_cedulaRuc").val(len);
+                            }
+
+                        }
+                        else
+                            if (tipo_doc == "CED") {
+                                if (cedula.length > 10) {
+                                    var len = $("#pe_cedulaRuc").val();
+                                    len = len.substring(0, 10);
+                                    $("#pe_cedulaRuc").val(len);
+                                }
+                            }
+                    }
+
+                    function mostrar_horas() {
+                        var Pago = Pago_por_horas.GetValue();
+
+                        if (Pago == true) {
+                            $("#DivPagoHoras").show();
+                        }
+                        else {
+                            $("#DivPagoHoras").hide();
+                        }
+                    };
+
+
+                    function dias_vacaciones() {
+                        var dias = GozaMasDeQuinceDiasVaciones.GetValue();
+                        if (dias == true) {
+                            $("#Divdias").show();
+                        }
+                        else {
+                            $("#Divdias").hide();
+                        }
+                    };
+
+                    function nombre_imagen() {
+                        var datos = {
+                            IdEmpresa: $("#IdActivoFijo").val()
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            data: JSON.stringify(datos),
+                            url: '@Url.Action("nombre_imagen", "Empleado", new { Area = "RRHH" })',
+                            async: false,
+                            bDeferRender: true,
+                            bProcessing: true,
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                            },
+                            error: function (error) {
+                            }
+                        });
+                    }
+                    function actualizar_div() {
+                        var datos = {
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            data: JSON.stringify(datos),
+                            url: '@Url.Action("nombre_imagen", "Empleado", new { Area = "RRHH" })',
+                            async: false,
+                            bDeferRender: true,
+                            bProcessing: true,
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+
+
+                                //$("#uploadedImage").load();
+                                //  $("#uploadedImage").attr("src",//Url.Content(Core.Erp.Web.Helps.SessionFixed.NombreImagen));
+
+                            },
+                            error: function (error) {
+                            }
+                        });
+                    }
+
+                    function Validar_cedula_ruc() {
+                        var datos = {
+                            tipo_documento: $("#IdTipoDocumento").val(),
+                            cedula_ruc: $("#pe_cedulaRuc").val(),
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            data: JSON.stringify(datos),
+                            url: '@Url.Action("Validar_cedula_ruc", "Persona", new { Area = "General" })',
+                            async: false,
+                            bDeferRender: true,
+                            bProcessing: true,
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                console.log(data);
+                                if (data.isValid == true) {
+                                    $("#error_documento").hide();
+                                }
+                                else {
+                                    $("#error_documento").show();
+                                }
+                            },
+                            error: function (error) {
+                            }
+                        });
+                    };
+                </script>
