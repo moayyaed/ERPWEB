@@ -18,8 +18,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     {
         #region variables
         ro_empleado_x_rubro_acumulado_Bus bus_rubro_acumulados = new ro_empleado_x_rubro_acumulado_Bus();
+        ro_empleado_x_rubro_acumulado_detalle_Bus bus_rubro_acumulados_detalle = new ro_empleado_x_rubro_acumulado_detalle_Bus();
         ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
+        ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
+        ro_empleado_x_rubro_acumulado_detalle_List ListaDetalle = new ro_empleado_x_rubro_acumulado_detalle_List();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -36,6 +39,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public tb_persona_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+
+
+        public ActionResult CmbRubro()
+        {
+            ro_empleado_x_rubro_acumulado_detalle_Info model = new ro_empleado_x_rubro_acumulado_detalle_Info();
+            return PartialView("_CmbRubro", model);
+        }
+        public List<ro_rubro_tipo_Info> get_list_bajo_demanda_rubro(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_rubro.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        public ro_rubro_tipo_Info get_info_bajo_demanda_rubro(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_rubro.get_info_bajo_demanda(Convert.ToInt32(SessionFixed.IdEmpresa), args);
         }
         #endregion
 
@@ -62,6 +80,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
+
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_rubros_acumulados_detalle(int IdEmpleado=0, string IdRubro="")
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.IdEmpresa = IdEmpresa;
+            ViewBag.IdEmpleado = IdEmpleado;
+            ViewBag.IdRubro = IdRubro;
+            carga_combo_detalle();
+            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
+            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(model.IdTransaccionSession);
+            return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
+        }
+
+        private void carga_combo_detalle()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_jornada = bus_jornada.get_list(IdEmpresa, false);
+            ViewBag.lst_jornada = lst_jornada;
+        }
         #endregion
 
         #region acciones
@@ -74,7 +112,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.IdEmpleado = info.IdEmpleado;
                 info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 info.UsuarioIngresa = SessionFixed.IdUsuario;
-               if( bus_rubro_acumulados.si_existe(info))
+
+                info.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(info.IdTransaccionSession);
+
+                if ( bus_rubro_acumulados.si_existe(info))
                 {
                     ViewBag.mensaje = "El empleado tiene una solicitud vigente para el rubro seleccionado";
                     cargar_combos();
@@ -109,9 +150,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     IdEmpleado = IdEmpleado,
                     Fec_Inicio_Acumulacion = new DateTime(DateTime.Now.Year, 1, 1),
-                    Fec_Fin_Acumulacion = new DateTime(DateTime.Now.Year, 12, 1)
+                    Fec_Fin_Acumulacion = new DateTime(DateTime.Now.Year, 12, 1),
+                    IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                    lst_empleado_x_rubro_acumulado_detalle = new List<ro_empleado_x_rubro_acumulado_detalle_Info>()
+                };
 
-            };
+                var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                //model.lst_empleado_x_rubro_acumulado_detalle = bus_rubro_acumulados_detalle.get_list(IdEmpresa, model.IdEmpleado, model.IdRubro);
+                ListaDetalle.set_list(model.lst_empleado_x_rubro_acumulado_detalle, model.IdTransaccionSession);
+
                 ViewBag.IdEmpleado = IdEmpleado;
                 cargar_combos();
                 return View(model);
@@ -152,7 +199,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 cargar_combos();
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                return View(bus_rubro_acumulados.get_info(IdEmpresa, Idempleado, IdRubro));
+
+                ro_empleado_x_rubro_acumulado_Info model = bus_rubro_acumulados.get_info(IdEmpresa, Idempleado, IdRubro);
+
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+                model.lst_empleado_x_rubro_acumulado_detalle = bus_rubro_acumulados_detalle.get_list(IdEmpresa, Idempleado, IdRubro);
+                ListaDetalle.set_list(model.lst_empleado_x_rubro_acumulado_detalle, model.IdTransaccionSession);
+
+                return View(model);
 
             }
             catch (Exception)
@@ -162,6 +216,42 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
+        #endregion
+
+        #region Detalle
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ro_empleado_x_rubro_acumulado_detalle_Info info_det)
+        {
+            if (ModelState.IsValid)
+                ListaDetalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
+            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            carga_combo_detalle();
+            return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_empleado_x_rubro_acumulado_detalle_Info info_det)
+        {
+
+            if (ModelState.IsValid)
+                ListaDetalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
+            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            carga_combo_detalle();
+            return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
+        }
+
+        public ActionResult EditingDelete(int secuencia)
+        {
+            ListaDetalle.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
+            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            carga_combo_detalle();
+            return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
+        }
         #endregion
         private void cargar_combos()
         {
@@ -196,6 +286,84 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public void set_list(List<ro_empleado_x_rubro_acumulado_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
+    public class ro_empleado_x_rubro_acumulado_detalle_List
+    {
+        ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
+        ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
+
+        string variable = "ro_empleado_x_rubro_acumulado_detalle_Info";
+        public List<ro_empleado_x_rubro_acumulado_detalle_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_empleado_x_rubro_acumulado_detalle_Info> list = new List<ro_empleado_x_rubro_acumulado_detalle_Info>();
+
+                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_empleado_x_rubro_acumulado_detalle_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_empleado_x_rubro_acumulado_detalle_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(ro_empleado_x_rubro_acumulado_detalle_Info info_det, decimal IdTransaccionSession)
+        {
+            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            List<ro_empleado_x_rubro_acumulado_detalle_Info> list = get_list(IdTransaccionSession);
+            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            if (info_det.IdRubroContabilizacion != null)
+            {
+                var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
+                if (!string.IsNullOrEmpty(info_rubro.ToString()))
+                    info_det.ru_descripcion = info_rubro.ru_descripcion;
+            }
+
+            if (info_det.IdJornada != 0)
+            {
+                var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
+                if (!string.IsNullOrEmpty(info_jornada.ToString()))
+                    info_det.Descripcion = info_jornada.Descripcion;
+            }
+
+            list.Add(info_det);
+        }
+
+        public void UpdateRow(ro_empleado_x_rubro_acumulado_detalle_Info info_det, decimal IdTransaccionSession)
+        {
+            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            ro_empleado_x_rubro_acumulado_detalle_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            edited_info.IdJornada = info_det.IdJornada;
+            edited_info.IdRubroContabilizacion = info_det.IdRubroContabilizacion;
+            
+            if (info_det.IdRubroContabilizacion != null)
+            {
+                var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
+                if (!string.IsNullOrEmpty(info_rubro.ToString()))
+                    info_det.ru_descripcion = info_rubro.ru_descripcion;
+            }
+
+            if (info_det.IdJornada != 0)
+            {
+                var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
+                if (!string.IsNullOrEmpty(info_jornada.ToString()))
+                    info_det.Descripcion = info_jornada.Descripcion;
+            }
+
+            edited_info.ru_descripcion = info_det.ru_descripcion;
+            edited_info.Descripcion = info_det.Descripcion;
+        }
+
+        public void DeleteRow(int secuencia, decimal IdTransaccionSession)
+        {
+            List<ro_empleado_x_rubro_acumulado_detalle_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.Secuencia == secuencia).First());
         }
     }
 }

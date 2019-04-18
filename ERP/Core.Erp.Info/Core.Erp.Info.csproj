@@ -478,6 +478,7 @@
     <Compile Include="RRHH\ro_empleado_x_jornada_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_tipoNomina_Info.cs" />
+    <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_titulos_Info.cs" />
     <Compile Include="RRHH\ro_FormulaHorasRecargo_Info.cs" />
