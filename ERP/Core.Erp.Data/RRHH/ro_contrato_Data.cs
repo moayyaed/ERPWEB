@@ -241,6 +241,14 @@ namespace Core.Erp.Data.RRHH
                         EstadoContrato=info.EstadoContrato,
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now
                     };
+                    if (info.EstadoContrato == cl_enumeradores.eEstadoContratoRRHH.ECT_ACT.ToString())
+                    {
+                        Entity_Empleado.em_fechaSalida = null;
+                    }
+                    else
+                    {
+                        Entity_Empleado.em_fechaSalida = info.FechaFin.Date;
+                    }
                     Context.ro_contrato.Add(Entity);
 
                     Context.SaveChanges();
@@ -277,10 +285,15 @@ namespace Core.Erp.Data.RRHH
                     ro_empleado Entity_Empleado = Context.ro_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdEmpleado == info.IdEmpleado);
                     if (Entity_Empleado == null)
                         return false;
-
+                    if(info.EstadoContrato == cl_enumeradores.eEstadoContratoRRHH.ECT_ACT.ToString())
+                    {
+                        Entity_Empleado.em_fechaSalida = null;
+                    }
+                    else
+                    {
+                        Entity_Empleado.em_fechaSalida = info.FechaFin.Date;
+                    }
                     Entity_Empleado.em_fechaIngaRol = info.FechaInicio.Date;
-                    Entity_Empleado.em_fechaSalida = info.FechaFin.Date;
-
                     Context.SaveChanges();
                 }
 
