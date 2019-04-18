@@ -356,7 +356,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                                 };
 
-                                if(info.IdRubro=="68")
+                                if(info.IdRubro=="63")
                                 {
 
                                 }
