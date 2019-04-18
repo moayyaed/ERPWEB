@@ -19,8 +19,9 @@ namespace Core.Erp.Info.RRHH
         public string UsuarioIngresa { get; set; }
         public Nullable<System.DateTime> FechaModifica { get; set; }
         public string UsuarioModifica { get; set; }
-        [Required(ErrorMessage = "El campo fecha solicitud es obligatorio")]
+        [Required(ErrorMessage = "El campo fecha inicio acumulacion es obligatorio")]
         public Nullable<System.DateTime> Fec_Inicio_Acumulacion { get; set; }
+        [Required(ErrorMessage = "El campo fecha fin acumulacion es obligatorio")]
         public Nullable<System.DateTime> Fec_Fin_Acumulacion { get; set; }
 
 

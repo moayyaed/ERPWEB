@@ -44,7 +44,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult CmbRubro()
         {
-            ro_empleado_x_rubro_acumulado_detalle_Info model = new ro_empleado_x_rubro_acumulado_detalle_Info();
+            decimal model = new decimal();
             return PartialView("_CmbRubro", model);
         }
         public List<ro_rubro_tipo_Info> get_list_bajo_demanda_rubro(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -82,16 +82,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_rubros_acumulados_detalle(int IdEmpleado=0, string IdRubro="")
+        public ActionResult GridViewPartial_rubros_acumulados_detalle()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdEmpleado = IdEmpleado;
-            ViewBag.IdRubro = IdRubro;
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             carga_combo_detalle();
-            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
-            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(model.IdTransaccionSession);
-            return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
+            List<ro_empleado_x_rubro_acumulado_detalle_Info> lista = new List<ro_empleado_x_rubro_acumulado_detalle_Info>();
+            lista = ListaDetalle.get_list(IdTransaccionSession);
+            return PartialView("_GridViewPartial_rubros_acumulados_detalle", lista);
         }
 
         private void carga_combo_detalle()
@@ -156,7 +154,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 };
 
                 var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                //model.lst_empleado_x_rubro_acumulado_detalle = bus_rubro_acumulados_detalle.get_list(IdEmpresa, model.IdEmpleado, model.IdRubro);
                 ListaDetalle.set_list(model.lst_empleado_x_rubro_acumulado_detalle, model.IdTransaccionSession);
 
                 ViewBag.IdEmpleado = IdEmpleado;
@@ -225,8 +222,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (ModelState.IsValid)
                 ListaDetalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
-            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
-            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<ro_empleado_x_rubro_acumulado_detalle_Info> model = new List<ro_empleado_x_rubro_acumulado_detalle_Info>();
+            model = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             carga_combo_detalle();
             return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
         }
@@ -238,8 +235,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (ModelState.IsValid)
                 ListaDetalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
-            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
-            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<ro_empleado_x_rubro_acumulado_detalle_Info> model = new List<ro_empleado_x_rubro_acumulado_detalle_Info>();
+            model = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             carga_combo_detalle();
             return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
         }
@@ -247,8 +244,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingDelete(int secuencia)
         {
             ListaDetalle.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            ro_empleado_x_rubro_acumulado_Info model = new ro_empleado_x_rubro_acumulado_Info();
-            model.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<ro_empleado_x_rubro_acumulado_detalle_Info> model = new List<ro_empleado_x_rubro_acumulado_detalle_Info>();
+            model = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             carga_combo_detalle();
             return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
         }

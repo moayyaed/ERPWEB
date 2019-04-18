@@ -1,9 +1,8 @@
 @using System.Web.UI.WebControls;
-@model Core.Erp.Info.RRHH.ro_empleado_x_rubro_acumulado_Info
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_rubros_acumulados_detalle";
-        settings.CallbackRouteValues = new { Controller = "EmpleadoRubroAcumulado", Action = "GridViewPartial_rubros_acumulados_detalle", Area = "RRHH", IdEmpleado = Model == null ? 0 : Model.IdEmpleado, IdRubro = Model == null ? "" : Model.IdRubro };
+        settings.CallbackRouteValues = new { Controller = "EmpleadoRubroAcumulado", Action = "GridViewPartial_rubros_acumulados_detalle" };
         settings.KeyFieldName = "Secuencia";
         settings.Width = Unit.Percentage(100);
         settings.CommandColumn.ShowNewButtonInHeader = true;
@@ -82,4 +81,4 @@
     });
 
 }
-@grid.Bind(Model.lst_empleado_x_rubro_acumulado_detalle).GetHtml()
+@grid.Bind(Model).GetHtml()
