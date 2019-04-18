@@ -1618,6 +1618,7 @@
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_tipoNomina_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_titulos_Data.cs" />
     <Compile Include="RRHH\ro_FormulaHorasRecargo_Data.cs" />
     <Compile Include="RRHH\ro_Historico_Liquidacion_Vacaciones_Data.cs" />
@@ -2620,6 +2621,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_empleado_x_rubro_acumulado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_rubro_acumulado_detalle.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_empleado_x_titulos.cs">

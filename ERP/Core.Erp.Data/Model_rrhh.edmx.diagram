@@ -219,10 +219,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_catalogo" />
         <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_detalle_ro_prestamo" />
         <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Width="1.5" PointX="23.625" PointY="56.25" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo" />
         <EntityTypeShape EntityType="Model_rrhh.ro_empleado" Width="1.5" PointX="0.75" PointY="46.375" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_archivos_bancos_generacion_x_empleado_ro_empleado" />
@@ -258,6 +254,11 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_x_rubro_acumulado_detalle" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_empleado_x_rubro_acumulado_detalle" Width="1.5" PointX="23.625" PointY="56.25" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_empleado_x_rubro_acumulado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_jornada" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_detalle_ro_rubro_tipo" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_datos_generales" Width="1.5" PointX="0.75" PointY="27.75" />
         </Diagram>
     </edmx:Diagrams>

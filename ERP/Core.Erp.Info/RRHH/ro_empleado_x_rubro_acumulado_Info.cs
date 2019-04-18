@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_empleado_x_rubro_acumulado_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo empleado es obligatorio")]
         public decimal IdEmpleado { get; set; }
@@ -30,6 +31,8 @@ namespace Core.Erp.Info.RRHH
         public string pe_nombre { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string em_codigo { get; set; }
+
+        public List<ro_empleado_x_rubro_acumulado_detalle_Info> lst_empleado_x_rubro_acumulado_detalle { get; set; }
 
     }
 }

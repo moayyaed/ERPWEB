@@ -146,8 +146,9 @@ namespace Core.Erp.Data
         public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
         public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
         public DbSet<ro_prestamo> ro_prestamo { get; set; }
-        public DbSet<ro_empleado_x_rubro_acumulado_detalle> ro_empleado_x_rubro_acumulado_detalle { get; set; }
         public DbSet<ro_empleado> ro_empleado { get; set; }
+        public DbSet<vwro_empleado_x_rubro_acumulado_detalle> vwro_empleado_x_rubro_acumulado_detalle { get; set; }
+        public DbSet<ro_empleado_x_rubro_acumulado_detalle> ro_empleado_x_rubro_acumulado_detalle { get; set; }
         public DbSet<vwro_empleado_datos_generales> vwro_empleado_datos_generales { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)

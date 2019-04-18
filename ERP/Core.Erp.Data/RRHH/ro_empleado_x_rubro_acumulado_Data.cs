@@ -115,6 +115,23 @@ namespace Core.Erp.Data.RRHH
                         
                     };
                     Context.ro_empleado_x_rubro_acumulado.Add(Entity);
+
+                    var Secuencia = 0;
+                    foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
+                    {
+                        ro_empleado_x_rubro_acumulado_detalle Entity_Det = new ro_empleado_x_rubro_acumulado_detalle
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdEmpleado = info.IdEmpleado,
+                            IdRubro = info.IdRubro,
+                            IdRubroContabilizacion = item.IdRubroContabilizacion,
+                            IdJornada = item.IdJornada,
+                            Secuencia = Secuencia++
+
+                        };
+                        Context.ro_empleado_x_rubro_acumulado_detalle.Add(Entity_Det);
+                    }
+
                     Context.SaveChanges();
                 }
                 return true;

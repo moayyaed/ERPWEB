@@ -10013,6 +10013,8 @@
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_017.cshtml" />
     <Content Include="Areas\Banco\Views\ConciliacionBanco\_GridViewPartial_banco_conciliacion_det.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\_CmbCuenta_contable_ContaFin.cshtml" />
+    <Content Include="Areas\RRHH\Views\EmpleadoRubroAcumulado\_GridViewPartial_rubros_acumulados_detalle.cshtml" />
+    <Content Include="Areas\RRHH\Views\EmpleadoRubroAcumulado\_CmbRubro.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
