@@ -14,6 +14,11 @@ namespace Core.Erp.Data
     
     public partial class ro_empleado_x_rubro_acumulado
     {
+        public ro_empleado_x_rubro_acumulado()
+        {
+            this.ro_empleado_x_rubro_acumulado_detalle = new HashSet<ro_empleado_x_rubro_acumulado_detalle>();
+        }
+    
         public int IdEmpresa { get; set; }
         public decimal IdEmpleado { get; set; }
         public string IdRubro { get; set; }
@@ -25,6 +30,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fec_Fin_Acumulacion { get; set; }
     
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
+        public virtual ICollection<ro_empleado_x_rubro_acumulado_detalle> ro_empleado_x_rubro_acumulado_detalle { get; set; }
         public virtual ro_empleado ro_empleado { get; set; }
     }
 }

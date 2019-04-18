@@ -29,7 +29,7 @@ namespace Core.Erp.Data
         public int DiasGanado { get; set; }
         public int DiasTomados { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }
