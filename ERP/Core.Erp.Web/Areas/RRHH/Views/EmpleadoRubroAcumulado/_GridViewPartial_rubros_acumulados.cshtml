@@ -54,6 +54,7 @@
             {
 
                 ViewContext.Writer.Write(
+                    Html.ActionLink("Modificar", "Modificar", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdRubro = DataBinder.Eval(tc.DataItem, "IdRubro") }) + "&nbsp;" +
                     Html.ActionLink("Anular", "Anular", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdRubro = DataBinder.Eval(tc.DataItem, "IdRubro") },
                         new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                 );
@@ -67,7 +68,7 @@
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = Unit.Pixel(100);
+            c.Width = Unit.Pixel(150);
         });
 
 
@@ -79,7 +80,7 @@
         {
             column.FieldName = "Fec_Inicio_Acumulacion";
             column.Caption = "Fecha solicitud";
-            column.Width = Unit.Percentage(13);
+            column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
 
         });
@@ -87,7 +88,7 @@
         {
             column.FieldName = "Fec_Fin_Acumulacion";
             column.Caption = "Fin solicitud";
-            column.Width = Unit.Percentage(13);
+            column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
 
         });

@@ -116,7 +116,7 @@ namespace Core.Erp.Data.RRHH
                     };
                     Context.ro_empleado_x_rubro_acumulado.Add(Entity);
 
-                    var Secuencia = 0;
+                    var Secuencia = 1;
                     foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
                     {
                         ro_empleado_x_rubro_acumulado_detalle Entity_Det = new ro_empleado_x_rubro_acumulado_detalle
@@ -142,18 +142,38 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public bool anularDB(ro_empleado_x_rubro_acumulado_Info info)
+
+        public bool modificarDB(ro_empleado_x_rubro_acumulado_Info info)
         {
             try
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
+                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
                     && q.IdRubro == info.IdRubro
-                    && q.IdEmpleado==info.IdEmpleado);
+                    && q.IdEmpleado == info.IdEmpleado);
                     if (Entity == null)
                         return false;
-                    Context.ro_empleado_x_rubro_acumulado.Remove(Entity);
+
+                    var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
+                    Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);
+
+                    if (info.lst_empleado_x_rubro_acumulado_detalle.Count() > 0)
+                    {
+                        foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
+                        {
+                            Context.ro_empleado_x_rubro_acumulado_detalle.Add(new ro_empleado_x_rubro_acumulado_detalle
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdEmpleado = info.IdEmpleado,
+                                IdRubro = info.IdRubro,                                
+                                Secuencia = item.Secuencia,
+                                IdJornada = item.IdJornada,
+                                IdRubroContabilizacion = item.IdRubroContabilizacion
+                            });
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
 
@@ -165,5 +185,34 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-       }
+
+        public bool anularDB(ro_empleado_x_rubro_acumulado_Info info)
+        {
+            try
+            {
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
+                    && q.IdRubro == info.IdRubro
+                    && q.IdEmpleado==info.IdEmpleado);
+                    if (Entity == null)
+                        return false;
+
+                    var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
+
+                    Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);
+                    Context.ro_empleado_x_rubro_acumulado.Remove(Entity);
+
+                    Context.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+    }
 }

@@ -167,8 +167,65 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        [HttpPost]
 
+        public ActionResult Modificar(decimal Idempleado = 0, string IdRubro = "")
+        {
+            try
+            {
+                cargar_combos();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+                ro_empleado_x_rubro_acumulado_Info model = bus_rubro_acumulados.get_info(IdEmpresa, Idempleado, IdRubro);
+
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+                model.lst_empleado_x_rubro_acumulado_detalle = bus_rubro_acumulados_detalle.get_list(IdEmpresa, Idempleado, IdRubro);
+                ListaDetalle.set_list(model.lst_empleado_x_rubro_acumulado_detalle, model.IdTransaccionSession);
+
+                return View(model);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Modificar(ro_empleado_x_rubro_acumulado_Info info)
+        {
+            try
+            {
+                ViewBag.IdEmpleado = info.IdEmpleado;
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info.UsuarioIngresa = SessionFixed.IdUsuario;
+
+                info.lst_empleado_x_rubro_acumulado_detalle = ListaDetalle.get_list(info.IdTransaccionSession);
+
+                if (ModelState.IsValid)
+                {
+                    if (!bus_rubro_acumulados.modificarDB(info))
+                    {
+                        cargar_combos();
+                        return View(info);
+                    }
+                    else
+                        return RedirectToAction("Index");
+
+                }
+                else
+                    return View(info);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
         public ActionResult Anular(ro_empleado_x_rubro_acumulado_Info info)
         {
             try
