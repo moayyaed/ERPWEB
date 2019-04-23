@@ -78,7 +78,6 @@ namespace Core.Erp.Data
         public DbSet<ro_tipo_gastos_personales> ro_tipo_gastos_personales { get; set; }
         public DbSet<vwro_Empleado_Novedades> vwro_Empleado_Novedades { get; set; }
         public DbSet<ro_tipo_gastos_personales_tabla_valores_x_anio> ro_tipo_gastos_personales_tabla_valores_x_anio { get; set; }
-        public DbSet<ro_rol_detalle> ro_rol_detalle { get; set; }
         public DbSet<ro_rol_detalle_x_rubro_acumulado> ro_rol_detalle_x_rubro_acumulado { get; set; }
         public DbSet<ro_EmpleadoNovedadCargaMasiva> ro_EmpleadoNovedadCargaMasiva { get; set; }
         public DbSet<ro_EmpleadoNovedadCargaMasiva_det> ro_EmpleadoNovedadCargaMasiva_det { get; set; }
@@ -151,6 +150,7 @@ namespace Core.Erp.Data
         public DbSet<vwro_empleado_x_rubro_acumulado_detalle> vwro_empleado_x_rubro_acumulado_detalle { get; set; }
         public DbSet<ro_rubro_tipo_x_jornada> ro_rubro_tipo_x_jornada { get; set; }
         public DbSet<vwro_rubro_tipo_x_jornada> vwro_rubro_tipo_x_jornada { get; set; }
+        public DbSet<ro_rol_detalle> ro_rol_detalle { get; set; }
         public DbSet<vwro_rol_detalle> vwro_rol_detalle { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)

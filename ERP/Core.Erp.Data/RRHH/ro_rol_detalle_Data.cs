@@ -48,7 +48,8 @@ namespace Core.Erp.Data.RRHH
                                     ru_descripcion=a.ru_descripcion,
                                     pc_CuentaEmple = a.pc_CuentaEmple,
                                     pc_CuentaRubro = a.pc_CuentaRubro,
-                                    IdSucursal = a.IdSucursalContabilizacion
+                                    IdSucursal = a.IdSucursalContabilizacion,
+                                    Su_Descripcion = a.Su_Descripcion
                                 }).ToList();
                 }
                 return oListado;

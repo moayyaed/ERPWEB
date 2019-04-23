@@ -292,15 +292,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                //info.lst_sueldo_x_pagar= Session["lst_sueldo_pagar"] as List<ct_cbtecble_det_Info>;
                 info.lst_sueldo_x_pagar = list_det.get_list_cta(info.IdTransaccionSession);
                 info.lst_provisiones = list_prov.get_list(info.IdTransaccionSession);
-                info.UsuarioCierre = Session["IdUsuario"].ToString();
+                info.UsuarioCierre = SessionFixed.IdUsuario;
                 
                 foreach (var item in info.lst_sueldo_x_pagar)
                 {
-                    item.IdCtaCble = item.IdCtaCble.Trim();
-                    if (item.IdCtaCble == null || item.IdCtaCble == "")
+                    //item.IdCtaCble = item.IdCtaCble.Trim();
+                    if (string.IsNullOrEmpty(item.IdCtaCble))
                     {
                         ViewBag.mensaje = " Falta cueta contable de:" +item.dc_Observacion;
                         cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);

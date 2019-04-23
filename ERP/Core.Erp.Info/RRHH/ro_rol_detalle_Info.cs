@@ -42,6 +42,7 @@ namespace Core.Erp.Info.RRHH
         public string pc_CuentaRubro { get; set; }
         public string pc_CuentaEmple { get; set; }
         public int? IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
 
         #endregion
 

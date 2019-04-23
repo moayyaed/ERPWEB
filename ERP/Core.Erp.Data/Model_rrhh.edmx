@@ -2854,6 +2854,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle' no tiene definid
           <Property Name="rub_provision" Type="bit" Nullable="false" />
           <Property Name="rub_ContPorEmpleado" Type="bit" Nullable="false" />
           <Property Name="IdSucursalContabilizacion" Type="int" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6048,7 +6049,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
     [vwro_rol_detalle].[pe_nombreCompleto] AS [pe_nombreCompleto], 
     [vwro_rol_detalle].[rub_provision] AS [rub_provision], 
     [vwro_rol_detalle].[rub_ContPorEmpleado] AS [rub_ContPorEmpleado], 
-    [vwro_rol_detalle].[IdSucursalContabilizacion] AS [IdSucursalContabilizacion]
+    [vwro_rol_detalle].[IdSucursalContabilizacion] AS [IdSucursalContabilizacion], 
+    [vwro_rol_detalle].[Su_Descripcion] AS [Su_Descripcion]
     FROM [dbo].[vwro_rol_detalle] AS [vwro_rol_detalle]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRo_rol_detalle_saldo_por_pagar" EntityType="Self.vwRo_rol_detalle_saldo_por_pagar" store:Type="Views" store:Schema="dbo">
@@ -8294,7 +8296,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_tipo_gastos_personales" EntitySet="ro_tipo_gastos_personales" />
             <End Role="ro_tipo_gastos_personales_tabla_valores_x_anio" EntitySet="ro_tipo_gastos_personales_tabla_valores_x_anio" />
           </AssociationSet>
-          <EntitySet Name="ro_rol_detalle" EntityType="Model_rrhh.ro_rol_detalle" />
           <EntitySet Name="ro_rol_detalle_x_rubro_acumulado" EntityType="Model_rrhh.ro_rol_detalle_x_rubro_acumulado" />
           <EntitySet Name="ro_EmpleadoNovedadCargaMasiva" EntityType="Model_rrhh.ro_EmpleadoNovedadCargaMasiva" />
           <EntitySet Name="ro_EmpleadoNovedadCargaMasiva_det" EntityType="Model_rrhh.ro_EmpleadoNovedadCargaMasiva_det" />
@@ -8502,10 +8503,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_HorasProfesores_det" EntitySet="ro_HorasProfesores_det" />
           </AssociationSet>
-          <AssociationSet Name="FK_ro_rol_detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
-          </AssociationSet>
           <EntitySet Name="ro_rol" EntityType="Model_rrhh.ro_rol" />
           <EntitySet Name="vwro_rol" EntityType="Model_rrhh.vwro_rol" />
           <AssociationSet Name="FK_ro_rol_ro_Nomina_Tipo" Association="Model_rrhh.FK_ro_rol_ro_Nomina_Tipo">
@@ -8519,10 +8516,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <AssociationSet Name="FK_ro_rol_ro_periodo_x_ro_Nomina_TipoLiqui" Association="Model_rrhh.FK_ro_rol_ro_periodo_x_ro_Nomina_TipoLiqui">
             <End Role="ro_periodo_x_ro_Nomina_TipoLiqui" EntitySet="ro_periodo_x_ro_Nomina_TipoLiqui" />
             <End Role="ro_rol" EntitySet="ro_rol" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rol_detalle_ro_rol" Association="Model_rrhh.FK_ro_rol_detalle_ro_rol">
-            <End Role="ro_rol" EntitySet="ro_rol" />
-            <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_rol_detalle_x_rubro_acumulado_ro_rol" Association="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_rol">
             <End Role="ro_rol" EntitySet="ro_rol" />
@@ -8844,10 +8837,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_rdep_det" EntitySet="ro_rdep_det" />
           </AssociationSet>
-          <AssociationSet Name="FK_ro_rol_detalle_ro_empleado" Association="Model_rrhh.FK_ro_rol_detalle_ro_empleado">
-            <End Role="ro_empleado" EntitySet="ro_empleado" />
-            <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
-          </AssociationSet>
           <AssociationSet Name="FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" Association="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_rol_detalle_x_rubro_acumulado" EntitySet="ro_rol_detalle_x_rubro_acumulado" />
@@ -8876,7 +8865,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_rubro_tipo_x_jornada" EntitySet="ro_rubro_tipo_x_jornada" />
           </AssociationSet>
+          <EntitySet Name="ro_rol_detalle" EntityType="Model_rrhh.ro_rol_detalle" />
           <EntitySet Name="vwro_rol_detalle" EntityType="Model_rrhh.vwro_rol_detalle" />
+          <AssociationSet Name="FK_ro_rol_detalle_ro_empleado" Association="Model_rrhh.FK_ro_rol_detalle_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rol_detalle_ro_rol" Association="Model_rrhh.FK_ro_rol_detalle_ro_rol">
+            <End Role="ro_rol" EntitySet="ro_rol" />
+            <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rol_detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -9189,26 +9191,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ro_rol_detalle">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdRol" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdRubro" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdRol" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="Valor" Type="Double" Nullable="false" />
-          <Property Name="rub_visible_reporte" Type="Boolean" />
-          <Property Name="Observacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo" FromRole="ro_rol_detalle" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rol" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rol" FromRole="ro_rol_detalle" ToRole="ro_rol" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_rol_detalle" ToRole="ro_empleado" />
-        </EntityType>
         <EntityType Name="ro_rol_detalle_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -10790,7 +10772,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_rubro_acumulado" />
           <NavigationProperty Name="ro_EmpleadoNovedadCargaMasiva" Relationship="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_EmpleadoNovedadCargaMasiva" />
           <NavigationProperty Name="ro_HorasProfesores_det" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_HorasProfesores_det" />
-          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rol_detalle" />
           <NavigationProperty Name="ro_rubros_calculados" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
           <NavigationProperty Name="ro_rubros_calculados1" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
           <NavigationProperty Name="ro_rubros_calculados2" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
@@ -10813,6 +10794,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="rub_ContPorJornada" Type="Boolean" />
           <NavigationProperty Name="ro_rubro_tipo_x_jornada" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rubro_tipo_x_jornada" />
           <NavigationProperty Name="ro_rubro_tipo_x_jornada1" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1" FromRole="ro_rubro_tipo" ToRole="ro_rubro_tipo_x_jornada" />
+          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rol_detalle" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
           <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
@@ -10924,20 +10906,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_rol_detalle_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rol_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ro_rol">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -10967,9 +10935,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_Nomina_Tipo" Relationship="Model_rrhh.FK_ro_rol_ro_Nomina_Tipo" FromRole="ro_rol" ToRole="ro_Nomina_Tipo" />
           <NavigationProperty Name="ro_Nomina_Tipoliqui" Relationship="Model_rrhh.FK_ro_rol_ro_Nomina_Tipoliqui" FromRole="ro_rol" ToRole="ro_Nomina_Tipoliqui" />
           <NavigationProperty Name="ro_periodo_x_ro_Nomina_TipoLiqui" Relationship="Model_rrhh.FK_ro_rol_ro_periodo_x_ro_Nomina_TipoLiqui" FromRole="ro_rol" ToRole="ro_periodo_x_ro_Nomina_TipoLiqui" />
-          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rol" FromRole="ro_rol" ToRole="ro_rol_detalle" />
           <NavigationProperty Name="ro_rol_detalle_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_rol" FromRole="ro_rol" ToRole="ro_rol_detalle_x_rubro_acumulado" />
           <NavigationProperty Name="ro_Comprobantes_Contables" Relationship="Model_rrhh.FK_ro_Comprobantes_Contables_ro_rol" FromRole="ro_rol" ToRole="ro_Comprobantes_Contables" />
+          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rol" FromRole="ro_rol" ToRole="ro_rol_detalle" />
         </EntityType>
         <EntityType Name="vwro_rol">
           <Key>
@@ -11052,20 +11020,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               <PropertyRef Name="IdNominaTipo" />
               <PropertyRef Name="IdNominaTipoLiqui" />
               <PropertyRef Name="IdPeriodo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rol_detalle_ro_rol">
-          <End Type="Model_rrhh.ro_rol" Role="ro_rol" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rol">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRol" />
-            </Principal>
-            <Dependent Role="ro_rol_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12149,10 +12103,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_permiso_x_empleado1" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" FromRole="ro_empleado" ToRole="ro_permiso_x_empleado" />
           <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_empleado" FromRole="ro_empleado" ToRole="ro_prestamo" />
           <NavigationProperty Name="ro_rdep_det" Relationship="Model_rrhh.FK_ro_rdep_ro_empleado" FromRole="ro_empleado" ToRole="ro_rdep_det" />
-          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle" />
           <NavigationProperty Name="ro_rol_detalle_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle_x_rubro_acumulado" />
           <NavigationProperty Name="ro_SancionesPorMarcaciones_det" Relationship="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_SancionesPorMarcaciones_det" />
           <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
+          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
@@ -12574,20 +12528,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_rol_detalle_ro_empleado">
-          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Principal>
-            <Dependent Role="ro_rol_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
           <End Type="Model_rrhh.ro_rol_detalle_x_rubro_acumulado" Role="ro_rol_detalle_x_rubro_acumulado" Multiplicity="*" />
@@ -12826,6 +12766,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ro_rol_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRol" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdRubro" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRol" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="rub_visible_reporte" Type="Boolean" />
+          <Property Name="Observacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_rol_detalle" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_rol" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rol" FromRole="ro_rol_detalle" ToRole="ro_rol" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo" FromRole="ro_rol_detalle" ToRole="ro_rubro_tipo" />
+        </EntityType>
         <EntityType Name="vwro_rol_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12865,7 +12825,50 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="rub_provision" Type="Boolean" Nullable="false" />
           <Property Name="rub_ContPorEmpleado" Type="Boolean" Nullable="false" />
           <Property Name="IdSucursalContabilizacion" Type="Int32" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="FK_ro_rol_detalle_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_rol_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rol_detalle_ro_rol">
+          <End Type="Model_rrhh.ro_rol" Role="ro_rol" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rol">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="ro_rol_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rol_detalle_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rol_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13874,21 +13877,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="AnioFiscal" ColumnName="AnioFiscal" />
                 <ScalarProperty Name="IdTipoGasto" ColumnName="IdTipoGasto" />
                 <ScalarProperty Name="IdGasto" ColumnName="IdGasto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ro_rol_detalle">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_rol_detalle">
-              <MappingFragment StoreEntitySet="ro_rol_detalle">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="rub_visible_reporte" ColumnName="rub_visible_reporte" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -15537,9 +15525,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ro_rol_detalle">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_rol_detalle">
+              <MappingFragment StoreEntitySet="ro_rol_detalle">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="rub_visible_reporte" ColumnName="rub_visible_reporte" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vwro_rol_detalle">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_rol_detalle">
               <MappingFragment StoreEntitySet="vwro_rol_detalle">
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
                 <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
                 <ScalarProperty Name="rub_ContPorEmpleado" ColumnName="rub_ContPorEmpleado" />
                 <ScalarProperty Name="rub_provision" ColumnName="rub_provision" />

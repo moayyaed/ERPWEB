@@ -158,51 +158,57 @@ namespace Core.Erp.Bus.RRHH
                 ro_parametro = new ro_Parametros_Data();
                 ro_Comprobantes_Contables_Info info_comprobanteID = new ro_Comprobantes_Contables_Info();
                 ct_cbtecble_Info info_ctb =null;
-                 info_parametro = ro_parametro.get_info(info.IdEmpresa);
-                if(info.lst_sueldo_x_pagar.Count()>0)
-                 info_ctb = get_armar_diario_sueldo(info,Convert.ToInt32( info_parametro.IdTipoCbte_AsientoSueldoXPagar));
-                info_ctb.IdSucursal = Convert.ToInt32(info.IdSucursal);
-                if (info_ctb != null)
+                info_parametro = ro_parametro.get_info(info.IdEmpresa);
+
+                var lstSucursal = info.lst_sueldo_x_pagar.GroupBy(q => new { q.IdSucursal, q.Su_Descripcion }).Select(q => new { IdSucursal = q.Key.IdSucursal, Su_Descripcion = q.Key.Su_Descripcion });
+                foreach (var item in lstSucursal)
                 {
-                    if (odata_comprobante.guardarDB(info_ctb))
+
+                    info_ctb = get_armar_diario_sueldo(info, Convert.ToInt32(info_parametro.IdTipoCbte_AsientoSueldoXPagar),item.IdSucursal ?? 0);
+                    info_ctb.IdSucursal = item.IdSucursal ?? 0;
+
+                    if (info_ctb != null)
                     {
-                        // grabando los ID del asiento sueldo por pagar
-                        info_comprobanteID.IdEmpresa = info.IdEmpresa;
-                        info_comprobanteID.IdNomina = info.IdNomina_Tipo;
-                        info_comprobanteID.IdNominaTipo = info.IdNomina_TipoLiqui;
-                        info_comprobanteID.IdPeriodo = info.IdPeriodo;
-                        info_comprobanteID.IdTipoCbte = info_ctb.IdTipoCbte;
-                        info_comprobanteID.IdCbteCble = info_ctb.IdCbteCble;
-                        info_comprobanteID.IdRol = info.IdRol;
-                        info_comprobanteID.IdEmpresa_rol = info.IdEmpresa;
-                        ro_comprobante.grabarDB(info_comprobanteID);
-                        info_ctb = null;
-                        if (info.lst_provisiones.Count() > 0)
+                        if (odata_comprobante.guardarDB(info_ctb))
                         {
-                            info_ctb = get_armar_diario_provisiones(info, Convert.ToInt32(info_parametro.IdTipoCbte_AsientoSueldoXPagar));
-                            info_ctb.IdSucursal = Convert.ToInt32(info.IdSucursal);
-                        }
-                        if (info_ctb != null)
-                        {
-                            if(odata_comprobante.guardarDB(info_ctb))
+                            // grabando los ID del asiento sueldo por pagar
+                            info_comprobanteID.IdEmpresa = info.IdEmpresa;
+                            info_comprobanteID.IdNomina = info.IdNomina_Tipo;
+                            info_comprobanteID.IdNominaTipo = info.IdNomina_TipoLiqui;
+                            info_comprobanteID.IdPeriodo = info.IdPeriodo;
+                            info_comprobanteID.IdTipoCbte = info_ctb.IdTipoCbte;
+                            info_comprobanteID.IdCbteCble = info_ctb.IdCbteCble;
+                            info_comprobanteID.IdRol = info.IdRol;
+                            info_comprobanteID.IdEmpresa_rol = info.IdEmpresa;
+                            ro_comprobante.grabarDB(info_comprobanteID);
+                            info_ctb = null;
+                            if (info.lst_provisiones.Count() > 0)
                             {
-                                // grabando los ID del asiento sueldo por pagar
-                                info_comprobanteID = new ro_Comprobantes_Contables_Info();
-                                info_comprobanteID.IdEmpresa = info.IdEmpresa;
-                                info_comprobanteID.IdNomina = info.IdNomina_Tipo;
-                                info_comprobanteID.IdNominaTipo = info.IdNomina_TipoLiqui;
-                                info_comprobanteID.IdPeriodo = info.IdPeriodo;
-                                info_comprobanteID.IdTipoCbte = info_ctb.IdTipoCbte;
-                                info_comprobanteID.IdCbteCble = info_ctb.IdCbteCble;
-                                info_comprobanteID.IdRol = info.IdRol;
-                                info_comprobanteID.IdEmpresa_rol = info.IdEmpresa;
-                                ro_comprobante.grabarDB(info_comprobanteID);
+                                info_ctb = get_armar_diario_provisiones(info, Convert.ToInt32(info_parametro.IdTipoCbte_AsientoSueldoXPagar),item.IdSucursal ?? 0);
+                                info_ctb.IdSucursal = item.IdSucursal ?? 0;
+                            }
+                            if (info_ctb != null)
+                            {
+                                if (odata_comprobante.guardarDB(info_ctb))
+                                {
+                                    // grabando los ID del asiento sueldo por pagar
+                                    info_comprobanteID = new ro_Comprobantes_Contables_Info();
+                                    info_comprobanteID.IdEmpresa = info.IdEmpresa;
+                                    info_comprobanteID.IdNomina = info.IdNomina_Tipo;
+                                    info_comprobanteID.IdNominaTipo = info.IdNomina_TipoLiqui;
+                                    info_comprobanteID.IdPeriodo = info.IdPeriodo;
+                                    info_comprobanteID.IdTipoCbte = info_ctb.IdTipoCbte;
+                                    info_comprobanteID.IdCbteCble = info_ctb.IdCbteCble;
+                                    info_comprobanteID.IdRol = info.IdRol;
+                                    info_comprobanteID.IdEmpresa_rol = info.IdEmpresa;
+                                    ro_comprobante.grabarDB(info_comprobanteID);
+                                }
                             }
                         }
-
                     }
+
                 }
-                 odata.ContabilizarPeriodo(info);
+                odata.ContabilizarPeriodo(info);
 
                 return true;
             }
@@ -241,7 +247,7 @@ namespace Core.Erp.Bus.RRHH
                 info_cta_sueldo_x_pagar = bus_cta_sueldo_x_pagar.get_info(idEmpresa, idNominaTipo, idNominaTipoLiqui);
                 oListro_rol_detalle_Info = bus_detalle.Get_lst_detalle_contabilizar(idEmpresa, idNominaTipo, idNominaTipoLiqui, idPeriodo, IdRol, false);
 
-                var lstSucursal = oListro_rol_detalle_Info.GroupBy(q => q.IdSucursal).Select(q => q.Key);
+                var lstSucursal = oListro_rol_detalle_Info.GroupBy(q => new { q.IdSucursal, q.Su_Descripcion}).Select(q => new { IdSucursal = q.Key.IdSucursal, Su_Descripcion = q.Key.Su_Descripcion });
 
                 #region Rubros que no se contabilizan por empleados
                 foreach (ro_Config_Param_contable_Info item in lst_confn_param_contables.Where(v => v.rub_ContPorEmpleado == false))
@@ -251,7 +257,7 @@ namespace Core.Erp.Bus.RRHH
                         double valorTotal = 0;
                         valorTotal = oListro_rol_detalle_Info.Where(v => v.IdDivision == Convert.ToInt32(item.IdDivision)
                                                                     && v.IdArea == item.IdArea
-                                                                    && v.IdDepartamento == item.IdDepartamento && v.IdRubro == item.IdRubro && Suc == v.IdSucursal).Sum(v => v.Valor);
+                                                                    && v.IdDepartamento == item.IdDepartamento && v.IdRubro == item.IdRubro && Suc.IdSucursal == v.IdSucursal).Sum(v => v.Valor);
                         if (valorTotal < 0)
                             valorTotal = valorTotal * -1;
                         if (valorTotal > 0)
@@ -278,7 +284,8 @@ namespace Core.Erp.Bus.RRHH
                             oct_cbtecble_det_Info.dc_Valor = valorTotal;
                             oct_cbtecble_det_Info.dc_Observacion = item.ru_descripcion + "/ " + item.DescripcionArea + "/ " + item.de_descripcion;
                             //Agrego sucursal para contabilización multiple
-                            oct_cbtecble_det_Info.IdSucursal = Suc;
+                            oct_cbtecble_det_Info.IdSucursal = Suc.IdSucursal;
+                            oct_cbtecble_det_Info.Su_Descripcion = Suc.Su_Descripcion;
                             lst_detalle_diario.Add(oct_cbtecble_det_Info);
                         }
                     }
@@ -320,6 +327,7 @@ namespace Core.Erp.Bus.RRHH
                         oct_cbtecble_det_Info.dc_Observacion = item.ru_descripcion + "/ " + item.pe_nombreCompleato;
                         //Agrego sucursal para contabilización multiple
                         oct_cbtecble_det_Info.IdSucursal = item.IdSucursal;
+                        oct_cbtecble_det_Info.Su_Descripcion = item.Su_Descripcion;
                         lst_detalle_diario.Add(oct_cbtecble_det_Info);
                     }
                 }
@@ -340,12 +348,13 @@ namespace Core.Erp.Bus.RRHH
                     oct_cbtecble_det_Info2.IdEmpresa = idEmpresa;
                     oct_cbtecble_det_Info2.IdCtaCble = (info_cta_sueldo_x_pagar.IdCtaCble) == null ? "" : info_cta_sueldo_x_pagar.IdCtaCble;
                     oct_cbtecble_det_Info2.pc_Cuenta = info_cta_sueldo_x_pagar.pc_Cuenta;
-                    oct_cbtecble_det_Info2.dc_Valor = Math.Round(lst_detalle_diario.Where(q => q.IdSucursal == item).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) *-1;// valorSueldoXPagar * -1;
+                    oct_cbtecble_det_Info2.dc_Valor = Math.Round(lst_detalle_diario.Where(q => q.IdSucursal == item.IdSucursal).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) *-1;// valorSueldoXPagar * -1;
                     oct_cbtecble_det_Info2.dc_Valor_haber = Math.Abs(oct_cbtecble_det_Info2.dc_Valor);
                     oct_cbtecble_det_Info2.dc_Observacion = "Sueldo por Pagar Neto a Recibir al " + idPeriodo;
+                    oct_cbtecble_det_Info2.IdSucursal = item.IdSucursal;
+                    oct_cbtecble_det_Info2.Su_Descripcion = item.Su_Descripcion;
                     lst_detalle_diario.Add(oct_cbtecble_det_Info2);
                 }
-                
 
                 return lst_detalle_diario;
             }
@@ -365,7 +374,7 @@ namespace Core.Erp.Bus.RRHH
                 info_cta_sueldo_x_pagar = bus_cta_sueldo_x_pagar.get_info(idEmpresa, idNominaTipo, idNominaTipoLiqui);
                 oListro_rol_detalle_Info = bus_detalle.Get_lst_detalle_contabilizar(idEmpresa, idNominaTipo, idNominaTipoLiqui, idPeriodo,IdRol, true);
 
-                var lstSucursal = oListro_rol_detalle_Info.GroupBy(q => q.IdSucursal).Select(q => q.Key);
+                var lstSucursal = oListro_rol_detalle_Info.GroupBy(q => new { q.IdSucursal, q.Su_Descripcion }).Select(q => new { IdSucursal = q.Key.IdSucursal, Su_Descripcion = q.Key.Su_Descripcion }).ToList();
 
                 foreach (var item in lst_confn_param_contables)
                 {
@@ -376,7 +385,7 @@ namespace Core.Erp.Bus.RRHH
                                                                          && v.IdArea == item.IdArea
                                                                          && v.IdDepartamento == item.IdDepartamento
                                                                          && v.IdRubro == item.IdRubro
-                                                                         && v.IdSucursal == suc).Sum(v => v.Valor);
+                                                                         && v.IdSucursal == suc.IdSucursal).Sum(v => v.Valor);
                         if (valorTotal > 0)
                         {
                             secuencia++;
@@ -389,7 +398,9 @@ namespace Core.Erp.Bus.RRHH
                             oct_cbtecble_det_Info.dc_Valor = valorTotal;
                             oct_cbtecble_det_Info.dc_Observacion = item.ru_descripcion + "/ " + item.DescripcionArea + "/ " + item.de_descripcion;
                             oct_cbtecble_det_Info.pc_Cuenta = item.pc_Cuenta_prov_debito;
-                            oct_cbtecble_det_Info.IdSucursal = suc;
+                            //Agrego sucursal para contabilización multiple
+                            oct_cbtecble_det_Info.IdSucursal = suc.IdSucursal;
+                            oct_cbtecble_det_Info.Su_Descripcion = suc.Su_Descripcion;
                             lst_detalle_diario.Add(oct_cbtecble_det_Info);
 
                             secuencia++;
@@ -405,7 +416,8 @@ namespace Core.Erp.Bus.RRHH
                             oct_cbtecble_det_Info2.dc_Observacion = item.ru_descripcion + "/ " + item.DescripcionArea + "/ " + item.de_descripcion;
                             oct_cbtecble_det_Info2.pc_Cuenta = item.pc_Cuenta_prov_credito;
                             //Agrego sucursal para contabilización multiple
-                            oct_cbtecble_det_Info.IdSucursal = suc;
+                            oct_cbtecble_det_Info2.IdSucursal = suc.IdSucursal;
+                            oct_cbtecble_det_Info2.Su_Descripcion = suc.Su_Descripcion;
                             lst_detalle_diario.Add(oct_cbtecble_det_Info2);
                         }
                     }
@@ -418,7 +430,7 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        private ct_cbtecble_Info get_armar_diario_sueldo(ro_rol_Info info, int TipoComprobante)
+        private ct_cbtecble_Info get_armar_diario_sueldo(ro_rol_Info info, int TipoComprobante, int IdSucursal)
         {
 
             try
@@ -426,6 +438,7 @@ namespace Core.Erp.Bus.RRHH
                 ct_cbtecble_Info info_diario=new ct_cbtecble_Info();
 
                 info_diario.lst_ct_cbtecble_det = (from q in info.lst_sueldo_x_pagar
+                                                   where q.IdSucursal == IdSucursal
                                                    group q by new
                                                    {
                                                        q.IdCtaCble
@@ -445,7 +458,7 @@ namespace Core.Erp.Bus.RRHH
                 //REVISA CARLOS FALTA IDSUCURSAL
 
                 info_diario.cb_Observacion = "Contabilización rol general del periodo "+info.IdPeriodo.ToString();
-                info_diario.cb_Valor = info.lst_sueldo_x_pagar.Sum(v=>v.dc_Valor);
+                info_diario.cb_Valor = info.lst_sueldo_x_pagar.Where(q=> q.IdSucursal == IdSucursal).Sum(v=>v.dc_Valor);
                 info_diario.IdUsuario = info.UsuarioIngresa;
                 info_diario.cb_FechaTransac = DateTime.Now;
                 info_diario.cb_Estado = "A";
@@ -458,13 +471,14 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        private ct_cbtecble_Info get_armar_diario_provisiones(ro_rol_Info info, int TipoComprobante)
+        private ct_cbtecble_Info get_armar_diario_provisiones(ro_rol_Info info, int TipoComprobante,int IdSucursal)
         {
 
             try
             {
                 ct_cbtecble_Info info_diario = new ct_cbtecble_Info();
                 info_diario.lst_ct_cbtecble_det = (from q in info.lst_provisiones
+                                                   where q.IdSucursal == IdSucursal
                                                    group q by new
                                                    {
                                                        q.IdCtaCble
@@ -474,6 +488,7 @@ namespace Core.Erp.Bus.RRHH
                                                        IdCtaCble = g.Key.IdCtaCble,
                                                        dc_Valor = g.Sum(q => q.dc_Valor)
                                                    }).ToList();
+
                 info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
                 //info_diario.lst_ct_cbtecble_det = info.lst_provisiones;
                 info_diario.IdEmpresa = info.IdEmpresa;
@@ -484,7 +499,7 @@ namespace Core.Erp.Bus.RRHH
                 //REVISA CARLOS FALTA IDSUCURSAL
 
                 info_diario.cb_Observacion = "Contabilización rol general del periodo " + info.IdPeriodo.ToString();
-                info_diario.cb_Valor = info.lst_sueldo_x_pagar.Sum(v => v.dc_Valor);
+                info_diario.cb_Valor = info.lst_provisiones.Where(q=> q.IdSucursal == IdSucursal).Sum(v => v.dc_Valor);
                 info_diario.IdUsuario = info.UsuarioIngresa;
                 info_diario.cb_FechaTransac = DateTime.Now;
                 info_diario.cb_Estado = "A";

@@ -29,5 +29,6 @@ namespace Core.Erp.Info.Contabilidad
         public string pc_Cuenta { get; set; }
         public string Descripcion { get; set; }
         public int? IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }

@@ -80,6 +80,15 @@
         //        p.DataSource = ViewBag.lst_cuentas;
         //    });
         //});
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Su_Descripcion";
+            column.Caption = "Sucursal";
+            column.Width = Unit.Percentage(5);
+            column.GroupIndex = 0;
+        });
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "pc_Cuenta";
@@ -123,8 +132,21 @@
             });
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe");
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe").DisplayFormat = "Debe {0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber").DisplayFormat = "Haber {0:n2}";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe").DisplayFormat = "Debe {0:n2}";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber").DisplayFormat = "Haber {0:n2}";
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
         settings.Settings.ShowFooter = true;
 
     });

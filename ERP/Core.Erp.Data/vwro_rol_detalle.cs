@@ -36,5 +36,6 @@ namespace Core.Erp.Data
         public bool rub_provision { get; set; }
         public bool rub_ContPorEmpleado { get; set; }
         public Nullable<int> IdSucursalContabilizacion { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }
