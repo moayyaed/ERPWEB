@@ -45,7 +45,20 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-    
+
+        public bool modificarDB(ro_empleado_x_rubro_acumulado_Info info)
+        {
+            try
+            {
+                return odata.modificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool anularDB(ro_empleado_x_rubro_acumulado_Info info)
         {
             try
