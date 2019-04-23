@@ -293,33 +293,33 @@ namespace Core.Erp.Data.Contabilidad
                                      && fac.fecha <= FechaFin1
                                      && fac.bd_est == 1
                                      && ((fac.nu_ced_ruc).Length > 9)
-                                     group fac by new
+                                     /*group fac by new
                                      {
                                          ID = fac.nu_ced_ruc.Trim()
-                                     } into g
+                                     } into g*/
                                      select new ATS_ventas_eventos
                                      {
                                          IdEmpresa = IdEmpresa,
                                          IdPeriodo = IdPeriodo,                                         
-                                         idCliente = g.Key.ID,
+                                         idCliente = fac.nu_ced_ruc,//g.Key.ID,
                                          parteRel = "NO",
                                          DenoCli = "",
                                          tipoComprobante = "18",
                                          tipoEm = "F",
-                                         numeroComprobantes = g.Count(),
+                                         numeroComprobantes = 1,//g.Count(),
                                          baseNoGraIva = 0,
                                          baseImponible = 0,
-                                         baseImpGrav = g.Sum(q=> q.subtotal ?? 0),
-                                         montoIva = g.Sum(q => q.v_iva ?? 0),
+                                         baseImpGrav = fac.subtotal ?? 0, //g.Sum(q=> q.subtotal ?? 0),
+                                         montoIva = fac.v_iva ?? 0,//g.Sum(q => q.v_iva ?? 0),
                                          montoIce = 0,
                                          valorRetIva = 0,
                                          valorRetRenta = 0,
                                          formaPago = "01",
                                          codEstab = "001",
-                                         ventasEstab = g.Sum(q => q.subtotal ?? 0),
+                                         ventasEstab = fac.subtotal?? 0,//g.Sum(q => q.subtotal ?? 0),
                                          IdSucursal = 8,
-                                         tpIdCliente = g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
-                                         tipoCliente = g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
+                                         tpIdCliente = fac.nu_ced_ruc.Length == 13 ? "04" : fac.nu_ced_ruc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
+                                         tipoCliente = fac.nu_ced_ruc.Length == 13 ? "02" : fac.nu_ced_ruc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
                                      }).ToList();
                 
                 using (Entities_contabilidad Context = new Entities_contabilidad())

@@ -307,7 +307,6 @@ namespace Core.Erp.Data.Banco
                 throw;
             }
         }
-
         public bool GuardarDisenioDB(int IdEmpresa, int IdBanco, byte[] Disenio)
         {
             try
@@ -324,6 +323,27 @@ namespace Core.Erp.Data.Banco
                         Entity.ReporteChequeComprobante = Disenio;
                     db.SaveChanges();
                 }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool ValidarSaldoCuenta(int IdEmpresa, string IdCtaCble,  double Valor)
+        {
+            try
+            {
+                Entities_contabilidad db_c = new Entities_contabilidad();
+                Entities_banco db_b = new Entities_banco();
+
+                var saldo = db_c.ct_cbtecble_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdCtaCble == IdCtaCble).Sum(q => q.dc_Valor);
+                var saldo_act = Math.Round(saldo + Valor, 2, MidpointRounding.AwayFromZero);
+
+                if (saldo_act < 0)
+                    return false;
+
                 return true;
             }
             catch (Exception)
