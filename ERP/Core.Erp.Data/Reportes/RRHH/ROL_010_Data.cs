@@ -63,7 +63,10 @@ namespace Core.Erp.Data.Reportes.RRHH
                                      edad = q.edad,
                                      CodCatalogo_Ubicacion = q.CodCatalogo_Ubicacion,
                                      UbicacionGeneral = q.UbicacionGeneral,
-                                     TipoNomina = q.TipoNomina
+                                     TipoNomina = q.TipoNomina,
+                                     pe_correo = q.pe_correo,
+                                     pe_direccion = q.pe_direccion,
+                                     pe_telfono_Contacto = q.pe_telfono_Contacto
                                  }).ToList();
                     }
                     else
@@ -102,7 +105,10 @@ namespace Core.Erp.Data.Reportes.RRHH
                                      edad = q.edad,
                                      CodCatalogo_Ubicacion = q.CodCatalogo_Ubicacion,
                                      UbicacionGeneral = q.UbicacionGeneral,
-                                     TipoNomina = q.TipoNomina
+                                     TipoNomina = q.TipoNomina,
+                                     pe_correo = q.pe_correo,
+                                     pe_direccion = q.pe_direccion,
+                                     pe_telfono_Contacto = q.pe_telfono_Contacto
                                  }).ToList();
                     }                    
                 }

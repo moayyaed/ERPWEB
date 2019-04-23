@@ -295,7 +295,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_rubro_tipo_x_jornada_Info info_det)
         {
-
             if (ModelState.IsValid)
             {
                 ListaDetalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -373,7 +372,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             var existe = list.Where(q=> q.IdJornada == info_det.IdJornada && q.IdRubroContabilizacion == info_det.IdRubroContabilizacion).ToList();
 
-            if (existe.Count() > 0)
+            if (existe.Count() == 0)
             {
                 if (info_det.IdRubroContabilizacion != null)
                 {
@@ -403,7 +402,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             List<ro_rubro_tipo_x_jornada_Info> list = get_list(IdTransaccionSession);
             var existe = list.Where(q => q.IdJornada == info_det.IdJornada && q.IdRubroContabilizacion == info_det.IdRubroContabilizacion).ToList();
 
-            if (existe.Count() > 0)
+            if (existe.Count() == 0)
             {
                 if (info_det.IdRubroContabilizacion != null)
                 {

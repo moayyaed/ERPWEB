@@ -33,6 +33,10 @@ namespace Core.Erp.Info.Reportes.RRHH
         public string CodCatalogo_Ubicacion { get; set; }
         public string UbicacionGeneral { get; set; }
         public string TipoNomina { get; set; }
+        public string pe_correo { get; set; }
+        public string pe_telfono_Contacto { get; set; }
+        public string pe_direccion { get; set; }
+
 
         public int CantidadEmpleados { get; set; }
     }
