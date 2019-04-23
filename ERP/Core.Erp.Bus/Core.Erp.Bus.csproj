@@ -463,6 +463,7 @@
     <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Bus.cs" />
     <Compile Include="RRHH\ro_rubros_calculados_Bus.cs" />
     <Compile Include="RRHH\ro_rubro_tipo_Bus.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_x_jornada_Bus.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_Bus.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Bus.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Bus.cs" />

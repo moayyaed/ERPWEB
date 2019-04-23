@@ -8,6 +8,8 @@ using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class RubroController : Controller
@@ -239,5 +241,83 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
 
+    }
+
+    public class ro_rubro_tipo_x_jornada_List
+    {
+        ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
+        ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
+
+        string variable = "ro_rubro_tipo_x_jornada_Info";
+        public List<ro_rubro_tipo_x_jornada_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_rubro_tipo_x_jornada_Info> list = new List<ro_rubro_tipo_x_jornada_Info>();
+
+                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_rubro_tipo_x_jornada_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_rubro_tipo_x_jornada_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(ro_rubro_tipo_x_jornada_Info info_det, decimal IdTransaccionSession)
+        {
+            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            List<ro_rubro_tipo_x_jornada_Info> list = get_list(IdTransaccionSession);
+            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            if (info_det.IdRubroContabilizacion != null)
+            {
+                var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
+                if (!string.IsNullOrEmpty(info_rubro.ToString()))
+                    info_det.ru_descripcion = info_rubro.ru_descripcion;
+            }
+
+            if (info_det.IdJornada != 0)
+            {
+                var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
+                if (!string.IsNullOrEmpty(info_jornada.ToString()))
+                    info_det.Descripcion = info_jornada.Descripcion;
+            }
+
+            list.Add(info_det);
+        }
+
+        public void UpdateRow(ro_rubro_tipo_x_jornada_Info info_det, decimal IdTransaccionSession)
+        {
+            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            ro_rubro_tipo_x_jornada_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            edited_info.IdJornada = info_det.IdJornada;
+            edited_info.IdRubroContabilizacion = info_det.IdRubroContabilizacion;
+
+            if (info_det.IdRubroContabilizacion != null)
+            {
+                var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
+                if (!string.IsNullOrEmpty(info_rubro.ToString()))
+                    info_det.ru_descripcion = info_rubro.ru_descripcion;
+            }
+
+            if (info_det.IdJornada != 0)
+            {
+                var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
+                if (!string.IsNullOrEmpty(info_jornada.ToString()))
+                    info_det.Descripcion = info_jornada.Descripcion;
+            }
+
+            edited_info.ru_descripcion = info_det.ru_descripcion;
+            edited_info.Descripcion = info_det.Descripcion;
+        }
+
+        public void DeleteRow(int secuencia, decimal IdTransaccionSession)
+        {
+            List<ro_rubro_tipo_x_jornada_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.Secuencia == secuencia).First());
+        }
     }
 }

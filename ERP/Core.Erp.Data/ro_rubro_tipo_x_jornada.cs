@@ -12,19 +12,16 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ro_empleado_x_rubro_acumulado
+    public partial class ro_rubro_tipo_x_jornada
     {
         public int IdEmpresa { get; set; }
-        public decimal IdEmpleado { get; set; }
         public string IdRubro { get; set; }
-        public System.DateTime FechaIngresa { get; set; }
-        public string UsuarioIngresa { get; set; }
-        public Nullable<System.DateTime> FechaModifica { get; set; }
-        public string UsuarioModifica { get; set; }
-        public Nullable<System.DateTime> Fec_Inicio_Acumulacion { get; set; }
-        public Nullable<System.DateTime> Fec_Fin_Acumulacion { get; set; }
+        public int Secuencia { get; set; }
+        public string IdRubroContabilizacion { get; set; }
+        public int IdJornada { get; set; }
     
+        public virtual ro_jornada ro_jornada { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
-        public virtual ro_empleado ro_empleado { get; set; }
+        public virtual ro_rubro_tipo ro_rubro_tipo1 { get; set; }
     }
 }

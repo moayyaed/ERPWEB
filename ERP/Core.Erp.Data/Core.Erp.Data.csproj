@@ -1440,9 +1440,6 @@
     <Compile Include="ro_empleado_x_rubro_acumulado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="ro_empleado_x_rubro_acumulado_detalle.cs">
-      <DependentUpon>Model_rrhh.tt</DependentUpon>
-    </Compile>
     <Compile Include="ro_empleado_x_titulos.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1551,6 +1548,9 @@
     <Compile Include="ro_rubro_tipo.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_rubro_tipo_x_jornada.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_SancionesPorMarcaciones.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1654,6 +1654,7 @@
     <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Data.cs" />
     <Compile Include="RRHH\ro_rubros_calculados_Data.cs" />
     <Compile Include="RRHH\ro_rubro_tipo_Data.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_x_jornada_Data.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_Data.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Data.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Data.cs" />
@@ -2690,6 +2691,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_rubro_tipo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rubro_tipo_x_jornada.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_SancionesPorMarcaciones.cs">

@@ -516,6 +516,7 @@
     <Compile Include="RRHH\ro_rubros_calculados_Info.cs" />
     <Compile Include="RRHH\ro_rubro_acumulados_Info.cs" />
     <Compile Include="RRHH\ro_rubro_tipo_Info.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_x_jornada_Info.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Info.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_Info.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Info.cs" />
