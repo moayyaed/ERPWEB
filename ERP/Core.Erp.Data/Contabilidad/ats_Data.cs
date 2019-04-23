@@ -301,7 +301,7 @@ namespace Core.Erp.Data.Contabilidad
                                      {
                                          IdEmpresa = IdEmpresa,
                                          IdPeriodo = IdPeriodo,                                         
-                                         idCliente = fac.nu_ced_ruc,//g.Key.ID,
+                                         idCliente = fac.nu_ced_ruc.Trim(),//g.Key.ID,
                                          parteRel = "NO",
                                          DenoCli = "",
                                          tipoComprobante = "18",
