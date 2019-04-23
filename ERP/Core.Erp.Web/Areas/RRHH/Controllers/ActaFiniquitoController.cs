@@ -86,7 +86,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         private void cargar_combos()
         {
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.lst_empleado = bus_empleado.get_list_combo_liquidar(IdEmpresa);
             ViewBag.lst_tipo_contrato = bus_catalogo.get_list_x_tipo(2);
             ViewBag.lst_tipo_terminacion = bus_catalogo.get_list_x_tipo(24);
@@ -96,7 +96,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             ro_Acta_Finiquito_Info model = new ro_Acta_Finiquito_Info
             {
-                IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdCausaTerminacion = "CTL_02",
                 lst_detalle = new List<ro_Acta_Finiquito_Detalle_Info>()
@@ -129,7 +129,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         public ActionResult Modificar(decimal IdActaFiniquito)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_Acta_Finiquito_Info model = bus_acta_finiquito.get_info(IdEmpresa, IdActaFiniquito);
             if (model == null)
                 return RedirectToAction("Index");
@@ -167,7 +167,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         public ActionResult Anular( decimal IdActaFiniquito)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_Acta_Finiquito_Info model = bus_acta_finiquito.get_info(IdEmpresa, IdActaFiniquito);
             if (model == null)
                 return RedirectToAction("Index");
@@ -205,7 +205,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         private void cargar_combos_detalle()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.lst_rubro = bus_rubro.get_list(IdEmpresa, false);
         }
         [HttpPost, ValidateInput(false)]
@@ -273,7 +273,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (FechaSalida == null)
                 FechaSalida = DateTime.Now;
 
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"].ToString());
+            IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             info.IdEmpleado = IdEmpleado;
             info.IdEmpresa = IdEmpresa;
             info.UltimaRemuneracion = UltimaRemuneracion;
@@ -294,7 +294,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         
         public ActionResult Liquidar( decimal IdActaFiniquito)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_Acta_Finiquito_Info model = bus_acta_finiquito.get_info(IdEmpresa, IdActaFiniquito);
             if (model == null)
                 return RedirectToAction("Index");
@@ -314,8 +314,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 return View(model);
             }
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            model.IdUsuarioUltMod = Session["IdUsuario"].ToString();
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_acta_finiquito.Liquidar(model))
             {
                 cargar_combos();

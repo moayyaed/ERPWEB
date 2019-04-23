@@ -536,7 +536,7 @@ namespace Core.Erp.Bus.RRHH
                 item.IdEmpresa = _Info.IdEmpresa;
                 item.IdEmpleado = _Info.IdEmpleado;
                 item.IdActaFiniquito = _Info.IdActaFiniquito;
-                item.Observacion = "Decima tercera remuneracón";
+                item.Observacion = "Decimo tercera remuneracón";
                 item.Valor =Math.Round( vacaciones,2);
                 item.IdRubro = info_rubros_calculados.IdRubro_DIII;
                 if (item.Valor != 0)
