@@ -9,6 +9,7 @@ using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -19,14 +20,51 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         List<ro_catalogo_Info> lst_grupo = new List<ro_catalogo_Info>();
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
         ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
+        ro_rubro_tipo_x_jornada_Bus bus_rubro_jornada = new ro_rubro_tipo_x_jornada_Bus();
+        ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
         List<ct_plancta_Info> lst_plancuenta = new List<ct_plancta_Info>();
         List<ro_catalogo_Info> lst_grupo_rep_gene = new List<ro_catalogo_Info>();
-
+        ro_rubro_tipo_x_jornada_List ListaDetalle = new ro_rubro_tipo_x_jornada_List();
         Bus.Contabilidad.ct_plancta_Bus bus_plancuenta = new Bus.Contabilidad.ct_plancta_Bus();
         public ActionResult Index()
         {
             return View();
         }
+
+        #region Combo bajo demanda
+        public ActionResult CmbRubro()
+        {
+            decimal model = new decimal();
+            return PartialView("_CmbRubro", model);
+        }
+        public List<ro_rubro_tipo_Info> get_list_bajo_demanda_rubro(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_rubro.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        public ro_rubro_tipo_Info get_info_bajo_demanda_rubro(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_rubro.get_info_bajo_demanda(Convert.ToInt32(SessionFixed.IdEmpresa), args);
+        }
+        #endregion
+
+        #region Rubro por Jornada
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_rubros_x_jornada()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            carga_combo_detalle();
+            List<ro_rubro_tipo_x_jornada_Info> lista = new List<ro_rubro_tipo_x_jornada_Info>();
+            lista = ListaDetalle.get_list(IdTransaccionSession);
+            return PartialView("_GridViewPartial_rubros_x_jornada", lista);
+        }
+        private void carga_combo_detalle()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_jornada = bus_jornada.get_list(IdEmpresa, false);
+            ViewBag.lst_jornada = lst_jornada;
+        }
+        #endregion
 
         [ValidateInput(false)]
         public ActionResult GridViewPartial_rubro()
@@ -50,6 +88,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     info.IdEmpresa = GetIdEmpresa();
+                    info.lst_rubro_jornada = ListaDetalle.get_list(info.IdTransaccionSession);
                     if (!bus_rubro.guardarDB(info))
                     {
                         cargar_combo();
@@ -75,8 +114,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ro_rubro_tipo_Info info = new ro_rubro_tipo_Info
                 {
                     rub_GrupoResumen = "",
-                    rub_grupo = ""
+                    rub_grupo = "",
+                    IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                    lst_rubro_jornada = new List<ro_rubro_tipo_x_jornada_Info>()
                 };
+
+                ListaDetalle.set_list(info.lst_rubro_jornada, info.IdTransaccionSession);
                 cargar_combo();
                 return View(info);
 
@@ -94,6 +137,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    info.lst_rubro_jornada = ListaDetalle.get_list(info.IdTransaccionSession);
                     if (!bus_rubro.modificarDB(info))
                     {
                         cargar_combo();
@@ -117,11 +161,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 ro_rubro_tipo_Info model = bus_rubro.get_info(GetIdEmpresa(), IdRubro);
+
                 if (model == null)
                     return RedirectToAction("Index");
+
                 model.rub_grupo = model.rub_grupo == null ? "" : model.rub_grupo;
                 model.rub_GrupoResumen = model.rub_GrupoResumen == null ? "" : model.rub_GrupoResumen;
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+                model.lst_rubro_jornada = bus_rubro_jornada.get_list(IdEmpresa, IdRubro);
+                ListaDetalle.set_list(model.lst_rubro_jornada, model.IdTransaccionSession);
+
                 cargar_combo();
                 return View(model);
                 //return View(bus_rubro.get_info(GetIdEmpresa(), IdRubro));
@@ -139,6 +190,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                //info.lst_rubro_jornada = ListaDetalle.get_list(info.IdTransaccionSession);
                     if (!bus_rubro.anularDB(info))
                     {
                         cargar_combo();
@@ -157,8 +209,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 cargar_combo();
-                return View(bus_rubro.get_info(GetIdEmpresa(), IdRubro));
+
+                ro_rubro_tipo_Info model = bus_rubro.get_info(GetIdEmpresa(), IdRubro);
+
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+                model.lst_rubro_jornada = bus_rubro_jornada.get_list(IdEmpresa, IdRubro);
+                ListaDetalle.set_list(model.lst_rubro_jornada, model.IdTransaccionSession);
+
+                return View(model);
 
             }
             catch (Exception)

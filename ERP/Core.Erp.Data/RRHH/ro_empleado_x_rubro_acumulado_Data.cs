@@ -7,7 +7,7 @@ using Core.Erp.Info.RRHH;
 namespace Core.Erp.Data.RRHH
 {
   public  class ro_empleado_x_rubro_acumulado_Data
-    {
+  {
         public List<ro_empleado_x_rubro_acumulado_Info> get_list(int IdEmpresa)
         {
             try
@@ -16,21 +16,21 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        Lista = (from q in Context.vwro_empleado_x_rubro_acumulado
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_empleado_x_rubro_acumulado_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdEmpleado = q.IdEmpleado,
-                                     IdRubro = q.IdRubro,
-                                     Fec_Inicio_Acumulacion = q.Fec_Inicio_Acumulacion,
-                                     Fec_Fin_Acumulacion=q.Fec_Fin_Acumulacion,
-                                     pe_cedulaRuc=q.pe_cedulaRuc,
-                                     pe_nombreCompleto=q.pe_apellido+" "+q.pe_nombre,
-                                     ru_descripcion=q.ru_descripcion,
-                                     em_codigo=q.em_codigo
-                                 }).ToList();
-                    
+                    Lista = (from q in Context.vwro_empleado_x_rubro_acumulado
+                             where q.IdEmpresa == IdEmpresa
+                             select new ro_empleado_x_rubro_acumulado_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdEmpleado = q.IdEmpleado,
+                                 IdRubro = q.IdRubro,
+                                 Fec_Inicio_Acumulacion = q.Fec_Inicio_Acumulacion,
+                                 Fec_Fin_Acumulacion = q.Fec_Fin_Acumulacion,
+                                 pe_cedulaRuc = q.pe_cedulaRuc,
+                                 pe_nombreCompleto = q.pe_apellido + " " + q.pe_nombre,
+                                 ru_descripcion = q.ru_descripcion,
+                                 em_codigo = q.em_codigo
+                             }).ToList();
+
                 }
 
                 return Lista;
@@ -49,9 +49,9 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == IdEmpresa 
+                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == IdEmpresa
                     && q.IdEmpleado == IdEmpleado
-                    && q.IdRubro==IdRubro);
+                    && q.IdRubro == IdRubro);
                     if (Entity == null) return null;
 
                     info = new ro_empleado_x_rubro_acumulado_Info
@@ -82,7 +82,7 @@ namespace Core.Erp.Data.RRHH
                               where q.IdEmpresa == IdEmpresa
                               && q.IdEmpleado == IdEmpleado
                               && q.IdRubro == IdRubro
-                    select q;
+                              select q;
 
                     if (lst.Count() > 0)
                         return true;
@@ -111,26 +111,26 @@ namespace Core.Erp.Data.RRHH
                         Fec_Inicio_Acumulacion = info.Fec_Inicio_Acumulacion,
                         Fec_Fin_Acumulacion = info.Fec_Inicio_Acumulacion,
                         FechaIngresa = info.FechaIngresa = DateTime.Now,
-                        UsuarioIngresa=info.UsuarioIngresa
-                        
+                        UsuarioIngresa = info.UsuarioIngresa
+
                     };
                     Context.ro_empleado_x_rubro_acumulado.Add(Entity);
 
-                    var Secuencia = 1;
-                    foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
-                    {
-                        ro_empleado_x_rubro_acumulado_detalle Entity_Det = new ro_empleado_x_rubro_acumulado_detalle
-                        {
-                            IdEmpresa = info.IdEmpresa,
-                            IdEmpleado = info.IdEmpleado,
-                            IdRubro = info.IdRubro,
-                            IdRubroContabilizacion = item.IdRubroContabilizacion,
-                            IdJornada = item.IdJornada,
-                            Secuencia = Secuencia++
+                    //var Secuencia = 1;
+                    //foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
+                    //{
+                    //    ro_empleado_x_rubro_acumulado_detalle Entity_Det = new ro_empleado_x_rubro_acumulado_detalle
+                    //    {
+                    //        IdEmpresa = info.IdEmpresa,
+                    //        IdEmpleado = info.IdEmpleado,
+                    //        IdRubro = info.IdRubro,
+                    //        IdRubroContabilizacion = item.IdRubroContabilizacion,
+                    //        IdJornada = item.IdJornada,
+                    //        Secuencia = Secuencia++
 
-                        };
-                        Context.ro_empleado_x_rubro_acumulado_detalle.Add(Entity_Det);
-                    }
+                    //    };
+                    //    Context.ro_empleado_x_rubro_acumulado_detalle.Add(Entity_Det);
+                    //}
 
                     Context.SaveChanges();
                 }
@@ -155,24 +155,24 @@ namespace Core.Erp.Data.RRHH
                     if (Entity == null)
                         return false;
 
-                    var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
-                    Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);
+                    //var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
+                    //Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);
 
-                    if (info.lst_empleado_x_rubro_acumulado_detalle.Count() > 0)
-                    {
-                        foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
-                        {
-                            Context.ro_empleado_x_rubro_acumulado_detalle.Add(new ro_empleado_x_rubro_acumulado_detalle
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdEmpleado = info.IdEmpleado,
-                                IdRubro = info.IdRubro,                                
-                                Secuencia = item.Secuencia,
-                                IdJornada = item.IdJornada,
-                                IdRubroContabilizacion = item.IdRubroContabilizacion
-                            });
-                        }
-                    }
+                    //if (info.lst_empleado_x_rubro_acumulado_detalle.Count() > 0)
+                    //{
+                    //    foreach (var item in info.lst_empleado_x_rubro_acumulado_detalle)
+                    //    {
+                    //        Context.ro_empleado_x_rubro_acumulado_detalle.Add(new ro_empleado_x_rubro_acumulado_detalle
+                    //        {
+                    //            IdEmpresa = info.IdEmpresa,
+                    //            IdEmpleado = info.IdEmpleado,
+                    //            IdRubro = info.IdRubro,
+                    //            Secuencia = item.Secuencia,
+                    //            IdJornada = item.IdJornada,
+                    //            IdRubroContabilizacion = item.IdRubroContabilizacion
+                    //        });
+                    //    }
+                    //}
 
                     Context.SaveChanges();
                 }
@@ -192,15 +192,15 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa 
+                    ro_empleado_x_rubro_acumulado Entity = Context.ro_empleado_x_rubro_acumulado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
                     && q.IdRubro == info.IdRubro
-                    && q.IdEmpleado==info.IdEmpleado);
+                    && q.IdEmpleado == info.IdEmpleado);
                     if (Entity == null)
                         return false;
 
-                    var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
+                    //var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
 
-                    Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);
+                    //Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);
                     Context.ro_empleado_x_rubro_acumulado.Remove(Entity);
 
                     Context.SaveChanges();

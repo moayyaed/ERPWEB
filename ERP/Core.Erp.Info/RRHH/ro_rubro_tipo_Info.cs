@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
     public class ro_rubro_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public string IdRubro { get; set; }
         [Required(ErrorMessage = "El campo Código es obligatorio")]
@@ -49,7 +50,8 @@ namespace Core.Erp.Info.RRHH
 
         public string rub_GrupoResumen { get; set; }
         public bool rub_ContPorEmpleado { get; set; }
-
+        public Nullable<bool> rub_ContPorJornada { get; set; }
+        public List<ro_rubro_tipo_x_jornada_Info> lst_rubro_jornada { get; set; }
 
     }
 }

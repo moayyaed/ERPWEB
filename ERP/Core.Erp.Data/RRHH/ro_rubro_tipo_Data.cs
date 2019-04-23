@@ -263,8 +263,8 @@ namespace Core.Erp.Data.RRHH
                         rub_acumula = Entity.rub_acumula,
                         rub_AplicaIR =Entity.rub_AplicaIR,
                         rub_GrupoResumen=Entity.rub_GrupoResumen,
-                        rub_ContPorEmpleado = Entity.rub_ContPorEmpleado
-
+                        rub_ContPorEmpleado = Entity.rub_ContPorEmpleado,
+                        rub_ContPorJornada = Entity.rub_ContPorJornada
                     };
                 }
 
@@ -331,7 +331,8 @@ namespace Core.Erp.Data.RRHH
                         rub_provision = info.rub_provision,
                         rub_aplica_IESS = info.rub_aplica_IESS,                         
                         rub_GrupoResumen = info.rub_GrupoResumen == "" ? null : info.rub_GrupoResumen,
-                        rub_ContPorEmpleado = info.rub_ContPorEmpleado
+                        rub_ContPorEmpleado = info.rub_ContPorEmpleado,
+                        rub_ContPorJornada = info.rub_ContPorJornada
                     };
                     Context.ro_rubro_tipo.Add(Entity);
                     Context.SaveChanges();
@@ -373,6 +374,7 @@ namespace Core.Erp.Data.RRHH
                     Entity.rub_AplicaIR = info.rub_AplicaIR;
                     Entity.rub_GrupoResumen = info.rub_GrupoResumen == "" ? null : info.rub_GrupoResumen;
                     Entity.rub_ContPorEmpleado = info.rub_ContPorEmpleado;
+                    Entity.rub_ContPorJornada = info.rub_ContPorJornada;
 
                     Context.SaveChanges();
                 }

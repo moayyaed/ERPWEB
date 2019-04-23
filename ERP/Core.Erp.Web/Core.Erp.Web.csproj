@@ -10016,6 +10016,8 @@
     <Content Include="Areas\RRHH\Views\EmpleadoRubroAcumulado\_GridViewPartial_rubros_acumulados_detalle.cshtml" />
     <Content Include="Areas\RRHH\Views\EmpleadoRubroAcumulado\_CmbRubro.cshtml" />
     <Content Include="Areas\RRHH\Views\EmpleadoRubroAcumulado\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\Rubro\_GridViewPartial_rubros_x_jornada.cshtml" />
+    <Content Include="Areas\RRHH\Views\Rubro\_CmbRubro.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
