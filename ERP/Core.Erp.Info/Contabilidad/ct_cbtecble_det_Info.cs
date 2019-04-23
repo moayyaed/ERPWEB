@@ -28,6 +28,6 @@ namespace Core.Erp.Info.Contabilidad
         public double dc_Valor_haber { get; set; }
         public string pc_Cuenta { get; set; }
         public string Descripcion { get; set; }
-
+        public int? IdSucursal { get; set; }
     }
 }
