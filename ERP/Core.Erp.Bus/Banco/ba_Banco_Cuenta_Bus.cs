@@ -32,6 +32,19 @@ namespace Core.Erp.Bus.Banco
             }
         }
 
+        public bool ValidarSaldoCuenta(int IdEmpresa, string IdCtaCble, double Valor)
+        {
+            try
+            {
+                return odata.ValidarSaldoCuenta(IdEmpresa, IdCtaCble, Valor);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public ba_Banco_Cuenta_Info get_info(int IdEmpresa, int idBanco)
         {
             try
