@@ -335,6 +335,22 @@ namespace Core.Erp.Data.RRHH
                         rub_ContPorJornada = info.rub_ContPorJornada
                     };
                     Context.ro_rubro_tipo.Add(Entity);
+
+                    var Secuencia = 1;
+                    foreach (var item in info.lst_rubro_jornada)
+                    {
+                        ro_rubro_tipo_x_jornada Entity_Det = new ro_rubro_tipo_x_jornada
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdRubro = info.IdRubro,
+                            IdRubroContabilizacion = item.IdRubroContabilizacion,
+                            IdJornada = item.IdJornada,
+                            Secuencia = Secuencia++
+
+                        };
+                        Context.ro_rubro_tipo_x_jornada.Add(Entity_Det);
+                    }
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -375,6 +391,25 @@ namespace Core.Erp.Data.RRHH
                     Entity.rub_GrupoResumen = info.rub_GrupoResumen == "" ? null : info.rub_GrupoResumen;
                     Entity.rub_ContPorEmpleado = info.rub_ContPorEmpleado;
                     Entity.rub_ContPorJornada = info.rub_ContPorJornada;
+
+
+                    var lst_det = Context.ro_rubro_tipo_x_jornada.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdRubro == info.IdRubro);
+                    Context.ro_rubro_tipo_x_jornada.RemoveRange(lst_det);
+
+                    if (info.lst_rubro_jornada.Count() > 0)
+                    {
+                        foreach (var item in info.lst_rubro_jornada)
+                        {
+                            Context.ro_rubro_tipo_x_jornada.Add(new ro_rubro_tipo_x_jornada
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdRubro = info.IdRubro,
+                                Secuencia = item.Secuencia,
+                                IdJornada = item.IdJornada,
+                                IdRubroContabilizacion = item.IdRubroContabilizacion
+                            });
+                        }
+                    }
 
                     Context.SaveChanges();
                 }

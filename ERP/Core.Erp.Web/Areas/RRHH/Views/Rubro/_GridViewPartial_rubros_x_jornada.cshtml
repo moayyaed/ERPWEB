@@ -59,7 +59,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
             {
-                Html.RenderPartial("_CmbRubro", DataBinder.Eval(c.DataItem, "IdRubro"));
+                Html.RenderPartial("_CmbRubro", DataBinder.Eval(c.DataItem, "IdRubroContabilizacion"));
             });
         });
         settings.Columns.Add(column =>

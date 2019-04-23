@@ -71,7 +71,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_rubro_tipo_Info> model = bus_rubro.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa); 
+
+                List<ro_rubro_tipo_Info> model = bus_rubro.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_rubro", model);
             }
             catch (Exception)
@@ -87,7 +89,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     info.lst_rubro_jornada = ListaDetalle.get_list(info.IdTransaccionSession);
                     if (!bus_rubro.guardarDB(info))
                     {
@@ -116,8 +117,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     rub_GrupoResumen = "",
                     rub_grupo = "",
                     IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
-                    lst_rubro_jornada = new List<ro_rubro_tipo_x_jornada_Info>()
-                };
+                    lst_rubro_jornada = new List<ro_rubro_tipo_x_jornada_Info>(),
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
+            };
 
                 ListaDetalle.set_list(info.lst_rubro_jornada, info.IdTransaccionSession);
                 cargar_combo();
@@ -138,6 +140,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     info.lst_rubro_jornada = ListaDetalle.get_list(info.IdTransaccionSession);
+                    info.IdUsuarioUltMod = SessionFixed.IdUsuario;
+
                     if (!bus_rubro.modificarDB(info))
                     {
                         cargar_combo();
@@ -162,7 +166,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                ro_rubro_tipo_Info model = bus_rubro.get_info(GetIdEmpresa(), IdRubro);
+                ro_rubro_tipo_Info model = bus_rubro.get_info(IdEmpresa, IdRubro);
 
                 if (model == null)
                     return RedirectToAction("Index");
@@ -175,8 +179,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 cargar_combo();
                 return View(model);
-                //return View(bus_rubro.get_info(GetIdEmpresa(), IdRubro));
-
             }
             catch (Exception)
             {
@@ -190,7 +192,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                //info.lst_rubro_jornada = ListaDetalle.get_list(info.IdTransaccionSession);
                     if (!bus_rubro.anularDB(info))
                     {
                         cargar_combo();
@@ -212,8 +213,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 cargar_combo();
 
-                ro_rubro_tipo_Info model = bus_rubro.get_info(GetIdEmpresa(), IdRubro);
-
+                ro_rubro_tipo_Info model = bus_rubro.get_info(IdEmpresa, IdRubro);
+                model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 model.lst_rubro_jornada = bus_rubro_jornada.get_list(IdEmpresa, IdRubro);
                 ListaDetalle.set_list(model.lst_rubro_jornada, model.IdTransaccionSession);
@@ -277,7 +278,45 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        
+
+        #region Funciones del Detalle
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ro_rubro_tipo_x_jornada_Info info_det)
+        {
+            if (ModelState.IsValid)
+                ListaDetalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            List<ro_rubro_tipo_x_jornada_Info> model = new List<ro_rubro_tipo_x_jornada_Info>();
+            model = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            carga_combo_detalle();
+            return PartialView("_GridViewPartial_rubros_x_jornada", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_rubro_tipo_x_jornada_Info info_det)
+        {
+
+            if (ModelState.IsValid)
+            {
+                ListaDetalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            }
+               
+
+            List<ro_rubro_tipo_x_jornada_Info> model = new List<ro_rubro_tipo_x_jornada_Info>();
+            model = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            carga_combo_detalle();
+            return PartialView("_GridViewPartial_rubros_x_jornada", model);
+        }
+
+        public ActionResult EditingDelete(int secuencia)
+        {
+            ListaDetalle.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<ro_rubro_tipo_x_jornada_Info> model = new List<ro_rubro_tipo_x_jornada_Info>();
+            model = ListaDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            carga_combo_detalle();
+            return PartialView("_GridViewPartial_rubros_x_jornada", model);
+        }
+        #endregion
     }
 
 
@@ -331,47 +370,60 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             List<ro_rubro_tipo_x_jornada_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            if (info_det.IdRubroContabilizacion != null)
-            {
-                var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
-                if (!string.IsNullOrEmpty(info_rubro.ToString()))
-                    info_det.ru_descripcion = info_rubro.ru_descripcion;
-            }
 
-            if (info_det.IdJornada != 0)
-            {
-                var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
-                if (!string.IsNullOrEmpty(info_jornada.ToString()))
-                    info_det.Descripcion = info_jornada.Descripcion;
-            }
+            var existe = list.Where(q=> q.IdJornada == info_det.IdJornada && q.IdRubroContabilizacion == info_det.IdRubroContabilizacion).ToList();
 
-            list.Add(info_det);
+            if (existe.Count() > 0)
+            {
+                if (info_det.IdRubroContabilizacion != null)
+                {
+                    var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
+                    if (!string.IsNullOrEmpty(info_rubro.ToString()))
+                        info_det.ru_descripcion = info_rubro.ru_descripcion;
+                }
+
+                if (info_det.IdJornada != 0)
+                {
+                    var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
+                    if (!string.IsNullOrEmpty(info_jornada.ToString()))
+                        info_det.Descripcion = info_jornada.Descripcion;
+                }
+
+                list.Add(info_det);
+            }
+            
         }
 
         public void UpdateRow(ro_rubro_tipo_x_jornada_Info info_det, decimal IdTransaccionSession)
         {
             int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
 
-            ro_rubro_tipo_x_jornada_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
-            edited_info.IdJornada = info_det.IdJornada;
-            edited_info.IdRubroContabilizacion = info_det.IdRubroContabilizacion;
+            ro_rubro_tipo_x_jornada_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();            
 
-            if (info_det.IdRubroContabilizacion != null)
+            List<ro_rubro_tipo_x_jornada_Info> list = get_list(IdTransaccionSession);
+            var existe = list.Where(q => q.IdJornada == info_det.IdJornada && q.IdRubroContabilizacion == info_det.IdRubroContabilizacion).ToList();
+
+            if (existe.Count() > 0)
             {
-                var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
-                if (!string.IsNullOrEmpty(info_rubro.ToString()))
-                    info_det.ru_descripcion = info_rubro.ru_descripcion;
-            }
+                if (info_det.IdRubroContabilizacion != null)
+                {
+                    var info_rubro = bus_rubro.get_info(IdEmpresa, info_det.IdRubroContabilizacion);
+                    if (!string.IsNullOrEmpty(info_rubro.ToString()))
+                        info_det.ru_descripcion = info_rubro.ru_descripcion;
+                }
 
-            if (info_det.IdJornada != 0)
-            {
-                var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
-                if (!string.IsNullOrEmpty(info_jornada.ToString()))
-                    info_det.Descripcion = info_jornada.Descripcion;
-            }
+                if (info_det.IdJornada != 0)
+                {
+                    var info_jornada = bus_jornada.get_info(IdEmpresa, info_det.IdJornada);
+                    if (!string.IsNullOrEmpty(info_jornada.ToString()))
+                        info_det.Descripcion = info_jornada.Descripcion;
+                }
 
-            edited_info.ru_descripcion = info_det.ru_descripcion;
-            edited_info.Descripcion = info_det.Descripcion;
+                edited_info.IdJornada = info_det.IdJornada;
+                edited_info.IdRubroContabilizacion = info_det.IdRubroContabilizacion;
+                edited_info.ru_descripcion = info_det.ru_descripcion;
+                edited_info.Descripcion = info_det.Descripcion;
+            }            
         }
 
         public void DeleteRow(int secuencia, decimal IdTransaccionSession)

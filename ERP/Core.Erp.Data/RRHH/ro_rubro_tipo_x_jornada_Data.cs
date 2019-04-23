@@ -23,7 +23,9 @@ namespace Core.Erp.Data.RRHH
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdRubro = q.IdRubro,
+                                 Secuencia = q.Secuencia,
                                  IdJornada = q.IdJornada,
+                                 IdRubroContabilizacion = q.IdRubroContabilizacion,
                                  ru_descripcion = q.ru_descripcion,
                                  Descripcion = q.Descripcion
                              }).ToList();
