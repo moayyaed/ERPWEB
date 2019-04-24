@@ -43,7 +43,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_rol_Info> model = bus_rol.get_list_decimos(IdEmpresa, IdSucursal);
                 return PartialView("_GridViewPartial_pago_beneficios", model);
             }
@@ -60,8 +60,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.UsuarioIngresa = Session["IdUsuario"].ToString();
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.UsuarioIngresa = SessionFixed.IdUsuario;
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     if (!bus_rol.Decimos(info))
                         return View(info);
                     else
@@ -100,7 +100,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     info.UsuarioIngresa = SessionFixed.IdUsuario;
                     if (!bus_rol.Decimos(info))
                     {
@@ -126,7 +126,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 ro_rol_Info model = new ro_rol_Info();
                 cargar_combos(IdNomina_Tipo, IdNomina_TipoLiqui);
-                IdEmpresa = GetIdEmpresa();
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 model=bus_rol.get_info(IdEmpresa, IdNomina_Tipo, IdNomina_TipoLiqui, IdPeriodo, IdRol);
                 if (model.IdNomina_TipoLiqui == 3)
                     model.decimoIII = true;
@@ -142,21 +142,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         private void cargar_combos(int IdNomina_Tipo, int IdNomina_Tipo_Liqui)
         {
             try
