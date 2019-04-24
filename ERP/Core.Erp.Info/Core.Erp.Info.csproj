@@ -249,15 +249,12 @@
     <Compile Include="General\tb_sis_Impuesto_Info.cs" />
     <Compile Include="General\tb_sis_Impuesto_Tipo_Info.cs" />
     <Compile Include="General\tb_sis_Impuesto_x_ctacble_Info.cs" />
-    <Compile Include="General\tb_sis_log_error_Info.cs" />
     <Compile Include="General\tb_sis_reporte_diseno_Info.cs" />
     <Compile Include="General\tb_sis_reporte_Info.cs" />
     <Compile Include="General\tb_sis_reporte_x_seg_usuario_Info.cs" />
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Info.cs" />
     <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Info.cs" />
     <Compile Include="General\tb_sucursal_Info.cs" />
-    <Compile Include="General\tb_TarjetaCredito_Info.cs" />
-    <Compile Include="General\tb_TarjetaCredito_x_cp_proveedor_Info.cs" />
     <Compile Include="General\tb_transportista_Info.cs" />
     <Compile Include="General\tb_visor_video_Info.cs" />
     <Compile Include="Helps\cl_enumeradores.cs" />
@@ -463,7 +460,6 @@
     <Compile Include="RRHH\ro_contrato_Info.cs" />
     <Compile Include="RRHH\ro_departamento_Info.cs" />
     <Compile Include="RRHH\ro_division_Info.cs" />
-    <Compile Include="RRHH\ro_DocumentoxEmp_Info.cs" />
     <Compile Include="RRHH\ro_EmpleadoFoto_Info.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Info.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Info.cs" />
@@ -471,13 +467,11 @@
     <Compile Include="RRHH\ro_empleado_novedad_det_Info.cs" />
     <Compile Include="RRHH\ro_empleado_novedad_Info.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_det_Info.cs" />
-    <Compile Include="RRHH\ro_empleado_x_CuentaContable_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_division_x_area_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_horario_Info.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_jornada_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Info.cs" />
-    <Compile Include="RRHH\ro_empleado_x_ro_tipoNomina_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_titulos_Info.cs" />

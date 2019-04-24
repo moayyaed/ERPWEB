@@ -14,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+
 
 namespace Core.Erp.Web.Areas.Presupuesto.Controllers
 {
@@ -31,7 +31,6 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
         ct_plancta_Bus bus_PlanCta = new ct_plancta_Bus();
         pre_PresupuestoDet_List Lista_PresupuestoDet = new pre_PresupuestoDet_List();
         List<pre_Presupuesto_Info> lst_Presupuesto = new List<pre_Presupuesto_Info>();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         string mensaje = string.Empty;
         #endregion
 
@@ -277,8 +276,6 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
-
                 ViewBag.error = ex.Message.ToString();
                 return View(model);
             }

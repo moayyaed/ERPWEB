@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+
 using System.Linq;
 using Core.Erp.Web.Reportes.Banco;
 
@@ -26,7 +26,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ct_plancta_Bus bus_cuentacontable = new ct_plancta_Bus();
         ba_Banco_Cuenta_List ListaBanco = new ba_Banco_Cuenta_List();
         ba_Banco_Cbte_List ListaCbte = new ba_Banco_Cbte_List();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+
         ba_Banco_Cuenta_x_tb_sucursal_Bus bus_cta_det = new ba_Banco_Cuenta_x_tb_sucursal_Bus();
         ba_Banco_Det_List List_Det = new ba_Banco_Det_List();
 
@@ -195,7 +195,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

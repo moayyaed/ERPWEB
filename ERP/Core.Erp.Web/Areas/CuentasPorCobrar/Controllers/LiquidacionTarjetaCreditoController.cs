@@ -71,20 +71,20 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #endregion
 
         #region Metodos ComboBox bajo demanda tarjeta
-        tb_TarjetaCredito_Bus bus_tarjeta = new tb_TarjetaCredito_Bus();
-        public ActionResult CmbTarjetaCredito()
-        {
-            decimal model = new decimal();
-            return PartialView("_CmbTarjetaCredito", model);
-        }
-        public List<tb_TarjetaCredito_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
-        {
-            return bus_tarjeta.get_list_bajo_demanda(args);
-        }
-        public tb_TarjetaCredito_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
-        {
-            return bus_tarjeta.get_info_bajo_demanda(args);
-        }
+        //tb_TarjetaCredito_Bus bus_tarjeta = new tb_TarjetaCredito_Bus();
+        //public ActionResult CmbTarjetaCredito()
+        //{
+        //    decimal model = new decimal();
+        //    return PartialView("_CmbTarjetaCredito", model);
+        //}
+        //public List<tb_TarjetaCredito_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        //{
+        //    return bus_tarjeta.get_list_bajo_demanda(args);
+        //}
+        //public tb_TarjetaCredito_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        //{
+        //    return bus_tarjeta.get_info_bajo_demanda(args);
+        //}
         #endregion
 
         #region Index

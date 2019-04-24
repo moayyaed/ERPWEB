@@ -118,11 +118,16 @@ namespace Core.Erp.Web.Areas.General.Controllers
             tb_sis_Impuesto_Info model = bus_impuesto.get_info(IdCod_Impuesto);
             if (model == null)
                 return RedirectToAction("Index");
+            model.info_impuesto_ctacble = new tb_sis_Impuesto_x_ctacble_Info();
             model.info_impuesto_ctacble = bus_impuesto_ctacble.get_info(IdCod_Impuesto, Convert.ToInt32(SessionFixed.IdEmpresa));
-            model.info_impuesto_ctacble.IdEmpresa_cta = IdEmpresa;
-            model.info_impuesto_ctacble.IdCod_Impuesto = model.IdCod_Impuesto;
-            model.IdCtaCble = model.info_impuesto_ctacble.IdCtaCble;
-            model.IdCtaCble_vta = model.info_impuesto_ctacble.IdCtaCble_vta;
+            if (model.info_impuesto_ctacble != null)
+            {
+                model.info_impuesto_ctacble.IdEmpresa_cta = IdEmpresa;
+                model.info_impuesto_ctacble.IdCod_Impuesto = model.IdCod_Impuesto;
+                model.IdCtaCble = model.info_impuesto_ctacble.IdCtaCble;
+                model.IdCtaCble_vta = model.info_impuesto_ctacble.IdCtaCble_vta;
+            }
+                       
             cargar_combos();
             return View(model);
         }

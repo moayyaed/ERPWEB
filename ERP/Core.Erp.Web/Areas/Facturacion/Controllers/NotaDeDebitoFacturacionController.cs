@@ -17,7 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -48,7 +48,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_nota_x_empresa_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
 
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+
         fa_notaCreDeb_List Lista_Factura = new fa_notaCreDeb_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -607,7 +607,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
                 ViewBag.error = ex.Message.ToString();
                 return View(model);
             }

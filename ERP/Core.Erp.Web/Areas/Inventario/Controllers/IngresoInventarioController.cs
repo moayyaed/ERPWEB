@@ -11,7 +11,6 @@ using Core.Erp.Bus.General;
 using DevExpress.Web;
 using Core.Erp.Web.Helps;
 using Core.Erp.Bus.Contabilidad;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
 using System.IO;
 using ExcelDataReader;
 using Core.Erp.Info.General;
@@ -30,7 +29,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_bodega_Bus bus_bodega;
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 

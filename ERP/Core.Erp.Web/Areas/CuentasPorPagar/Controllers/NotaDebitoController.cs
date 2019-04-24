@@ -17,7 +17,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -45,7 +44,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         List<cp_nota_DebCre_Info> Lista_NotaDebito = new List<cp_nota_DebCre_Info>();
         cp_nota_DebCre_List ListaNotaDebito = new cp_nota_DebCre_List();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -499,7 +498,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

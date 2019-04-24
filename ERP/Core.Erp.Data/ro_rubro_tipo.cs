@@ -18,7 +18,6 @@ namespace Core.Erp.Data
         {
             this.ro_Acta_Finiquito_Detalle = new HashSet<ro_Acta_Finiquito_Detalle>();
             this.ro_Config_Param_contable = new HashSet<ro_Config_Param_contable>();
-            this.ro_empleado_x_CuentaContable = new HashSet<ro_empleado_x_CuentaContable>();
             this.ro_empleado_x_ro_rubro = new HashSet<ro_empleado_x_ro_rubro>();
             this.ro_empleado_x_rubro_acumulado = new HashSet<ro_empleado_x_rubro_acumulado>();
             this.ro_EmpleadoNovedadCargaMasiva = new HashSet<ro_EmpleadoNovedadCargaMasiva>();
@@ -79,7 +78,6 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_Acta_Finiquito_Detalle> ro_Acta_Finiquito_Detalle { get; set; }
         public virtual ro_catalogo ro_catalogo { get; set; }
         public virtual ICollection<ro_Config_Param_contable> ro_Config_Param_contable { get; set; }
-        public virtual ICollection<ro_empleado_x_CuentaContable> ro_empleado_x_CuentaContable { get; set; }
         public virtual ICollection<ro_empleado_x_ro_rubro> ro_empleado_x_ro_rubro { get; set; }
         public virtual ICollection<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
         public virtual ICollection<ro_EmpleadoNovedadCargaMasiva> ro_EmpleadoNovedadCargaMasiva { get; set; }

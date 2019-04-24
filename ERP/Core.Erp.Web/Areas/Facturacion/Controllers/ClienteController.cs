@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+
 using ExcelDataReader;
 using System.IO;
 using Core.Erp.Web.Areas.General.Controllers;
@@ -34,7 +34,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_persona_List ListaPersona = new tb_persona_List();
         fa_cliente_tipo_List ListaTipoCliente = new fa_cliente_tipo_List();
         fa_cliente_List ListaCliente = new fa_cliente_List();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         string mensaje = string.Empty;
         #endregion
         #region Index
@@ -301,7 +300,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

@@ -38,9 +38,7 @@ namespace Core.Erp.Data
         public DbSet<ro_Config_Param_contable> ro_Config_Param_contable { get; set; }
         public DbSet<ro_Departamento> ro_Departamento { get; set; }
         public DbSet<ro_Division> ro_Division { get; set; }
-        public DbSet<ro_DocumentoxEmp> ro_DocumentoxEmp { get; set; }
         public DbSet<ro_empleado_x_horario> ro_empleado_x_horario { get; set; }
-        public DbSet<ro_empleado_x_ro_tipoNomina> ro_empleado_x_ro_tipoNomina { get; set; }
         public DbSet<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
         public DbSet<ro_empleado_x_titulos> ro_empleado_x_titulos { get; set; }
         public DbSet<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
@@ -121,7 +119,6 @@ namespace Core.Erp.Data
         public DbSet<vwro_empleado_x_jornada> vwro_empleado_x_jornada { get; set; }
         public DbSet<ro_empleado_Novedad> ro_empleado_Novedad { get; set; }
         public DbSet<vwro_empleado_Novedad> vwro_empleado_Novedad { get; set; }
-        public DbSet<ro_empleado_x_CuentaContable> ro_empleado_x_CuentaContable { get; set; }
         public DbSet<ro_empleado_x_division_x_area> ro_empleado_x_division_x_area { get; set; }
         public DbSet<vwro_empleado_x_division_x_area> vwro_empleado_x_division_x_area { get; set; }
         public DbSet<vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar> vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar { get; set; }

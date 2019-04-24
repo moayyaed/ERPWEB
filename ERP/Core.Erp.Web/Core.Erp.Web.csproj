@@ -352,6 +352,7 @@
     <Compile Include="Areas\General\Controllers\ImagenesController.cs" />
     <Compile Include="Areas\General\Controllers\ImpuestoController.cs" />
     <Compile Include="Areas\General\Controllers\LogErrorController.cs" />
+    <Compile Include="Areas\General\Controllers\ParametrosGeneralController.cs" />
     <Compile Include="Areas\General\Controllers\ProcesosBancariosPorEmpresaController.cs" />
     <Compile Include="Areas\General\Controllers\ReportesPorUsuarioController.cs" />
     <Compile Include="Areas\General\Controllers\ModuloController.cs" />
@@ -363,8 +364,6 @@
     <Compile Include="Areas\General\Controllers\ReporteController.cs" />
     <Compile Include="Areas\General\Controllers\Reportes_pre_impreso.cs" />
     <Compile Include="Areas\General\Controllers\SucursalController.cs" />
-    <Compile Include="Areas\General\Controllers\TarjetaCreditoController.cs" />
-    <Compile Include="Areas\General\Controllers\TarjetaCreditoPorProveedorController.cs" />
     <Compile Include="Areas\General\Controllers\TipoDocumentoController.cs" />
     <Compile Include="Areas\General\Controllers\TipoDocumentoTalonarioController.cs" />
     <Compile Include="Areas\General\Controllers\TransportistaController.cs" />
@@ -447,7 +446,6 @@
     <Compile Include="Areas\RRHH\Controllers\DepartamentoPorAreaController.cs" />
     <Compile Include="Areas\RRHH\Controllers\DivisionController.cs" />
     <Compile Include="Areas\RRHH\Controllers\EmpleadoController.cs" />
-    <Compile Include="Areas\RRHH\Controllers\EmpleadoCuentaContableController.cs" />
     <Compile Include="Areas\RRHH\Controllers\EmpleadoNovedadController.cs" />
     <Compile Include="Areas\RRHH\Controllers\EmpleadoPorRubroController.cs" />
     <Compile Include="Areas\RRHH\Controllers\EmpleadoRubroAcumuladoController.cs" />
@@ -9625,17 +9623,6 @@
     <Content Include="Areas\General\Views\ProcesosBancariosPorEmpresa\Anular.cshtml" />
     <Content Include="Areas\General\Views\ProcesosBancariosPorEmpresa\_GridViewPartial_procesos_bancarios.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\CodigoSRI\_CmbCuenta_Codigo.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCredito\Index.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCredito\_GridViewPartial_TarjetaCredito.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCredito\Nuevo.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCredito\Modificar.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCredito\Anular.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCreditoPorProveedor\Nuevo.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCreditoPorProveedor\Modificar.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCreditoPorProveedor\Index.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCreditoPorProveedor\Anular.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCreditoPorProveedor\_GridViewPartial_tarjeta_credito_proveedor.cshtml" />
-    <Content Include="Areas\General\Views\TarjetaCreditoPorProveedor\_CmbProveedor_TarjetaCredito.cshtml" />
     <Content Include="Areas\Inventario\Views\Consignacion\_GridViewPartial_Consignacion.cshtml" />
     <Content Include="Areas\Inventario\Views\Consignacion\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\Consignacion\_CmbProveedor_Consignacion.cshtml" />
@@ -9937,16 +9924,11 @@
     <Content Include="Areas\RRHH\Views\EmpleadoNovedad\_CmbSucursal.cshtml" />
     <Content Include="Areas\Banco\Views\NotaDeCreditoBanco\_CmbTipoNota.cshtml" />
     <Content Include="Areas\Banco\Views\NotaDeDebitoBanco\_CmbTipoNota.cshtml" />
-    <Content Include="Areas\RRHH\Views\EmpleadoCuentaContable\Index.cshtml" />
-    <Content Include="Areas\RRHH\Views\EmpleadoCuentaContable\_GridViewPartial_Emp_CtaCont.cshtml" />
-    <Content Include="Areas\RRHH\Views\EmpleadoCuentaContable\_CmbCuenta_Empleado.cshtml" />
-    <Content Include="Areas\RRHH\Views\EmpleadoCuentaContable\_CmbRubro_Emp.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_023.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\_CmbArea_Individual.cshtml" />
     <Content Include="Areas\Inventario\Views\MotivoInventario\_CmbCtaCble.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_015.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_014.cshtml" />
-    <Content Include="Areas\RRHH\Views\EmpleadoCuentaContable\_CmbEmpleado_CtaCon.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_008.cshtml" />
     <Content Include="Areas\Inventario\Views\AuditoriaInventario\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\AuditoriaInventario\_GridViewPartial_CorreccionTransferencias.cshtml" />
@@ -10018,6 +10000,7 @@
     <Content Include="Areas\RRHH\Views\EmpleadoRubroAcumulado\Modificar.cshtml" />
     <Content Include="Areas\RRHH\Views\Rubro\_GridViewPartial_rubros_x_jornada.cshtml" />
     <Content Include="Areas\RRHH\Views\Rubro\_CmbRubro.cshtml" />
+    <Content Include="Areas\General\Views\ParametrosGeneral\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

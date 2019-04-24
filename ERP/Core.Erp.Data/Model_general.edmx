@@ -370,19 +370,6 @@
           <Property Name="Posicion" Type="int" Nullable="false" />
           <Property Name="ApareceCombo_FileReporte" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
-        <EntityType Name="tb_sis_formulario">
-          <Key>
-            <PropertyRef Name="IdFormulario" />
-          </Key>
-          <Property Name="IdFormulario" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="cod_Formulario" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="nom_Formulario" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="CodModulo" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Text" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="observacion" Type="varchar" MaxLength="550" Nullable="false" />
-          <Property Name="estado" Type="bit" Nullable="false" />
-          <Property Name="nom_Asembly" Type="varchar" MaxLength="250" Nullable="false" />
-        </EntityType>
         <EntityType Name="tb_sis_Impuesto">
           <Key>
             <PropertyRef Name="IdCod_Impuesto" />
@@ -413,17 +400,6 @@
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
           <Property Name="observacion" Type="varchar" MaxLength="50" />
           <Property Name="IdCtaCble_vta" Type="varchar" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="tb_sis_log_error">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdError" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdError" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="DescripcionError" Type="varchar(max)" Nullable="false" />
-          <Property Name="Modulo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Accion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tb_sucursal">
           <Key>
@@ -463,37 +439,6 @@
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="IdCatalogo" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="IdNivel" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tb_TarjetaCredito">
-          <Key>
-            <PropertyRef Name="IdTarjeta" />
-          </Key>
-          <Property Name="IdTarjeta" Type="int" Nullable="false" />
-          <Property Name="NombreTarjeta" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_Transac" Type="datetime" />
-          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_UltMod" Type="datetime" />
-          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_UltAnu" Type="datetime" />
-        </EntityType>
-        <EntityType Name="tb_TarjetaCredito_x_cp_proveedor">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdTransaccion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdTransaccion" Type="int" Nullable="false" />
-          <Property Name="IdTarjeta" Type="int" Nullable="false" />
-          <Property Name="IdProveedor" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_Transac" Type="datetime" />
-          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_UltMod" Type="datetime" />
-          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_UltAnu" Type="datetime" />
         </EntityType>
         <EntityType Name="tb_transportista">
           <Key>
@@ -994,18 +939,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tb_sis_formulario_tb_modulo">
-          <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="1" />
-          <End Role="tb_sis_formulario" Type="Self.tb_sis_formulario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_modulo">
-              <PropertyRef Name="CodModulo" />
-            </Principal>
-            <Dependent Role="tb_sis_formulario">
-              <PropertyRef Name="CodModulo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tb_sis_Impuesto_tb_sis_Impuesto_Tipo">
           <End Role="tb_sis_Impuesto_Tipo" Type="Self.tb_sis_Impuesto_Tipo" Multiplicity="1" />
           <End Role="tb_sis_Impuesto" Type="Self.tb_sis_Impuesto" Multiplicity="*" />
@@ -1116,18 +1049,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito">
-          <End Role="tb_TarjetaCredito" Type="Self.tb_TarjetaCredito" Multiplicity="1" />
-          <End Role="tb_TarjetaCredito_x_cp_proveedor" Type="Self.tb_TarjetaCredito_x_cp_proveedor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_TarjetaCredito">
-              <PropertyRef Name="IdTarjeta" />
-            </Principal>
-            <Dependent Role="tb_TarjetaCredito_x_cp_proveedor">
-              <PropertyRef Name="IdTarjeta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Model_generalStoreContainer">
           <EntitySet Name="tb_banco" EntityType="Self.tb_banco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_banco_procesos_bancarios_x_empresa" EntityType="Self.tb_banco_procesos_bancarios_x_empresa" Schema="dbo" store:Type="Tables" />
@@ -1152,15 +1073,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_sis_Documento_Tipo_Reporte_x_Empresa" EntityType="Self.tb_sis_Documento_Tipo_Reporte_x_Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo_Talonario" EntityType="Self.tb_sis_Documento_Tipo_Talonario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo_x_Empresa" EntityType="Self.tb_sis_Documento_Tipo_x_Empresa" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_sis_formulario" EntityType="Self.tb_sis_formulario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Impuesto" EntityType="Self.tb_sis_Impuesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Impuesto_Tipo" EntityType="Self.tb_sis_Impuesto_Tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Impuesto_x_ctacble" EntityType="Self.tb_sis_Impuesto_x_ctacble" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_sis_log_error" EntityType="Self.tb_sis_log_error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sucursal" EntityType="Self.tb_sucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sucursal_FormaPago_x_fa_NivelDescuento" EntityType="Self.tb_sucursal_FormaPago_x_fa_NivelDescuento" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_TarjetaCredito" EntityType="Self.tb_TarjetaCredito" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_TarjetaCredito_x_cp_proveedor" EntityType="Self.tb_TarjetaCredito_x_cp_proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_transportista" EntityType="Self.tb_transportista" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_visor_video" EntityType="Self.tb_visor_video" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_usuario_ftp" EntityType="Self.tbl_usuario_ftp" Schema="dbo" store:Type="Tables" />
@@ -1343,10 +1260,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_empresa" EntitySet="tb_empresa" />
             <End Role="tb_sis_Documento_Tipo_x_Empresa" EntitySet="tb_sis_Documento_Tipo_x_Empresa" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_sis_formulario_tb_modulo" Association="Self.FK_tb_sis_formulario_tb_modulo">
-            <End Role="tb_modulo" EntitySet="tb_modulo" />
-            <End Role="tb_sis_formulario" EntitySet="tb_sis_formulario" />
-          </AssociationSet>
           <AssociationSet Name="FK_tb_sis_Impuesto_tb_sis_Impuesto_Tipo" Association="Self.FK_tb_sis_Impuesto_tb_sis_Impuesto_Tipo">
             <End Role="tb_sis_Impuesto_Tipo" EntitySet="tb_sis_Impuesto_Tipo" />
             <End Role="tb_sis_Impuesto" EntitySet="tb_sis_Impuesto" />
@@ -1383,10 +1296,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_empresa" EntitySet="tb_empresa" />
             <End Role="tb_sucursal" EntitySet="tb_sucursal" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito" Association="Self.FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito">
-            <End Role="tb_TarjetaCredito" EntitySet="tb_TarjetaCredito" />
-            <End Role="tb_TarjetaCredito_x_cp_proveedor" EntitySet="tb_TarjetaCredito_x_cp_proveedor" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1412,11 +1321,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_sis_Documento_Tipo_Reporte_x_Empresa" EntityType="Model_general.tb_sis_Documento_Tipo_Reporte_x_Empresa" />
           <EntitySet Name="tb_sis_Documento_Tipo_Talonario" EntityType="Model_general.tb_sis_Documento_Tipo_Talonario" />
           <EntitySet Name="tb_sis_Documento_Tipo_x_Empresa" EntityType="Model_general.tb_sis_Documento_Tipo_x_Empresa" />
-          <EntitySet Name="tb_sis_formulario" EntityType="Model_general.tb_sis_formulario" />
           <EntitySet Name="tb_sis_Impuesto" EntityType="Model_general.tb_sis_Impuesto" />
           <EntitySet Name="tb_sis_Impuesto_Tipo" EntityType="Model_general.tb_sis_Impuesto_Tipo" />
           <EntitySet Name="tb_sis_Impuesto_x_ctacble" EntityType="Model_general.tb_sis_Impuesto_x_ctacble" />
-          <EntitySet Name="tb_sis_log_error" EntityType="Model_general.tb_sis_log_error" />
           <EntitySet Name="tb_transportista" EntityType="Model_general.tb_transportista" />
           <EntitySet Name="tb_visor_video" EntityType="Model_general.tb_visor_video" />
           <EntitySet Name="tbl_usuario_ftp" EntityType="Model_general.tbl_usuario_ftp" />
@@ -1473,10 +1380,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_ciudad" EntitySet="tb_ciudad" />
             <End Role="tb_parroquia" EntitySet="tb_parroquia" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_sis_formulario_tb_modulo" Association="Model_general.FK_tb_sis_formulario_tb_modulo">
-            <End Role="tb_modulo" EntitySet="tb_modulo" />
-            <End Role="tb_sis_formulario" EntitySet="tb_sis_formulario" />
-          </AssociationSet>
           <AssociationSet Name="FK_tb_provincia_tb_pais" Association="Model_general.FK_tb_provincia_tb_pais">
             <End Role="tb_pais" EntitySet="tb_pais" />
             <End Role="tb_provincia" EntitySet="tb_provincia" />
@@ -1523,13 +1426,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="vwtb_bodega_x_sucursal" EntityType="Model_general.vwtb_bodega_x_sucursal" />
           <EntitySet Name="vwtb_banco_procesos_bancarios_x_empresa" EntityType="Model_general.vwtb_banco_procesos_bancarios_x_empresa" />
           <EntitySet Name="tb_persona_tipo" EntityType="Model_general.tb_persona_tipo" />
-          <EntitySet Name="tb_TarjetaCredito" EntityType="Model_general.tb_TarjetaCredito" />
-          <EntitySet Name="tb_TarjetaCredito_x_cp_proveedor" EntityType="Model_general.tb_TarjetaCredito_x_cp_proveedor" />
           <EntitySet Name="vwtb_TarjetaCredito_x_cp_proveedor" EntityType="Model_general.vwtb_TarjetaCredito_x_cp_proveedor" />
-          <AssociationSet Name="FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito" Association="Model_general.FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito">
-            <End Role="tb_TarjetaCredito" EntitySet="tb_TarjetaCredito" />
-            <End Role="tb_TarjetaCredito_x_cp_proveedor" EntitySet="tb_TarjetaCredito_x_cp_proveedor" />
-          </AssociationSet>
           <EntitySet Name="tb_empresa" EntityType="Model_general.tb_empresa" />
           <AssociationSet Name="FK_tb_sis_Documento_Tipo_x_Empresa_tb_empresa" Association="Model_general.FK_tb_sis_Documento_Tipo_x_Empresa_tb_empresa">
             <End Role="tb_empresa" EntitySet="tb_empresa" />
@@ -1722,7 +1619,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nom_Carpeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Se_Cierra" Type="Boolean" />
-          <NavigationProperty Name="tb_sis_formulario" Relationship="Model_general.FK_tb_sis_formulario_tb_modulo" FromRole="tb_modulo" ToRole="tb_sis_formulario" />
           <NavigationProperty Name="tb_sis_reporte" Relationship="Model_general.FK_tb_sis_reporte_tb_modulo" FromRole="tb_modulo" ToRole="tb_sis_reporte" />
         </EntityType>
         <EntityType Name="tb_moneda">
@@ -1918,20 +1814,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <NavigationProperty Name="tb_sis_Documento_Tipo_Talonario" Relationship="Model_general.FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo_x_Empresa" FromRole="tb_sis_Documento_Tipo_x_Empresa" ToRole="tb_sis_Documento_Tipo_Talonario" />
           <NavigationProperty Name="tb_empresa" Relationship="Model_general.FK_tb_sis_Documento_Tipo_x_Empresa_tb_empresa" FromRole="tb_sis_Documento_Tipo_x_Empresa" ToRole="tb_empresa" />
         </EntityType>
-        <EntityType Name="tb_sis_formulario">
-          <Key>
-            <PropertyRef Name="IdFormulario" />
-          </Key>
-          <Property Name="IdFormulario" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="cod_Formulario" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="nom_Formulario" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CodModulo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Text" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="observacion" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Boolean" Nullable="false" />
-          <Property Name="nom_Asembly" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tb_modulo" Relationship="Model_general.FK_tb_sis_formulario_tb_modulo" FromRole="tb_sis_formulario" ToRole="tb_modulo" />
-        </EntityType>
         <EntityType Name="tb_sis_Impuesto">
           <Key>
             <PropertyRef Name="IdCod_Impuesto" />
@@ -1967,17 +1849,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble_vta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tb_sis_Impuesto" Relationship="Model_general.FK_tb_sis_Impuesto_x_ctacble_tb_sis_Impuesto" FromRole="tb_sis_Impuesto_x_ctacble" ToRole="tb_sis_Impuesto" />
-        </EntityType>
-        <EntityType Name="tb_sis_log_error">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdError" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdError" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="DescripcionError" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Modulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Accion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tb_transportista">
           <Key>
@@ -2206,18 +2077,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tb_sis_formulario_tb_modulo">
-          <End Type="Model_general.tb_modulo" Role="tb_modulo" Multiplicity="1" />
-          <End Type="Model_general.tb_sis_formulario" Role="tb_sis_formulario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_modulo">
-              <PropertyRef Name="CodModulo" />
-            </Principal>
-            <Dependent Role="tb_sis_formulario">
-              <PropertyRef Name="CodModulo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tb_provincia_tb_pais">
           <End Type="Model_general.tb_pais" Role="tb_pais" Multiplicity="1" />
           <End Type="Model_general.tb_provincia" Role="tb_provincia" Multiplicity="*" />
@@ -2441,39 +2300,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Descricpion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tb_TarjetaCredito">
-          <Key>
-            <PropertyRef Name="IdTarjeta" />
-          </Key>
-          <Property Name="IdTarjeta" Type="Int32" Nullable="false" />
-          <Property Name="NombreTarjeta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tb_TarjetaCredito_x_cp_proveedor" Relationship="Model_general.FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito" FromRole="tb_TarjetaCredito" ToRole="tb_TarjetaCredito_x_cp_proveedor" />
-        </EntityType>
-        <EntityType Name="tb_TarjetaCredito_x_cp_proveedor">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdTransaccion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTransaccion" Type="Int32" Nullable="false" />
-          <Property Name="IdTarjeta" Type="Int32" Nullable="false" />
-          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tb_TarjetaCredito" Relationship="Model_general.FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito" FromRole="tb_TarjetaCredito_x_cp_proveedor" ToRole="tb_TarjetaCredito" />
-        </EntityType>
         <EntityType Name="vwtb_TarjetaCredito_x_cp_proveedor">
           <Key>
             <PropertyRef Name="IdTarjeta" />
@@ -2497,18 +2323,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="IdTransaccion" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito">
-          <End Type="Model_general.tb_TarjetaCredito" Role="tb_TarjetaCredito" Multiplicity="1" />
-          <End Type="Model_general.tb_TarjetaCredito_x_cp_proveedor" Role="tb_TarjetaCredito_x_cp_proveedor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_TarjetaCredito">
-              <PropertyRef Name="IdTarjeta" />
-            </Principal>
-            <Dependent Role="tb_TarjetaCredito_x_cp_proveedor">
-              <PropertyRef Name="IdTarjeta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tb_empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3063,20 +2877,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_sis_formulario">
-            <EntityTypeMapping TypeName="Model_general.tb_sis_formulario">
-              <MappingFragment StoreEntitySet="tb_sis_formulario">
-                <ScalarProperty Name="nom_Asembly" ColumnName="nom_Asembly" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="observacion" ColumnName="observacion" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="CodModulo" ColumnName="CodModulo" />
-                <ScalarProperty Name="nom_Formulario" ColumnName="nom_Formulario" />
-                <ScalarProperty Name="cod_Formulario" ColumnName="cod_Formulario" />
-                <ScalarProperty Name="IdFormulario" ColumnName="IdFormulario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_sis_Impuesto">
             <EntityTypeMapping TypeName="Model_general.tb_sis_Impuesto">
               <MappingFragment StoreEntitySet="tb_sis_Impuesto">
@@ -3107,17 +2907,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
                 <ScalarProperty Name="IdEmpresa_cta" ColumnName="IdEmpresa_cta" />
                 <ScalarProperty Name="IdCod_Impuesto" ColumnName="IdCod_Impuesto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_sis_log_error">
-            <EntityTypeMapping TypeName="Model_general.tb_sis_log_error">
-              <MappingFragment StoreEntitySet="tb_sis_log_error">
-                <ScalarProperty Name="Accion" ColumnName="Accion" />
-                <ScalarProperty Name="Modulo" ColumnName="Modulo" />
-                <ScalarProperty Name="DescripcionError" ColumnName="DescripcionError" />
-                <ScalarProperty Name="IdError" ColumnName="IdError" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3290,38 +3079,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
               <MappingFragment StoreEntitySet="tb_persona_tipo">
                 <ScalarProperty Name="Descricpion" ColumnName="Descricpion" />
                 <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_TarjetaCredito">
-            <EntityTypeMapping TypeName="Model_general.tb_TarjetaCredito">
-              <MappingFragment StoreEntitySet="tb_TarjetaCredito">
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="NombreTarjeta" ColumnName="NombreTarjeta" />
-                <ScalarProperty Name="IdTarjeta" ColumnName="IdTarjeta" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_TarjetaCredito_x_cp_proveedor">
-            <EntityTypeMapping TypeName="Model_general.tb_TarjetaCredito_x_cp_proveedor">
-              <MappingFragment StoreEntitySet="tb_TarjetaCredito_x_cp_proveedor">
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="IdTarjeta" ColumnName="IdTarjeta" />
-                <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

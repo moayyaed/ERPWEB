@@ -24,11 +24,9 @@
         <EntityTypeShape EntityType="Model_general.tb_sis_Documento_Tipo_Reporte_x_Empresa" Width="1.5" PointX="15.25" PointY="24.125" />
         <EntityTypeShape EntityType="Model_general.tb_sis_Documento_Tipo_Talonario" Width="1.5" PointX="15.25" PointY="19.125" />
         <EntityTypeShape EntityType="Model_general.tb_sis_Documento_Tipo_x_Empresa" Width="1.5" PointX="13" PointY="18.375" />
-        <EntityTypeShape EntityType="Model_general.tb_sis_formulario" Width="1.5" PointX="17" PointY="1.625" />
         <EntityTypeShape EntityType="Model_general.tb_sis_Impuesto" Width="1.5" PointX="10" PointY="1.625" />
         <EntityTypeShape EntityType="Model_general.tb_sis_Impuesto_Tipo" Width="1.5" PointX="7.75" PointY="2.25" />
         <EntityTypeShape EntityType="Model_general.tb_sis_Impuesto_x_ctacble" Width="1.5" PointX="12.25" PointY="2" />
-        <EntityTypeShape EntityType="Model_general.tb_sis_log_error" Width="1.5" PointX="5.75" PointY="16.375" />
         <EntityTypeShape EntityType="Model_general.tb_transportista" Width="1.5" PointX="7.75" PointY="16.375" />
         <EntityTypeShape EntityType="Model_general.tb_visor_video" Width="1.5" PointX="16.75" PointY="5.375" />
         <EntityTypeShape EntityType="Model_general.tbl_usuario_ftp" Width="1.5" PointX="16.75" PointY="9.375" />
@@ -49,7 +47,6 @@
         <AssociationConnector Association="Model_general.FK_tb_persona_tb_Catalogo6" />
         <AssociationConnector Association="Model_general.FK_tb_ciudad_tb_provincia" />
         <AssociationConnector Association="Model_general.FK_tb_parroquia_tb_ciudad" />
-        <AssociationConnector Association="Model_general.FK_tb_sis_formulario_tb_modulo" />
         <AssociationConnector Association="Model_general.FK_tb_provincia_tb_pais" />
         <AssociationConnector Association="Model_general.FK_tb_region_tb_pais" />
         <AssociationConnector Association="Model_general.FK_tb_provincia_tb_region" />
@@ -65,10 +62,7 @@
         <AssociationConnector Association="Model_general.FK_tb_sis_reporte_x_seg_usuario_tb_sis_reporte" />
         <EntityTypeShape EntityType="Model_general.vwtb_bodega_x_tb_sucursal" Width="1.5" PointX="19.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_general.tb_persona_tipo" Width="1.5" PointX="17.375" PointY="12.75" />
-        <EntityTypeShape EntityType="Model_general.tb_TarjetaCredito" Width="1.5" PointX="19.625" PointY="27.5" />
-        <EntityTypeShape EntityType="Model_general.tb_TarjetaCredito_x_cp_proveedor" Width="1.5" PointX="21.875" PointY="27.25" />
         <EntityTypeShape EntityType="Model_general.vwtb_TarjetaCredito_x_cp_proveedor" Width="1.5" PointX="6.375" PointY="20.75" />
-        <AssociationConnector Association="Model_general.FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito" />
         <EntityTypeShape EntityType="Model_general.tb_empresa" Width="1.5" PointX="10.75" PointY="14.25" />
         <AssociationConnector Association="Model_general.FK_tb_sis_Documento_Tipo_x_Empresa_tb_empresa" />
         <AssociationConnector Association="Model_general.FK_tb_sis_reporte_x_seg_usuario_tb_empresa" />

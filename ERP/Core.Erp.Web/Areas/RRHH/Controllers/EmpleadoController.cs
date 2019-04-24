@@ -13,7 +13,7 @@ using DevExpress.Web;
 using System.IO;
 using Microsoft.SqlServer.Server;
 using Core.Erp.Web.Helps;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+//using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
 using ExcelDataReader;
 using System.Globalization;
 using Core.Erp.Info.Helps;
@@ -44,7 +44,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ro_empleado_x_division_x_area_Bus bus_empleado_x_division_x_area = new ro_empleado_x_division_x_area_Bus();
 
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+        //tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         ro_rubro_tipo_Info_list ListaRubro = new ro_rubro_tipo_Info_list();
         ro_horario_List ListaHorario = new ro_horario_List();
         ro_turno_List ListaTurno = new ro_turno_List();
@@ -806,7 +806,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

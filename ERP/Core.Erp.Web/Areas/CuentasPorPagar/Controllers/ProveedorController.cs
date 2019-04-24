@@ -12,7 +12,6 @@ using Core.Erp.Info.Helps;
 using DevExpress.Web;
 using Core.Erp.Web.Helps;
 using Core.Erp.Info.General;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
 using System.IO;
 using ExcelDataReader;
 using Core.Erp.Web.Areas.General.Controllers;
@@ -35,7 +34,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_proveedor_List ListaProveedor = new cp_proveedor_List();
         cp_proveedor_clase_List ListaClaseProveedor = new cp_proveedor_clase_List();
         tb_persona_List ListaPersona = new tb_persona_List();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         
         #endregion
 
@@ -285,7 +283,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

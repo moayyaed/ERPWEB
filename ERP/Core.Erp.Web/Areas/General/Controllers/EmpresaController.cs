@@ -10,7 +10,7 @@ using DevExpress.Web;
 using Core.Erp.Web.Helps;
 using System.IO;
 using ExcelDataReader;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+
 
 namespace Core.Erp.Web.Areas.General.Controllers
 {
@@ -23,7 +23,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         tb_empresa_List ListaEmpresa = new tb_empresa_List();
         tb_sucursal_List ListaSucursal = new tb_sucursal_List();
         tb_bodega_List ListaBodega = new tb_bodega_List();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+
         public ActionResult Index()
         {
             return View();
@@ -178,7 +178,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

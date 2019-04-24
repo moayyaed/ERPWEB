@@ -679,15 +679,12 @@
     <Compile Include="General\tb_sis_Impuesto_Data.cs" />
     <Compile Include="General\tb_sis_Impuesto_Tipo_Data.cs" />
     <Compile Include="General\tb_sis_Impuesto_x_ctacble_Data.cs" />
-    <Compile Include="General\tb_sis_log_error_Data.cs" />
     <Compile Include="General\tb_sis_reporte_Data.cs" />
     <Compile Include="General\tb_sis_reporte_diseno_Data.cs" />
     <Compile Include="General\tb_sis_reporte_x_seg_usuario_Data.cs" />
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Data.cs" />
     <Compile Include="General\tb_sucursal_Data.cs" />
     <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Data.cs" />
-    <Compile Include="General\tb_TarjetaCredito_Data.cs" />
-    <Compile Include="General\tb_TarjetaCredito_x_cp_proveedor_Data.cs" />
     <Compile Include="General\tb_transportista_Data.cs" />
     <Compile Include="General\tb_visor_video_Data.cs" />
     <Compile Include="Helps\FilesHelper_Data.cs" />
@@ -1392,9 +1389,6 @@
     <Compile Include="ro_Division.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="ro_DocumentoxEmp.cs">
-      <DependentUpon>Model_rrhh.tt</DependentUpon>
-    </Compile>
     <Compile Include="ro_empleado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1419,9 +1413,6 @@
     <Compile Include="ro_empleado_proyeccion_gastos_det.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="ro_empleado_x_CuentaContable.cs">
-      <DependentUpon>Model_rrhh.tt</DependentUpon>
-    </Compile>
     <Compile Include="ro_empleado_x_division_x_area.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1432,9 +1423,6 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_empleado_x_ro_rubro.cs">
-      <DependentUpon>Model_rrhh.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ro_empleado_x_ro_tipoNomina.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_empleado_x_rubro_acumulado.cs">
@@ -1602,7 +1590,6 @@
     <Compile Include="RRHH\ro_contrato_Data.cs" />
     <Compile Include="RRHH\ro_departamento_Data.cs" />
     <Compile Include="RRHH\ro_division_Data.cs" />
-    <Compile Include="RRHH\ro_DocumentoxEmp_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoFoto_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Data.cs" />
@@ -1610,13 +1597,11 @@
     <Compile Include="RRHH\ro_empleado_novedad_Data.cs" />
     <Compile Include="RRHH\ro_empleado_novedad_det_Data.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_det_Data.cs" />
-    <Compile Include="RRHH\ro_empleado_x_CuentaContable_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_division_x_area_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_horario_Data.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_jornada_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Data.cs" />
-    <Compile Include="RRHH\ro_empleado_x_ro_tipoNomina_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_titulos_Data.cs" />
@@ -1898,9 +1883,6 @@
     <Compile Include="tb_sis_Documento_Tipo_x_Empresa.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
-    <Compile Include="tb_sis_formulario.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
     <Compile Include="tb_sis_Impuesto.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -1908,9 +1890,6 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sis_Impuesto_x_ctacble.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tb_sis_log_error.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sis_reporte.cs">
@@ -1926,12 +1905,6 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sucursal_FormaPago_x_fa_NivelDescuento.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tb_TarjetaCredito.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tb_TarjetaCredito_x_cp_proveedor.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_transportista.cs">

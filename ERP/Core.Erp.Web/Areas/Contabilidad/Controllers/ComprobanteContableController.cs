@@ -13,7 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static Core.Erp.Info.General.tb_sis_log_error_InfoList;
+
 
 namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 {
@@ -29,7 +29,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-        tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
+        //tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -389,7 +389,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             }
             catch (Exception ex)
             {
-                SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
+                //SisLogError.set_list((ex.InnerException) == null ? ex.Message.ToString() : ex.InnerException.ToString());
 
                 ViewBag.error = ex.Message.ToString();
                 return View(model);

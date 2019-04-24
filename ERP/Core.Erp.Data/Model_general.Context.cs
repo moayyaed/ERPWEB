@@ -44,11 +44,9 @@ namespace Core.Erp.Data
         public DbSet<tb_sis_Documento_Tipo_Reporte_x_Empresa> tb_sis_Documento_Tipo_Reporte_x_Empresa { get; set; }
         public DbSet<tb_sis_Documento_Tipo_Talonario> tb_sis_Documento_Tipo_Talonario { get; set; }
         public DbSet<tb_sis_Documento_Tipo_x_Empresa> tb_sis_Documento_Tipo_x_Empresa { get; set; }
-        public DbSet<tb_sis_formulario> tb_sis_formulario { get; set; }
         public DbSet<tb_sis_Impuesto> tb_sis_Impuesto { get; set; }
         public DbSet<tb_sis_Impuesto_Tipo> tb_sis_Impuesto_Tipo { get; set; }
         public DbSet<tb_sis_Impuesto_x_ctacble> tb_sis_Impuesto_x_ctacble { get; set; }
-        public DbSet<tb_sis_log_error> tb_sis_log_error { get; set; }
         public DbSet<tb_transportista> tb_transportista { get; set; }
         public DbSet<tb_visor_video> tb_visor_video { get; set; }
         public DbSet<tbl_usuario_ftp> tbl_usuario_ftp { get; set; }
@@ -63,8 +61,6 @@ namespace Core.Erp.Data
         public DbSet<vwtb_bodega_x_sucursal> vwtb_bodega_x_sucursal { get; set; }
         public DbSet<vwtb_banco_procesos_bancarios_x_empresa> vwtb_banco_procesos_bancarios_x_empresa { get; set; }
         public DbSet<tb_persona_tipo> tb_persona_tipo { get; set; }
-        public DbSet<tb_TarjetaCredito> tb_TarjetaCredito { get; set; }
-        public DbSet<tb_TarjetaCredito_x_cp_proveedor> tb_TarjetaCredito_x_cp_proveedor { get; set; }
         public DbSet<vwtb_TarjetaCredito_x_cp_proveedor> vwtb_TarjetaCredito_x_cp_proveedor { get; set; }
         public DbSet<tb_empresa> tb_empresa { get; set; }
         public DbSet<tb_parametro> tb_parametro { get; set; }
