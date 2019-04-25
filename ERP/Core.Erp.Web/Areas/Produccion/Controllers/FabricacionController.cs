@@ -279,9 +279,8 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
                 p.TextField = "Descripcion";
                 p.ValueField = "IdUnidadMedida_equiva";
                 p.ValueType = typeof(string);
-                p.BindList(bus_UnidadMedidaEquivalencia.get_list_combo(info_produto.IdUnidadMedida));
+                p.BindList(bus_UnidadMedidaEquivalencia.get_list_combo(info_produto.IdUnidadMedida_Consumo));
             });
-
         }
         #endregion
 
