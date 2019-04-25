@@ -28,6 +28,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -136,6 +137,25 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             List<in_Consignacion_Info> model = bus_in_Consignacion.GetList(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_Consignacion", model);
         }
+
+        #region Cargar Unidad de medida
+        public ActionResult CargarUnidadMedida()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            decimal IdProducto = Request.Params["in_IdProducto"] != null ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
+
+            in_Producto_Info info_produto = bus_producto.get_info(IdEmpresa, IdProducto);
+            return GridViewExtension.GetComboBoxCallbackResult(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdUnidadMedida_equiva";
+                p.ValueType = typeof(string);
+                p.BindList(bus_UnidadMedidaEquivalencia.get_list_combo(info_produto.IdUnidadMedida_Consumo));
+            });
+
+        }
+        #endregion
 
         #region Acciones
         public ActionResult Nuevo()

@@ -282,10 +282,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_UnidadMedida_Bus bus_unidad = new in_UnidadMedida_Bus();
             var lst_unidad = bus_unidad.get_list(false);
             ViewBag.lst_unidad = lst_unidad;
-
-            in_UnidadMedida_Bus bus_unidad_medida = new in_UnidadMedida_Bus();
-            var lst_unidad_medida = bus_unidad_medida.get_list(true);
-            ViewBag.lst_unidad_medida = lst_unidad_medida;
         }
 
         private bool validar(in_Ing_Egr_Inven_Info i_validar, ref string msg)

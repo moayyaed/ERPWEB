@@ -140,3 +140,12 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+
+<script type="text/javascript">
+    function OnSelectedProductoChanged() {
+        GridView_ConsignacionDet.GetEditor("IdUnidadMedida").PerformCallback();
+    }
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+    }
+</script>
