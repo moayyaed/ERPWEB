@@ -435,6 +435,15 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult SetUnidadMedida(decimal IdProducto = 0)
+        {
+            in_Producto_Bus bus_producto = new in_Producto_Bus();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
+            if (resultado == null)
+                resultado = new in_Producto_Info();
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult MostrarPrecios(string IdUsuarioAut = "", string contrasena_admin = "", decimal IdProducto=0)
         {

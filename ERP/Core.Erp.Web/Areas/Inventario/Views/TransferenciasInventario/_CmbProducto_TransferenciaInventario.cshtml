@@ -17,6 +17,9 @@
         settings.Properties.Columns.Add("IdProducto", "ID", 10);
         settings.Properties.Columns.Add("pr_descripcion", "Producto", 70);
         settings.Properties.Columns.Add("nom_categoria", "Categoria", 20);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
+        settings.Properties.ClientSideEvents.EndCallback = "SetUnidadMedida";
+
 
     })
     .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.TransferenciasInventarioController().get_list_bajo_demanda,
