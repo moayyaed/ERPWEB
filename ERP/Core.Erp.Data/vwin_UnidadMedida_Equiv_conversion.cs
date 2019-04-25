@@ -12,16 +12,13 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwin_producto_hijo_combo
+    public partial class vwin_UnidadMedida_Equiv_conversion
     {
-        public int IdEmpresa { get; set; }
-        public decimal IdProducto { get; set; }
-        public decimal IdProducto_padre { get; set; }
-        public string pr_descripcion { get; set; }
-        public string nom_presentacion { get; set; }
-        public string ca_Categoria { get; set; }
-        public string lote_num_lote { get; set; }
-        public Nullable<System.DateTime> lote_fecha_vcto { get; set; }
         public string IdUnidadMedida { get; set; }
+        public string cod_alterno { get; set; }
+        public string Descripcion { get; set; }
+        public string IdUnidadMedida_equiva { get; set; }
+        public double valor_equiv { get; set; }
+        public string interpretacion { get; set; }
     }
 }

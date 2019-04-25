@@ -21,6 +21,19 @@ namespace Core.Erp.Bus.Inventario
             }
         }
 
+        public List<in_UnidadMedida_Equiv_conversion_Info> get_list_combo(string IdUnidadMedida)
+        {
+            try
+            {
+                return odata.get_list_combo(IdUnidadMedida);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(List<in_UnidadMedida_Equiv_conversion_Info> Lista)
         {
             try

@@ -159,6 +159,15 @@
             CargarBodega();
         });
     });
+
+    function OnSelectedProductoChanged() {
+        GridViewPartial_inv_det.GetEditor("IdUnidadMedida").PerformCallback();
+    }
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+    }
+
+
     function CargarBodega() {
         $("#IdBodega").empty();
         var datos = {

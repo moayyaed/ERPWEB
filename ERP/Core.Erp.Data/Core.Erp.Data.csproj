@@ -2450,6 +2450,9 @@
     <Compile Include="vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_UnidadMedida_Equiv_conversion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="VWPRE_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>

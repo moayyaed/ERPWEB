@@ -1294,7 +1294,21 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Transferencias' no tiene defi
           <Property Name="IdEstadoAproba_egr" Type="varchar" MaxLength="15" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_UnidadMedida_Equiv_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwin_UnidadMedida_Equiv_conversion">
+          <Key>
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="IdUnidadMedida_equiva" />
+            <PropertyRef Name="valor_equiv" />
+          </Key>
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="cod_alterno" Type="varchar" MaxLength="25" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdUnidadMedida_equiva" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="valor_equiv" Type="float" Nullable="false" />
+          <Property Name="interpretacion" Type="varchar" MaxLength="500" />
+        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det_x_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det_x_devolver">
@@ -2815,6 +2829,16 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Transferencias].[IdEstadoAproba_ing] AS [IdEstadoAproba_ing], 
     [vwin_Transferencias].[IdEstadoAproba_egr] AS [IdEstadoAproba_egr]
     FROM [dbo].[vwin_Transferencias] AS [vwin_Transferencias]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwin_UnidadMedida_Equiv_conversion" EntityType="Self.vwin_UnidadMedida_Equiv_conversion" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwin_UnidadMedida_Equiv_conversion].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [vwin_UnidadMedida_Equiv_conversion].[cod_alterno] AS [cod_alterno], 
+    [vwin_UnidadMedida_Equiv_conversion].[Descripcion] AS [Descripcion], 
+    [vwin_UnidadMedida_Equiv_conversion].[IdUnidadMedida_equiva] AS [IdUnidadMedida_equiva], 
+    [vwin_UnidadMedida_Equiv_conversion].[valor_equiv] AS [valor_equiv], 
+    [vwin_UnidadMedida_Equiv_conversion].[interpretacion] AS [interpretacion]
+    FROM [dbo].[vwin_UnidadMedida_Equiv_conversion] AS [vwin_UnidadMedida_Equiv_conversion]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_Ing_Egr_Inven_det_x_devolver" EntityType="Self.vwin_Ing_Egr_Inven_det_x_devolver" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -4549,6 +4573,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="vwin_producto_x_tb_bodega_Costo_Historico" EntityType="Model_inventario.vwin_producto_x_tb_bodega_Costo_Historico" />
           <EntitySet Name="vwin_movi_inve_x_estado_contabilizacion" EntityType="Model_inventario.vwin_movi_inve_x_estado_contabilizacion" />
           <EntitySet Name="vwin_producto_x_tb_bodega" EntityType="Model_inventario.vwin_producto_x_tb_bodega" />
+          <EntitySet Name="vwin_UnidadMedida_Equiv_conversion" EntityType="Model_inventario.vwin_UnidadMedida_Equiv_conversion" />
           </EntityContainer>
         <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -6059,6 +6084,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vwin_UnidadMedida_Equiv_conversion">
+          <Key>
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="IdUnidadMedida_equiva" />
+            <PropertyRef Name="valor_equiv" />
+          </Key>
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="cod_alterno" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida_equiva" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="valor_equiv" Type="Double" Nullable="false" />
+          <Property Name="interpretacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7245,6 +7284,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_UnidadMedida_Equiv_conversion">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_UnidadMedida_Equiv_conversion">
+              <MappingFragment StoreEntitySet="vwin_UnidadMedida_Equiv_conversion">
+                <ScalarProperty Name="interpretacion" ColumnName="interpretacion" />
+                <ScalarProperty Name="valor_equiv" ColumnName="valor_equiv" />
+                <ScalarProperty Name="IdUnidadMedida_equiva" ColumnName="IdUnidadMedida_equiva" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="cod_alterno" ColumnName="cod_alterno" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

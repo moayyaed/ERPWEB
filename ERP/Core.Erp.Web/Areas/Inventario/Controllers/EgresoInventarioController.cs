@@ -27,6 +27,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -110,6 +111,25 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return PartialView("_GridViewPartial_egreso_inventario", model);
         }
 
+        #endregion
+
+        #region Cargar Unidad de medida
+        public ActionResult CargarUnidadMedida()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            decimal IdProducto = Request.Params["in_IdProducto"] != null ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
+
+            in_Producto_Info info_produto = bus_producto.get_info(IdEmpresa, IdProducto);
+            return GridViewExtension.GetComboBoxCallbackResult(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdUnidadMedida_equiva";
+                p.ValueType = typeof(string);
+                p.BindList(bus_UnidadMedidaEquivalencia.get_list_combo(info_produto.IdUnidadMedida_Consumo));
+            });
+
+        }
         #endregion
 
         #region Acciones
@@ -262,7 +282,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_UnidadMedida_Bus bus_unidad = new in_UnidadMedida_Bus();
             var lst_unidad = bus_unidad.get_list(false);
             ViewBag.lst_unidad = lst_unidad;
+
+            in_UnidadMedida_Bus bus_unidad_medida = new in_UnidadMedida_Bus();
+            var lst_unidad_medida = bus_unidad_medida.get_list(true);
+            ViewBag.lst_unidad_medida = lst_unidad_medida;
         }
+
         private bool validar(in_Ing_Egr_Inven_Info i_validar, ref string msg)
         {
             if (i_validar.lst_in_Ing_Egr_Inven_det.Count == 0)
@@ -328,7 +353,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     if (info_producto != null)
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
-                        info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
+                        //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
@@ -352,7 +377,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     if (info_producto != null)
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
-                        info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
+                        //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;

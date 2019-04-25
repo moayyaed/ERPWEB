@@ -38,6 +38,31 @@ namespace Core.Erp.Data.Inventario
             }
         }
 
+        public List<in_UnidadMedida_Equiv_conversion_Info> get_list_combo (string IdUnidadMedida)
+        {
+            try
+            {
+                List<in_UnidadMedida_Equiv_conversion_Info> Lista;
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    Lista = (from q in Context.vwin_UnidadMedida_Equiv_conversion
+                             where q.IdUnidadMedida == IdUnidadMedida
+                             select new in_UnidadMedida_Equiv_conversion_Info
+                             {
+                                 IdUnidadMedida_equiva = q.IdUnidadMedida_equiva,
+                                 Descripcion = q.Descripcion
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(List<in_UnidadMedida_Equiv_conversion_Info> Lista)
         {
             try

@@ -18,5 +18,6 @@ namespace Core.Erp.Info.Inventario
 
         //Campos que no existen en la tabla
         public int secuencia { get; set; }
+        public string Descripcion { get; set; }
     }
 }

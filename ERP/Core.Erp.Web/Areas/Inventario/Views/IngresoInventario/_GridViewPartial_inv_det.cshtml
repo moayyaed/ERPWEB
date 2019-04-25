@@ -59,18 +59,36 @@
                 Html.RenderPartial("_CmbProducto_IngresoInventario", DataBinder.Eval(c.DataItem, "IdProducto"));
             });
         });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "IdUnidadMedida_sinConversion";
+        //    column.Caption = "Unidad de medida";
+        //    column.Width = Unit.Percentage(20);
+        //    column.EditorProperties().ComboBox(p =>
+        //    {
+        //        p.Columns.Add("descripcion", "Descripción").Width = Unit.Percentage(100);
+        //        p.TextField = "descripcion";
+        //        p.ValueField = "IdUnidadMedida";
+        //        p.ValueType = typeof(string);
+        //        p.DataSource = ViewBag.lst_unidad;
+        //    });
+        //});
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdUnidadMedida_sinConversion";
+            column.FieldName = "IdUnidadMedida";
             column.Caption = "Unidad de medida";
             column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
             {
-                p.Columns.Add("descripcion", "Descripción").Width = Unit.Percentage(100);
-                p.TextField = "descripcion";
+                p.CallbackRouteValues = new { Controller = "IngresoInventario", Action = "CargarUnidadMedida", Area = "Inventario" };
+                p.TextField = "Descripcion";
                 p.ValueField = "IdUnidadMedida";
                 p.ValueType = typeof(string);
-                p.DataSource = ViewBag.lst_unidad;
+                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
+                p.BindList(ViewBag.lst_unidad_medida);
+                p.ClientSideEvents.BeginCallback = "UnidadMedidaComboBox_BeginCallback";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
         settings.Columns.Add(column =>
