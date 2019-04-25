@@ -34,7 +34,7 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
-
+       
         settings.Columns.Add(column =>
         {
             column.Caption = "*";
@@ -74,18 +74,36 @@
                 ViewContext.Writer.Write("</div>");
             });
         });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "IdUnidadMedida";
+        //    column.Caption = "Unidad de medida";
+        //    column.Width = Unit.Percentage(20);
+        //    column.EditorProperties().ComboBox(p =>
+        //    {
+        //        p.Columns.Add("descripcion", "Descripción").Width = Unit.Percentage(100);
+        //        p.TextField = "descripcion";
+        //        p.ValueField = "IdUnidadMedida";
+        //        p.ValueType = typeof(string);
+        //        p.DataSource = ViewBag.lst_unidad;
+        //    });
+        //});
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdUnidadMedida";
             column.Caption = "Unidad de medida";
             column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
             {
-                p.Columns.Add("descripcion", "Descripción").Width = Unit.Percentage(100);
-                p.TextField = "descripcion";
+                p.CallbackRouteValues = new { Controller = "Fabricacion", Action = "CargarUnidadMedida", Area = "Produccion" };
+                p.TextField = "Descripcion";
                 p.ValueField = "IdUnidadMedida";
                 p.ValueType = typeof(string);
-                p.DataSource = ViewBag.lst_unidad;
+                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
+                p.BindList(ViewBag.lst_unidad_medida);
+                p.ClientSideEvents.BeginCallback = "UnidadMedidaComboBox_BeginCallback";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
         settings.Columns.Add(column =>

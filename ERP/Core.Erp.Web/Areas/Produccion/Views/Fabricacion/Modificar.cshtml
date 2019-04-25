@@ -8,6 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
 <script type="text/javascript">
         $(function () {
             CargarBodegaIngreso();
@@ -19,18 +20,24 @@
                 CargarBodegaEgreso();
             });
         });
-        var selectedIDs;
-        function OnBeginCallback(s, e) {
-            e.customArgs["selectedIDs"] = selectedIDs;
-            e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
-        };
-        function OnSelectionChanged(s, e) {
-            s.GetSelectedFieldValues("Secuencia", GetSelectedFieldValuesCallback);
-        };
-        function GetSelectedFieldValuesCallback(values) {
-            //Capture all selected keys
-            selectedIDs = values.join(',');
-        };
+        function OnSelectedProductoChanged() {
+            GridViewPartial_fabricacion_det_ing.GetEditor("IdUnidadMedida").PerformCallback();
+        }
+        function UnidadMedidaComboBox_BeginCallback(s, e) {
+            e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+        }
+        //var selectedIDs;
+        //function OnBeginCallback(s, e) {
+        //    e.customArgs["selectedIDs"] = selectedIDs;
+        //    e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        //};
+        //function OnSelectionChanged(s, e) {
+        //    s.GetSelectedFieldValues("Secuencia", GetSelectedFieldValuesCallback);
+        //};
+        //function GetSelectedFieldValuesCallback(values) {
+        //    //Capture all selected keys
+        //    selectedIDs = values.join(',');
+        //};
 
         function CargarBodegaIngreso() {
     $("#ing_IdBodega").empty();
@@ -105,7 +112,7 @@
     }
 
 
-    function MostrarModalFacturas() {
+    @*function MostrarModalFacturas() {
         BuscarFacturas();
         $("#ModalFacturas").modal("show");
     };
@@ -162,7 +169,7 @@
         GridViewPartial_fabricacion_det_fac.UnselectRows();
         GridViewPartial_fabricacion_det_ing.PerformCallback();
         $("#ModalFacturas").modal("hide");
-    };
+    };*@
 </script>
 @using (Html.BeginForm("Modificar", "Fabricacion", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -232,7 +239,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        @*<div class="col-md-6">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for=""></label>
@@ -242,10 +249,10 @@
                 </div>
             </div>
 
-        </div>
+        </div>*@
 
     </div>
-    <div class="modal fade" id="ModalFacturas" role="dialog">
+   @* <div class="modal fade" id="ModalFacturas" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
@@ -312,7 +319,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <div class="row">
         <div class="col-md-12">
