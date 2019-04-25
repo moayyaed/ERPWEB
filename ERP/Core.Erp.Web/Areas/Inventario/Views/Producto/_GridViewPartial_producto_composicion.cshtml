@@ -1,8 +1,9 @@
 @using System.Web.UI.WebControls;
 @model Core.Erp.Info.Inventario.in_Producto_Info
 @{
-    var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "lst_producto_composicion";
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_producto_composicion";
         settings.CallbackRouteValues = new { Controller = "Producto", Action = "GridViewPartial_producto_composicion", IdProducto = Model == null ? 0 : Model.IdProducto };
         settings.KeyFieldName = "secuencia";
         settings.Width = Unit.Percentage(100);
@@ -35,7 +36,6 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["IdProductoHijo"] = 0;
-            e.NewValues["IdUnidadMedida"] = "UNID";
             e.NewValues["Cantidad"] = 0;
         };
 
@@ -58,19 +58,37 @@
                 Html.RenderPartial("_CmbProducto_composicion", DataBinder.Eval(c.DataItem, "IdProductoHijo"));
             });
         });
-         settings.Columns.Add(column =>
-         {
-             column.FieldName = "IdUnidadMedida";
-             column.Caption = "Unidad de medida";
-             column.Width = Unit.Percentage(30);
-             column.EditorProperties().ComboBox(p =>
-             {
-                 p.TextField = "Descripcion";
-                 p.ValueField = "IdUnidadMedida";
-                 p.ValueType = typeof(string);
-                 p.DataSource = ViewBag.lst_unidad_medida;
-             });
-         });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "IdUnidadMedida";
+        //    column.Caption = "Unidad de medida";
+        //    column.Width = Unit.Percentage(30);
+        //    column.EditorProperties().ComboBox(p =>
+        //    {
+        //        p.TextField = "Descripcion";
+        //        p.ValueField = "IdUnidadMedida";
+        //        p.ValueType = typeof(string);
+        //        p.DataSource = ViewBag.lst_unidad_medida;
+        //    });
+        //});
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUnidadMedida";
+            column.Caption = "Unidad de medida";
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.CallbackRouteValues = new { Controller = "Producto", Action = "CargarUnidadMedida", Area = "Inventario" };
+                p.TextField = "Descripcion";
+                p.ValueField = "IdUnidadMedida";
+                p.ValueType = typeof(string);
+                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
+                p.BindList(ViewBag.lst_unidad_medida);
+                p.ClientSideEvents.BeginCallback = "UnidadMedidaComboBox_BeginCallback";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            });
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Cantidad";
@@ -82,9 +100,8 @@
                 sp.MaxValue = 999999999;
             });
         });
+
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
-    if (ViewData["EditError"] != null){
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
 }
 @grid.Bind(Model.lst_producto_composicion).GetHtml()

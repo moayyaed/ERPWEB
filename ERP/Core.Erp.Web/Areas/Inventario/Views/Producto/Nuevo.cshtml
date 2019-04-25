@@ -8,7 +8,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script>
+    function OnSelectedProductoChanged() {
+        GridViewPartial_producto_composicion.GetEditor("IdUnidadMedida").PerformCallback();
+    }
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProductoHijo.GetValue();
+    }
+</script>
 @using (Html.BeginForm("Nuevo", "Producto", FormMethod.Post, new { @class = "form", @rolw = "form" }))
 {
 

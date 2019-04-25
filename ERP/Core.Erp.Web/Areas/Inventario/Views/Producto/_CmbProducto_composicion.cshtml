@@ -20,6 +20,7 @@
         settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
         settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
         settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
 
     })
     .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_list_bajo_demandaComposicion,

@@ -38,6 +38,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_producto_x_tb_bodega_Bus bus_producto_x_bodega = new in_producto_x_tb_bodega_Bus();
         seg_usuario_Bus bus_usuarios = new seg_usuario_Bus();
         tbl_TransaccionesAutorizadas_Bus bus_transacciones_aut = new tbl_TransaccionesAutorizadas_Bus();
+        in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
 
 
         private string mensaje;
@@ -808,6 +809,23 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return PartialView("_Producto_imagen", model);
         }
         #endregion
+        #region Cargar Unidad de medida
+        public ActionResult CargarUnidadMedida()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            decimal IdProducto = Request.Params["in_IdProducto"] != null ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
+
+            in_Producto_Info info_produto = bus_producto.get_info(IdEmpresa, IdProducto);
+            return GridViewExtension.GetComboBoxCallbackResult(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdUnidadMedida_equiva";
+                p.ValueType = typeof(string);
+                p.BindList(bus_UnidadMedidaEquivalencia.get_list_combo(info_produto.IdUnidadMedida_Consumo));
+            });
+        }
+        #endregion
 
 
         #region Importacion
@@ -1093,7 +1111,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             List<in_Producto_Composicion_Info> list = get_list(IdTransaccionSession);
             
             info_det.secuencia = list.Count == 0 ? 1 : list.Max(q => q.secuencia)+1;
+            if (info_det.IdProductoHijo != info_det.IdProductoHijo)
+            {
+                info_det.pr_descripcion = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProductoHijo).pr_descripcion_combo;
+            }
+            info_det.IdUnidadMedida = info_det.IdUnidadMedida;
             info_det.pr_descripcion = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProductoHijo).pr_descripcion_combo;
+            info_det.Cantidad = info_det.Cantidad;
             list.Add(info_det);
         }
 
