@@ -385,7 +385,6 @@
     <Compile Include="Areas\Inventario\Controllers\CategoriaController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ConsignacionController.cs" />
     <Compile Include="Areas\Inventario\Controllers\DevolucionInventarioController.cs" />
-    <Compile Include="Areas\Inventario\Controllers\DistribucionPorLoteController.cs" />
     <Compile Include="Areas\Inventario\Controllers\EgresoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\GrupoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\IngresoInventarioController.cs" />
@@ -9202,12 +9201,6 @@
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_013.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_CmbPersona_ConciliacionCaja.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_002.cshtml" />
-    <Content Include="Areas\Inventario\Views\DistribucionPorLote\Index.cshtml" />
-    <Content Include="Areas\Inventario\Views\DistribucionPorLote\_GridViewPartial_distribuion.cshtml" />
-    <Content Include="Areas\Inventario\Views\DistribucionPorLote\Nuevo.cshtml" />
-    <Content Include="Areas\Inventario\Views\DistribucionPorLote\_GridViewPartial_por_distribuir.cshtml" />
-    <Content Include="Areas\Inventario\Views\DistribucionPorLote\_GridViewPartial_distribuidos.cshtml" />
-    <Content Include="Areas\Inventario\Views\DistribucionPorLote\_GridViewPartial_distribucion_det.cshtml" />
     <Content Include="Areas\Caja\Views\CajaMovimientoIngreso\_CmbPersona_MovimientoIngreso.cshtml" />
     <Content Include="Areas\Caja\Views\CajaMovimientoEgreso\_CmbPersona_MovimientoEgreso.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Index.cshtml" />

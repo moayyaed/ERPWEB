@@ -280,7 +280,6 @@
     <Compile Include="Inventario\in_devolucion_inven_Info.cs" />
     <Compile Include="Inventario\in_grupo_Info.cs" />
     <Compile Include="Inventario\in_Ing_Egr_Inven_det_Info.cs" />
-    <Compile Include="Inventario\in_Ing_Egr_Inven_distribucion_Info.cs" />
     <Compile Include="Inventario\in_Ing_Egr_Inven_Info.cs" />
     <Compile Include="Inventario\in_linea_Info.cs" />
     <Compile Include="Inventario\in_Marca_Info.cs" />

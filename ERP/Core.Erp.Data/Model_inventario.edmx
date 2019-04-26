@@ -231,26 +231,6 @@
           <Property Name="mv_costo_sinConversion" Type="float" />
           <Property Name="IdMotivo_Inv" Type="int" />
         </EntityType>
-        <EntityType Name="in_Ing_Egr_Inven_distribucion">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdMovi_inven_tipo" />
-            <PropertyRef Name="IdNumMovi" />
-            <PropertyRef Name="secuencia_distribucion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdSucursal" Type="int" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo" Type="int" Nullable="false" />
-          <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="secuencia_distribucion" Type="int" Nullable="false" />
-          <Property Name="IdEmpresa_dis" Type="int" Nullable="false" />
-          <Property Name="IdSucursal_dis" Type="int" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo_dis" Type="int" Nullable="false" />
-          <Property Name="IdNumMovi_dis" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="estado" Type="bit" Nullable="false" />
-          <Property Name="signo" Type="varchar" MaxLength="1" Nullable="false" />
-        </EntityType>
         <EntityType Name="in_linea">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1661,42 +1641,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven">
-          <End Role="in_Ing_Egr_Inven" Type="Self.in_Ing_Egr_Inven" Multiplicity="1" />
-          <End Role="in_Ing_Egr_Inven_distribucion" Type="Self.in_Ing_Egr_Inven_distribucion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Ing_Egr_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_distribucion">
-              <PropertyRef Name="IdEmpresa_dis" />
-              <PropertyRef Name="IdSucursal_dis" />
-              <PropertyRef Name="IdMovi_inven_tipo_dis" />
-              <PropertyRef Name="IdNumMovi_dis" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1">
-          <End Role="in_Ing_Egr_Inven" Type="Self.in_Ing_Egr_Inven" Multiplicity="1" />
-          <End Role="in_Ing_Egr_Inven_distribucion" Type="Self.in_Ing_Egr_Inven_distribucion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Ing_Egr_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_distribucion">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven">
           <End Role="in_Motivo_Inven" Type="Self.in_Motivo_Inven" Multiplicity="0..1" />
           <End Role="in_Ing_Egr_Inven" Type="Self.in_Ing_Egr_Inven" Multiplicity="*" />
@@ -2473,7 +2417,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="in_grupo" EntityType="Self.in_grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_Ing_Egr_Inven" EntityType="Self.in_Ing_Egr_Inven" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_Ing_Egr_Inven_det" EntityType="Self.in_Ing_Egr_Inven_det" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="in_Ing_Egr_Inven_distribucion" EntityType="Self.in_Ing_Egr_Inven_distribucion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_linea" EntityType="Self.in_linea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_Marca" EntityType="Self.in_Marca" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_Motivo_Inven" EntityType="Self.in_Motivo_Inven" Schema="dbo" store:Type="Tables" />
@@ -2970,14 +2913,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven" Association="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven">
-            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
-            <End Role="in_Ing_Egr_Inven_distribucion" EntitySet="in_Ing_Egr_Inven_distribucion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1" Association="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1">
-            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
-            <End Role="in_Ing_Egr_Inven_distribucion" EntitySet="in_Ing_Egr_Inven_distribucion" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven" Association="Self.FK_in_Ing_Egr_Inven_in_Motivo_Inven">
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
             <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
@@ -3353,8 +3288,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_devolucion_inven" Relationship="Self.FK_in_devolucion_inven_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_devolucion_inven" />
           <NavigationProperty Name="in_devolucion_inven1" Relationship="Self.FK_in_devolucion_inven_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven" ToRole="in_devolucion_inven" />
           <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Self.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_Ing_Egr_Inven_det" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_distribucion" Relationship="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_Ing_Egr_Inven_distribucion" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_distribucion1" Relationship="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven" ToRole="in_Ing_Egr_Inven_distribucion" />
           <NavigationProperty Name="in_Consignacion" Relationship="Model_inventario.FK_in_Consignacion_in_Ing_Egr_Inven2" FromRole="in_Ing_Egr_Inven" ToRole="in_Consignacion" />
           <NavigationProperty Name="in_transferencia" Relationship="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_transferencia" />
           <NavigationProperty Name="in_transferencia1" Relationship="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven" ToRole="in_transferencia" />
@@ -3405,28 +3338,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_UnidadMedida1" Relationship="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" FromRole="in_Ing_Egr_Inven_det" ToRole="in_UnidadMedida" />
           <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto" FromRole="in_Ing_Egr_Inven_det" ToRole="in_Producto" />
           <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" FromRole="in_Ing_Egr_Inven_det" ToRole="in_movi_inve_detalle" />
-        </EntityType>
-        <EntityType Name="in_Ing_Egr_Inven_distribucion">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdMovi_inven_tipo" />
-            <PropertyRef Name="IdNumMovi" />
-            <PropertyRef Name="secuencia_distribucion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
-          <Property Name="IdNumMovi" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="secuencia_distribucion" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa_dis" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal_dis" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo_dis" Type="Int32" Nullable="false" />
-          <Property Name="IdNumMovi_dis" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="estado" Type="Boolean" Nullable="false" />
-          <Property Name="signo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven_distribucion" ToRole="in_Ing_Egr_Inven" />
-          <NavigationProperty Name="in_Ing_Egr_Inven1" Relationship="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven_distribucion" ToRole="in_Ing_Egr_Inven" />
         </EntityType>
         <EntityType Name="in_linea">
           <Key>
@@ -4091,42 +4002,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven">
-          <End Role="in_Ing_Egr_Inven" Type="Self.in_Ing_Egr_Inven" Multiplicity="1" />
-          <End Role="in_Ing_Egr_Inven_distribucion" Type="Self.in_Ing_Egr_Inven_distribucion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Ing_Egr_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_distribucion">
-              <PropertyRef Name="IdEmpresa_dis" />
-              <PropertyRef Name="IdSucursal_dis" />
-              <PropertyRef Name="IdMovi_inven_tipo_dis" />
-              <PropertyRef Name="IdNumMovi_dis" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1">
-          <End Role="in_Ing_Egr_Inven" Type="Self.in_Ing_Egr_Inven" Multiplicity="1" />
-          <End Role="in_Ing_Egr_Inven_distribucion" Type="Self.in_Ing_Egr_Inven_distribucion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Ing_Egr_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_distribucion">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida2">
           <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
           <End Role="in_Ing_Egr_Inven_det" Type="Self.in_Ing_Egr_Inven_det" Multiplicity="*" />
@@ -4222,7 +4097,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="in_grupo" EntityType="Self.in_grupo" />
           <EntitySet Name="in_Ing_Egr_Inven" EntityType="Self.in_Ing_Egr_Inven" />
           <EntitySet Name="in_Ing_Egr_Inven_det" EntityType="Self.in_Ing_Egr_Inven_det" />
-          <EntitySet Name="in_Ing_Egr_Inven_distribucion" EntityType="Self.in_Ing_Egr_Inven_distribucion" />
           <EntitySet Name="in_linea" EntityType="Self.in_linea" />
           <EntitySet Name="in_Marca" EntityType="Self.in_Marca" />
           <EntitySet Name="in_movi_inven_tipo" EntityType="Self.in_movi_inven_tipo" />
@@ -4279,14 +4153,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" Association="Self.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven">
             <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
             <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven" Association="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven">
-            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
-            <End Role="in_Ing_Egr_Inven_distribucion" EntitySet="in_Ing_Egr_Inven_distribucion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1" Association="Self.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1">
-            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
-            <End Role="in_Ing_Egr_Inven_distribucion" EntitySet="in_Ing_Egr_Inven_distribucion" />
           </AssociationSet>
           <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" Association="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2">
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
@@ -6283,23 +6149,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdUnidadMedida_sinConversion" ColumnName="IdUnidadMedida_sinConversion" />
                 <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
                 <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="in_Ing_Egr_Inven_distribucion">
-            <EntityTypeMapping TypeName="Model_inventario.in_Ing_Egr_Inven_distribucion">
-              <MappingFragment StoreEntitySet="in_Ing_Egr_Inven_distribucion">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
-                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
-                <ScalarProperty Name="secuencia_distribucion" ColumnName="secuencia_distribucion" />
-                <ScalarProperty Name="IdEmpresa_dis" ColumnName="IdEmpresa_dis" />
-                <ScalarProperty Name="IdSucursal_dis" ColumnName="IdSucursal_dis" />
-                <ScalarProperty Name="IdMovi_inven_tipo_dis" ColumnName="IdMovi_inven_tipo_dis" />
-                <ScalarProperty Name="IdNumMovi_dis" ColumnName="IdNumMovi_dis" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="signo" ColumnName="signo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

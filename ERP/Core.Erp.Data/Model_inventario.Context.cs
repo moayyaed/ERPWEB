@@ -35,7 +35,6 @@ namespace Core.Erp.Data
         public DbSet<in_grupo> in_grupo { get; set; }
         public DbSet<in_Ing_Egr_Inven> in_Ing_Egr_Inven { get; set; }
         public DbSet<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
-        public DbSet<in_Ing_Egr_Inven_distribucion> in_Ing_Egr_Inven_distribucion { get; set; }
         public DbSet<in_linea> in_linea { get; set; }
         public DbSet<in_Marca> in_Marca { get; set; }
         public DbSet<in_movi_inven_tipo> in_movi_inven_tipo { get; set; }

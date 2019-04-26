@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="Model_inventario.in_grupo" Width="1.5" PointX="9.5" PointY="28.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_Ing_Egr_Inven" Width="1.5" PointX="14.75" PointY="42.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_Ing_Egr_Inven_det" Width="1.5" PointX="11" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_inventario.in_Ing_Egr_Inven_distribucion" Width="1.5" PointX="17" PointY="50.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_linea" Width="1.5" PointX="7.25" PointY="28.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_Marca" Width="1.5" PointX="11.75" PointY="21.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inven_tipo" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
@@ -44,8 +43,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_grupo_in_linea" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_subgrupo_in_grupo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_distribucion_in_Ing_Egr_Inven1" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inven_tipo_x_tb_bodega_in_movi_inven_tipo" ManuallyRouted="false" />
