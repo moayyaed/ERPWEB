@@ -160,13 +160,36 @@
         });
     });
 
-    function OnSelectedProductoChanged() {
+    function OnSelectedProductoChanged(s, e) {
         GridViewPartial_inv_det.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
     }
+
     function UnidadMedidaComboBox_BeginCallback(s, e) {
         e.customArgs["in_IdProducto"] = IdProducto.GetValue();
     }
 
+    function SetUnidadMedida(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(s.GetValue());
+                console.log(data.IdUnidadMedida);
+                GridViewPartial_inv_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+            },
+            error: function (error) {
+            }
+        });
+    };
 
     function CargarBodega() {
         $("#IdBodega").empty();

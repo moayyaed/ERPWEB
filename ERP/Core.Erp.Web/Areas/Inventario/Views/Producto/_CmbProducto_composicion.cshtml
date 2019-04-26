@@ -2,7 +2,7 @@
 @{
     var comboBox = Html.DevExpress().ComboBox(settings =>
     {
-        
+
         settings.Name = "IdProductoHijo";
         settings.Width = Unit.Percentage(100);
         settings.Properties.DropDownWidth = Unit.Percentage(100);
@@ -21,6 +21,7 @@
         settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
         settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
+
 
     })
     .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_list_bajo_demandaComposicion,

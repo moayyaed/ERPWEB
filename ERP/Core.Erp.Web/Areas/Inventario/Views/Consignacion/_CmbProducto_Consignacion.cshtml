@@ -16,7 +16,7 @@
         settings.Properties.Columns.Add("IdProducto", "ID", 20);
         settings.Properties.Columns.Add("pr_descripcion", "Producto", 80);
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
-        settings.Properties.FilterMinLength = 3;
+
     })
 
      .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.ConsignacionController().get_list_bajo_demanda,

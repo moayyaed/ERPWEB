@@ -9,12 +9,34 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script>
-    function OnSelectedProductoChanged() {
+    function OnSelectedProductoChanged(s,e) {
         GridViewPartial_producto_composicion.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
     }
+
     function UnidadMedidaComboBox_BeginCallback(s, e) {
         e.customArgs["in_IdProducto"] = IdProductoHijo.GetValue();
     }
+
+    function SetUnidadMedida(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_producto_composicion.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>
 @using (Html.BeginForm("Nuevo", "Producto", FormMethod.Post, new { @class = "form", @rolw = "form" }))
 {
