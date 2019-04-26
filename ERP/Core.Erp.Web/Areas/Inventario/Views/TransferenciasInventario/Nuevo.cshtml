@@ -143,11 +143,12 @@
             });
     });
 
-    function OnSelectedProductoChanged() {
+    function OnSelectedProductoChanged(s,e) {
         GridViewPartial_transferencias_det.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
     }
     function UnidadMedidaComboBox_BeginCallback(s, e) {
-        e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+        e.customArgs["in_IdProducto"] = IdProducto.GetValue();        
     }
 
     function SetUnidadMedida(s,e ) {
@@ -163,7 +164,7 @@
             bProcessing: true,
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(IdProducto.GetValue());
+                console.log(s.GetValue());
                 console.log(data.IdUnidadMedida);
                 GridViewPartial_transferencias_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
             },
