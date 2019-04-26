@@ -22,6 +22,7 @@
     [pf_atencion_a]          VARCHAR (500) NULL,
     [pr_dias_entrega]        INT           NOT NULL,
     [IdNivel]                INT           NOT NULL,
+    [IdCatalogo_FormaPago]   VARCHAR (15)  NULL,
     CONSTRAINT [PK_fa_proforma] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdProforma] ASC),
     CONSTRAINT [FK_fa_proforma_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
     CONSTRAINT [FK_fa_proforma_fa_NivelDescuento] FOREIGN KEY ([IdEmpresa], [IdNivel]) REFERENCES [dbo].[fa_NivelDescuento] ([IdEmpresa], [IdNivel]),
@@ -30,6 +31,8 @@
     CONSTRAINT [FK_fa_proforma_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_proforma_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

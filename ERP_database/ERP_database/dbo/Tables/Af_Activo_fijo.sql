@@ -28,6 +28,7 @@
     [Af_Codigo_Barra]          VARCHAR (50)   NULL,
     [Estado_Proceso]           VARCHAR (35)   NOT NULL,
     [Af_ValorSalvamento]       FLOAT (53)     NOT NULL,
+    [Cantidad]                 INT            NOT NULL,
     [IdUsuario]                VARCHAR (20)   NULL,
     [Fecha_Transac]            DATETIME       NULL,
     [IdUsuarioUltMod]          VARCHAR (20)   NULL,
@@ -42,13 +43,15 @@
     CONSTRAINT [FK_Af_Activo_fijo_Af_Catalogo6] FOREIGN KEY ([IdCatalogo_Modelo]) REFERENCES [dbo].[Af_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Catalogo7] FOREIGN KEY ([IdCatalogo_Color]) REFERENCES [dbo].[Af_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Catalogo8] FOREIGN KEY ([IdTipoCatalogo_Ubicacion]) REFERENCES [dbo].[Af_Catalogo] ([IdCatalogo]),
+    CONSTRAINT [FK_Af_Activo_fijo_Af_Catalogo9] FOREIGN KEY ([Estado_Proceso]) REFERENCES [dbo].[Af_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Departamento] FOREIGN KEY ([IdEmpresa], [IdDepartamento]) REFERENCES [dbo].[Af_Departamento] ([IdEmpresa], [IdDepartamento]),
     CONSTRAINT [FK_Af_Activo_fijo_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleadoEncargado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
     CONSTRAINT [FK_Af_Activo_fijo_ro_empleado1] FOREIGN KEY ([IdEmpresa], [IdEmpleadoCustodio]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
     CONSTRAINT [FK_Af_Activo_fijo_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa]),
-    CONSTRAINT [FK_Af_Activo_fijo_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal]),
-	CONSTRAINT [FK_Af_Activo_fijo_Af_Catalogo9] FOREIGN KEY ([Estado_Proceso]) REFERENCES [dbo].[Af_Catalogo] ([IdCatalogo]),
+    CONSTRAINT [FK_Af_Activo_fijo_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

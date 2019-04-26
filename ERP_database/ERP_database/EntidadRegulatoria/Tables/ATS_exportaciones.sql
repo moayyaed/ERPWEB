@@ -19,6 +19,9 @@
     [autorizacion]        VARCHAR (50)    NULL,
     [fechaEmision]        DATE            NULL,
     [denoExpCli]          VARCHAR (500)   NULL,
+    [IdSucursal]          INT             NULL,
     CONSTRAINT [PK_ATS_exportaciones] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC, [Secuencia] ASC)
 );
+
+
 

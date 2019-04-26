@@ -1,5 +1,5 @@
-﻿CREATE VIEW web.vwfa_cliente_consulta
-AS
+﻿CREATE view [web].[vwfa_cliente_consulta]
+as
 SELECT dbo.fa_cliente.IdEmpresa, dbo.fa_cliente.IdCliente, dbo.fa_cliente.Codigo, dbo.fa_cliente.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.fa_cliente.Idtipo_cliente, dbo.tb_persona.pe_cedulaRuc, dbo.fa_cliente.Estado, 
                   dbo.fa_cliente_tipo.Descripcion_tip_cliente
 FROM     dbo.tb_persona RIGHT OUTER JOIN
@@ -97,16 +97,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 17
          End
-         Begin Table = "fa_cliente_tipo"
-            Begin Extent = 
-               Top = 7
-               Left = 692
-               Bottom = 170
-               Right = 939
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
       End
    End
    Begin SQLPane = 
@@ -114,30 +104,19 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
-         Width = 284
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-      End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
@@ -145,6 +124,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_cliente_consulta';
+
+
 
 
 

@@ -27,6 +27,9 @@
     [autModificado]     VARCHAR (49)    NULL,
     [re_tipo_Ret]       VARCHAR (10)    NOT NULL,
     [denopr]            VARCHAR (500)   NULL,
+    [IdSucursal]        INT             NULL,
     CONSTRAINT [PK_retenciones] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC, [Secuencia] ASC)
 );
+
+
 

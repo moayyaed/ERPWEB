@@ -13,8 +13,8 @@ CREATE  PROCEDURE  [EntidadRegulatoria].[spROL_DecimosCSV]
  --@IdRol int,
  --@IdRubro Int
  --set @IdEmpresa =1
- --set @IdEol =1
- --set @IdRubro=950
+ --set @IdRol =12
+ --set @IdRubro=24
 	
 	
 BEGIN
@@ -24,7 +24,7 @@ BEGIN
 	@FechaI date,
 	@FechaF date
 
-	select @IdPeriodo= IdPeriodo from ro_rol where IdEmpresa=@IdEmpresa and IdRol=@IdRubro
+	select @IdPeriodo= IdPEriodo from ro_rol where IdEmpresa=@IdEmpresa and IdRol=@IdRol
 	
 	select @FechaI= pe_FechaIni, @FechaF=pe_FechaFin from ro_periodo where IdEmpresa=@IdEmpresa and IdPeriodo=@IdPeriodo
    
@@ -61,7 +61,18 @@ Tab_Valores_Decimos_x_Empleado
 
 left join
 (
-select CON.IdEmpresa,CON.IdEmpleado, IIF(FechaInicio< @FechaI,datediff(DD,@FechaI,@FechaF) , datediff(DD,FechaInicio,@FechaF)) as DiasTrabajados from ro_contrato as CON
+select CON.IdEmpresa,CON.IdEmpleado, 
+
+
+case when (CON.FechaInicio <= @FechaI) then '360'
+else ((datediff(MONTH, CON.FechaInicio,@FechaF )+1)*30)-(day(CON.FechaInicio))+1
+end as DiasTrabajados
+
+
+from ro_contrato as CON
 where CON.EstadoContrato='ECT_ACT' and CON.Estado='A'and  CON.IdEmpresa=@IdEmpresa) tab_DiasTrabajados_x_Empleado
 on tab_DiasTrabajados_x_Empleado.IdEmpresa=Tab_Valores_Decimos_x_Empleado.IdEmpresa and tab_DiasTrabajados_x_Empleado.IdEmpleado=Tab_Valores_Decimos_x_Empleado.IdEmpleado
+
+
+ORDER BY pe_apellido asc
 end

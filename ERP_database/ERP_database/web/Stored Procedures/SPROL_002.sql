@@ -101,7 +101,7 @@ FROM            dbo.ro_rol_detalle AS D INNER JOIN
 
 	  -- actualizando rubros vespertina matutina
 
-update     web.ro_SPROL_002 set ru_descripcion  = ru_descripcion+  ' (' +CAST(ro_HorasProfesores_det.NumHoras as varchar)+')' 
+update     web.ro_SPROL_002 set ru_descripcion  = ru_descripcion+  ' (' +CAST( convert(decimal(10, 2), ro_HorasProfesores_det.NumHoras) as varchar)+')' 
 FROM            dbo.ro_HorasProfesores_det INNER JOIN
                          dbo.ro_HorasProfesores ON dbo.ro_HorasProfesores_det.IdEmpresa = dbo.ro_HorasProfesores.IdEmpresa AND dbo.ro_HorasProfesores_det.IdCarga = dbo.ro_HorasProfesores.IdCarga INNER JOIN
                          web.ro_SPROL_002 ON dbo.ro_HorasProfesores_det.IdEmpresa = web.ro_SPROL_002.IdEmpresa AND dbo.ro_HorasProfesores_det.IdRubro = web.ro_SPROL_002.IdRubro AND 

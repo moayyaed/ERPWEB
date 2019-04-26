@@ -1,5 +1,5 @@
 ﻿
---EXEC [web].[SPCONTA_003_balances] 2,2018,'2018/06/30','2018/12/31','123',6,1, ''
+--EXEC [web].[SPCONTA_003_balances] 1,2019,'2019/01/01','2019/01/31','ADMIN',6,0,'',1,9999,0
 CREATE PROCEDURE [web].[SPCONTA_003_balances]
 (
 @IdEmpresa int,
@@ -11,7 +11,8 @@ CREATE PROCEDURE [web].[SPCONTA_003_balances]
 @MostrarSaldo0 bit,
 @Balance VARCHAR(2),
 @IdSucursalIni int,
-@IdSucursalFin int
+@IdSucursalFin int,
+@MostrarAcumulado bit
 )
 AS
 delete web.ct_CONTA_003_balances where IdUsuario = @IdUsuario
@@ -311,7 +312,23 @@ and IdEmpresa = @IdEmpresa
 END
 
 update web.ct_CONTA_003_balances Set SaldoFinal = round(SaldoFinal,2), SaldoFinalNaturaleza = round(SaldoFinalNaturaleza,2)
+where IdUsuario = @IdUsuario
+and IdEmpresa = @IdEmpresa
 
+if(@MostrarAcumulado = 0)
+BEGIN
+	update web.ct_CONTA_003_balances SET SaldoFinal = SaldoDebitosCreditos, SaldoFinalNaturaleza = SaldoDebitosCreditosNaturaleza	
+	where IdUsuario = @IdUsuario
+	and IdEmpresa = @IdEmpresa
+
+	IF(@MostrarSaldo0 = 0)
+	BEGIN
+		DELETE web.ct_CONTA_003_balances
+		WHERE SaldoDebitosCreditos = 0
+		and IdUsuario = @IdUsuario
+	END
+END
+ELSE
 IF(@MostrarSaldo0 = 0)
 BEGIN
 	DELETE web.ct_CONTA_003_balances

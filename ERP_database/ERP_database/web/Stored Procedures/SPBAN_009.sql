@@ -6,7 +6,7 @@ CREATE PROCEDURE [web].[SPBAN_009]
 @FechaFin date
 )
 AS
-select a.IdEmpresa, a.IdBanco, a.ba_descripcion, a.IdTipoFlujo, a.NomFlujo, sum(a.Valor) as ValorFlujo
+select a.IdEmpresa, a.IdBanco, a.ba_descripcion, a.IdTipoFlujo, a.NomFlujo, sum(round(a.Valor,2)) as ValorFlujo
 from (
 SELECT c.IdEmpresa, 
 		b.IdBanco, 
@@ -34,6 +34,7 @@ and cr.cb_Fecha <= @FechaFin
 and c.IdEmpresa = @IdEmpresa
 and b.IdBanco = @IdBanco
 and c.cb_Fecha <= @FechaFin
+--and b.Estado = 'A'
 UNION ALL
 SELECT ba_TipoFlujo_Movimiento.IdEmpresa, ba_TipoFlujo_Movimiento.IdBanco, ba_Banco_Cuenta.ba_descripcion, ba_TipoFlujo_Movimiento.IdTipoFlujo, ba_TipoFlujo.Descricion, ba_TipoFlujo_Movimiento.Valor, 
                   ba_TipoFlujo_Movimiento.Valor
@@ -43,3 +44,4 @@ FROM     ba_TipoFlujo_Movimiento INNER JOIN
 WHERE  (ba_TipoFlujo_Movimiento.Estado = 1) AND ba_TipoFlujo_Movimiento.Fecha <= @FechaFin AND ba_TipoFlujo_Movimiento.IdEmpresa = @IdEmpresa AND ba_TipoFlujo_Movimiento.IdBanco = @IdBanco
 ) a
 group by a.IdEmpresa, a.IdBanco, a.ba_descripcion, a.IdTipoFlujo, a.NomFlujo
+having round(sum(a.Valor),2) != 0

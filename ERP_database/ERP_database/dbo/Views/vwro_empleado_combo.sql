@@ -1,12 +1,13 @@
-﻿CREATE VIEW dbo.vwro_empleado_combo
+﻿CREATE VIEW [dbo].[vwro_empleado_combo]
 AS
-SELECT        dbo.tb_persona.pe_apellido + ' ' + dbo.tb_persona.pe_nombre AS Empleado, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_status, dbo.ro_empleado.IdEmpresa, dbo.ro_empleado.IdEmpleado, dbo.ro_contrato.IdNomina, 
-                         dbo.ro_empleado.IdSucursal, dbo.ro_empleado.Pago_por_horas, dbo.ro_empleado.Valor_horas_vespertina, dbo.ro_empleado.Valor_horas_matutino, dbo.ro_empleado.Tiene_ingresos_compartidos, 
-                         dbo.ro_empleado.Valor_maximo_horas_vesp, dbo.ro_empleado.Valor_maximo_horas_mat, dbo.ro_empleado.Valor_horas_brigada, dbo.ro_empleado.GozaMasDeQuinceDiasVaciones, dbo.ro_empleado.DiasVacaciones, 
-                         dbo.ro_empleado.Valor_hora_adicionales, dbo.ro_empleado.Valor_hora_control_salida
-FROM            dbo.ro_empleado INNER JOIN
-                         dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+SELECT distinct dbo.tb_persona.pe_apellido + ' ' + dbo.tb_persona.pe_nombre AS Empleado, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_status, dbo.ro_empleado.IdEmpresa, dbo.ro_empleado.IdEmpleado, dbo.ro_contrato.IdNomina, 
+                  dbo.ro_empleado.IdSucursal, dbo.ro_empleado.Pago_por_horas, dbo.ro_empleado.Valor_horas_vespertina, dbo.ro_empleado.Valor_horas_matutino, dbo.ro_empleado.Tiene_ingresos_compartidos, 
+                  dbo.ro_empleado.Valor_maximo_horas_vesp, dbo.ro_empleado.Valor_maximo_horas_mat, dbo.ro_empleado.Valor_horas_brigada, dbo.ro_empleado.GozaMasDeQuinceDiasVaciones, dbo.ro_empleado.DiasVacaciones, 
+                  dbo.ro_empleado.Valor_hora_adicionales, dbo.ro_empleado.Valor_hora_control_salida
+FROM     dbo.ro_empleado INNER JOIN
+                  dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                  dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+where dbo.ro_contrato.EstadoContrato <> 'EST_LIQ'
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

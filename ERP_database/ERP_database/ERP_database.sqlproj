@@ -85,6 +85,8 @@
     <Folder Include="Security\" />
     <Folder Include="EntidadRegulatoria\Views\" />
     <Folder Include="Snapshots" />
+    <Folder Include="Migraciones\" />
+    <Folder Include="Migraciones\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\in_Ing_Egr_Inven.sql" />
@@ -100,7 +102,6 @@
     <Build Include="dbo\Tables\ba_Archivo_Transferencia_Det.sql" />
     <Build Include="dbo\Tables\fa_factura_x_fa_guia_remision.sql" />
     <Build Include="dbo\Tables\ro_rubros_calculados.sql" />
-    <Build Include="dbo\Tables\cp_Aprobacion_Ing_Bod_x_OC_det.sql" />
     <Build Include="dbo\Tables\ba_Archivo_Transferencia_Parametros.sql" />
     <Build Include="dbo\Tables\cxc_cobro.sql" />
     <Build Include="dbo\Tables\ro_periodo.sql" />
@@ -118,7 +119,6 @@
     <Build Include="dbo\Tables\ro_prestamo_detalle.sql" />
     <Build Include="dbo\Tables\ro_cargaFamiliar.sql" />
     <Build Include="dbo\Tables\fa_formaPago.sql" />
-    <Build Include="dbo\Tables\tb_sis_Documento_Tipo_Reporte_x_Empresa.sql" />
     <Build Include="dbo\Tables\cp_catalogo.sql" />
     <Build Include="dbo\Tables\ct_plancta.sql" />
     <Build Include="dbo\Tables\ro_cargo.sql" />
@@ -147,7 +147,6 @@
     <Build Include="dbo\Tables\cp_codigo_SRI_x_CtaCble.sql" />
     <Build Include="dbo\Tables\ro_Config_Param_contable.sql" />
     <Build Include="dbo\Tables\ba_Cbte_Ban.sql" />
-    <Build Include="dbo\Tables\tb_sis_formulario.sql" />
     <Build Include="dbo\Tables\cp_conciliacion.sql" />
     <Build Include="dbo\Tables\tb_sis_Impuesto_x_ctacble.sql" />
     <Build Include="dbo\Tables\in_movi_inve_detalle_x_ct_cbtecble_det.sql" />
@@ -209,7 +208,6 @@
     <Build Include="dbo\Tables\tb_sucursal.sql" />
     <Build Include="dbo\Tables\cxc_Catalogo.sql" />
     <Build Include="dbo\Tables\cp_orden_giro_pagos_sri.sql" />
-    <Build Include="dbo\Tables\ro_DocumentoxEmp.sql" />
     <Build Include="dbo\Tables\fa_cliente_contactos.sql" />
     <Build Include="EntidadRegulatoria\Tables\ATS_retenciones.sql" />
     <Build Include="dbo\Tables\cxc_CatalogoTipo.sql" />
@@ -219,7 +217,6 @@
     <Build Include="EntidadRegulatoria\Tables\ATS_compras.sql" />
     <Build Include="dbo\Tables\in_linea.sql" />
     <Build Include="web\Tables\tb_sis_reporte.sql" />
-    <Build Include="dbo\Tables\ro_empleado_estudios.sql" />
     <Build Include="dbo\Tables\fa_PuntoVta.sql" />
     <Build Include="dbo\Tables\tb_transportista.sql" />
     <Build Include="dbo\Tables\cxc_cobro_det.sql" />
@@ -277,7 +274,6 @@
     <Build Include="dbo\Tables\Af_Activo_fijo.sql" />
     <Build Include="dbo\Tables\caj_catalogo.sql" />
     <Build Include="dbo\Tables\cp_parametros.sql" />
-    <Build Include="dbo\Tables\ro_empleado_x_ro_tipoNomina.sql" />
     <Build Include="dbo\Tables\Af_Activo_fijo_tipo.sql" />
     <Build Include="dbo\Tables\caj_catalogo_tipo.sql" />
     <Build Include="dbo\Tables\ro_empleado_x_rubro_acumulado.sql" />
@@ -319,7 +315,6 @@
     <Build Include="dbo\Tables\cp_TipoDocumento.sql" />
     <Build Include="dbo\Tables\Af_CatalogoTipo.sql" />
     <Build Include="dbo\Tables\in_transferencia_det.sql" />
-    <Build Include="dbo\Tables\tb_contacto.sql" />
     <Build Include="dbo\Tables\Af_Depreciacion_Det.sql" />
     <Build Include="dbo\Tables\tb_dia.sql" />
     <Build Include="dbo\Tables\ro_Acta_Finiquito.sql" />
@@ -368,20 +363,16 @@
     <Build Include="web\Tables\ba_SPBAN_004.sql" />
     <Build Include="dbo\Tables\com_ordencompra_local_det_x_com_solicitud_compra_det.sql" />
     <Build Include="dbo\Tables\Af_Retiro_Activo.sql" />
-    <Build Include="dbo\Tables\tbROL_NominaGeneral.sql" />
     <Build Include="dbo\Tables\ct_centro_costo.sql" />
     <Build Include="web\Tables\in_SPINV_003.sql" />
     <Build Include="dbo\Tables\com_parametro.sql" />
     <Build Include="dbo\Tables\Af_Mej_Baj_Activo.sql" />
-    <Build Include="dbo\Tables\tbROL_Rpt001.sql" />
-    <Build Include="dbo\Tables\tbROL_Rpt002.sql" />
     <Build Include="web\Tables\in_SPINV_005.sql" />
     <Build Include="dbo\Tables\com_solicitante.sql" />
     <Build Include="dbo\Tables\Af_spACTF_activos_a_depreciar.sql" />
     <Build Include="dbo\Tables\ct_centro_costo_sub_centro_costo.sql" />
     <Build Include="dbo\Tables\imp_catalogo.sql" />
     <Build Include="dbo\Tables\in_Guia_x_traspaso_bodega.sql" />
-    <Build Include="dbo\Tables\tbROL_Rpt003.sql" />
     <Build Include="dbo\Tables\tb_persona_tipo.sql" />
     <Build Include="web\Tables\ro_SPROL_002.sql" />
     <Build Include="dbo\Tables\com_solicitud_compra.sql" />
@@ -395,12 +386,10 @@
     <Build Include="dbo\Tables\ro_empleado_x_ro_rubro.sql" />
     <Build Include="dbo\Tables\ct_grupo_x_Tipo_Gasto.sql" />
     <Build Include="dbo\Tables\imp_liquidacion.sql" />
-    <Build Include="dbo\Tables\ro_Acta_Finiquito_Detalle_x_Decimos.sql" />
     <Build Include="dbo\Tables\in_Guia_x_traspaso_bodega_det_sin_oc.sql" />
     <Build Include="dbo\Tables\fa_cuotas_x_doc.sql" />
     <Build Include="dbo\Tables\ct_grupocble.sql" />
     <Build Include="dbo\Tables\ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.sql" />
-    <Build Include="dbo\Tables\ro_Acta_Finiquito_Detalle_x_vacaciones.sql" />
     <Build Include="dbo\Tables\in_Guia_x_traspaso_bodega_x_in_transferencia_det.sql" />
     <Build Include="dbo\Tables\tb_region.sql" />
     <Build Include="dbo\Tables\ro_participacion_utilidad.sql" />
@@ -506,7 +495,6 @@
     <Build Include="dbo\Views\vwcxc_cobro_x_documentos_x_cobrar.sql" />
     <Build Include="web\Views\vwcxc_cobro_para_retencion.sql" />
     <Build Include="dbo\Views\vw_TipoTitulo.sql" />
-    <Build Include="dbo\Views\vwtb_contacto.sql" />
     <Build Include="web\Views\vwcp_retencion.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_x_fa_factura_NotaDeb.sql" />
     <Build Include="dbo\Views\vwcp_cp_retencion_x_empresa.sql" />
@@ -534,7 +522,6 @@
     <Build Include="web\Views\VWCXP_003.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_x_Valores_Aplicados.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_SRI.sql" />
-    <Build Include="dbo\Views\vwtb_sis_Documento_Tipo_x_Disenio_Report.sql" />
     <Build Include="web\Views\VWCXP_003_cancelaciones.sql" />
     <Build Include="Fj_servindustrias\Views\vwfa_pre_facturacion_det_Fact_x_Gastos.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_total_pagodo.sql" />
@@ -556,7 +543,6 @@
     <Build Include="dbo\Views\vwcp_orden_pago_cancelacion_Total_pagado_x_cbteble.sql" />
     <Build Include="dbo\Views\vwtb_Ubicacion_Geografica.sql" />
     <Build Include="web\Views\VWCXP_006_diario.sql" />
-    <Build Include="dbo\Views\vwro_Acta_Finiquito_det_Vac_dec.sql" />
     <Build Include="dbo\Views\vwcp_orden_pago_con_cancelacion_pagado_con_CbteBan.sql" />
     <Build Include="web\Views\VWROL_014.sql" />
     <Build Include="web\Views\VWINV_001.sql" />
@@ -713,7 +699,6 @@
     <Build Include="dbo\Views\vwcp_nota_DebCre_total_saldo.sql" />
     <Build Include="dbo\Views\vwcxc_cobro_x_movi_caja_x_cbtecble.sql" />
     <Build Include="dbo\Views\vwba_tipo_nota.sql" />
-    <Build Include="dbo\Views\vwcp_Orden_Giro_Conciliado_x_Ing_Bod_x_OC.sql" />
     <Build Include="dbo\Views\vwro_marcaciones_x_empleado.sql" />
     <Build Include="dbo\Views\vwin_devolucion_inven_det.sql" />
     <Build Include="dbo\Views\vwcxc_cobros_x_vta_nota_x_RetFuente.sql" />
@@ -749,7 +734,6 @@
     <Build Include="dbo\Views\vwct_cbtecble_con_saldo_cxp.sql" />
     <Build Include="dbo\Views\vwro_Novedades_X_Rubros.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_det_x_com_ordencompra_local_det_2.sql" />
-    <Build Include="dbo\Views\vwin_Ing_Egr_Inven_det_x_com_ordencompra_local_det_x_cp_Aprobacion_Ing_Bod_x_OC_det.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_det_x_estado_aprob.sql" />
     <Build Include="dbo\Views\vwcxc_anticipos_x_cruzar.sql" />
     <Build Include="dbo\Views\vwRo_Parametros_Contables.sql" />
@@ -978,10 +962,8 @@
     <Build Include="web\Stored Procedures\SPROL_017.sql" />
     <Build Include="dbo\Tables\ro_permiso_x_empleado.sql" />
     <Build Include="dbo\Views\vwro_permiso_x_empleado.sql" />
-    <Build Include="dbo\Tables\tb_sis_log_error.sql" />
     <Build Include="web\Views\VWROL_018.sql" />
     <Build Include="web\Views\VWROL_019.sql" />
-    <Build Include="dbo\Tables\tbsys_ProductosConCosto0.sql" />
     <Build Include="dbo\Stored Procedures\spsys_fa_reversar_anulacion_factura.sql" />
     <Build Include="dbo\Stored Procedures\spsys_actualizar_costo_ingresos.sql" />
     <Build Include="web\Views\VWCXP_001_detalle.sql" />
@@ -1107,7 +1089,6 @@
     <Build Include="web\Stored Procedures\SPROL_022.sql" />
     <Build Include="dbo\Views\vwcxc_LiquidacionTarjeta.sql" />
     <Build Include="dbo\Views\vwro_empleado_x_jornada.sql" />
-    <Build Include="dbo\Tables\ro_empleado_x_CuentaContable.sql" />
     <Build Include="web\Views\VWCXC_007_Diario.sql" />
     <Build Include="web\Views\VWCXC_007_Cobros.sql" />
     <Build Include="web\Views\VWCXC_007.sql" />
@@ -1128,6 +1109,60 @@
     <Build Include="dbo\Tables\ct_CierrePorModuloPorSucursal.sql" />
     <Build Include="web\Views\VWROL_002_detallle_prestamos.sql" />
     <Build Include="dbo\Views\vw_ct_CierrePorModuloPorSucursal.sql" />
+    <Build Include="web\Tables\in_SPINV_016.sql" />
+    <Build Include="EntidadRegulatoria\Tables\ro_rdep_det.sql" />
+    <Build Include="EntidadRegulatoria\Tables\ro_rdep.sql" />
+    <Build Include="EntidadRegulatoria\Tables\ATS_ventas_eventos.sql" />
+    <Build Include="dbo\Tables\tb_sucursal_FormaPago_x_fa_NivelDescuento.sql" />
+    <Build Include="dbo\Tables\seg_usuario_x_tb_sucursal.sql" />
+    <Build Include="dbo\Tables\ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.sql" />
+    <Build Include="dbo\Tables\ro_rubro_tipo_x_jornada.sql" />
+    <Build Include="dbo\Tables\ro_rol_x_prestamo_detalle.sql" />
+    <Build Include="dbo\Tables\ro_rol_x_empleado_novedades.sql" />
+    <Build Include="dbo\Tables\ro_empleado_x_rubro_acumulado_detalle.sql" />
+    <Build Include="dbo\Tables\cp_conciliacion_Caja_ValesNoConciliados.sql" />
+    <Build Include="dbo\Tables\ba_Conciliacion_det.sql" />
+    <Build Include="Migraciones\Tables\tb_facturas_eventos.sql" />
+    <Build Include="web\Views\VWROL_028.sql" />
+    <Build Include="web\Views\VWROL_026.sql" />
+    <Build Include="web\Views\VWCXP_014.sql" />
+    <Build Include="web\Views\VWCXC_008.sql" />
+    <Build Include="web\Views\VWCAJ_002_ValesNoConciliados.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwro_rdep.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_retencion_detalle.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_retencion.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_nota_debito_impuestos.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_nota_debito_detalle.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_nota_debito.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_nota_credito_impuestos.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_nota_credito_detalle.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_nota_credito.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_guia_remision_x_factura.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_guia_remision_detalle.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_guia_remision.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_factura_impuestos.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_factura_detalle.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_factura.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_documentos_peniente_enviar_sri.sql" />
+    <Build Include="dbo\Views\vwseg_usuario_x_tb_sucursal.sql" />
+    <Build Include="dbo\Views\vwro_rubro_tipo_x_jornada.sql" />
+    <Build Include="dbo\Views\vwro_rol_detalle_x_rubro_acumulado.sql" />
+    <Build Include="dbo\Views\vwro_empleado_x_rubro_acumulado_detalle.sql" />
+    <Build Include="dbo\Views\vwin_UnidadMedida_Equiv_conversion.sql" />
+    <Build Include="dbo\Views\vwct_CierrePorModuloPorSucursal.sql" />
+    <Build Include="dbo\Views\vwcaj_Caja_Movimiento_ValesNoConciliados.sql" />
+    <Build Include="dbo\Functions\calcular_dias_fondos_reserva.sql" />
+    <Build Include="web\Stored Procedures\SPROL_027.sql" />
+    <Build Include="web\Stored Procedures\SPROL_025.sql" />
+    <Build Include="web\Stored Procedures\SPINV_016.sql" />
+    <Build Include="web\Stored Procedures\SPFAC_017.sql" />
+    <Build Include="web\Stored Procedures\SPFAC_016.sql" />
+    <Build Include="web\Stored Procedures\SPFAC_015.sql" />
+    <Build Include="web\Stored Procedures\SPCXP_015.sql" />
+    <Build Include="EntidadRegulatoria\Stored Procedures\GenerarRDEP.sql" />
+    <Build Include="dbo\Stored Procedures\SPCAJ_AbrirConciliacionCaja.sql" />
+    <Build Include="dbo\Stored Procedures\SPATS_MigrarEventos.sql" />
+    <Build Include="Security\Migraciones.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

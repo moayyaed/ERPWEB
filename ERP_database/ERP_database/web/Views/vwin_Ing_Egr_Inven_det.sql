@@ -1,12 +1,14 @@
-﻿CREATE VIEW web.vwin_Ing_Egr_Inven_det
+﻿CREATE VIEW [web].[vwin_Ing_Egr_Inven_det]
 AS
-SELECT in_Ing_Egr_Inven_det.IdEmpresa, in_Ing_Egr_Inven_det.IdSucursal, in_Ing_Egr_Inven_det.IdMovi_inven_tipo, in_Ing_Egr_Inven_det.IdNumMovi, in_Ing_Egr_Inven_det.Secuencia, in_Ing_Egr_Inven_det.IdBodega, 
-                  in_Ing_Egr_Inven_det.IdProducto, in_Ing_Egr_Inven_det.dm_cantidad, in_Ing_Egr_Inven_det.dm_observacion, in_Ing_Egr_Inven_det.mv_costo, in_Ing_Egr_Inven_det.IdCentroCosto, 
-                  in_Ing_Egr_Inven_det.IdCentroCosto_sub_centro_costo, in_Ing_Egr_Inven_det.IdEstadoAproba, in_Ing_Egr_Inven_det.IdUnidadMedida, in_Ing_Egr_Inven_det.IdEmpresa_oc, in_Ing_Egr_Inven_det.IdSucursal_oc, 
-                  in_Ing_Egr_Inven_det.IdOrdenCompra, in_Ing_Egr_Inven_det.Secuencia_oc, in_Ing_Egr_Inven_det.IdPunto_cargo_grupo, in_Ing_Egr_Inven_det.IdPunto_cargo, in_Ing_Egr_Inven_det.IdEmpresa_inv, in_Ing_Egr_Inven_det.IdSucursal_inv, 
-                  in_Ing_Egr_Inven_det.IdBodega_inv, in_Ing_Egr_Inven_det.IdMovi_inven_tipo_inv, in_Ing_Egr_Inven_det.IdNumMovi_inv, in_Ing_Egr_Inven_det.secuencia_inv, in_Ing_Egr_Inven_det.Motivo_Aprobacion, 
-                  in_Ing_Egr_Inven_det.dm_cantidad_sinConversion, in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion, in_Ing_Egr_Inven_det.mv_costo_sinConversion, in_Ing_Egr_Inven_det.IdMotivo_Inv, in_Producto.pr_descripcion, 
-                  in_presentacion.nom_presentacion, in_Producto.lote_fecha_vcto, in_Producto.lote_num_lote
-FROM     in_presentacion INNER JOIN
-                  in_Producto ON in_presentacion.IdEmpresa = in_Producto.IdEmpresa AND in_presentacion.IdPresentacion = in_Producto.IdPresentacion RIGHT OUTER JOIN
-                  in_Ing_Egr_Inven_det ON in_Producto.IdEmpresa = in_Ing_Egr_Inven_det.IdEmpresa AND in_Producto.IdProducto = in_Ing_Egr_Inven_det.IdProducto
+SELECT dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia, dbo.in_Ing_Egr_Inven_det.IdBodega, 
+                  dbo.in_Ing_Egr_Inven_det.IdProducto, dbo.in_Ing_Egr_Inven_det.dm_cantidad, dbo.in_Ing_Egr_Inven_det.dm_observacion, dbo.in_Ing_Egr_Inven_det.mv_costo, dbo.in_Ing_Egr_Inven_det.IdCentroCosto, 
+                  dbo.in_Ing_Egr_Inven_det.IdCentroCosto_sub_centro_costo, dbo.in_Ing_Egr_Inven_det.IdEstadoAproba, dbo.in_Ing_Egr_Inven_det.IdUnidadMedida, dbo.in_Ing_Egr_Inven_det.IdEmpresa_oc, dbo.in_Ing_Egr_Inven_det.IdSucursal_oc, 
+                  dbo.in_Ing_Egr_Inven_det.IdOrdenCompra, dbo.in_Ing_Egr_Inven_det.Secuencia_oc, dbo.in_Ing_Egr_Inven_det.IdPunto_cargo_grupo, dbo.in_Ing_Egr_Inven_det.IdPunto_cargo, dbo.in_Ing_Egr_Inven_det.IdEmpresa_inv, 
+                  dbo.in_Ing_Egr_Inven_det.IdSucursal_inv, dbo.in_Ing_Egr_Inven_det.IdBodega_inv, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo_inv, dbo.in_Ing_Egr_Inven_det.IdNumMovi_inv, dbo.in_Ing_Egr_Inven_det.secuencia_inv, 
+                  dbo.in_Ing_Egr_Inven_det.Motivo_Aprobacion, dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion, dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion, dbo.in_Ing_Egr_Inven_det.mv_costo_sinConversion, 
+                  dbo.in_Ing_Egr_Inven_det.IdMotivo_Inv, dbo.in_Producto.pr_descripcion, dbo.in_presentacion.nom_presentacion, dbo.in_Producto.lote_fecha_vcto, dbo.in_Producto.lote_num_lote, dbo.in_ProductoTipo.tp_ManejaInven, 
+                  dbo.in_Producto.se_distribuye
+FROM     dbo.in_presentacion INNER JOIN
+                  dbo.in_Producto ON dbo.in_presentacion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_presentacion.IdPresentacion = dbo.in_Producto.IdPresentacion INNER JOIN
+                  dbo.in_ProductoTipo ON dbo.in_Producto.IdEmpresa = dbo.in_ProductoTipo.IdEmpresa AND dbo.in_Producto.IdProductoTipo = dbo.in_ProductoTipo.IdProductoTipo RIGHT OUTER JOIN
+                  dbo.in_Ing_Egr_Inven_det ON dbo.in_Producto.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.in_Ing_Egr_Inven_det.IdProducto

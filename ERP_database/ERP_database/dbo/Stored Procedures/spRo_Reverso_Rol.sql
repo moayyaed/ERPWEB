@@ -1,9 +1,12 @@
 ﻿
+
 CREATE PROCEDURE [dbo].[spRo_Reverso_Rol]
 	@IdEmpresa int,
 	@IdNomina_Tipo int,
 	@IdNomina_TipoLiqui int,
-	@IdPeriodo int
+	@IdPeriodo int,
+	@IdRol int,
+	@TipoReverso int
 	
 	
 AS
@@ -28,10 +31,9 @@ DECLARE
 @fechai date,
 @fechaf date
 
-select @fechai=pe_FechaIni,@fechaf=pe_FechaFin from ro_periodo where IdEmpresa=@IdEmpresa and IdPeriodo=@IdPeriodo
 
 -- eleiminando comprobante contable detalle 
-
+if(@TipoReverso=1)
 delete ct_cbtecble_det
 FROM            dbo.ro_Comprobantes_Contables INNER JOIN
                          dbo.ct_cbtecble_det ON dbo.ro_Comprobantes_Contables.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ro_Comprobantes_Contables.IdTipoCbte = dbo.ct_cbtecble_det.IdTipoCbte AND 
@@ -43,6 +45,7 @@ FROM            dbo.ro_Comprobantes_Contables INNER JOIN
 
 
 -- eliminando comprobante contable cabecera 
+if(@TipoReverso=1)
 delete ct_cbtecble
 FROM            dbo.ro_Comprobantes_Contables AS comp_rol INNER JOIN
                   dbo.ct_cbtecble ON comp_rol.IdEmpresa = dbo.ct_cbtecble.IdEmpresa AND comp_rol.IdTipoCbte = dbo.ct_cbtecble.IdTipoCbte AND comp_rol.IdCbteCble = dbo.ct_cbtecble.IdCbteCble
@@ -53,7 +56,7 @@ FROM            dbo.ro_Comprobantes_Contables AS comp_rol INNER JOIN
 
 
 -- eliminando comprobante contable rol
-
+if(@TipoReverso=1)
 delete ro_Comprobantes_Contables 
 			where IdEmpresa=@IdEmpresa
 			and ro_Comprobantes_Contables.IdNomina=@IdNomina_Tipo
@@ -63,55 +66,34 @@ delete ro_Comprobantes_Contables
 
 
 
-update ro_empleado_novedad_det set EstadoCobro='PEN'
-FROM            dbo.ro_empleado_Novedad AS nov INNER JOIN
-                         dbo.ro_empleado_novedad_det AS nov_det ON nov.IdEmpresa = nov_det.IdEmpresa AND nov.IdNovedad = nov_det.IdNovedad INNER JOIN
-                         dbo.ro_rubro_tipo AS rub ON nov_det.IdEmpresa = rub.IdEmpresa AND nov_det.IdRubro = rub.IdRubro
-						 WHERE FechaPago between @fechai and @fechaf
-						 and IdNomina_Tipo=@IdNomina_Tipo
-						 and IdNomina_TipoLiqui=@IdNomina_TipoLiqui
-						 and nov.IdEmpresa=@IdEmpresa
-						 and exists (select * from ro_rol_detalle d, ro_rol r
-						 where r.IdEmpresa=nov.IdEmpresa
-						 and r.IdEmpresa=d.IdEmpresa
-						 and r.IdRol=d.IdRol
-						 and d.IdEmpleado=nov.IdEmpleado
-						 and r.IdNominaTipo=nov.IdNomina_Tipo
-						 and r.IdNominaTipoLiqui=nov.IdNomina_TipoLiqui
-						 and d.IdRubro=nov_det.IdRubro
-						 and r.IdPeriodo=@IdPeriodo)
+update ro_empleado_novedad_det set EstadoCobro='PEND'       
+FROM            dbo.ro_empleado_novedad_det INNER JOIN
+                         dbo.ro_rol_x_empleado_novedades ON dbo.ro_empleado_novedad_det.IdEmpresa = dbo.ro_rol_x_empleado_novedades.IdEmpresa AND 
+                         dbo.ro_empleado_novedad_det.IdEmpresa = dbo.ro_rol_x_empleado_novedades.IdEmpresa_nov AND dbo.ro_empleado_novedad_det.IdNovedad = dbo.ro_rol_x_empleado_novedades.IdNovedad AND 
+                         dbo.ro_empleado_novedad_det.Secuencia = dbo.ro_rol_x_empleado_novedades.Secuencia
+
+						 where ro_rol_x_empleado_novedades.IdEmpresa=@IdEmpresa
+						 and ro_rol_x_empleado_novedades.IdRol=@IdRol
 
 
 
-						 update ro_periodo_x_ro_Nomina_TipoLiqui set Contabilizado='N' 
+						 update ro_prestamo_detalle set EstadoPago='PEND'
+	FROM            dbo.ro_rol_x_prestamo_detalle INNER JOIN
+                         dbo.ro_prestamo_detalle ON dbo.ro_rol_x_prestamo_detalle.IdEmpresa = dbo.ro_prestamo_detalle.IdEmpresa AND dbo.ro_rol_x_prestamo_detalle.IdEmpresa_pre = dbo.ro_prestamo_detalle.IdEmpresa AND 
+                         dbo.ro_rol_x_prestamo_detalle.IdPrestamo = dbo.ro_prestamo_detalle.IdPrestamo AND dbo.ro_rol_x_prestamo_detalle.NumCuota = dbo.ro_prestamo_detalle.NumCuota
+
+						 where ro_rol_x_prestamo_detalle.IdEmpresa=@IdEmpresa
+						 and ro_rol_x_prestamo_detalle.IdRol=@IdRol
+if(@TipoReverso=1)
+						 update ro_rol set Cerrado='CERRADO' 
 						 where IdEmpresa=@IdEmpresa 
-						 and  IdNomina_Tipo=@IdNomina_Tipo
-						 and IdNomina_TipoLiqui=@IdNomina_TipoLiqui
-						 and IdPeriodo=@IdPeriodo
+						 AND IdRol=@IdRol
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-update ro_periodo_x_ro_Nomina_TipoLiqui set Contabilizado='N'
-			where IdEmpresa=@IdEmpresa 
-			and IdNomina_Tipo=@IdNomina_Tipo 
-			and IdNomina_TipoLiqui=@IdNomina_TipoLiqui
-			and IdPeriodo=@IdPeriodo
-
-
+if(@TipoReverso=0)
+						 update ro_rol set Cerrado='ABIERTO' 
+						 where IdEmpresa=@IdEmpresa 
+						 AND IdRol=@IdRol
 
 
 END

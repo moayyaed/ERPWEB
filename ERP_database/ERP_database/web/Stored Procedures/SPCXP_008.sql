@@ -1,5 +1,4 @@
-﻿
---exec [dbo].[spCXP_Rpt035] 1,'3/10/2017',88,88
+﻿--exec [web].[SPCXP_008] 2,'3/10/2019',2,2,1,9999999
 CREATE PROCEDURE [web].[SPCXP_008]
   @idempresa int ,
   @fecha datetime ,
@@ -93,4 +92,5 @@ group by IdEmpresa_cxp,IdTipoCbte_cxp ,IdCbteCble_cxp ) as
 b on
  a.IdEmpresa = b.IdEmpresa_cxp and a.IdCbteCble_Ogiro = b.IdCbteCble_cxp and a.IdTipoCbte_Ogiro = b.IdTipoCbte_cxp 
  ) VW
+ where vw.Saldo > 0
 END

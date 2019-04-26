@@ -8,6 +8,9 @@
     [secuencialInicio] VARCHAR (9)  NOT NULL,
     [secuencialFin]    VARCHAR (9)  NOT NULL,
     [Autorización]     VARCHAR (49) NOT NULL,
+    [IdSucursal]       INT          NULL,
     CONSTRAINT [PK_comprobantes_anulados] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC, [Secuencia] ASC)
 );
+
+
 
