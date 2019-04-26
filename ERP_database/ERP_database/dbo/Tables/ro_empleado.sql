@@ -66,24 +66,13 @@
     [IdEmpleadoPAdre]                      NUMERIC (18)  NULL,
     [CodCatalogo_Ubicacion]                VARCHAR (10)  NULL,
     [IdCtaCble_x_pagar_empleado]           VARCHAR (20)  NULL,
+    [IdSucursalContabilizacion]            INT           NULL,
     CONSTRAINT [PK_ro_empleado] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEmpleado] ASC),
-    CONSTRAINT [FK_ro_empleado_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble_Emplea]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
-    CONSTRAINT [FK_ro_empleado_ct_plancta1] FOREIGN KEY ([IdEmpresa], [IdCtaCble_x_pagar_empleado]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
-    CONSTRAINT [FK_ro_empleado_ro_Cargo] FOREIGN KEY ([IdEmpresa], [IdCargo]) REFERENCES [dbo].[ro_cargo] ([IdEmpresa], [IdCargo]),
-    CONSTRAINT [FK_ro_empleado_ro_Catalogo] FOREIGN KEY ([IdTipoEmpleado]) REFERENCES [dbo].[ro_catalogo] ([CodCatalogo]),
-    CONSTRAINT [FK_ro_empleado_ro_Catalogo1] FOREIGN KEY ([IdTipoSangre]) REFERENCES [dbo].[ro_catalogo] ([CodCatalogo]),
-    CONSTRAINT [FK_ro_empleado_ro_Catalogo2] FOREIGN KEY ([IdTipoLicencia]) REFERENCES [dbo].[ro_catalogo] ([CodCatalogo]),
-    CONSTRAINT [FK_ro_empleado_ro_Catalogo3] FOREIGN KEY ([IdTipoLicencia]) REFERENCES [dbo].[ro_catalogo] ([CodCatalogo]),
-    CONSTRAINT [FK_ro_empleado_ro_catalogo4] FOREIGN KEY ([CodCatalogo_Ubicacion]) REFERENCES [dbo].[ro_catalogo] ([CodCatalogo]),
-    CONSTRAINT [FK_ro_empleado_ro_Departamento] FOREIGN KEY ([IdEmpresa], [IdDepartamento]) REFERENCES [dbo].[ro_Departamento] ([IdEmpresa], [IdDepartamento]),
-    CONSTRAINT [FK_ro_empleado_ro_Division] FOREIGN KEY ([IdEmpresa], [IdDivision]) REFERENCES [dbo].[ro_Division] ([IdEmpresa], [IdDivision]),
     CONSTRAINT [FK_ro_empleado_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado_Supervisor]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
-    CONSTRAINT [FK_ro_empleado_ro_empleado1] FOREIGN KEY ([IdEmpresa], [IdEmpleadoPAdre]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
-    CONSTRAINT [FK_ro_empleado_tb_banco] FOREIGN KEY ([IdBanco]) REFERENCES [dbo].[tb_banco] ([IdBanco]),
-    CONSTRAINT [FK_ro_empleado_tb_ciudad] FOREIGN KEY ([IdCiudad]) REFERENCES [dbo].[tb_ciudad] ([IdCiudad]),
-    CONSTRAINT [FK_ro_empleado_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
-    CONSTRAINT [FK_ro_empleado_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
+    CONSTRAINT [FK_ro_empleado_ro_empleado1] FOREIGN KEY ([IdEmpresa], [IdEmpleadoPAdre]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado])
 );
+
+
 
 
 

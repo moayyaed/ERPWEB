@@ -30,6 +30,9 @@
     [ptoEmiModificado] VARCHAR (5)     NULL,
     [secModificado]    VARCHAR (9)     NULL,
     [autModificado]    VARCHAR (60)    NULL,
+    [IdSucursal]       INT             NULL,
     CONSTRAINT [PK_compras] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC, [Secuencia] ASC)
 );
+
+
 

@@ -18,7 +18,6 @@
         settings.Properties.Columns.Add("pr_descripcion", "Producto", 70);
         settings.Properties.Columns.Add("nom_categoria", "Categoria", 20);
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
-        settings.Properties.ClientSideEvents.EndCallback = "function(s,e){SetUnidadMedida(s,e)}";
 
 
     })

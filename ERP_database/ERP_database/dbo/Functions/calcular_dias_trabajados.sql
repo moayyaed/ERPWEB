@@ -20,6 +20,8 @@
    set @dias=30
    if((@dias=28 or @dias=29 and datepart(MONTH, @Fecha_inicio)=2) )
    set @dias=30
+   if(@dias < 30 and MONTH(@Fecha_inicio) != 2 and @em_status<>'EST_PLQ')
+   set @dias = @dias+1
 
    return @dias
  end;

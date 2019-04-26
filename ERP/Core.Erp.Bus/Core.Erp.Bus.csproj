@@ -233,7 +233,6 @@
     <Compile Include="Inventario\in_grupo_Bus.cs" />
     <Compile Include="Inventario\in_Ing_Egr_Inven_Bus.cs" />
     <Compile Include="Inventario\in_Ing_Egr_Inven_det_Bus.cs" />
-    <Compile Include="Inventario\in_Ing_Egr_Inven_distribucion_Bus.cs" />
     <Compile Include="Inventario\in_linea_Bus.cs" />
     <Compile Include="Inventario\in_Marca_Bus.cs" />
     <Compile Include="Inventario\in_Motivo_Inven_Bus.cs" />

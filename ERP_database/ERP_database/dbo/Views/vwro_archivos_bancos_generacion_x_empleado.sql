@@ -16,7 +16,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[29] 4[5] 2[5] 3) )"
+         Configuration = "(H (1[71] 4[5] 2[5] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -82,26 +82,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
-            Begin Extent = 
-               Top = 111
-               Left = 38
-               Bottom = 456
-               Right = 270
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "ro_empleado"
-            Begin Extent = 
-               Top = 30
-               Left = 828
-               Bottom = 389
-               Right = 1117
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "ro_archivos_bancos_generacion"
             Begin Extent = 
                Top = 0
@@ -118,6 +98,26 @@ Begin DesignProperties =
                Left = 481
                Bottom = 216
                Right = 690
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ro_empleado"
+            Begin Extent = 
+               Top = 30
+               Left = 828
+               Bottom = 389
+               Right = 1117
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 111
+               Left = 38
+               Bottom = 456
+               Right = 270
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -155,6 +155,8 @@ Begin DesignProperties =
          Column = 1440
          Alias = 900
   ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_archivos_bancos_generacion_x_empleado';
+
+
 
 
 

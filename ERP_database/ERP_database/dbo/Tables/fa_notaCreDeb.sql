@@ -30,6 +30,7 @@
     [IdCtaCble_TipoNota]  VARCHAR (20)   NULL,
     [IdPuntoVta]          INT            NULL,
     [aprobada_enviar_sri] BIT            NOT NULL,
+    [Generado]            BIT            NULL,
     CONSTRAINT [PK_fa_notaCreDeb] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdNota] ASC),
     CONSTRAINT [FK_fa_notaCreDeb_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble_TipoNota]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_fa_notaCreDeb_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
@@ -40,6 +41,8 @@
     CONSTRAINT [FK_fa_notaCreDeb_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_notaCreDeb_tb_sis_Documento_Tipo_Talonario] FOREIGN KEY ([IdEmpresa], [CodDocumentoTipo], [Serie2], [Serie1], [NumNota_Impresa]) REFERENCES [dbo].[tb_sis_Documento_Tipo_Talonario] ([IdEmpresa], [CodDocumentoTipo], [PuntoEmision], [Establecimiento], [NumDocumento])
 );
+
+
 
 
 

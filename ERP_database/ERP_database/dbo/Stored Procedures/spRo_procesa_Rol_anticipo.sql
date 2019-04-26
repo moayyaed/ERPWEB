@@ -64,7 +64,7 @@ insert into ro_rol
 UsuarioIngresa,	FechaModifica,		UsuarioModifica,		FechaAnula,			UsuarioAnula,				MotivoAnula,				UsuarioCierre,		FechaCierre,
 IdCentroCosto)
 values
-(@IdEmpresa	, @IdRol, case when @IdSucursalInicio=0then NULL else @IdSucursalInicio end	,@IdNomina			,@IdNominaTipo			,@IdPEriodo			,@observacion				,@observacion				,'N'				,GETDATE()
+(@IdEmpresa	, @IdRol, case when @IdSucursalInicio=0then NULL else @IdSucursalInicio end	,@IdNomina			,@IdNominaTipo			,@IdPEriodo			,@observacion				,@observacion				,'ABIERTO'				,GETDATE()
 ,@IdUsuario		,null				,null					,null				,null						,null						,null				,null
 ,null)
 
@@ -327,5 +327,6 @@ PIVOT
 
 
 
+update ro_periodo_x_ro_Nomina_TipoLiqui set Procesado='S' where IdEmpresa=@IdEmpresa and IdNomina_Tipo=@IdNomina and IdNomina_TipoLiqui=@IdNominaTipo and IdPeriodo=@IdPEriodo
 
 END

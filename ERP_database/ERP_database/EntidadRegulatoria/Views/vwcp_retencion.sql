@@ -4,8 +4,8 @@ SELECT        dbo.cp_retencion.IdEmpresa, dbo.cp_retencion.IdRetencion, dbo.cp_r
                          dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.fecha, dbo.cp_retencion.observacion, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.co_fechaOg, 
                          dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.Num_Autorizacion, dbo.cp_orden_giro.Num_Autorizacion_Imprenta, dbo.tb_persona.pe_Naturaleza, 
                          dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_direccion, dbo.tb_persona.pe_telfono_Contacto, dbo.tb_persona.pe_celular, 
-                         dbo.tb_persona.pe_correo, dbo.tb_persona.pe_razonSocial, dbo.tb_empresa.em_nombre, dbo.tb_empresa.RazonSocial, dbo.tb_empresa.NombreComercial, dbo.tb_empresa.ContribuyenteEspecial, 'SI' AS ObligadoAllevarConta, 
-                         dbo.tb_empresa.em_ruc, dbo.tb_empresa.em_direccion, dbo.tb_empresa.em_telefonos, dbo.tb_empresa.em_Email, dbo.cp_orden_giro.IdOrden_giro_Tipo, 
+                         dbo.cp_proveedor.pr_correo AS pe_correo, dbo.tb_persona.pe_razonSocial, dbo.tb_empresa.em_nombre, dbo.tb_empresa.RazonSocial, dbo.tb_empresa.NombreComercial, dbo.tb_empresa.ContribuyenteEspecial, 
+                         'SI' AS ObligadoAllevarConta, dbo.tb_empresa.em_ruc, dbo.tb_empresa.em_direccion, dbo.tb_empresa.em_telefonos, dbo.tb_empresa.em_Email, dbo.cp_orden_giro.IdOrden_giro_Tipo, 
                          dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico
 FROM            dbo.cp_proveedor INNER JOIN
                          dbo.cp_orden_giro ON dbo.cp_proveedor.IdEmpresa = dbo.cp_orden_giro.IdEmpresa AND dbo.cp_proveedor.IdProveedor = dbo.cp_orden_giro.IdProveedor INNER JOIN
@@ -22,7 +22,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        Width = 1500
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'      Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -91,13 +91,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[17] 4[47] 2[30] 3) )"
+         Configuration = "(H (1[8] 4[24] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -232,7 +234,9 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 39
          Width = 284
- ', @level0type = N'SCHEMA', @level0name = N'EntidadRegulatoria', @level1type = N'VIEW', @level1name = N'vwcp_retencion';
+   ', @level0type = N'SCHEMA', @level0name = N'EntidadRegulatoria', @level1type = N'VIEW', @level1name = N'vwcp_retencion';
+
+
 
 
 

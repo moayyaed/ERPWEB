@@ -32,7 +32,7 @@ BEGIN --INSERTO EN TABLA PK DE PRODUCTOS A MOSTRAR
 	where in_producto_x_tb_bodega.IdEmpresa = @IdEmpresa
 	AND IdSucursal between @IdSucursal_ini and @IdSucursal_fin
 	AND IdBodega BETWEEN @IdBodega_ini and @IdBodega_fin
-	and isnull(in_Producto.IdProducto_padre,0) between @IdProducto_ini and @IdProducto_fin
+	and isnull(in_Producto.IdProducto_padre,in_Producto.IdProducto) between @IdProducto_ini and @IdProducto_fin
 	and in_Producto.IdMarca between @IdMarcaIni and @IdMarcaFin
 END
 

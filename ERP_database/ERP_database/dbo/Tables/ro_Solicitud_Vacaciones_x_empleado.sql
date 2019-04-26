@@ -30,7 +30,8 @@
     [Gozadas_Pgadas]     BIT           NOT NULL,
     [Canceladas]         BIT           NOT NULL,
     CONSTRAINT [PK_ro_Solicitud_Vacaciones_x_empleado_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEmpleado] ASC, [IdSolicitud] ASC),
-    CONSTRAINT [FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
-    CONSTRAINT [FK_ro_Solicitud_Vacaciones_x_empleado_ro_historico_vacaciones_x_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado], [IdVacacion]) REFERENCES [dbo].[ro_historico_vacaciones_x_empleado] ([IdEmpresa], [IdEmpleado], [IdVacacion])
+    CONSTRAINT [FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado])
 );
+
+
 

@@ -21,8 +21,11 @@
     [codEstab]           VARCHAR (3)     NOT NULL,
     [ventasEstab]        NUMERIC (20, 2) NOT NULL,
     [ivaComp]            NUMERIC (20, 2) NOT NULL,
+    [IdSucursal]         INT             NULL,
     CONSTRAINT [PK_ventas] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC, [Secuencia] ASC)
 );
+
+
 
 
 

@@ -742,7 +742,6 @@
     <Compile Include="Inventario\in_grupo_Data.cs" />
     <Compile Include="Inventario\in_Ing_Egr_Inven_Data.cs" />
     <Compile Include="Inventario\in_Ing_Egr_Inven_det_Data.cs" />
-    <Compile Include="Inventario\in_Ing_Egr_Inven_distribucion_Data.cs" />
     <Compile Include="Inventario\in_linea_Data.cs" />
     <Compile Include="Inventario\in_Marca_Data.cs" />
     <Compile Include="Inventario\in_Motivo_Inven_Data.cs" />
@@ -789,9 +788,6 @@
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="in_Ing_Egr_Inven_det.cs">
-      <DependentUpon>Model_inventario.tt</DependentUpon>
-    </Compile>
-    <Compile Include="in_Ing_Egr_Inven_distribucion.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="in_linea.cs">

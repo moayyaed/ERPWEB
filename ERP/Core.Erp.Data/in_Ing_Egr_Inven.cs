@@ -19,8 +19,6 @@ namespace Core.Erp.Data
             this.in_devolucion_inven = new HashSet<in_devolucion_inven>();
             this.in_devolucion_inven1 = new HashSet<in_devolucion_inven>();
             this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
-            this.in_Ing_Egr_Inven_distribucion = new HashSet<in_Ing_Egr_Inven_distribucion>();
-            this.in_Ing_Egr_Inven_distribucion1 = new HashSet<in_Ing_Egr_Inven_distribucion>();
             this.in_Consignacion = new HashSet<in_Consignacion>();
             this.in_transferencia = new HashSet<in_transferencia>();
             this.in_transferencia1 = new HashSet<in_transferencia>();
@@ -51,8 +49,6 @@ namespace Core.Erp.Data
         public virtual ICollection<in_devolucion_inven> in_devolucion_inven { get; set; }
         public virtual ICollection<in_devolucion_inven> in_devolucion_inven1 { get; set; }
         public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_distribucion> in_Ing_Egr_Inven_distribucion { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_distribucion> in_Ing_Egr_Inven_distribucion1 { get; set; }
         public virtual ICollection<in_Consignacion> in_Consignacion { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia1 { get; set; }

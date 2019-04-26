@@ -1,4 +1,5 @@
-﻿--exec [web].[SPROL_023] 1,1,1,1,2,201901,1,99999,1,99999,1,99999
+﻿
+--exec [web].[SPROL_023] 5,1,1,1,2,201902,1,99999,1,99999,1,99999
 CREATE PROCEDURE [web].[SPROL_023]
 (
 @IdEmpresa int,
@@ -71,7 +72,7 @@ FROM (
 		CASE WHEN ro_catalogo.CodCatalogo = 'ANTICIPO' THEN VALOR ELSE 0 END AS ANTICIPO,
 		CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOC' THEN  VALOR ELSE 0 END AS DECIMOC,
 		CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN  VALOR ELSE 0 END AS DECIMOT,
-		case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol_detalle.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
+	    case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva AND d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
 		CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 		CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,
 		CASE WHEN ro_catalogo.CodCatalogo = 'SOBRET' THEN  VALOR ELSE 0 END AS SOBRET,
@@ -80,7 +81,7 @@ FROM (
 		CASE WHEN ro_rubro_tipo.ru_tipo = 'E' AND ro_rubro_tipo.rub_GrupoResumen is null THEN VALOR ELSE 0 END AS OTROEGR,
 		CASE WHEN ro_rubro_tipo.ru_tipo = 'I' AND ro_rubro_tipo.rub_GrupoResumen is null THEN VALOR ELSE 0 END AS OTROING,
 		CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_dias_trabajados then VALOR ELSE 0 END AS DIASTRABAJADOS,				  
-		CASE WHEN ro_rubro_tipo.IdRubro != ro_rubros_calculados.IdRubro_horas_vespertina  then 'HORAS MATUTINA' WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_horas_vespertina THEN'HORAS VESPERTINA'  END AS JORNADA
+		CASE WHEN ro_rubro_tipo.IdRubro <> ro_rubros_calculados.IdRubro_horas_vespertina AND ro_rubro_tipo.IdRubro<>ro_rubros_calculados.IdRubro_primaria_vespertina  then 'HORAS MATUTINA' WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_horas_vespertina THEN'HORAS VESPERTINA'   WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_primaria_vespertina THEN'PRIMARIA VESP.'  END AS JORNADA
 				 
 		FROM            dbo.tb_persona INNER JOIN
 		dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
@@ -100,7 +101,7 @@ FROM (
 		dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
 		dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
 		dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-		dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+		dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 		--METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
 
 		where ro_rol_detalle.IdEmpresa=@IdEmpresa
@@ -180,7 +181,7 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOC' THEN VALOR ELSE 0 END AS DECIMOC,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN VALOR ELSE 0 END AS DECIMOT,
 				
-				  case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
+				   case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva AND d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
 				  CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'SOBRET' THEN VALOR ELSE 0 END AS SOBRET,
@@ -189,8 +190,13 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_rubro_tipo.ru_tipo = 'E' AND ro_rubro_tipo.rub_GrupoResumen is null THEN VALOR ELSE 0 END AS OTROEGR,
 				  CASE WHEN ro_rubro_tipo.ru_tipo = 'I' AND ro_rubro_tipo.rub_GrupoResumen is null THEN VALOR ELSE 0 END AS OTROING,
 				  CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_dias_trabajados then VALOR ELSE 0 END AS DIASTRABAJADOS,				  
-				  CASE WHEN ro_rubro_tipo.IdRubro != ro_rubros_calculados.IdRubro_horas_vespertina  then 'HORAS MATUTINA' WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_horas_vespertina THEN'HORAS VESPERTINA'   END AS JORNADA
-				 
+				 case when J.CONT > 1 then
+				 (CASE WHEN ro_rubro_tipo.IdRubro <> ro_rubros_calculados.IdRubro_horas_vespertina AND ro_rubro_tipo.IdRubro<>ro_rubros_calculados.IdRubro_primaria_vespertina  
+				 then 'HORAS MATUTINA' WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_horas_vespertina 
+				 THEN'HORAS VESPERTINA' 
+				 WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_primaria_vespertina THEN'PRIMARIA VESP.'  END )
+				 ELSE J.NomJornada END
+				 AS JORNADA						 
 FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
                          dbo.ro_Departamento ON dbo.ro_empleado.IdEmpresa = dbo.ro_Departamento.IdEmpresa AND dbo.ro_empleado.IdDepartamento = dbo.ro_Departamento.IdDepartamento RIGHT OUTER JOIN
@@ -209,7 +215,13 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+						 LEFT JOIN (
+						 SELECT X.IdEmpresa, IdEmpleado, MAX(Y.Descripcion) NomJornada, COUNT(*) CONT FROM ro_empleado_x_jornada AS X
+						 INNER JOIN ro_jornada AS Y ON X.IDEMPRESA = Y.IdEmpresa AND X.IdJornada = Y.IdJornada
+						 WHERE X.IdEmpresa = @IdEmpresa
+						 GROUP BY X.IdEmpresa, IdEmpleado
+						 ) AS J ON ro_empleado.IdEmpresa = J.IdEmpresa AND ro_empleado.IdEmpleado = J.IdEmpleado
 				  --METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
 
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
@@ -283,8 +295,8 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'ANTICIPO' THEN VALOR ELSE 0 END AS ANTICIPO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOC' THEN  VALOR ELSE 0 END AS DECIMOC,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN  VALOR ELSE 0 END AS DECIMOT,
-				  case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol_detalle.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
-				   CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
+				  case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva AND d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
+				  CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'SOBRET' THEN  VALOR ELSE 0 END AS SOBRET,
 				  CASE WHEN ro_rubro_tipo.ru_tipo = 'E' THEN VALOR ELSE 0 END AS TOTALE,
@@ -312,7 +324,7 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 
 
 				  --METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
@@ -320,7 +332,7 @@ FROM            dbo.tb_persona INNER JOIN
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
 				  and ro_rol_detalle.IdSucursal>=@IdSucursalIni
 				  and ro_rol_detalle.IdSucursal<=@IdSucursalFin
-
+				  
 				  and ro_rol.IdNominaTipo=@IdNomina
 				  and ro_rol.IdNominaTipoLiqui=@IdNominaTipoLiqui
 				  and ro_rol.IdPeriodo=@IdPeriodo
@@ -394,7 +406,7 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOC' THEN VALOR ELSE 0 END AS DECIMOC,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN VALOR ELSE 0 END AS DECIMOT,
 				
-				  case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
+				  case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
 				  CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'SOBRET' THEN VALOR ELSE 0 END AS SOBRET,
@@ -423,7 +435,7 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado  and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 				  --METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
 
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa

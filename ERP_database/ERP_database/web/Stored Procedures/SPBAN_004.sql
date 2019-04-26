@@ -79,10 +79,26 @@ and A.IdEmpresa = @IdEmpresa
 and B.IdCtaCble=@IdCtaCble
 AND A.cb_Fecha <= @i_FechaFin
 GROUP BY A.IdEmpresa, B.IdCtaCble
+
+DECLARE @RE_NoSeleccionado float
+select @RE_NoSeleccionado = SUM(A.Valor)
+from(
+select isnull(case when tipo_IngEgr = '-' then Valor*-1 else Valor end,0) Valor
+from ba_Conciliacion_det b
+where b.IdEmpresa = @IdEmpresa
+and b.IdConciliacion = @IdConciliacion
+and b.Seleccionado = 0
+) A
+
+set @RE_NoSeleccionado = isnull(@RE_NoSeleccionado,0)
+set @SaldoInicial = round(isnull(@SaldoInicial,0) + isnull(@RE_NoSeleccionado,0),2)
+
 END
 
 BEGIN --CALCULO EGRESOS NO CONCILIADOS
-SELECT       @w_TEgr=  ISNULL(SUM(D.dc_valor),0)
+SELECT @w_TEgr=  ISNULL(A.Valor,0)
+from(
+SELECT       ISNULL(SUM(D.dc_valor),0) Valor
 FROM            ct_cbtecble_det AS D INNER JOIN
                          ct_cbtecble AS C ON C.IdEmpresa = D.IdEmpresa AND C.IdTipoCbte = D.IdTipoCbte AND D.IdCbteCble = C.IdCbteCble
 WHERE        (C.IdEmpresa = @IdEmpresa) AND (D.IdCtaCble = @IdCtaCble) AND (D.dc_Valor < 0) 
@@ -104,6 +120,13 @@ AND C.cb_Estado = 'A'
             ba_Conciliacion_det_IngEgr.IdTipocbte = D.IdTipoCbte AND ba_Conciliacion_det_IngEgr.IdCbteCble = D.IdCbteCble AND 
             ba_Conciliacion_det_IngEgr.SecuenciaCbteCble = D.secuencia and ba_Conciliacion_det_IngEgr.checked = 0
             and ba_Conciliacion_det_IngEgr.IdConciliacion = @IdConciliacion)
+/*UNION ALL
+
+SELECT ISNULL(SUM(B.Valor)*-1,0) FROM ba_Conciliacion_det B
+WHERE B.IdEmpresa = @IdEmpresa
+AND B.IdConciliacion  = @IdConciliacion
+AND B.tipo_IngEgr = '-' AND B.Seleccionado = 0*/
+			)A
 END
 
 BEGIN --CALCULO EGRESOS NO CONCILIADOS QUE ESTAN ANULADOS
@@ -185,9 +208,20 @@ AND EXISTS
                 and rev.IdTipoCbte = c.IdTipoCbte
                 and rev.IdCbteCble = c.IdCbteCble
                 )
+				
+select @RE_NoSeleccionado = SUM(A.Valor)
+from(
+select isnull(case when tipo_IngEgr = '-' then Valor*-1 else Valor end,0) Valor
+from ba_Conciliacion_det b
+where b.IdEmpresa = @IdEmpresa
+and b.IdConciliacion = @IdConciliacion
+and b.Seleccionado = 1
+) A
+set @RE_NoSeleccionado = isnull(@RE_NoSeleccionado,0)
+
 END
 
-set @SaldoFin=ISNULL(@w_TIng+@w_TEgr_ANU+@w_TIng_ANU+@w_TEgr,0)
+set @SaldoFin=ISNULL(@w_TIng+@w_TEgr_ANU+@w_TIng_ANU+@w_TEgr+@RE_NoSeleccionado,0)
 set @SaldoInicial=ISNULL(@SaldoInicial,0)
 
 BEGIN --INSERTO INGRESOS NO CONCILIADOS 
@@ -218,16 +252,6 @@ AND EXISTS
             ba_Conciliacion_det_IngEgr.IdTipocbte = D.IdTipoCbte AND ba_Conciliacion_det_IngEgr.IdCbteCble = D.IdCbteCble AND 
             ba_Conciliacion_det_IngEgr.SecuenciaCbteCble = D.secuencia AND ba_Conciliacion.IdEmpresa = @IdEmpresa and ba_Conciliacion_det_IngEgr.checked = 0
             and ba_Conciliacion_det_IngEgr.IdConciliacion = @IdConciliacion)        
-            
-            and exists(
-                SELECT        rev.IdEmpresa, rev.IdTipoCbte, rev.IdCbteCble, ct_cbtecble.cb_Fecha
-                FROM            ct_cbtecble_Reversado AS rev INNER JOIN
-                            ct_cbtecble ON rev.IdEmpresa_Anu = ct_cbtecble.IdEmpresa AND rev.IdTipoCbte_Anu = ct_cbtecble.IdTipoCbte AND rev.IdCbteCble_Anu = ct_cbtecble.IdCbteCble
-                where ct_cbtecble.cb_Fecha <= @i_FechaIni
-                and rev.IdEmpresa = c.IdEmpresa
-                and rev.IdTipoCbte = c.IdTipoCbte
-                and rev.IdCbteCble = c.IdCbteCble
-                )
 END
 
 BEGIN--INSERTO INGRESOS ANULADOS QUE PUEDEN ESTAR EN ESTA CONCILIACION
@@ -361,7 +385,7 @@ FROM            ba_Conciliacion AS A INNER JOIN
 WHERE        (A.IdEmpresa = @IdEmpresa) AND (A.IdConciliacion = @IdConciliacion) AND (A.IdBanco = @IdBanco) AND (ba_Conciliacion_det_IngEgr.checked = 1)  AND (ct_cbtecble_det.dc_Valor > 0)
 END
 
-set @TotalConciliado = ISNULL(@w_TIng,0) + ISNULL(@w_TEgr,0)
+set @TotalConciliado = ISNULL(@w_TIng,0)  + ISNULL(@w_TEgr,0)
 
 if (@TotalRegistros>0)
 begin

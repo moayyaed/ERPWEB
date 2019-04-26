@@ -9,7 +9,7 @@
     [cm_observacion]  VARCHAR (MAX) NULL,
     [IdCaja]          INT           NOT NULL,
     [IdPeriodo]       INT           NOT NULL,
-    [cm_fecha]        DATETIME      NOT NULL,
+    [cm_fecha]        DATE          NOT NULL,
     [IdUsuario]       VARCHAR (50)  NULL,
     [IdUsuario_Anu]   VARCHAR (50)  NULL,
     [FechaAnulacion]  DATETIME      NULL,
@@ -22,6 +22,7 @@
     [IdTipo_Persona]  VARCHAR (20)  NOT NULL,
     [IdEntidad]       NUMERIC (18)  NOT NULL,
     [IdPersona]       NUMERIC (18)  NOT NULL,
+    [SecuenciaCaja]   NUMERIC (18)  NULL,
     CONSTRAINT [PK_ba_Caja_Movimiento] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdCbteCble] ASC, [IdTipocbte] ASC),
     CONSTRAINT [FK_caj_Caja_Movimiento_ba_TipoFlujo] FOREIGN KEY ([IdEmpresa], [IdTipoFlujo]) REFERENCES [dbo].[ba_TipoFlujo] ([IdEmpresa], [IdTipoFlujo]),
     CONSTRAINT [FK_caj_Caja_Movimiento_caj_Caja] FOREIGN KEY ([IdEmpresa], [IdCaja]) REFERENCES [dbo].[caj_Caja] ([IdEmpresa], [IdCaja]),
@@ -31,4 +32,6 @@
     CONSTRAINT [FK_caj_Caja_Movimiento_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
     CONSTRAINT [FK_caj_Caja_Movimiento_tb_persona_tipo] FOREIGN KEY ([IdTipo_Persona]) REFERENCES [dbo].[tb_persona_tipo] ([IdTipo_Persona])
 );
+
+
 
