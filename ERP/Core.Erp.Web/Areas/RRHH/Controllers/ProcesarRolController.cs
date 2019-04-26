@@ -224,7 +224,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         return View(info);
                     }
                     else
-                        return RedirectToAction("Index");
+                {
+                    if(info.IdNomina_TipoLiqui == 3 || info.IdNomina_TipoLiqui == 4 )
+                        return RedirectToAction("Index", "PagoBenediciosSociales", new { Area = "RRHH" });
+                }
+                return RedirectToAction("Index");
               
 
             }

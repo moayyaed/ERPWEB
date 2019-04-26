@@ -58,18 +58,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
                     info.UsuarioIngresa = SessionFixed.IdUsuario;
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     if (!bus_rol.Decimos(info))
                         return View(info);
                     else
                         return RedirectToAction("Index");
-                }
-                else
-                    return View(info);
-
+         
             }
             catch (Exception)
             {
@@ -148,7 +143,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
                 ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
-                var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
+                var lst_sucursal = bus_sucursal.GetList(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, false);
                 ViewBag.lst_sucursal = lst_sucursal;
 
               var  lista_nomina = bus_nomina.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);

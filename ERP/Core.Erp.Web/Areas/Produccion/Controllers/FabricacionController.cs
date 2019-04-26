@@ -26,7 +26,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
         in_Producto_Composicion_Info comp = new in_Producto_Composicion_Info();
         in_Producto_Composicion_Bus bus_comp = new in_Producto_Composicion_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
-        //  pro_FabricacionDet_Fac List_Fac = new pro_FabricacionDet_Fac();
+        pro_FabricacionDet_Fac List_Fac = new pro_FabricacionDet_Fac();
 
         #endregion
         #region Index
@@ -75,8 +75,8 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
         private void cargar_combos_detalle()
         {
             in_UnidadMedida_Bus bus_unidad = new in_UnidadMedida_Bus();
-            var lst_unidad = bus_unidad.get_list(false);
-            ViewBag.lst_unidad = lst_unidad;
+            var lst_unidad_medida = bus_unidad.get_list(false);
+            ViewBag.lst_unidad_medida = lst_unidad_medida;
         }
 
         #endregion
@@ -103,7 +103,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
 
             };
             List_det.set_list(model.LstDet, model.IdTransaccionSession);
-           // List_Fac.set_list_fac(model.LstDet, model.IdTransaccionSession);
+            List_Fac.set_list_fac(model.LstDet, model.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
@@ -221,7 +221,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-       /* public JsonResult GetProductoFacturadosPorFecha(DateTime FechaIni, DateTime FechaFin, int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdTransaccionSession = 0)
+        public JsonResult GetProductoFacturadosPorFecha(DateTime FechaIni, DateTime FechaFin, int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdTransaccionSession = 0)
         {
             bool resultado = true;
             var Lista = bus_fabricacion_det.GetProductoFacturadosPorFecha(IdEmpresa, IdSucursal, IdBodega, FechaIni, FechaFin);
@@ -230,8 +230,8 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             var det = List_Fac.get_list_fact(IdTransaccionSession);
             List_Fac.set_list_fac(Lista, IdTransaccionSession);
             return Json(resultado, JsonRequestBehavior.AllowGet);
-        }*/
-       /*    public JsonResult EditingAddNew(string IDs = "", decimal IdTransaccionSession = 0)
+        }
+           public JsonResult EditingAddNew(string IDs = "", decimal IdTransaccionSession = 0)
         {
             bool resultado = true;
             if (!string.IsNullOrEmpty(IDs))
@@ -247,7 +247,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             }
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return Json(resultado, JsonRequestBehavior.AllowGet);
-        }*/
+        }
 
         #endregion
         #region Metodos ComboBox bajo demanda
@@ -299,14 +299,9 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
                 info_det.pr_descripcion = producto.pr_descripcion;
-
             info_det.Signo = "+";
-
             if (ModelState.IsValid)
-
                 List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
-
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(q => q.Signo == "+").ToList();
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_fabricacion_det_ing", model);
@@ -378,7 +373,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
         }
 
         #endregion
-        /*       #region Det Fact
+        #region Det Fact
             [ValidateInput(false)]
             public ActionResult GridViewPartial_fabricacion_det_fac()
             {
@@ -388,7 +383,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             }
 
 
-            #endregion*/
+            #endregion
     }
     public class pro_FabricacionDet_List
     {
@@ -420,6 +415,10 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             else
             {
                 info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+                info_det.IdProducto = info_det.IdProducto;
+                info_det.IdUnidadMedida = info_det.IdUnidadMedida;
+                info_det.RealizaMovimiento = info_det.RealizaMovimiento;
+                info_det.pr_descripcion = info_det.pr_descripcion;
                 list.Add(info_det);
             }            
         }
@@ -447,22 +446,22 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
         }
     }
 
-    //public class pro_FabricacionDet_Fac
-    //{
-    //    string variable = "pro_FabricacionDet_Fac";
-    //    public List<pro_FabricacionDet_Info> get_list_fact(decimal IdTransaccionSession)
-    //    {
-    //        if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
-    //        {
-    //            List<pro_FabricacionDet_Info> list = new List<pro_FabricacionDet_Info>();
+    public class pro_FabricacionDet_Fac
+    {
+        string variable = "pro_FabricacionDet_Fac";
+        public List<pro_FabricacionDet_Info> get_list_fact(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<pro_FabricacionDet_Info> list = new List<pro_FabricacionDet_Info>();
 
-    //            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
-    //        }
-    //        return (List<pro_FabricacionDet_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
-    //    }
-    //    public void set_list_fac(List<pro_FabricacionDet_Info> list, decimal IdTransaccionSession)
-    //    {
-    //        HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
-    //    }
-    //}
+                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<pro_FabricacionDet_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        }
+        public void set_list_fac(List<pro_FabricacionDet_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
 }
