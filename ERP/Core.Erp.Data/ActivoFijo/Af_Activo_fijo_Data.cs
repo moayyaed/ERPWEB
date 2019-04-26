@@ -249,23 +249,7 @@ namespace Core.Erp.Data.ActivoFijo
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now                                                
                     };
-                    /*
-                    if (info.LstDet.Count > 0)
-                    {
-                        foreach (var item in info.LstDet)
-                        {
-                            Context.Af_Activo_fijo_CtaCble.Add(new Af_Activo_fijo_CtaCble
-                            {
-                                IdActivoFijo = info.IdActivoFijo,
-                                IdDepartamento = item.IdDepartamento,
-                                IdCtaCble = item.IdCtaCble,
-                                Porcentaje = item.Porcentaje,
-                                Secuencia = item.Secuencia,
-                                IdEmpresa = info.IdEmpresa
 
-                            });
-                        }
-                    }*/
                     Context.Af_Activo_fijo.Add(Entity);
                     Context.SaveChanges();
                 }
