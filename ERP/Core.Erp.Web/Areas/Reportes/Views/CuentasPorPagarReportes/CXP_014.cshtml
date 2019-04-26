@@ -60,7 +60,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal</label>
                             @*@Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
@@ -86,7 +86,7 @@
                                    listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
                                    foreach (var item in ViewBag.lst_sucursal)
                                    {
-                                       listBoxSettings.Properties.Items.Add(item.Su_Descripcion, item.IdSucursal);
+                                       listBoxSettings.Properties.Items.Add(item.Su_Descripcion, item.IdSucursal).Selected = item.Seleccionado;
                                    }
                                    listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
                                    listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
@@ -109,7 +109,7 @@
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdCliente">Proveedor</label>
                             @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
