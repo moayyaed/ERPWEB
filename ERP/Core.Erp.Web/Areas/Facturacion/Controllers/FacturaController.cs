@@ -298,17 +298,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region ValidarStock
             
-            var lst_validar = i_validar.lst_det.Select(q => new in_Producto_Stock_Info
+            var lst_validar = i_validar.lst_det.GroupBy(q=> new { q.IdProducto, q.pr_descripcion, q.tp_manejaInven, q.se_distribuye}).Select(q => new in_Producto_Stock_Info
             {
                 IdEmpresa = i_validar.IdEmpresa,
                 IdSucursal = i_validar.IdSucursal,
                 IdBodega = i_validar.IdBodega,
-                IdProducto = q.IdProducto,
-                pr_descripcion = q.pr_descripcion,
-                Cantidad = q.vt_cantidad,
-                tp_manejaInven = q.tp_manejaInven,
-                CantidadAnterior = q.CantidadAnterior,
-                SeDestribuye = q.se_distribuye ?? false
+                IdProducto = q.Key.IdProducto,
+                pr_descripcion = q.Key.pr_descripcion,
+                tp_manejaInven = q.Key.tp_manejaInven,
+                SeDestribuye = q.Key.se_distribuye ?? false,
+
+                Cantidad = q.Sum(v=> v.vt_cantidad),
+                CantidadAnterior = q.Sum(v => v.CantidadAnterior),                
             }).ToList();
 
             if (!bus_producto.validar_stock(lst_validar, ref msg))
