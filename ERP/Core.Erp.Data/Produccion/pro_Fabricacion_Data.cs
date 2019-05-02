@@ -194,7 +194,7 @@ namespace Core.Erp.Data.Produccion
                         #region EGR
 
                         info.egr_IdMovi_inven_tipo = parametro.IdMovi_inven_tipo_elaboracion_egr;
-                        var movi_egr = GenerarMoviInven(info, "-");
+                        var movi_egr = GenerarMoviInven(info, "-", parametro.IdMotivo_Inv_elaboracion_egr);
                         if (movi_egr == null)
                             return true;
 
@@ -213,7 +213,7 @@ namespace Core.Erp.Data.Produccion
                         #endregion
                         #region ING
                         info.ing_IdMovi_inven_tipo = parametro.IdMovi_inven_tipo_elaboracion_ing;
-                        var movi_ing = GenerarMoviInven(info, "+");
+                        var movi_ing = GenerarMoviInven(info, "+", parametro.IdMotivo_Inv_elaboracion_ing);
                         if (movi_ing == null)
                             return true;
                         if (info.ing_IdNumMovi == null && odata_i.guardarDB(movi_ing, "+"))
@@ -298,7 +298,7 @@ namespace Core.Erp.Data.Produccion
                         #region EGR
 
                         info.egr_IdMovi_inven_tipo = parametro.IdMovi_inven_tipo_elaboracion_egr;
-                        var movi_egr = GenerarMoviInven(info, "-");
+                        var movi_egr = GenerarMoviInven(info, "-",parametro.IdMotivo_Inv_elaboracion_egr);
                         if (movi_egr == null)
                             return true;
 
@@ -313,7 +313,7 @@ namespace Core.Erp.Data.Produccion
                         #endregion
                         #region ING
                         info.ing_IdMovi_inven_tipo = parametro.IdMovi_inven_tipo_elaboracion_ing;
-                        var movi_ing = GenerarMoviInven(info, "+");
+                        var movi_ing = GenerarMoviInven(info, "+", parametro.IdMotivo_Inv_elaboracion_ing);
                         if (movi_ing == null)
                             return true;
                         if (info.ing_IdNumMovi == null && odata_i.guardarDB(movi_ing, "+"))
@@ -364,16 +364,12 @@ namespace Core.Erp.Data.Produccion
             }
         }
 
-        private in_Ing_Egr_Inven_Info GenerarMoviInven(pro_Fabricacion_Info info, string Signo)
+        private in_Ing_Egr_Inven_Info GenerarMoviInven(pro_Fabricacion_Info info, string Signo, int? IdMotivo_inv)
         {
             try
             {
                 using (Entities_inventario db = new Entities_inventario())
                 {
-                    var motivo = db.in_Motivo_Inven.Where(q => q.IdEmpresa == info.IdEmpresa && q.Genera_Movi_Inven == "S" && q.Tipo_Ing_Egr == (Signo=="+" ? "ING":"EGR")).FirstOrDefault();
-                    if (motivo == null)
-                        return null;
-
                     in_Ing_Egr_Inven_Info movi = new in_Ing_Egr_Inven_Info
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -386,10 +382,11 @@ namespace Core.Erp.Data.Produccion
                         IdNumMovi = Convert.ToInt32(Signo == "+" ? info.ing_IdNumMovi : info.egr_IdNumMovi),
                         lst_in_Ing_Egr_Inven_det = new List<in_Ing_Egr_Inven_det_Info>(),
                         IdSucursal = Signo == "+" ? info.ing_IdSucursal : info.egr_IdSucursal,
-                        IdBodega = Signo == "+" ? info.ing_IdBodega : info.ing_IdBodega
+                        IdBodega = Signo == "+" ? info.ing_IdBodega : info.ing_IdBodega,
+                        IdMotivo_Inv = IdMotivo_inv
                     };
                     int secuencia = 1;
-                    foreach (var item in info.LstDet)
+                    foreach (var item in info.LstDet.Where(q=> q.Signo == Signo).ToList())
                     {
                         var producto = db.in_Producto.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdProducto == item.IdProducto).FirstOrDefault();
                         if (producto == null)
@@ -406,8 +403,8 @@ namespace Core.Erp.Data.Produccion
                             IdProducto = item.IdProducto,
                             dm_cantidad = item.Cantidad *(Signo =="-" ? -1 : 1),
                             dm_cantidad_sinConversion = item.Cantidad * (Signo == "-" ? -1 : 1),
-                            mv_costo = 0,
-                            mv_costo_sinConversion = 0,
+                            mv_costo = item.Costo,
+                            mv_costo_sinConversion = item.Costo,
                             IdUnidadMedida = producto.IdUnidadMedida_Consumo,
                             IdUnidadMedida_sinConversion = producto.IdUnidadMedida_Consumo,
                         });

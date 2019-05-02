@@ -666,7 +666,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 if (info_p != null)
                 {
                     info_det.pr_descripcion = info_p.pr_descripcion;
-                    info_det.IdUnidadMedida = info_p.IdUnidadMedida;
+                    //info_det.IdUnidadMedida = info_p.IdUnidadMedida;
                 }
                 list_producto_composicion.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }
@@ -688,7 +688,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 if (info_p != null)
                 {
                     info_det.pr_descripcion = info_p.pr_descripcion;
-                    info_det.IdUnidadMedida = info_p.IdUnidadMedida;
+                    //info_det.IdUnidadMedida = info_p.IdUnidadMedida;
                 }
                 list_producto_composicion.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             }

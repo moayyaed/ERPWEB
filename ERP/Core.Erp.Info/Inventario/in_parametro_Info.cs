@@ -26,5 +26,7 @@ namespace Core.Erp.Info.Inventario
         public int IdMovi_inven_tipo_Consignacion { get; set; }
         public int IdMovi_inven_tipo_elaboracion_egr { get; set; }
         public int IdMovi_inven_tipo_elaboracion_ing { get; set; }
+        public Nullable<int> IdMotivo_Inv_elaboracion_ing { get; set; }
+        public Nullable<int> IdMotivo_Inv_elaboracion_egr { get; set; }
     }
 }

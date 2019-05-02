@@ -2392,6 +2392,9 @@
     <Compile Include="vwin_devolucion_inven_det.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_det_conversion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_det_x_devolver.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>

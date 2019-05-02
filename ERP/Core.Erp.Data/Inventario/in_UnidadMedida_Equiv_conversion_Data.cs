@@ -88,6 +88,18 @@ namespace Core.Erp.Data.Inventario
                             Context.in_UnidadMedida_Equiv_conversion.Add(Entity);
                             Context.SaveChanges();
                         }
+
+                        if(Context.in_UnidadMedida_Equiv_conversion.Where(q=> q.IdUnidadMedida == item.IdUnidadMedida && q.IdUnidadMedida_equiva == item.IdUnidadMedida).Count() == 0)
+                        {
+                            in_UnidadMedida_Equiv_conversion Entity = new in_UnidadMedida_Equiv_conversion
+                            {
+                                IdUnidadMedida = item.IdUnidadMedida,
+                                IdUnidadMedida_equiva = item.IdUnidadMedida,
+                                valor_equiv = 1,
+                                interpretacion = item.interpretacion
+                            };
+                            Context.in_UnidadMedida_Equiv_conversion.Add(Entity);
+                        }
                     }
 
                 }

@@ -22,7 +22,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_movi_inven_tipo_Bus bus_tipo_movimiento = new in_movi_inven_tipo_Bus();
         in_Catalogo_Bus bus_catalogo = new in_Catalogo_Bus();
         in_ProductoTipo_Bus bus_producto_tipo = new in_ProductoTipo_Bus();
+        in_Motivo_Inven_Bus bus_motivo_inven = new in_Motivo_Inven_Bus();
         #endregion
+
         #region Index / Metodos
         public ActionResult Index()
         {
@@ -50,6 +52,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.lst_tipo_movimiento_egr = lst_tipo_movimiento.Where(q => q.cm_tipo_movi == "-").ToList();
             ViewBag.lst_tipo_movimiento_ing = lst_tipo_movimiento.Where(q => q.cm_tipo_movi == "+").ToList();
 
+            var lst_motivo = bus_motivo_inven.get_list(IdEmpresa, false);
+            ViewBag.lst_motivo_ing = lst_motivo.Where(q => q.Tipo_Ing_Egr == "ING").ToList();
+            ViewBag.lst_motivo_egr = lst_motivo.Where(q => q.Tipo_Ing_Egr == "EGR").ToList();
+
             var lst_aprobacion = bus_catalogo.get_list(Convert.ToInt32(cl_enumeradores.eTipoCatalogoInventario.EST_APROB),false);
             ViewBag.lst_aprobacion = lst_aprobacion;
 
@@ -59,9 +65,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var lst_fecha_contab = bus_catalogo.get_list(Convert.ToInt32(cl_enumeradores.eTipoCatalogoInventario.FECH_CONTA), false);
             ViewBag.lst_fecha_contab = lst_fecha_contab;
 
-            var lst_cuentas = bus_plancta.get_list(IdEmpresa, false, false);
-            ViewBag.lst_cuentas = lst_cuentas;
-
             var lst_producto_tipo = bus_producto_tipo.get_list(IdEmpresa, false);
             ViewBag.lst_producto_tipo = lst_producto_tipo;
         }
@@ -70,16 +73,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
         #region Metodos ComboBox bajo demanda
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
-        public ActionResult CmbCuenta_Param1()
-        {
-            in_parametro_Info model = new in_parametro_Info();
-            return PartialView("_CmbCuenta_Param1", model);
-        }
-        public ActionResult CmbCuenta_Param2()
-        {
-            in_parametro_Info model = new in_parametro_Info();
-            return PartialView("_CmbCuenta_Param2", model);
-        }
         public ActionResult CmbCuenta_Param3()
         {
             in_parametro_Info model = new in_parametro_Info();

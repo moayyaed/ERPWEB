@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Banco
 {
     public class ba_Talonario_cheques_x_banco_Data
     {
-        public List<ba_Talonario_cheques_x_banco_Info> get_list(int IdEmpresa, bool mostrar_anulados)
+        public List<ba_Talonario_cheques_x_banco_Info> get_list(int IdEmpresa, int IdSucursal, bool mostrar_anulados)
         {
             try
             {
@@ -20,7 +20,9 @@ namespace Core.Erp.Data.Banco
                         Lista = (from q in Context.ba_Talonario_cheques_x_banco
                                  join p in Context.ba_Banco_Cuenta
                                  on new { q.IdEmpresa , q.IdBanco} equals new {p.IdEmpresa , p.IdBanco}
-                                 where q.IdEmpresa == IdEmpresa
+                                 join s in Context.ba_Banco_Cuenta_x_tb_sucursal
+                                 on new { p.IdEmpresa, p.IdBanco} equals new { s.IdEmpresa, s.IdBanco}
+                                 where q.IdEmpresa == IdEmpresa && s.IdSucursal == IdSucursal
                                  select new ba_Talonario_cheques_x_banco_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -43,7 +45,9 @@ namespace Core.Erp.Data.Banco
                         Lista = (from q in Context.ba_Talonario_cheques_x_banco
                                  join p in Context.ba_Banco_Cuenta
                                  on new { q.IdEmpresa, q.IdBanco } equals new { p.IdEmpresa, p.IdBanco }
-                                 where q.IdEmpresa == IdEmpresa
+                                 join s in Context.ba_Banco_Cuenta_x_tb_sucursal
+                                 on new { p.IdEmpresa, p.IdBanco } equals new { s.IdEmpresa, s.IdBanco }
+                                 where q.IdEmpresa == IdEmpresa && s.IdSucursal == IdSucursal
                                  && q.Estado == "A"
                                  select new ba_Talonario_cheques_x_banco_Info
                                  {

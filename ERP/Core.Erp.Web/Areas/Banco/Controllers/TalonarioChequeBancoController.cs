@@ -29,7 +29,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public ActionResult GridViewPartial_talonario_cheque()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_talonario.get_list(IdEmpresa, true);
+            var model = bus_talonario.get_list(IdEmpresa,Convert.ToInt32(SessionFixed.IdSucursal), true);
             return PartialView("_GridViewPartial_talonario_cheque", model);
         }
 

@@ -834,19 +834,46 @@ namespace Core.Erp.Data.Inventario
                     int Secuencia = 1;
                     foreach (var item in d)
                     {
-                        db.in_movi_inve_detalle.Add(new in_movi_inve_detalle
+                        var det = db.vwin_Ing_Egr_Inven_det_conversion.Where(q => q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal && q.IdMovi_inven_tipo == item.IdMovi_inven_tipo && q.IdNumMovi == item.IdNumMovi && q.Secuencia == item.Secuencia).FirstOrDefault();
+                        if (det != null)
                         {
-                            IdEmpresa = cab.IdEmpresa,
-                            IdSucursal = cab.IdSucursal,
-                            IdBodega = cab.IdBodega,
-                            IdMovi_inven_tipo = cab.IdMovi_inven_tipo,
-                            IdNumMovi = cab.IdNumMovi,
-                            Secuencia = Secuencia++,
+                            db.in_movi_inve_detalle.Add(new in_movi_inve_detalle
+                            {
+                                IdEmpresa = cab.IdEmpresa,
+                                IdSucursal = cab.IdSucursal,
+                                IdBodega = cab.IdBodega,
+                                IdMovi_inven_tipo = cab.IdMovi_inven_tipo,
+                                IdNumMovi = cab.IdNumMovi,
+                                Secuencia = Secuencia,
 
-                            mv_tipo_movi = cab.cm_tipo,
-                            IdProducto = item.IdProducto,
-                            dm_observacion = item.dm_observacion
-                        });
+                                mv_tipo_movi = cab.cm_tipo,
+                                IdProducto = item.IdProducto,
+                                dm_observacion = item.dm_observacion,
+
+                                dm_cantidad_sinConversion = item.dm_cantidad_sinConversion,
+                                IdUnidadMedida_sinConversion = item.IdUnidadMedida_sinConversion,
+                                mv_costo_sinConversion = item.mv_costo_sinConversion,
+
+                                IdUnidadMedida = det.IdUnidadMedida_Consumo,
+                                dm_cantidad = det.dm_cantidad,
+                                mv_costo = det.mv_costo,
+
+                                IdCentroCosto = item.IdCentroCosto,
+                                IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
+                                Costeado = true,
+                                IdMotivo_Inv = item.IdMotivo_Inv,                                
+                            });
+                            item.mv_costo = det.mv_costo;
+                            item.dm_cantidad = det.dm_cantidad;
+                            item.IdUnidadMedida = det.IdUnidadMedida_Consumo;
+
+                            item.IdEmpresa_inv = cab.IdEmpresa;
+                            item.IdSucursal_inv = cab.IdSucursal;
+                            item.IdBodega_inv = cab.IdBodega;
+                            item.IdMovi_inven_tipo_inv = cab.IdMovi_inven_tipo;
+                            item.IdNumMovi_inv = cab.IdNumMovi;
+                            item.secuencia_inv = Secuencia++;
+                        }
                     }
                     #endregion
 

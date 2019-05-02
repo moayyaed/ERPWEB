@@ -9565,8 +9565,6 @@
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param2.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param3.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param4.cshtml" />
-    <Content Include="Areas\Inventario\Views\ParametroInventario\_CmbCuenta_Param1.cshtml" />
-    <Content Include="Areas\Inventario\Views\ParametroInventario\_CmbCuenta_Param2.cshtml" />
     <Content Include="Areas\Inventario\Views\ParametroInventario\_CmbCuenta_Param3.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\_CmbEmpleado_RRHH.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_015.cshtml" />

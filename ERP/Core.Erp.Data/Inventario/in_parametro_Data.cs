@@ -39,7 +39,9 @@ namespace Core.Erp.Data.Inventario
                         IdMovi_inven_tipo_Cambio = Entity.IdMovi_inven_tipo_Cambio,
                         IdMovi_inven_tipo_Consignacion = Entity.IdMovi_inven_tipo_Consignacion,
                         IdMovi_inven_tipo_elaboracion_egr = Entity.IdMovi_inven_tipo_elaboracion_egr,
-                        IdMovi_inven_tipo_elaboracion_ing = Entity.IdMovi_inven_tipo_elaboracion_ing
+                        IdMovi_inven_tipo_elaboracion_ing = Entity.IdMovi_inven_tipo_elaboracion_ing,
+                        IdMotivo_Inv_elaboracion_egr = Entity.IdMotivo_Inv_elaboracion_egr,
+                        IdMotivo_Inv_elaboracion_ing = Entity.IdMotivo_Inv_elaboracion_ing
                     };
                 }
 
@@ -84,7 +86,9 @@ namespace Core.Erp.Data.Inventario
                             IdMovi_inven_tipo_Cambio = info.IdMovi_inven_tipo_Cambio,
                             IdMovi_inven_tipo_Consignacion = info.IdMovi_inven_tipo_Consignacion,
                             IdMovi_inven_tipo_elaboracion_egr = info.IdMovi_inven_tipo_elaboracion_egr,
-                            IdMovi_inven_tipo_elaboracion_ing = info.IdMovi_inven_tipo_elaboracion_ing
+                            IdMovi_inven_tipo_elaboracion_ing = info.IdMovi_inven_tipo_elaboracion_ing,
+                            IdMotivo_Inv_elaboracion_egr = info.IdMotivo_Inv_elaboracion_egr,
+                            IdMotivo_Inv_elaboracion_ing = info.IdMotivo_Inv_elaboracion_ing
                         };
                         Context.in_parametro.Add(Entity);
                     }
@@ -111,6 +115,8 @@ namespace Core.Erp.Data.Inventario
                         Entity.IdMovi_inven_tipo_Consignacion = info.IdMovi_inven_tipo_Consignacion;
                         Entity.IdMovi_inven_tipo_elaboracion_egr = info.IdMovi_inven_tipo_elaboracion_egr;
                         Entity.IdMovi_inven_tipo_elaboracion_ing = info.IdMovi_inven_tipo_elaboracion_ing;
+                        Entity.IdMotivo_Inv_elaboracion_egr = info.IdMotivo_Inv_elaboracion_egr;
+                        Entity.IdMotivo_Inv_elaboracion_ing = info.IdMotivo_Inv_elaboracion_ing;
                     }
                     Context.SaveChanges();
                 }

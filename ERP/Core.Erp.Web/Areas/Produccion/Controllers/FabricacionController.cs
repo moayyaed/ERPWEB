@@ -27,6 +27,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
         in_Producto_Composicion_Bus bus_comp = new in_Producto_Composicion_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
         pro_FabricacionDet_Fac List_Fac = new pro_FabricacionDet_Fac();
+        in_producto_x_tb_bodega_Costo_Historico_Bus bus_costo = new in_producto_x_tb_bodega_Costo_Historico_Bus();
 
         #endregion
         #region Index
@@ -195,18 +196,20 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ArmarMateriaPrima(int IdEmpresa = 0, decimal IdTransaccionSession = 0)
+        public JsonResult ArmarMateriaPrima(int IdEmpresa = 0,int IdSucursal = 0, int IdBodega = 0, decimal IdTransaccionSession = 0)
         {
+            double CostoProductoElaborado = 0;
             List_det.DeleteAll("-", IdTransaccionSession);
             var lst = List_det.get_list(IdTransaccionSession).Where(q => q.Signo == "+").ToList();
-
+            List_det.DeleteAll("+", IdTransaccionSession);
             foreach (var item in lst)
             {
                 var resultado = bus_comp.get_list(IdEmpresa, item.IdProducto);
-
+                CostoProductoElaborado = 0;
                 foreach (var cmp in resultado)
                 {
-                    List_det.AddRow(new pro_FabricacionDet_Info
+                    var costo = bus_costo.get_ultimo_costo(IdEmpresa, IdSucursal, IdBodega, cmp.IdProductoHijo, DateTime.Now.Date);
+                    var row = new pro_FabricacionDet_Info
                     {
                         IdEmpresa = cmp.IdEmpresa,
                         IdProducto = cmp.IdProductoHijo,
@@ -214,9 +217,14 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
                         pr_descripcion = cmp.pr_descripcion,
                         IdUnidadMedida = cmp.IdUnidadMedida,
                         Signo = "-",
-                        RealizaMovimiento = true
-                    }, IdTransaccionSession);
+                        RealizaMovimiento = true,
+                        Costo = costo * cmp.Cantidad
+                    };
+                    List_det.AddRow(row, IdTransaccionSession);
+                    CostoProductoElaborado += row.Costo;
                 }
+                item.Costo = CostoProductoElaborado;
+                List_det.AddRow(item, IdTransaccionSession);
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -431,6 +439,7 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             edited_info.IdUnidadMedida = info_det.IdUnidadMedida;
             edited_info.RealizaMovimiento = info_det.RealizaMovimiento;
             edited_info.pr_descripcion = info_det.pr_descripcion;
+            edited_info.Costo = info_det.Costo;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

@@ -114,7 +114,9 @@
     function ArmarMateriaPrima() {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
+            IdSucursal: $("#egr_IdSucursal").val(),
+            IdBodega: $("#egr_IdBodega").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
         }
         $.ajax({
             type: 'POST',
@@ -355,22 +357,37 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Materia prima</label>
-                    @Html.Action("GridViewPartial_fabricacion_det_egr")
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_producto" aria-controls="vales" role="tab" data-toggle="tab">Producto terminado</a>
+            </li>
+            <li>
+                <a href="#tab_materia" aria-controls="vales" role="tab" data-toggle="tab">Materia prima</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_producto">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_fabricacion_det_ing")
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Producto terminado</label>
-                    @Html.Action("GridViewPartial_fabricacion_det_ing")
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_materia">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_fabricacion_det_egr")
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

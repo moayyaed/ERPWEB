@@ -79,12 +79,12 @@
 
         settings.Columns.Add("IdUnidadMedida", "ID").Width = Unit.Percentage(15);
         settings.Columns.Add("cod_alterno", "Código").Width = Unit.Percentage(15);
-        settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(15);
+        settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(40);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
             column.EditorProperties().CheckBox(sp =>
             {
 

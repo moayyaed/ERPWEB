@@ -114,7 +114,9 @@
     function ArmarMateriaPrima() {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
+            IdSucursal: $("#egr_IdSucursal").val(),
+            IdBodega: $("#egr_IdBodega").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
         }
         $.ajax({
             type: 'POST',
