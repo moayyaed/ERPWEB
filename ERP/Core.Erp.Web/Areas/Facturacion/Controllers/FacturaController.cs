@@ -214,8 +214,24 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             #endregion
 
-            i_validar.info_resumen.SubtotalConDscto = i_validar.info_resumen.SubtotalIVAConDscto + i_validar.info_resumen.SubtotalSinIVAConDscto;
+            #region Resumen
+            i_validar.info_resumen = new fa_factura_resumen_Info
+            {
+                SubtotalIVASinDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero),
+                SubtotalSinIVASinDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero),
+
+                Descuento = (decimal)Math.Round(i_validar.lst_det.Sum(q => q.vt_DescUnitario * q.vt_cantidad), 2, MidpointRounding.AwayFromZero),
+
+                SubtotalIVAConDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero),
+                SubtotalSinIVAConDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero),
+
+                ValorIVA = (decimal)Math.Round(i_validar.lst_det.Sum(q => q.vt_iva), 2, MidpointRounding.AwayFromZero)
+            };
             i_validar.info_resumen.SubtotalSinDscto = i_validar.info_resumen.SubtotalIVASinDscto + i_validar.info_resumen.SubtotalSinIVASinDscto;
+            i_validar.info_resumen.SubtotalConDscto = i_validar.info_resumen.SubtotalIVAConDscto + i_validar.info_resumen.SubtotalSinIVAConDscto;
+            i_validar.info_resumen.Total = i_validar.info_resumen.SubtotalConDscto + i_validar.info_resumen.ValorIVA;
+            #endregion
+
 
             i_validar.IdUsuario = SessionFixed.IdUsuario;
             i_validar.IdUsuarioUltModi = SessionFixed.IdUsuario;

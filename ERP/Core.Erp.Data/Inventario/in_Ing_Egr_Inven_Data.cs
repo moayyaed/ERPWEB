@@ -795,5 +795,91 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+        public bool Aprobar(int IdEmpresa, int IdSucursal, int IdMovi_inven_tipo, decimal IdNumMovi)
+        {
+            try
+            {
+                using (Entities_inventario db = new Entities_inventario())
+                {
+                    #region Movimiento pre aprobado
+                    var c = db.in_Ing_Egr_Inven.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdMovi_inven_tipo == IdMovi_inven_tipo && q.IdNumMovi == IdNumMovi).FirstOrDefault();
+                    if (c == null)
+                        return false;
+
+                    var d = db.in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdMovi_inven_tipo == IdMovi_inven_tipo && q.IdNumMovi == IdNumMovi).ToList();
+                    if(d.Count == 0)
+                        return false;
+                    #endregion
+
+                    #region Cabecera
+                    in_movi_inve cab = new in_movi_inve
+                    {
+                        IdEmpresa = IdEmpresa,
+                        IdSucursal = IdSucursal,
+                        IdMovi_inven_tipo = IdMovi_inven_tipo,
+                        IdBodega = d.First().IdBodega,
+                        IdNumMovi = GetId_movi_inven(IdEmpresa,IdSucursal,d.First().IdBodega,IdMovi_inven_tipo ,IdNumMovi),
+                        CodMoviInven = c.CodMoviInven,
+                        cm_tipo = c.signo,
+                        cm_observacion = c.cm_observacion,
+                        cm_fecha = c.cm_fecha,
+                        Estado = "A",
+                        IdMotivo_Inv = c.IdMotivo_Inv
+                    };
+                    db.in_movi_inve.Add(cab);
+                    db.SaveChanges();
+                    #endregion
+
+                    #region Detalle
+                    int Secuencia = 1;
+                    foreach (var item in d)
+                    {
+                        db.in_movi_inve_detalle.Add(new in_movi_inve_detalle
+                        {
+                            IdEmpresa = cab.IdEmpresa,
+                            IdSucursal = cab.IdSucursal,
+                            IdBodega = cab.IdBodega,
+                            IdMovi_inven_tipo = cab.IdMovi_inven_tipo,
+                            IdNumMovi = cab.IdNumMovi,
+                            Secuencia = Secuencia++,
+
+                            mv_tipo_movi = cab.cm_tipo,
+                            IdProducto = item.IdProducto,
+                            dm_observacion = item.dm_observacion
+                        });
+                    }
+                    #endregion
+
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public decimal GetId_movi_inven(int IdEmpresa, int IdSucursal, int IdBodega, int IdMovi_inven_tipo, decimal IdNumMovi)
+        {
+            try
+            {
+                decimal ID = 1;
+
+                using (Entities_inventario db = new Entities_inventario())
+                {
+                    var lst = db.in_movi_inve.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdMovi_inven_tipo == IdMovi_inven_tipo).ToList();
+                    if (lst.Count > 0)
+                        ID = lst.Max(q => q.IdNumMovi) + 1;
+                }
+
+                return ID;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
