@@ -80,7 +80,9 @@ namespace Core.Erp.Data.Inventario
                 List<in_producto_x_tb_bodega_Costo_Historico_Info> Lista = new List<in_producto_x_tb_bodega_Costo_Historico_Info>();
 
                 using (Entities_inventario contex = new Entities_inventario())
-                {                    
+                {
+                    contex.SetCommandTimeOut(5000);
+
                     contex.spSys_Inv_Recosteo_Inventario(IdEmpresa, IdSucursal, IdBodega, fecha_ini,5);
 
                     Lista = contex.vwin_producto_x_tb_bodega_Costo_Historico.Where(q => 

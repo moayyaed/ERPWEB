@@ -51,7 +51,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             var lst_estado = bus_estado.get_list(false);
             ViewBag.lst_estado = lst_estado;
 
-            var lst_movi = bus_movi.get_list(IdEmpresa, false);
+            var lst_movi = bus_movi.get_list(IdEmpresa,"+", false);
             ViewBag.lst_movi = lst_movi;
         }
 

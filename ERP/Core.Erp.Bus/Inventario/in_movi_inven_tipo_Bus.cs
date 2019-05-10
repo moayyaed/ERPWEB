@@ -9,11 +9,11 @@ namespace Core.Erp.Bus.Inventario
     {
         in_movi_inven_tipo_Data odata = new in_movi_inven_tipo_Data();
 
-        public List<in_movi_inven_tipo_Info> get_list(int IdEmpresa, bool mostrar_anulados)
+        public List<in_movi_inven_tipo_Info> get_list(int IdEmpresa, string Signo, bool mostrar_anulados)
         {
             try
             {
-                return odata.get_list(IdEmpresa, mostrar_anulados);
+                return odata.get_list(IdEmpresa,Signo, mostrar_anulados);
             }
             catch (Exception)
             {

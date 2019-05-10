@@ -48,7 +48,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var lst_tipo_comprobante = bus_tipo_comprobante.get_list(IdEmpresa, false);
             ViewBag.lst_tipo_comprobante = lst_tipo_comprobante;
 
-            var lst_tipo_movimiento = bus_tipo_movimiento.get_list(IdEmpresa, false);
+            var lst_tipo_movimiento = bus_tipo_movimiento.get_list(IdEmpresa,"", false);
             ViewBag.lst_tipo_movimiento_egr = lst_tipo_movimiento.Where(q => q.cm_tipo_movi == "-").ToList();
             ViewBag.lst_tipo_movimiento_ing = lst_tipo_movimiento.Where(q => q.cm_tipo_movi == "+").ToList();
 

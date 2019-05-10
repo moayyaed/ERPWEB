@@ -65,19 +65,49 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             var lst_sucursal_consulta = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal_consulta = lst_sucursal_consulta;
         }
-        private void cargar_combos(int IdEmpresa)
+        private void cargar_combos(pro_Fabricacion_Info model)
         {
-            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
-            var lst_bodega = bus_bodega.get_list(IdEmpresa, false);
-            ViewBag.lst_bodega = lst_bodega;
 
+            var lst_bodega_ing = bus_bodega.get_list(model.IdEmpresa, model.ing_IdSucursal, false);
+            ViewBag.lst_bodega_ing = lst_bodega_ing;
+
+            var lst_bodega_egr = bus_bodega.get_list(model.IdEmpresa, model.egr_IdSucursal, false);
+            ViewBag.lst_bodega_egr = lst_bodega_egr;
         }
         private void cargar_combos_detalle()
         {
             in_UnidadMedida_Bus bus_unidad = new in_UnidadMedida_Bus();
             var lst_unidad_medida = bus_unidad.get_list(false);
             ViewBag.lst_unidad_medida = lst_unidad_medida;
+        }
+
+        private bool Validar(pro_Fabricacion_Info i_validar, ref string msg)
+        {
+            #region ValidarStock
+
+            var lst_validar = i_validar.LstDet.GroupBy(q => new { q.IdProducto, q.pr_descripcion, q.tp_ManejaInven, q.se_distribuye }).Select(q => new in_Producto_Stock_Info
+            {
+                IdEmpresa = i_validar.IdEmpresa,
+                IdSucursal = i_validar.egr_IdSucursal,
+                IdBodega = i_validar.egr_IdBodega,
+                IdProducto = q.Key.IdProducto,
+                pr_descripcion = q.Key.pr_descripcion,
+                tp_manejaInven = q.Key.tp_ManejaInven,
+                SeDestribuye = q.Key.se_distribuye,
+
+                Cantidad = q.Sum(v => v.Cantidad),
+                CantidadAnterior = q.Sum(v => v.CantidadAnterior),
+            }).ToList();
+
+            if (!bus_producto.validar_stock(lst_validar, ref msg))
+            {
+                return false;
+            }
+            #endregion
+
+            return true;
         }
 
         #endregion
@@ -105,18 +135,18 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             };
             List_det.set_list(model.LstDet, model.IdTransaccionSession);
             List_Fac.set_list_fac(model.LstDet, model.IdTransaccionSession);
-            cargar_combos(model.IdEmpresa);
+            cargar_combos(model);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Nuevo(pro_Fabricacion_Info model)
         {
-            model.IdUsuarioCreacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioCreacion = SessionFixed.IdUsuario;
             model.LstDet = List_det.get_list(model.IdTransaccionSession);
             if (!bus_fabricacion.GuardarDB(model))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
 
             }
@@ -139,18 +169,18 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             model.FechaIni = DateTime.Now;
             model.FechaFin = DateTime.Now;
             List_det.set_list(model.LstDet, model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
             return View(model);
 
         }
         [HttpPost]
         public ActionResult Modificar(pro_Fabricacion_Info model)
         {
-            model.IdUsuarioModificacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             model.LstDet = List_det.get_list(model.IdTransaccionSession);
             if (!bus_fabricacion.ModificarDB(model))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
 
             }
@@ -170,17 +200,17 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.LstDet = bus_fabricacion_det.GetList(IdEmpresa, IdFabricacion);
             List_det.set_list(model.LstDet, model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
             return View(model);
 
         }
         [HttpPost]
         public ActionResult Anular(pro_Fabricacion_Info model)
         {
-            model.IdUsuarioAnulacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
             if (!bus_fabricacion.AnularDB(model))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
 
             }
@@ -218,7 +248,9 @@ namespace Core.Erp.Web.Areas.Produccion.Controllers
                         IdUnidadMedida = cmp.IdUnidadMedida,
                         Signo = "-",
                         RealizaMovimiento = true,
-                        Costo = costo * cmp.Cantidad
+                        Costo = costo * cmp.Cantidad,
+                        se_distribuye = cmp.se_distribuye ?? false,
+                        tp_ManejaInven = cmp.tp_ManejaInven
                     };
                     List_det.AddRow(row, IdTransaccionSession);
                     CostoProductoElaborado += row.Costo;

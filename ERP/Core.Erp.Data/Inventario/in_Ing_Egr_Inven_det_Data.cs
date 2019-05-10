@@ -57,7 +57,7 @@ namespace Core.Erp.Data.Inventario
                                  lote_fecha_vcto = p.lote_fecha_vcto,
                                  lote_num_lote = p.lote_num_lote,
                                  se_distribuye = p.se_distribuye ?? false,
-                                 tp_ManejaInven = c.tp_ManejaInven
+                                 tp_ManejaInven = c.tp_ManejaInven,                                 
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -65,6 +65,7 @@ namespace Core.Erp.Data.Inventario
                     V.pr_descripcion = V.pr_descripcion;
                     V.dm_cantidad_sinConversion = Math.Abs(V.dm_cantidad_sinConversion);
                     V.dm_cantidad = Math.Abs(V.dm_cantidad);
+                    V.CantidadAnterior = Math.Abs(V.CantidadAnterior);
                 });
                 return Lista;
             }

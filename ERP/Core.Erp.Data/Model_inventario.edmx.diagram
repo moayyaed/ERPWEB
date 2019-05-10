@@ -31,7 +31,6 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_Transferencias" Width="1.5" PointX="2.75" PointY="19.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_det_x_devolver" Width="1.5" PointX="18.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_por_devolver" Width="1.5" PointX="8.75" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Composicion" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_hijo_combo" Width="1.5" PointX="18.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_padre_combo" Width="1.5" PointX="4.75" PointY="21.5" IsExpanded="true" />
         <AssociationConnector Association="Model_inventario.FK_in_Catalogo_in_CatalogoTipo" ManuallyRouted="false" />
@@ -128,6 +127,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo8" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo9" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_ProductoTipo" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Composicion" Width="1.5" PointX="25.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

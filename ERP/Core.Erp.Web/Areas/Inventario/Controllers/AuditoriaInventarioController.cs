@@ -63,8 +63,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.lst_bodega = lst_bodega;
 
             Dictionary<string, string> lst_Rubro = new Dictionary<string, string>();
-            lst_Rubro.Add( "11", "Décimo cuarto sueldo");
-            lst_Rubro.Add("12", "Décimo tercer sueldo");
+            lst_Rubro.Add( "+", "Ingresos");
+            lst_Rubro.Add("-", "Egresos");
             ViewBag.lst_tipo_movimiento = lst_Rubro;
 
         }
@@ -124,12 +124,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
 
         #region CorreccionTransferencia
-        public JsonResult BuscarTransferencia(DateTime fecha_ini, int IdEmpresa = 0)
+        public JsonResult BuscarTransferencia(int[] ListaSucursal, DateTime fecha_ini, int IdEmpresa = 0)
         {
             var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_ini);
 
-            var model = bus_transferencia.GetListRecosteoInventario(IdEmpresa, ViewBag.fecha_ini);
+            var model = bus_transferencia.GetListRecosteoInventario(IdEmpresa, ViewBag.fecha_ini,ListaSucursal);
             ListaCorregirTransferencia.set_list(model, IdTransaccionSession);
 
             return Json(model, JsonRequestBehavior.AllowGet);

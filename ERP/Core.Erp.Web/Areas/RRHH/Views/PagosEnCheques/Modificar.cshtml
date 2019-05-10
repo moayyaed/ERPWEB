@@ -56,22 +56,7 @@
                     @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-1">
-                <label for="IdDescargar"></label>
-                <div class="form-group">
-                    <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("get_archivo","ArchivosTransferencias",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa, IdArchivo =Model.IdTransaccion },null)">
-                        <i class="fa fa-download"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="IdImprimir"></label>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
-                </div>
-            </div>
+
             <div class="col-md-1">
                 <label for="IdNuevo"></label>
                 <div class="form-group">

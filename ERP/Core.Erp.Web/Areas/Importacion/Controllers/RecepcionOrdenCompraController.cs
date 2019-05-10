@@ -213,7 +213,7 @@ namespace Core.Erp.Web.Areas.Importacion.Controllers
             ViewBag.lst_catalogos = lst_catalogos;
 
             in_movi_inven_tipo_Bus bus_tipo = new in_movi_inven_tipo_Bus();
-            var lst_tipo = bus_tipo.get_list(IdEmpresa, false);
+            var lst_tipo = bus_tipo.get_list(IdEmpresa,"+", false);
             ViewBag.lst_tipo = lst_tipo;
 
             in_Motivo_Inven_Bus bus_motivo = new in_Motivo_Inven_Bus();

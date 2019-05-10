@@ -100,6 +100,32 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    var param = Context.ro_rubros_calculados.Where(q => q.IdEmpresa == IdEmpresa).FirstOrDefault();
+                    if (param == null) return new List<ro_rol_detalle_Info>();
+
+                    Lista = (from a in Context.vwro_empleado_combo
+                             join b in Context.ro_rol_detalle
+                             on new { a.IdEmpresa, a.IdEmpleado } equals new { b.IdEmpresa, b.IdEmpleado }
+                             join c in Context.ro_rol
+                             on new { b.IdEmpresa, b.IdRol } equals new { c.IdEmpresa, c.IdRol }
+                             where c.IdEmpresa == IdEmpresa
+                                   && c.IdEmpresa == IdEmpresa
+                                   && c.IdNominaTipo == IdNominaTipo
+                                   && c.IdNominaTipoLiqui == IdNominaTipoLiqui
+                                   && c.IdPeriodo == IdPeriodo
+                                   && c.IdSucursal == IdSucursal
+                                   && b.IdRubro == param.IdRubro_sueldo
+                             select new ro_rol_detalle_Info
+                             {
+                                 IdEmpresa = b.IdEmpresa,
+                                 IdEmpleado = b.IdEmpleado,
+                                 pe_nombreCompleato = a.Empleado,
+                                 pe_cedulaRuc = a.pe_cedulaRuc,
+                                 Valor = b.Valor,
+                                 IdRol = b.IdRol,
+                                 IdRubro = b.IdRubro
+                             }).ToList();
+                    /*
                     Lista = (from q in Context.vwRo_rol_detalle_saldo_por_pagar
                              where q.IdEmpresa == IdEmpresa
                                    && q.IdEmpresa == IdEmpresa
@@ -107,7 +133,7 @@ namespace Core.Erp.Data.RRHH
                                    && q.IdNominaTipoLiqui == IdNominaTipoLiqui
                                    && q.IdPeriodo == IdPeriodo
                                    && q.IdSucursal==IdSucursal
-                                   && q.Saldo > 0
+                                   //&& q.Saldo != 0
                              select new ro_rol_detalle_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -119,7 +145,7 @@ namespace Core.Erp.Data.RRHH
                                  IdRubro=q.IdRubro
                                
                              }).ToList();
-
+                             */
                 }
 
                 return Lista;
@@ -138,12 +164,36 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    int IdEmpresa = lista.Count == 0 ? 0 : lista[0].IdEmpresa;
+                    var param = Context.ro_rubros_calculados.Where(q => q.IdEmpresa == IdEmpresa).FirstOrDefault();
                     foreach (var item in lista)
                     {
                         ro_rol_detalle Entity = Context.ro_rol_detalle.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdEmpleado == item.IdEmpleado 
                         && q.IdRol == item.IdRol && q.IdRubro==item.IdRubro);
                         if(Entity!=null)
-                        Entity.Valor = item.Valor;
+                        Entity.Valor = Math.Round(item.Valor,2,MidpointRounding.AwayFromZero);
+                        
+                        if (param != null)
+                        {
+                            #region Actualizo total ingreso
+                            var TotalIngreso = Context.ro_rol_detalle.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdEmpleado == item.IdEmpleado
+                            && q.IdRol == item.IdRol && q.IdRubro == param.IdRubro_tot_ing);
+
+                            if (TotalIngreso != null)
+                                TotalIngreso.Valor = Math.Round(Context.vwro_rol_detalle.Where(q => q.IdEmpresa == item.IdEmpresa && q.IdRol == item.IdRol && q.IdRubro != item.IdRubro && q.ru_tipo == "I").ToList().Sum(q => q.Valor) + item.Valor,2,MidpointRounding.AwayFromZero);
+                            #endregion
+
+                            #region Actualizo liquido a recibir
+                            var TotalEgreso = Context.ro_rol_detalle.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdEmpleado == item.IdEmpleado
+                            && q.IdRol == item.IdRol && q.IdRubro == param.IdRubro_tot_egr);
+
+                            var TotalAPagar = Context.ro_rol_detalle.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa && q.IdEmpleado == item.IdEmpleado
+                            && q.IdRol == item.IdRol && q.IdRubro == param.IdRubro_tot_pagar);
+                            if (TotalAPagar != null)
+                                TotalAPagar.Valor = Math.Round(TotalIngreso.Valor - (TotalEgreso == null ? 0 : TotalEgreso.Valor),2,MidpointRounding.AwayFromZero);
+                            #endregion
+                        }
+
                         Context.SaveChanges();
 
                     }

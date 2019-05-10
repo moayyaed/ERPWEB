@@ -35,9 +35,17 @@ namespace Core.Erp.Web.Reportes.Contabilidad
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            if (emp != null )
+            {
+                lblDireccion.Text = emp.em_direccion;
+                lblTelefono.Text = string.IsNullOrEmpty(emp.em_telefonos) ? "" : "Tel. " +emp.em_telefonos;
+                if (emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
+            }
+            
         }
     }
 }

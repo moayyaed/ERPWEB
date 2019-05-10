@@ -222,11 +222,11 @@ namespace Core.Erp.Bus.Inventario
 
         }
 
-        public List<in_transferencia_Info> GetListRecosteoInventario(int IdEmpresa, DateTime FechaInicio)
+        public List<in_transferencia_Info> GetListRecosteoInventario(int IdEmpresa, DateTime FechaInicio, int[] ListaSucursales)
         {
             try
             {
-                return odata.GetListRecosteoInventario(IdEmpresa, FechaInicio);
+                return odata.GetListRecosteoInventario(IdEmpresa, FechaInicio, ListaSucursales);
             }
             catch (Exception)
             {

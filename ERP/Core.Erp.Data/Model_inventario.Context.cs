@@ -21,7 +21,10 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -53,7 +56,6 @@ namespace Core.Erp.Data
         public DbSet<vwin_Transferencias> vwin_Transferencias { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_det_x_devolver> vwin_Ing_Egr_Inven_det_x_devolver { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_por_devolver> vwin_Ing_Egr_Inven_por_devolver { get; set; }
-        public DbSet<vwin_Producto_Composicion> vwin_Producto_Composicion { get; set; }
         public DbSet<vwin_producto_hijo_combo> vwin_producto_hijo_combo { get; set; }
         public DbSet<vwin_producto_padre_combo> vwin_producto_padre_combo { get; set; }
         public DbSet<vwin_producto_x_tb_bodega_stock_x_lote> vwin_producto_x_tb_bodega_stock_x_lote { get; set; }
@@ -82,6 +84,7 @@ namespace Core.Erp.Data
         public DbSet<vwin_UnidadMedida_Equiv_conversion> vwin_UnidadMedida_Equiv_conversion { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_det_conversion> vwin_Ing_Egr_Inven_det_conversion { get; set; }
         public DbSet<in_parametro> in_parametro { get; set; }
+        public DbSet<vwin_Producto_Composicion> vwin_Producto_Composicion { get; set; }
     
         public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
         {

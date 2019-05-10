@@ -26,7 +26,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="egr_IdBodega">Bodega de egreso*</label>
-                    @Html.DropDownListFor(q => q.egr_IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "egr_IdBodega" })
+                    @Html.DropDownListFor(q => q.egr_IdBodega, new SelectList(ViewBag.lst_bodega_egr, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "egr_IdBodega" })
                     @Html.ValidationMessageFor(q => q.egr_IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="ing_IdBodega">Bodega de ingreso*</label>
-                    @Html.DropDownListFor(q => q.ing_IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "ing_IdBodega" })
+                    @Html.DropDownListFor(q => q.ing_IdBodega, new SelectList(ViewBag.lst_bodega_ing, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "ing_IdBodega" })
                     @Html.ValidationMessageFor(q => q.ing_IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>

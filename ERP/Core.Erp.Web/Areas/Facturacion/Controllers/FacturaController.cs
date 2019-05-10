@@ -650,10 +650,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (list.Count() == 0)
                 resultado = false;
             var detalle_factura = List_det.get_list(IdTransaccionSession);
-            if(detalle_factura.Where(v=>v.IdProforma==IdProforma).Count()==0)
-            detalle_factura.AddRange(list);
-
-
+            if (detalle_factura.Where(v => v.IdProforma == IdProforma).Count() == 0)
+            {
+                int Secuencia = detalle_factura.Count == 0 ? 1 : detalle_factura.Max(q=>q.Secuencia)+1;
+                list.ForEach(q => q.Secuencia = Secuencia++);
+                detalle_factura.AddRange(list);
+            }
             List_det.set_list(detalle_factura, IdTransaccionSession);
 
 

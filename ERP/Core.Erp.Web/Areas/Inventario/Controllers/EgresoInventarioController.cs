@@ -260,7 +260,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult Anular(in_Ing_Egr_Inven_Info model)
         {
             model.lst_in_Ing_Egr_Inven_det = List_in_Ing_Egr_Inven_det.get_list(model.IdTransaccionSession);
-            if (!validar(model, ref mensaje))
+            if (!bus_periodo.ValidarFechaTransaccion(model.IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
@@ -321,7 +321,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         private void cargar_combos(in_Ing_Egr_Inven_Info model)
         {
             in_movi_inven_tipo_Bus bus_tipo = new in_movi_inven_tipo_Bus();
-            var lst_tipo = bus_tipo.get_list(model.IdEmpresa, false);
+            var lst_tipo = bus_tipo.get_list(model.IdEmpresa,"-", false);
             ViewBag.lst_tipo = lst_tipo;
 
             in_Motivo_Inven_Bus bus_motivo = new in_Motivo_Inven_Bus();

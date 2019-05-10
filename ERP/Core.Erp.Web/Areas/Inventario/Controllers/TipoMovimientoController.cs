@@ -32,7 +32,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult GridViewPartial_tipo_movimiento()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_tipo_movimiento.get_list(IdEmpresa, true);
+            var model = bus_tipo_movimiento.get_list(IdEmpresa, "", true);
             return PartialView("_GridViewPartial_tipo_movimiento", model);
         }
 

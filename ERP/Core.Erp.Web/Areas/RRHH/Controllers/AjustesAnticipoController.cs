@@ -36,11 +36,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-            cl_filtros_Info model = new cl_filtros_Info();
-            model.IdNomina = 1;
-            model.IdTipoNomina = 1;
-            model.IdEmpresa=Convert.ToInt32( SessionFixed.IdEmpresa);
-            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdNomina = 1,
+                IdTipoNomina = 1,
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
             cargar_combos(0, 0);
             return View(model);
         }
@@ -91,7 +94,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_nomina = lista_nomina;
                 ViewBag.lst_nomina_tipo = lst_nomina_tipo;
                 ViewBag.lst_periodos = lst_periodos;
-                ViewBag.lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
+                ViewBag.lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
 
 
             }

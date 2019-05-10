@@ -29,8 +29,8 @@ namespace Core.Erp.Data
     
         public virtual DbSet<pro_FabricacionDet> pro_FabricacionDet { get; set; }
         public virtual DbSet<pro_Fabricacion> pro_Fabricacion { get; set; }
-        public virtual DbSet<vwpro_FabricacionDet> vwpro_FabricacionDet { get; set; }
         public virtual DbSet<vwpro_Fabricacion> vwpro_Fabricacion { get; set; }
+        public virtual DbSet<vwpro_FabricacionDet> vwpro_FabricacionDet { get; set; }
     
         public virtual ObjectResult<sppro_GetProductoFacturadosPorFecha_Result> sppro_GetProductoFacturadosPorFecha(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
         {

@@ -25,5 +25,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         public Nullable<System.DateTime> lote_fecha_vcto { get; set; }
         public string lote_num_lote { get; set; }
+        public string tp_ManejaInven { get; set; }
+        public Nullable<bool> se_distribuye { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace Core.Erp.Web.Areas.Importacion.Controllers
             var lst_tipo = bus_comprobante_tipo.get_list(IdEmpresa, false);
             ViewBag.lst_tipo = lst_tipo;
 
-            var lst_tipo_mov = bus_tipo.get_list(IdEmpresa, false);
+            var lst_tipo_mov = bus_tipo.get_list(IdEmpresa,"+", false);
             ViewBag.lst_tipo_mov = lst_tipo_mov;
 
             var lst_motivo = bus_motivo.get_list(IdEmpresa, false);

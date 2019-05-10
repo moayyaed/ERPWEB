@@ -9,6 +9,7 @@ using Core.Erp.Web.Reportes.CuentasPorCobrar;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -99,6 +100,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 tc_descripcion = "TODOS"
             });
             ViewBag.lst_cobro = lst_cobro;
+        }
+        private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            if (intArray == null || intArray.Count() == 0)
+            {
+                lst_sucursal.Where(q => q.IdSucursal == Convert.ToInt32(SessionFixed.IdSucursal)).FirstOrDefault().Seleccionado = true;
+            }
+            else
+                foreach (var item in lst_sucursal)
+                {
+                    item.Seleccionado = (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+                }
+            ViewBag.lst_sucursal = lst_sucursal;
         }
         public ActionResult CXC_001(int IdSucursal = 0, decimal IdCobro = 0)
         {
@@ -200,13 +216,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdCliente = 0
-
+                IdCliente = 0,
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_cliente_contacto(model);
+            cargar_sucursal_check(model.IdEmpresa,model.IntArray);
             CXC_005_Rpt report = new CXC_005_Rpt();
             report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_IdSucursal.Value = model.IdSucursal;
+            report.IntArray = model.IntArray;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_fecha_corte.Value = model.fecha_corte;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
@@ -220,14 +237,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXC_005(cl_filtros_facturacion_Info model)
         {
             CXC_005_Rpt report = new CXC_005_Rpt();
+            cargar_cliente_contacto(model);
+            report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_fecha_corte.Value = model.fecha_corte;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_cliente_contacto(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
 
             return View(model);

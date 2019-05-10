@@ -27,7 +27,11 @@ namespace Core.Erp.Data.Produccion
                         RealizaMovimiento = q.RealizaMovimiento,
                         Secuencia = q.Secuencia,
                         Signo = q.Signo,
-                        pr_descripcion = q.pr_descripcion
+                        pr_descripcion = q.pr_descripcion,
+
+                        CantidadAnterior = q.Cantidad,
+                        tp_ManejaInven = q.tp_ManejaInven,
+                        se_distribuye = q.se_distribuye ?? false
                         
                     }).ToList();
                 }

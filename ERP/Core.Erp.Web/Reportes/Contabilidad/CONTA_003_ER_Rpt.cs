@@ -71,14 +71,22 @@ namespace Core.Erp.Web.Reportes.Contabilidad
                                     gc_Orden = ListaAgrupada.Key.gc_Orden
                                 }).ToList();
 
+            if (!mostrarSaldo0)
+                ListaReporte = ListaReporte.Where(q => Math.Round(q.SaldoFinalNaturaleza,2,MidpointRounding.AwayFromZero) != 0).ToList();
+
             this.DataSource = ListaReporte;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-            if (emp != null && emp.em_logo != null)
+            if (emp != null)
             {
-                ImageConverter obj = new ImageConverter();
-                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                lblDireccion.Text = emp.em_direccion;
+                lblTelefono.Text = string.IsNullOrEmpty(emp.em_telefonos) ? "" : "Tel. " + emp.em_telefonos;
+                if (emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@
 
 
     @{
-        ViewBag.Title = "Videos";
+        ViewBag.Title = Model.Nombre_video;
         if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
         {
             Response.Redirect("~/Account/Login");
@@ -15,12 +15,16 @@
     @using (Html.BeginForm())
     {
     <body>
-        <video width="500" height="450"  controls>
-            <source src="~/Content/videos/@ViewBag.Cod_video" type="video/mp4">
-        </video>
-        <p>
-            @Model.Nombre_video
-        </p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <video width="854" height="480" controls>
+                        <source src="~/Content/videos/@ViewBag.Cod_video" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        
 
     </body>
     }

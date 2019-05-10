@@ -1402,6 +1402,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Producto_Composicion' no tien
           <Property Name="lote_fecha_fab" Type="datetime" />
           <Property Name="lote_fecha_vcto" Type="datetime" />
           <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
+          <Property Name="tp_ManejaInven" Type="char" MaxLength="1" />
+          <Property Name="se_distribuye" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_hijo_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2906,7 +2908,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Producto_Composicion].[ca_Categoria] AS [ca_Categoria], 
     [vwin_Producto_Composicion].[lote_fecha_fab] AS [lote_fecha_fab], 
     [vwin_Producto_Composicion].[lote_fecha_vcto] AS [lote_fecha_vcto], 
-    [vwin_Producto_Composicion].[lote_num_lote] AS [lote_num_lote]
+    [vwin_Producto_Composicion].[lote_num_lote] AS [lote_num_lote], 
+    [vwin_Producto_Composicion].[tp_ManejaInven] AS [tp_ManejaInven], 
+    [vwin_Producto_Composicion].[se_distribuye] AS [se_distribuye]
     FROM [web].[vwin_Producto_Composicion] AS [vwin_Producto_Composicion]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_producto_hijo_combo" EntityType="Self.vwin_producto_hijo_combo" store:Type="Views" store:Schema="web">
@@ -3883,29 +3887,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vwin_Producto_Composicion">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdProductoPadre" />
-            <PropertyRef Name="IdProductoHijo" />
-            <PropertyRef Name="IdUnidadMedida" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="pr_descripcion" />
-            <PropertyRef Name="nom_presentacion" />
-            <PropertyRef Name="ca_Categoria" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdProductoPadre" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdProductoHijo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="nom_presentacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ca_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="lote_fecha_fab" Type="DateTime" Precision="3" />
-          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
-          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="vwin_producto_hijo_combo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4201,7 +4182,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="vwin_Transferencias" EntityType="Self.vwin_Transferencias" />
           <EntitySet Name="vwin_Ing_Egr_Inven_det_x_devolver" EntityType="Self.vwin_Ing_Egr_Inven_det_x_devolver" />
           <EntitySet Name="vwin_Ing_Egr_Inven_por_devolver" EntityType="Self.vwin_Ing_Egr_Inven_por_devolver" />
-          <EntitySet Name="vwin_Producto_Composicion" EntityType="Self.vwin_Producto_Composicion" />
           <EntitySet Name="vwin_producto_hijo_combo" EntityType="Self.vwin_producto_hijo_combo" />
           <EntitySet Name="vwin_producto_padre_combo" EntityType="Self.vwin_producto_padre_combo" />
           <AssociationSet Name="FK_in_Catalogo_in_CatalogoTipo" Association="Self.FK_in_Catalogo_in_CatalogoTipo">
@@ -4535,6 +4515,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_ProductoTipo" EntitySet="in_ProductoTipo" />
             <End Role="in_parametro" EntitySet="in_parametro" />
           </AssociationSet>
+          <EntitySet Name="vwin_Producto_Composicion" EntityType="Model_inventario.vwin_Producto_Composicion" />
           </EntityContainer>
         <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -6121,6 +6102,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwin_Producto_Composicion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdProductoPadre" />
+            <PropertyRef Name="IdProductoHijo" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="nom_presentacion" />
+            <PropertyRef Name="ca_Categoria" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdProductoPadre" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdProductoHijo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lote_fecha_fab" Type="DateTime" Precision="3" />
+          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
+          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="se_distribuye" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6648,23 +6654,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
                 <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
                 <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwin_Producto_Composicion">
-            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_Composicion">
-              <MappingFragment StoreEntitySet="vwin_Producto_Composicion">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdProductoPadre" ColumnName="IdProductoPadre" />
-                <ScalarProperty Name="IdProductoHijo" ColumnName="IdProductoHijo" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
-                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
-                <ScalarProperty Name="lote_fecha_fab" ColumnName="lote_fecha_fab" />
-                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
-                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7323,6 +7312,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdMovi_Inven_tipo_x_Dev_Inv_x_Ing" ColumnName="IdMovi_Inven_tipo_x_Dev_Inv_x_Ing" />
                 <ScalarProperty Name="IdMovi_inven_tipo_ingresoBodegaDestino" ColumnName="IdMovi_inven_tipo_ingresoBodegaDestino" />
                 <ScalarProperty Name="IdMovi_inven_tipo_egresoBodegaOrigen" ColumnName="IdMovi_inven_tipo_egresoBodegaOrigen" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_Producto_Composicion">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_Composicion">
+              <MappingFragment StoreEntitySet="vwin_Producto_Composicion">
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
+                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
+                <ScalarProperty Name="lote_fecha_fab" ColumnName="lote_fecha_fab" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProductoHijo" ColumnName="IdProductoHijo" />
+                <ScalarProperty Name="IdProductoPadre" ColumnName="IdProductoPadre" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

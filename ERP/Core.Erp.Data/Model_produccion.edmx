@@ -99,6 +99,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
           <Property Name="Costo" Type="float" Nullable="false" />
           <Property Name="RealizaMovimiento" Type="bit" Nullable="false" />
           <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="tp_ManejaInven" Type="char" MaxLength="1" />
+          <Property Name="se_distribuye" Type="bit" />
         </EntityType>
         <Association Name="FK_pro_FabricacionDet_pro_Fabricacion">
           <End Role="pro_Fabricacion" Type="Self.pro_Fabricacion" Multiplicity="1" />
@@ -153,7 +155,9 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
     [vwpro_FabricacionDet].[Cantidad] AS [Cantidad], 
     [vwpro_FabricacionDet].[Costo] AS [Costo], 
     [vwpro_FabricacionDet].[RealizaMovimiento] AS [RealizaMovimiento], 
-    [vwpro_FabricacionDet].[pr_descripcion] AS [pr_descripcion]
+    [vwpro_FabricacionDet].[pr_descripcion] AS [pr_descripcion], 
+    [vwpro_FabricacionDet].[tp_ManejaInven] AS [tp_ManejaInven], 
+    [vwpro_FabricacionDet].[se_distribuye] AS [se_distribuye]
     FROM [dbo].[vwpro_FabricacionDet] AS [vwpro_FabricacionDet]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_pro_FabricacionDet_pro_Fabricacion" Association="Self.FK_pro_FabricacionDet_pro_Fabricacion">
@@ -189,7 +193,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
             <End Role="pro_Fabricacion" EntitySet="pro_Fabricacion" />
             <End Role="pro_FabricacionDet" EntitySet="pro_FabricacionDet" />
           </AssociationSet>
-          <EntitySet Name="vwpro_FabricacionDet" EntityType="Model_produccion.vwpro_FabricacionDet" />
           <FunctionImport Name="sppro_GetProductoFacturadosPorFecha" ReturnType="Collection(Model_produccion.sppro_GetProductoFacturadosPorFecha_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
@@ -198,6 +201,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="vwpro_Fabricacion" EntityType="Model_produccion.vwpro_Fabricacion" />
+          <EntitySet Name="vwpro_FabricacionDet" EntityType="Model_produccion.vwpro_FabricacionDet" />
         </EntityContainer>
         <EntityType Name="pro_Fabricacion">
           <Key>
@@ -240,29 +244,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwpro_FabricacionDet">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdFabricacion" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="Signo" />
-            <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="IdUnidadMedida" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="Costo" />
-            <PropertyRef Name="RealizaMovimiento" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdFabricacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="Signo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="Costo" Type="Double" Nullable="false" />
-          <Property Name="RealizaMovimiento" Type="Boolean" Nullable="false" />
-          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         <ComplexType Name="sppro_GetProductoFacturadosPorFecha_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
@@ -299,6 +280,31 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwpro_FabricacionDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Signo" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="RealizaMovimiento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdFabricacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Signo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Costo" Type="Double" Nullable="false" />
+          <Property Name="RealizaMovimiento" Type="Boolean" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="se_distribuye" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -347,22 +353,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwpro_FabricacionDet">
-            <EntityTypeMapping TypeName="Model_produccion.vwpro_FabricacionDet">
-              <MappingFragment StoreEntitySet="vwpro_FabricacionDet">
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="RealizaMovimiento" ColumnName="RealizaMovimiento" />
-                <ScalarProperty Name="Costo" ColumnName="Costo" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Signo" ColumnName="Signo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sppro_GetProductoFacturadosPorFecha" FunctionName="Model_produccion.Store.sppro_GetProductoFacturadosPorFecha">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_produccion.sppro_GetProductoFacturadosPorFecha_Result">
@@ -393,6 +383,24 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene def
                 <ScalarProperty Name="egr_IdMovi_inven_tipo" ColumnName="egr_IdMovi_inven_tipo" />
                 <ScalarProperty Name="egr_IdBodega" ColumnName="egr_IdBodega" />
                 <ScalarProperty Name="egr_IdSucursal" ColumnName="egr_IdSucursal" />
+                <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwpro_FabricacionDet">
+            <EntityTypeMapping TypeName="Model_produccion.vwpro_FabricacionDet">
+              <MappingFragment StoreEntitySet="vwpro_FabricacionDet">
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="RealizaMovimiento" ColumnName="RealizaMovimiento" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Signo" ColumnName="Signo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

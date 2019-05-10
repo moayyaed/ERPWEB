@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Inventario
 {
     public class in_movi_inven_tipo_Data
     {
-        public List<in_movi_inven_tipo_Info> get_list(int IdEmpresa, bool mostrar_anulados)
+        public List<in_movi_inven_tipo_Info> get_list(int IdEmpresa,string Signo, bool mostrar_anulados)
         {
             try
             {
@@ -20,6 +20,7 @@ namespace Core.Erp.Data.Inventario
                     if (mostrar_anulados)
                         Lista = (from q in Context.in_movi_inven_tipo
                                  where q.IdEmpresa == IdEmpresa
+                                 && q.cm_tipo_movi.Contains(Signo)
                                  select new in_movi_inven_tipo_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -35,6 +36,7 @@ namespace Core.Erp.Data.Inventario
                         Lista = (from q in Context.in_movi_inven_tipo
                                  where q.IdEmpresa == IdEmpresa
                                  && q.Estado == "A"
+                                 && q.cm_tipo_movi.Contains(Signo)
                                  select new in_movi_inven_tipo_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,

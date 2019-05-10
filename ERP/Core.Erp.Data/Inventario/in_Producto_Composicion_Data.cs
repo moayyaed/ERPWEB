@@ -33,13 +33,15 @@ namespace Core.Erp.Data.Inventario
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  nom_presentacion = q.nom_presentacion,
                                  lote_num_lote = q.lote_num_lote,
-                                 pr_descripcion = q.pr_descripcion
+                                 pr_descripcion = q.pr_descripcion,
+                                 tp_ManejaInven = q.tp_ManejaInven,
+                                 se_distribuye = q.se_distribuye                                 
                              }).ToList();
 
                     int secuencia = 1;
                     Lista.ForEach(V => {
                         V.secuencia = secuencia++;
-                        V.pr_descripcion = V.pr_descripcion + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "")+ " - "+V.ca_Categoria;
+                        V.pr_descripcion = V.pr_descripcion;// + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "")+ " - "+V.ca_Categoria;
                     });
                 }
 

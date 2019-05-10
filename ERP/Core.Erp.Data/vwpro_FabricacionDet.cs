@@ -24,5 +24,7 @@ namespace Core.Erp.Data
         public double Costo { get; set; }
         public bool RealizaMovimiento { get; set; }
         public string pr_descripcion { get; set; }
+        public string tp_ManejaInven { get; set; }
+        public Nullable<bool> se_distribuye { get; set; }
     }
 }

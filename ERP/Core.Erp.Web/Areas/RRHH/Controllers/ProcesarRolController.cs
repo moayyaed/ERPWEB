@@ -124,8 +124,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.UsuarioIngresa = Session["IdUsuario"].ToString();
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.UsuarioIngresa = SessionFixed.IdUsuario;
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     if (!bus_rol.procesar(info))
                         return View(info);
                     else
@@ -168,8 +168,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 
-                    info.IdEmpresa = GetIdEmpresa();
-                    if (!bus_rol.procesar(info))
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                if (!bus_rol.procesar(info))
                     {
                         cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
                         return View(info);
@@ -217,8 +217,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 //    return View(info);
                 //}
 
-                info.IdEmpresa = GetIdEmpresa();
-                    if (!bus_rol.CerrarPeriodo(info))
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                if (!bus_rol.CerrarPeriodo(info))
                     {
                         cargar_combos(info.IdNomina_Tipo,info.IdNomina_TipoLiqui);
                         return View(info);
@@ -259,7 +259,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
 
-                info.IdEmpresa = GetIdEmpresa();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 if (!bus_rol.AbrirPeriodo(info))
                 {
                     cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
@@ -382,7 +382,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
 
-                info.IdEmpresa = GetIdEmpresa();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 if (!bus_rol.Reversar_contabilidad_Periodo(info))
                 {
                     cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
@@ -414,22 +414,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+        
         private void cargar_combos(int IdNomina_Tipo, int IdNomina_Tipo_Liqui)
         {
             try
@@ -443,9 +428,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_periodos = lst_periodos;
                 var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
                 ViewBag.lst_sucursal = lst_sucursal;
-
-                
-
             }
             catch (Exception)
             {

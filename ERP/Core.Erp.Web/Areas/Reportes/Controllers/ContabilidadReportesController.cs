@@ -64,10 +64,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            foreach (var item in lst_sucursal)
+            if (intArray == null || intArray.Count() == 0)
             {
-                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+                lst_sucursal.Where(q => q.IdSucursal == Convert.ToInt32(SessionFixed.IdSucursal)).FirstOrDefault().Seleccionado = true;
             }
+            else
+                foreach (var item in lst_sucursal)
+                {
+                    item.Seleccionado = (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+                }
             ViewBag.lst_sucursal = lst_sucursal;
         }
         private void cargar_nivel()
