@@ -14,11 +14,6 @@ namespace Core.Erp.Data
     
     public partial class in_parametro
     {
-        public in_parametro()
-        {
-            this.in_Motivo_Inven = new HashSet<in_Motivo_Inven>();
-        }
-    
         public int IdEmpresa { get; set; }
         public int IdMovi_inven_tipo_egresoBodegaOrigen { get; set; }
         public int IdMovi_inven_tipo_ingresoBodegaDestino { get; set; }
@@ -46,8 +41,6 @@ namespace Core.Erp.Data
     
         public virtual in_Catalogo in_Catalogo { get; set; }
         public virtual in_Catalogo in_Catalogo1 { get; set; }
-        public virtual ICollection<in_Motivo_Inven> in_Motivo_Inven { get; set; }
-        public virtual in_Motivo_Inven in_Motivo_Inven1 { get; set; }
         public virtual in_movi_inven_tipo in_movi_inven_tipo { get; set; }
         public virtual in_movi_inven_tipo in_movi_inven_tipo1 { get; set; }
         public virtual in_movi_inven_tipo in_movi_inven_tipo2 { get; set; }

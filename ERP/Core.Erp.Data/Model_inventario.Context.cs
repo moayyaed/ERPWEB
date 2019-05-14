@@ -71,7 +71,6 @@ namespace Core.Erp.Data
         public DbSet<in_Producto> in_Producto { get; set; }
         public DbSet<in_transferencia> in_transferencia { get; set; }
         public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
-        public DbSet<in_Motivo_Inven> in_Motivo_Inven { get; set; }
         public DbSet<in_movi_inve> in_movi_inve { get; set; }
         public DbSet<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public DbSet<in_movi_inve_x_ct_cbteCble> in_movi_inve_x_ct_cbteCble { get; set; }
@@ -83,8 +82,9 @@ namespace Core.Erp.Data
         public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
         public DbSet<vwin_UnidadMedida_Equiv_conversion> vwin_UnidadMedida_Equiv_conversion { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_det_conversion> vwin_Ing_Egr_Inven_det_conversion { get; set; }
-        public DbSet<in_parametro> in_parametro { get; set; }
         public DbSet<vwin_Producto_Composicion> vwin_Producto_Composicion { get; set; }
+        public DbSet<in_Motivo_Inven> in_Motivo_Inven { get; set; }
+        public DbSet<in_parametro> in_parametro { get; set; }
     
         public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
         {

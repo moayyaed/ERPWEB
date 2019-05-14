@@ -468,7 +468,7 @@
           <Property Name="IdMovi_Inven_tipo_x_Dev_Inv_x_Erg" Type="int" Nullable="false" />
           <Property Name="P_Al_Conta_CtaInven_Buscar_en" Type="varchar" MaxLength="15" />
           <Property Name="P_Al_Conta_CtaCosto_Buscar_en" Type="varchar" MaxLength="15" />
-          <Property Name="P_IdCtaCble_transitoria_transf_inven" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="P_IdCtaCble_transitoria_transf_inven" Type="varchar" MaxLength="20" />
           <Property Name="P_IdProductoTipo_para_lote_0" Type="int" Nullable="false" />
           <Property Name="P_se_crea_lote_0_al_crear_producto_matriz" Type="bit" Nullable="false" />
           <Property Name="IdMovi_inven_tipo_x_distribucion_ing" Type="int" Nullable="false" />
@@ -732,8 +732,8 @@
           <Property Name="valor_equiv" Type="float" Nullable="false" />
           <Property Name="interpretacion" Type="varchar" MaxLength="500" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Consignacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Consignacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Consignacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -759,8 +759,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Consignacion' no tiene defini
           <Property Name="NombreTipoMovimiento" Type="nvarchar" MaxLength="50" />
           <Property Name="NombreProveedor" Type="varchar" MaxLength="200" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_ConsignacionDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_ConsignacionDet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_ConsignacionDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -781,8 +781,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_ConsignacionDet' no tiene def
           <Property Name="Observacion" Type="varchar(max)" />
           <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_devolucion_inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_devolucion_inven_det' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_devolucion_inven_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -819,8 +819,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_devolucion_inven_det' no tien
           <Property Name="IdUnidadMedida_sinConversion" Type="varchar" MaxLength="25" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_det_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Ing_Egr_Inven_det_conversion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det_conversion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -851,8 +851,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_det_conversion'
           <Property Name="dm_cantidad" Type="float" Nullable="false" />
           <Property Name="mv_costo" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_distribucion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Ing_Egr_Inven_distribucion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_distribucion">
           <Key>
             <PropertyRef Name="IdRow" />
@@ -884,8 +884,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_distribucion' n
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_distribucion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Ing_Egr_Inven_distribucion_det' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_distribucion_det">
           <Key>
             <PropertyRef Name="IdRow" />
@@ -914,8 +914,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_distribucion_de
           <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
           <Property Name="lote_fecha_fab" Type="datetime" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_distribucion_x_distribuir' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Ing_Egr_Inven_distribucion_x_distribuir' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_distribucion_x_distribuir">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -944,8 +944,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_distribucion_x_
           <Property Name="IdCategoria" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="IdPresentacion" Type="varchar" MaxLength="25" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorContabilizar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Ing_Egr_Inven_PorContabilizar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_PorContabilizar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -976,8 +976,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorContabilizar
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="EsTransferencia" Type="bit" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_movi_inve_x_estado_contabilizacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_movi_inve_x_estado_contabilizacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_movi_inve_x_estado_contabilizacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1008,8 +1008,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_movi_inve_x_estado_contabiliz
           <Property Name="TotalContabilidad" Type="float" Nullable="false" />
           <Property Name="Diferencia" Type="float" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_para_composicion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Producto_para_composicion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Producto_para_composicion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1031,8 +1031,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_para_composicion' no
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="tp_descripcion" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Producto_PorSucursal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Producto_PorSucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1047,8 +1047,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorSucursal' no tien
           <Property Name="Stock" Type="float" />
           <Property Name="precio_1" Type="float" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_Stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Producto_Stock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Producto_Stock">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1062,8 +1062,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_Stock' no tiene defi
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Stock" Type="float" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_producto_x_tb_bodega' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_producto_x_tb_bodega">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1178,8 +1178,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega' no tien
           <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
           <Property Name="nom_presentacion" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_Costo_Historico' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_producto_x_tb_bodega_Costo_Historico' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_producto_x_tb_bodega_Costo_Historico">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1215,8 +1215,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_Costo_Hi
           <Property Name="Observacion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fecha_trans" Type="datetime" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_stock_x_lote' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_producto_x_tb_bodega_stock_x_lote' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1238,8 +1238,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_stock_x_
           <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
           <Property Name="stock" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1258,8 +1258,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_transferencia_x_in_movi_inve_
           <Property Name="nom_bodega" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="tr_fecha" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Transferencias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_Transferencias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Transferencias">
           <Key>
             <PropertyRef Name="SucuOrigen" />
@@ -1307,8 +1307,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Transferencias' no tiene defi
           <Property Name="IdEstadoAproba_ing" Type="varchar" MaxLength="15" />
           <Property Name="IdEstadoAproba_egr" Type="varchar" MaxLength="15" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_UnidadMedida_Equiv_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.dbo.vwin_UnidadMedida_Equiv_conversion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_UnidadMedida_Equiv_conversion">
           <Key>
             <PropertyRef Name="IdUnidadMedida" />
@@ -1323,8 +1323,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_UnidadMedida_Equiv_conversion
           <Property Name="valor_equiv" Type="float" Nullable="false" />
           <Property Name="interpretacion" Type="varchar" MaxLength="500" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det_x_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.web.vwin_Ing_Egr_Inven_det_x_devolver' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det_x_devolver">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1357,8 +1357,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det_x_devolver'
           <Property Name="NomUnidad" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_por_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.web.vwin_Ing_Egr_Inven_por_devolver' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Ing_Egr_Inven_por_devolver">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1378,8 +1378,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_por_devolver' n
           <Property Name="cm_fecha" Type="datetime" Nullable="false" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Producto_Composicion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.web.vwin_Producto_Composicion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_Producto_Composicion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1405,8 +1405,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Producto_Composicion' no tien
           <Property Name="tp_ManejaInven" Type="char" MaxLength="1" />
           <Property Name="se_distribuye" Type="bit" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_hijo_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.web.vwin_producto_hijo_combo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_producto_hijo_combo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1427,8 +1427,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_hijo_combo' no tiene
           <Property Name="lote_fecha_vcto" Type="datetime" />
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP_FIXED.web.vwin_producto_padre_combo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwin_producto_padre_combo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1717,18 +1717,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_Motivo_Inven_in_parametro">
-          <End Role="in_parametro" Type="Self.in_parametro" Multiplicity="1" />
-          <End Role="in_Motivo_Inven" Type="Self.in_Motivo_Inven" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_parametro">
-              <PropertyRef Name="IdEmpresa" />
-            </Principal>
-            <Dependent Role="in_Motivo_Inven">
-              <PropertyRef Name="IdEmpresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_movi_inve_detalle_in_movi_inve">
           <End Role="in_movi_inve" Type="Self.in_movi_inve" Multiplicity="1" />
           <End Role="in_movi_inve_detalle" Type="Self.in_movi_inve_detalle" Multiplicity="*" />
@@ -1902,20 +1890,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Principal>
             <Dependent Role="in_parametro">
               <PropertyRef Name="P_Al_Conta_CtaCosto_Buscar_en" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_parametro_in_Motivo_Inven">
-          <End Role="in_Motivo_Inven" Type="Self.in_Motivo_Inven" Multiplicity="0..1" />
-          <End Role="in_parametro" Type="Self.in_parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Motivo_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
-            </Principal>
-            <Dependent Role="in_parametro">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv_elaboracion_egr" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3007,10 +2981,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_Catalogo" EntitySet="in_Catalogo" />
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_Motivo_Inven_in_parametro" Association="Self.FK_in_Motivo_Inven_in_parametro">
-            <End Role="in_parametro" EntitySet="in_parametro" />
-            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_movi_inve_detalle_in_movi_inve" Association="Self.FK_in_movi_inve_detalle_in_movi_inve">
             <End Role="in_movi_inve" EntitySet="in_movi_inve" />
             <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
@@ -3057,10 +3027,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           </AssociationSet>
           <AssociationSet Name="FK_in_parametro_in_Catalogo1" Association="Self.FK_in_parametro_in_Catalogo1">
             <End Role="in_Catalogo" EntitySet="in_Catalogo" />
-            <End Role="in_parametro" EntitySet="in_parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_parametro_in_Motivo_Inven" Association="Self.FK_in_parametro_in_Motivo_Inven">
-            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
             <End Role="in_parametro" EntitySet="in_parametro" />
           </AssociationSet>
           <AssociationSet Name="FK_in_parametro_in_movi_inven_tipo" Association="Self.FK_in_parametro_in_movi_inven_tipo">
@@ -3230,8 +3196,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="in_CatalogoTipo" Relationship="Self.FK_in_Catalogo_in_CatalogoTipo" FromRole="in_Catalogo" ToRole="in_CatalogoTipo" />
           <NavigationProperty Name="in_transferencia" Relationship="Model_inventario.FK_in_transferencia_in_Catalogo" FromRole="in_Catalogo" ToRole="in_transferencia" />
-          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" FromRole="in_Catalogo" ToRole="in_Motivo_Inven" />
           <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_Catalogo" FromRole="in_Catalogo" ToRole="in_movi_inve" />
+          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" FromRole="in_Catalogo" ToRole="in_Motivo_Inven" />
           <NavigationProperty Name="in_parametro" Relationship="Model_inventario.FK_in_parametro_in_Catalogo" FromRole="in_Catalogo" ToRole="in_parametro" />
           <NavigationProperty Name="in_parametro1" Relationship="Model_inventario.FK_in_parametro_in_Catalogo1" FromRole="in_Catalogo" ToRole="in_parametro" />
           </EntityType>
@@ -4371,15 +4337,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
           </AssociationSet>
           <EntitySet Name="vwin_Producto_PorSucursal" EntityType="Model_inventario.vwin_Producto_PorSucursal" />
-          <EntitySet Name="in_Motivo_Inven" EntityType="Model_inventario.in_Motivo_Inven" />
-          <AssociationSet Name="FK_in_Motivo_Inven_in_Catalogo1" Association="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1">
-            <End Role="in_Catalogo" EntitySet="in_Catalogo" />
-            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven" Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven">
-            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
-            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
-          </AssociationSet>
           <EntitySet Name="in_movi_inve" EntityType="Model_inventario.in_movi_inve" />
           <EntitySet Name="in_movi_inve_detalle" EntityType="Model_inventario.in_movi_inve_detalle" />
           <EntitySet Name="in_movi_inve_x_ct_cbteCble" EntityType="Model_inventario.in_movi_inve_x_ct_cbteCble" />
@@ -4390,10 +4347,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle">
             <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
             <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_in_Motivo_Inven" Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven">
-            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
           </AssociationSet>
           <AssociationSet Name="FK_in_movi_inve_detalle_in_movi_inve" Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve">
             <End Role="in_movi_inve" EntitySet="in_movi_inve" />
@@ -4446,7 +4399,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="vwin_producto_x_tb_bodega" EntityType="Model_inventario.vwin_producto_x_tb_bodega" />
           <EntitySet Name="vwin_UnidadMedida_Equiv_conversion" EntityType="Model_inventario.vwin_UnidadMedida_Equiv_conversion" />
           <EntitySet Name="vwin_Ing_Egr_Inven_det_conversion" EntityType="Model_inventario.vwin_Ing_Egr_Inven_det_conversion" />
+          <EntitySet Name="vwin_Producto_Composicion" EntityType="Model_inventario.vwin_Producto_Composicion" />
+          <EntitySet Name="in_Motivo_Inven" EntityType="Model_inventario.in_Motivo_Inven" />
           <EntitySet Name="in_parametro" EntityType="Model_inventario.in_parametro" />
+          <AssociationSet Name="FK_in_Motivo_Inven_in_Catalogo1" Association="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1">
+            <End Role="in_Catalogo" EntitySet="in_Catalogo" />
+            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
+          </AssociationSet>
           <AssociationSet Name="FK_in_parametro_in_Catalogo" Association="Model_inventario.FK_in_parametro_in_Catalogo">
             <End Role="in_Catalogo" EntitySet="in_Catalogo" />
             <End Role="in_parametro" EntitySet="in_parametro" />
@@ -4455,13 +4414,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_Catalogo" EntitySet="in_Catalogo" />
             <End Role="in_parametro" EntitySet="in_parametro" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_Motivo_Inven_in_parametro" Association="Model_inventario.FK_in_Motivo_Inven_in_parametro">
-            <End Role="in_parametro" EntitySet="in_parametro" />
+          <AssociationSet Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven" Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven">
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
+            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_parametro_in_Motivo_Inven" Association="Model_inventario.FK_in_parametro_in_Motivo_Inven">
+          <AssociationSet Name="FK_in_movi_inve_in_Motivo_Inven" Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven">
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
-            <End Role="in_parametro" EntitySet="in_parametro" />
+            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
           </AssociationSet>
           <AssociationSet Name="FK_in_parametro_in_movi_inven_tipo" Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo">
             <End Role="in_movi_inven_tipo" EntitySet="in_movi_inven_tipo" />
@@ -4515,7 +4474,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_ProductoTipo" EntitySet="in_ProductoTipo" />
             <End Role="in_parametro" EntitySet="in_parametro" />
           </AssociationSet>
-          <EntitySet Name="vwin_Producto_Composicion" EntityType="Model_inventario.vwin_Producto_Composicion" />
           </EntityContainer>
         <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -5204,57 +5162,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Stock" Type="Double" />
           <Property Name="precio_1" Type="Double" />
         </EntityType>
-        <EntityType Name="in_Motivo_Inven">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdMotivo_Inv" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdMotivo_Inv" Type="Int32" Nullable="false" />
-          <Property Name="Cod_Motivo_Inv" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Desc_mov_inv" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Genera_Movi_Inven" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FechaHoraAnul" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Tipo_Ing_Egr" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" FromRole="in_Motivo_Inven" ToRole="in_Catalogo" />
-          <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_Ing_Egr_Inven" />
-          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_movi_inve" />
-          <NavigationProperty Name="in_parametro" Relationship="Model_inventario.FK_in_Motivo_Inven_in_parametro" FromRole="in_Motivo_Inven" ToRole="in_parametro" />
-          <NavigationProperty Name="in_parametro1" Relationship="Model_inventario.FK_in_parametro_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_parametro" />
-        </EntityType>
-        <Association Name="FK_in_Motivo_Inven_in_Catalogo1">
-          <End Type="Model_inventario.in_Catalogo" Role="in_Catalogo" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Catalogo">
-              <PropertyRef Name="IdCatalogo" />
-            </Principal>
-            <Dependent Role="in_Motivo_Inven">
-              <PropertyRef Name="Tipo_Ing_Egr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven">
-          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_Ing_Egr_Inven" Role="in_Ing_Egr_Inven" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Motivo_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="in_movi_inve">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5301,12 +5208,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Fecha_despacho" Type="DateTime" Precision="3" />
           <Property Name="IdMotivo_Inv" Type="Int32" />
           <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_movi_inve_in_Catalogo" FromRole="in_movi_inve" ToRole="in_Catalogo" />
-          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_movi_inve" ToRole="in_Motivo_Inven" />
           <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve_detalle" />
           <NavigationProperty Name="in_movi_inve1" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve1" />
           <NavigationProperty Name="in_movi_inve2" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inve" FromRole="in_movi_inve1" ToRole="in_movi_inve" />
           <NavigationProperty Name="in_movi_inven_tipo" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" FromRole="in_movi_inve" ToRole="in_movi_inven_tipo" />
           <NavigationProperty Name="in_movi_inve_x_ct_cbteCble" Relationship="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve_x_ct_cbteCble" />
+          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_movi_inve" ToRole="in_Motivo_Inven" />
         </EntityType>
         <EntityType Name="in_movi_inve_detalle">
           <Key>
@@ -5397,20 +5304,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               <PropertyRef Name="IdMovi_inven_tipo_inv" />
               <PropertyRef Name="IdNumMovi_inv" />
               <PropertyRef Name="secuencia_inv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_in_Motivo_Inven">
-          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Motivo_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
-            </Principal>
-            <Dependent Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5824,6 +5717,54 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="dm_cantidad" Type="Double" Nullable="false" />
           <Property Name="mv_costo" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="vwin_Producto_Composicion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdProductoPadre" />
+            <PropertyRef Name="IdProductoHijo" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="nom_presentacion" />
+            <PropertyRef Name="ca_Categoria" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdProductoPadre" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdProductoHijo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lote_fecha_fab" Type="DateTime" Precision="3" />
+          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
+          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="se_distribuye" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="in_Motivo_Inven">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo_Inv" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdMotivo_Inv" Type="Int32" Nullable="false" />
+          <Property Name="Cod_Motivo_Inv" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Desc_mov_inv" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Genera_Movi_Inven" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHoraAnul" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_Ing_Egr" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" FromRole="in_Motivo_Inven" ToRole="in_Catalogo" />
+          <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_Ing_Egr_Inven" />
+          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_movi_inve" />
+        </EntityType>
         <EntityType Name="in_parametro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5835,7 +5776,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="IdMovi_Inven_tipo_x_Dev_Inv_x_Erg" Type="Int32" Nullable="false" />
           <Property Name="P_Al_Conta_CtaInven_Buscar_en" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="P_Al_Conta_CtaCosto_Buscar_en" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="P_IdCtaCble_transitoria_transf_inven" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="P_IdCtaCble_transitoria_transf_inven" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="P_IdProductoTipo_para_lote_0" Type="Int32" Nullable="false" />
           <Property Name="P_se_crea_lote_0_al_crear_producto_matriz" Type="Boolean" Nullable="false" />
           <Property Name="IdMovi_inven_tipo_x_distribucion_ing" Type="Int32" Nullable="false" />
@@ -5854,8 +5795,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="IdMotivo_Inv_elaboracion_egr" Type="Int32" />
           <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_parametro_in_Catalogo" FromRole="in_parametro" ToRole="in_Catalogo" />
           <NavigationProperty Name="in_Catalogo1" Relationship="Model_inventario.FK_in_parametro_in_Catalogo1" FromRole="in_parametro" ToRole="in_Catalogo" />
-          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_Motivo_Inven_in_parametro" FromRole="in_parametro" ToRole="in_Motivo_Inven" />
-          <NavigationProperty Name="in_Motivo_Inven1" Relationship="Model_inventario.FK_in_parametro_in_Motivo_Inven" FromRole="in_parametro" ToRole="in_Motivo_Inven" />
           <NavigationProperty Name="in_movi_inven_tipo" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo" FromRole="in_parametro" ToRole="in_movi_inven_tipo" />
           <NavigationProperty Name="in_movi_inven_tipo1" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo1" FromRole="in_parametro" ToRole="in_movi_inven_tipo" />
           <NavigationProperty Name="in_movi_inven_tipo2" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo10" FromRole="in_parametro" ToRole="in_movi_inven_tipo" />
@@ -5870,6 +5809,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_movi_inven_tipo11" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo9" FromRole="in_parametro" ToRole="in_movi_inven_tipo" />
           <NavigationProperty Name="in_ProductoTipo" Relationship="Model_inventario.FK_in_parametro_in_ProductoTipo" FromRole="in_parametro" ToRole="in_ProductoTipo" />
         </EntityType>
+        <Association Name="FK_in_Motivo_Inven_in_Catalogo1">
+          <End Type="Model_inventario.in_Catalogo" Role="in_Catalogo" Multiplicity="0..1" />
+          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="in_Motivo_Inven">
+              <PropertyRef Name="Tipo_Ing_Egr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_in_parametro_in_Catalogo">
           <End Type="Model_inventario.in_Catalogo" Role="in_Catalogo" Multiplicity="0..1" />
           <End Type="Model_inventario.in_parametro" Role="in_parametro" Multiplicity="*" />
@@ -5894,29 +5845,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_Motivo_Inven_in_parametro">
-          <End Type="Model_inventario.in_parametro" Role="in_parametro" Multiplicity="1" />
-          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_parametro">
-              <PropertyRef Name="IdEmpresa" />
-            </Principal>
-            <Dependent Role="in_Motivo_Inven">
-              <PropertyRef Name="IdEmpresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_parametro_in_Motivo_Inven">
+        <Association Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven">
           <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_parametro" Role="in_parametro" Multiplicity="*" />
+          <End Type="Model_inventario.in_Ing_Egr_Inven" Role="in_Ing_Egr_Inven" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="in_Motivo_Inven">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdMotivo_Inv" />
             </Principal>
-            <Dependent Role="in_parametro">
+            <Dependent Role="in_Ing_Egr_Inven">
               <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv_elaboracion_egr" />
+              <PropertyRef Name="IdMotivo_Inv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_in_Motivo_Inven">
+          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="0..1" />
+          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Motivo_Inven">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo_Inv" />
+            </Principal>
+            <Dependent Role="in_movi_inve">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo_Inv" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6102,31 +6055,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwin_Producto_Composicion">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdProductoPadre" />
-            <PropertyRef Name="IdProductoHijo" />
-            <PropertyRef Name="IdUnidadMedida" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="pr_descripcion" />
-            <PropertyRef Name="nom_presentacion" />
-            <PropertyRef Name="ca_Categoria" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdProductoPadre" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdProductoHijo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="lote_fecha_fab" Type="DateTime" Precision="3" />
-          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
-          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="se_distribuye" Type="Boolean" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6978,26 +6906,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="in_Motivo_Inven">
-            <EntityTypeMapping TypeName="Model_inventario.in_Motivo_Inven">
-              <MappingFragment StoreEntitySet="in_Motivo_Inven">
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="Tipo_Ing_Egr" ColumnName="Tipo_Ing_Egr" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="FechaHoraAnul" ColumnName="FechaHoraAnul" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="Genera_Movi_Inven" ColumnName="Genera_Movi_Inven" />
-                <ScalarProperty Name="Desc_mov_inv" ColumnName="Desc_mov_inv" />
-                <ScalarProperty Name="Cod_Motivo_Inv" ColumnName="Cod_Motivo_Inv" />
-                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="in_movi_inve">
             <EntityTypeMapping TypeName="Model_inventario.in_movi_inve">
               <MappingFragment StoreEntitySet="in_movi_inve">
@@ -7286,6 +7194,45 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vwin_Producto_Composicion">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_Composicion">
+              <MappingFragment StoreEntitySet="vwin_Producto_Composicion">
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
+                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
+                <ScalarProperty Name="lote_fecha_fab" ColumnName="lote_fecha_fab" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProductoHijo" ColumnName="IdProductoHijo" />
+                <ScalarProperty Name="IdProductoPadre" ColumnName="IdProductoPadre" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_Motivo_Inven">
+            <EntityTypeMapping TypeName="Model_inventario.in_Motivo_Inven">
+              <MappingFragment StoreEntitySet="in_Motivo_Inven">
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="Tipo_Ing_Egr" ColumnName="Tipo_Ing_Egr" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="FechaHoraAnul" ColumnName="FechaHoraAnul" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="Genera_Movi_Inven" ColumnName="Genera_Movi_Inven" />
+                <ScalarProperty Name="Desc_mov_inv" ColumnName="Desc_mov_inv" />
+                <ScalarProperty Name="Cod_Motivo_Inv" ColumnName="Cod_Motivo_Inv" />
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="in_parametro">
             <EntityTypeMapping TypeName="Model_inventario.in_parametro">
               <MappingFragment StoreEntitySet="in_parametro">
@@ -7312,25 +7259,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdMovi_Inven_tipo_x_Dev_Inv_x_Ing" ColumnName="IdMovi_Inven_tipo_x_Dev_Inv_x_Ing" />
                 <ScalarProperty Name="IdMovi_inven_tipo_ingresoBodegaDestino" ColumnName="IdMovi_inven_tipo_ingresoBodegaDestino" />
                 <ScalarProperty Name="IdMovi_inven_tipo_egresoBodegaOrigen" ColumnName="IdMovi_inven_tipo_egresoBodegaOrigen" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwin_Producto_Composicion">
-            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_Composicion">
-              <MappingFragment StoreEntitySet="vwin_Producto_Composicion">
-                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
-                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
-                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
-                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
-                <ScalarProperty Name="lote_fecha_fab" ColumnName="lote_fecha_fab" />
-                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
-                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdProductoHijo" ColumnName="IdProductoHijo" />
-                <ScalarProperty Name="IdProductoPadre" ColumnName="IdProductoPadre" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

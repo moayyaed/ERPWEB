@@ -16,7 +16,6 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo descripción es obligatorio")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "el campo descripción debe tener mínimo 1 caracter y máximo 50")]
         public string Descripcion_tip_cliente { get; set; }
-        [Required(ErrorMessage = "El campo cuenta contable es obligatorio")]
         public string IdCtaCble_CXC_Cred { get; set; }
         public string estado { get; set; }
         public bool EstadoBool { get; set; }

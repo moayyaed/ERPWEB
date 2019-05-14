@@ -31,8 +31,6 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-
-        [Required(ErrorMessage = "El campo cuenta contable es obligatorio")]
         public string IdCtaCble_cxc_Credito { get; set; }
         public bool es_empresa_relacionada { get; set; }
         public string FormaPago { get; set; }

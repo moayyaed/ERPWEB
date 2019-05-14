@@ -85,15 +85,11 @@
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven1" />
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_det_in_transferencia" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorSucursal" Width="1.5" PointX="23.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_inventario.in_Motivo_Inven" Width="1.5" PointX="6" PointY="34.875" />
-        <AssociationConnector Association="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" />
-        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inve" Width="1.5" PointX="16.25" PointY="25.25" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inve_detalle" Width="1.5" PointX="18.5" PointY="27.5" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inve_x_ct_cbteCble" Width="1.5" PointX="18.5" PointY="35.25" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_Catalogo" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" />
-        <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_movi_inve" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" />
@@ -109,11 +105,14 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega" Width="1.5" PointX="24.375" PointY="25.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_UnidadMedida_Equiv_conversion" Width="1.5" PointX="7.375" PointY="21.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_det_conversion" Width="1.5" PointX="25.375" PointY="6.75" />
-        <EntityTypeShape EntityType="Model_inventario.in_parametro" Width="1.5" PointX="21.25" PointY="29.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Composicion" Width="1.5" PointX="25.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Model_inventario.in_Motivo_Inven" Width="1.5" PointX="14" PointY="31.125" />
+        <EntityTypeShape EntityType="Model_inventario.in_parametro" Width="1.5" PointX="11.625" PointY="0.75" />
+        <AssociationConnector Association="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_Catalogo" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_Catalogo1" />
-        <AssociationConnector Association="Model_inventario.FK_in_Motivo_Inven_in_parametro" />
-        <AssociationConnector Association="Model_inventario.FK_in_parametro_in_Motivo_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo1" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo10" />
@@ -127,7 +126,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo8" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo9" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_ProductoTipo" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Composicion" Width="1.5" PointX="25.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
