@@ -13,7 +13,8 @@
 
    declare @dias int,
     @Mes int
-
+	if(DATEPART(day,@Fecha_fin) = 31)
+		set @Fecha_fin=DATEADD (DAY , -1 , @Fecha_fin )
 	if(datepart(MONTH, @Fecha_fin)=2 and datepart(DAY, @Fecha_fin)=28)
 		set @Fecha_fin=DATEADD (DAY , 2 , @Fecha_fin )
 	if(datepart(MONTH, @Fecha_fin)=2 and datepart(DAY, @Fecha_fin)=29)
@@ -32,9 +33,9 @@
 					THEN DATEDIFF(DAY,@Fecha_inicio,@Fecha_fin)+1
 
 				--EMPLEADO COMIENZA A ACUMULAR ANTES DE PERIODO Y SALE DURANTE EL PERIODO
-				WHEN (@FechaInicioAcum <= @Fecha_inicio) AND (@Fecha_salida >= @Fecha_fin)
-					THEN DATEDIFF(DAY,@Fecha_inicio,@Fecha_salida)+1
-
+				WHEN (@FechaInicioAcum <= @Fecha_inicio) AND (@Fecha_salida <= @Fecha_fin)
+					--THEN DATEDIFF(DAY,@Fecha_inicio,@Fecha_salida)+1
+					THEN 30
 					END
    return @dias
  end;

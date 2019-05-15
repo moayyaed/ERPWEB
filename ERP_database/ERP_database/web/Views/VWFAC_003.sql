@@ -1,43 +1,43 @@
 ﻿CREATE VIEW web.VWFAC_003
 AS
-SELECT        d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdCbteVta, d.Secuencia, d.IdProducto, pro.pr_descripcion, d.vt_cantidad, d.vt_Precio, d.vt_cantidad * d.vt_Precio AS SubtotalSinDscto, d.vt_Subtotal AS SubtotalConDscto, d.vt_iva, 
-                         d.vt_Subtotal + d.vt_iva AS vt_Total, c.vt_fecha, c.vt_serie1 + '-' + c.vt_serie2 + '-' + c.vt_NumFactura AS vt_NumFactura, per.pe_nombreCompleto AS cli_Nombre, per.pe_cedulaRuc AS cli_cedulaRuc, 
-                         con.Direccion AS cli_direccion, con.Telefono AS cli_Telefonos, con.Correo AS cli_correo, su.Su_Descripcion, su.Su_Telefonos, su.Su_Direccion, cat.Nombre AS FormaDePago, c.IdCatalogo_FormaPago, c.vt_autorizacion, 
-                         c.Fecha_Autorizacion, c.vt_Observacion, dbo.fa_factura_resumen.SubtotalIVASinDscto, dbo.fa_factura_resumen.SubtotalSinIVASinDscto, dbo.fa_factura_resumen.SubtotalSinDscto AS T_SubtotalSinDscto, 
-                         dbo.fa_factura_resumen.Descuento, dbo.fa_factura_resumen.SubtotalIVAConDscto, dbo.fa_factura_resumen.SubtotalSinIVAConDscto, dbo.fa_factura_resumen.SubtotalConDscto AS T_SubtotalConDscto, 
-                         dbo.fa_factura_resumen.ValorIVA, dbo.fa_factura_resumen.Total, dbo.fa_factura_resumen.ValorEfectivo, dbo.fa_factura_resumen.Cambio
-FROM            dbo.fa_cliente_contactos AS con INNER JOIN
-                         dbo.fa_factura AS c ON con.IdEmpresa = c.IdEmpresa AND con.IdCliente = c.IdCliente AND con.IdContacto = c.IdContacto INNER JOIN
-                         dbo.fa_factura_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdCbteVta = d.IdCbteVta INNER JOIN
-                         dbo.in_Producto AS pro ON d.IdEmpresa = pro.IdEmpresa AND d.IdProducto = pro.IdProducto INNER JOIN
-                         dbo.fa_cliente AS cli ON con.IdEmpresa = cli.IdEmpresa AND con.IdCliente = cli.IdCliente INNER JOIN
-                         dbo.tb_persona AS per ON cli.IdPersona = per.IdPersona INNER JOIN
-                         dbo.tb_sucursal AS su ON c.IdEmpresa = su.IdEmpresa AND c.IdSucursal = su.IdSucursal LEFT OUTER JOIN
-                         dbo.fa_factura_resumen ON c.IdEmpresa = dbo.fa_factura_resumen.IdEmpresa AND c.IdSucursal = dbo.fa_factura_resumen.IdSucursal AND c.IdBodega = dbo.fa_factura_resumen.IdBodega AND 
-                         c.IdCbteVta = dbo.fa_factura_resumen.IdCbteVta LEFT OUTER JOIN
-                         dbo.fa_catalogo AS cat ON c.IdCatalogo_FormaPago = cat.IdCatalogo
+SELECT d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdCbteVta, d.Secuencia, d.IdProducto, pro.pr_descripcion, d.vt_cantidad, d.vt_Precio, d.vt_cantidad * d.vt_Precio AS SubtotalSinDscto, d.vt_Subtotal AS SubtotalConDscto, d.vt_iva, 
+                  d.vt_Subtotal + d.vt_iva AS vt_Total, c.vt_fecha, c.vt_serie1 + '-' + c.vt_serie2 + '-' + c.vt_NumFactura AS vt_NumFactura, per.pe_nombreCompleto AS cli_Nombre, per.pe_cedulaRuc AS cli_cedulaRuc, con.Direccion AS cli_direccion, 
+                  con.Telefono AS cli_Telefonos, con.Correo AS cli_correo, su.Su_Descripcion, su.Su_Telefonos, su.Su_Direccion, cat.Nombre AS FormaDePago, c.IdCatalogo_FormaPago, c.vt_autorizacion, c.Fecha_Autorizacion, c.vt_Observacion, 
+                  dbo.fa_factura_resumen.SubtotalIVASinDscto, dbo.fa_factura_resumen.SubtotalSinIVASinDscto, dbo.fa_factura_resumen.SubtotalSinDscto AS T_SubtotalSinDscto, dbo.fa_factura_resumen.Descuento, 
+                  dbo.fa_factura_resumen.SubtotalIVAConDscto, dbo.fa_factura_resumen.SubtotalSinIVAConDscto, dbo.fa_factura_resumen.SubtotalConDscto AS T_SubtotalConDscto, dbo.fa_factura_resumen.ValorIVA, dbo.fa_factura_resumen.Total, 
+                  dbo.fa_factura_resumen.ValorEfectivo, dbo.fa_factura_resumen.Cambio, d.vt_detallexItems
+FROM     dbo.fa_cliente_contactos AS con INNER JOIN
+                  dbo.fa_factura AS c ON con.IdEmpresa = c.IdEmpresa AND con.IdCliente = c.IdCliente AND con.IdContacto = c.IdContacto INNER JOIN
+                  dbo.fa_factura_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdCbteVta = d.IdCbteVta INNER JOIN
+                  dbo.in_Producto AS pro ON d.IdEmpresa = pro.IdEmpresa AND d.IdProducto = pro.IdProducto INNER JOIN
+                  dbo.fa_cliente AS cli ON con.IdEmpresa = cli.IdEmpresa AND con.IdCliente = cli.IdCliente INNER JOIN
+                  dbo.tb_persona AS per ON cli.IdPersona = per.IdPersona INNER JOIN
+                  dbo.tb_sucursal AS su ON c.IdEmpresa = su.IdEmpresa AND c.IdSucursal = su.IdSucursal LEFT OUTER JOIN
+                  dbo.fa_factura_resumen ON c.IdEmpresa = dbo.fa_factura_resumen.IdEmpresa AND c.IdSucursal = dbo.fa_factura_resumen.IdSucursal AND c.IdBodega = dbo.fa_factura_resumen.IdBodega AND 
+                  c.IdCbteVta = dbo.fa_factura_resumen.IdCbteVta LEFT OUTER JOIN
+                  dbo.fa_catalogo AS cat ON c.IdCatalogo_FormaPago = cat.IdCatalogo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWFAC_003';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   End
-         Begin Table = "cat"
-            Begin Extent = 
-               Top = 273
-               Left = 48
-               Bottom = 436
-               Right = 256
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
          Begin Table = "fa_factura_resumen"
             Begin Extent = 
                Top = 6
                Left = 1610
                Bottom = 330
                Right = 1829
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "cat"
+            Begin Extent = 
+               Top = 273
+               Left = 48
+               Bottom = 436
+               Right = 256
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -78,7 +78,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   End
          Width = 1500
          Width = 1500
          Width = 1500
-         Width = 1515
+         Width = 1512
          Width = 1500
          Width = 1500
          Width = 1500
@@ -88,8 +88,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   End
          Width = 1500
          Width = 1500
          Width = 1500
-         Width = 1695
-         Width = 1635
+         Width = 1692
+         Width = 1632
          Width = 1500
          Width = 1500
          Width = 1500
@@ -98,16 +98,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 2550
-         Alias = 1530
-         Table = 1170
+         Column = 2556
+         Alias = 1536
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -121,13 +121,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[62] 4[3] 2[16] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -221,7 +223,7 @@ Begin DesignProperties =
                Right = 1223
             End
             DisplayFlags = 280
-            TopColumn = 17
+            TopColumn = 8
          End
          Begin Table = "pro"
             Begin Extent = 
@@ -235,10 +237,10 @@ Begin DesignProperties =
          End
          Begin Table = "cli"
             Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 170
-               Right = 304
+               Top = 0
+               Left = 0
+               Bottom = 163
+               Right = 256
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -262,7 +264,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 7
-      ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWFAC_003';
+         ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWFAC_003';
+
+
 
 
 

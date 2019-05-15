@@ -1,4 +1,4 @@
-﻿--exec [dbo].[spINV_aprobacion_ing_egr] 2,8,1,7,11
+﻿--exec [dbo].[spINV_aprobacion_ing_egr] 2,1,1,6,54
 CREATE PROCEDURE [dbo].[spINV_aprobacion_ing_egr]
 (
 @IdEmpresa int,
@@ -19,6 +19,14 @@ DECLARE @IdNumMovi_apro numeric,
 @signo varchar(1),
 @fecha date
 END
+
+select @signo = signo ,
+@fecha = CM_FECHA
+from in_Ing_Egr_Inven 
+where IdEmpresa = @IdEmpresa 
+and IdSucursal = @IdSucursal  
+and IdMovi_inven_tipo = @IdMovi_inven_tipo 
+and IdNumMovi = @IdNumMovi
 
 BEGIN --GET ID IN_MOVI_INVE
 PRINT 'GET ID IN_MOVI_INVE'
@@ -65,13 +73,15 @@ INSERT INTO [dbo].[in_movi_inve_detalle]
 ,[IdPunto_cargo_grupo]    ,[IdMotivo_Inv]	            ,[Costeado])
 SELECT        
 det.IdEmpresa			  ,det.IdSucursal				,det.IdBodega					,det.IdMovi_inven_tipo			,@IdNumMovi_apro	 ,det.Secuencia
-,cab.signo				  ,det.IdProducto				,isnull(det.dm_cantidad_sinConversion,0)				
-,det.dm_observacion		  ,isnull(det.mv_costo_sinConversion,0)													,det.IdCentroCosto				,det.IdCentroCosto_sub_centro_costo
-,det.IdUnidadMedida		  ,det.dm_cantidad_sinConversion,det.IdUnidadMedida_sinConversion,det.mv_costo_sinConversion	,det.IdPunto_cargo
-,det.IdPunto_cargo_grupo  ,det.IdMotivo_Inv				,0
+,cab.signo				  ,det.IdProducto				,isnull(C.dm_cantidad,det.dm_cantidad_sinConversion)				
+,det.dm_observacion		  ,isnull(C.mv_costo,det.mv_costo_sinConversion)													,det.IdCentroCosto				,det.IdCentroCosto_sub_centro_costo
+,ISNULL(C.IdUnidadMedida_Consumo,det.IdUnidadMedida)		  ,det.dm_cantidad_sinConversion,det.IdUnidadMedida_sinConversion,det.mv_costo_sinConversion	,det.IdPunto_cargo
+,det.IdPunto_cargo_grupo  ,det.IdMotivo_Inv				,1
 FROM            in_Ing_Egr_Inven AS cab INNER JOIN in_Ing_Egr_Inven_det AS det 
 				ON cab.IdEmpresa = det.IdEmpresa AND cab.IdSucursal = det.IdSucursal 
-				AND cab.IdMovi_inven_tipo = det.IdMovi_inven_tipo AND cab.IdNumMovi = det.IdNumMovi
+				AND cab.IdMovi_inven_tipo = det.IdMovi_inven_tipo AND cab.IdNumMovi = det.IdNumMovi left join
+				vwin_Ing_Egr_Inven_det_conversion as c on det.IdEmpresa = c.IdEmpresa and det.IdSucursal = c.IdSucursal
+				and det.IdMovi_inven_tipo = c.IdMovi_inven_tipo AND C.IdNumMovi = DET.IdNumMovi AND C.Secuencia = DET.Secuencia
 WHERE det.IdEmpresa = @IdEmpresa
 and det.IdSucursal = @IdSucursal
 and det.IdBodega = @IdBodega
@@ -88,9 +98,12 @@ IdBodega_inv = A.IdBodega,
 IdMovi_inven_tipo_inv = A.IdMovi_inven_tipo,
 IdNumMovi_inv = A.IdNumMovi,
 secuencia_inv = A.Secuencia,
-IdEstadoAproba = 'APRO'
+IdEstadoAproba = 'APRO',
+IdUnidadMedida = a.IdUnidadMedida,
+mv_costo = a.mv_costo,
+dm_cantidad = a.dm_cantidad
 FROM (
-SELECT det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdMovi_inven_tipo, det.IdNumMovi, det.Secuencia
+SELECT det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdMovi_inven_tipo, det.IdNumMovi, det.Secuencia, mv_costo, dm_cantidad, IdUnidadMedida
 FROM in_movi_inve_detalle det
 WHERE det.IdEmpresa = @IdEmpresa
 and det.IdSucursal = @IdSucursal
@@ -109,27 +122,24 @@ END
 BEGIN --SI ES INGRESO REGISTRO COSTO HISTORICO
 IF(@signo = '+')
 	BEGIN
+
 		INSERT INTO [dbo].[in_producto_x_tb_bodega_Costo_Historico]
 				([IdEmpresa]           ,[IdSucursal]           ,[IdBodega]           ,[IdProducto]			     ,[IdFecha]
 				,[Secuencia]           ,[fecha]                ,[costo]              ,[Stock_a_la_fecha]          ,[Observacion]
 				,[fecha_trans])
 
-		SELECT det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdProducto, CAST(year(cm_fecha) AS VARCHAR(4)) + RIGHT('00' + CAST(month(cm_fecha) as varchar(2)), 2) + RIGHT('00' + CAST(day(cm_fecha) as varchar(2)), 2),
-		isnull(ROW_NUMBER() over(partition by det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdProducto order by det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdProducto),0) + ISNULL(costo_prom.Secuencia,0) secuencia_pro
-		,cm_fecha, mv_costo, 0, '' , GETDATE()
-				FROM 
-				in_Ing_Egr_Inven cab inner join
-				in_Ing_Egr_Inven_det det 
-				on cab.IdEmpresa = det.IdEmpresa and cab.IdSucursal = det.IdSucursal
-				and cab.IdMovi_inven_tipo = det.IdMovi_inven_tipo
-				and cab.IdNumMovi = det.IdNumMovi left join (
-				select fila, IdEmpresa,IdSucursal,IdBodega,IdProducto, Secuencia, costo from (
-				SELECT ROW_NUMBER() over(partition by IdEmpresa,IdSucursal,IdBodega,IdProducto order by IdEmpresa,IdSucursal,IdBodega,IdProducto,fecha DESC, Secuencia desc) as fila, IdEmpresa,IdSucursal,IdBodega,IdProducto, Secuencia, costo 
-				FROM in_producto_x_tb_bodega_Costo_Historico
-				WHERE IdEmpresa = @IdEmpresa and IdSucursal = @IdSucursal and IdBodega = @IdBodega and fecha = @fecha
-				) A where a.fila = 1
-				) costo_prom on det.IdEmpresa = costo_prom.IdEmpresa and costo_prom.IdSucursal = det.IdSucursal and det.IdBodega = costo_prom.IdBodega and det.IdProducto = costo_prom.IdProducto
-		where cab.IdEmpresa = @IdEmpresa and cab.IdSucursal = @IdSucursal and cab.IdMovi_inven_tipo = @IdMovi_inven_tipo and cab.IdNumMovi = @IdNumMovi and det.IdBodega = @IdBodega
+			SELECT D.IdEmpresa, D.IdSucursal, D.IdBodega, D.IdProducto,
+			CAST(CAST(YEAR(C.cm_fecha)  AS VARCHAR(4))+RIGHT('00'+ CAST(MONTH(C.cm_fecha) AS VARCHAR(2)),2)+RIGHT('00'+ CAST(DAY(C.cm_fecha) AS VARCHAR(2)),2)AS INT),
+			ROW_NUMBER() OVER(ORDER BY D.IdEmpresa) + ISNULL(SEC.SECUENCIA + 1,1), C.cm_fecha, D.mv_costo,0,'',GETDATE()
+			FROM in_Ing_Egr_Inven_det AS D INNER JOIN in_Ing_Egr_Inven AS C
+			ON C.IdEmpresa = D.IdEmpresa AND C.IdSucursal = D.IdSucursal AND C.IdMovi_inven_tipo = D.IdMovi_inven_tipo AND C.IdNumMovi = D.IdNumMovi
+			LEFT JOIN (
+			SELECT F.IdEmpresa, F.IdSucursal, F.IdBodega, F.IdProducto, F.IdFecha, MAX(F.Secuencia)Secuencia
+			FROM in_producto_x_tb_bodega_Costo_Historico AS F
+			WHERE F.IdEmpresa = @IdEmpresa AND F.IdSucursal = @IdSucursal AND F.IdBodega = @IdBodega AND IdFecha = CAST(CAST(YEAR(@Fecha)  AS VARCHAR(4))+RIGHT('00'+ CAST(MONTH(@Fecha) AS VARCHAR(2)),2)+RIGHT('00'+ CAST(DAY(@Fecha) AS VARCHAR(2)),2)AS INT)
+			GROUP BY F.IdEmpresa, F.IdSucursal, F.IdBodega, F.IdProducto, F.IdFecha
+			) SEC ON D.IdEmpresa = SEC.IdEmpresa AND D.IdSucursal = SEC.IdSucursal AND D.IdBodega = SEC.IdBodega AND D.IdProducto = SEC.IdProducto
+			WHERE D.IdEmpresa = @IdEmpresa and D.IdSucursal = @IdSucursal AND D.IdMovi_inven_tipo = @IdMovi_inven_tipo AND D.IdNumMovi = @IdNumMovi
 	END
 END
 

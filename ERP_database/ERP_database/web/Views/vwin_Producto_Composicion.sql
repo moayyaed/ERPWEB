@@ -1,9 +1,11 @@
-﻿CREATE VIEW web.vwin_Producto_Composicion
-AS
-SELECT        in_Producto_Composicion.IdEmpresa, in_Producto_Composicion.IdProductoPadre, in_Producto_Composicion.IdProductoHijo, in_Producto_Composicion.IdUnidadMedida, in_Producto_Composicion.Cantidad, 
-                         in_Producto.pr_descripcion, in_presentacion.nom_presentacion, in_categorias.ca_Categoria, in_Producto.lote_fecha_fab, in_Producto.lote_fecha_vcto, in_Producto.lote_num_lote
-FROM            in_Producto_Composicion INNER JOIN
-                         in_Producto ON in_Producto_Composicion.IdEmpresa = in_Producto.IdEmpresa AND in_Producto_Composicion.IdEmpresa = in_Producto.IdEmpresa AND 
-                         in_Producto_Composicion.IdProductoHijo = in_Producto.IdProducto INNER JOIN
-                         in_categorias ON in_Producto.IdEmpresa = in_categorias.IdEmpresa AND in_Producto.IdCategoria = in_categorias.IdCategoria INNER JOIN
-                         in_presentacion ON in_Producto.IdEmpresa = in_presentacion.IdEmpresa AND in_Producto.IdPresentacion = in_presentacion.IdPresentacion
+﻿CREATE view [web].[vwin_Producto_Composicion]
+as
+SELECT dbo.in_Producto_Composicion.IdEmpresa, dbo.in_Producto_Composicion.IdProductoPadre, dbo.in_Producto_Composicion.IdProductoHijo, dbo.in_Producto_Composicion.IdUnidadMedida, dbo.in_Producto_Composicion.Cantidad, 
+                  dbo.in_Producto.pr_descripcion, dbo.in_presentacion.nom_presentacion, dbo.in_categorias.ca_Categoria, dbo.in_Producto.lote_fecha_fab, dbo.in_Producto.lote_fecha_vcto, dbo.in_Producto.lote_num_lote, 
+                  dbo.in_ProductoTipo.tp_ManejaInven, dbo.in_Producto.se_distribuye
+FROM     dbo.in_Producto_Composicion INNER JOIN
+                  dbo.in_Producto ON dbo.in_Producto_Composicion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_Producto_Composicion.IdEmpresa = dbo.in_Producto.IdEmpresa AND 
+                  dbo.in_Producto_Composicion.IdProductoHijo = dbo.in_Producto.IdProducto INNER JOIN
+                  dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria INNER JOIN
+                  dbo.in_presentacion ON dbo.in_Producto.IdEmpresa = dbo.in_presentacion.IdEmpresa AND dbo.in_Producto.IdPresentacion = dbo.in_presentacion.IdPresentacion INNER JOIN
+                  dbo.in_ProductoTipo ON dbo.in_Producto.IdEmpresa = dbo.in_ProductoTipo.IdEmpresa AND dbo.in_Producto.IdProductoTipo = dbo.in_ProductoTipo.IdProductoTipo

@@ -1,6 +1,4 @@
-﻿
-
-CREATE PROCEDURE [web].[SPINV_005] 	
+﻿CREATE PROCEDURE [web].[SPINV_005] 	
 @IdEmpresa int,
 @IdSucursal_ini int,
 @IdSucursal_fin int,
@@ -186,7 +184,7 @@ SELECT * FROM (
 						tb_sucursal.codigo AS cod_sucursal, tb_sucursal.Su_Descripcion AS nom_sucursal, in_Ing_Egr_Inven_det.IdEmpresa_oc, in_Ing_Egr_Inven_det.IdSucursal_oc, 
 						in_Ing_Egr_Inven_det.IdOrdenCompra, 
 						
-						IIF(cp_orden_giro.co_factura is null, cast(cast(fa_factura.vt_NumFactura as numeric) as varchar(20)), cast(cast(cp_orden_giro.co_factura as numeric) as varchar(20))) AS num_factura, 
+						IIF(cp_orden_giro.co_factura is null, cast(cast(fa_factura.vt_numFactura as numeric) as varchar(20)), cast(cast(cp_orden_giro.co_factura as numeric) as varchar(20))) AS num_factura, 
 
 						iif(tb_persona.pe_nombreCompleto is null,fa_cliente_contactos.Nombres,tb_persona.pe_nombreCompleto) AS nom_proveedor, in_Producto.pr_codigo, 
 						in_Producto.pr_descripcion + ' '+pre.nom_presentacion + ' ' + ISNULL(in_Producto.lote_num_lote,'') + ' ' + (iif(in_Producto.lote_fecha_vcto is null,'',CONVERT(varchar(10), in_Producto.lote_fecha_vcto, 103))) pr_descripcion, 
@@ -216,13 +214,11 @@ FROM            fa_factura INNER JOIN
                          com_ordencompra_local ON cp_proveedor.IdEmpresa = com_ordencompra_local.IdEmpresa AND cp_proveedor.IdProveedor = com_ordencompra_local.IdProveedor ON 
                          in_Ing_Egr_Inven_det.IdEmpresa_oc = com_ordencompra_local.IdEmpresa AND in_Ing_Egr_Inven_det.IdSucursal_oc = com_ordencompra_local.IdSucursal AND 
                          in_Ing_Egr_Inven_det.IdOrdenCompra = com_ordencompra_local.IdOrdenCompra LEFT OUTER JOIN
-                         cp_Aprobacion_Ing_Bod_x_OC INNER JOIN
-                         cp_Aprobacion_Ing_Bod_x_OC_det ON cp_Aprobacion_Ing_Bod_x_OC.IdEmpresa = cp_Aprobacion_Ing_Bod_x_OC_det.IdEmpresa AND 
-                         cp_Aprobacion_Ing_Bod_x_OC.IdAprobacion = cp_Aprobacion_Ing_Bod_x_OC_det.IdAprobacion INNER JOIN
-                         cp_orden_giro ON cp_Aprobacion_Ing_Bod_x_OC.IdEmpresa_Ogiro = cp_orden_giro.IdEmpresa AND cp_Aprobacion_Ing_Bod_x_OC.IdCbteCble_Ogiro = cp_orden_giro.IdCbteCble_Ogiro AND 
-                         cp_Aprobacion_Ing_Bod_x_OC.IdTipoCbte_Ogiro = cp_orden_giro.IdTipoCbte_Ogiro ON in_Ing_Egr_Inven_det.IdEmpresa = cp_Aprobacion_Ing_Bod_x_OC_det.IdEmpresa_Ing_Egr_Inv AND 
-                         in_Ing_Egr_Inven_det.IdSucursal = cp_Aprobacion_Ing_Bod_x_OC_det.IdSucursal_Ing_Egr_Inv AND in_Ing_Egr_Inven_det.IdMovi_inven_tipo = cp_Aprobacion_Ing_Bod_x_OC_det.IdMovi_inven_tipo_Ing_Egr_Inv AND 
-                         in_Ing_Egr_Inven_det.IdNumMovi = cp_Aprobacion_Ing_Bod_x_OC_det.IdNumMovi_Ing_Egr_Inv AND in_Ing_Egr_Inven_det.Secuencia = cp_Aprobacion_Ing_Bod_x_OC_det.Secuencia_Ing_Egr_Inv LEFT OUTER JOIN
+                         cp_orden_giro_x_in_Ing_Egr_Inven INNER JOIN
+                         cp_orden_giro ON cp_orden_giro_x_in_Ing_Egr_Inven.og_IdEmpresa = cp_orden_giro.IdEmpresa AND cp_orden_giro_x_in_Ing_Egr_Inven.og_IdCbteCble_Ogiro = cp_orden_giro.IdCbteCble_Ogiro AND 
+                         cp_orden_giro_x_in_Ing_Egr_Inven.og_IdTipoCbte_Ogiro = cp_orden_giro.IdTipoCbte_Ogiro ON in_Ing_Egr_Inven_det.IdEmpresa = cp_orden_giro_x_in_Ing_Egr_Inven.inv_IdEmpresa AND 
+                         in_Ing_Egr_Inven_det.IdSucursal = cp_orden_giro_x_in_Ing_Egr_Inven.inv_IdSucursal AND in_Ing_Egr_Inven_det.IdMovi_inven_tipo = cp_orden_giro_x_in_Ing_Egr_Inven.inv_IdMovi_inven_tipo AND 
+                         in_Ing_Egr_Inven_det.IdNumMovi = cp_orden_giro_x_in_Ing_Egr_Inven.inv_IdNumMovi  LEFT OUTER JOIN
                          in_presentacion AS pre ON in_Producto.IdEmpresa = pre.IdEmpresa AND in_Producto.IdPresentacion = pre.IdPresentacion
 						 
 						 

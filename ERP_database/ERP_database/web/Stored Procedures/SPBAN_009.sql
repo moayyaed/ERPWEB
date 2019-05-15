@@ -44,4 +44,4 @@ FROM     ba_TipoFlujo_Movimiento INNER JOIN
 WHERE  (ba_TipoFlujo_Movimiento.Estado = 1) AND ba_TipoFlujo_Movimiento.Fecha <= @FechaFin AND ba_TipoFlujo_Movimiento.IdEmpresa = @IdEmpresa AND ba_TipoFlujo_Movimiento.IdBanco = @IdBanco
 ) a
 group by a.IdEmpresa, a.IdBanco, a.ba_descripcion, a.IdTipoFlujo, a.NomFlujo
-having round(sum(a.Valor),2) != 0
+having ROUND(sum(round(a.Valor,2)),2) != 0
