@@ -16,9 +16,10 @@
     CONSTRAINT [PK_in_Motivo_Inven] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMotivo_Inv] ASC),
     CONSTRAINT [FK_in_Motivo_Inven_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_in_Motivo_Inven_in_Catalogo1] FOREIGN KEY ([Tipo_Ing_Egr]) REFERENCES [dbo].[in_Catalogo] ([IdCatalogo]),
-    CONSTRAINT [FK_in_Motivo_Inven_in_parametro] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[in_parametro] ([IdEmpresa]),
     CONSTRAINT [FK_in_Motivo_Inven_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa])
 );
+
+
 
 
 

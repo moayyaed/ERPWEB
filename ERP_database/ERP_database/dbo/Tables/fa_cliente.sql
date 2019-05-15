@@ -14,7 +14,7 @@
     [IdUsuarioUltAnu]        VARCHAR (20) NULL,
     [Fecha_UltAnu]           DATETIME     NULL,
     [Estado]                 VARCHAR (50) NOT NULL,
-    [IdCtaCble_cxc_Credito]  VARCHAR (20) NOT NULL,
+    [IdCtaCble_cxc_Credito]  VARCHAR (20) NULL,
     [es_empresa_relacionada] BIT          NOT NULL,
     [FormaPago]              VARCHAR (2)  NULL,
     [EsClienteExportador]    BIT          NOT NULL,
@@ -28,6 +28,8 @@
     CONSTRAINT [FK_fa_cliente_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa]),
     CONSTRAINT [FK_fa_cliente_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona])
 );
+
+
 
 
 
