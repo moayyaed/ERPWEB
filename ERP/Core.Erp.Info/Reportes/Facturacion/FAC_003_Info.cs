@@ -49,5 +49,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public Nullable<decimal> Cambio { get; set; }
         public string vt_detallexItems { get; set; }
 
+        public string ValorEnLetras { get; set; }
     }
 }

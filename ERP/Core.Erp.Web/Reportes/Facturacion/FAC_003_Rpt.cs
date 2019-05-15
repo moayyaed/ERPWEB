@@ -33,7 +33,9 @@ namespace Core.Erp.Web.Reportes.Facturacion
             List<FAC_003_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, mostrar_cuotas);
             if (lst_rpt.Count > 0)
             {
-                lbl_ValorEnLetras.Text = funciones.NumeroALetras(lst_rpt[0].Total.ToString());
+                string ValorEnLetras = funciones.NumeroALetras(lst_rpt[0].Total.ToString());
+                lbl_ValorEnLetras.Text = ValorEnLetras;
+                lst_rpt.ForEach(q => q.ValorEnLetras = ValorEnLetras);
             }
 
             this.DataSource = lst_rpt;
