@@ -11,15 +11,19 @@ namespace Core.Erp.Data
 {
     using System;
     
-    public partial class SPACTF_004_resumen_Result
+    public partial class SPCXP_016_Result
     {
         public int IdEmpresa { get; set; }
-        public int IdActivoFijoTipo { get; set; }
+        public int IdSucursal { get; set; }
+        public decimal IdProveedor { get; set; }
         public string IdUsuario { get; set; }
-        public string Af_Descripcion { get; set; }
-        public double Af_costo_compra { get; set; }
-        public double Valor_Depreciacion { get; set; }
-        public double Valor_ult_depreciacion { get; set; }
-        public double Costo_neto { get; set; }
+        public string Su_Descripcion { get; set; }
+        public string pe_CedulaRuc { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public double SaldoInicial { get; set; }
+        public double Compra { get; set; }
+        public double Retenciones { get; set; }
+        public double Pagos { get; set; }
+        public double Saldo { get; set; }
     }
 }
