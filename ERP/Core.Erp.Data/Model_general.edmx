@@ -318,24 +318,6 @@
           <Property Name="estado" Type="char" MaxLength="1" />
           <Property Name="Posicion" Type="int" />
         </EntityType>
-        <EntityType Name="tb_sis_Documento_Tipo_Reporte_x_Empresa">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="codDocumentoTipo" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="codDocumentoTipo" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="File_Disenio_Reporte" Type="varbinary(max)" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_Transac" Type="datetime" />
-          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_UltMod" Type="datetime" />
-          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
-          <Property Name="Fecha_UltAnu" Type="datetime" />
-          <Property Name="MotivoAnula" Type="varchar" MaxLength="100" />
-          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
-          <Property Name="ip" Type="varchar" MaxLength="25" />
-        </EntityType>
         <EntityType Name="tb_sis_Documento_Tipo_Talonario">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -481,6 +463,17 @@
           <Property Name="ftp_usuario" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ftp_contrasenia" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ftp_url" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_FiltroReportes">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
         </EntityType>
         <EntityType Name="tb_sis_reporte">
           <Key>
@@ -889,18 +882,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo">
-          <End Role="tb_sis_Documento_Tipo" Type="Self.tb_sis_Documento_Tipo" Multiplicity="1" />
-          <End Role="tb_sis_Documento_Tipo_Reporte_x_Empresa" Type="Self.tb_sis_Documento_Tipo_Reporte_x_Empresa" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_sis_Documento_Tipo">
-              <PropertyRef Name="codDocumentoTipo" />
-            </Principal>
-            <Dependent Role="tb_sis_Documento_Tipo_Reporte_x_Empresa">
-              <PropertyRef Name="codDocumentoTipo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo">
           <End Role="tb_sis_Documento_Tipo" Type="Self.tb_sis_Documento_Tipo" Multiplicity="1" />
           <End Role="tb_sis_Documento_Tipo_Talonario" Type="Self.tb_sis_Documento_Tipo_Talonario" Multiplicity="*" />
@@ -1070,7 +1051,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_provincia" EntityType="Self.tb_provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_region" EntityType="Self.tb_region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo" EntityType="Self.tb_sis_Documento_Tipo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_sis_Documento_Tipo_Reporte_x_Empresa" EntityType="Self.tb_sis_Documento_Tipo_Reporte_x_Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo_Talonario" EntityType="Self.tb_sis_Documento_Tipo_Talonario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo_x_Empresa" EntityType="Self.tb_sis_Documento_Tipo_x_Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Impuesto" EntityType="Self.tb_sis_Impuesto" Schema="dbo" store:Type="Tables" />
@@ -1081,6 +1061,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_transportista" EntityType="Self.tb_transportista" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_visor_video" EntityType="Self.tb_visor_video" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_usuario_ftp" EntityType="Self.tbl_usuario_ftp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_FiltroReportes" EntityType="Self.tb_FiltroReportes" Schema="web" store:Type="Tables" />
           <EntitySet Name="tb_sis_reporte" EntityType="Self.tb_sis_reporte" Schema="web" store:Type="Tables" />
           <EntitySet Name="tb_sis_reporte_x_seg_usuario" EntityType="Self.tb_sis_reporte_x_seg_usuario" Schema="web" store:Type="Tables" />
           <EntitySet Name="tb_sis_reporte_x_tb_empresa" EntityType="Self.tb_sis_reporte_x_tb_empresa" Schema="web" store:Type="Tables" />
@@ -1244,10 +1225,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_pais" EntitySet="tb_pais" />
             <End Role="tb_region" EntitySet="tb_region" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo" Association="Self.FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo">
-            <End Role="tb_sis_Documento_Tipo" EntitySet="tb_sis_Documento_Tipo" />
-            <End Role="tb_sis_Documento_Tipo_Reporte_x_Empresa" EntitySet="tb_sis_Documento_Tipo_Reporte_x_Empresa" />
-          </AssociationSet>
           <AssociationSet Name="FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo" Association="Self.FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo">
             <End Role="tb_sis_Documento_Tipo" EntitySet="tb_sis_Documento_Tipo" />
             <End Role="tb_sis_Documento_Tipo_Talonario" EntitySet="tb_sis_Documento_Tipo_Talonario" />
@@ -1318,7 +1295,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_provincia" EntityType="Model_general.tb_provincia" />
           <EntitySet Name="tb_region" EntityType="Model_general.tb_region" />
           <EntitySet Name="tb_sis_Documento_Tipo" EntityType="Model_general.tb_sis_Documento_Tipo" />
-          <EntitySet Name="tb_sis_Documento_Tipo_Reporte_x_Empresa" EntityType="Model_general.tb_sis_Documento_Tipo_Reporte_x_Empresa" />
           <EntitySet Name="tb_sis_Documento_Tipo_Talonario" EntityType="Model_general.tb_sis_Documento_Tipo_Talonario" />
           <EntitySet Name="tb_sis_Documento_Tipo_x_Empresa" EntityType="Model_general.tb_sis_Documento_Tipo_x_Empresa" />
           <EntitySet Name="tb_sis_Impuesto" EntityType="Model_general.tb_sis_Impuesto" />
@@ -1392,10 +1368,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_region" EntitySet="tb_region" />
             <End Role="tb_provincia" EntitySet="tb_provincia" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo" Association="Model_general.FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo">
-            <End Role="tb_sis_Documento_Tipo" EntitySet="tb_sis_Documento_Tipo" />
-            <End Role="tb_sis_Documento_Tipo_Reporte_x_Empresa" EntitySet="tb_sis_Documento_Tipo_Reporte_x_Empresa" />
-          </AssociationSet>
           <AssociationSet Name="FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo" Association="Model_general.FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo">
             <End Role="tb_sis_Documento_Tipo" EntitySet="tb_sis_Documento_Tipo" />
             <End Role="tb_sis_Documento_Tipo_Talonario" EntitySet="tb_sis_Documento_Tipo_Talonario" />
@@ -1466,6 +1438,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_sucursal" EntitySet="tb_sucursal" />
             <End Role="tb_sucursal_FormaPago_x_fa_NivelDescuento" EntitySet="tb_sucursal_FormaPago_x_fa_NivelDescuento" />
           </AssociationSet>
+          <EntitySet Name="tb_FiltroReportes" EntityType="Model_general.tb_FiltroReportes" />
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -1754,27 +1727,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Posicion" Type="Int32" />
-          <NavigationProperty Name="tb_sis_Documento_Tipo_Reporte_x_Empresa" Relationship="Model_general.FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo" FromRole="tb_sis_Documento_Tipo" ToRole="tb_sis_Documento_Tipo_Reporte_x_Empresa" />
           <NavigationProperty Name="tb_sis_Documento_Tipo_Talonario" Relationship="Model_general.FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo" FromRole="tb_sis_Documento_Tipo" ToRole="tb_sis_Documento_Tipo_Talonario" />
-        </EntityType>
-        <EntityType Name="tb_sis_Documento_Tipo_Reporte_x_Empresa">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="codDocumentoTipo" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="codDocumentoTipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="File_Disenio_Reporte" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tb_sis_Documento_Tipo" Relationship="Model_general.FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo" FromRole="tb_sis_Documento_Tipo_Reporte_x_Empresa" ToRole="tb_sis_Documento_Tipo" />
         </EntityType>
         <EntityType Name="tb_sis_Documento_Tipo_Talonario">
           <Key>
@@ -2110,18 +2063,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Principal>
             <Dependent Role="tb_provincia">
               <PropertyRef Name="Cod_Region" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tb_sis_Documento_Tipo_Reporte_x_Empresa_tb_sis_Documento_Tipo">
-          <End Type="Model_general.tb_sis_Documento_Tipo" Role="tb_sis_Documento_Tipo" Multiplicity="1" />
-          <End Type="Model_general.tb_sis_Documento_Tipo_Reporte_x_Empresa" Role="tb_sis_Documento_Tipo_Reporte_x_Empresa" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_sis_Documento_Tipo">
-              <PropertyRef Name="codDocumentoTipo" />
-            </Principal>
-            <Dependent Role="tb_sis_Documento_Tipo_Reporte_x_Empresa">
-              <PropertyRef Name="codDocumentoTipo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2553,6 +2494,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tb_FiltroReportes">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2825,24 +2777,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="codDocumentoTipo" ColumnName="codDocumentoTipo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_sis_Documento_Tipo_Reporte_x_Empresa">
-            <EntityTypeMapping TypeName="Model_general.tb_sis_Documento_Tipo_Reporte_x_Empresa">
-              <MappingFragment StoreEntitySet="tb_sis_Documento_Tipo_Reporte_x_Empresa">
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="File_Disenio_Reporte" ColumnName="File_Disenio_Reporte" />
-                <ScalarProperty Name="codDocumentoTipo" ColumnName="codDocumentoTipo" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3211,6 +3145,16 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="IdCatalogo" ColumnName="IdCatalogo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_FiltroReportes">
+            <EntityTypeMapping TypeName="Model_general.tb_FiltroReportes">
+              <MappingFragment StoreEntitySet="tb_FiltroReportes">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

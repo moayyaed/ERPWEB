@@ -900,6 +900,12 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Rpt.Designer.cs">
       <DependentUpon>CXP_015_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_016_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_016_Rpt.Designer.cs">
+      <DependentUpon>CXP_016_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -9992,6 +9998,7 @@
     <Content Include="Areas\RRHH\Views\Rubro\_GridViewPartial_rubros_x_jornada.cshtml" />
     <Content Include="Areas\RRHH\Views\Rubro\_CmbRubro.cshtml" />
     <Content Include="Areas\General\Views\ParametrosGeneral\Index.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_016.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10115,6 +10122,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10315,6 +10323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_015_Rpt.resx">
       <DependentUpon>CXP_015_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_016_Rpt.resx">
+      <DependentUpon>CXP_016_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_001_Rpt.resx">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>

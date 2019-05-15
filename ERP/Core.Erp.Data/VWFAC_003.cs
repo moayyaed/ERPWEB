@@ -53,5 +53,6 @@ namespace Core.Erp.Data
         public Nullable<decimal> Total { get; set; }
         public Nullable<decimal> ValorEfectivo { get; set; }
         public Nullable<decimal> Cambio { get; set; }
+        public string vt_detallexItems { get; set; }
     }
 }

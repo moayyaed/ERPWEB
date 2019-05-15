@@ -234,6 +234,7 @@
     <Compile Include="General\tb_ColaImpresionDirecta_Info.cs" />
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Info.cs" />
     <Compile Include="General\tb_empresa_Info.cs" />
+    <Compile Include="General\tb_FiltroReportes_Info.cs" />
     <Compile Include="General\tb_mes_Info.cs" />
     <Compile Include="General\tb_modulo_Info.cs" />
     <Compile Include="General\tb_moneda_Info.cs" />

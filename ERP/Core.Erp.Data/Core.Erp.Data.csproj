@@ -664,6 +664,7 @@
     <Compile Include="General\tb_ColaImpresionDirecta_Data.cs" />
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Data.cs" />
     <Compile Include="General\tb_empresa_Data.cs" />
+    <Compile Include="General\tb_FiltroReportes_Data.cs" />
     <Compile Include="General\tb_mes_Data.cs" />
     <Compile Include="General\tb_modulo_Data.cs" />
     <Compile Include="General\tb_moneda_Data.cs" />
@@ -1841,6 +1842,9 @@
     <Compile Include="tb_facturas_eventos.cs">
       <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
+    <Compile Include="tb_FiltroReportes.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="tb_mes.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -1872,9 +1876,6 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sis_Documento_Tipo.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tb_sis_Documento_Tipo_Reporte_x_Empresa.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sis_Documento_Tipo_Talonario.cs">

@@ -412,5 +412,47 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult CXP_016()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+            };
+            model.IntArray = new int[] { model.IdSucursal};
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            CXP_016_Rpt report = new CXP_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.IntArray = model.IntArray;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_MostrarSaldo0.Value = model.mostrarSaldo0;
+
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CXP_016(cl_filtros_Info model)
+        {
+            CXP_016_Rpt report = new CXP_016_Rpt();
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.IntArray = model.IntArray;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_MostrarSaldo0.Value = model.mostrarSaldo0;
+
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }

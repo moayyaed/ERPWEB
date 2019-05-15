@@ -12,9 +12,11 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tb_persona_tipo
+    public partial class tb_FiltroReportes
     {
-        public string IdTipo_Persona { get; set; }
-        public string Descricpion { get; set; }
+        public int IdEmpresa { get; set; }
+        public string IdUsuario { get; set; }
+        public int IdSucursal { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
     }
 }

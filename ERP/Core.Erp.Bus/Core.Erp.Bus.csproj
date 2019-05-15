@@ -188,6 +188,7 @@
     <Compile Include="General\tb_ColaImpresionDirecta_Bus.cs" />
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Bus.cs" />
     <Compile Include="General\tb_empresa_Bus.cs" />
+    <Compile Include="General\tb_FiltroReportes_Bus.cs" />
     <Compile Include="General\tb_mes_Bus.cs" />
     <Compile Include="General\tb_modulo_Bus.cs" />
     <Compile Include="General\tb_moneda_Bus.cs" />
