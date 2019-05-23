@@ -1237,6 +1237,7 @@
     <Compile Include="Reportes\Compra\COMP_001_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_001_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_002_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_004_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_003_balances_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Data.cs" />

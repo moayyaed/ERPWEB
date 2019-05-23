@@ -84,8 +84,8 @@ namespace Core.Erp.Bus.RRHH
             {
                 bool si_grabo = false;
                 info.info_persona.pe_Naturaleza = "NATU";
-                info.info_persona.pe_nombreCompleto = info.info_persona.pe_apellido + " " + info.info_persona.pe_nombre;
-                info.info_persona.pe_razonSocial = info.info_persona.pe_apellido + " " + info.info_persona.pe_nombre;
+                info.info_persona.pe_nombreCompleto = info.pe_apellido + " " + info.pe_nombre;
+                info.info_persona.pe_razonSocial = info.pe_apellido + " " + info.pe_nombre;
                 decimal IdPersona = bus_persona.validar_existe_cedula(info.info_persona.pe_cedulaRuc);
                 if (IdPersona != 0)
                 {
@@ -95,8 +95,8 @@ namespace Core.Erp.Bus.RRHH
                 else
                 {
                     info.info_persona.pe_Naturaleza = "NATU";
-                    info.info_persona.pe_nombreCompleto = info.info_persona.pe_apellido + " " + info.info_persona.pe_nombre;
-                    info.info_persona.pe_razonSocial = info.info_persona.pe_apellido + " " + info.info_persona.pe_nombre;
+                    info.info_persona.pe_nombreCompleto = info.pe_apellido  + " " + info.pe_nombre;
+                    info.info_persona.pe_razonSocial = null;
                     info.info_persona.IdPersona = info.IdPersona;
                     info.info_persona.pe_apellido = info.pe_apellido;
                     info.info_persona.pe_nombre = info.pe_nombre;

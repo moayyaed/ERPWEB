@@ -8,19 +8,30 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Data.Reportes.Contabilidad
 {
-   public class CONTA_003_balances_Data
+   public class CONTA_004_Data
     {
 
         tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
-        string Su_Descripcion = "";
-        public List<CONTA_003_balances_Info> get_list(int IdEmpresa, int IdAnio, DateTime fechaIni, DateTime fechaFin, string IdUsuario, int IdNivel, bool mostrarSaldo0, string balance, bool MostrarSaldoAcumulado)
+        public List<CONTA_004_Info> get_list(int IdEmpresa, int IdAnio, DateTime fechaIni1, DateTime fechaFin1, string IdUsuario, int IdNivel, bool mostrarSaldo0, string balance, bool MostrarSaldoAcumulado, DateTime fechaIni2, DateTime fechaFin2)
         {
             try
             {
-                List<CONTA_003_balances_Info> Lista;
+                List<CONTA_004_Info> Lista;
+                List<CONTA_003_balances_Info> Lista1;
+                List<CONTA_003_balances_Info> Lista2;
+
+                Entities_contabilidad db = new Entities_contabilidad();
+                Lista = db.ct_plancta.Where(q => q.IdEmpresa == IdEmpresa && q.pc_Estado == "A").Select(q => new CONTA_004_Info
+                {
+                    IdEmpresa = q.IdEmpresa,
+                    IdCtaCble = q.IdCtaCble,
+                    IdCtaCblePadre = q.IdCtaCblePadre,
+                    pc_Cuenta = q.pc_Cuenta
+                }).ToList();
+
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCONTA_003_balances(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance,MostrarSaldoAcumulado)
+                    Lista1 = (from q in Context.SPCONTA_003_balances(IdEmpresa, IdAnio, fechaIni1, fechaFin1, IdUsuario, IdNivel, mostrarSaldo0, balance,MostrarSaldoAcumulado)
                              select new CONTA_003_balances_Info
                              {
                                  IdUsuario = q.IdUsuario,
@@ -49,8 +60,7 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                                  SaldoDebitosCreditosNaturaleza = q.SaldoDebitosCreditosNaturaleza,
                                  SaldoDebitosNaturaleza = q.SaldoDebitosNaturaleza,
                                  SaldoFinalNaturaleza = q.SaldoFinalNaturaleza,
-                                 SaldoInicialNaturaleza = q.SaldoInicialNaturaleza,
-                                 Su_Descripcion = Su_Descripcion
+                                 SaldoInicialNaturaleza = q.SaldoInicialNaturaleza                                 
                              }).ToList();
                 }
                 return Lista;

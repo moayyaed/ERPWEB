@@ -53,7 +53,9 @@ END
 
 BEGIN --ACTUALIZO SALDO INICIAL
 
-UPDATE [web].[cp_SPCXP_016] SET SaldoInicial = A.TOTAL
+UPDATE [web].[cp_SPCXP_016] SET SaldoInicial = B.TOTAL
+FROM(
+select A.IdEmpresa, A.IdSucursal, A.IdProveedor, SUM(A.Total ) TOTAL
 FROM(
 
 SELECT OG.IdEmpresa, OG.IdSucursal, OG.IdProveedor, ROUND(OG.co_total - isnull(RET.re_valor_retencion,0) - isnull(MontoAplicado,0),2) AS Total
@@ -88,13 +90,13 @@ FROM cp_nota_DebCre AS OG LEFT JOIN
 )AS PAG ON OG.IdEmpresa = PAG.IdEmpresa_cxp AND OG.IdTipoCbte_Nota = PAG.IdTipoCbte_cxp AND OG.IdCbteCble_Nota = PAG.IdCbteCble_cxp
 inner join web.tb_FiltroReportes as f on og.IdEmpresa = f.IdEmpresa and og.IdSucursal = f.IdSucursal
 where OG.IdEmpresa = @IdEmpresa AND OG.Estado = 'A' and f.IdUsuario = @IdUsuario
-and OG.cn_fecha < @FechaIni
+and OG.cn_fecha < @FechaIni AND OG.DebCre = 'D'
 
 UNION ALL
 
 SELECT OG.IdEmpresa, OG.IdSucursal, OG.IdEntidad, ROUND(opd.Valor_a_pagar - isnull(MontoAplicado,0),2) AS Total
 FROM cp_orden_pago AS OG inner join 
-cp_orden_pago_det as opd on opd.IdEmpresa = og.IdEmpresa and opd.IdOrdenPago = opd.IdOrdenPago 
+cp_orden_pago_det as opd on opd.IdEmpresa = og.IdEmpresa and og.IdOrdenPago = opd.IdOrdenPago 
 
 LEFT JOIN
 (
@@ -103,7 +105,7 @@ LEFT JOIN
 	ct_cbtecble as ct on ct.IdEmpresa = pa.IdEmpresa_pago and ct.IdTipoCbte = pa.IdTipoCbte_pago and ct.IdCbteCble = pa.IdCbteCble_pago
 	WHERE pa.IdEmpresa_cxp = @IdEmpresa and ct.cb_Fecha < @FechaIni
 	GROUP BY IdEmpresa_cxp, IdTipoCbte_cxp, IdCbteCble_cxp
-)AS PAG ON opd.IdEmpresa = PAG.IdEmpresa_cxp AND opd.IdEmpresa_cxp = PAG.IdTipoCbte_cxp AND opd.IdCbteCble_cxp = PAG.IdCbteCble_cxp
+)AS PAG ON opd.IdEmpresa = PAG.IdEmpresa_cxp AND opd.IdTipoCbte_cxp = PAG.IdTipoCbte_cxp AND opd.IdCbteCble_cxp = PAG.IdCbteCble_cxp
 inner join web.tb_FiltroReportes as f on og.IdEmpresa = f.IdEmpresa and og.IdSucursal = f.IdSucursal
 where OG.IdEmpresa = @IdEmpresa AND OG.Estado = 'A' and f.IdUsuario = @IdUsuario and OG.Fecha < @FechaIni and og.IdTipo_Persona = 'PROVEE'
 AND NOT EXISTS(
@@ -118,8 +120,9 @@ WHERE R.IdEmpresa = opd.IdEmpresa
 AND R.IdTipoCbte_Nota = OPD.IdTipoCbte_cxp
 AND R.IdCbteCble_Nota = OPD.IdCbteCble_cxp
 )
-
-) A WHERE A.IdEmpresa = [web].[cp_SPCXP_016].IdEmpresa and A.IdSucursal = [web].[cp_SPCXP_016].IdSucursal and a.IdProveedor = [web].[cp_SPCXP_016].IdProveedor and [web].[cp_SPCXP_016].IdUsuario = @IdUsuario
+) A
+GROUP BY A.IdEmpresa, A.IdSucursal, A.IdProveedor
+) B WHERE B.IdEmpresa = [web].[cp_SPCXP_016].IdEmpresa and B.IdSucursal = [web].[cp_SPCXP_016].IdSucursal and B.IdProveedor = [web].[cp_SPCXP_016].IdProveedor and [web].[cp_SPCXP_016].IdUsuario = @IdUsuario
 END
 
 BEGIN --ACTUALIZO COMPRAS
@@ -130,19 +133,20 @@ SELECT A.IdEmpresa,A.IdSucursal,A.IdProveedor,SUM(A.TOTAL) TOTAL FROM(
 SELECT OG.IdEmpresa, OG.IdSucursal, OG.IdProveedor, OG.co_total TOTAL
 FROM cp_orden_giro OG INNER JOIN
 WEB.tb_FiltroReportes AS F ON OG.IdEmpresa = F.IdEmpresa
-AND OG.IdSucursal = F.IdSucursal
+AND OG.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 WHERE OG.IdEmpresa = @IdEmpresa AND OG.co_FechaFactura BETWEEN @FechaIni AND @FechaFin AND OG.Estado = 'A'
 UNION ALL
 SELECT OG.IdEmpresa, OG.IdSucursal, OG.IdProveedor, OG.cn_total
 FROM cp_nota_DebCre OG INNER JOIN
 WEB.tb_FiltroReportes AS F ON OG.IdEmpresa = F.IdEmpresa
-AND OG.IdSucursal = F.IdSucursal
+AND OG.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 WHERE OG.IdEmpresa = @IdEmpresa AND OG.cn_fecha BETWEEN @FechaIni AND @FechaFin AND OG.Estado = 'A'
+AND OG.DebCre = 'D'
 UNION ALL
 SELECT d.IdEmpresa, c.IdSucursal, c.IdEntidad, d.Valor_a_pagar 
 FROM cp_orden_pago c inner join 
 cp_orden_pago_det d on c.IdEmpresa = d.IdEmpresa and c.IdOrdenPago = d.IdOrdenPago inner join
-web.tb_FiltroReportes s on s.IdEmpresa = c.IdEmpresa and s.IdSucursal = c.IdSucursal
+web.tb_FiltroReportes s on s.IdEmpresa = c.IdEmpresa and s.IdSucursal = c.IdSucursal AND S.IdUsuario = @IdUsuario
 where c.IdEmpresa = @IdEmpresa and c.Fecha between @FechaIni and @FechaFin and c.Estado = 'A' and c.IdTipo_Persona = 'PROVEE'
 AND NOT EXISTS(
 SELECT R.IdEmpresa FROM cp_orden_giro R

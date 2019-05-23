@@ -103,6 +103,7 @@ namespace Core.Erp.Data.RRHH
                             Valor = item.Valor,
                             Observacion = item.Observacion + " del " + info.FechaCarga.Date.ToString().Substring(0, 10),
                              EstadoCobro = "PEN",
+                             CantidadHoras = item.NumHoras,
                             Secuencia = 1
                         };
                            
@@ -136,7 +137,6 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-
         public bool AnularDB(ro_HorasProfesores_Info info)
         {
             try
@@ -235,6 +235,5 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-
     }
 }

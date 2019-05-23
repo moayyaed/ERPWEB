@@ -41,47 +41,11 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             CONTA_003_balances_Bus bus_rpt = new CONTA_003_balances_Bus();
             string Sucursal = "";
 
-            if (IntArray != null)
-            {
-                for (int i = 0; i < IntArray.Count(); i++)
-                {
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, IntArray[i], MostrarSaldoAcumulado));
-                    Sucursal += bus_sucursal.get_info(IdEmpresa, IntArray[i]).Su_Descripcion + (IntArray.Count() - 1 == i ? "" : ", ");
-                }
-                lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
-            }
+            tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
+            bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
 
-            var ListaReporte = (from q in lst_rpt
-                                orderby q.IdCtaCble
-                                group q by new
-                                {
-                                    q.IdCtaCble,
-                                    q.pc_Cuenta,
-                                    q.Su_Descripcion,
-                                    q.EsCuentaMovimiento,
-                                    q.IdGrupoCble
-                                } 
-                                into ListaAgrupada                                
-                                select new
-                                {
-                                    IdCtaCble = ListaAgrupada.Key.IdCtaCble,
-                                    pc_Cuenta = ListaAgrupada.Key.pc_Cuenta,
-                                    Su_Descripcion = ListaAgrupada.Key.Su_Descripcion,
-                                    IdGrupoCble = ListaAgrupada.Key.IdGrupoCble,
-                                    EsCuentaMovimiento = ListaAgrupada.Key.EsCuentaMovimiento,
-                                    SaldoInicialNaturaleza = ListaAgrupada.Sum(p => p.SaldoInicialNaturaleza),
-                                    SaldoDebitosNaturaleza = ListaAgrupada.Sum(p => p.SaldoDebitosNaturaleza),
-                                    SaldoCreditosNaturaleza = ListaAgrupada.Sum(p => p.SaldoCreditosNaturaleza),
-                                    SaldoFinalNaturaleza = ListaAgrupada.Sum(p => p.SaldoFinalNaturaleza),
-                                    SaldoInicial = ListaAgrupada.Sum(p => p.SaldoInicial),
-                                    Debitos = ListaAgrupada.Sum(p => p.Debitos),
-                                    Creditos = ListaAgrupada.Sum(p => p.Creditos),
-                                    SaldoFinal = ListaAgrupada.Sum(p => p.SaldoFinal)
-                                }).ToList();
-            if (!mostrarSaldo0)
-                ListaReporte = ListaReporte.Where(q => Math.Round(q.SaldoFinalNaturaleza, 2, MidpointRounding.AwayFromZero) != 0).ToList();
-
-            this.DataSource = ListaReporte;
+            lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, MostrarSaldoAcumulado));
+            this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);

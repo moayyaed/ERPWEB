@@ -21,7 +21,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   End
          Begin Table = "fa_factura_resumen"
             Begin Extent = 
                Top = 6
@@ -123,13 +123,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[62] 4[3] 2[16] 3) )"
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -223,7 +225,7 @@ Begin DesignProperties =
                Right = 1223
             End
             DisplayFlags = 280
-            TopColumn = 8
+            TopColumn = 12
          End
          Begin Table = "pro"
             Begin Extent = 
@@ -237,10 +239,10 @@ Begin DesignProperties =
          End
          Begin Table = "cli"
             Begin Extent = 
-               Top = 0
-               Left = 0
-               Bottom = 163
-               Right = 256
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 304
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -264,7 +266,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 7
-         ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWFAC_003';
+      ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWFAC_003';
+
+
 
 
 

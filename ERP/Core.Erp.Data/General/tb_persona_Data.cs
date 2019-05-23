@@ -174,6 +174,8 @@ namespace Core.Erp.Data.General
             {
                 using (Entities_general Context = new Entities_general())
                 {
+                    pe_CedulaRuc = pe_CedulaRuc == null ? "" : pe_CedulaRuc.Trim();
+
                     var lst = from q in Context.tb_persona
                               where q.pe_cedulaRuc == pe_CedulaRuc
                               select q;
@@ -341,7 +343,7 @@ namespace Core.Erp.Data.General
                         pe_apellido = info.pe_apellido,
                         pe_nombre = info.pe_nombre,
                         IdTipoDocumento = info.IdTipoDocumento,
-                        pe_cedulaRuc = info.pe_cedulaRuc,
+                        pe_cedulaRuc = info.pe_cedulaRuc.Trim(),
                         pe_direccion = info.pe_direccion,
                         pe_telfono_Contacto = info.pe_telfono_Contacto,
                         pe_celular = info.pe_celular,

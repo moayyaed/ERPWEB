@@ -4161,8 +4161,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Parameter Name="IdNivel" Type="int" Mode="In" />
           <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
           <Parameter Name="Balance" Type="varchar" Mode="In" />
-          <Parameter Name="IdSucursalIni" Type="int" Mode="In" />
-          <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
           <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
         </Function>
         <Function Name="SPCXC_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
@@ -8564,19 +8562,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="SPCONTA_003_balances" ReturnType="Collection(Model_reportes.SPCONTA_003_balances_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdAnio" Mode="In" Type="Int32" />
-            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
-            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
-            <Parameter Name="Balance" Mode="In" Type="String" />
-            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
-            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <EntitySet Name="VWCAJ_002" EntityType="Model_reportes.VWCAJ_002" />
           <FunctionImport Name="SPFAC_010" ReturnType="Collection(Model_reportes.SPFAC_010_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
@@ -8656,6 +8641,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SPCONTA_003_balances" ReturnType="Collection(Model_reportes.SPCONTA_003_balances_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdAnio" Mode="In" Type="Int32" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+            <Parameter Name="Balance" Mode="In" Type="String" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="VWFAC_003" EntityType="Model_reportes.VWFAC_003" />
         </EntityContainer>
@@ -11497,35 +11493,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="String" Name="de_descripcion" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="Su_Descripcion" Nullable="false" MaxLength="100" />
         </ComplexType>
-        <ComplexType Name="SPCONTA_003_balances_Result">
-          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
-          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
-          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
-          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
-          <Property Type="Double" Name="DebitosSaldoInicial" Nullable="false" />
-          <Property Type="Double" Name="CreditosSaldoInicial" Nullable="false" />
-          <Property Type="Double" Name="SaldoInicial" Nullable="false" />
-          <Property Type="Double" Name="Debitos" Nullable="false" />
-          <Property Type="Double" Name="Creditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitosCreditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitos" Nullable="false" />
-          <Property Type="Double" Name="SaldoCreditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoFinal" Nullable="false" />
-          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
-          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
-          <Property Type="Double" Name="SaldoInicialNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitosCreditosNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoDebitosNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoCreditosNaturaleza" Nullable="false" />
-          <Property Type="Double" Name="SaldoFinalNaturaleza" Nullable="false" />
-        </ComplexType>
         <EntityType Name="VWCAJ_002">
           <Key>
             <PropertyRef Name="IdRow" />
@@ -12058,6 +12025,35 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Double" Name="Retenciones" Nullable="false" />
           <Property Type="Double" Name="Pagos" Nullable="false" />
           <Property Type="Double" Name="Saldo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPCONTA_003_balances_Result">
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
+          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
+          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
+          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
+          <Property Type="Double" Name="DebitosSaldoInicial" Nullable="false" />
+          <Property Type="Double" Name="CreditosSaldoInicial" Nullable="false" />
+          <Property Type="Double" Name="SaldoInicial" Nullable="false" />
+          <Property Type="Double" Name="Debitos" Nullable="false" />
+          <Property Type="Double" Name="Creditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitosCreditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitos" Nullable="false" />
+          <Property Type="Double" Name="SaldoCreditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoFinal" Nullable="false" />
+          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
+          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
+          <Property Type="Double" Name="SaldoInicialNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitosCreditosNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoDebitosNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoCreditosNaturaleza" Nullable="false" />
+          <Property Type="Double" Name="SaldoFinalNaturaleza" Nullable="false" />
         </ComplexType>
         <EntityType Name="VWFAC_003">
           <Key>
@@ -15244,39 +15240,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_003_balances" FunctionName="Model_reportes.Store.SPCONTA_003_balances">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_003_balances_Result">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
-                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
-                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
-                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
-                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
-                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
-                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
-                <ScalarProperty Name="DebitosSaldoInicial" ColumnName="DebitosSaldoInicial" />
-                <ScalarProperty Name="CreditosSaldoInicial" ColumnName="CreditosSaldoInicial" />
-                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
-                <ScalarProperty Name="Debitos" ColumnName="Debitos" />
-                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
-                <ScalarProperty Name="SaldoDebitosCreditos" ColumnName="SaldoDebitosCreditos" />
-                <ScalarProperty Name="SaldoDebitos" ColumnName="SaldoDebitos" />
-                <ScalarProperty Name="SaldoCreditos" ColumnName="SaldoCreditos" />
-                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
-                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
-                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
-                <ScalarProperty Name="SaldoInicialNaturaleza" ColumnName="SaldoInicialNaturaleza" />
-                <ScalarProperty Name="SaldoDebitosCreditosNaturaleza" ColumnName="SaldoDebitosCreditosNaturaleza" />
-                <ScalarProperty Name="SaldoDebitosNaturaleza" ColumnName="SaldoDebitosNaturaleza" />
-                <ScalarProperty Name="SaldoCreditosNaturaleza" ColumnName="SaldoCreditosNaturaleza" />
-                <ScalarProperty Name="SaldoFinalNaturaleza" ColumnName="SaldoFinalNaturaleza" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="VWCAJ_002">
             <EntityTypeMapping TypeName="Model_reportes.VWCAJ_002">
               <MappingFragment StoreEntitySet="VWCAJ_002">
@@ -15728,6 +15691,39 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="Retenciones" ColumnName="Retenciones" />
                 <ScalarProperty Name="Pagos" ColumnName="Pagos" />
                 <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_003_balances" FunctionName="Model_reportes.Store.SPCONTA_003_balances">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_003_balances_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
+                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
+                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
+                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
+                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
+                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
+                <ScalarProperty Name="DebitosSaldoInicial" ColumnName="DebitosSaldoInicial" />
+                <ScalarProperty Name="CreditosSaldoInicial" ColumnName="CreditosSaldoInicial" />
+                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
+                <ScalarProperty Name="Debitos" ColumnName="Debitos" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="SaldoDebitosCreditos" ColumnName="SaldoDebitosCreditos" />
+                <ScalarProperty Name="SaldoDebitos" ColumnName="SaldoDebitos" />
+                <ScalarProperty Name="SaldoCreditos" ColumnName="SaldoCreditos" />
+                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
+                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
+                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
+                <ScalarProperty Name="SaldoInicialNaturaleza" ColumnName="SaldoInicialNaturaleza" />
+                <ScalarProperty Name="SaldoDebitosCreditosNaturaleza" ColumnName="SaldoDebitosCreditosNaturaleza" />
+                <ScalarProperty Name="SaldoDebitosNaturaleza" ColumnName="SaldoDebitosNaturaleza" />
+                <ScalarProperty Name="SaldoCreditosNaturaleza" ColumnName="SaldoCreditosNaturaleza" />
+                <ScalarProperty Name="SaldoFinalNaturaleza" ColumnName="SaldoFinalNaturaleza" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

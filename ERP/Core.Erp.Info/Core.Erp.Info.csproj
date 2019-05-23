@@ -333,6 +333,7 @@
     <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Info.cs" />
     <Compile Include="Reportes\Compra\COMP_001_Info.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_002_Info.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_004_Info.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_003_balances_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Info.cs" />
@@ -527,12 +528,6 @@
     <Compile Include="SeguridadAcceso\seg_usuario_Info.cs" />
     <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Info.cs" />
     <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Info.cs" />
-    <Compile Include="vwcaj_Caja_Movimiento_por_conciliar_Info.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Core.Erp.Web\Areas\Banco\Views\BancoCuenta\Index.cshtml">
-      <Link>Index.cshtml</Link>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

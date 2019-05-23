@@ -1167,6 +1167,7 @@
     <Build Include="web\Tables\cp_SPCXP_016.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_det_conversion.sql" />
     <Build Include="web\Stored Procedures\SPCXP_016.sql" />
+    <Build Include="dbo\Views\vwro_empleado_x_jornada_x_rubro_cont.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

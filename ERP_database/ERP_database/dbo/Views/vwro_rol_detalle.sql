@@ -1,30 +1,38 @@
-﻿
-CREATE VIEW [dbo].[vwro_rol_detalle]
+﻿CREATE VIEW [dbo].[vwro_rol_detalle]
 AS
-SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, r_det.IdRubro, r_det.Valor, rub.ru_tipo, rub.rub_ctacon, dbo.ct_plancta.pc_Cuenta AS pc_CuentaRubro, emp.IdCtaCble_Emplea, 
-                  ct_plancta_1.pc_Cuenta AS pc_CuentaEmple, emp.IdDivision, emp.IdArea, emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, isnull(emp.IdSucursalContabilizacion,r.IdSucursal) IdSucursalContabilizacion,
-				  su.Su_Descripcion
+SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, ISNULL(X.IdRubroContabilizacion, r_det.IdRubro) IdRubro,  
+CASE WHEN X.IdEmpleado IS NOT NULL AND X.Secuencia = X.CantJornada 
+THEN  r_det.Valor - (ROUND(r_det.Valor/X.CantJornada,2) * (X.CantJornada-1)) 
+WHEN X.IdEmpleado IS NULL THEN r_det.Valor
+ELSE ROUND(r_det.Valor/X.CantJornada,2) 
+END AS Valor,
+rub.ru_tipo, rub.rub_ctacon, dbo.ct_plancta.pc_Cuenta AS pc_CuentaRubro, emp.IdCtaCble_Emplea, 
+                  ct_plancta_1.pc_Cuenta AS pc_CuentaEmple, emp.IdDivision, emp.IdArea, emp.IdDepartamento, ISNULL(RU.ru_descripcion,rub.ru_descripcion)ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, isnull(emp.IdSucursalContabilizacion, 
+                  r.IdSucursal) IdSucursalContabilizacion, su.Su_Descripcion
 FROM     dbo.ro_rol AS r INNER JOIN
                   dbo.ro_rol_detalle AS r_det ON r.IdEmpresa = r_det.IdEmpresa AND r.IdRol = r_det.IdRol INNER JOIN
                   dbo.ro_rubro_tipo AS rub ON r_det.IdEmpresa = rub.IdEmpresa AND r_det.IdRubro = rub.IdRubro INNER JOIN
                   dbo.ro_empleado AS emp ON r_det.IdEmpresa = emp.IdEmpresa AND r_det.IdEmpleado = emp.IdEmpleado INNER JOIN
                   dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona LEFT OUTER JOIN
                   dbo.ct_plancta AS ct_plancta_1 ON emp.IdCtaCble_Emplea = ct_plancta_1.IdCtaCble AND emp.IdEmpresa = ct_plancta_1.IdEmpresa LEFT OUTER JOIN
-                  dbo.ct_plancta ON rub.rub_ctacon = dbo.ct_plancta.IdCtaCble AND rub.IdEmpresa = dbo.ct_plancta.IdEmpresa left join
-				  tb_sucursal as su on su.IdEmpresa = emp.IdEmpresa and su.IdSucursal = isnull(emp.IdSucursalContabilizacion,r.IdSucursal)
+                  dbo.ct_plancta ON rub.rub_ctacon = dbo.ct_plancta.IdCtaCble AND rub.IdEmpresa = dbo.ct_plancta.IdEmpresa LEFT JOIN
+                  tb_sucursal AS su ON su.IdEmpresa = emp.IdEmpresa AND su.IdSucursal = isnull(emp.IdSucursalContabilizacion, r.IdSucursal) LEFT JOIN
+				  vwro_empleado_x_jornada_x_rubro_cont AS X ON r_det.IdEmpresa = X.IdEmpresa AND r_det.IdEmpleado = X.IdEmpleado AND r_det.IdRubro = X.IdRubro LEFT JOIN
+				  ro_rubro_tipo AS RU ON RU.IdEmpresa = X.IdEmpresa AND RU.IdRubro = X.IdRubroContabilizacion
 WHERE  (rub.rub_nocontab = 1) AND (emp.Tiene_ingresos_compartidos = 0)
 UNION ALL
 /* empleados que tienen sueldos compartidos y rubros que se distribuyen*/ SELECT rol.IdEmpresa, rol.IdRol, rol.IdSucursal, rol.IdNominaTipo, rol.IdNominaTipoLiqui, rol.IdPeriodo, rol.IdEmpleado, rol.IdRubro, rol.Valor * (ing_comp.Porcentaje / 100) 
                   AS Expr1, rol.ru_tipo, rol.rub_ctacon, dbo.ct_plancta.pc_Cuenta, rol.IdCtaCble_Emplea, ct_plancta_1.pc_Cuenta AS Expr2, rol.IdDivision, ing_comp.IdArea, rol.IdDepartamento, rol.ru_descripcion, rol.pe_nombreCompleto, rol.rub_provision, 
-                  rol.rub_ContPorEmpleado, rol.IdSucursalContabilizacion,rol.Su_Descripcion
+                  rol.rub_ContPorEmpleado, rol.IdSucursalContabilizacion, rol.Su_Descripcion
 FROM     (SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, r_det.IdRubro, r_det.Valor, rub.ru_tipo, rub.rub_ctacon, emp.IdCtaCble_Emplea, emp.IdDivision, emp.IdArea, 
-                                    emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, rub.se_distribuye, isnull(emp.IdSucursalContabilizacion,r.IdSucursal) IdSucursalContabilizacion, Su_Descripcion
+                                    emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, rub.se_distribuye, isnull(emp.IdSucursalContabilizacion, r.IdSucursal) IdSucursalContabilizacion, 
+                                    Su_Descripcion
                   FROM      dbo.ro_rol AS r INNER JOIN
                                     dbo.ro_rol_detalle AS r_det ON r.IdEmpresa = r_det.IdEmpresa AND r.IdRol = r_det.IdRol INNER JOIN
                                     dbo.ro_rubro_tipo AS rub ON r_det.IdEmpresa = rub.IdEmpresa AND r_det.IdRubro = rub.IdRubro INNER JOIN
                                     dbo.ro_empleado AS emp ON r_det.IdEmpresa = emp.IdEmpresa AND r_det.IdEmpleado = emp.IdEmpleado INNER JOIN
-                                    dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona left join
-									tb_sucursal as su on su.IdEmpresa = emp.IdEmpresa and su.IdSucursal = isnull(emp.IdSucursalContabilizacion,r.IdSucursal)
+                                    dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona LEFT JOIN
+                                    tb_sucursal AS su ON su.IdEmpresa = emp.IdEmpresa AND su.IdSucursal = isnull(emp.IdSucursalContabilizacion, r.IdSucursal)
                   WHERE   (rub.rub_nocontab = 1) AND (emp.Tiene_ingresos_compartidos = 1) AND (rub.se_distribuye = 1)) AS rol INNER JOIN
                       (SELECT emp_x_are_xrol.IdEmpresa, emp_x_are_xrol.IdRol, emp_x_are_xrol.Secuencia, emp_x_are_xrol.IdEmpleado, emp_x_are_xrol.IDividion, emp_x_are_xrol.IdArea, emp_x_are_xrol.Porcentaje, area.Descripcion, 
                                          dbo.ro_empleado_x_division_x_area.CargaGasto
@@ -38,42 +46,48 @@ FROM     (SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaT
 UNION ALL
 /* empleados que tienen sueldos compartidos y rubros que no se distribuyen*/ SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, r_det.IdRubro, r_det.Valor, rub.ru_tipo, rub.rub_ctacon, 
                   dbo.ct_plancta.pc_Cuenta, emp.IdCtaCble_Emplea, ct_plancta_1.pc_Cuenta, emp.IdDivision, emp.IdArea, emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, 
-                  isnull(emp.IdSucursalContabilizacion,r.IdSucursal) IdSucursalContabilizacion, su.Su_Descripcion
+                  isnull(emp.IdSucursalContabilizacion, r.IdSucursal) IdSucursalContabilizacion, su.Su_Descripcion
 FROM     dbo.ro_rol AS r INNER JOIN
                   dbo.ro_rol_detalle AS r_det ON r.IdEmpresa = r_det.IdEmpresa AND r.IdRol = r_det.IdRol INNER JOIN
                   dbo.ro_rubro_tipo AS rub ON r_det.IdEmpresa = rub.IdEmpresa AND r_det.IdRubro = rub.IdRubro INNER JOIN
                   dbo.ro_empleado AS emp ON r_det.IdEmpresa = emp.IdEmpresa AND r_det.IdEmpleado = emp.IdEmpleado INNER JOIN
                   dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona LEFT OUTER JOIN
                   dbo.ct_plancta AS ct_plancta_1 ON emp.IdEmpresa = ct_plancta_1.IdEmpresa AND emp.IdCtaCble_Emplea = ct_plancta_1.IdCtaCble LEFT OUTER JOIN
-                  dbo.ct_plancta ON rub.IdEmpresa = dbo.ct_plancta.IdEmpresa AND rub.rub_ctacon = dbo.ct_plancta.IdCtaCble left join
-									tb_sucursal as su on su.IdEmpresa = emp.IdEmpresa and su.IdSucursal = isnull(emp.IdSucursalContabilizacion,r.IdSucursal)
+                  dbo.ct_plancta ON rub.IdEmpresa = dbo.ct_plancta.IdEmpresa AND rub.rub_ctacon = dbo.ct_plancta.IdCtaCble LEFT JOIN
+                  tb_sucursal AS su ON su.IdEmpresa = emp.IdEmpresa AND su.IdSucursal = isnull(emp.IdSucursalContabilizacion, r.IdSucursal)
 WHERE  (rub.rub_nocontab = 1) AND (emp.Tiene_ingresos_compartidos = 1) AND (rub.se_distribuye = 0)
 UNION ALL
-/*Rubros acumulados*/ SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, r_det.IdRubro, r_det.Valor, rub.ru_tipo, rub.rub_ctacon, dbo.ct_plancta.pc_Cuenta AS pc_CuentaRubro, 
-                  emp.IdCtaCble_Emplea, ct_plancta_1.pc_Cuenta AS pc_CuentaEmple, emp.IdDivision, emp.IdArea, emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, 
-                  isnull(emp.IdSucursalContabilizacion,r.IdSucursal) IdSucursalContabilizacion, Su_Descripcion
+/*Rubros acumulados*/ SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, ISNULL(X.IdRubroContabilizacion, r_det.IdRubro) IdRubro, CASE WHEN X.IdEmpleado IS NOT NULL AND X.Secuencia = X.CantJornada 
+THEN  r_det.Valor - (ROUND(r_det.Valor/X.CantJornada,2) * (X.CantJornada-1)) 
+WHEN X.IdEmpleado IS NULL THEN r_det.Valor
+ELSE ROUND(r_det.Valor/X.CantJornada,2) 
+END AS Valor, rub.ru_tipo, rub.rub_ctacon, dbo.ct_plancta.pc_Cuenta AS pc_CuentaRubro, 
+                  emp.IdCtaCble_Emplea, ct_plancta_1.pc_Cuenta AS pc_CuentaEmple, emp.IdDivision, emp.IdArea, emp.IdDepartamento, ISNULL(RU.ru_descripcion,rub.ru_descripcion)ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, 
+                  isnull(emp.IdSucursalContabilizacion, r.IdSucursal) IdSucursalContabilizacion, Su_Descripcion
 FROM     dbo.ro_rol AS r INNER JOIN
                   dbo.ro_rol_detalle_x_rubro_acumulado AS r_det ON r.IdEmpresa = r_det.IdEmpresa AND r.IdRol = r_det.IdRol INNER JOIN
                   dbo.ro_rubro_tipo AS rub ON r_det.IdEmpresa = rub.IdEmpresa AND r_det.IdRubro = rub.IdRubro INNER JOIN
                   dbo.ro_empleado AS emp ON r_det.IdEmpresa = emp.IdEmpresa AND r_det.IdEmpleado = emp.IdEmpleado INNER JOIN
                   dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona LEFT OUTER JOIN
                   dbo.ct_plancta AS ct_plancta_1 ON emp.IdCtaCble_Emplea = ct_plancta_1.IdCtaCble AND emp.IdEmpresa = ct_plancta_1.IdEmpresa LEFT OUTER JOIN
-                  dbo.ct_plancta ON rub.rub_ctacon = dbo.ct_plancta.IdCtaCble AND rub.IdEmpresa = dbo.ct_plancta.IdEmpresa left join
-									tb_sucursal as su on su.IdEmpresa = emp.IdEmpresa and su.IdSucursal = isnull(emp.IdSucursalContabilizacion,r.IdSucursal)
+                  dbo.ct_plancta ON rub.rub_ctacon = dbo.ct_plancta.IdCtaCble AND rub.IdEmpresa = dbo.ct_plancta.IdEmpresa LEFT JOIN
+                  tb_sucursal AS su ON su.IdEmpresa = emp.IdEmpresa AND su.IdSucursal = isnull(emp.IdSucursalContabilizacion, r.IdSucursal) LEFT JOIN
+				  vwro_empleado_x_jornada_x_rubro_cont AS X ON r_det.IdEmpresa = X.IdEmpresa AND r_det.IdEmpleado = X.IdEmpleado AND r_det.IdRubro = X.IdRubro LEFT JOIN
+				  ro_rubro_tipo AS RU ON RU.IdEmpresa = X.IdEmpresa AND RU.IdRubro = X.IdRubroContabilizacion
 WHERE  (rub.rub_nocontab = 1) AND (emp.Tiene_ingresos_compartidos = 0)
 UNION ALL
 /* empleados que tienen sueldos compartidos y rubros que se distribuyen*/ SELECT rol.IdEmpresa, rol.IdRol, rol.IdSucursal, rol.IdNominaTipo, rol.IdNominaTipoLiqui, rol.IdPeriodo, rol.IdEmpleado, rol.IdRubro, rol.Valor * (ing_comp.Porcentaje / 100) 
                   AS Expr1, rol.ru_tipo, rol.rub_ctacon, dbo.ct_plancta.pc_Cuenta, rol.IdCtaCble_Emplea, ct_plancta_1.pc_Cuenta AS Expr2, rol.IdDivision, ing_comp.IdArea, rol.IdDepartamento, rol.ru_descripcion, rol.pe_nombreCompleto, rol.rub_provision, 
                   rol.rub_ContPorEmpleado, rol.IdSucursalContabilizacion, Su_Descripcion
 FROM     (SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, r_det.IdRubro, r_det.Valor, rub.ru_tipo, rub.rub_ctacon, emp.IdCtaCble_Emplea, emp.IdDivision, emp.IdArea, 
-                                    emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, rub.se_distribuye, isnull(emp.IdSucursalContabilizacion,r.IdSucursal) IdSucursalContabilizacion,
-									Su_Descripcion
+                                    emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, rub.se_distribuye, isnull(emp.IdSucursalContabilizacion, r.IdSucursal) IdSucursalContabilizacion, 
+                                    Su_Descripcion
                   FROM      dbo.ro_rol AS r INNER JOIN
                                     dbo.ro_rol_detalle_x_rubro_acumulado AS r_det ON r.IdEmpresa = r_det.IdEmpresa AND r.IdRol = r_det.IdRol INNER JOIN
                                     dbo.ro_rubro_tipo AS rub ON r_det.IdEmpresa = rub.IdEmpresa AND r_det.IdRubro = rub.IdRubro INNER JOIN
                                     dbo.ro_empleado AS emp ON r_det.IdEmpresa = emp.IdEmpresa AND r_det.IdEmpleado = emp.IdEmpleado INNER JOIN
-                                    dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona left join
-									tb_sucursal as su on su.IdEmpresa = emp.IdEmpresa and su.IdSucursal = isnull(emp.IdSucursalContabilizacion,r.IdSucursal)
+                                    dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona LEFT JOIN
+                                    tb_sucursal AS su ON su.IdEmpresa = emp.IdEmpresa AND su.IdSucursal = isnull(emp.IdSucursalContabilizacion, r.IdSucursal)
                   WHERE   (rub.rub_nocontab = 1) AND (emp.Tiene_ingresos_compartidos = 1) AND (rub.se_distribuye = 1)) AS rol INNER JOIN
                       (SELECT emp_x_are_xrol.IdEmpresa, emp_x_are_xrol.IdRol, emp_x_are_xrol.Secuencia, emp_x_are_xrol.IdEmpleado, emp_x_are_xrol.IDividion, emp_x_are_xrol.IdArea, emp_x_are_xrol.Porcentaje, area.Descripcion, 
                                          dbo.ro_empleado_x_division_x_area.CargaGasto
@@ -87,15 +101,15 @@ FROM     (SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaT
 UNION ALL
 /* empleados que tienen sueldos compartidos y rubros que no se distribuyen*/ SELECT r.IdEmpresa, r.IdRol, r.IdSucursal, r.IdNominaTipo, r.IdNominaTipoLiqui, r.IdPeriodo, r_det.IdEmpleado, r_det.IdRubro, r_det.Valor, rub.ru_tipo, rub.rub_ctacon, 
                   dbo.ct_plancta.pc_Cuenta, emp.IdCtaCble_Emplea, ct_plancta_1.pc_Cuenta, emp.IdDivision, emp.IdArea, emp.IdDepartamento, rub.ru_descripcion, per.pe_nombreCompleto, rub.rub_provision, rub.rub_ContPorEmpleado, 
-                  isnull(emp.IdSucursalContabilizacion,r.IdSucursal) IdSucursalContabilizacion, Su_Descripcion
+                  isnull(emp.IdSucursalContabilizacion, r.IdSucursal) IdSucursalContabilizacion, Su_Descripcion
 FROM     dbo.ro_rol AS r INNER JOIN
                   dbo.ro_rol_detalle_x_rubro_acumulado AS r_det ON r.IdEmpresa = r_det.IdEmpresa AND r.IdRol = r_det.IdRol INNER JOIN
                   dbo.ro_rubro_tipo AS rub ON r_det.IdEmpresa = rub.IdEmpresa AND r_det.IdRubro = rub.IdRubro INNER JOIN
                   dbo.ro_empleado AS emp ON r_det.IdEmpresa = emp.IdEmpresa AND r_det.IdEmpleado = emp.IdEmpleado INNER JOIN
                   dbo.tb_persona AS per ON emp.IdPersona = per.IdPersona LEFT OUTER JOIN
                   dbo.ct_plancta AS ct_plancta_1 ON emp.IdEmpresa = ct_plancta_1.IdEmpresa AND emp.IdCtaCble_Emplea = ct_plancta_1.IdCtaCble LEFT OUTER JOIN
-                  dbo.ct_plancta ON rub.IdEmpresa = dbo.ct_plancta.IdEmpresa AND rub.rub_ctacon = dbo.ct_plancta.IdCtaCble left join
-									tb_sucursal as su on su.IdEmpresa = emp.IdEmpresa and su.IdSucursal = isnull(emp.IdSucursalContabilizacion,r.IdSucursal)
+                  dbo.ct_plancta ON rub.IdEmpresa = dbo.ct_plancta.IdEmpresa AND rub.rub_ctacon = dbo.ct_plancta.IdCtaCble LEFT JOIN
+                  tb_sucursal AS su ON su.IdEmpresa = emp.IdEmpresa AND su.IdSucursal = isnull(emp.IdSucursalContabilizacion, r.IdSucursal)
 WHERE  (rub.rub_nocontab = 1) AND (emp.Tiene_ingresos_compartidos = 1) AND (rub.se_distribuye = 0)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_rol_detalle';

@@ -1,12 +1,14 @@
-﻿CREATE VIEW [dbo].[vwro_rubro_tipo_x_jornada]
+﻿CREATE VIEW dbo.vwro_empleado_x_jornada_x_rubro_cont
 AS
-SELECT dbo.ro_rubro_tipo_x_jornada.IdEmpresa, dbo.ro_rubro_tipo_x_jornada.IdRubro, dbo.ro_rubro_tipo_x_jornada.Secuencia, dbo.ro_rubro_tipo_x_jornada.IdRubroContabilizacion, dbo.ro_rubro_tipo_x_jornada.IdJornada, 
-                  dbo.ro_rubro_tipo.ru_descripcion, dbo.ro_jornada.Descripcion
-FROM     dbo.ro_rubro_tipo INNER JOIN
-                  dbo.ro_rubro_tipo_x_jornada ON dbo.ro_rubro_tipo.IdEmpresa = dbo.ro_rubro_tipo_x_jornada.IdEmpresa AND dbo.ro_rubro_tipo.IdRubro = dbo.ro_rubro_tipo_x_jornada.IdRubroContabilizacion INNER JOIN
-                  dbo.ro_jornada ON dbo.ro_rubro_tipo_x_jornada.IdEmpresa = dbo.ro_jornada.IdEmpresa AND dbo.ro_rubro_tipo_x_jornada.IdJornada = dbo.ro_jornada.IdJornada
+SELECT dbo.ro_empleado_x_jornada.IdEmpresa, dbo.ro_empleado_x_jornada.IdEmpleado, dbo.ro_rubro_tipo_x_jornada.IdRubro, dbo.ro_rubro_tipo_x_jornada.IdRubroContabilizacion, jo.CantJornada, 
+                  dbo.ro_rubro_tipo_x_jornada.Secuencia
+FROM     dbo.ro_empleado_x_jornada INNER JOIN
+                  dbo.ro_rubro_tipo_x_jornada ON dbo.ro_empleado_x_jornada.IdEmpresa = dbo.ro_rubro_tipo_x_jornada.IdEmpresa AND dbo.ro_empleado_x_jornada.IdJornada = dbo.ro_rubro_tipo_x_jornada.IdJornada LEFT OUTER JOIN
+                      (SELECT IdEmpresa, IdEmpleado, COUNT(*) AS CantJornada
+                       FROM      dbo.ro_empleado_x_jornada AS f
+                       GROUP BY IdEmpresa, IdEmpleado) AS jo ON dbo.ro_empleado_x_jornada.IdEmpresa = jo.IdEmpresa AND dbo.ro_empleado_x_jornada.IdEmpleado = jo.IdEmpleado
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_rubro_tipo_x_jornada';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_empleado_x_jornada_x_rubro_cont';
 
 
 GO
@@ -81,22 +83,12 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "ro_jornada"
+         Begin Table = "ro_empleado_x_jornada"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 217
-            End
-            DisplayFlags = 280
-            TopColumn = 1
-         End
-         Begin Table = "ro_rubro_tipo"
-            Begin Extent = 
-               Top = 0
-               Left = 987
-               Bottom = 130
-               Right = 1205
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 242
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -104,9 +96,19 @@ Begin DesignProperties =
          Begin Table = "ro_rubro_tipo_x_jornada"
             Begin Extent = 
                Top = 0
-               Left = 679
-               Bottom = 192
-               Right = 849
+               Left = 318
+               Bottom = 163
+               Right = 569
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "jo"
+            Begin Extent = 
+               Top = 343
+               Left = 48
+               Bottom = 484
+               Right = 242
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -120,35 +122,33 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 9
          Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_rubro_tipo_x_jornada';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_empleado_x_jornada_x_rubro_cont';
 
