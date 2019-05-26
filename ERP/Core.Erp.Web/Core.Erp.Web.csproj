@@ -546,6 +546,12 @@
     <Compile Include="Reportes\ActivoFijo\ACTF_007_Rpt.Designer.cs">
       <DependentUpon>ACTF_007_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\ActivoFijo\ACTF_008_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ActivoFijo\ACTF_008_Rpt.Designer.cs">
+      <DependentUpon>ACTF_008_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Banco\BAN_001_cancelaciones_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -9999,6 +10005,9 @@
     <Content Include="Areas\RRHH\Views\Rubro\_CmbRubro.cshtml" />
     <Content Include="Areas\General\Views\ParametrosGeneral\Index.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_016.cshtml" />
+    <Content Include="Areas\Reportes\Views\ActivoFijoReportes\_CmbEmpleado_AF1.cshtml" />
+    <Content Include="Areas\Reportes\Views\ActivoFijoReportes\_CmbEmpleado_AF2.cshtml" />
+    <Content Include="Areas\Reportes\Views\ActivoFijoReportes\ACTF_008.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -10146,6 +10155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_007_Rpt.resx">
       <DependentUpon>ACTF_007_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_008_Rpt.resx">
+      <DependentUpon>ACTF_008_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_001_cancelaciones_Rpt.resx">
       <DependentUpon>BAN_001_cancelaciones_Rpt.cs</DependentUpon>

@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.ActivoFijo;
+using Core.Erp.Bus.General;
 using Core.Erp.Info.ActivoFijo;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;
 using Core.Erp.Web.Reportes.ActivoFijo;
@@ -29,6 +31,39 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             return bus_activo.get_info_bajo_demanda(Convert.ToInt32(SessionFixed.IdEmpresa), args);
         }
+        #region Metodos ComboBox bajo demanda empleado
+        tb_persona_Bus bus_persona = new tb_persona_Bus();
+        public ActionResult CmbEmpleado_AF1()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+            return PartialView("_CmbEmpleado_AF1", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+        public tb_persona_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda empleado
+        public ActionResult CmbEmpleado_AF2()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+            return PartialView("_CmbEmpleado_AF2", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda_cust(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+        public tb_persona_Info get_info_bajo_demanda_cust(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+        #endregion
+
 
         #region Json
         public JsonResult cargar_categoria(int IdEmpresa = 0 , int IdActivoFijoTipo = 0)
@@ -190,6 +225,25 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_act = lst_act;
 
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal= bus_sucursal.get_list(model.IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "Todas"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+
+            Af_Departamento_Bus bus_dep = new Af_Departamento_Bus();
+            var lst_dep = bus_dep.GetList(model.IdEmpresa, false);
+            lst_dep.Add(new Af_Departamento_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdDepartamento = 0,
+                Descripcion = "Todos"
+            });
+            ViewBag.lst_dep = lst_dep;
         }
         public ActionResult ACTF_005()
         {
@@ -257,6 +311,43 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.empresa = SessionFixed.NomEmpresa.ToString();
             return View(model);
 
+        }
+        
+        public ActionResult ACTF_008()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdDepartamento = 0,
+                IdEmpleado =0
+            };
+            cargar_combos(model);
+            ACTF_008_Rpt report = new ACTF_008_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdDepartamento.Value = model.IdDepartamento;
+            report.p_IdEmpleadoCustodio.Value = model.IdEmpleado;
+            report.p_IdEmpleadoEncargado.Value = model.IdEmpleado;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ACTF_008(cl_filtros_Info model)
+        {
+            ACTF_008_Rpt report = new ACTF_008_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdDepartamento.Value = model.IdDepartamento;
+            report.p_IdEmpleadoCustodio.Value = model.IdEmpleado;
+            report.p_IdEmpleadoEncargado.Value = model.IdEmpleado;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model);
+            ViewBag.Report = report;
+            return View(model);
         }
     }
 }
