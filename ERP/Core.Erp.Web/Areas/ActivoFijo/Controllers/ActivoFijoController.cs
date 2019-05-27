@@ -653,6 +653,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
 
                 cont = 0;
                 reader.NextResult();
+                reader.NextResult();
 
                 #region ActivoFijo   
                 var ListaEmpleado = bus_empleado.get_list_combo(IdEmpresa);
@@ -669,6 +670,14 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                         var info_empleado_encargado = Lista_Empleado.get_list().Where(q => q.pe_cedulaRuc == Convert.ToString(reader.GetValue(22))).FirstOrDefault();
                         var info_tipo_activofijo = ListaTipo.get_list(IdTransaccionSession).Where(q => q.IdActivoFijoTipo == IdTipo).FirstOrDefault();
 
+                        if (info_empleado_custodio == null)
+                        {
+
+                        }
+                        if (info_empleado_encargado == null)
+                        {
+
+                        }
                         Af_Activo_fijo_Info info = new Af_Activo_fijo_Info
                         {
                             IdEmpresa = IdEmpresa,
@@ -685,8 +694,8 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                             IdCatalogo_Modelo = Convert.ToString(reader.GetValue(8)),
                             IdCatalogo_Color = Convert.ToString(reader.GetValue(10)),
                             IdTipoCatalogo_Ubicacion = Convert.ToString(reader.GetValue(11)),
-                            IdEmpleadoCustodio = info_empleado_custodio.IdEmpleado,
-                            IdEmpleadoEncargado = info_empleado_encargado.IdEmpleado,
+                            IdEmpleadoCustodio = info_empleado_custodio == null ? 0 : info_empleado_custodio.IdEmpleado,
+                            IdEmpleadoEncargado = info_empleado_encargado == null ? 0 : info_empleado_encargado.IdEmpleado,
                             Af_fecha_compra = Convert.ToDateTime(reader.GetValue(12)),
                             Af_fecha_ini_depre = ini_depre,
                             Af_costo_compra = Convert.ToDouble(reader.GetValue(15)),
