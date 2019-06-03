@@ -197,6 +197,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                     i_validar.cr_Banco = null;
                     break;
             }
+
+            foreach (var item in i_validar.lst_det)
+            {
+                if (i_validar.cr_fecha < item.vt_fecha)
+                {
+                    msg = "Existen comprobantes de venta con fecha mayor a la fecha del cobro aplicado";
+                    return false;
+                }
+            }
             return true;
         }
         #endregion

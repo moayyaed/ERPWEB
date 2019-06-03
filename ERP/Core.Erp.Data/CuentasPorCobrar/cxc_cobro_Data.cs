@@ -130,6 +130,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
             Entities_facturacion Context_fac = new Entities_facturacion();
             Entities_caja Context_caj = new Entities_caja();
             Entities_contabilidad Context_ct = new Entities_contabilidad();
+            Entities_general Context_gen = new Entities_general();
             ct_cbtecble_Data data_ct = new ct_cbtecble_Data();
             try
             {
@@ -295,6 +296,9 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                 if (generar_diario)
                 {
+                    var persona = Context_gen.tb_persona.Where(q => q.IdPersona == cliente.IdPersona).FirstOrDefault();
+                    if (persona == null) persona = new tb_persona();
+
                     #region Diario
                     ct_cbtecble diario = new ct_cbtecble
                     {
@@ -304,7 +308,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         cb_Fecha = cab.cr_fecha.Date,
                         IdSucursal = info.IdSucursal,
                         IdPeriodo = Convert.ToInt32(cab.cr_fecha.ToString("yyyyMM")),
-                        cb_Observacion = cab.cr_observacion,
+                        cb_Observacion = cab.cr_observacion + " CLIENTE: "+persona.pe_nombreCompleto,
                         cb_Estado = "A",
 
                         IdUsuario = cab.IdUsuario,

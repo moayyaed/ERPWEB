@@ -38,5 +38,7 @@ namespace Core.Erp.Info.Reportes.Banco
         public double Total_Conciliado { get; set; }
         public Nullable<System.DateTime> FechaIni { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
+        public double TotalConciliadoNoContable { get; set; }
+        public double co_SaldoBanco_anterior { get; set; }
     }
 }

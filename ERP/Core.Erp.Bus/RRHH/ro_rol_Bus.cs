@@ -165,6 +165,9 @@ namespace Core.Erp.Bus.RRHH
                 {
 
                     info_ctb = get_armar_diario_sueldo(info, Convert.ToInt32(info_parametro.IdTipoCbte_AsientoSueldoXPagar),item.IdSucursal ?? 0);
+                    if (info_ctb == null)
+                        return false;
+
                     info_ctb.IdSucursal = item.IdSucursal ?? 0;
 
                     if (info_ctb != null)
@@ -185,6 +188,8 @@ namespace Core.Erp.Bus.RRHH
                             if (info.lst_provisiones.Count() > 0)
                             {
                                 info_ctb = get_armar_diario_provisiones(info, Convert.ToInt32(info_parametro.IdTipoCbte_AsientoSueldoXPagar),item.IdSucursal ?? 0);
+                                if (info_ctb == null)
+                                    return false;
                                 info_ctb.IdSucursal = item.IdSucursal ?? 0;
                             }
                             if (info_ctb != null)
@@ -355,7 +360,11 @@ namespace Core.Erp.Bus.RRHH
                     oct_cbtecble_det_Info2.Su_Descripcion = item.Su_Descripcion;
                     lst_detalle_diario.Add(oct_cbtecble_det_Info2);
                 }
-
+                lst_detalle_diario.ForEach(q => {
+                    q.dc_Valor = Math.Round(q.dc_Valor, 2, MidpointRounding.AwayFromZero);
+                    q.dc_Valor_debe = Math.Round(q.dc_Valor_debe, 2, MidpointRounding.AwayFromZero);
+                    q.dc_Valor_haber = Math.Round(q.dc_Valor_haber, 2, MidpointRounding.AwayFromZero);
+                });
                 return lst_detalle_diario;
             }
             catch (Exception)
@@ -422,6 +431,11 @@ namespace Core.Erp.Bus.RRHH
                         }
                     }
                 }
+                lst_detalle_diario.ForEach(q => {
+                    q.dc_Valor = Math.Round(q.dc_Valor,2,MidpointRounding.AwayFromZero);
+                    q.dc_Valor_debe = Math.Round(q.dc_Valor_debe, 2, MidpointRounding.AwayFromZero);
+                    q.dc_Valor_haber = Math.Round(q.dc_Valor_haber, 2, MidpointRounding.AwayFromZero);
+                });
                 return lst_detalle_diario;
             }
             catch (Exception)
@@ -449,19 +463,21 @@ namespace Core.Erp.Bus.RRHH
                                                        dc_Valor = g.Sum(q=> q.dc_Valor)
                                                    }).ToList();
                 info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
+                info_diario.lst_ct_cbtecble_det.ForEach(q => q.dc_Valor = Math.Round(q.dc_Valor, 2, MidpointRounding.AwayFromZero));
                 //info_diario.lst_ct_cbtecble_det = info.lst_sueldo_x_pagar;
                 info_diario.IdEmpresa = info.IdEmpresa;
                 info_diario.IdTipoCbte = TipoComprobante;
                 info_diario.cb_Fecha = info.Fechacontabilizacion;
                 info_diario.IdPeriodo = Convert.ToInt32(info.Fechacontabilizacion.Year.ToString() + info.Fechacontabilizacion.Month.ToString().PadLeft(2, '0'));
                 
-                //REVISA CARLOS FALTA IDSUCURSAL
-
                 info_diario.cb_Observacion = "Contabilización rol general del periodo "+info.IdPeriodo.ToString();
                 info_diario.cb_Valor = info.lst_sueldo_x_pagar.Where(q=> q.IdSucursal == IdSucursal).Sum(v=>v.dc_Valor);
                 info_diario.IdUsuario = info.UsuarioIngresa;
                 info_diario.cb_FechaTransac = DateTime.Now;
                 info_diario.cb_Estado = "A";
+
+                if (Math.Round(info_diario.lst_ct_cbtecble_det.Sum(q=>q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
+                    return null;
                 
                 return info_diario;
             }
@@ -490,20 +506,22 @@ namespace Core.Erp.Bus.RRHH
                                                    }).ToList();
 
                 info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
+                info_diario.lst_ct_cbtecble_det.ForEach(q => q.dc_Valor = Math.Round(q.dc_Valor, 2, MidpointRounding.AwayFromZero));
                 //info_diario.lst_ct_cbtecble_det = info.lst_provisiones;
                 info_diario.IdEmpresa = info.IdEmpresa;
                 info_diario.IdTipoCbte = TipoComprobante;
                 info_diario.cb_Fecha = info.Fechacontabilizacion;
                 info_diario.IdPeriodo = Convert.ToInt32(info.Fechacontabilizacion.Year.ToString() + info.Fechacontabilizacion.Month.ToString().PadLeft(2, '0'));
                 
-                //REVISA CARLOS FALTA IDSUCURSAL
-
                 info_diario.cb_Observacion = "Contabilización rol general del periodo " + info.IdPeriodo.ToString();
                 info_diario.cb_Valor = info.lst_provisiones.Where(q=> q.IdSucursal == IdSucursal).Sum(v => v.dc_Valor);
                 info_diario.IdUsuario = info.UsuarioIngresa;
                 info_diario.cb_FechaTransac = DateTime.Now;
                 info_diario.cb_Estado = "A";
                 info_diario.IdUsuario = info.UsuarioIngresa;
+
+                if (Math.Round(info_diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) != 0)
+                    return null;
 
                 return info_diario;
             }

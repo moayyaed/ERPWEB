@@ -177,6 +177,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(model.IdTransaccionSession);
             if (!validar(model,ref mensaje))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
                 return View(model);
@@ -184,6 +185,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_comprobante.guardarDB(model))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
@@ -229,13 +231,15 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(model.IdTransaccionSession);
             if (!validar(model, ref mensaje))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            model.IdUsuarioUltModi = Session["IdUsuario"].ToString();            
+            model.IdUsuarioUltModi = SessionFixed.IdUsuario;
             if (!bus_comprobante.modificarDB(model))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
@@ -277,6 +281,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.IdUsuarioAnu = SessionFixed.IdUsuario;
             if (!bus_comprobante.anularDB(model))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }

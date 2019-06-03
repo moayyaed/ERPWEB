@@ -8,10 +8,11 @@ namespace Core.Erp.Data.General
 {
     public class tb_FiltroReportes_Data
     {
-        public bool GuardarDB(int IdEmpresa, int[] IdSucursal, string IdUsuario)
+        public string GuardarDB(int IdEmpresa, int[] IdSucursal, string IdUsuario)
         {
             try
             {
+                string Sucursal = string.Empty;
                 using (Entities_general db = new Entities_general())
                 {
                     var ls = db.tb_FiltroReportes.Where(q => q.IdUsuario == IdUsuario).ToList();
@@ -30,10 +31,31 @@ namespace Core.Erp.Data.General
                         }
                     }
                     db.SaveChanges();
-                    
+                    var suc = (from a in db.tb_FiltroReportes
+                               join b in db.tb_sucursal
+                               on new { a.IdEmpresa, a.IdSucursal } equals new { b.IdEmpresa, b.IdSucursal }
+                               where a.IdEmpresa == IdEmpresa && a.IdUsuario == IdUsuario
+                               orderby a.IdSucursal
+                               select new
+                               {
+                                   a.IdEmpresa,
+                                   a.IdSucursal,
+                                   b.Su_Descripcion
+                               }).ToList();
+                    int s = 0;
+                    foreach (var item in suc)
+                    {
+                        if (s == 0)
+                        {
+                            Sucursal += item.Su_Descripcion;
+                            s = 1;
+                        }
+                        else
+                            Sucursal += ", " + item.Su_Descripcion;
+                    }
                 }
 
-                return true;
+                return Sucursal;
             }
             catch (Exception)
             {

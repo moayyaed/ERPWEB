@@ -536,7 +536,7 @@
             this.xrTableCell18.Name = "xrTableCell18";
             this.xrTableCell18.StylePriority.UseBorders = false;
             this.xrTableCell18.StylePriority.UseFont = false;
-            this.xrTableCell18.Text = "DESCRIPCIÓN";
+            this.xrTableCell18.Text = "DESCRIPCION";
             this.xrTableCell18.Weight = 1.0372323501707512D;
             // 
             // xrTableCell6
@@ -547,7 +547,7 @@
             this.xrTableCell6.Name = "xrTableCell6";
             this.xrTableCell6.StylePriority.UseBorders = false;
             this.xrTableCell6.StylePriority.UseFont = false;
-            this.xrTableCell6.Text = "CARACT. Y ESPECIFICACIONES";
+            this.xrTableCell6.Text = "OBSERVACION";
             this.xrTableCell6.Weight = 1.0372323742152128D;
             // 
             // xrTableCell22

@@ -11,7 +11,7 @@ namespace Core.Erp.Bus.General
     {
         tb_FiltroReportes_Data odata = new tb_FiltroReportes_Data();
 
-        public bool GuardarDB(int IdEmpresa, int[] IdSucursal, string IdUsuario)
+        public string GuardarDB(int IdEmpresa, int[] IdSucursal, string IdUsuario)
         {
             try
             {

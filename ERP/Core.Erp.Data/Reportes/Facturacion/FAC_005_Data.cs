@@ -17,7 +17,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                 int IdSucursal_fin = IdSucursal == 0 ? 9999 : IdSucursal;
 
                 decimal IdCliente_ini = IdCliente;
-                decimal IdCliente_fin = IdCliente == 0 ? 999999 : IdCliente;
+                decimal IdCliente_fin = IdCliente == 0 ? 9999999 : IdCliente;
 
                 Fecha_ini = Fecha_ini.Date;
                 Fecha_fin = Fecha_fin.Date;
@@ -55,11 +55,13 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                        into grouping
                                    select new { grouping.Key,
                                        CantidadPorSucursal = grouping.Sum(q => q.Cantidad),
-                                       CantidadVentasLocales = grouping.Where(q => q.EsExportacion == false).Sum(q => q.Cantidad),
-                                       CantidadExportaciones = grouping.Where(q => q.EsExportacion == true).Sum(q => q.Cantidad),
+                                       CantidadVentasLocales = grouping.Sum(q => q.Cantidad),
+                                       BaseImponible = grouping.Sum(q=> q.SubtotalConDscto),
+                                       BaseImponible12= grouping.Sum(q=> q.SubtotalIVAConDscto),
+                                       BaseImponible0 = grouping.Sum(q => q.SubtotalSinIVAConDscto),
                                        TotalPorSucursal = grouping.Sum(p => p.Total),
-                                       TotalVentasLocales = grouping.Where(q => q.EsExportacion == false).Sum(p => p.Total),
-                                       TotalExportaciones = grouping.Where(q => q.EsExportacion == true).Sum(p => p.Total)
+                                       TotalVentasLocales = grouping.Sum(p => p.Total),
+                                      ValorIva = grouping.Sum(q=> q.ValorIVA) 
                                    };
 
                 foreach (var item in TdebitosxCta)
@@ -67,12 +69,15 @@ namespace Core.Erp.Data.Reportes.Facturacion
                     lst_resumen.Add(new FAC_005_resumen_Info
                     {
                         NomSucursal = "Total " + item.Key.Su_CodigoEstablecimiento + " - " + item.Key.Su_Descripcion,
-                        CantidadExportaciones = Convert.ToInt32(item.CantidadExportaciones),
                         CantidadVentasLocales = Convert.ToInt32(item.CantidadVentasLocales),
                         CantidadPorSucursal = Convert.ToInt32(item.CantidadPorSucursal),
                         TotalVentasLocales = item.TotalVentasLocales == null ? 0 : Convert.ToDouble(item.TotalVentasLocales),
-                        TotalExportaciones = item.TotalExportaciones == null ? 0 : Convert.ToDouble(item.TotalExportaciones),
-                        TotalPorSucursal = item.TotalPorSucursal == null ? 0 : Convert.ToDouble(item.TotalPorSucursal)
+                        TotalPorSucursal = item.TotalPorSucursal == null ? 0 : Convert.ToDouble(item.TotalPorSucursal),
+                        BaseImponible = item.BaseImponible ?? 0,
+                        BaseImponible0 = item.BaseImponible0 ?? 0,
+                        BaseImponible12 = item.BaseImponible12 ?? 0,
+                        ValorIva = item.ValorIva ?? 0
+
                     });
                 }
 

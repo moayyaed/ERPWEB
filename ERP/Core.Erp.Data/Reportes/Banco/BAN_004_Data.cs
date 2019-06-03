@@ -32,11 +32,11 @@ namespace Core.Erp.Data.Reportes.Banco
                                  IdCtaCble = q.IdCtaCble,
                                  IdTipoCbte = q.IdTipoCbte,
                                  SecuenciaCbte = q.SecuenciaCbte,
-                                 Valor = q.Valor,
+                                 Valor = q.Valor ?? 0,
                                  Observacion = q.Observacion,
                                  Cheque = q.Cheque,
-                                 SaldoInicial = q.SaldoInicial,
-                                 SaldoFinal = q.SaldoFinal,
+                                 SaldoInicial = q.SaldoInicial ?? 0,
+                                 SaldoFinal = q.SaldoFinal ?? 0,
                                  SaldoBanco_EstCta = q.SaldoBanco_EstCta,
                                  Titulo_grupo = q.Titulo_grupo,
                                  referencia = q.referencia,
@@ -46,9 +46,11 @@ namespace Core.Erp.Data.Reportes.Banco
                                  GiradoA = q.GiradoA,
                                  IdTipoFlujo = q.IdTipoFlujo,
                                  nom_tipo_flujo = q.nom_tipo_flujo,
-                                 Total_Conciliado = q.Total_Conciliado,
+                                 Total_Conciliado = q.Total_Conciliado ?? 0,
                                  FechaFin = q.FechaFin,
-                                 FechaIni = q.FechaIni
+                                 FechaIni = q.FechaIni,
+                                 co_SaldoBanco_anterior = q.co_SaldoBanco_anterior,
+                                 TotalConciliadoNoContable = q.TotalConciliadoNoContable
                              }).ToList();
                 }
                 return Lista;

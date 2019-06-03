@@ -39,9 +39,10 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             string Sucursal = "";
 
             tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
-            bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
+            Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
 
             lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdAnio, fechaIni, fechaFin, IdUsuario, IdNivel, mostrarSaldo0, balance, MostrarSaldoAcumulado));
+            lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

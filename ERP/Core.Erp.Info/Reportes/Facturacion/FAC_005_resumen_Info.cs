@@ -12,5 +12,9 @@
         public int CantidadPorSucursal { get; set; }
         public int CantidadExportaciones { get; set; }
         public string NomSucursal { get; set; }
+        public decimal BaseImponible12 { get; set; }
+        public decimal BaseImponible0 { get; set; }
+        public decimal BaseImponible { get; set; }
+        public decimal ValorIva { get; set; }
     }
 }
