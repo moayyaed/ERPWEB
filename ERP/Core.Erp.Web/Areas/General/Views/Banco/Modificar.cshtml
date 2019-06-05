@@ -12,6 +12,8 @@
 @using (Html.BeginForm("Modificar", "Banco", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdBanco)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    @Html.HiddenFor(q => q.IdEmpresa)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -39,8 +41,25 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <div class="checkbox">
-                        <label for="">@Html.CheckBoxFor(q => q.TieneFormatoTransferencia) Tiene formato transferencia</label>
+                        @Html.DevExpress().CheckBoxFor(q => q.TieneFormatoTransferencia,
+                         settings =>
+                         {
+                             settings.Name = "TieneFormatoTransferencia";
+                             settings.Checked = false;
+                             settings.Text = "Tiene formato transferencia";
+                             settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_detalle();}";
+                         }
+                     ).GetHtml()
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="detalle">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_proceso_bancario")
                 </div>
             </div>
         </div>
@@ -54,3 +73,16 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+<script>
+    mostrar_detalle();
+
+    function mostrar_detalle() {
+        var det = TieneFormatoTransferencia.GetValue();
+        if (det == true) {
+            $("#detalle").show();
+        }
+        else {
+            $("#detalle").hide();
+        }
+    }
+</script>

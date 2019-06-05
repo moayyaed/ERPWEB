@@ -76,7 +76,8 @@ namespace Core.Erp.Data.General
                                      IdProceso_bancario_tipo = q.IdProceso_bancario_tipo,
                                      NombreProceso = q.NombreProceso,
                                      Codigo_Empresa = q.Codigo_Empresa,
-                                     estado = q.estado
+                                     estado = q.estado,
+                                     IdTipoNota = q.IdTipoNota
 
                                  }).ToList();
                    
@@ -131,7 +132,7 @@ namespace Core.Erp.Data.General
                               select q;
 
                     if (lst.Count() > 0)
-                        ID = lst.Max(q => q.IdBanco) + 1;
+                        ID = lst.Max(q => q.IdProceso) + 1;
                 }
                 return ID;
             }
@@ -176,23 +177,36 @@ namespace Core.Erp.Data.General
             {
                 using (Entities_general Context = new Entities_general())
                 {
-                    tb_banco_procesos_bancarios_x_empresa Entity = Context.tb_banco_procesos_bancarios_x_empresa.FirstOrDefault(q => q.IdProceso == info.IdProceso && q.IdEmpresa==info.IdEmpresa);
-                    if (Entity == null)
-                        return false;
-                    Entity.IdProceso_bancario_tipo = info.IdProceso_bancario_tipo;
-                    Entity.IdBanco = info.IdBanco;
-                    Entity.NombreProceso = info.NombreProceso;
-                    Entity.Codigo_Empresa = info.Codigo_Empresa;
-                    Entity.Se_contabiliza = info.Se_contabiliza;
-                    Entity.IdTipoNota = info.IdTipoNota;
+                    var list = Context.tb_banco_procesos_bancarios_x_empresa.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdProceso == info.IdProceso).FirstOrDefault();
+                    if(list != null)
+                    {
+                        list.IdProceso_bancario_tipo = info.IdProceso_bancario_tipo;
+                        list.IdBanco = info.IdBanco;
+                        list.NombreProceso = info.NombreProceso;
+                        list.Codigo_Empresa = info.Codigo_Empresa;
+                        list.Se_contabiliza = info.Se_contabiliza;
+                        list.IdTipoNota = info.IdTipoNota;
+                    }
+                    else
+                    {
+                        Context.tb_banco_procesos_bancarios_x_empresa.Add(new tb_banco_procesos_bancarios_x_empresa
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdBanco = info.IdBanco,
+                            IdProceso = info.IdProceso = get_id(info.IdEmpresa),
+                            Codigo_Empresa = info.Codigo_Empresa,
+                            IdProceso_bancario_tipo = info.IdProceso_bancario_tipo,
+                            IdTipoNota = info.IdTipoNota,
+                            NombreProceso = info.NombreProceso,
+                            Se_contabiliza = info.Se_contabiliza
+                        });
+                    }
                     Context.SaveChanges();
                 }
-
                 return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

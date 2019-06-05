@@ -10008,6 +10008,7 @@
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\_CmbEmpleado_AF1.cshtml" />
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\_CmbEmpleado_AF2.cshtml" />
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\ACTF_008.cshtml" />
+    <Content Include="Areas\General\Views\Banco\_GridViewPartial_proceso_bancario.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

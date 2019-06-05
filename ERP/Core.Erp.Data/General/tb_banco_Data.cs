@@ -61,6 +61,7 @@ namespace Core.Erp.Data.General
 
                     info = new tb_banco_Info
                     {
+                        
                         IdBanco = Entity.IdBanco,
                         ba_descripcion = Entity.ba_descripcion,
                         Estado = Entity.Estado,
@@ -98,6 +99,31 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+        private int GetId(int IdEmpresa)
+        {
+            try
+            {
+                int Id = 1;
+
+                using (Entities_general Context = new Entities_general())
+                {
+                    var lst = from q in Context.tb_banco_procesos_bancarios_x_empresa
+                              select q;
+                    if (lst.Count() > 0)
+                        Id = lst.Max(q => q.IdProceso) + 1;
+
+                }
+
+                return Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(tb_banco_Info info)
         {
             try

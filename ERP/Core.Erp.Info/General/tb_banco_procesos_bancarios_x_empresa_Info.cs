@@ -16,10 +16,7 @@ namespace Core.Erp.Info.General
         [StringLength(50, MinimumLength = 3, ErrorMessage = "El campo nombre proceso debe tener mínimo 3 caracteres y máximo 250")]
         [Required(ErrorMessage = "El campo nombre del proceso es obligatorio")]
         public string NombreProceso { get; set; }
-        [Required(ErrorMessage = "El campo banco es obligatorio")]
         public int IdBanco { get; set; }
-        [StringLength(50, MinimumLength = 1, ErrorMessage = "El campo codigo de empresa debe tener mínimo 1 caracteres y máximo 250")]
-        [Required(ErrorMessage = "El campo codigo  es obligatorio")]
         public string Codigo_Empresa { get; set; }
         public Nullable<int> IdTipoNota { get; set; }
         public Nullable<bool> Se_contabiliza { get; set; }
@@ -35,7 +32,7 @@ namespace Core.Erp.Info.General
         public string CodigoLegal { get; set; }
 
 
-
+        public string Descripcion { get; set; }
         public bool EstadoBool { get; set; }
     }
 }
