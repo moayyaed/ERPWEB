@@ -140,14 +140,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Detalle
         private void cargar_combos_Detalle()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            ViewBag.lst_sucursal = lst_sucursal;
-
-
-            var lst_banco = bus_banco.get_list(false);
-            ViewBag.lst_banco = lst_banco;
         }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_archivo_bancario_det()
