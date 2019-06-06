@@ -131,6 +131,8 @@
     <Compile Include="ATS_ventas_eventos.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Banco\ba_Archivo_Transferencia_Data.cs" />
+    <Compile Include="Banco\ba_Archivo_Transferencia_Det_Data.cs" />
     <Compile Include="Banco\ba_Banco_Cuenta_Data.cs" />
     <Compile Include="Banco\ba_Banco_Cuenta_x_tb_sucursal_Data.cs" />
     <Compile Include="Banco\ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Data.cs" />
@@ -149,6 +151,12 @@
     <Compile Include="Banco\ba_TipoFlujo_PlantillaDet_Data.cs" />
     <Compile Include="Banco\ba_TipoFlujo_Plantilla_Data.cs" />
     <Compile Include="Banco\ba_tipo_nota_Data.cs" />
+    <Compile Include="ba_Archivo_Transferencia.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Archivo_Transferencia_Det.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
     <Compile Include="ba_Banco_Cuenta.cs">
       <DependentUpon>Model_banco.tt</DependentUpon>
     </Compile>

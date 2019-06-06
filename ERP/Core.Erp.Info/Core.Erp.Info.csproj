@@ -55,6 +55,8 @@
     <Compile Include="ActivoFijo\Af_Parametros_Info.cs" />
     <Compile Include="ActivoFijo\Af_Retiro_Activo_Info.cs" />
     <Compile Include="ActivoFijo\Af_Venta_Activo_Info.cs" />
+    <Compile Include="Banco\ba_Archivo_Transferencia_Det_Info.cs" />
+    <Compile Include="Banco\ba_Archivo_Transferencia_Info.cs" />
     <Compile Include="Banco\ba_Banco_Cuenta_Info.cs" />
     <Compile Include="Banco\ba_Banco_Cuenta_x_tb_sucursal_Info.cs" />
     <Compile Include="Banco\ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info.cs" />

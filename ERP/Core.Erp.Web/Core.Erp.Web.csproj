@@ -255,6 +255,7 @@
     <Compile Include="Areas\ActivoFijo\Controllers\VentaActivoController.cs" />
     <Compile Include="Areas\ActivoFijo\Controllers\TipoAFController.cs" />
     <Compile Include="Areas\Banco\BancoAreaRegistration.cs" />
+    <Compile Include="Areas\Banco\Controllers\ArchivoBancarioController.cs" />
     <Compile Include="Areas\Banco\Controllers\BancoCuentaController.cs" />
     <Compile Include="Areas\Banco\Controllers\CatalogoBancoController.cs" />
     <Compile Include="Areas\Banco\Controllers\CatalogoTipoBancoController.cs" />
@@ -10009,6 +10010,12 @@
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\_CmbEmpleado_AF2.cshtml" />
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\ACTF_008.cshtml" />
     <Content Include="Areas\General\Views\Banco\_GridViewPartial_proceso_bancario.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Index.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_archivo_bancario.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Nuevo.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Modificar.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Anular.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_archivo_bancario_det.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
