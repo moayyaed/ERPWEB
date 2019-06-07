@@ -146,6 +146,31 @@ namespace Core.Erp.Data.Banco
                         Fecha_Transac = DateTime.Now,
                         IdSucursal = info.IdSucursal
                     });
+
+
+                    if(info.Lst_det.Count()>0)
+                    {
+                        foreach (var item in info.Lst_det)
+                        {
+                            Context.ba_Archivo_Transferencia_Det.Add(new ba_Archivo_Transferencia_Det
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdArchivo = info.IdArchivo,
+                                Contabilizado = item.Contabilizado,
+                                Estado = item.Estado,
+                                Fecha_proceso = item.Fecha_proceso,
+                                IdOrdenPago = item.IdOrdenPago,
+                                IdEmpresa_OP = item.IdEmpresa_OP,
+                                Secuencia = item.Secuencia,
+                                Id_Item = item.Id_Item,
+                                Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
+                                Secuencia_OP = item.Secuencia_OP,
+                                Valor = item.Valor
+                            });
+                        }
+                    }
+
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -169,6 +194,31 @@ namespace Core.Erp.Data.Banco
                     Entity.Observacion = info.Observacion;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
+
+                    var Lst_det = Context.ba_Archivo_Transferencia_Det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).ToList();
+                    Context.ba_Archivo_Transferencia_Det.RemoveRange(Lst_det);
+                    if (info.Lst_det.Count() > 0)
+                    {
+                        foreach (var item in info.Lst_det)
+                        {
+                            Context.ba_Archivo_Transferencia_Det.Add(new ba_Archivo_Transferencia_Det
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdArchivo = info.IdArchivo,
+                                Contabilizado = item.Contabilizado,
+                                Estado = item.Estado,
+                                Fecha_proceso = item.Fecha_proceso,
+                                IdOrdenPago = item.IdOrdenPago,
+                                IdEmpresa_OP = item.IdEmpresa_OP,
+                                Secuencia = item.Secuencia,
+                                Id_Item = item.Id_Item,
+                                Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
+                                Secuencia_OP = item.Secuencia_OP,
+                                Valor = item.Valor
+                            });
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
                 return true;

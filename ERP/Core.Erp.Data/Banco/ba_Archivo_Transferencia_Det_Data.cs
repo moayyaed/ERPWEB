@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Info.Banco;
+using Core.Erp.Info.CuentasPorPagar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,5 +41,38 @@ namespace Core.Erp.Data.Banco
                 throw;
             }
         }
+
+        public List<ba_Archivo_Transferencia_Det_Info> get_list_con_saldo(int IdEmpresa, decimal IdPersona, string IdTipo_Persona, decimal IdEntidad, string IdEstado_Aprobacion, string IdUsuario, int IdSucursal, bool mostrar_saldo_0)
+        {
+            try
+            {
+                decimal IdPersona_ini = IdPersona;
+                decimal IdPersona_fin = IdPersona == 0 ? 99999 : IdPersona;
+
+                decimal IdEntidad_ini = IdEntidad;
+                decimal IdEntidad_fin = IdEntidad == 0 ? 99999 : IdEntidad;
+                List<ba_Archivo_Transferencia_Det_Info> Lista;
+
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario, IdSucursal, mostrar_saldo_0)
+                             select new ba_Archivo_Transferencia_Det_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdEmpresa_OP = q.IdEmpresa,
+                                 Secuencia_OP = q.Secuencia_OP,
+                                 IdOrdenPago = q.IdOrdenPago
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

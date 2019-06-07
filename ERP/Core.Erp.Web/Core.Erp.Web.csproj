@@ -10016,6 +10016,7 @@
     <Content Include="Areas\Banco\Views\ArchivoBancario\Modificar.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\Anular.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_archivo_bancario_det.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_archivo_bancario_det_op.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

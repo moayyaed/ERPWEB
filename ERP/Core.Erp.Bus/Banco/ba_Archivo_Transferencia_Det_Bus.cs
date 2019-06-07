@@ -23,5 +23,19 @@ namespace Core.Erp.Bus.Banco
                 throw;
             }
         }
+
+        public List<ba_Archivo_Transferencia_Det_Info> get_list_con_saldo(int IdEmpresa, decimal IdPersona, string IdTipo_Persona, decimal IdEntidad, string IdEstado_Aprobacion, string IdUsuario, int IdSucursal, bool mostrar_saldo_0)
+
+        {
+            try
+            {
+                return odata.get_list_con_saldo(IdEmpresa, IdPersona, IdTipo_Persona, IdEntidad, IdEstado_Aprobacion, IdUsuario, IdSucursal, mostrar_saldo_0);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
