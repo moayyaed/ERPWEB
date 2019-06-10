@@ -16,6 +16,75 @@
     }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script>
+    var selectedIDs;
+    function OnBeginCallback(s, e) {
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs["selectedIDs"] = selectedIDs;
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdOrdenPago", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+    function MostrarModal() {
+        selectedIDs = "";
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListPorCruzar", "ArchivoBancario",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_archivo_bancario_det_op.PerformCallback();
+                GridView_archivo_bancario_det_op.UnselectRows();
+                $("#OpModal").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+
+    function AddOP() {
+        var datos = {
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNew", "ArchivoBancario",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+         },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+        GridView_archivo_bancario_det_op.PerformCallback();
+        GridView_archivo_bancario_det_op.UnselectRows();
+        GridView_archivo_bancario_det.PerformCallback();
+        $("#OpModal").modal("hide");
+    }
+
+</script>
 
 @using (Html.BeginForm("Modificar", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -100,7 +169,45 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="OpModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ordenes de pago</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_archivo_bancario_det_op")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddOP();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_archivo_bancario_det")
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","ArchivoBancario",new { Area = "Banco" },null)">Cancelar</a>

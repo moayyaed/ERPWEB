@@ -4,7 +4,7 @@
     {
         settings.Name = "GridView_archivo_bancario_det_op";
         settings.CallbackRouteValues = new { Controller = "ArchivoBancario", Action = "GridViewPartial_archivo_bancario_det_op" };
-        settings.KeyFieldName = "IdEmpresa";
+        settings.KeyFieldName = "Secuencia";
 
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;
@@ -36,12 +36,28 @@
         settings.Columns.Add("IdOrdenPago", "ID").Width = Unit.Percentage(30);
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(40);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Id_Item";
+            column.Caption = "Item";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
             column.FieldName = "Fecha_proceso";
             column.Caption = "Fecha";
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
         });
-
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Secuencial_reg_x_proceso";
+            column.Caption = "Secuencial";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(20);

@@ -51,6 +51,7 @@ namespace Core.Erp.Data.Banco
 
                 decimal IdEntidad_ini = IdEntidad;
                 decimal IdEntidad_fin = IdEntidad == 0 ? 99999 : IdEntidad;
+
                 List<ba_Archivo_Transferencia_Det_Info> Lista;
 
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
