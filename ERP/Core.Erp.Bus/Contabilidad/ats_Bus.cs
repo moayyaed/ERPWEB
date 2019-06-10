@@ -169,6 +169,7 @@ namespace Core.Erp.Bus.Contabilidad
                                                    comp_det.estabRetencion1 = item.estabRetencion1;
                                                    comp_det.ptoEmiRetencion1 = item.ptoEmiRetencion1;
                                                    comp_det.secRetencion1 = item.secRetencion1;
+                                                   comp_det.fechaEmiRet1 = item.fechaEmiRet1.ToString().Substring(0,10);
                                           
                                                }
                                                else
