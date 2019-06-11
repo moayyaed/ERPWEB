@@ -159,7 +159,7 @@ namespace Core.Erp.Bus.Contabilidad
                                            if (item.re_tipo_Ret == "RTF")
                                            {
                                                    comp_det.air.Add(new detalleAir
-                                                   {
+                                                   {                                                       
                                                        codRetAir = item.codRetAir.ToString(),
                                                        baseImpAir = item.baseImpAir.ToString(),
                                                        porcentajeAir = item.porcentajeAir.ToString(),
