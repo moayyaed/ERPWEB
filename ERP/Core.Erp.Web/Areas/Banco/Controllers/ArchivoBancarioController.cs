@@ -179,7 +179,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             cargar_combos_Detalle();
-            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = Lst_det_op.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_archivo_bancario_det_op", model);
         }
 
@@ -192,7 +192,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
-                    var info_det = Lst_det.Where(q => q.IdEmpresa == Convert.ToInt32(item)).FirstOrDefault();
+                    var info_det = Lst_det.Where(q => q.IdOrdenPago == Convert.ToInt32(item)).FirstOrDefault();
                     if (info_det != null)
                     {
                         List_det.AddRow(info_det, IdTransaccionSession);
