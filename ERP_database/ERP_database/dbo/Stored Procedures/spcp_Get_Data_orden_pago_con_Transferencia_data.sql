@@ -48,7 +48,7 @@ and OP_can.IdEmpresa_pago = tipo.IdEmpresa
 and OP_can.IdTipoCbte_pago = tipo.IdTipoCbteCble
 ) or  OP_can.IdEmpresa_pago is null
 )
-and (OP_can.Observacion like '%'+arc_tr.IdProceso_bancario+'%' OR OP_can.Observacion IS NULL)
+--and (OP_can.Observacion like '%'+arc_tr.IdProceso_bancario+'%' OR OP_can.Observacion IS NULL)
 GROUP BY OP_det.IdEmpresa, OP.IdTipo_op, OP_det.IdOrdenPago, OP_det.Secuencia, OP.IdTipo_Persona, OP.IdPersona, OP.IdEntidad, OP.Fecha, OP.Observacion,OP_det.Valor_a_pagar, OP_det.IdEstadoAprobacion, OP_det.IdFormaPago, 
                          OP_det.Fecha_Pago, OP_det.IdCbteCble_cxp, OP.Estado, OP_det.IdEmpresa_cxp, OP_det.IdTipoCbte_cxp,arc_tr.IdArchivo,OP_can.IdEmpresa_pago
 						, OP_can.IdTipoCbte_pago, OP_can.IdCbteCble_pago, ct_cbtecble_tipo.tc_TipoCbte,arc_tr.Secuencial_reg_x_proceso, arc_tr.Secuencia
