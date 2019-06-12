@@ -284,7 +284,6 @@
     <Compile Include="Areas\Compras\Controllers\CompradorController.cs" />
     <Compile Include="Areas\Compras\Controllers\DepartamentoComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\EstadoCierreComprasController.cs" />
-    <Compile Include="Areas\Compras\Controllers\MotivoCompraController.cs" />
     <Compile Include="Areas\Compras\Controllers\OrdenCompraLocalController.cs" />
     <Compile Include="Areas\Compras\Controllers\ParametrosComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\TerminoPagoComprasController.cs" />
@@ -9513,11 +9512,6 @@
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\Nuevo.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\Modificar.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\Anular.cshtml" />
-    <Content Include="Areas\Compras\Views\MotivoCompra\Index.cshtml" />
-    <Content Include="Areas\Compras\Views\MotivoCompra\_GridViewPartial_motivocompra.cshtml" />
-    <Content Include="Areas\Compras\Views\MotivoCompra\Nuevo.cshtml" />
-    <Content Include="Areas\Compras\Views\MotivoCompra\Modificar.cshtml" />
-    <Content Include="Areas\Compras\Views\MotivoCompra\Anular.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_CmbProveedor_COM.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_011.cshtml" />
     <Content Include="Areas\Compras\Views\Comprador\_CmbPersona_Compras.cshtml" />

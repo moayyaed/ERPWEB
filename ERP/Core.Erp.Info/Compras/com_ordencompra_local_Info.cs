@@ -37,7 +37,6 @@ namespace Core.Erp.Info.Compras
         public string MotivoReprobacion { get; set; }
         public decimal IdDepartamento { get; set; }
         public string IdUsuario { get; set; }
-        public int IdMotivo { get; set; }
         public System.DateTime oc_fechaVencimiento { get; set; }
         public string IdEstado_cierre { get; set; }
         [Required(ErrorMessage = ("el campo comprador es obligatorio"))]

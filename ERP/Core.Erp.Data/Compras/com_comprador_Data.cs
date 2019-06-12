@@ -70,10 +70,7 @@ namespace Core.Erp.Data.Compras
                         IdComprador = Entity.IdComprador,
                         Estado = Entity.Estado,
                         Descripcion = Entity.Descripcion,
-                        IdUsuario_com = Entity.IdUsuario_com,
-                        IdPersona = Entity.IdPersona,
-                        cedula = Entity.cedula
-                        
+                        IdUsuario_com = Entity.IdUsuario_com                        
                     };
                 }
                 return info;
@@ -120,9 +117,6 @@ namespace Core.Erp.Data.Compras
                         Estado = "A",
                         Descripcion = info.Descripcion,
                         IdUsuario_com = info.IdUsuario_com,
-                        IdPersona = info.IdPersona,
-                        cedula = info.cedula,
-
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
 
@@ -150,9 +144,6 @@ namespace Core.Erp.Data.Compras
 
                     Entity.Descripcion = info.Descripcion;
                     Entity.IdUsuario_com = info.IdUsuario_com;
-                    Entity.IdPersona = info.IdPersona;
-                    Entity.cedula = info.cedula;
-
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
                     Context.SaveChanges();

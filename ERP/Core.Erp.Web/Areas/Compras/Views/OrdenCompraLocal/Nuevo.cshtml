@@ -18,7 +18,7 @@
     @Html.HiddenFor(q => q.IdEstadoAprobacion_cat)
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control" })
@@ -39,14 +39,6 @@
                     <label for="IdEstado_cierre">Estado de cierre*</label>
                     @Html.DropDownListFor(q => q.IdEstado_cierre, new SelectList(ViewBag.lst_estado, "IdEstado_cierre", "Descripcion"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.IdEstado_cierre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="IdMotivo">Motivo</label>
-                    @Html.DropDownListFor(q => q.IdMotivo, new SelectList(ViewBag.lst_motivo, "IdMotivo", "Descripcion"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.IdMotivo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-offset-1 col-md-2">
@@ -102,7 +94,7 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="oc_fechaVencimiento">Fecha vencimiento*</label>
+                    <label for="oc_fechaVencimiento">Fecha de entrega*</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
