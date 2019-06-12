@@ -72,6 +72,17 @@ namespace Core.Erp.Bus.Compras
             }
         }
 
+        public com_comprador_Info get_info_x_IdUsuario(int IdEmpresa, string IdUsuario)
+        {
+            try
+            {
+                return odata.get_info_x_IdUsuario(IdEmpresa, IdUsuario);
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
     }
 }

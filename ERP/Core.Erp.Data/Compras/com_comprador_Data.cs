@@ -183,6 +183,31 @@ namespace Core.Erp.Data.Compras
             }
         }
 
+        public com_comprador_Info get_info_x_IdUsuario(int IdEmpresa, string IdUsuario)
+        {
+            try
+            {
+                com_comprador_Info info = new com_comprador_Info();
+                using (Entities_compras Context = new Entities_compras())
+                {
+                    com_comprador Entity = Context.com_comprador.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario_com == IdUsuario).FirstOrDefault();
+                    if (Entity == null) return null;
+                    info = new com_comprador_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdComprador = Entity.IdComprador,
+                        Estado = Entity.Estado,
+                        Descripcion = Entity.Descripcion,
+                        IdUsuario_com = Entity.IdUsuario_com
+                    };
+                }
+                return info;
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
     }
 }

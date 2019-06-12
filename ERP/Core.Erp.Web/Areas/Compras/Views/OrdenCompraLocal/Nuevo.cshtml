@@ -6,9 +6,31 @@
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script type="text/javascript">
+    function CrearModificarProveedor() {
+        var location = GetPathServer();
+        if(IdProveedor.GetValue() > 0)
+        {
+            var win = window.open(location+ "/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(location +"/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+</script>
 @using (Html.BeginForm("Nuevo", "OrdenCompraLocal", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
 
@@ -37,11 +59,11 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdEstado_cierre">Estado de cierre*</label>
-                    @Html.DropDownListFor(q => q.IdEstado_cierre, new SelectList(ViewBag.lst_estado, "IdEstado_cierre", "Descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdEstado_cierre, new SelectList(ViewBag.lst_estado, "IdEstado_cierre", "Descripcion"), new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.IdEstado_cierre, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-1 col-md-2">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="oc_fecha">Fecha*</label>
                     <div class="input-group date">
@@ -59,37 +81,6 @@
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.oc_fecha, "", new { @class = "text-danger" })
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProveedor_COM", Model.IdProveedor)
-                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-           
-
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="IdTerminoPago">Termino pago*</label>
-                    @Html.DropDownListFor(q => q.IdTerminoPago, new SelectList(ViewBag.lst_termino, "IdTerminoPago", "Descripcion"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.IdTerminoPago, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-md-1">
-                <div class="form-group">
-                    <label for="oc_plazo">Plazo*</label>
-                    @Html.TextBoxFor(q => q.oc_plazo, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.oc_plazo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
@@ -112,21 +103,45 @@
                     </div>
                 </div>
             </div>
-
-          
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="IdComprador">Comprador*</label>
-                    @Html.DropDownListFor(q => q.IdComprador, new SelectList(ViewBag.lst_comprador, "IdComprador", "Descripcion"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.IdComprador, "", new { @class = "text-danger" })
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_COM", Model.IdProveedor)
+                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdProveedor"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
                 </div>
             </div>
             <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdTerminoPago">Termino pago*</label>
+                    @Html.DropDownListFor(q => q.IdTerminoPago, new SelectList(ViewBag.lst_termino, "IdTerminoPago", "Descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdTerminoPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="oc_plazo">Plazo*</label>
+                    @Html.TextBoxFor(q => q.oc_plazo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.oc_plazo, "", new { @class = "text-danger" })
+                </div>
+            </div>      
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdDepartamento">Departamento</label>
                     @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_dep, "IdDepartamento", "nom_departamento"), new { @class = "form-control" })
@@ -135,7 +150,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -165,6 +179,14 @@
     }
 }
 <script type="text/javascript">
+
+    $(function () {
+        get_list_termino_pago
+    });
+
+    $("#IdTerminoPago").change(function () {
+        get_info_termino_pago();
+    });
 
     function GetInfoProducto(s, e) {
         $("#Secuencia").text(0);
@@ -206,7 +228,6 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    console.log(data);
                     $.each(data, function (i, row) {
                         $("#IdTerminoPago").append("<option value=" + row.IdTerminoPago + ">" + row.Descripcion + "</option>");
                     });
@@ -222,6 +243,7 @@
     function get_info_termino_pago() {
         if ($("#IdTerminoPago").val() > 0) {
             var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
                 IdTerminoPago: $("#IdTerminoPago").val()
             }
             $.ajax({

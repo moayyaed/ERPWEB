@@ -35,6 +35,8 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         com_ordencompra_local_det_List List_det = new com_ordencompra_local_det_List();
         com_ordencompra_local_det_Bus bus_det = new com_ordencompra_local_det_Bus();
         com_parametro_Bus bus_param = new com_parametro_Bus();
+        string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda proveedor
@@ -168,15 +170,38 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
+
+            var IdUsuario_Com = SessionFixed.IdUsuario;
+            com_comprador_Info info_comprador = bus_comprador.get_info_x_IdUsuario(model.IdEmpresa, IdUsuario_Com);
+
+            if (info_comprador == null)
+            {
+                model.IdComprador = 0;
+            }
+            else
+            {
+                model.IdComprador = info_comprador.IdComprador;
+            }
+
+            if (!Validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+
             if (!bus_ordencompra.guardarDB(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdOrdenCompra = model.IdOrdenCompra, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0 ,  decimal IdOrdenCompra  = 0)
+
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0 ,  decimal IdOrdenCompra  = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -191,6 +216,10 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdOrdenCompra);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
         [HttpPost]
@@ -198,13 +227,24 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         {
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
+
+            if (!Validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+
             if (!bus_ordencompra.modificarDB(model))
             {
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdOrdenCompra = model.IdOrdenCompra, Exito = true });
         }
+
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, decimal IdOrdenCompra = 0)
         {
             #region Validar Session
@@ -227,6 +267,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         {
             model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
+
             if (!bus_ordencompra.anularDB(model))
             {
                 cargar_combos(model.IdEmpresa);
@@ -305,6 +346,45 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         {
             var info_termino_pago = bus_termino.get_info(IdEmpresa, IdTerminoPago);
             return Json(info_termino_pago, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Metodos
+        private bool Validar(com_ordencompra_local_Info i_validar, ref string msg)
+        {
+            i_validar.lst_det = List_det.get_list(i_validar.IdTransaccionSession);
+
+            if (i_validar.IdComprador == 0)
+            {
+                mensaje = "Debe ingresar su usuario como comprador";
+                return false;
+            }
+            else if (i_validar.lst_det.Count == 0)
+            {
+                mensaje = "Debe ingresar al menos un producto en el detalle de la orden";
+                return false;
+            }
+            else
+            {
+                foreach (var item1 in i_validar.lst_det)
+                {
+                    var contador = 0;
+                    foreach (var item2 in i_validar.lst_det)
+                    {
+                        if (item1.IdProducto == item2.IdProducto)
+                        {
+                            contador++;
+                        }
+
+                        if (contador > 1)
+                        {
+                            mensaje = "Existen productos repetidos en el detalle";
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
         #endregion
 
