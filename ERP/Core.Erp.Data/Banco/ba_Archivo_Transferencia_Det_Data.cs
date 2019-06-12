@@ -65,7 +65,7 @@ namespace Core.Erp.Data.Banco
                                  Nom_Beneficiario =  q.Nom_Beneficiario,
                                  Valor = q.Saldo_x_Pagar_OP,
                                  Referencia = q.Referencia,
-                                 IdPersona = q.IdPersona,
+                                 IdTipoPersona = q.IdTipoPersona,
                                  Fecha_Factura = q.Fecha_Fa_Prov        
                              }).ToList();
                 }

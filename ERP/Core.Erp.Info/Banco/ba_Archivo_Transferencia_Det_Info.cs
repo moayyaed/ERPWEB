@@ -24,5 +24,6 @@ namespace Core.Erp.Info.Banco
         public string Nom_Beneficiario { get; set; }
         public string Referencia { get; set; }
         public decimal IdPersona { get; set; }
+        public string IdTipoPersona { get; set; }
     }
 }
