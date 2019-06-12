@@ -32,7 +32,6 @@
     }
     function MostrarModal() {
         selectedIDs = "";
-
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdTransaccionSession: $("#IdTransaccionSession").val()
@@ -56,8 +55,6 @@
             }
         });
     }
-
-
     function AddOP() {
         var datos = {
             IDs: selectedIDs,
@@ -84,7 +81,6 @@
         GridView_archivo_bancario_det.PerformCallback();
         $("#OpModal").modal("hide");
     }
-
 </script>
 @using (Html.BeginForm("Nuevo", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -216,13 +212,10 @@
                         @Scripts.Render("~/bundles/jqueryval")
                     }
 }
-
-
 <script>
     $(function () {
         cargar_procesos();
         GetListBancoPorSucursal();
-
     });
         $("#IdBanco").change(function () {
         $("#IdProceso").empty();
@@ -231,7 +224,6 @@
     $("#IdSucursal").change(function () {
         GetListBancoPorSucursal();
     });
-
         function GetListBancoPorSucursal() {
         $("#IdBanco").empty();
         var datos = {
@@ -256,16 +248,11 @@
             }
         });
     }
-
-
-
     function cargar_procesos() {
         $("#IdProceso").empty();
-
                 var datos = {
                     IdBanco: $("#IdBanco").val()
                 }
-
                 $.ajax({
                     type: 'POST',
                     data: JSON.stringify(datos),
@@ -286,5 +273,4 @@
                     }
                 });
     };
-
 </script>

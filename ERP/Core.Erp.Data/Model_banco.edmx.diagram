@@ -53,9 +53,9 @@
         <EntityTypeShape EntityType="Model_banco.ba_parametros" Width="1.5" PointX="9.375" PointY="15.75" />
         <EntityTypeShape EntityType="Model_banco.ba_Conciliacion_det" Width="1.5" PointX="8.25" PointY="21.75" />
         <AssociationConnector Association="Model_banco.FK_ba_Conciliacion_det_ba_Conciliacion" />
-        <EntityTypeShape EntityType="Model_banco.ba_Archivo_Transferencia_Det" Width="1.5" PointX="5.25" PointY="31.375" />
         <EntityTypeShape EntityType="Model_banco.ba_Archivo_Transferencia" Width="1.5" PointX="3" PointY="13.5" />
         <AssociationConnector Association="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" />
+        <EntityTypeShape EntityType="Model_banco.ba_Archivo_Transferencia_Det" Width="1.5" PointX="5.25" PointY="22.375" />
         <AssociationConnector Association="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" />
         </Diagram>
     </edmx:Diagrams>

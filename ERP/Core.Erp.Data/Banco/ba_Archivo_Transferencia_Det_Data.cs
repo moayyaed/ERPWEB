@@ -63,7 +63,7 @@ namespace Core.Erp.Data.Banco
                                  Secuencia = q.Secuencia_OP,
                                  IdOrdenPago = q.IdOrdenPago,
                                  Nom_Beneficiario =  q.Nom_Beneficiario,
-                                 //Valor = q.Saldo_x_Pagar_OP,
+                                 Valor = q.Saldo_x_Pagar_OP,
                                  Referencia = q.Referencia,
                                  IdPersona = q.IdPersona,
                                  Fecha_Factura = q.Fecha_Fa_Prov        

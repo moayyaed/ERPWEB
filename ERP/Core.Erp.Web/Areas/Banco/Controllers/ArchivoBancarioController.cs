@@ -192,7 +192,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
-                    var info_det = Lst_det.Where(q => q.IdEmpresa == Convert.ToInt32(item)).FirstOrDefault();
+                    var info_det = Lst_det.Where(q => q.IdOrdenPago == Convert.ToInt32(item)).FirstOrDefault();
                     if (info_det != null)
                     {
                         List_det.AddRow(info_det, IdTransaccionSession);
@@ -213,9 +213,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             cargar_combos_Detalle();
             return PartialView("_GridViewPartial_archivo_bancario_det", model);
         }
-        public ActionResult EditingDelete(int Secuencia)
+        public ActionResult EditingDelete(decimal IdOrdenPago)
         {
-            List_det.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List_det.DeleteRow(IdOrdenPago, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_Detalle();
             return PartialView("_GridViewPartial_archivo_bancario_det", model);
@@ -254,23 +254,23 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             List<ba_Archivo_Transferencia_Det_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            if (list.Where(q => q.IdEmpresa == info_det.IdEmpresa).Count() == 0)
+            if (list.Where(q => q.IdOrdenPago == info_det.IdOrdenPago).Count() == 0)
                 list.Add(info_det);
         }
 
         public void UpdateRow(ba_Archivo_Transferencia_Det_Info info_det, decimal IdTransaccionSession)
         {
-            ba_Archivo_Transferencia_Det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            ba_Archivo_Transferencia_Det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdOrdenPago == info_det.IdOrdenPago).First();
             if (edited_info != null)
             {
                 edited_info.Valor = info_det.Valor;
             }
         }
 
-        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
+        public void DeleteRow(decimal IdOrdenPago, decimal IdTransaccionSession)
         {
             List<ba_Archivo_Transferencia_Det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.IdOrdenPago == IdOrdenPago).First());
         }
     }
 
