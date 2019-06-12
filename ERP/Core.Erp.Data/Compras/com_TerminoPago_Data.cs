@@ -179,5 +179,35 @@ namespace Core.Erp.Data.Compras
             }
         }
 
+        public List<com_TerminoPago_Info> get_list_x_plazo_proveedor(int IdEmpresa, int plazo)
+        {
+            try
+            {
+                List<com_TerminoPago_Info> Lista;
+                using (Entities_compras Context = new Entities_compras())
+                {
+                    Lista = (from q in Context.com_TerminoPago
+                                where q.IdEmpresa == IdEmpresa
+                                && q.Estado == "A"
+                                && q.Dias >= plazo
+                                select new com_TerminoPago_Info
+                                {
+                                    IdEmpresa = q.IdEmpresa,
+                                    IdTerminoPago = q.IdTerminoPago,
+                                    Descripcion = q.Descripcion,
+                                    Dias = q.Dias,
+                                    Estado = q.Estado,
+
+                                    EstadoBool = q.Estado == "A" ? true : false
+                                }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

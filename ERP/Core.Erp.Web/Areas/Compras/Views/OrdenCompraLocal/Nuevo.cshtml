@@ -189,4 +189,57 @@
             }
         });
     };
+
+    function get_list_termino_pago() {
+        if (IdProveedor.GetValue() > 0) {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor: IdProveedor.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_list_termino_pago", "OrdenCompraLocal", new { Area = "Compras" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function (i, row) {
+                        $("#IdTerminoPago").append("<option value=" + row.IdTerminoPago + ">" + row.Descripcion + "</option>");
+                    });
+
+                    get_info_termino_pago();
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+
+    function get_info_termino_pago() {
+        if ($("#IdTerminoPago").val() > 0) {
+            var datos = {
+                IdTerminoPago: $("#IdTerminoPago").val()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_termino_pago", "OrdenCompraLocal", new { Area = "Compras" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    $("#oc_plazo").val(data.Dias);
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
 </script>

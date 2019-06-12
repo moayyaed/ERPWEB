@@ -76,5 +76,17 @@ namespace Core.Erp.Bus.Compras
             }
         }
 
+        public List<com_TerminoPago_Info> get_list_x_plazo_proveedor(int IdEmpresa, int plazo)
+        {
+            try
+            {
+                return odata.get_list_x_plazo_proveedor(IdEmpresa, plazo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

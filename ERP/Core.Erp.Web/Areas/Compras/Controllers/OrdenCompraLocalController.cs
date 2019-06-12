@@ -14,6 +14,7 @@ using Core.Erp.Info.General;
 using DevExpress.Web;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.CuentasPorPagar;
 
 namespace Core.Erp.Web.Areas.Compras.Controllers
 {
@@ -285,8 +286,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         #endregion
 
         #region Json
-
-        public JsonResult GetInfoProducto(int IdEmpresa = 0 ,decimal IdProducto = 0)
+        public JsonResult GetInfoProducto(int IdEmpresa = 0 ,int IdProducto = 0)
         {
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
@@ -294,6 +294,18 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult get_list_termino_pago(int IdEmpresa = 0, decimal IdProveedor = 0)
+        {
+            cp_proveedor_Info info_proveedor = bus_proveedor.get_info(IdEmpresa, IdProveedor);
+            var list_termino_pago = bus_termino.get_list_x_plazo_proveedor(IdEmpresa, info_proveedor.pr_plazo);
+            return Json(list_termino_pago, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult get_info_termino_pago(int IdEmpresa = 0, int IdTerminoPago=0)
+        {
+            var info_termino_pago = bus_termino.get_info(IdEmpresa, IdTerminoPago);
+            return Json(info_termino_pago, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
     }
