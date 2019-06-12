@@ -102,7 +102,6 @@
     <Build Include="dbo\Tables\ba_Archivo_Transferencia_Det.sql" />
     <Build Include="dbo\Tables\fa_factura_x_fa_guia_remision.sql" />
     <Build Include="dbo\Tables\ro_rubros_calculados.sql" />
-    <Build Include="dbo\Tables\ba_Archivo_Transferencia_Parametros.sql" />
     <Build Include="dbo\Tables\cxc_cobro.sql" />
     <Build Include="dbo\Tables\ro_periodo.sql" />
     <Build Include="dbo\Tables\ro_periodo_x_ro_Nomina_TipoLiqui.sql" />
@@ -345,7 +344,6 @@
     <Build Include="dbo\Tables\in_CatalogoTipo.sql" />
     <Build Include="dbo\Tables\fa_cliente_tipo.sql" />
     <Build Include="dbo\Tables\tb_parametro.sql" />
-    <Build Include="dbo\Tables\com_Motivo_Orden_Compra.sql" />
     <Build Include="dbo\Tables\ct_cbtecble_Plantilla_det.sql" />
     <Build Include="dbo\Tables\ro_Nomina_Tipo.sql" />
     <Build Include="web\Tables\Af_SPACTF_004_detalle.sql" />
@@ -1168,6 +1166,7 @@
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_det_conversion.sql" />
     <Build Include="web\Stored Procedures\SPCXP_016.sql" />
     <Build Include="dbo\Views\vwro_empleado_x_jornada_x_rubro_cont.sql" />
+    <Build Include="web\Views\VWACTF_008.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

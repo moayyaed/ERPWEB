@@ -16,35 +16,14 @@
     @Html.HiddenFor(q => q.IdComprador)
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdUsuario_com">Usuario</label>
                     @Html.DropDownListFor(q => q.IdUsuario_com, new SelectList(ViewBag.lst_usuario, "IdUsuario", "Nombre"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.IdUsuario_com, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdPersona">Beneficiario</label>
-                    @Html.Partial("_CmbPersona_Compras", Model.IdPersona)
-                    @Html.ValidationMessageFor(q => q.IdPersona, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="cedula">Cédula</label>
-                    @Html.TextBoxFor(q => q.cedula, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.cedula, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="Descripcion">Descripción*</label>
                     @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
@@ -53,8 +32,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="box-footer">
         <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index","Comprador", new { Area = "Compras"  },null)">Cancelar</a>

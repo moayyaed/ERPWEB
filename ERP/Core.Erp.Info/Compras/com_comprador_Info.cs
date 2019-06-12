@@ -18,8 +18,6 @@ namespace Core.Erp.Info.Compras
         public string Descripcion { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-        public Nullable<decimal> IdPersona { get; set; }
-        public string cedula { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }

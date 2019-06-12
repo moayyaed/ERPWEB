@@ -10,7 +10,6 @@
     [Estado]                 VARCHAR (1)    NOT NULL,
     [IdEstadoAprobacion_cat] VARCHAR (25)   NOT NULL,
     [IdDepartamento]         NUMERIC (18)   NOT NULL,
-    [IdMotivo]               INT            NOT NULL,
     [oc_fechaVencimiento]    DATETIME       NOT NULL,
     [IdEstado_cierre]        VARCHAR (25)   NULL,
     [IdComprador]            NUMERIC (18)   NOT NULL,
@@ -29,7 +28,6 @@
     CONSTRAINT [FK_com_ordencompra_local_com_comprador] FOREIGN KEY ([IdEmpresa], [IdComprador]) REFERENCES [dbo].[com_comprador] ([IdEmpresa], [IdComprador]),
     CONSTRAINT [FK_com_ordencompra_local_com_departamento] FOREIGN KEY ([IdEmpresa], [IdDepartamento]) REFERENCES [dbo].[com_departamento] ([IdEmpresa], [IdDepartamento]),
     CONSTRAINT [FK_com_ordencompra_local_com_estado_cierre] FOREIGN KEY ([IdEstado_cierre]) REFERENCES [dbo].[com_estado_cierre] ([IdEstado_cierre]),
-    CONSTRAINT [FK_com_ordencompra_local_com_Motivo_Orden_Compra] FOREIGN KEY ([IdEmpresa], [IdMotivo]) REFERENCES [dbo].[com_Motivo_Orden_Compra] ([IdEmpresa], [IdMotivo]),
     CONSTRAINT [FK_com_ordencompra_local_com_TerminoPago1] FOREIGN KEY ([IdEmpresa], [IdTerminoPago]) REFERENCES [dbo].[com_TerminoPago] ([IdEmpresa], [IdTerminoPago]),
     CONSTRAINT [FK_com_ordencompra_local_cp_proveedor] FOREIGN KEY ([IdEmpresa], [IdProveedor]) REFERENCES [dbo].[cp_proveedor] ([IdEmpresa], [IdProveedor]),
     CONSTRAINT [FK_com_ordencompra_local_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])

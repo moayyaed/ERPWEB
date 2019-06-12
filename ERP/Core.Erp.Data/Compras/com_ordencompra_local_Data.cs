@@ -94,7 +94,6 @@ namespace Core.Erp.Data.Compras
                         IdDepartamento = Entity.IdDepartamento,
                         IdEstadoAprobacion_cat = Entity.IdEstadoAprobacion_cat,
                         IdEstado_cierre = Entity.IdEstado_cierre,
-                        IdMotivo = Entity.IdMotivo,
                         IdProveedor = Entity.IdProveedor,
                         IdSucursal = Entity.IdSucursal,
                         IdTerminoPago = Entity.IdTerminoPago,
@@ -151,7 +150,6 @@ namespace Core.Erp.Data.Compras
                         IdDepartamento = info.IdDepartamento,
                         IdEstadoAprobacion_cat = info.IdEstadoAprobacion_cat,
                         IdEstado_cierre = info.IdEstado_cierre,
-                        IdMotivo = info.IdMotivo,
                         IdProveedor = info.IdProveedor,
                         IdSucursal = info.IdSucursal,
                         IdTerminoPago = info.IdTerminoPago,
@@ -216,7 +214,6 @@ namespace Core.Erp.Data.Compras
                      Entity.IdDepartamento = info.IdDepartamento;
                      Entity.IdEstadoAprobacion_cat = info.IdEstadoAprobacion_cat;
                      Entity.IdEstado_cierre = info.IdEstado_cierre;
-                     Entity.IdMotivo = info.IdMotivo;
                      Entity.IdProveedor = info.IdProveedor;
                      Entity.IdSucursal = info.IdSucursal;
                      Entity.IdTerminoPago = info.IdTerminoPago;

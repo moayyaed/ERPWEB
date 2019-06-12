@@ -89,7 +89,6 @@
     <Compile Include="Compras\com_comprador_Info.cs" />
     <Compile Include="Compras\com_departamento_Info.cs" />
     <Compile Include="Compras\com_estado_cierre_Info.cs" />
-    <Compile Include="Compras\com_Motivo_Orden_Compra_Info.cs" />
     <Compile Include="Compras\com_ordencompra_local_det_Info.cs" />
     <Compile Include="Compras\com_ordencompra_local_Info.cs" />
     <Compile Include="Compras\com_parametro_Info.cs" />
