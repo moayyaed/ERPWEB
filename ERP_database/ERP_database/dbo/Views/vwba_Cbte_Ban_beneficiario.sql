@@ -14,14 +14,14 @@ FROM     dbo.cp_orden_pago INNER JOIN
                   dbo.cp_orden_pago.IdOrdenPago = dbo.cp_orden_pago_cancelaciones.IdOrdenPago_op
 WHERE  (dbo.ba_Cbte_Ban.cb_Cheque IS NULL)
 GROUP BY dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdCbteCble, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto
-UNION
+/*UNION
 SELECT ba_Cbte_Ban.IdEmpresa, ba_Cbte_Ban.IdTipocbte, ba_Cbte_Ban.IdCbteCble, tb_persona.IdPersona, tb_persona.pe_nombreCompleto
 FROM     ro_empleado INNER JOIN
                   tb_persona ON ro_empleado.IdPersona = tb_persona.IdPersona INNER JOIN
                   ba_Archivo_Transferencia_Det INNER JOIN
                   ba_Cbte_Ban ON ba_Archivo_Transferencia_Det.IdEmpresa_pago = ba_Cbte_Ban.IdEmpresa AND ba_Archivo_Transferencia_Det.IdCbteCble_pago = ba_Cbte_Ban.IdCbteCble AND 
                   ba_Archivo_Transferencia_Det.IdTipoCbte_pago = ba_Cbte_Ban.IdTipocbte ON ro_empleado.IdEmpleado = ba_Archivo_Transferencia_Det.IdEmpleado AND ro_empleado.IdEmpresa = ba_Archivo_Transferencia_Det.IdEmpresa
-GROUP BY ba_Cbte_Ban.IdEmpresa, ba_Cbte_Ban.IdTipocbte, ba_Cbte_Ban.IdCbteCble, tb_persona.IdPersona, tb_persona.pe_nombreCompleto
+GROUP BY ba_Cbte_Ban.IdEmpresa, ba_Cbte_Ban.IdTipocbte, ba_Cbte_Ban.IdCbteCble, tb_persona.IdPersona, tb_persona.pe_nombreCompleto*/
 UNION
 SELECT dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdCbteCble, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto
 FROM     dbo.ba_Cbte_Ban INNER JOIN
