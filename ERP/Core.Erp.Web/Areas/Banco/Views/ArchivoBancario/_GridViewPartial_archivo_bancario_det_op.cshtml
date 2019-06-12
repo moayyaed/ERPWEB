@@ -4,7 +4,7 @@
     {
         settings.Name = "GridView_archivo_bancario_det_op";
         settings.CallbackRouteValues = new { Controller = "ArchivoBancario", Action = "GridViewPartial_archivo_bancario_det_op" };
-        settings.KeyFieldName = "Secuencia";
+        settings.KeyFieldName = "IdOrdenPago";
 
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;
@@ -38,8 +38,8 @@
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.Width = Unit.Percentage(10);
-            column.FieldName = "IdPersona";
-            column.Caption = "Id persona";
+            column.FieldName = "IdTipoPersona";
+            column.Caption = "Tipo persona";
         });
         settings.Columns.Add(column =>
         {

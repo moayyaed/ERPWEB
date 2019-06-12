@@ -166,6 +166,7 @@ namespace Core.Erp.Data.Banco
                                 Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
                                 Secuencia_OP = item.Secuencia_OP,
                                 Valor = item.Valor
+                               
                             });
                         }
                     }

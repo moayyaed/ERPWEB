@@ -16,7 +16,7 @@ namespace Core.Erp.Info.Banco
         public Nullable<decimal> IdOrdenPago { get; set; }
         public Nullable<int> Secuencia_OP { get; set; }
         public bool Estado { get; set; }
-        public decimal Valor { get; set; }
+        public double Valor { get; set; }
         public decimal Secuencial_reg_x_proceso { get; set; }
         public Nullable<bool> Contabilizado { get; set; }
         public Nullable<System.DateTime> Fecha_proceso { get; set; }
@@ -24,5 +24,6 @@ namespace Core.Erp.Info.Banco
         public string Nom_Beneficiario { get; set; }
         public string Referencia { get; set; }
         public decimal IdPersona { get; set; }
+        public string IdTipoPersona { get; set; }
     }
 }
