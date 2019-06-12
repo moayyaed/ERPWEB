@@ -60,12 +60,15 @@ namespace Core.Erp.Data.Banco
                              select new ba_Archivo_Transferencia_Det_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
-                                 IdEmpresa_OP = q.IdEmpresa,
-                                 Secuencia_OP = q.Secuencia_OP,
-                                 IdOrdenPago = q.IdOrdenPago
+                                 Secuencia = q.Secuencia_OP,
+                                 IdOrdenPago = q.IdOrdenPago,
+                                 Nom_Beneficiario =  q.Nom_Beneficiario,
+                                 //Valor = q.Saldo_x_Pagar_OP,
+                                 Referencia = q.Referencia,
+                                 IdPersona = q.IdPersona,
+                                 Fecha_Factura = q.Fecha_Fa_Prov        
                              }).ToList();
                 }
-
                 return Lista;
             }
             catch (Exception)

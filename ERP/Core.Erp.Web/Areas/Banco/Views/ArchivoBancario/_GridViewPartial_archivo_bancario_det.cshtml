@@ -39,45 +39,49 @@
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "IdOrdenPago";
             column.Caption = "ID";
         });
-
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(40);
-            column.FieldName = "Id_Item";
-            column.Caption = "Item";
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "IdPersona";
+            column.Caption = "Id persona";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "Nom_Beneficiario";
+            column.Caption = "Nombre beneficiario";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "Referencia";
+            column.Caption = "Referencia";
         });
 
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(40);
-            column.FieldName = "Fecha_proceso";
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha_Factura";
             column.Caption = "Fecha";
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
         });
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.Width = Unit.Percentage(20);
-            column.FieldName = "Secuencial_reg_x_proceso";
-            column.Caption = "Secuencial";
-            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
-        });
-        settings.Columns.Add(column =>
-        {
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "Valor";
             column.Caption = "Valor";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -20,5 +20,9 @@ namespace Core.Erp.Info.Banco
         public decimal Secuencial_reg_x_proceso { get; set; }
         public Nullable<bool> Contabilizado { get; set; }
         public Nullable<System.DateTime> Fecha_proceso { get; set; }
+        public Nullable<System.DateTime> Fecha_Factura { get; set; }
+        public string Nom_Beneficiario { get; set; }
+        public string Referencia { get; set; }
+        public decimal IdPersona { get; set; }
     }
 }

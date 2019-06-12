@@ -192,7 +192,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
-                    var info_det = Lst_det.Where(q => q.IdOrdenPago == Convert.ToInt32(item)).FirstOrDefault();
+                    var info_det = Lst_det.Where(q => q.IdEmpresa == Convert.ToInt32(item)).FirstOrDefault();
                     if (info_det != null)
                     {
                         List_det.AddRow(info_det, IdTransaccionSession);
