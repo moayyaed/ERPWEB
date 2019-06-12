@@ -102,7 +102,6 @@
     <Build Include="dbo\Tables\ba_Archivo_Transferencia_Det.sql" />
     <Build Include="dbo\Tables\fa_factura_x_fa_guia_remision.sql" />
     <Build Include="dbo\Tables\ro_rubros_calculados.sql" />
-    <Build Include="dbo\Tables\ba_Archivo_Transferencia_Parametros.sql" />
     <Build Include="dbo\Tables\cxc_cobro.sql" />
     <Build Include="dbo\Tables\ro_periodo.sql" />
     <Build Include="dbo\Tables\ro_periodo_x_ro_Nomina_TipoLiqui.sql" />
