@@ -104,21 +104,21 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Estado=Entity.Estado,
                         Observacion=Entity.Observacion,
                     };
-                    info.lst_cuotas_det
-                          = (from q in Context.cp_cuotas_x_doc_det
-                             where q.IdCuota ==info.IdCuota
-                             && q.IdEmpresa==IdEmpresa
-                                  select new cp_cuotas_x_doc_det_Info
-                                  {
-                                      IdEmpresa = q.IdEmpresa,
-                                      IdCuota = q.IdCuota,
-                                      Secuencia = q.Secuencia,
-                                      Num_cuota = q.Num_cuota,
-                                      Fecha_vcto_cuota = q.Fecha_vcto_cuota,
-                                      Valor_cuota = q.Valor_cuota,
-                                      Observacion = q.Observacion,
-                                      Estado = q.Estado,
-                                  }).ToList();
+                    //info.lst_cuotas_det
+                    //      = (from q in Context.cp_cuotas_x_doc_det
+                    //         where q.IdCuota ==info.IdCuota
+                    //         && q.IdEmpresa==IdEmpresa
+                    //              select new cp_cuotas_x_doc_det_Info
+                    //              {
+                    //                  IdEmpresa = q.IdEmpresa,
+                    //                  IdCuota = q.IdCuota,
+                    //                  Secuencia = q.Secuencia,
+                    //                  Num_cuota = q.Num_cuota,
+                    //                  Fecha_vcto_cuota = q.Fecha_vcto_cuota,
+                    //                  Valor_cuota = q.Valor_cuota,
+                    //                  Observacion = q.Observacion,
+                    //                  Estado = q.Estado,
+                    //              }).ToList();
                 }
 
                 return info;
@@ -188,14 +188,14 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Context.cp_cuotas_x_doc.Add(Entity);
                         Context.SaveChanges();
 
-                        cp_cuotas_x_doc_det_Data oData_det = new cp_cuotas_x_doc_det_Data();
-                        foreach (var item in info.lst_cuotas_det)
-                        {
-                            item.IdCuota = info.IdCuota;
-                            item.IdEmpresa = info.IdEmpresa;
+                        //cp_cuotas_x_doc_det_Data oData_det = new cp_cuotas_x_doc_det_Data();
+                        //foreach (var item in info.lst_cuotas_det)
+                        //{
+                        //    item.IdCuota = info.IdCuota;
+                        //    item.IdEmpresa = info.IdEmpresa;
 
-                        }
-                        oData_det.GuardarDB(info.lst_cuotas_det);
+                        //}
+                        //oData_det.GuardarDB(info.lst_cuotas_det);
                     }
                     else
                     {
@@ -227,29 +227,29 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.Total_a_pagar = info.Total_a_pagar;
                         Context.SaveChanges();
 
-                        var lst = from q in Context.cp_cuotas_x_doc_det
-                                  where q.IdEmpresa == info.IdEmpresa
-                                  && q.IdCuota == info.IdCuota
-                                  && q.Estado == true
-                                  select q;
-                        cp_cuotas_x_doc_det_Data oData = new cp_cuotas_x_doc_det_Data();
-                        if (lst.Count() == 0)
-                        {
-                            oData.EliminarDB(info.IdEmpresa, info.IdCuota);
-                            foreach (var item in info.lst_cuotas_det)
-                            {
-                                item.IdCuota = info.IdCuota;
-                                item.IdEmpresa = info.IdEmpresa;
-                            }
-                            oData.GuardarDB(info.lst_cuotas_det);
-                        }
-                        else
-                        {
-                            foreach (var item in info.lst_cuotas_det)
-                            {
-                                oData.ModificarDB_campos_op(item);
-                            }
-                        }
+                        //var lst = from q in Context.cp_cuotas_x_doc_det
+                        //          where q.IdEmpresa == info.IdEmpresa
+                        //          && q.IdCuota == info.IdCuota
+                        //          && q.Estado == true
+                        //          select q;
+                        //cp_cuotas_x_doc_det_Data oData = new cp_cuotas_x_doc_det_Data();
+                        //if (lst.Count() == 0)
+                        //{
+                        //    oData.EliminarDB(info.IdEmpresa, info.IdCuota);
+                        //    foreach (var item in info.lst_cuotas_det)
+                        //    {
+                        //        item.IdCuota = info.IdCuota;
+                        //        item.IdEmpresa = info.IdEmpresa;
+                        //    }
+                        //    oData.GuardarDB(info.lst_cuotas_det);
+                        //}
+                        //else
+                        //{
+                        //    foreach (var item in info.lst_cuotas_det)
+                        //    {
+                        //        oData.ModificarDB_campos_op(item);
+                        //    }
+                        //}
                     }
 
                 }

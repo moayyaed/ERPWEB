@@ -21,70 +21,6 @@
 
 <script type="text/javascript">
    
-
-    function MostrarModalOC() {
-        if (IdProveedor.GetValue() > 0) {
-            var datos = {
-                IdEmpresa: $("#IdEmpresa").val(),
-                IdSucursal: $("#IdSucursal").val(),
-                IdProveedor: IdProveedor.GetValue(),
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("GetListOcPorIngresar", "Deudas", new { Area = "CuentasPorPagar" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                },
-                error: function (error) {
-                }
-            });
-            GridView_deuda_det_PorIngresar.PerformCallback();
-            $("#ModalOc").modal("show");
-            GridView_deuda_det_PorIngresar.UnselectRows();
-        }
-    }
-    var selectedIDs;
-    function OnBeginCallback(s, e) {
-        //Pass all selected keys to GridView callback action
-        e.customArgs["selectedIDs"] = selectedIDs;
-        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
-    }
-    function OnSelectionChanged(s, e) {
-        s.GetSelectedFieldValues("SecuencialID", GetSelectedFieldValuesCallback);
-    }
-    function GetSelectedFieldValuesCallback(values) {
-        //Capture all selected keys
-        selectedIDs = values.join(',');
-    }
-    function AgregarOC() {
-        var datos = {
-            Ids: selectedIDs,
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("AgregarOC", "Deudas", new { Area = "CuentasPorPagar" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridView_deuda_det.PerformCallback();
-                $("#ModalOc").modal("hide");
-            },
-            error: function (error) {
-            }
-        });
-        $("#btn_guardar").disabled = false;
-    }
     function SetValorRetencion(s, e) {
         var datos = {
             IdCodigoSRI: s.GetValue()
@@ -115,14 +51,15 @@
         });
     };
 
-     function CrearModificarProveedor() {
+    function CrearModificarProveedor() {
+        var location = GetPathServer();
         if(IdProveedor.GetValue() > 0)
         {
-            var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            var win = window.open(location + "/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
             win.focus();
         }else
         {
-            var win = window.open(window.location.origin +"/FixedERP/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            var win = window.open(location + "/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
             win.focus();
         }
     }
@@ -136,28 +73,6 @@
     @Html.HiddenFor(q => q.IdCbteCble_Ogiro)
     @Html.HiddenFor(q => q.IdTipoCbte_Ogiro)
     @Html.HiddenFor(q => q.co_fechaOg)
-
-    <div class="modal fade" id="ModalOc" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ordenes de compra</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Action("GridViewPartial_deudas_det_PorIngresar")
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="AgregarOC();">Aceptar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
@@ -339,20 +254,14 @@
                 <a href="#tab_datos_generales" aria-controls="informacion_general" role="tab" data-toggle="tab">Datos generales</a>
             </li>
             <li>
-                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Detalle de ingreso</a>
-            </li>
-            <li>
-                <a href="#tab_documento_modificado" aria-controls="contactos_telefonos" role="tab" data-toggle="tab">Documento modificado</a>
-            </li>
-            <li>
-                <a href="#tab_informacion_pago" aria-controls="contabilidad" role="tab" data-toggle="tab">Información de pago</a>
-            </li>
-            <li>
-                <a href="#tab_detalle_cuotas" aria-controls="cuentas" role="tab" data-toggle="tab">Detalle de cuotas</a>
-            </li>
-            <li>
                 <a href="#tab_retencion" aria-controls="retencion" role="tab" data-toggle="tab">Retención</a>
             </li>
+            <li>
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Detalle de ingreso</a>
+            </li> 
+            <li>
+                <a href="#tab_informacion_pago" aria-controls="contabilidad" role="tab" data-toggle="tab">Información adicional</a>
+            </li>                       
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
@@ -409,7 +318,65 @@
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_documento_modificado">
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_retencion">
+                <div id="Tabs" role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tab_retenciones" aria-controls="retenciones" role="tab" data-toggle="tab">Retenciones</a>
+                        </li>
+                        <li>
+                            <a href="#tab_diario" aria-controls="diario" role="tab" data-toggle="tab">Diario contable</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" style="padding-top: 20px">
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_retenciones">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Detalle retención*</label>
+                                            @Html.Action("GridViewPartial_retencion_det", new { Area = "CuentasPorPagar", Controller = "Retencion" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div role="tabpanel" class="tab-pane " style="margin-left: 1em;" id="tab_diario">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Diario contable*</label>
+                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="co_observacion"></label>
+                                @Html.Action("GridViewPartial_deudas_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_informacion_pago">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -454,9 +421,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_informacion_pago">
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
@@ -518,148 +482,7 @@
                     </div>
                 </div>
 
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary form-control" onclick="MostrarModalOC()" title="Buscar órdenes">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="co_observacion"></label>
-                                @Html.Action("GridViewPartial_deudas_det")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle_cuotas">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="Num_cuotas">#cuotas</label>
-                                @Html.TextBoxFor(q => q.info_cuota.Num_cuotas, new { @class = "form-control", @id = "Num_cuotas" })
-                                @Html.ValidationMessageFor(q => q.info_cuota.Num_cuotas, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="Dias_plazo">Días plazo</label>
-                                @Html.TextBoxFor(q => q.info_cuota.Dias_plazo, new { @class = "form-control", @id = "Dias_plazo" })
-                                @Html.ValidationMessageFor(q => q.info_cuota.Dias_plazo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="Total_a_pagar">Total pagar</label>
-                                @Html.TextBoxFor(q => q.info_cuota.Total_a_pagar, new { @class = "form-control", @id = "Total_a_pagar" })
-                                @Html.ValidationMessageFor(q => q.info_cuota.Total_a_pagar, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="co_FechaContabilizacion">Fecha Primera cuota*</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    @Html.DevExpress().DateEditFor(q => q.info_cuota.Fecha_inicio, settings =>
-                                       {
-                                           settings.Name = "Fecha_inicio";
-                                           settings.Properties.UseMaskBehavior = true;
-                                           settings.Properties.EditFormat = EditFormat.Date;
-                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_cuotas();}";
-                                       }).GetHtml()
-                                    @Html.ValidationMessageFor(q => q.info_cuota.Fecha_inicio, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="co_observacion">Detalle de cuotas</label>
-
-                                @Html.Action("GridViewPartial_documento_cuotas_det")
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_retencion">
-
-
-
-
-
-                <div id="Tabs" role="tabpanel">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active">
-                            <a href="#tab_retenciones" aria-controls="retenciones" role="tab" data-toggle="tab">Retenciones</a>
-                        </li>
-                        <li>
-                            <a href="#tab_diario" aria-controls="diario" role="tab" data-toggle="tab">Diario contable</a>
-                        </li>
-
-                    </ul>
-                    <div class="tab-content" style="padding-top: 20px">
-                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_retenciones">
-
-                           
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="">Detalle retención*</label>
-                                            @Html.Action("GridViewPartial_retencion_det", new { Area = "CuentasPorPagar", Controller = "Retencion" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div role="tabpanel" class="tab-pane " style="margin-left: 1em;" id="tab_diario">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="">Diario contable*</label>
-                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
+            </div>                       
         </div>
     </div>
     <div class="box-footer">
@@ -729,20 +552,20 @@
         }
     }
 
-    $("#IdIden_credito").change(function () {
+    //$("#IdIden_credito").change(function () {
 
-        var tipo_doc = $("#IdIden_credito").val();
+    //    var tipo_doc = $("#IdIden_credito").val();
 
-        if (tipo_doc == "04")
-        {
-            $("#tab_documento_modificado").show();
-        }
-        else
-        {
-            $("#tab_documento_modificado").hide();
+    //    if (tipo_doc == "04")
+    //    {
+    //        $("#tab_documento_modificado").show();
+    //    }
+    //    else
+    //    {
+    //        $("#tab_documento_modificado").hide();
 
-        }
-    });
+    //    }
+    //});
 
 
     function actualizar_valores() {

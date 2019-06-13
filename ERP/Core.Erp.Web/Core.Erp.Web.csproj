@@ -9104,7 +9104,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\Anular.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_documento_cuotas_det.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_deudas.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_deudas_dc.cshtml" />
     <Content Include="Areas\General\Views\Ciudad\Anular.cshtml" />
@@ -9785,7 +9784,6 @@
     <Content Include="Areas\Inventario\Views\Producto\_GridViewPartial_MarcaPro_importacion.cshtml" />
     <Content Include="Areas\Inventario\Views\Producto\_GridViewPartial_PresentacionPro_importacion.cshtml" />
     <Content Include="Areas\Inventario\Views\Producto\_GridViewPartial_ProductoPro_importacion.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_deudas_det_PorIngresar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\SolicitudPago\Index.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\SolicitudPago\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\SolicitudPago\_CmbProveedor_CXP.cshtml" />

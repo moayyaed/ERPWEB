@@ -20,11 +20,11 @@ namespace Core.Erp.Info.CuentasPorPagar
         public bool Estado { get; set; }
         public string Observacion { get; set; }
 
-        public List<cp_cuotas_x_doc_det_Info> lst_cuotas_det { get; set; }
+        //public List<cp_cuotas_x_doc_det_Info> lst_cuotas_det { get; set; }
 
-        public  cp_cuotas_x_doc_Info()
-        {
-            lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
-        }
+        //public  cp_cuotas_x_doc_Info()
+        //{
+        //    lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
+        //}
     }
 }

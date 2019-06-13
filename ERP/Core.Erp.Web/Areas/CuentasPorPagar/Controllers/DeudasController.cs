@@ -39,7 +39,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_parametros_Info info_parametro = new cp_parametros_Info();
         cp_parametros_Bus bus_param = new cp_parametros_Bus();
         ct_cbtecble_det_List_fp Lis_ct_cbtecble_det_List = new ct_cbtecble_det_List_fp();
-        cp_cuotas_x_doc_det_Info_lst Lis_cp_cuotas_x_doc_det_Info = new cp_cuotas_x_doc_det_Info_lst();
+        //cp_cuotas_x_doc_det_Info_lst Lis_cp_cuotas_x_doc_det_Info = new cp_cuotas_x_doc_det_Info_lst();
         cp_orden_giro_det_Info_List List_det = new cp_orden_giro_det_Info_List();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
@@ -197,21 +197,21 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #endregion
 
         #region vista de Detalle de cuotas y diario contable
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_documento_cuotas_det()
-        {
-            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            try
-            {
-                lst_detalle_cuotas = Lis_cp_cuotas_x_doc_det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-                return PartialView("_GridViewPartial_documento_cuotas_det", lst_detalle_cuotas);
-            }
-            catch (Exception)
-            {
+        //[ValidateInput(false)]
+        //public ActionResult GridViewPartial_documento_cuotas_det()
+        //{
+        //    SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+        //    try
+        //    {
+        //        lst_detalle_cuotas = Lis_cp_cuotas_x_doc_det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+        //        return PartialView("_GridViewPartial_documento_cuotas_det", lst_detalle_cuotas);
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
         public ActionResult GridViewPartial_deudas_dc()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -353,7 +353,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             List_ct_cbtecble_det_List_retencion.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
 
             Lis_ct_cbtecble_det_List.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
-            Lis_cp_cuotas_x_doc_det_Info.set_list(new List<cp_cuotas_x_doc_det_Info>(), model.IdTransaccionSession);
+            //Lis_cp_cuotas_x_doc_det_Info.set_list(new List<cp_cuotas_x_doc_det_Info>(), model.IdTransaccionSession);
             List_det.set_list(new List<cp_orden_giro_det_Info>(), model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
@@ -420,7 +420,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     }
                 });
             }
-            model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
+            //model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
             if (Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession).Count() == 0)
             {
                 ViewBag.mensaje = "Falta diario contable";
@@ -479,10 +479,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_comrobante.lst_ct_cbtecble_det == null)
                 model.info_comrobante.lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>();
             Lis_ct_cbtecble_det_List.set_list(model.info_comrobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
-            if (model.info_cuota.lst_cuotas_det == null)
-                model.info_cuota.lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
+            //if (model.info_cuota.lst_cuotas_det == null)
+            //    model.info_cuota.lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
-            Lis_cp_cuotas_x_doc_det_Info.set_list(model.info_cuota.lst_cuotas_det, model.IdTransaccionSession);
+            //Lis_cp_cuotas_x_doc_det_Info.set_list(model.info_cuota.lst_cuotas_det, model.IdTransaccionSession);
             List_det.set_list(bus_det.get_list(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro), model.IdTransaccionSession);
 
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
@@ -535,7 +535,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.info_comrobante.IdTipoCbte = (int)info_parametro.pa_TipoCbte_OG;
 
 
-            model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
+            //model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
             model.info_retencion.detalle = List_cp_retencion_det.get_list(model.IdTransaccionSession);
             model.info_retencion.info_comprobante.lst_ct_cbtecble_det = List_ct_cbtecble_det_List_retencion.get_list(model.IdTransaccionSession);
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession);
@@ -625,10 +625,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_comrobante.lst_ct_cbtecble_det == null)
                 model.info_comrobante.lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>();
             Lis_ct_cbtecble_det_List.set_list(model.info_comrobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
-            if (model.info_cuota.lst_cuotas_det == null)
-                model.info_cuota.lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
+            //if (model.info_cuota.lst_cuotas_det == null)
+            //    model.info_cuota.lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-            Lis_cp_cuotas_x_doc_det_Info.set_list(model.info_cuota.lst_cuotas_det, model.IdTransaccionSession);
+            //Lis_cp_cuotas_x_doc_det_Info.set_list(model.info_cuota.lst_cuotas_det, model.IdTransaccionSession);
             List_det.set_list(bus_det.get_list(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro), model.IdTransaccionSession);
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             model.info_retencion = bus_retencion.get_info(model.info_retencion.IdEmpresa, model.info_retencion.IdRetencion);
@@ -665,21 +665,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-
-
-
             model.info_comrobante = new ct_cbtecble_Info();
-            model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
+            //model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
 
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession);
-
-
-
-
-
             model.info_retencion.detalle = List_cp_retencion_det.get_list(model.IdTransaccionSession);
-
-            
 
             string mensaje = bus_orden_giro.validar(model);
             if (mensaje != "")
@@ -747,7 +737,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
 
             lst_detalle_cuotas = bus_detalle_cuotas.calcular_cuotas(Fecha_inicio, Num_cuotas, Dias_plazo, Total_a_pagar);
-            Lis_cp_cuotas_x_doc_det_Info.set_list(lst_detalle_cuotas, IdTransaccionSession);
+            //Lis_cp_cuotas_x_doc_det_Info.set_list(lst_detalle_cuotas, IdTransaccionSession);
 
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -755,12 +745,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             var list_tipo_doc = bus_tipo_documento.get_list(IdEmpresa, IdProveedor, codigoSRI);
             return Json(list_tipo_doc, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetListOcPorIngresar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProveedor = 0, decimal IdTransaccionSession = 0)
-        {
-            List_det_PorIngresar.set_list(bus_det.GetListPorIngresar(IdEmpresa, IdSucursal, IdProveedor), IdTransaccionSession);
-            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult armar_diario(decimal IdProveedor = 0, double co_subtotal_iva = 0, double co_subtotal_siniva = 0, double co_valoriva = 0, double co_total = 0, string observacion = "", decimal IdTransaccionSession = 0, int IdSucursal_cxp = 0)
@@ -946,24 +930,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AgregarOC(string Ids = "", decimal IdTransaccionSession = 0)
-        {
-            if (Ids != null)
-            {
-                var lst = List_det_PorIngresar.get_list(IdTransaccionSession);
-                string[] array = Ids.Split(',');
-                var output = array.GroupBy(q => q).ToList();                
-                foreach (var item in output)
-                {
-                    if (!string.IsNullOrEmpty(item.Key))
-                    {
-                        var info_add = lst.Where(q => q.SecuencialID == item.Key).FirstOrDefault();
-                        List_det.AddRow(info_add, IdTransaccionSession);
-                    }
-                }
-            }
-            return Json("", JsonRequestBehavior.AllowGet);
-        }
         #endregion
 
         #region Detalle de inventario
@@ -975,16 +941,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.lst_det = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();            
             return PartialView("_GridViewPartial_deudas_det", model);
-        }
-
-        public ActionResult GridViewPartial_deudas_det_PorIngresar()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            
-            var model = List_det_PorIngresar.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
-            return PartialView("_GridViewPartial_deudas_det_PorIngresar", model);
         }
 
         [HttpPost, ValidateInput(false)]
@@ -1094,36 +1050,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return PartialView("_GridViewPartial_aprobacion_facturas", model);
         }
 
-        #endregion
-
-        #region cuotas
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingAddNew_cuota([ModelBinder(typeof(DevExpressEditorsBinder))] cp_cuotas_x_doc_det_Info info_det)
-        {
-            if (ModelState.IsValid)
-                Lis_cp_cuotas_x_doc_det_Info.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            lst_detalle_cuotas = Lis_cp_cuotas_x_doc_det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
-            return PartialView("_GridViewPartial_documento_cuotas_det", lst_detalle_cuotas);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingUpdate_cuota([ModelBinder(typeof(DevExpressEditorsBinder))] cp_cuotas_x_doc_det_Info info_det)
-        {
-            if (ModelState.IsValid)
-                Lis_cp_cuotas_x_doc_det_Info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            lst_detalle_cuotas = Lis_cp_cuotas_x_doc_det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
-            return PartialView("_GridViewPartial_documento_cuotas_det", lst_detalle_cuotas);
-        }
-
-        public ActionResult EditingDelete_cuota(int secuencia)
-        {
-            Lis_cp_cuotas_x_doc_det_Info.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            lst_detalle_cuotas = Lis_cp_cuotas_x_doc_det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
-            return PartialView("_GridViewPartial_documento_cuotas_det", lst_detalle_cuotas);
-        }
         #endregion
     }
 
@@ -1282,44 +1208,4 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
     }
 
-    public class cp_cuotas_x_doc_det_Info_lst
-    {
-        string Variable = "lst_cuotas";
-        public List<cp_cuotas_x_doc_det_Info> get_list(decimal IdTransaccionSession)
-        {
-            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
-            {
-                List<cp_cuotas_x_doc_det_Info> list = new List<cp_cuotas_x_doc_det_Info>();
-
-                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
-            }
-            return (List<cp_cuotas_x_doc_det_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
-        }
-
-        public void set_list(List<cp_cuotas_x_doc_det_Info> list, decimal IdTransaccionSession)
-        {
-            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
-        }
-
-        public void AddRow(cp_cuotas_x_doc_det_Info info_det, decimal IdTransaccionSession)
-        {
-            List<cp_cuotas_x_doc_det_Info> list = get_list(IdTransaccionSession);
-            list.Add(info_det);
-        }
-
-        public void UpdateRow(cp_cuotas_x_doc_det_Info info_det, decimal IdTransaccionSession)
-        {
-            cp_cuotas_x_doc_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
-            edited_info.Fecha_vcto_cuota = info_det.Fecha_vcto_cuota;
-            edited_info.Valor_cuota = info_det.Valor_cuota;
-            edited_info.Observacion = info_det.Observacion;
-        }
-
-        public void DeleteRow(int secuencia, decimal IdTransaccionSession)
-        {
-            List<cp_cuotas_x_doc_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == secuencia).First());
-        }
-        
-    }
 }
