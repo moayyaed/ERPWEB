@@ -7,7 +7,7 @@
     [IdOrdenPago]              NUMERIC (18)    NULL,
     [Secuencia_OP]             INT             NULL,
     [Estado]                   BIT             NOT NULL,
-    [Valor]                    NUMERIC (18, 2) NOT NULL,
+    [Valor]                    FLOAT NOT NULL,
     [Secuencial_reg_x_proceso] NUMERIC (18)    NOT NULL,
     [Contabilizado]            BIT             NULL,
     [Fecha_proceso]            DATETIME        NULL,

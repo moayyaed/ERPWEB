@@ -1167,6 +1167,9 @@
     <Build Include="web\Stored Procedures\SPCXP_016.sql" />
     <Build Include="dbo\Views\vwro_empleado_x_jornada_x_rubro_cont.sql" />
     <Build Include="web\Views\VWACTF_008.sql" />
+    <Build Include="dbo\Tables\ct_CentroCostoNivel.sql" />
+    <Build Include="dbo\Tables\ct_CentroCosto.sql" />
+    <Build Include="dbo\Views\vwba_Archivo_Transferencia_Det.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
