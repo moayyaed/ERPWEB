@@ -393,5 +393,58 @@ namespace Core.Erp.Data.Compras
                 throw;
             }
         }
+
+        public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal)
+        {
+            try
+            {
+                List<com_ordencompra_local_Info> Lista;
+                using (Entities_compras Context = new Entities_compras())
+                {
+                        Lista = (from q in Context.vwcom_ordencompra_local_x_ingresar
+                                 where q.IdEmpresa == IdEmpresa
+                                 && q.IdSucursal == IdSucursal
+                                 select new com_ordencompra_local_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdSucursal = q.IdSucursal,
+                                     IdOrdenCompra = q.IdOrdenCompra,
+                                     Secuencia = q.Secuencia,
+                                     oc_fecha = q.oc_fecha,
+                                     oc_observacion = q.oc_observacion,
+                                     IdProveedor = q.IdProveedor,
+                                     IdEstadoAprobacion_cat = q.IdEstadoAprobacion_cat,
+                                     IdEstado_cierre = q.IdEstado_cierre,
+                                     Estado = q.Estado,
+                                     IdProducto = q.IdProducto,
+                                     IdCod_Impuesto = q.IdCod_Impuesto,
+                                     Por_Iva = q.Por_Iva,
+                                     do_Cantidad = q.do_Cantidad,
+                                     do_precioCompra = q.do_precioCompra,
+                                     do_porc_des = q.do_porc_des,
+                                     do_precioFinal = q.do_precioFinal,
+                                     do_subtotal = q.do_subtotal,
+                                     do_iva = q.do_iva,
+                                     do_total = q.do_total,
+                                     IdUnidadMedida = q.IdUnidadMedida,
+                                     pr_descripcion =q.pr_descripcion,
+                                     CantidadIngresada = q.CantidadIngresada,
+                                     Saldo = q.Saldo,
+                                     NomUnidadMedida = q.NomUnidadMedida,
+                                     IdCtaCtble_Inve = q.IdCtaCtble_Inve,
+                                     EstadoBool = q.Estado == "A" ? true : false,
+
+                                 }).ToList();
+
+                    Lista.ForEach(q=>q.IdInventarioOrdenCompra = (q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000")  + q.IdOrdenCompra.ToString("000000") + q.Secuencia.ToString("000000")) );                  
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

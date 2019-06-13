@@ -28,6 +28,10 @@ namespace Core.Erp.Info.Inventario
         public Nullable<int> IdMotivo_Inv { get; set; }        
         public Nullable<decimal> IdResponsable { get; set; }
 
+        #region Campos de Orden de compra
+        public int IdProveedor { get; set; }
+        #endregion
+
         #region Campos de auditoria
         public string IdUsuario { get; set; }
         public string MotivoAnulacion { get; set; }

@@ -120,5 +120,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public List<in_Ing_Egr_Inven_Info> get_list_orden_compra(int IdEmpresa, string signo, int IdSucursal, bool mostrar_anulados, int IdMovi_inven_tipo, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                return odata.get_list_orden_compra(IdEmpresa, signo, IdSucursal, mostrar_anulados, IdMovi_inven_tipo, fecha_ini, fecha_fin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

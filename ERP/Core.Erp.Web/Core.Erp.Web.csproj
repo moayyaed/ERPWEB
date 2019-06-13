@@ -388,6 +388,7 @@
     <Compile Include="Areas\Inventario\Controllers\EgresoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\GrupoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\IngresoInventarioController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\IngresoInventarioOrdenCompraController.cs" />
     <Compile Include="Areas\Inventario\Controllers\LineaController.cs" />
     <Compile Include="Areas\Inventario\Controllers\MarcaController.cs" />
     <Compile Include="Areas\Inventario\Controllers\MotivoInventarioController.cs" />
@@ -10009,6 +10010,15 @@
     <Content Include="Areas\Banco\Views\ArchivoBancario\Anular.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_archivo_bancario_det.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_archivo_bancario_det_op.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\Nuevo.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\Modificar.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\Anular.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_GridViewPartial_inv_det.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_GridViewPartial_IngresoOrdenCompra.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbProducto_IngresoOrdenCompra.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbProveedor_IngresoOrdenCompra.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_GridViewPartial_oc_x_ingresar.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

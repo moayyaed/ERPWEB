@@ -908,5 +908,127 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+
+        public List<in_Ing_Egr_Inven_Info> get_list_orden_compra(int IdEmpresa, string signo, int IdSucursal, bool mostrar_anulados, int IdMovi_inven_tipo, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                List<in_Ing_Egr_Inven_Info> Lista;
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    if (mostrar_anulados)
+                        Lista = (from q in Context.in_Ing_Egr_Inven
+                                 join t in Context.in_movi_inven_tipo
+                                 on new { q.IdEmpresa, q.IdMovi_inven_tipo } equals new { t.IdEmpresa, t.IdMovi_inven_tipo }
+                                 where q.IdEmpresa == IdEmpresa
+                                 && q.signo == signo
+                                 && IdSucursalIni <= q.IdSucursal
+                                 && q.IdSucursal <= IdSucursalFin
+                                 && q.IdMovi_inven_tipo == IdMovi_inven_tipo
+                                 && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
+                                 orderby new { q.IdNumMovi } descending
+                                 select new in_Ing_Egr_Inven_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdSucursal = q.IdSucursal,
+                                     IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                     IdBodega = q.IdBodega,
+                                     IdNumMovi = q.IdNumMovi,
+                                     IdMotivo_Inv = q.IdMotivo_Inv,
+                                     Estado = q.Estado,
+                                     signo = q.signo,
+                                     cm_observacion = q.cm_observacion,
+                                     CodMoviInven = q.CodMoviInven,
+                                     cm_fecha = q.cm_fecha,
+                                     tm_descripcion = t.tm_descripcion,
+
+                                     EstadoBool = q.Estado == "A" ? true : false
+
+                                 }).ToList();
+
+                    else
+                        Lista = (from q in Context.in_Ing_Egr_Inven
+                                 join t in Context.in_movi_inven_tipo
+                                 on new { q.IdEmpresa, q.IdMovi_inven_tipo } equals new { t.IdEmpresa, t.IdMovi_inven_tipo }
+                                 where q.IdEmpresa == IdEmpresa
+                                 && q.signo == signo
+                                 && IdSucursalIni <= q.IdSucursal
+                                 && q.IdSucursal <= IdSucursalFin
+                                 && q.IdMovi_inven_tipo == IdMovi_inven_tipo
+                                 && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
+                                 && q.Estado == "A"
+                                 orderby new { q.IdNumMovi } descending
+                                 select new in_Ing_Egr_Inven_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdSucursal = q.IdSucursal,
+                                     IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                     IdBodega = q.IdBodega,
+                                     IdNumMovi = q.IdNumMovi,
+                                     IdMotivo_Inv = q.IdMotivo_Inv,
+                                     Estado = q.Estado,
+                                     signo = q.signo,
+                                     cm_observacion = q.cm_observacion,
+                                     CodMoviInven = q.CodMoviInven,
+                                     cm_fecha = q.cm_fecha,
+                                     tm_descripcion = t.tm_descripcion,
+
+                                     EstadoBool = q.Estado == "A" ? true : false
+                                 }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<in_Ing_Egr_Inven_Info> get_list_orden_compra_x_ingresar(int IdEmpresa, int IdSucursal,  int IdMovi_inven_tipo)
+        {
+            try
+            {
+                List<in_Ing_Egr_Inven_Info> Lista;
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                        Lista = (from q in Context.in_Ing_Egr_Inven
+                                 join t in Context.in_movi_inven_tipo
+                                 on new { q.IdEmpresa, q.IdMovi_inven_tipo } equals new { t.IdEmpresa, t.IdMovi_inven_tipo }
+                                 where q.IdEmpresa == IdEmpresa
+                                 && IdSucursal == q.IdSucursal
+                                 && q.IdMovi_inven_tipo == IdMovi_inven_tipo
+                                 orderby new { q.IdNumMovi } descending
+                                 select new in_Ing_Egr_Inven_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdSucursal = q.IdSucursal,
+                                     IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                     IdBodega = q.IdBodega,
+                                     IdNumMovi = q.IdNumMovi,
+                                     IdMotivo_Inv = q.IdMotivo_Inv,
+                                     Estado = q.Estado,
+                                     signo = q.signo,
+                                     cm_observacion = q.cm_observacion,
+                                     CodMoviInven = q.CodMoviInven,
+                                     cm_fecha = q.cm_fecha,
+                                     tm_descripcion = t.tm_descripcion,
+
+                                     EstadoBool = q.Estado == "A" ? true : false
+
+                                 }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
