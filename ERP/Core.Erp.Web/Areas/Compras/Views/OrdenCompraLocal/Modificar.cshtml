@@ -15,8 +15,8 @@
             </h4>
         </div>
     }
-    
-    @*if (ViewBag.MensajeSuccess != null)
+
+    if (ViewBag.MensajeSuccess != null)
     {
         <div class="row">
             <div class="col-md-12">
@@ -26,13 +26,14 @@
                     </h4>
                 </div>
             </div>
-     }*@
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script type="text/javascript">
     function Imprimir() {
         var location = GetPathServer();
-        var win = window.open(location +"/Reportes/ComprasReportes/COMP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursak="+@Model.IdSucursal+"&IdOrdenCompra="+@Model.IdOrdenCompra, '_blank');
+        var win = window.open(location +"/Reportes/CompraReportes/COMP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdOrdenCompra="+@Model.IdOrdenCompra, '_blank');
         win.focus();
     }
 
@@ -57,6 +58,8 @@
     @Html.HiddenFor(q => q.IdOrdenCompra)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdEstadoAprobacion_cat)
+    @Html.HiddenFor(q => q.IdComprador)
+    
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">

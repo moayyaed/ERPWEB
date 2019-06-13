@@ -20,8 +20,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.usuario = SessionFixed.IdUsuario;
             model.empresa = SessionFixed.NomEmpresa;
             return View(model);
-
-
         }
 
     }

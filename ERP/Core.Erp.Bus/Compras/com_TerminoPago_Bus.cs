@@ -76,11 +76,11 @@ namespace Core.Erp.Bus.Compras
             }
         }
 
-        public List<com_TerminoPago_Info> get_list_x_plazo_proveedor(int IdEmpresa, int plazo)
+        public com_TerminoPago_Info get_info_termino_pago_x_proveedor(int IdEmpresa, int plazo, string signo)
         {
             try
             {
-                return odata.get_list_x_plazo_proveedor(IdEmpresa, plazo);
+                return odata.get_info_termino_pago_x_proveedor(IdEmpresa, plazo, signo);
             }
             catch (Exception)
             {

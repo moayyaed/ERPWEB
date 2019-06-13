@@ -179,29 +179,36 @@ namespace Core.Erp.Data.Compras
             }
         }
 
-        public List<com_TerminoPago_Info> get_list_x_plazo_proveedor(int IdEmpresa, int plazo)
+        public com_TerminoPago_Info get_info_termino_pago_x_proveedor(int IdEmpresa, int plazo, string signo)
         {
             try
             {
-                List<com_TerminoPago_Info> Lista;
+                com_TerminoPago_Info info = new com_TerminoPago_Info();
                 using (Entities_compras Context = new Entities_compras())
                 {
-                    Lista = (from q in Context.com_TerminoPago
-                                where q.IdEmpresa == IdEmpresa
-                                && q.Estado == "A"
-                                && q.Dias >= plazo
-                                select new com_TerminoPago_Info
-                                {
-                                    IdEmpresa = q.IdEmpresa,
-                                    IdTerminoPago = q.IdTerminoPago,
-                                    Descripcion = q.Descripcion,
-                                    Dias = q.Dias,
-                                    Estado = q.Estado,
+                    com_TerminoPago Entity = null;
 
-                                    EstadoBool = q.Estado == "A" ? true : false
-                                }).ToList();
+                    if (signo == "=")
+                    {
+                        Entity = Context.com_TerminoPago.Where(q => q.IdEmpresa == IdEmpresa && q.Dias == plazo).FirstOrDefault();
+                    }
+                    else
+                    {
+                        Entity = Context.com_TerminoPago.Where(q => q.IdEmpresa == IdEmpresa && q.Dias >= plazo).FirstOrDefault();
+                    }
+
+                    if (Entity == null) return null;
+
+                    info = new com_TerminoPago_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdTerminoPago = Entity.IdTerminoPago,
+                        Descripcion = Entity.Descripcion,
+                        Dias = Entity.Dias,
+                        Estado = Entity.Estado
+                    };
                 }
-                return Lista;
+                return info;
             }
             catch (Exception)
             {

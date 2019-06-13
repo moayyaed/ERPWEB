@@ -113,6 +113,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         private void cargar_combos(int IdEmpresa)
         {
             var lst_termino = bus_termino.get_list(IdEmpresa, false);
+            lst_termino.Add(new com_TerminoPago_Info());
             ViewBag.lst_termino = lst_termino;
 
             var lst_apro = bus_catalogo.get_list(cl_enumeradores.eTipoCatalogoCOM.EST_APRO.ToString(), false);
@@ -335,11 +336,23 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult get_list_termino_pago(int IdEmpresa = 0, decimal IdProveedor = 0)
+        public JsonResult get_info_termino_pago_x_proveedor(int IdEmpresa = 0, decimal IdProveedor = 0)
         {
+            var info_termino_pago = new com_TerminoPago_Info();
             cp_proveedor_Info info_proveedor = bus_proveedor.get_info(IdEmpresa, IdProveedor);
-            var list_termino_pago = bus_termino.get_list_x_plazo_proveedor(IdEmpresa, info_proveedor.pr_plazo);
-            return Json(list_termino_pago, JsonRequestBehavior.AllowGet);
+            com_TerminoPago_Info info_termino_pago_igual = bus_termino.get_info_termino_pago_x_proveedor(IdEmpresa, info_proveedor.pr_plazo, "=");
+            com_TerminoPago_Info info_termino_pago_mayor = bus_termino.get_info_termino_pago_x_proveedor(IdEmpresa, info_proveedor.pr_plazo, ">=");
+
+            if (info_termino_pago_igual != null)
+            {
+                info_termino_pago = info_termino_pago_igual;
+            }
+            else
+            {
+                info_termino_pago = info_termino_pago_mayor;
+            }
+            
+            return Json(info_termino_pago, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult get_info_termino_pago(int IdEmpresa = 0, int IdTerminoPago=0)
