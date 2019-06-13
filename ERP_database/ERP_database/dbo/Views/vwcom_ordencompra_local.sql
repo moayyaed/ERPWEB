@@ -11,14 +11,14 @@ FROM            dbo.com_ordencompra_local AS c LEFT OUTER JOIN
                                FROM            dbo.com_ordencompra_local_det AS det
                                GROUP BY IdEmpresa, IdSucursal, IdOrdenCompra) AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdOrdenCompra = d.IdOrdenCompra LEFT OUTER JOIN
                          dbo.com_comprador AS com ON c.IdEmpresa = com.IdEmpresa AND c.IdComprador = com.IdComprador LEFT OUTER JOIN
-                         dbo.com_TerminoPago AS tp ON c.IdTerminoPago = tp.IdTerminoPago
+                         dbo.com_TerminoPago AS tp ON c.IdEmpresa = tp.IdEmpresa AND c.IdTerminoPago = tp.IdTerminoPago
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[28] 4[3] 2[63] 3) )"
+         Configuration = "(H (1[48] 4[5] 2[43] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -160,6 +160,8 @@ Begin DesignProperties =
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
       End
@@ -168,6 +170,17 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
    End
    Begin DataPane = 
       Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
       End
    End
    Begin CriteriaPane = 
@@ -189,6 +202,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+
+
 
 
 

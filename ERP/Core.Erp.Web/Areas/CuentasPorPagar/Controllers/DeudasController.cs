@@ -30,8 +30,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_codigo_SRI_x_CtaCble_Bus bus_codigo_sri = new cp_codigo_SRI_x_CtaCble_Bus();
         cp_pagos_sri_Bus bus_forma_paogo = new cp_pagos_sri_Bus();
         cp_pais_sri_Bus bus_pais = new cp_pais_sri_Bus();
-        List<cp_cuotas_x_doc_det_Info> lst_detalle_cuotas = new List<cp_cuotas_x_doc_det_Info>();
-        cp_cuotas_x_doc_det_Bus bus_detalle_cuotas = new cp_cuotas_x_doc_det_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         cp_TipoDocumento_Bus bus_tipo_documento = new cp_TipoDocumento_Bus();
         cp_proveedor_Info info_proveedor = new cp_proveedor_Info();
@@ -39,7 +37,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_parametros_Info info_parametro = new cp_parametros_Info();
         cp_parametros_Bus bus_param = new cp_parametros_Bus();
         ct_cbtecble_det_List_fp Lis_ct_cbtecble_det_List = new ct_cbtecble_det_List_fp();
-        //cp_cuotas_x_doc_det_Info_lst Lis_cp_cuotas_x_doc_det_Info = new cp_cuotas_x_doc_det_Info_lst();
         cp_orden_giro_det_Info_List List_det = new cp_orden_giro_det_Info_List();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
@@ -337,10 +334,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 PaisPago = "593",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoServicio = cl_enumeradores.eTipoServicioCXP.SERVI.ToString(),
-                info_cuota = new cp_cuotas_x_doc_Info
-                {
-                    Fecha_inicio = DateTime.Now.Date
-                },
                 info_retencion = new cp_retencion_Info
                 {
                     serie1 = info_documento.Establecimiento,
@@ -370,8 +363,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = "El documento " + model.co_serie + " " + model.co_factura + ", ya se encuentra registrado";
                 cargar_combos(model);
                 cargar_combos_detalle();
-                if (model.info_cuota.Fecha_inicio.Year == 1)
-                    model.info_cuota.Fecha_inicio = DateTime.Now;
+                //if (model.info_cuota.Fecha_inicio.Year == 1)
+                //    model.info_cuota.Fecha_inicio = DateTime.Now;
                 return View(model);
             }
 
@@ -380,8 +373,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = "Falta parametrizar el módulo de cuentas por pagar";
                 cargar_combos(model);
                 cargar_combos_detalle();
-                if (model.info_cuota.Fecha_inicio.Year == 1)
-                    model.info_cuota.Fecha_inicio = DateTime.Now;
+                //if (model.info_cuota.Fecha_inicio.Year == 1)
+                //    model.info_cuota.Fecha_inicio = DateTime.Now;
                 return View(model);
             }
             model.info_comrobante = new ct_cbtecble_Info();
@@ -426,8 +419,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = "Falta diario contable";
                 cargar_combos(model);
                 cargar_combos_detalle();
-                if (model.info_cuota.Fecha_inicio.Year == 1)
-                    model.info_cuota.Fecha_inicio = DateTime.Now;
+                //if (model.info_cuota.Fecha_inicio.Year == 1)
+                //    model.info_cuota.Fecha_inicio = DateTime.Now;
                 return View(model);
 
             }
@@ -439,8 +432,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model);
                 cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
-                if (model.info_cuota.Fecha_inicio.Year == 1)
-                    model.info_cuota.Fecha_inicio = DateTime.Now;
+                //if (model.info_cuota.Fecha_inicio.Year == 1)
+                //    model.info_cuota.Fecha_inicio = DateTime.Now;
                 return View(model);
             }
 
@@ -455,8 +448,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (!bus_orden_giro.guardarDB(model))
             {
                 cargar_combos(model);
-                if (model.info_cuota.Fecha_inicio.Year == 1)
-                    model.info_cuota.Fecha_inicio = DateTime.Now;
+                //if (model.info_cuota.Fecha_inicio.Year == 1)
+                //    model.info_cuota.Fecha_inicio = DateTime.Now;
                 return View(model);
             }
 
@@ -733,14 +726,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult calcular_cuotas(DateTime Fecha_inicio, int Num_cuotas = 0, int Dias_plazo = 0, double Total_a_pagar = 0, decimal IdTransaccionSession = 0)
-        {
 
-            lst_detalle_cuotas = bus_detalle_cuotas.calcular_cuotas(Fecha_inicio, Num_cuotas, Dias_plazo, Total_a_pagar);
-            //Lis_cp_cuotas_x_doc_det_Info.set_list(lst_detalle_cuotas, IdTransaccionSession);
-
-            return Json("", JsonRequestBehavior.AllowGet);
-        }
         public JsonResult get_list_tipo_doc(int IdEmpresa = 0, decimal IdProveedor = 0, string codigoSRI = "")
         {
             var list_tipo_doc = bus_tipo_documento.get_list(IdEmpresa, IdProveedor, codigoSRI);

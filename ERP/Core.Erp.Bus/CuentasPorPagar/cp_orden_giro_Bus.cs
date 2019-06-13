@@ -17,7 +17,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
     {
         cp_orden_giro_Data data = new cp_orden_giro_Data();
         ct_cbtecble_Bus bus_contabilidad = new ct_cbtecble_Bus();
-        cp_cuotas_x_doc_Bus bus_cuotas = new cp_cuotas_x_doc_Bus();
         ct_cbtecble_det_Bus bus_comrpbante_det = new ct_cbtecble_det_Bus();
         cp_orden_pago_Bus bus_op;
         cp_proveedor_Bus bus_proveedor = new cp_proveedor_Bus();
@@ -379,10 +378,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info= data.get_info(IdEmpresa,IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
                 info.info_comrobante = bus_contabilidad.get_info(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
                 info.info_comrobante.lst_ct_cbtecble_det = bus_comrpbante_det.get_list(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
-                info.info_cuota = bus_cuotas.get_info(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
-                if (info.info_cuota == null)
-                    info.info_cuota = new cp_cuotas_x_doc_Info { Fecha_inicio = info.co_FechaFactura};
-
                 info.info_forma_pago = bus_forma_pago.get_info(info.IdEmpresa, info.IdTipoCbte_Ogiro, info.IdCbteCble_Ogiro);
                 if (info.info_forma_pago == null)
                     info.info_forma_pago = new cp_orden_giro_pagos_sri_Info();

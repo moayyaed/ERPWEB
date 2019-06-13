@@ -16,7 +16,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
     {
         cp_nota_DebCre_Data data = new cp_nota_DebCre_Data();
         ct_cbtecble_Bus bus_contabilidad = new ct_cbtecble_Bus();
-        cp_cuotas_x_doc_Bus bus_cuotas = new cp_cuotas_x_doc_Bus();
         ct_cbtecble_Bus bus_comprobante = new ct_cbtecble_Bus();
         ct_cbtecble_det_Bus bus_comprobante_det = new ct_cbtecble_det_Bus();
         cp_parametros_Bus bus_cp_parametro = new cp_parametros_Bus();

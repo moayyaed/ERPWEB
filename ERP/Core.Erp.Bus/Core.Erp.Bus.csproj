@@ -124,8 +124,6 @@
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Bus.cs" />
-    <Compile Include="CuentasPorPagar\cp_cuotas_x_doc_Bus.cs" />
-    <Compile Include="CuentasPorPagar\cp_cuotas_x_doc_det_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_nota_DebCre_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_det_Bus.cs" />

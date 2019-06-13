@@ -620,41 +620,7 @@
 
         $("#num_docu_Modificar").val(doc);
     }
-    // calcular cuotas
-    function get_cuotas()
-    {
-
-        var Fecha_i = Fecha_inicio.GetDate();
-        var Num_cuot = $("#Num_cuotas").val();
-        var Dias_plaz = $("#Dias_plazo").val();
-        var Total_a_pag = $("#Total_a_pagar").val();
-
-        if (Num_cuot > 0 && Dias_plaz > 0 && Total_a_pag > 0) {
-            var datos = {
-                Fecha_inicio: Fecha_i,
-                Num_cuotas: Num_cuot,
-                Dias_plazo: Dias_plaz,
-                Total_a_pagar: Total_a_pag,
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("calcular_cuotas","Deudas", new { Area = "CuentasPorPagar" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    GridViewPartial_documento_cuotas_det.PerformCallback();
-                },
-                error: function (error) {
-                }
-            });
-        }
-    };
-
+    
   // obtener tipo de documento
     function get_list_tipo_doc() {
 
