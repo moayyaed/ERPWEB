@@ -262,7 +262,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="co_factura">Dcumento*</label>
+                    <label for="co_factura">Documento*</label>
                     @Html.TextBoxFor(q => q.co_factura, new { @class = "form-control", @id = "co_factura" })
                     @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
                 </div>
@@ -565,17 +565,6 @@
             get_list_tipo_doc();
         }
     });
-    $("#co_plazo").change(function () {
-        var plazo = Number($("#co_plazo").val());
-        if (plazo != 0) {
-
-            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(plazo, 'days'));
-            co_FechaFactura_vct.SetValue(date);
-        }
-        else
-            co_FechaFactura_vct.SetValue(co_FechaFactura.GetValue());
-
-    });
 
     $("#IdIden_credito").change(function () {
 
@@ -616,19 +605,8 @@
             $('#co_Por_iva').val(12);
         else
             $('#co_Por_iva').val(0.00);
-
-
-
     }
-    $("#Num_cuotas").keyup(function () {
-        get_cuotas();
-    });
-    $("#Dias_plazo").keyup(function () {
-        get_cuotas();
-    });
-    $("#Total_a_pagar").keyup(function () {
-        get_cuotas();
-    });
+
 
     function rellenar_ceros_izquierda() {
         var str = "" + Number($("#co_factura").val());
@@ -645,40 +623,6 @@
 
         $("#num_docu_Modificar").val(doc);
     }
-    // calcular cuotas
-    function get_cuotas()
-    {
-
-        var Fecha_i = Fecha_inicio.GetDate();
-        var Num_cuot = $("#Num_cuotas").val();
-        var Dias_plaz = $("#Dias_plazo").val();
-        var Total_a_pag = $("#Total_a_pagar").val();
-
-        if (Num_cuot > 0 && Dias_plaz > 0 && Total_a_pag > 0) {
-            var datos = {
-                Fecha_inicio: Fecha_i,
-                Num_cuotas: Num_cuot,
-                Dias_plazo: Dias_plaz,
-                Total_a_pagar: Total_a_pag,
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("calcular_cuotas","Deudas", new { Area = "CuentasPorPagar" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    GridViewPartial_documento_cuotas_det.PerformCallback();
-                },
-                error: function (error) {
-                }
-            });
-        }
-    };
 
     // obtener tipo de documento
     function get_list_tipo_doc() {

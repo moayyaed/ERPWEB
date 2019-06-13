@@ -67,7 +67,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string num_docu_Modificar { get; set; }
         public string aut_doc_Modificar { get; set; }
         public Nullable<int> IdTipoMovi { get; set; }
-        //public cp_cuotas_x_doc_Info info_cuota { get; set; }
         public ct_cbtecble_Info info_comrobante { get; set; }
         public cp_proveedor_Info info_proveedor { get; set; }
         public string Descripcion { get; set; }
@@ -150,7 +149,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string num_docu_Modificar { get; set; }
         public string aut_doc_Modificar { get; set; }
         public Nullable<int> IdTipoMovi { get; set; }
-        //public cp_cuotas_x_doc_Info info_cuota { get; set; }
         public ct_cbtecble_Info info_comrobante { get; set; }
         public cp_proveedor_Info info_proveedor { get; set; }
         public string Descripcion { get; set; }

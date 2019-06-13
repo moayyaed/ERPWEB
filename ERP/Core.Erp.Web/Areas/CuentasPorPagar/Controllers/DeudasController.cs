@@ -194,21 +194,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #endregion
 
         #region vista de Detalle de cuotas y diario contable
-        //[ValidateInput(false)]
-        //public ActionResult GridViewPartial_documento_cuotas_det()
-        //{
-        //    SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-        //    try
-        //    {
-        //        lst_detalle_cuotas = Lis_cp_cuotas_x_doc_det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-        //        return PartialView("_GridViewPartial_documento_cuotas_det", lst_detalle_cuotas);
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
+        [ValidateInput(false)]
         public ActionResult GridViewPartial_deudas_dc()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -346,7 +332,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             List_ct_cbtecble_det_List_retencion.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
 
             Lis_ct_cbtecble_det_List.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
-            //Lis_cp_cuotas_x_doc_det_Info.set_list(new List<cp_cuotas_x_doc_det_Info>(), model.IdTransaccionSession);
             List_det.set_list(new List<cp_orden_giro_det_Info>(), model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
@@ -363,8 +348,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = "El documento " + model.co_serie + " " + model.co_factura + ", ya se encuentra registrado";
                 cargar_combos(model);
                 cargar_combos_detalle();
-                //if (model.info_cuota.Fecha_inicio.Year == 1)
-                //    model.info_cuota.Fecha_inicio = DateTime.Now;
+
                 return View(model);
             }
 
@@ -373,8 +357,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = "Falta parametrizar el módulo de cuentas por pagar";
                 cargar_combos(model);
                 cargar_combos_detalle();
-                //if (model.info_cuota.Fecha_inicio.Year == 1)
-                //    model.info_cuota.Fecha_inicio = DateTime.Now;
+
                 return View(model);
             }
             model.info_comrobante = new ct_cbtecble_Info();
@@ -413,14 +396,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     }
                 });
             }
-            //model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
+
             if (Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession).Count() == 0)
             {
                 ViewBag.mensaje = "Falta diario contable";
                 cargar_combos(model);
                 cargar_combos_detalle();
-                //if (model.info_cuota.Fecha_inicio.Year == 1)
-                //    model.info_cuota.Fecha_inicio = DateTime.Now;
+
                 return View(model);
 
             }
@@ -432,8 +414,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model);
                 cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
-                //if (model.info_cuota.Fecha_inicio.Year == 1)
-                //    model.info_cuota.Fecha_inicio = DateTime.Now;
+
                 return View(model);
             }
 
@@ -448,8 +429,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (!bus_orden_giro.guardarDB(model))
             {
                 cargar_combos(model);
-                //if (model.info_cuota.Fecha_inicio.Year == 1)
-                //    model.info_cuota.Fecha_inicio = DateTime.Now;
                 return View(model);
             }
 
@@ -472,10 +451,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_comrobante.lst_ct_cbtecble_det == null)
                 model.info_comrobante.lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>();
             Lis_ct_cbtecble_det_List.set_list(model.info_comrobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
-            //if (model.info_cuota.lst_cuotas_det == null)
-            //    model.info_cuota.lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
-            //Lis_cp_cuotas_x_doc_det_Info.set_list(model.info_cuota.lst_cuotas_det, model.IdTransaccionSession);
             List_det.set_list(bus_det.get_list(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro), model.IdTransaccionSession);
 
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
@@ -528,7 +504,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.info_comrobante.IdTipoCbte = (int)info_parametro.pa_TipoCbte_OG;
 
 
-            //model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
             model.info_retencion.detalle = List_cp_retencion_det.get_list(model.IdTransaccionSession);
             model.info_retencion.info_comprobante.lst_ct_cbtecble_det = List_ct_cbtecble_det_List_retencion.get_list(model.IdTransaccionSession);
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession);
@@ -618,10 +593,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_comrobante.lst_ct_cbtecble_det == null)
                 model.info_comrobante.lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>();
             Lis_ct_cbtecble_det_List.set_list(model.info_comrobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
-            //if (model.info_cuota.lst_cuotas_det == null)
-            //    model.info_cuota.lst_cuotas_det = new List<cp_cuotas_x_doc_det_Info>();
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-            //Lis_cp_cuotas_x_doc_det_Info.set_list(model.info_cuota.lst_cuotas_det, model.IdTransaccionSession);
             List_det.set_list(bus_det.get_list(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro), model.IdTransaccionSession);
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             model.info_retencion = bus_retencion.get_info(model.info_retencion.IdEmpresa, model.info_retencion.IdRetencion);
@@ -659,7 +631,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
 
             model.info_comrobante = new ct_cbtecble_Info();
-            //model.info_cuota.lst_cuotas_det = Lis_cp_cuotas_x_doc_det_Info.get_list(model.IdTransaccionSession);
 
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession);
             model.info_retencion.detalle = List_cp_retencion_det.get_list(model.IdTransaccionSession);

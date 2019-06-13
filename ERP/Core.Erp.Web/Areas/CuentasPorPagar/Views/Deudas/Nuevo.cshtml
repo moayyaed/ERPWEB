@@ -232,7 +232,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="co_factura">Dcumento*</label>
+                    <label for="co_factura">Documento*</label>
                     @Html.TextBoxFor(q => q.co_factura, new { @class = "form-control", @id = "co_factura" })
                     @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
                 </div>
@@ -592,18 +592,7 @@
         else
             $('#co_Por_iva').val(0.00);
 
-
-
     }
-    $("#Num_cuotas").keyup(function () {
-        get_cuotas();
-    });
-    $("#Dias_plazo").keyup(function () {
-        get_cuotas();
-    });
-    $("#Total_a_pagar").keyup(function () {
-        get_cuotas();
-    });
 
     function rellenar_ceros_izquierda() {
         var str = "" + Number($("#co_factura").val());

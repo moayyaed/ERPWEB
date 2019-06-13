@@ -96,23 +96,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     data.guardarDB(info);
                 }
 
-                //if(info.info_cuota.Dias_plazo!=0
-                //    & info.info_cuota.Total_a_pagar!=0
-                //    & info.info_cuota.lst_cuotas_det.Count()>0
-                //  )
-                //{
-                //    bus_cuotas = new cp_cuotas_x_doc_Bus();
-                //    info.info_cuota.IdEmpresa = info.IdEmpresa;
-                //    info.info_cuota.IdTipoCbte = info.info_comrobante.IdTipoCbte;
-                //    info.info_cuota.IdCbteCble = info.info_comrobante.IdCbteCble;
-                //    info.info_cuota.Observacion = info.co_observacion;
-                //    info.info_cuota.Estado = true;
-                //    if (info.info_cuota.Fecha_inicio.Year == 1)
-                //        info.info_cuota.Fecha_inicio = info.co_FechaFactura;
-                //    bus_cuotas.GuardarDB(info.info_cuota);
-                //}
-
-
                 if(info.info_forma_pago.codigo_pago_sri!=null)
                 {
                     info.info_forma_pago.IdEmpresa = info.IdEmpresa;
@@ -163,7 +146,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
 
                 return true;
             }
-            catch (Exception )
+            catch (Exception)
             {
 
                 throw;
@@ -187,13 +170,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     info.info_comrobante.cb_Observacion = info.co_observacion;
 
                 info.co_valorpagar = info.co_total;
-                //if (info.info_cuota.Total_a_pagar == 0)
-                //    info.co_FechaFactura_vct = info.co_FechaFactura;
-                //else
-                //{
-                //    info.co_FechaFactura_vct = info.co_FechaFactura.AddDays(info.co_plazo);
-                //}
-
                 info.co_FechaFactura_vct = info.co_FechaFactura.AddDays(info.co_plazo);
                 info.co_fechaOg = info.co_FechaFactura;
                 if (bus_contabilidad.modificarDB(info.info_comrobante))
@@ -204,18 +180,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     data.modificarDB(info);
                 }
 
-                //if (info.info_cuota.Dias_plazo != 0
-                //    & info.info_cuota.Total_a_pagar != 0
-                //    & info.info_cuota.lst_cuotas_det.Count() > 0
-                //  )
-                //{
-                //    info.info_cuota.IdEmpresa = info.IdEmpresa;
-                //    info.info_cuota.IdTipoCbte = info.IdTipoCbte_Ogiro;
-                //    info.info_cuota.IdCbteCble = info.IdCbteCble_Ogiro;
-                //    info.info_cuota.Observacion = info.co_observacion;
-                //    info.info_cuota.Estado = true;
-                //    bus_cuotas.ModificarDB(info.info_cuota);
-                //}
                 if (info.info_forma_pago.codigo_pago_sri != "" && info.info_forma_pago.codigo_pago_sri!=null)
                 {
                     bus_forma_pago.EliminarDB(info.IdEmpresa, info.IdTipoCbte_Ogiro, info.IdCbteCble_Ogiro);
@@ -293,12 +257,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info.info_comrobante.IdCbteCble = info.IdCbteCble_Ogiro;
                 info.co_valorpagar = info.co_total;
                 info.co_FechaFactura_vct = info.co_FechaFactura;
-
-                //if (info.info_cuota.Total_a_pagar == 0)
-                //    info.co_FechaFactura_vct = info.co_FechaFactura;
-                //else
-                //    info.co_FechaFactura_vct = info.info_cuota.Fecha_inicio;
-
                 info.co_fechaOg = info.co_FechaFactura;
               
                 if (bus_contabilidad.anularDB(info.info_comrobante))
@@ -306,18 +264,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     data = new cp_orden_giro_Data();
                     data.anularDB(info);
                 }
-
-                //if (info.info_cuota.Dias_plazo != 0
-                //    & info.info_cuota.Total_a_pagar != 0
-                //    & info.info_cuota.lst_cuotas_det.Count() > 0
-                //  )
-                //{
-                //    info.info_cuota.IdEmpresa = info.IdEmpresa;
-                //    info.info_cuota.IdTipoCbte = info.IdTipoCbte_Ogiro;
-                //    info.info_cuota.IdCbteCble = info.IdCbteCble_Ogiro;
-                //    info.info_cuota.Observacion = info.co_observacion+"ANULADO";
-                //    bus_cuotas.AnularDB(info.info_cuota);
-                //}
 
                 #region Modificar retencion y diario rtencion
 
@@ -364,7 +310,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 #endregion
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
@@ -474,13 +420,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 valor =Math.Round( Convert.ToDouble(valor),2);
                 if (valor!=0)
                     mensaje = "El diario contable esta descuadrado ";
-
-                //if(info.info_cuota.Total_a_pagar!=0 && info.info_cuota.Num_cuotas!=0&& info.info_cuota.Dias_plazo!=0)
-                //{
-                //    if(info.info_cuota.lst_cuotas_det.Count()==0)
-                //        mensaje = "No existe detalle de pago";
-
-                //}
 
                 if(info.co_total>1000)
                 {
