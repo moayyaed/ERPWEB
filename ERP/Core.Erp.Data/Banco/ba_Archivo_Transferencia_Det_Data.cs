@@ -17,7 +17,7 @@ namespace Core.Erp.Data.Banco
                 List<ba_Archivo_Transferencia_Det_Info> Lista;
                 using (Entities_banco Context = new Entities_banco())
                 {
-                    Lista = Context.ba_Archivo_Transferencia_Det.Where(q => q.IdEmpresa == IdEmpresa && q.IdArchivo == IdArchivo).Select(q => new ba_Archivo_Transferencia_Det_Info
+                    Lista = Context.vwba_Archivo_Transferencia_Det.Where(q => q.IdEmpresa == IdEmpresa && q.IdArchivo == IdArchivo).Select(q => new ba_Archivo_Transferencia_Det_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdArchivo = q.IdArchivo,
@@ -30,7 +30,16 @@ namespace Core.Erp.Data.Banco
                         Secuencia = q.Secuencia,
                         Secuencial_reg_x_proceso = q.Secuencial_reg_x_proceso,
                         Secuencia_OP = q.Secuencia_OP,
-                        Valor = q.Valor
+                        Valor = q.Valor,
+                        Nom_Beneficiario = q.pe_nombreCompleto,
+                        pe_cedulaRuc = q.pe_cedulaRuc,
+                        pr_correo = q.pr_correo,
+                        pr_direccion = q.pr_direccion,
+                        num_cta_acreditacion = q.num_cta_acreditacion,
+                        IdBanco_acreditacion=q.IdBanco_acreditacion,
+                        IdTipoCta_acreditacion_cat =q.IdTipoCta_acreditacion_cat,
+                        IdTipoDocumento = q.IdTipoDocumento
+                        
                     }).ToList();
                 }
                 return Lista;
@@ -78,5 +87,31 @@ namespace Core.Erp.Data.Banco
             }
         }
 
+        public decimal GetIdSecuencial( int IdEmpresa, int IdBanco, int IdProceso_bancario)
+        {
+            try
+            {
+                decimal Id = 1;
+
+                using (Entities_banco Context = new Entities_banco())
+                {
+                    var lst = from q in Context.ba_Archivo_Transferencia_Det
+                              join t in Context.ba_Archivo_Transferencia
+                              on new { q.IdEmpresa } equals new { t.IdEmpresa }
+                              where q.IdEmpresa == IdEmpresa
+                              && t.IdBanco == IdBanco
+                              && t.IdProceso_bancario == IdProceso_bancario
+                              select q;
+                    if (lst.Count() > 0)
+                        Id = lst.Max(q => q.Secuencial_reg_x_proceso) +1;
+                }
+                return Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

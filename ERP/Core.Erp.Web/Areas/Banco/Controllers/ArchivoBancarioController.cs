@@ -16,6 +16,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 {
     public class ArchivoBancarioController : Controller
     {
+
+        string rutafile = System.IO.Path.GetTempPath();
+
         #region Variables
         ba_Archivo_Transferencia_Bus bus_archivo = new ba_Archivo_Transferencia_Bus();
         ba_Archivo_Transferencia_Det_Bus bus_archivo_det = new ba_Archivo_Transferencia_Det_Bus();
@@ -27,6 +30,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
         public ActionResult Index()
@@ -108,9 +112,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdArchivo = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdArchivo = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -124,6 +128,18 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo CXC
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
             cargar_combos();
             return View(model);
         }
@@ -137,7 +153,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdArchivo = 0)
@@ -145,6 +162,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Archivo_Transferencia_Info model = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
             if (model == null)
                 return RedirectToAction("Index");
+            #region Validacion Periodo CXC
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
             cargar_combos();
             return View(model);
         }
@@ -228,6 +253,63 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        private byte[] get_NCR(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+        {
+            try
+            {
+                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
+                {
+                    foreach (var item in info.Lst_det.Where(v => v.Valor > 0))
+                    {
+
+                        item.num_cta_acreditacion = item.num_cta_acreditacion.Trim();
+                        string linea = "";
+                        double valor = Convert.ToDouble(item.Valor);
+                        double valorEntero = Math.Floor(valor);
+                        double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
+
+                        linea += "PA\t";
+                        linea += item.num_cta_acreditacion.PadLeft(7, '0');
+                        linea += item.Secuencial_reg_x_proceso;
+                        linea += item.Referencia;
+                        linea += "USD\t";
+                        linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2, '0')).PadLeft(13, '0');
+                        linea += item.IdTipoCta_acreditacion_cat;
+                        linea += item.num_cta_acreditacion.PadLeft(7, '0');
+                        linea += item.pe_cedulaRuc;
+                        linea += item.Nom_Beneficiario;
+                        linea += item.pr_direccion;
+                        linea += item.Referencia;
+
+                        file.WriteLine(linea);
+                    }
+                }
+                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + ".txt");
+                return filebyte;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public byte[] GetArchivo(ba_Archivo_Transferencia_Info info, string nombre_file)
+        {
+            try
+            {
+                return get_NCR(info, nombre_file);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
     }
     public class ba_Archivo_Transferencia_Det_List

@@ -8,6 +8,11 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_Archivo_Transferencia_Det_Info
     {
+        public string pe_cedulaRuc;
+        public string pr_correo;
+        public string pr_direccion;
+        public string num_cta_acreditacion;
+
         public int IdEmpresa { get; set; }
         public decimal IdArchivo { get; set; }
         public int Secuencia { get; set; }
@@ -25,5 +30,8 @@ namespace Core.Erp.Info.Banco
         public string Referencia { get; set; }
         public decimal IdPersona { get; set; }
         public string IdTipoPersona { get; set; }
+        public int? IdBanco_acreditacion { get; set; }
+        public string IdTipoCta_acreditacion_cat { get; set; }
+        public string IdTipoDocumento { get; set; }
     }
 }

@@ -37,5 +37,18 @@ namespace Core.Erp.Bus.Banco
                 throw;
             }
         }
+
+        public decimal GetIdSecuencial(int IdEmpresa, int IdBanco, int IdProceso_bancario)
+        {
+            try
+            {
+                return odata.GetIdSecuencial(IdEmpresa, IdBanco, IdProceso_bancario);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
