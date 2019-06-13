@@ -57,6 +57,7 @@
         <AssociationConnector Association="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" />
         <EntityTypeShape EntityType="Model_banco.ba_Archivo_Transferencia_Det" Width="1.5" PointX="5.25" PointY="22.375" />
         <AssociationConnector Association="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" />
+        <EntityTypeShape EntityType="Model_banco.vwba_Archivo_Transferencia_Det" Width="1.5" PointX="11.375" PointY="18.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

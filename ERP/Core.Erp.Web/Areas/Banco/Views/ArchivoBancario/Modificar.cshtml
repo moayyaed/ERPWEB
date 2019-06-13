@@ -91,6 +91,26 @@
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdArchivo)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <label for="IdImprimirtxt"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("get_archivo","ArchivoBancario",new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdArchivo =Model.IdArchivo },null)">
+                        <i class="fa fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","ArchivoBancario",new { Area = "Banco", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">

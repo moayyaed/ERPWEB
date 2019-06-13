@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Erp.Info.Helps;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

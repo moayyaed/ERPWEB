@@ -441,6 +441,8 @@
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_cuotas_x_doc_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_cuotas_x_doc_det_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_nota_DebCre_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_det_Data.cs" />
@@ -1956,6 +1958,9 @@
     </Compile>
     <Compile Include="VWBAN_007.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Archivo_Transferencia_Det.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
     </Compile>
     <Compile Include="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito.cs">
       <DependentUpon>Model_banco.tt</DependentUpon>
