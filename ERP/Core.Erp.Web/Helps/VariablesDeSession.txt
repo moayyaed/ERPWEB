@@ -30,3 +30,9 @@ Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
 
 //AGREGAR EN FUNCIONES PARA VALIDAR
 i_validar.IdTransaccionSession
+
+//PEGAR EN MODEL DE INVENTARIO
+		public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
