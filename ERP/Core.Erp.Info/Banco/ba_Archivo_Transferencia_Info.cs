@@ -37,6 +37,7 @@ namespace Core.Erp.Info.Banco
         public Nullable<bool> Contabilizado { get; set; }
         public int IdSucursal { get; set; }
 
+        public cl_enumeradores.eTipoProcesoBancario TipoFile { get; set; }
         public List<ba_Archivo_Transferencia_Det_Info> Lst_det { get; set; }
     }
 }

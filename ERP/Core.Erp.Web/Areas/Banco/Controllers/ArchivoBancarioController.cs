@@ -128,19 +128,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+            cargar_combos();
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
-            #region Validacion Periodo CXC
-            ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
-
-            cargar_combos();
             return View(model);
         }
         [HttpPost]
@@ -253,6 +244,22 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        public FileResult get_archivo(int IdEmpresa = 0, int IdArchivo = 0)
+        {
+            byte[] archivo;
+            string NombreFile = "NCR";
+            ba_Archivo_Transferencia_Bus bus_tipo_file = new ba_Archivo_Transferencia_Bus();
+
+            var info_archivo = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
+            info_archivo.Lst_det = bus_archivo_det.GetList(IdEmpresa, IdArchivo);
+            var tipo_file = bus_tipo_file.GetInfo(IdEmpresa, info_archivo.IdProceso_bancario);
+            decimal secuancia = bus_archivo_det.GetIdSecuencial(IdEmpresa, info_archivo.IdBanco, info_archivo.IdProceso_bancario);
+
+            archivo = GetArchivo(info_archivo, NombreFile);
+            return File(archivo, "application/xml", NombreFile + ".txt");
+
+
+        }
 
         private byte[] get_NCR(ba_Archivo_Transferencia_Info info, string NombreArchivo)
         {
