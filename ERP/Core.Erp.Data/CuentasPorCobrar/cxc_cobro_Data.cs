@@ -308,7 +308,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         cb_Fecha = cab.cr_fecha.Date,
                         IdSucursal = info.IdSucursal,
                         IdPeriodo = Convert.ToInt32(cab.cr_fecha.ToString("yyyyMM")),
-                        cb_Observacion = cab.cr_observacion + " CLIENTE: "+persona.pe_nombreCompleto,
+                        cb_Observacion = "COBRO #" + info.IdCobro + " " + cab.cr_observacion + " CLIENTE: "+persona.pe_nombreCompleto,
                         cb_Estado = "A",
 
                         IdUsuario = cab.IdUsuario,
@@ -437,6 +437,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
             Entities_caja Context_caj = new Entities_caja();
             Entities_contabilidad Context_ct = new Entities_contabilidad();
             ct_cbtecble_Data data_ct = new ct_cbtecble_Data();
+            Entities_general Context_gen = new Entities_general();
             try
             {
                 #region Variables
@@ -606,7 +607,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 if (info.lst_det.Sum(q => q.dc_ValorPago) > 0)
                 {
                     var relacion = Context_cxc.cxc_cobro_x_ct_cbtecble.Where(q => q.cbr_IdEmpresa == info.IdEmpresa && q.cbr_IdSucursal == info.IdSucursal && q.cbr_IdCobro == info.IdCobro).FirstOrDefault();
-
+                    var persona = Context_gen.tb_persona.Where(q => q.IdPersona == cliente.IdPersona).FirstOrDefault();
+                    if (persona == null) persona = new tb_persona();
                     #region Si no tiene relacion creada
                     if (generar_diario && relacion == null)
                     {
@@ -619,7 +621,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             cb_Fecha = info.cr_fecha.Date,
                             IdSucursal = info.IdSucursal,
                             IdPeriodo = Convert.ToInt32(info.cr_fecha.ToString("yyyyMM")),
-                            cb_Observacion = info.cr_observacion,
+                            cb_Observacion = "COBRO #" + info.IdCobro + " " + info.cr_observacion + " CLIENTE: " + persona.pe_nombreCompleto,
                             cb_Estado = "A",
 
                             IdUsuario = info.IdUsuario,
@@ -728,6 +730,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     #region Si tiene diario creado
                     if (generar_diario && relacion != null)
                     {
+                        var personac = Context_gen.tb_persona.Where(q => q.IdPersona == cliente.IdPersona).FirstOrDefault();
+                        if (persona == null) persona = new tb_persona();
                         #region Diario
                         var diario = Context_ct.ct_cbtecble.Where(q => q.IdEmpresa == relacion.ct_IdEmpresa && q.IdTipoCbte == relacion.ct_IdTipoCbte && q.IdCbteCble == relacion.ct_IdCbteCble).FirstOrDefault();
                         if (diario == null)
@@ -735,7 +739,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         diario.cb_Fecha = info.cr_fecha.Date;
                         diario.IdSucursal = info.IdSucursal;
                         diario.IdPeriodo = Convert.ToInt32(info.cr_fecha.ToString("yyyyMM"));
-                        diario.cb_Observacion = info.cr_observacion;
+                        diario.cb_Observacion = "COBRO #" + info.IdCobro + " "+ info.cr_observacion + " CLIENTE: " + personac.pe_nombreCompleto;
                         diario.IdUsuarioUltModi = info.IdUsuarioUltMod;
                         diario.cb_FechaUltModi = DateTime.Now;
                         diario.cb_Valor = Math.Round(info.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero);

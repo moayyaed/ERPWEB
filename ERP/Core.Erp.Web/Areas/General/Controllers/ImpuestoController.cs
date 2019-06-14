@@ -126,6 +126,13 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 model.info_impuesto_ctacble.IdCod_Impuesto = model.IdCod_Impuesto;
                 model.IdCtaCble = model.info_impuesto_ctacble.IdCtaCble;
                 model.IdCtaCble_vta = model.info_impuesto_ctacble.IdCtaCble_vta;
+            }else
+            {
+                model.info_impuesto_ctacble = new tb_sis_Impuesto_x_ctacble_Info
+                {
+                    IdCod_Impuesto = model.IdCod_Impuesto,
+                    IdEmpresa_cta = IdEmpresa
+                };
             }
                        
             cargar_combos();
@@ -157,10 +164,21 @@ namespace Core.Erp.Web.Areas.General.Controllers
             if (model == null)
                 return RedirectToAction("Index");
             model.info_impuesto_ctacble = bus_impuesto_ctacble.get_info(IdCod_Impuesto, Convert.ToInt32(SessionFixed.IdEmpresa));
-            model.info_impuesto_ctacble.IdEmpresa_cta = IdEmpresa;
-            model.info_impuesto_ctacble.IdCod_Impuesto = model.IdCod_Impuesto;
-            model.IdCtaCble = model.info_impuesto_ctacble.IdCtaCble;
-            model.IdCtaCble_vta = model.info_impuesto_ctacble.IdCtaCble_vta;
+            if (model.info_impuesto_ctacble != null)
+            {
+                model.info_impuesto_ctacble.IdEmpresa_cta = IdEmpresa;
+                model.info_impuesto_ctacble.IdCod_Impuesto = model.IdCod_Impuesto;
+                model.IdCtaCble = model.info_impuesto_ctacble.IdCtaCble;
+                model.IdCtaCble_vta = model.info_impuesto_ctacble.IdCtaCble_vta;
+            }
+            else
+            {
+                model.info_impuesto_ctacble = new tb_sis_Impuesto_x_ctacble_Info
+                {
+                    IdCod_Impuesto = model.IdCod_Impuesto,
+                    IdEmpresa_cta = IdEmpresa
+                };
+            }
             cargar_combos();
             return View(model);
         }

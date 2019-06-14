@@ -19,7 +19,6 @@ namespace Core.Erp.Info.Caja
         public bool EstadoBool { get; set; }
         [Required(ErrorMessage = "El campo es obligatorio")]
         public string tm_Signo { get; set; }
-        [Required(ErrorMessage = ("el campo cuenta es obligatorio"))]
         public string IdCtaCble { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }

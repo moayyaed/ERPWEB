@@ -76,8 +76,11 @@ namespace Core.Erp.Web.Reportes.Banco
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-            ImageConverter obj = new ImageConverter();
-            lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
 
             var NC = lst_rpt.Where(q => q.tc_TipoCbte == "NCB").Sum(q => q.ValorAbsoluto);
             var ND = lst_rpt.Where(q => q.tc_TipoCbte == "NDB").Sum(q => q.ValorAbsoluto);
