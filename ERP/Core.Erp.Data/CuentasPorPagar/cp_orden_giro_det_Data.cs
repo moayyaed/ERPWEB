@@ -55,53 +55,53 @@ namespace Core.Erp.Data.CuentasPorPagar
             }
         }
 
-        public List<cp_orden_giro_det_Info> GetListPorIngresar(int IdEmpresa, int IdSucursal, decimal IdProveedor)
-        {
-            try
-            {
-                List<cp_orden_giro_det_Info> Lista;
+        //public List<cp_orden_giro_det_Info> GetListPorIngresar(int IdEmpresa, int IdSucursal, decimal IdProveedor)
+        //{
+        //    try
+        //    {
+        //        List<cp_orden_giro_det_Info> Lista;
 
-                using (Entities_compras db = new Entities_compras())
-                {
-                    Lista = db.vwcom_ordencompra_local_x_ingresar.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdProveedor == IdProveedor).Select(q => new cp_orden_giro_det_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        IdSucursal_oc = q.IdSucursal,
-                        IdOrdenCompra = q.IdOrdenCompra,
-                        Secuencia_oc = q.Secuencia,
-                        IdCod_Impuesto_Iva = q.IdCod_Impuesto,
-                        PorIva = q.Por_Iva,
-                        Cantidad = q.Saldo,
-                        CostoUni = q.do_precioCompra,
-                        PorDescuento = q.do_porc_des,
-                        CostoUniFinal = q.do_precioFinal,
-                        Subtotal = q.do_subtotal,
-                        ValorIva = q.do_iva,
-                        Total = q.do_total,
-                        DescuentoUni = q.do_descuento,
-                        IdUnidadMedida = q.IdUnidadMedida,
-                        pr_descripcion = q.pr_descripcion,
-                        IdEmpresa_oc = q.IdEmpresa,
-                        IdProducto = q.IdProducto,
-                        oc_fecha = q.oc_fecha,
-                        do_Cantidad = q.do_Cantidad,
-                        Saldo = q.Saldo,
-                        oc_observacion = q.oc_observacion,
-                        NomUnidadMedida = q.NomUnidadMedida,
-                        CantidadIngresada = q.CantidadIngresada,
-                        IdCtaCbleInv = q.IdCtaCtble_Inve
-                    }).ToList();
-                }
+        //        using (Entities_compras db = new Entities_compras())
+        //        {
+        //            Lista = db.vwcom_ordencompra_local_x_ingresar.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdProveedor == IdProveedor).Select(q => new cp_orden_giro_det_Info
+        //            {
+        //                IdEmpresa = q.IdEmpresa,
+        //                IdSucursal_oc = q.IdSucursal,
+        //                IdOrdenCompra = q.IdOrdenCompra,
+        //                Secuencia_oc = q.Secuencia,
+        //                IdCod_Impuesto_Iva = q.IdCod_Impuesto,
+        //                PorIva = q.Por_Iva,
+        //                Cantidad = q.Saldo,
+        //                CostoUni = q.do_precioCompra,
+        //                PorDescuento = q.do_porc_des,
+        //                CostoUniFinal = q.do_precioFinal,
+        //                Subtotal = q.do_subtotal,
+        //                ValorIva = q.do_iva,
+        //                Total = q.do_total,
+        //                DescuentoUni = q.do_descuento,
+        //                IdUnidadMedida = q.IdUnidadMedida,
+        //                pr_descripcion = q.pr_descripcion,
+        //                IdEmpresa_oc = q.IdEmpresa,
+        //                IdProducto = q.IdProducto,
+        //                oc_fecha = q.oc_fecha,
+        //                do_Cantidad = q.do_Cantidad,
+        //                Saldo = q.Saldo,
+        //                oc_observacion = q.oc_observacion,
+        //                NomUnidadMedida = q.NomUnidadMedida,
+        //                CantidadIngresada = q.CantidadIngresada,
+        //                IdCtaCbleInv = q.IdCtaCtble_Inve
+        //            }).ToList();
+        //        }
 
-                Lista.ForEach(q => q.SecuencialID = Convert.ToDecimal(q.IdOrdenCompra).ToString("0000000000") + Convert.ToInt32(q.Secuencia_oc).ToString("0000"));
+        //        Lista.ForEach(q => q.SecuencialID = Convert.ToDecimal(q.IdOrdenCompra).ToString("0000000000") + Convert.ToInt32(q.Secuencia_oc).ToString("0000"));
 
-                return Lista;
-            }
-            catch (Exception)
-            {
+        //        return Lista;
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
     }
 }

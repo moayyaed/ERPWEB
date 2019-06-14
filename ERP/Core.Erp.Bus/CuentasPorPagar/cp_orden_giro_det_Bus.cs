@@ -21,16 +21,16 @@ namespace Core.Erp.Bus.CuentasPorPagar
             }
         }
 
-        public List<cp_orden_giro_det_Info> GetListPorIngresar(int IdEmpresa, int IdSucursal, decimal IdProveedor)
-        {
-            try
-            {
-                return odata.GetListPorIngresar(IdEmpresa, IdSucursal, IdProveedor);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //public List<cp_orden_giro_det_Info> GetListPorIngresar(int IdEmpresa, int IdSucursal, decimal IdProveedor)
+        //{
+        //    try
+        //    {
+        //        return odata.GetListPorIngresar(IdEmpresa, IdSucursal, IdProveedor);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }

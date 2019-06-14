@@ -52,6 +52,10 @@ namespace Core.Erp.Info.Inventario
         public string SecuencialID { get; set; }
         #endregion
 
+        #region MyRegion
+        public string pe_nombreCompleto { get; set; }
+        #endregion
+
         #region Campos Auditoria de inventario
         public string nom_bodega { get; set; }        
         public string Estado_contabilizacion { get; set; }

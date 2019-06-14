@@ -100,10 +100,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdBodega = 0;
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
             com_parametro_Info info_parametro_compra = bus_com_param.get_info(IdEmpresa);
-            List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_orden_compra(IdEmpresa, "+", IdSucursal, true, info_parametro_compra.IdMovi_inven_tipo_OC, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_orden_compra(IdEmpresa, IdSucursal, true, IdBodega, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_IngresoOrdenCompra", model);
         }
         #endregion

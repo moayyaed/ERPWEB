@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="Model_inventario.in_devolucion_inven" Width="1.5" PointX="14" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_devolucion_inven_det" Width="1.5" PointX="16.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_grupo" Width="1.5" PointX="9.5" PointY="28.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_inventario.in_Ing_Egr_Inven" Width="1.5" PointX="14.75" PointY="42.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_Ing_Egr_Inven_det" Width="1.5" PointX="11" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_linea" Width="1.5" PointX="7.25" PointY="28.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_inventario.in_Marca" Width="1.5" PointX="11.75" PointY="21.375" IsExpanded="true" />
@@ -36,12 +35,9 @@
         <AssociationConnector Association="Model_inventario.FK_in_Catalogo_in_CatalogoTipo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_linea_in_categorias" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_devolucion_inven_det_in_devolucion_inven" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven1" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_grupo_in_linea" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_subgrupo_in_grupo" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inven_tipo_x_tb_bodega_in_movi_inven_tipo" ManuallyRouted="false" />
@@ -58,7 +54,6 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_Consignacion" Width="1.5" PointX="21.375" PointY="7.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_ConsignacionDet" Width="1.5" PointX="3.375" PointY="12.75" />
         <AssociationConnector Association="Model_inventario.FK_in_consignacion_det_In_consignacion" />
-        <AssociationConnector Association="Model_inventario.FK_in_Consignacion_in_Ing_Egr_Inven2" />
         <AssociationConnector Association="Model_inventario.FK_in_ConsignacionDet_in_UnidadMedida" />
         <EntityTypeShape EntityType="Model_inventario.in_ProductoTipo" Width="1.5" PointX="5.375" PointY="10" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_para_composicion" Width="1.5" PointX="21.375" PointY="12.75" />
@@ -81,8 +76,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_det_in_Producto" />
         <EntityTypeShape EntityType="Model_inventario.in_transferencia" Width="1.5" PointX="22" PointY="21.5" />
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_in_Catalogo" />
-        <AssociationConnector Association="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven" />
-        <AssociationConnector Association="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven1" />
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_det_in_transferencia" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorSucursal" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inve" Width="1.5" PointX="16.25" PointY="25.25" />
@@ -111,7 +104,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_Catalogo" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_Catalogo1" />
-        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo1" />
@@ -126,6 +118,15 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo8" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo9" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_ProductoTipo" />
+        <EntityTypeShape EntityType="Model_inventario.in_Ing_Egr_Inven" Width="1.5" PointX="16.25" PointY="36.25" />
+        <AssociationConnector Association="Model_inventario.FK_in_Consignacion_in_Ing_Egr_Inven2" />
+        <AssociationConnector Association="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven1" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven1" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="26.375" PointY="16.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
