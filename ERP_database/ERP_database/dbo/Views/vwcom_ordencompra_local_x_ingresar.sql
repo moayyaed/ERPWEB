@@ -16,13 +16,32 @@ FROM            dbo.in_categorias RIGHT OUTER JOIN
 GROUP BY d.IdEmpresa, d.IdSucursal, d.IdOrdenCompra, C.IdProveedor, C.oc_fecha, C.oc_observacion, C.Estado, C.IdEstadoAprobacion_cat, C.IdEstado_cierre, d.IdProducto, d.IdCod_Impuesto, d.Por_Iva, d.do_Cantidad, 
                          d.do_precioCompra, d.do_porc_des, d.do_descuento, d.do_precioFinal, d.do_subtotal, d.do_iva, d.do_total, d.IdUnidadMedida, p.pr_descripcion, d.Secuencia, dbo.in_UnidadMedida.Descripcion, 
                          dbo.in_categorias.IdCtaCtble_Inve
-HAVING        (C.IdEstadoAprobacion_cat = 'APRO') AND (C.IdEstado_cierre <> 'CER') AND (C.Estado = 'A')
+HAVING        (C.IdEstadoAprobacion_cat = 'APRO') AND (C.IdEstado_cierre <> 'CERR') AND (C.Estado = 'A')
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_x_ingresar';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 1500
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -49,6 +68,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 1500
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_x_ingresar';
+
+
 
 
 GO
@@ -123,6 +144,26 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "in_categorias"
+            Begin Extent = 
+               Top = 168
+               Left = 830
+               Bottom = 335
+               Right = 1027
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+         End
+         Begin Table = "p"
+            Begin Extent = 
+               Top = 270
+               Left = 38
+               Bottom = 400
+               Right = 288
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "in_UnidadMedida"
             Begin Extent = 
                Top = 10
@@ -163,26 +204,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "p"
-            Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 288
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "in_categorias"
-            Begin Extent = 
-               Top = 168
-               Left = 830
-               Bottom = 335
-               Right = 1027
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
       End
    End
    Begin SQLPane = 
@@ -190,9 +211,11 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 28
          Width = 284
          Width = 1500
          Width = 1500
-         Width =', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_x_ingresar';
+         Width ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_x_ingresar';
+
+
 
