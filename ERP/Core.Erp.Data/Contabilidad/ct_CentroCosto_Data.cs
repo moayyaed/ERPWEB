@@ -109,10 +109,7 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     if (mostrar_anulados && mostrar_solo_cuentas_movimiento)
 
-                        Lista = (from q in Context.ct_CentroCosto
-                                 join padre in Context.ct_CentroCosto
-                                 on new { q.IdEmpresa, q.IdCentroCostoPadre } equals new { padre.IdEmpresa, IdCentroCostoPadre = padre.IdCentroCosto } into temp_padre
-                                 from padre in temp_padre.DefaultIfEmpty()
+                        Lista = (from q in Context.vwct_CentroCosto
                                  where q.EsMovimiento == true
                                  && q.IdEmpresa == IdEmpresa
                                  orderby q.IdCentroCosto
@@ -122,17 +119,15 @@ namespace Core.Erp.Data.Contabilidad
                                      IdCentroCosto = q.IdCentroCosto,
                                      IdCentroCostoPadre = q.IdCentroCostoPadre,
                                      cc_Descripcion = q.cc_Descripcion,
-                                     cc_Descripcion_Padre = "",                                    
+                                     cc_Descripcion_Padre = q.cc_Descripcion_Padre,
+                                     nv_Descripcion = q.nv_Descripcion,                                    
                                      IdNivel = q.IdNivel,
                                      EsMovimiento = q.EsMovimiento,
                                      Estado = q.Estado
                                  }).ToList();
                     else
                         if (!mostrar_anulados && mostrar_solo_cuentas_movimiento)
-                        Lista = (from q in Context.ct_CentroCosto
-                                 join padre in Context.ct_CentroCosto
-                                 on new { q.IdEmpresa, q.IdCentroCostoPadre } equals new { padre.IdEmpresa, IdCentroCostoPadre = padre.IdCentroCosto } into temp_padre
-                                 from padre in temp_padre.DefaultIfEmpty()
+                        Lista = (from q in Context.vwct_CentroCosto
                                  where q.EsMovimiento == true
                                  && q.Estado == true
                                  && q.IdEmpresa == IdEmpresa
@@ -143,17 +138,15 @@ namespace Core.Erp.Data.Contabilidad
                                      IdCentroCosto = q.IdCentroCosto,
                                      IdCentroCostoPadre = q.IdCentroCostoPadre,
                                      cc_Descripcion = q.cc_Descripcion,
-                                     cc_Descripcion_Padre = "",
+                                     cc_Descripcion_Padre = q.cc_Descripcion_Padre,
+                                     nv_Descripcion = q.nv_Descripcion,
                                      IdNivel = q.IdNivel,
                                      EsMovimiento = q.EsMovimiento,
                                      Estado = q.Estado
                                  }).ToList();
                     else
                         if (mostrar_anulados && !mostrar_solo_cuentas_movimiento)
-                        Lista = (from q in Context.ct_CentroCosto
-                                 join padre in Context.ct_CentroCosto
-                             on new { q.IdEmpresa, q.IdCentroCostoPadre } equals new { padre.IdEmpresa, IdCentroCostoPadre = padre.IdCentroCosto } into temp_padre
-                                 from padre in temp_padre.DefaultIfEmpty()
+                        Lista = (from q in Context.vwct_CentroCosto
                                  where q.IdEmpresa == IdEmpresa
                                  orderby q.IdCentroCosto
                                  select new ct_CentroCosto_Info
@@ -162,16 +155,14 @@ namespace Core.Erp.Data.Contabilidad
                                      IdCentroCosto = q.IdCentroCosto,
                                      IdCentroCostoPadre = q.IdCentroCostoPadre,
                                      cc_Descripcion = q.cc_Descripcion,
-                                     cc_Descripcion_Padre = "",
+                                     cc_Descripcion_Padre = q.cc_Descripcion_Padre,
+                                     nv_Descripcion = q.nv_Descripcion,
                                      IdNivel = q.IdNivel,
                                      EsMovimiento = q.EsMovimiento,
                                      Estado = q.Estado
                                  }).ToList();
                     else
-                        Lista = (from q in Context.ct_CentroCosto
-                                 join padre in Context.ct_CentroCosto
-                             on new { q.IdEmpresa, q.IdCentroCostoPadre } equals new { padre.IdEmpresa, IdCentroCostoPadre = padre.IdCentroCosto } into temp_padre
-                                 from padre in temp_padre.DefaultIfEmpty()
+                        Lista = (from q in Context.vwct_CentroCosto
                                  where q.Estado == true
                                  && q.IdEmpresa == IdEmpresa
                                  orderby q.IdCentroCosto
@@ -181,7 +172,8 @@ namespace Core.Erp.Data.Contabilidad
                                      IdCentroCosto = q.IdCentroCosto,
                                      IdCentroCostoPadre = q.IdCentroCostoPadre,
                                      cc_Descripcion = q.cc_Descripcion,
-                                     cc_Descripcion_Padre = "",
+                                     cc_Descripcion_Padre = q.cc_Descripcion_Padre,
+                                     nv_Descripcion = q.nv_Descripcion,
                                      IdNivel = q.IdNivel,
                                      EsMovimiento = q.EsMovimiento,
                                      Estado = q.Estado

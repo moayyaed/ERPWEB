@@ -48,6 +48,7 @@
         <EntityTypeShape EntityType="Model_contabilidad.ct_CentroCosto" Width="1.5" PointX="16.625" PointY="12" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCosto" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCostoNivel" />
+        <EntityTypeShape EntityType="Model_contabilidad.vwct_CentroCosto" Width="1.5" PointX="16.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

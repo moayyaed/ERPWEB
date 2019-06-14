@@ -491,6 +491,28 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble_det' no tiene defini
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="523" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_CentroCosto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwct_CentroCosto">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCentroCosto" />
+            <PropertyRef Name="IdNivel" />
+            <PropertyRef Name="cc_Descripcion" />
+            <PropertyRef Name="EsMovimiento" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="nv_Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdCentroCostoPadre" Type="varchar" MaxLength="200" />
+          <Property Name="IdNivel" Type="int" Nullable="false" />
+          <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="EsMovimiento" Type="bit" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="nv_Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cc_Descripcion_Padre" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_CierrePorModuloPorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_CierrePorModuloPorSucursal">
           <Key>
@@ -850,6 +872,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
     [vwct_cbtecble_det].[IdGrupoPresupuesto] AS [IdGrupoPresupuesto], 
     [vwct_cbtecble_det].[pc_Cuenta] AS [pc_Cuenta]
     FROM [dbo].[vwct_cbtecble_det] AS [vwct_cbtecble_det]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwct_CentroCosto" EntityType="Self.vwct_CentroCosto" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwct_CentroCosto].[IdEmpresa] AS [IdEmpresa], 
+    [vwct_CentroCosto].[IdCentroCosto] AS [IdCentroCosto], 
+    [vwct_CentroCosto].[IdCentroCostoPadre] AS [IdCentroCostoPadre], 
+    [vwct_CentroCosto].[IdNivel] AS [IdNivel], 
+    [vwct_CentroCosto].[cc_Descripcion] AS [cc_Descripcion], 
+    [vwct_CentroCosto].[EsMovimiento] AS [EsMovimiento], 
+    [vwct_CentroCosto].[Estado] AS [Estado], 
+    [vwct_CentroCosto].[nv_Descripcion] AS [nv_Descripcion], 
+    [vwct_CentroCosto].[cc_Descripcion_Padre] AS [cc_Descripcion_Padre]
+    FROM [dbo].[vwct_CentroCosto] AS [vwct_CentroCosto]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwct_CierrePorModuloPorSucursal" EntityType="Self.vwct_CierrePorModuloPorSucursal" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1221,6 +1256,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_CentroCostoNivel" EntitySet="ct_CentroCostoNivel" />
             <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
           </AssociationSet>
+          <EntitySet Name="vwct_CentroCosto" EntityType="Model_contabilidad.vwct_CentroCosto" />
           </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -1860,6 +1896,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwct_CentroCosto">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCentroCosto" />
+            <PropertyRef Name="IdNivel" />
+            <PropertyRef Name="cc_Descripcion" />
+            <PropertyRef Name="EsMovimiento" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="nv_Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdCentroCostoPadre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <Property Name="cc_Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EsMovimiento" Type="Boolean" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="nv_Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cc_Descripcion_Padre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2347,6 +2403,21 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
                 <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="EsMovimiento" ColumnName="EsMovimiento" />
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="IdCentroCostoPadre" ColumnName="IdCentroCostoPadre" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwct_CentroCosto">
+            <EntityTypeMapping TypeName="Model_contabilidad.vwct_CentroCosto">
+              <MappingFragment StoreEntitySet="vwct_CentroCosto">
+                <ScalarProperty Name="cc_Descripcion_Padre" ColumnName="cc_Descripcion_Padre" />
+                <ScalarProperty Name="nv_Descripcion" ColumnName="nv_Descripcion" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="EsMovimiento" ColumnName="EsMovimiento" />
                 <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />

@@ -2082,6 +2082,9 @@
     <Compile Include="vwct_cbtecble_det.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwct_CentroCosto.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwct_CierrePorModuloPorSucursal.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
