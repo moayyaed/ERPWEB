@@ -44,7 +44,11 @@
         <EntityTypeShape EntityType="Model_contabilidad.ATS_retenciones" Width="1.5" PointX="7.75" PointY="8.75" />
         <EntityTypeShape EntityType="Model_contabilidad.ATS_ventas" Width="1.5" PointX="9.75" PointY="3.75" />
         <EntityTypeShape EntityType="Model_contabilidad.ATS_ventas_eventos" Width="1.5" PointX="14.375" PointY="4.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="Model_contabilidad.ct_CentroCostoNivel" Width="1.5" PointX="14.375" PointY="12.375" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_CentroCosto" Width="1.5" PointX="16.625" PointY="12" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCosto" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCostoNivel" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

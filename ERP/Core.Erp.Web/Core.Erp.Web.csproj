@@ -290,6 +290,8 @@
     <Compile Include="Areas\Contabilidad\ContabilidadAreaRegistration.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\AnioFiscalController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ATSController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\CentroCostoController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\CentroCostoNivelController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\CierrePorModuloPorSucursalController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
@@ -10019,6 +10021,17 @@
     <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbProducto_IngresoOrdenCompra.cshtml" />
     <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbProveedor_IngresoOrdenCompra.cshtml" />
     <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_GridViewPartial_oc_x_ingresar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\_GridViewPartial_cencost_nivel.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\Anular.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\_CmbPadre_CentroCosto.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\_GridViewPartial_centrocosto.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\Anular.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\Nuevo.cshtml" />
     <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

@@ -124,6 +124,8 @@
     <Compile Include="Contabilidad\ct_cbtecble_det_Info.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Info.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_tipo_Info.cs" />
+    <Compile Include="Contabilidad\ct_CentroCostoNivel_Info.cs" />
+    <Compile Include="Contabilidad\ct_CentroCosto_Info.cs" />
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Info.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Info.cs" />
     <Compile Include="Contabilidad\ct_parametro_Info.cs" />

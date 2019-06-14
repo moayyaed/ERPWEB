@@ -106,6 +106,44 @@
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="MotiAnula" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="ct_CentroCosto">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCentroCosto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdCentroCostoPadre" Type="varchar" MaxLength="200" />
+          <Property Name="IdNivel" Type="int" Nullable="false" />
+          <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="EsMovimiento" Type="bit" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ct_CentroCostoNivel">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdNivel" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdNivel" Type="int" Nullable="false" />
+          <Property Name="nv_NumDigitos" Type="int" Nullable="false" />
+          <Property Name="nv_Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="ct_CierrePorModuloPorSucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -638,6 +676,34 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ct_CentroCosto_ct_CentroCosto">
+          <End Role="ct_CentroCosto" Type="Self.ct_CentroCosto" Multiplicity="0..1" />
+          <End Role="ct_CentroCosto1" Type="Self.ct_CentroCosto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_CentroCosto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCentroCosto" />
+            </Principal>
+            <Dependent Role="ct_CentroCosto1">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCentroCostoPadre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_CentroCosto_ct_CentroCostoNivel">
+          <End Role="ct_CentroCostoNivel" Type="Self.ct_CentroCostoNivel" Multiplicity="1" />
+          <End Role="ct_CentroCosto" Type="Self.ct_CentroCosto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_CentroCostoNivel">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="ct_CentroCosto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ct_parametro_ct_cbtecble_tipo">
           <End Role="ct_cbtecble_tipo" Type="Self.ct_cbtecble_tipo" Multiplicity="1" />
           <End Role="ct_parametro" Type="Self.ct_parametro" Multiplicity="*" />
@@ -732,6 +798,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ct_cbtecble_det" EntityType="Self.ct_cbtecble_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_cbtecble_Reversado" EntityType="Self.ct_cbtecble_Reversado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_cbtecble_tipo" EntityType="Self.ct_cbtecble_tipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ct_CentroCosto" EntityType="Self.ct_CentroCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ct_CentroCostoNivel" EntityType="Self.ct_CentroCostoNivel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_CierrePorModuloPorSucursal" EntityType="Self.ct_CierrePorModuloPorSucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_grupocble" EntityType="Self.ct_grupocble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_parametro" EntityType="Self.ct_parametro" Schema="dbo" store:Type="Tables" />
@@ -848,6 +916,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <AssociationSet Name="FK_ct_cbtecble_Reversado_ct_cbtecble1" Association="Self.FK_ct_cbtecble_Reversado_ct_cbtecble1">
             <End Role="ct_cbtecble" EntitySet="ct_cbtecble" />
             <End Role="ct_cbtecble_Reversado" EntitySet="ct_cbtecble_Reversado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_CentroCosto_ct_CentroCosto" Association="Self.FK_ct_CentroCosto_ct_CentroCosto">
+            <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
+            <End Role="ct_CentroCosto1" EntitySet="ct_CentroCosto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_CentroCosto_ct_CentroCostoNivel" Association="Self.FK_ct_CentroCosto_ct_CentroCostoNivel">
+            <End Role="ct_CentroCostoNivel" EntitySet="ct_CentroCostoNivel" />
+            <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
           </AssociationSet>
           <AssociationSet Name="FK_ct_parametro_ct_cbtecble_tipo" Association="Self.FK_ct_parametro_ct_cbtecble_tipo">
             <End Role="ct_cbtecble_tipo" EntitySet="ct_cbtecble_tipo" />
@@ -1135,7 +1211,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ATS_ventas" EntityType="Model_contabilidad.ATS_ventas" />
           <EntitySet Name="ATS_ventas_eventos" EntityType="Model_contabilidad.ATS_ventas_eventos" />
           <FunctionImport Name="SPATS_MigrarEventos" />
-        </EntityContainer>
+          <EntitySet Name="ct_CentroCostoNivel" EntityType="Model_contabilidad.ct_CentroCostoNivel" />
+          <EntitySet Name="ct_CentroCosto" EntityType="Model_contabilidad.ct_CentroCosto" />
+          <AssociationSet Name="FK_ct_CentroCosto_ct_CentroCosto" Association="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCosto">
+            <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
+            <End Role="ct_CentroCosto1" EntitySet="ct_CentroCosto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_CentroCosto_ct_CentroCostoNivel" Association="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCostoNivel">
+            <End Role="ct_CentroCostoNivel" EntitySet="ct_CentroCostoNivel" />
+            <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1704,7 +1790,77 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="ivaComp" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="IdSucursal" Type="Int32" />
         </EntityType>
-      </Schema>
+        <EntityType Name="ct_CentroCostoNivel">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdNivel" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <Property Name="nv_NumDigitos" Type="Int32" Nullable="false" />
+          <Property Name="nv_Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ct_CentroCosto" Relationship="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCostoNivel" FromRole="ct_CentroCostoNivel" ToRole="ct_CentroCosto" />
+        </EntityType>
+        <EntityType Name="ct_CentroCosto">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCentroCosto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdCentroCostoPadre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <Property Name="cc_Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EsMovimiento" Type="Boolean" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ct_CentroCosto1" Relationship="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCosto" FromRole="ct_CentroCosto" ToRole="ct_CentroCosto1" />
+          <NavigationProperty Name="ct_CentroCosto2" Relationship="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCosto" FromRole="ct_CentroCosto1" ToRole="ct_CentroCosto" />
+          <NavigationProperty Name="ct_CentroCostoNivel" Relationship="Model_contabilidad.FK_ct_CentroCosto_ct_CentroCostoNivel" FromRole="ct_CentroCosto" ToRole="ct_CentroCostoNivel" />
+        </EntityType>
+        <Association Name="FK_ct_CentroCosto_ct_CentroCosto">
+          <End Type="Model_contabilidad.ct_CentroCosto" Role="ct_CentroCosto" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_CentroCosto" Role="ct_CentroCosto1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_CentroCosto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCentroCosto" />
+            </Principal>
+            <Dependent Role="ct_CentroCosto1">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCentroCostoPadre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_CentroCosto_ct_CentroCostoNivel">
+          <End Type="Model_contabilidad.ct_CentroCostoNivel" Role="ct_CentroCostoNivel" Multiplicity="1" />
+          <End Type="Model_contabilidad.ct_CentroCosto" Role="ct_CentroCosto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_CentroCostoNivel">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="ct_CentroCosto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2163,6 +2319,44 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPATS_MigrarEventos" FunctionName="Model_contabilidad.Store.SPATS_MigrarEventos" />
+          <EntitySetMapping Name="ct_CentroCostoNivel">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_CentroCostoNivel">
+              <MappingFragment StoreEntitySet="ct_CentroCostoNivel">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="nv_Descripcion" ColumnName="nv_Descripcion" />
+                <ScalarProperty Name="nv_NumDigitos" ColumnName="nv_NumDigitos" />
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ct_CentroCosto">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_CentroCosto">
+              <MappingFragment StoreEntitySet="ct_CentroCosto">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="EsMovimiento" ColumnName="EsMovimiento" />
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="IdCentroCostoPadre" ColumnName="IdCentroCostoPadre" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

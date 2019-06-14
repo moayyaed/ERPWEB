@@ -12,26 +12,26 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ct_plancta_nivel
+    public partial class ct_CentroCostoNivel
     {
-        public ct_plancta_nivel()
+        public ct_CentroCostoNivel()
         {
-            this.ct_plancta = new HashSet<ct_plancta>();
+            this.ct_CentroCosto = new HashSet<ct_CentroCosto>();
         }
     
         public int IdEmpresa { get; set; }
-        public int IdNivelCta { get; set; }
+        public int IdNivel { get; set; }
         public int nv_NumDigitos { get; set; }
         public string nv_Descripcion { get; set; }
-        public string Estado { get; set; }
-        public string IdUsuario { get; set; }
-        public Nullable<System.DateTime> Fecha_Transaccion { get; set; }
-        public string IdUsuarioUltModi { get; set; }
-        public Nullable<System.DateTime> Fecha_UltMod { get; set; }
-        public string IdUsuarioUltAnu { get; set; }
-        public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
+        public bool Estado { get; set; }
+        public string IdUsuarioCreacion { get; set; }
+        public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string IdUsuarioModificacion { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public string IdUsuarioAnulacion { get; set; }
+        public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public string MotivoAnulacion { get; set; }
     
-        public virtual ICollection<ct_plancta> ct_plancta { get; set; }
+        public virtual ICollection<ct_CentroCosto> ct_CentroCosto { get; set; }
     }
 }
