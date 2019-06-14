@@ -1,7 +1,7 @@
 ﻿
 @model Core.Erp.Info.Banco.ba_Archivo_Transferencia_Info
 @{
-    ViewBag.Title = "Nueva archivo bancario";
+    ViewBag.Title = "Nuevo archivo bancario";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -87,6 +87,15 @@
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdArchivo, new { @id = "IdArchivo" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 
     <div class="row">
         <div class="col-md-12">
