@@ -38,7 +38,8 @@ namespace Core.Erp.Data.Banco
                         num_cta_acreditacion = q.num_cta_acreditacion,
                         IdBanco_acreditacion=q.IdBanco_acreditacion,
                         IdTipoCta_acreditacion_cat =q.IdTipoCta_acreditacion_cat,
-                        IdTipoDocumento = q.IdTipoDocumento
+                        IdTipoDocumento = q.IdTipoDocumento,
+                        CodigoLegalBanco = q.CodigoLegalBanco
                         
                     }).ToList();
                 }

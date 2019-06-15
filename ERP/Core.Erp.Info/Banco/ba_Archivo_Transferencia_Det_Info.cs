@@ -33,5 +33,6 @@ namespace Core.Erp.Info.Banco
         public int? IdBanco_acreditacion { get; set; }
         public string IdTipoCta_acreditacion_cat { get; set; }
         public string IdTipoDocumento { get; set; }
+        public string CodigoLegalBanco { get; set; }
     }
 }

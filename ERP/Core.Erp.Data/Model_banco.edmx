@@ -396,6 +396,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no
             <PropertyRef Name="IdTipoDocumento" />
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="CodigoLegalBanco" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -417,6 +418,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no
           <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CodigoLegalBanco" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1054,7 +1056,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
     [vwba_Archivo_Transferencia_Det].[pr_correo] AS [pr_correo], 
     [vwba_Archivo_Transferencia_Det].[IdTipoDocumento] AS [IdTipoDocumento], 
     [vwba_Archivo_Transferencia_Det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
-    [vwba_Archivo_Transferencia_Det].[pe_nombreCompleto] AS [pe_nombreCompleto]
+    [vwba_Archivo_Transferencia_Det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwba_Archivo_Transferencia_Det].[CodigoLegalBanco] AS [CodigoLegalBanco]
     FROM [dbo].[vwba_Archivo_Transferencia_Det] AS [vwba_Archivo_Transferencia_Det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" EntityType="Self.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" store:Type="Views" store:Schema="dbo">
@@ -1754,11 +1757,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_Conciliacion_det" EntitySet="ba_Conciliacion_det" />
           </AssociationSet>
           <EntitySet Name="ba_Archivo_Transferencia" EntityType="Model_banco.ba_Archivo_Transferencia" />
+          <EntitySet Name="ba_Archivo_Transferencia_Det" EntityType="Model_banco.ba_Archivo_Transferencia_Det" />
           <AssociationSet Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" Association="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
             <End Role="ba_Banco_Cuenta" EntitySet="ba_Banco_Cuenta" />
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
           </AssociationSet>
-          <EntitySet Name="ba_Archivo_Transferencia_Det" EntityType="Model_banco.ba_Archivo_Transferencia_Det" />
           <AssociationSet Name="FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" Association="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1">
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
             <End Role="ba_Archivo_Transferencia_Det" EntitySet="ba_Archivo_Transferencia_Det" />
@@ -2381,20 +2384,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <NavigationProperty Name="ba_Banco_Cuenta" Relationship="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" FromRole="ba_Archivo_Transferencia" ToRole="ba_Banco_Cuenta" />
           <NavigationProperty Name="ba_Archivo_Transferencia_Det" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia" ToRole="ba_Archivo_Transferencia_Det" />
         </EntityType>
-        <Association Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
-          <End Type="Model_banco.ba_Banco_Cuenta" Role="ba_Banco_Cuenta" Multiplicity="1" />
-          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ba_Banco_Cuenta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdBanco" />
-            </Principal>
-            <Dependent Role="ba_Archivo_Transferencia">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdBanco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ba_Archivo_Transferencia_Det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2415,6 +2404,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Fecha_proceso" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia_Det" ToRole="ba_Archivo_Transferencia" />
         </EntityType>
+        <Association Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
+          <End Type="Model_banco.ba_Banco_Cuenta" Role="ba_Banco_Cuenta" Multiplicity="1" />
+          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Banco_Cuenta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdBanco" />
+            </Principal>
+            <Dependent Role="ba_Archivo_Transferencia">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1">
           <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="1" />
           <End Type="Model_banco.ba_Archivo_Transferencia_Det" Role="ba_Archivo_Transferencia_Det" Multiplicity="*" />
@@ -2440,6 +2443,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <PropertyRef Name="IdTipoDocumento" />
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="CodigoLegalBanco" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
@@ -2461,6 +2465,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoLegalBanco" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3022,6 +3027,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySetMapping Name="vwba_Archivo_Transferencia_Det">
             <EntityTypeMapping TypeName="Model_banco.vwba_Archivo_Transferencia_Det">
               <MappingFragment StoreEntitySet="vwba_Archivo_Transferencia_Det">
+                <ScalarProperty Name="CodigoLegalBanco" ColumnName="CodigoLegalBanco" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
                 <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
                 <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
