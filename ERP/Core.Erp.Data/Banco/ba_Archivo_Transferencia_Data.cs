@@ -126,6 +126,7 @@ namespace Core.Erp.Data.Banco
         {
             try
             {
+                info.Nom_Archivo = "PAGOS_MULTICASH_"+info.Fecha.ToString("yyyyMMdd")+"_01";
                 using (Entities_banco Context = new Entities_banco())
                 {
                     Context.ba_Archivo_Transferencia.Add(new ba_Archivo_Transferencia
