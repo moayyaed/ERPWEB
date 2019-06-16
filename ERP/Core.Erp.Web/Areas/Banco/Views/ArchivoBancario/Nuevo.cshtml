@@ -34,7 +34,8 @@
         selectedIDs = "";
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdSucursal: $("#IdSucursal").val()
         }
         $.ajax({
             type: 'POST',
@@ -203,6 +204,7 @@
             </div>
         </div>
     </div>
+    <br />
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-12">

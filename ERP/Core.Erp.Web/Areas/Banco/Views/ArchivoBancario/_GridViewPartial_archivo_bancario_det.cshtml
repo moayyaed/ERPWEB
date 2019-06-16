@@ -14,14 +14,15 @@
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
 
-        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowEditButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
-        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
 
-        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsContextMenu.Enabled = false;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
+        
 
         settings.Settings.ShowFooter = true;
         settings.SettingsPager.Visible = true;
@@ -47,32 +48,34 @@
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.Width = Unit.Percentage(10);
-            column.FieldName = "IdTipoPersona";
-            column.Caption = "Tipo persona";
+            column.FieldName = "Fecha_Factura";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
         });
+        /*
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "IdTipoPersona";
+            column.Caption = "Tipo persona";
+        });*/
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(30);
             column.FieldName = "Nom_Beneficiario";
             column.Caption = "Nombre beneficiario";
         });
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(30);
             column.FieldName = "Referencia";
             column.Caption = "Referencia";
         });
 
-        settings.Columns.Add(column =>
-        {
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(10);
-            column.FieldName = "Fecha_Factura";
-            column.Caption = "Fecha";
-            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-        });
+        
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.True;
