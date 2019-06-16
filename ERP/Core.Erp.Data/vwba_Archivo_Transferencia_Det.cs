@@ -34,5 +34,6 @@ namespace Core.Erp.Data
         public string IdTipoDocumento { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string pe_nombreCompleto { get; set; }
+        public string CodigoLegalBanco { get; set; }
     }
 }

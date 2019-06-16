@@ -247,21 +247,19 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public FileResult get_archivo(int IdEmpresa = 0, int IdArchivo = 0)
         {
             byte[] archivo;
-            string NombreFile = "NCR";
             ba_Archivo_Transferencia_Bus bus_tipo_file = new ba_Archivo_Transferencia_Bus();
 
             var info_archivo = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
             info_archivo.Lst_det = bus_archivo_det.GetList(IdEmpresa, IdArchivo);
-            var tipo_file = bus_tipo_file.GetInfo(IdEmpresa, info_archivo.IdProceso_bancario);
-            decimal secuancia = bus_archivo_det.GetIdSecuencial(IdEmpresa, info_archivo.IdBanco, info_archivo.IdProceso_bancario);
+           // decimal secuancia = bus_archivo_det.GetIdSecuencial(IdEmpresa, info_archivo.IdBanco, info_archivo.IdProceso_bancario);
 
-            archivo = GetArchivo(info_archivo, NombreFile);
-            return File(archivo, "application/xml", NombreFile + ".txt");
+            archivo = GetArchivo(info_archivo, info_archivo.Nom_Archivo);
+            return File(archivo, "application/xml", info_archivo.Nom_Archivo + ".txt");
 
 
         }
 
-        private byte[] get_NCR(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+        private byte[] GetMulticash(ba_Archivo_Transferencia_Info info, string NombreArchivo)
         {
             try
             {
@@ -270,25 +268,61 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 {
                     foreach (var item in info.Lst_det.Where(v => v.Valor > 0))
                     {
+                        /*
+                            info_.Multi_nombreClienteBeneficiario = info_.Multi_nombreClienteBeneficiario.Trim();
 
-                        item.num_cta_acreditacion = item.num_cta_acreditacion.Trim();
+
+                            info_.Multi_codigoOrientación = info_.Multi_codigoOrientación + "\t";
+                            info_.Multi_cuentaEmpresa = info_.Multi_cuentaEmpresa.PadLeft(10,'0') + "\t";
+                            info_.Multi_secuencialPago = info_.Multi_secuencialPago + "\t";
+                            info_.Multi_comprobantedePago = info_.Multi_comprobantedePago + "\t";
+                            info_.Multi_codigo = info_.Multi_codigo + "\t";
+                            info_.Multi_moneda = info_.Multi_moneda + "\t";
+                            info_.valor = info_.valor.ToString().PadLeft(13, '0') + "\t";
+                            info_.Multi_formaPago = info_.Multi_formaPago + "\t";
+                            if (info_.Multi_codigoDeInstitucionFinanciera == null)
+                            info_.Multi_codigoDeInstitucionFinanciera = "17";
+                            info_.Multi_codigoDeInstitucionFinanciera = info_.Multi_codigoDeInstitucionFinanciera.ToString().PadLeft(4, '0') + "\t";
+                            if (info_.Multi_tipoCuenta == "COR")
+                            info_.Multi_tipoCuenta = "CTE" + "\t";
+                            else
+                            info_.Multi_tipoCuenta = info_.Multi_tipoCuenta + "\t";
+                            info_.Multi_numeroDeCuenta = info_.Multi_numeroDeCuenta + "\t";
+                            info_.Multi_tipoIdClienteBeneficiario = info_.Multi_tipoIdClienteBeneficiario + "\t";
+                            info_.Multi_numeroIdClienteBeneficiario = info_.Multi_numeroIdClienteBeneficiario + "\t";
+                            info_.Multi_nombreClienteBeneficiario = info_.Multi_nombreClienteBeneficiario + "\t";
+                            info_.Multi_direccionBeneficiario = info_.Multi_direccionBeneficiario + "\t";
+                            info_.Multi_ciudadBeneficiario = info_.Multi_ciudadBeneficiario + "\t";
+                            info_.Multi_telefonoBeneficiario = info_.Multi_telefonoBeneficiario + "\t";
+                            info_.Multi_localidadPago = info_.Multi_localidadPago + "\t";
+                            info_.Multi_referencia = info_.Multi_referencia ;
+                            info_.Multi_referenciaAdicional = info_.Multi_referenciaAdicional;
+                         * */
                         string linea = "";
                         double valor = Convert.ToDouble(item.Valor);
                         double valorEntero = Math.Floor(valor);
                         double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
 
                         linea += "PA\t";
-                        linea += item.num_cta_acreditacion.PadLeft(7, '0');
-                        linea += item.Secuencial_reg_x_proceso;
-                        linea += item.Referencia;
+                        linea += item.num_cta_acreditacion.PadLeft(10, '0') + "\t";
+                        linea += item.Secuencial_reg_x_proceso.ToString().PadLeft(7, ' ') + "\t";
+                        linea += "\t";//COMPROBANTE DE PAGO
+                        linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? item.pe_cedulaRuc.Trim() : item.num_cta_acreditacion.Trim()) + "\t";
                         linea += "USD\t";
-                        linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2, '0')).PadLeft(13, '0');
-                        linea += item.IdTipoCta_acreditacion_cat;
-                        linea += item.num_cta_acreditacion.PadLeft(7, '0');
-                        linea += item.pe_cedulaRuc;
-                        linea += item.Nom_Beneficiario;
-                        linea += item.pr_direccion;
-                        linea += item.Referencia;
+                        linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2, '0')).PadLeft(13, '0') + "\t";
+                        linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? "EFE" : "CTA") + "\t";
+                        linea += (string.IsNullOrEmpty(item.num_cta_acreditacion)) ? item.CodigoLegalBanco.ToString().PadLeft(4, '0') : "0017" +"\t"; 
+                        linea += item.IdTipoCta_acreditacion_cat + "\t";
+                        linea += item.num_cta_acreditacion.PadLeft(7, '0') + "\t";
+                       // linea += item.IdTipoDocumento = ((item.IdTipoDocumento = item.IdTipoDocumento == "CED" ? "C") ? (item.IdTipoDocumento == "RUC" ? "R") : (item.IdTipoDocumento == "PAS" ? "P"));
+                        linea += item.pe_cedulaRuc + "\t";
+                        linea += item.Nom_Beneficiario + "\t";
+                        linea += item.pr_direccion + "\t";
+                        linea += "\t";//Ciudad
+                        linea += "\t";//Telefono
+                        linea += "\t";//Localidad
+                        linea += item.Referencia + "\t";
+                        linea += "\t";//Ref adicional
 
                         file.WriteLine(linea);
                     }
@@ -308,7 +342,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             try
             {
-                return get_NCR(info, nombre_file);
+                return GetMulticash(info, nombre_file);
 
             }
             catch (Exception)
