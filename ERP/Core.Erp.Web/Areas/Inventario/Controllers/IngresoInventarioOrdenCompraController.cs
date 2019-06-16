@@ -74,7 +74,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdBodega = 0
             };
             CargarCombosConsulta(model.IdEmpresa);
             return View(model);
@@ -85,6 +86,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
+
+            tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+            var lst_bodega = bus_bodega.get_list(IdEmpresa, true);
+            ViewBag.lst_bodega = lst_bodega;
         }
 
         [HttpPost]
@@ -95,14 +100,16 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_IngresoOrdenCompra(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_IngresoOrdenCompra(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0, int IdBodega=0)
         {
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdBodega = 0;
+
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
+            ViewBag.IdBodega = IdBodega;
+
             com_parametro_Info info_parametro_compra = bus_com_param.get_info(IdEmpresa);
             List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_orden_compra(IdEmpresa, IdSucursal, true, IdBodega, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_IngresoOrdenCompra", model);
@@ -156,6 +163,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost]
         public ActionResult Nuevo(in_Ing_Egr_Inven_Info model)
         {
+            com_parametro_Info info_param_oc = bus_com_param.get_info(model.IdEmpresa);
             model.lst_in_Ing_Egr_Inven_det = List_in_Ing_Egr_Inven_det.get_list(model.IdTransaccionSession);
             if (!validar(model, ref mensaje))
             {
@@ -163,7 +171,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
+            //model.IdResponsable = model.IdProveedor;
             model.IdUsuario = SessionFixed.IdUsuario;
+            model.signo = "+";
+            model.IdMovi_inven_tipo = info_param_oc.IdMovi_inven_tipo_OC;
+            model.lst_in_Ing_Egr_Inven_det.ForEach(q => q.IdBodega_inv = model.IdBodega);
             if (!bus_ing_inv.guardarDB(model, "+"))
             {
                 cargar_combos(model);
@@ -183,6 +195,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_Ing_Egr_Inven_Info model = bus_ing_inv.get_info(IdEmpresa, IdSucursal, IdMovi_inven_tipo, IdNumMovi);
             if (model == null)
                 return RedirectToAction("Index");
+            //model.IdProveedor = Convert.ToInt32(model.IdResponsable);
             model.lst_in_Ing_Egr_Inven_det = bus_det_ing_inv.get_list(IdEmpresa, IdSucursal, IdMovi_inven_tipo, IdNumMovi);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_in_Ing_Egr_Inven_det.set_list(model.lst_in_Ing_Egr_Inven_det, model.IdTransaccionSession);
@@ -212,6 +225,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
             model.IdUsuarioUltModi = SessionFixed.IdUsuario;
+            model.IdResponsable = model.IdProveedor;
+            
             if (!bus_ing_inv.modificarDB(model))
             {
                 cargar_combos(model);
@@ -256,6 +271,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
             model.IdusuarioUltAnu = SessionFixed.IdUsuario;
+
             if (!bus_ing_inv.anularDB(model))
             {
                 cargar_combos(model);
@@ -286,6 +302,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             if (IDs != "")
             {
+                int IdEmpresaSesion = Convert.ToInt32(SessionFixed.IdEmpresa);
                 var lst_x_ingresar = ListaPorIngresar.get_list(IdTransaccionSession);
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
@@ -295,13 +312,29 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     int IdOrdenCompra = Convert.ToInt32(item.Substring(6, 6));
                     int Secuencia = Convert.ToInt32(item.Substring(12, 6));
 
-                    //var info_det = lst_x_ingresar.Where(q => q.IdInventarioOrdenCompra == Convert.ToInt32(item)).FirstOrDefault();
-                    //if (info_det != null)
-                    //{
-                    //    GiradoA = info_det.pe_nombreCompleto;
-                    //    Observacion += info_det.Referencia + "/ ";
-                    //    List_in_Ing_Egr_Inven_det.AddRow(info_det, IdTransaccionSession);
-                    //}
+                    var info_det = lst_x_ingresar.Where(q => q.IdEmpresa == IdEmpresaOC && q.IdSucursal == IdSucursalOC && q.IdOrdenCompra == IdOrdenCompra && q.Secuencia == Secuencia).FirstOrDefault();
+
+                    in_Ing_Egr_Inven_det_Info info_det_inv = new in_Ing_Egr_Inven_det_Info();
+                    com_parametro_Info info_param_oc = bus_com_param.get_info(IdEmpresaSesion);
+                    if (info_det != null)
+                    {
+                        info_det_inv.IdEmpresa = info_det.IdEmpresa;
+                        info_det_inv.IdSucursal = info_det.IdSucursal;
+                        info_det_inv.IdProducto = info_det.IdProducto;
+                        info_det_inv.pr_descripcion = info_det.pr_descripcion;
+
+                        info_det_inv.IdEmpresa_oc = info_det.IdEmpresa;
+                        info_det_inv.IdSucursal_oc = info_det.IdSucursal;
+                        info_det_inv.IdOrdenCompra = info_det.IdOrdenCompra;
+                        info_det_inv.Secuencia_oc = info_det.Secuencia;
+
+                        info_det_inv.mv_costo_sinConversion = info_det.do_precioFinal;
+                        info_det_inv.dm_cantidad_sinConversion = info_det.do_Cantidad_vw;
+                        info_det_inv.IdUnidadMedida_sinConversion = info_det.IdUnidadMedida;
+                        info_det_inv.Saldo = Convert.ToInt32(info_det.Saldo_vw);
+
+                        List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);
+                    }
                 }
             }
             var model = List_in_Ing_Egr_Inven_det.get_list(IdTransaccionSession);
@@ -319,10 +352,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     if (info_producto != null)
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
-                        //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
-                        info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
-                        info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
             if (info_det.dm_cantidad_sinConversion > 0)
@@ -390,11 +420,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetListPorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdSucursal = 0)
+        public JsonResult GetListPorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdSucursal = 0, decimal IdResponsable=0)
         {
-            //var lst = bus_orden_compra.get_list_x_ingresar(IdEmpresa, IdSucursal);
             com_parametro_Info info_parametro_compra = bus_com_param.get_info(IdEmpresa);
-            var lst = bus_orden_compra.get_list_x_ingresar(IdEmpresa, IdSucursal);
+            var lst = bus_orden_compra.get_list_x_ingresar(IdEmpresa, IdSucursal, IdResponsable);
             ListaPorIngresar.set_list(lst, IdTransaccionSession);
 
             return Json("", JsonRequestBehavior.AllowGet);
@@ -422,28 +451,24 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
-        public void AddRow(in_Ing_Egr_Inven_det_Info info_det, decimal IdTransaccionSession)
+        public void AddRow(in_Ing_Egr_Inven_det_Info info_det_inv, decimal IdTransaccionSession)
         {
             List<in_Ing_Egr_Inven_det_Info> list = get_list(IdTransaccionSession);
-            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            info_det.IdProducto = info_det.IdProducto;
-            info_det.IdUnidadMedida = info_det.IdUnidadMedida;
-            info_det.mv_costo_sinConversion = info_det.mv_costo_sinConversion;
-            info_det.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
-            list.Add(info_det);
+            info_det_inv.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            info_det_inv.secuencia_inv = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+
+            list.Add(info_det_inv);
         }
 
         public void UpdateRow(in_Ing_Egr_Inven_det_Info info_det, decimal IdTransaccionSession)
         {
             in_Ing_Egr_Inven_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
             edited_info.IdProducto = info_det.IdProducto;
-            edited_info.IdUnidadMedida = info_det.IdUnidadMedida;
+            edited_info.IdUnidadMedida_sinConversion = info_det.IdUnidadMedida_sinConversion;
             edited_info.mv_costo_sinConversion = info_det.mv_costo_sinConversion;
             edited_info.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
             edited_info.pr_descripcion = info_det.pr_descripcion;
             edited_info.IdProducto = info_det.IdProducto;
-            edited_info.tp_ManejaInven = info_det.tp_ManejaInven;
-            edited_info.se_distribuye = info_det.se_distribuye;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

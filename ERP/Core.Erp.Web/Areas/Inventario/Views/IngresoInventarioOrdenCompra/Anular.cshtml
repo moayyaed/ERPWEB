@@ -18,6 +18,7 @@
     @Html.HiddenFor(q => q.IdNumMovi)
     @Html.HiddenFor(q => q.signo)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo)
+
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -25,8 +26,8 @@
                 <i class="icon fa fa-warning"></i> @ViewBag.mensaje
             </h4>
         </div>
-
     }
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -36,34 +37,50 @@
                     @Html.ValidationMessageFor(q => q.CodMoviInven, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-7 col-md-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_IngresoOrdenCompra", Model.IdResponsable)
+                    @Html.ValidationMessageFor(q => q.IdResponsable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdProveedor"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="">Fecha</label>
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.DevExpress().DateEditFor(q=> q.cm_fecha, settings =>
-                    {
-                        settings.Name = "cm_fecha";
-                        settings.Properties.UseMaskBehavior = true;
-                        settings.Properties.EditFormat = EditFormat.Date;
-                        settings.Properties.EditFormatString = "dd/MM/yyyy";
-                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                    }).GetHtml()
+                        @Html.DevExpress().DateEditFor(q => q.cm_fecha, settings =>
+                   {
+                       settings.Name = "cm_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -81,17 +98,8 @@
                     @Html.ValidationMessageFor(q => q.IdMotivo_Inv, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class=" col-md-3">
-                <div class="form-group">
-                    <label for="IdMovi_inven_tipo">Tipo movimiento*</label>
-                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_tipo, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
-                </div>
-            </div>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-md-12">
@@ -114,6 +122,7 @@
             </div>
         </div>
     </div>
+
     <div class="box-footer">
         @if (ViewBag.MostrarBoton ?? false)
         {
@@ -192,5 +201,6 @@ function CargarBodega() {
             error: function (error) {
             }
             });
-    };
+};
+
 </script>

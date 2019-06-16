@@ -59,21 +59,14 @@ namespace Core.Erp.Info.Compras
         #region Campos de vwcom_ordencompra_local_x_ingresar
         public int Secuencia { get; set; }
         public decimal IdProducto { get; set; }
-        public string IdCod_Impuesto { get; set; }
-        public double Por_Iva { get; set; }
-        public double do_Cantidad { get; set; }
-        public double do_precioCompra { get; set; }
-        public double do_porc_des { get; set; }
-        public double do_precioFinal { get; set; }
-        public double do_subtotal { get; set; }
-        public double do_iva { get; set; }
-        public double do_total { get; set; }
-        public string IdUnidadMedida { get; set; }
         public string pr_descripcion { get; set; }
-        public double CantidadIngresada { get; set; }
-        public double Saldo { get; set; }
-        public string NomUnidadMedida { get; set; }
-        public string IdCtaCtble_Inve { get; set; }
+        public double do_Cantidad_vw { get; set; }
+        public double do_precioFinal { get; set; }
+        public int CantidadIngresada { get; set; }
+        public double Saldo_vw { get; set; }
+        public string IdUnidadMedida { get; set; }
+        public string pe_NombreCompleto { get; set; }
+        public string oc_Observacion { get; set; }
         #endregion
     }
     public class com_orden_aprobacion_Info

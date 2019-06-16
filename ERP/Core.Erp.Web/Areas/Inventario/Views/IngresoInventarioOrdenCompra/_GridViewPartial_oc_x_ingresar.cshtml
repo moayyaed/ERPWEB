@@ -43,15 +43,16 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(30);
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
         });
+        settings.Columns.Add("do_Cantidad_vw", "Cantidad").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(10);
-            column.FieldName = "do_total";
-            column.Caption = "Total";
+            column.FieldName = "do_precioFinal";
+            column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";

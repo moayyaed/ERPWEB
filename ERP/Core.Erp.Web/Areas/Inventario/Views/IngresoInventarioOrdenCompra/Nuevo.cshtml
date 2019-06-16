@@ -67,7 +67,8 @@
         var datos = {
             IdTransaccionSession:$("#IdTransaccionSession").val(),
             IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val()
+            IdSucursal: $("#IdSucursal").val(),
+            IdResponsable: IdResponsable.GetValue()
         }
         $.ajax({
             type: 'POST',
@@ -117,6 +118,11 @@
         GridViewPartial_inv_det.PerformCallback();
         $("#OcModal").modal("hide");
     }
+
+    function ValidarCantidad() {
+        var Cantidad = GridViewPartial_inv_det.GetEditor('dm_cantidad_sinConversion').GetValue();
+        console.log(Cantidad);
+    }
 </script>
 @using (Html.BeginForm("Nuevo", "IngresoInventarioOrdenCompra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -165,8 +171,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProveedor_IngresoOrdenCompra", Model.IdProveedor)
-                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                    @Html.Partial("_CmbProveedor_IngresoOrdenCompra", Model.IdResponsable)
+                    @Html.ValidationMessageFor(q => q.IdResponsable, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-1">

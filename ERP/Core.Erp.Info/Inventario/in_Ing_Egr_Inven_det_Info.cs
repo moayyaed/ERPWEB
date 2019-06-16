@@ -51,6 +51,8 @@ namespace Core.Erp.Info.Inventario
         public DateTime? lote_fecha_vcto { get; set; }
         public string lote_num_lote { get; set; }
         public string nom_presentacion { get; set; }
+
+        public int Saldo { get; set; }
         #endregion
 
         #region Campos de factura        

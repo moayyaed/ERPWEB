@@ -194,7 +194,7 @@ namespace Core.Erp.Data.Compras
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -394,7 +394,7 @@ namespace Core.Erp.Data.Compras
             }
         }
 
-        public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal)
+        public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal, decimal IdResponsable)
         {
             try
             {
@@ -404,6 +404,7 @@ namespace Core.Erp.Data.Compras
                         Lista = (from q in Context.vwcom_ordencompra_local_detPorIngresar
                                  where q.IdEmpresa == IdEmpresa
                                  && q.IdSucursal == IdSucursal
+                                 && q.IdProveedor == IdResponsable
                                  select new com_ordencompra_local_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -411,8 +412,16 @@ namespace Core.Erp.Data.Compras
                                      IdOrdenCompra = q.IdOrdenCompra,
                                      Secuencia = q.Secuencia,
                                      oc_fecha = q.oc_fecha,
+                                     IdProducto = q.IdProducto,
+                                     pr_descripcion = q.pr_descripcion,
+                                     do_precioFinal = q.do_precioFinal,
+                                     do_Cantidad_vw = q.do_Cantidad,
+                                     IdUnidadMedida = q.IdUnidadMedida,
+                                     pe_nombreCompleto = q.pe_nombreCompleto,
+                                     oc_fechaVencimiento = q.oc_fecha,
                                      oc_observacion = q.oc_observacion,
                                      IdProveedor = q.IdProveedor,
+                                     Saldo_vw = q.Saldo
                                  }).ToList();
 
                     Lista.ForEach(q=>q.IdInventarioOrdenCompra = (q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000")  + q.IdOrdenCompra.ToString("000000") + q.Secuencia.ToString("000000")) );                  

@@ -230,7 +230,7 @@ namespace Core.Erp.Data.Inventario
                 Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
                 return true;
             }
-            catch (Exception )
+            catch (Exception ex)
             {
 
                 throw;
@@ -917,6 +917,8 @@ namespace Core.Erp.Data.Inventario
                 fecha_fin = fecha_fin.Date;
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdBodegaIni = IdBodega;
+                int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
                 List<in_Ing_Egr_Inven_Info> Lista;
                 using (Entities_inventario Context = new Entities_inventario())
                 {
@@ -925,6 +927,8 @@ namespace Core.Erp.Data.Inventario
                                  where q.IdEmpresa == IdEmpresa
                                  && IdSucursalIni <= q.IdSucursal
                                  && q.IdSucursal <= IdSucursalFin
+                                 && IdBodegaIni <= q.IdBodega
+                                 && q.IdBodega <= IdBodegaFin
                                  && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
                                  orderby new { q.IdNumMovi } descending
                                  select new in_Ing_Egr_Inven_Info
@@ -952,6 +956,8 @@ namespace Core.Erp.Data.Inventario
                                  where q.IdEmpresa == IdEmpresa
                                  && IdSucursalIni <= q.IdSucursal
                                  && q.IdSucursal <= IdSucursalFin
+                                 && IdBodegaIni <= q.IdBodega
+                                 && q.IdBodega <= IdBodegaFin
                                  && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
                                  && q.Estado == "A"
                                  orderby new { q.IdNumMovi } descending
@@ -1015,8 +1021,8 @@ namespace Core.Erp.Data.Inventario
 
                                      EstadoBool = q.Estado == "A" ? true : false
 
-                                 }).ToList();
-                }
+                                 }).ToList();                    
+               }
                 return Lista;
             }
             catch (Exception)

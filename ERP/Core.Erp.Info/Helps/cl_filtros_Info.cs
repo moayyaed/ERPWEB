@@ -17,7 +17,8 @@ namespace Core.Erp.Info.Helps
         public string IdCtaCbleFin { get; set; }
         public bool mostrarAnulados { get; set; }
         public bool mostrar_observacion_completa { get; set; }
-        
+        public int IdBodega { get; set; }
+
         #region Filtros activo
         public int IdActivoFijoTipo { get; set; }
         public int IdCategoriaAF { get; set; }

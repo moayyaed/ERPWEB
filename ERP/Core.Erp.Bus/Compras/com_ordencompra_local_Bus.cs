@@ -109,11 +109,11 @@ namespace Core.Erp.Bus.Compras
             }
         }
 
-        public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal)
+        public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal, decimal IdResponsable)
         {
             try
             {
-                return odata.get_list_x_ingresar(IdEmpresa, IdSucursal);
+                return odata.get_list_x_ingresar(IdEmpresa, IdSucursal, IdResponsable);
             }
             catch (Exception)
             {
