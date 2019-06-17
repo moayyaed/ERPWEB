@@ -34,8 +34,9 @@ namespace Core.Erp.Info.Banco
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string Motivo_anulacion { get; set; }
         public Nullable<System.DateTime> Fecha_Proceso { get; set; }
-        public Nullable<bool> Contabilizado { get; set; }
+        public bool Contabilizado { get; set; }
         public int IdSucursal { get; set; }
+        public decimal SecuencialInicial { get; set; }
 
         public cl_enumeradores.eTipoProcesoBancario TipoFile { get; set; }
         public List<ba_Archivo_Transferencia_Det_Info> Lst_det { get; set; }

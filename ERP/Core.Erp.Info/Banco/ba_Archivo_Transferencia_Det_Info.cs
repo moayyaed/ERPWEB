@@ -16,23 +16,28 @@ namespace Core.Erp.Info.Banco
         public int IdEmpresa { get; set; }
         public decimal IdArchivo { get; set; }
         public int Secuencia { get; set; }
-        public string Id_Item { get; set; }
-        public Nullable<int> IdEmpresa_OP { get; set; }
-        public Nullable<decimal> IdOrdenPago { get; set; }
-        public Nullable<int> Secuencia_OP { get; set; }
+        public int IdEmpresa_OP { get; set; }
+        public decimal IdOrdenPago { get; set; }
+        public int Secuencia_OP { get; set; }
         public bool Estado { get; set; }
         public double Valor { get; set; }
         public decimal Secuencial_reg_x_proceso { get; set; }
-        public Nullable<bool> Contabilizado { get; set; }
-        public Nullable<System.DateTime> Fecha_proceso { get; set; }
+        public bool Contabilizado { get; set; }
+        public Nullable<System.DateTime> Fecha_proceso { get; set; }        
+        public string Referencia { get; set; }
+
+        #region Campos que no existen en la tabla
         public Nullable<System.DateTime> Fecha_Factura { get; set; }
         public string Nom_Beneficiario { get; set; }
-        public string Referencia { get; set; }
         public decimal IdPersona { get; set; }
         public string IdTipoPersona { get; set; }
         public int? IdBanco_acreditacion { get; set; }
         public string IdTipoCta_acreditacion_cat { get; set; }
         public string IdTipoDocumento { get; set; }
         public string CodigoLegalBanco { get; set; }
+        public string Observacion { get; set; }
+        public decimal? IdEntidad { get; set; }
+        #endregion
+
     }
 }

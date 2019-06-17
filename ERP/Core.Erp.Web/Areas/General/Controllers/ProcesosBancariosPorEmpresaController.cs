@@ -98,7 +98,7 @@ namespace Core.Erp.Web.Areas.General
         }
 
 
-        public JsonResult get_list_procesos(int IdBanco = 0)
+        public JsonResult get_list_procesos(int IdBanco = 0, int SeContabiliza = 0)
         {
             try
             {
@@ -108,10 +108,9 @@ namespace Core.Erp.Web.Areas.General
                 info = bus_cta_bancaria.get_info(IdEmpresa, IdBanco);
                 if (info == null)
                     info = new ba_Banco_Cuenta_Info();
-                if (info.IdBanco_Financiero == null)
-                    info.IdBanco_Financiero = 0;
+                bool SeContabilizaBool = SeContabiliza == 1 ? true : false;
                 List<tb_banco_procesos_bancarios_x_empresa_Info> lst_periodos_x_nominas = new List<tb_banco_procesos_bancarios_x_empresa_Info>();
-                lst_periodos_x_nominas = bus_proceso_x_empresa.get_list(IdEmpresa,Convert.ToInt32( info.IdBanco_Financiero));
+                lst_periodos_x_nominas = bus_proceso_x_empresa.get_list(IdEmpresa,Convert.ToInt32( info.IdBanco_Financiero), SeContabilizaBool);
                 return Json(lst_periodos_x_nominas, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

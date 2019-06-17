@@ -26,7 +26,6 @@ namespace Core.Erp.Data.Banco
                         Fecha_proceso = q.Fecha_proceso,
                         IdEmpresa_OP = q.IdEmpresa_OP,
                         IdOrdenPago = q.IdOrdenPago,
-                        Id_Item = q.Id_Item,
                         Secuencia = q.Secuencia,
                         Secuencial_reg_x_proceso = q.Secuencial_reg_x_proceso,
                         Secuencia_OP = q.Secuencia_OP,
@@ -39,8 +38,13 @@ namespace Core.Erp.Data.Banco
                         IdBanco_acreditacion=q.IdBanco_acreditacion,
                         IdTipoCta_acreditacion_cat =q.IdTipoCta_acreditacion_cat,
                         IdTipoDocumento = q.IdTipoDocumento,
-                        CodigoLegalBanco = q.CodigoLegalBanco
-                        
+                        CodigoLegalBanco = q.CodigoLegalBanco,
+                        Referencia = q.Referencia,
+
+                        IdTipoPersona = q.IdTipo_Persona,
+                        IdEntidad = q.IdEntidad,
+                        IdPersona = q.IdPersona,
+                        Fecha_Factura = q.cb_Fecha
                     }).ToList();
                 }
                 return Lista;
@@ -71,12 +75,16 @@ namespace Core.Erp.Data.Banco
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  Secuencia = q.Secuencia_OP,
+                                 Secuencia_OP = q.Secuencia_OP,
                                  IdOrdenPago = q.IdOrdenPago,
                                  Nom_Beneficiario =  q.Nom_Beneficiario,
                                  Valor = q.Saldo_x_Pagar_OP,
-                                 Referencia = q.Referencia,
+                                 Referencia = q.Referencia2,
                                  IdTipoPersona = q.IdTipoPersona,
-                                 Fecha_Factura = q.Fecha_Fa_Prov        
+                                 Fecha_Factura = q.Fecha_Fa_Prov,
+                                 Observacion = q.Referencia,
+                                 IdEntidad = q.IdEntidad,
+                                 IdPersona = q.IdPersona
                              }).ToList();
                 }
                 return Lista;

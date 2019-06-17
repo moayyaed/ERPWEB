@@ -58,7 +58,7 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
-        public List<tb_banco_procesos_bancarios_x_empresa_Info> get_list(int IdEmpresa, int IdBanco)
+        public List<tb_banco_procesos_bancarios_x_empresa_Info> get_list(int IdEmpresa, int IdBanco, bool SeContabiliza)
         {
             try
             {
@@ -68,6 +68,7 @@ namespace Core.Erp.Data.General
                         Lista = (from q in Context.tb_banco_procesos_bancarios_x_empresa
                                  where q.IdEmpresa == IdEmpresa
                                  && q.IdBanco==IdBanco
+                                 && q.Se_contabiliza == SeContabiliza
                                  select new tb_banco_procesos_bancarios_x_empresa_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,

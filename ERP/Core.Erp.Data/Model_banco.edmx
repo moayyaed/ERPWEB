@@ -28,8 +28,9 @@
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="Motivo_anulacion" Type="varchar(max)" />
           <Property Name="Fecha_Proceso" Type="datetime" />
-          <Property Name="Contabilizado" Type="bit" />
+          <Property Name="Contabilizado" Type="bit" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="SecuencialInicial" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="ba_Archivo_Transferencia_Det">
           <Key>
@@ -40,15 +41,15 @@
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="Id_Item" Type="varchar" MaxLength="50" />
-          <Property Name="IdEmpresa_OP" Type="int" />
-          <Property Name="IdOrdenPago" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Secuencia_OP" Type="int" />
+          <Property Name="IdEmpresa_OP" Type="int" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia_OP" Type="int" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="Secuencial_reg_x_proceso" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Contabilizado" Type="bit" />
+          <Property Name="Contabilizado" Type="bit" Nullable="false" />
           <Property Name="Fecha_proceso" Type="datetime" />
+          <Property Name="Referencia" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="ba_Banco_Cuenta">
           <Key>
@@ -383,32 +384,39 @@
           <Property Name="IdTipoFlujo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Porcentaje" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_Archivo_Transferencia_Det' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Archivo_Transferencia_Det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdArchivo" />
             <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdEmpresa_OP" />
+            <PropertyRef Name="IdOrdenPago" />
+            <PropertyRef Name="Secuencia_OP" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Valor" />
             <PropertyRef Name="Secuencial_reg_x_proceso" />
+            <PropertyRef Name="Contabilizado" />
             <PropertyRef Name="IdTipoDocumento" />
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="CodigoLegalBanco" />
+            <PropertyRef Name="IdTipo_Persona" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdEntidad" />
+            <PropertyRef Name="cb_Fecha" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="Id_Item" Type="varchar" MaxLength="50" />
-          <Property Name="IdEmpresa_OP" Type="int" />
-          <Property Name="IdOrdenPago" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Secuencia_OP" Type="int" />
+          <Property Name="IdEmpresa_OP" Type="int" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia_OP" Type="int" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="Secuencial_reg_x_proceso" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Contabilizado" Type="bit" />
+          <Property Name="Contabilizado" Type="bit" Nullable="false" />
           <Property Name="Fecha_proceso" Type="datetime" />
           <Property Name="IdTipoCta_acreditacion_cat" Type="varchar" MaxLength="25" />
           <Property Name="num_cta_acreditacion" Type="varchar" MaxLength="50" />
@@ -419,9 +427,14 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="CodigoLegalBanco" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Referencia" Type="varchar(max)" />
+          <Property Name="IdTipo_Persona" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdEntidad" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cb_Fecha" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -459,8 +472,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_
           <Property Name="mba_IdTipocbte" Type="int" Nullable="false" />
           <Property Name="mba_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -494,8 +507,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_
           <Property Name="ca_Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cbr_IdSucursal" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Cbte_Ban_x_ba_TipoFlujo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -516,8 +529,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' no t
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="Descricion" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Conciliacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_Conciliacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Conciliacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -554,8 +567,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Conciliacion' no tiene defini
           <Property Name="IdEstado_Concil_Cat" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="co_SaldoBanco_EstCta" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_TipoFlujo_Movimiento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_TipoFlujo_Movimiento' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_TipoFlujo_Movimiento">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -582,8 +595,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_TipoFlujo_Movimiento' no tien
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_TipoFlujoPlantillaDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.dbo.vwba_TipoFlujoPlantillaDet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_TipoFlujoPlantillaDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -600,8 +613,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_TipoFlujoPlantillaDet' no tie
           <Property Name="Porcentaje" Type="float" Nullable="false" />
           <Property Name="Descricion" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwba_Cbte_Ban' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.web.vwba_Cbte_Ban' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Cbte_Ban">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -639,8 +652,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Cbte_Ban' no tiene definida n
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Imprimir_Solo_el_cheque" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwba_Conciliacion_det_IngEgr' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.web.vwba_Conciliacion_det_IngEgr' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Conciliacion_det_IngEgr">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -671,8 +684,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Conciliacion_det_IngEgr' no t
           <Property Name="IdConciliacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwba_Conciliacion_det_IngEgr_x_conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.web.vwba_Conciliacion_det_IngEgr_x_conciliar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Conciliacion_det_IngEgr_x_conciliar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -699,8 +712,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Conciliacion_det_IngEgr_x_con
           <Property Name="cb_Cheque" Type="varchar" MaxLength="50" />
           <Property Name="tc_TipoCbte" Type="char" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwba_Talonario_cheques_x_banco_ID">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1040,7 +1053,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
     [vwba_Archivo_Transferencia_Det].[IdEmpresa] AS [IdEmpresa], 
     [vwba_Archivo_Transferencia_Det].[IdArchivo] AS [IdArchivo], 
     [vwba_Archivo_Transferencia_Det].[Secuencia] AS [Secuencia], 
-    [vwba_Archivo_Transferencia_Det].[Id_Item] AS [Id_Item], 
     [vwba_Archivo_Transferencia_Det].[IdEmpresa_OP] AS [IdEmpresa_OP], 
     [vwba_Archivo_Transferencia_Det].[IdOrdenPago] AS [IdOrdenPago], 
     [vwba_Archivo_Transferencia_Det].[Secuencia_OP] AS [Secuencia_OP], 
@@ -1057,7 +1069,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
     [vwba_Archivo_Transferencia_Det].[IdTipoDocumento] AS [IdTipoDocumento], 
     [vwba_Archivo_Transferencia_Det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
     [vwba_Archivo_Transferencia_Det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vwba_Archivo_Transferencia_Det].[CodigoLegalBanco] AS [CodigoLegalBanco]
+    [vwba_Archivo_Transferencia_Det].[CodigoLegalBanco] AS [CodigoLegalBanco], 
+    [vwba_Archivo_Transferencia_Det].[Referencia] AS [Referencia], 
+    [vwba_Archivo_Transferencia_Det].[IdTipo_Persona] AS [IdTipo_Persona], 
+    [vwba_Archivo_Transferencia_Det].[IdPersona] AS [IdPersona], 
+    [vwba_Archivo_Transferencia_Det].[IdEntidad] AS [IdEntidad], 
+    [vwba_Archivo_Transferencia_Det].[cb_Fecha] AS [cb_Fecha]
     FROM [dbo].[vwba_Archivo_Transferencia_Det] AS [vwba_Archivo_Transferencia_Det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" EntityType="Self.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" store:Type="Views" store:Schema="dbo">
@@ -2379,8 +2396,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
           <Property Name="Motivo_anulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_Proceso" Type="DateTime" Precision="3" />
-          <Property Name="Contabilizado" Type="Boolean" />
+          <Property Name="Contabilizado" Type="Boolean" Nullable="false" />
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="SecuencialInicial" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="ba_Banco_Cuenta" Relationship="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" FromRole="ba_Archivo_Transferencia" ToRole="ba_Banco_Cuenta" />
           <NavigationProperty Name="ba_Archivo_Transferencia_Det" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia" ToRole="ba_Archivo_Transferencia_Det" />
         </EntityType>
@@ -2393,15 +2411,15 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="Id_Item" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa_OP" Type="Int32" />
-          <Property Name="IdOrdenPago" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Secuencia_OP" Type="Int32" />
+          <Property Name="IdEmpresa_OP" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia_OP" Type="Int32" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="Valor" Type="Double" Nullable="false" />
           <Property Name="Secuencial_reg_x_proceso" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Contabilizado" Type="Boolean" />
+          <Property Name="Contabilizado" Type="Boolean" Nullable="false" />
           <Property Name="Fecha_proceso" Type="DateTime" Precision="3" />
+          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia_Det" ToRole="ba_Archivo_Transferencia" />
         </EntityType>
         <Association Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
@@ -2437,25 +2455,32 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdArchivo" />
             <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdEmpresa_OP" />
+            <PropertyRef Name="IdOrdenPago" />
+            <PropertyRef Name="Secuencia_OP" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Valor" />
             <PropertyRef Name="Secuencial_reg_x_proceso" />
+            <PropertyRef Name="Contabilizado" />
             <PropertyRef Name="IdTipoDocumento" />
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="CodigoLegalBanco" />
+            <PropertyRef Name="IdTipo_Persona" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdEntidad" />
+            <PropertyRef Name="cb_Fecha" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="Id_Item" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa_OP" Type="Int32" />
-          <Property Name="IdOrdenPago" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Secuencia_OP" Type="Int32" />
+          <Property Name="IdEmpresa_OP" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia_OP" Type="Int32" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="Valor" Type="Double" Nullable="false" />
           <Property Name="Secuencial_reg_x_proceso" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Contabilizado" Type="Boolean" />
+          <Property Name="Contabilizado" Type="Boolean" Nullable="false" />
           <Property Name="Fecha_proceso" Type="DateTime" Precision="3" />
           <Property Name="IdTipoCta_acreditacion_cat" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -2466,6 +2491,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CodigoLegalBanco" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2983,6 +3013,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySetMapping Name="ba_Archivo_Transferencia">
             <EntityTypeMapping TypeName="Model_banco.ba_Archivo_Transferencia">
               <MappingFragment StoreEntitySet="ba_Archivo_Transferencia">
+                <ScalarProperty Name="SecuencialInicial" ColumnName="SecuencialInicial" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="Contabilizado" ColumnName="Contabilizado" />
                 <ScalarProperty Name="Fecha_Proceso" ColumnName="Fecha_Proceso" />
@@ -3009,6 +3040,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySetMapping Name="ba_Archivo_Transferencia_Det">
             <EntityTypeMapping TypeName="Model_banco.ba_Archivo_Transferencia_Det">
               <MappingFragment StoreEntitySet="ba_Archivo_Transferencia_Det">
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
                 <ScalarProperty Name="Fecha_proceso" ColumnName="Fecha_proceso" />
                 <ScalarProperty Name="Contabilizado" ColumnName="Contabilizado" />
                 <ScalarProperty Name="Secuencial_reg_x_proceso" ColumnName="Secuencial_reg_x_proceso" />
@@ -3017,7 +3049,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="Secuencia_OP" ColumnName="Secuencia_OP" />
                 <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
                 <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
-                <ScalarProperty Name="Id_Item" ColumnName="Id_Item" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
@@ -3027,6 +3058,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySetMapping Name="vwba_Archivo_Transferencia_Det">
             <EntityTypeMapping TypeName="Model_banco.vwba_Archivo_Transferencia_Det">
               <MappingFragment StoreEntitySet="vwba_Archivo_Transferencia_Det">
+                <ScalarProperty Name="cb_Fecha" ColumnName="cb_Fecha" />
+                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
                 <ScalarProperty Name="CodigoLegalBanco" ColumnName="CodigoLegalBanco" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
                 <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
@@ -3044,7 +3080,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="Secuencia_OP" ColumnName="Secuencia_OP" />
                 <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
                 <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
-                <ScalarProperty Name="Id_Item" ColumnName="Id_Item" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />

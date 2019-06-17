@@ -24,11 +24,11 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
-        public List<tb_banco_procesos_bancarios_x_empresa_Info> get_list(int IdEmpresa,int IdBanco)
+        public List<tb_banco_procesos_bancarios_x_empresa_Info> get_list(int IdEmpresa, int IdBanco, bool SeContabiliza)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdBanco);
+                return odata.get_list(IdEmpresa, IdBanco, SeContabiliza);
             }
             catch (Exception)
             {

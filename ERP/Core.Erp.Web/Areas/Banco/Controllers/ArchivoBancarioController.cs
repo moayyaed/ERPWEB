@@ -56,8 +56,19 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             var pro = bus_procesos_bancarios.get_info(i_validar.IdEmpresa, i_validar.IdProceso_bancario);
             i_validar.Cod_Empresa = pro.Codigo_Empresa;
 
-            return true;
+            if (i_validar.SecuencialInicial == 0)
+            {
+                i_validar.SecuencialInicial = bus_archivo_det.GetIdSecuencial(i_validar.IdEmpresa, i_validar.IdBanco, i_validar.IdProceso_bancario);
+            }
 
+            var lst_prov = i_validar.Lst_det.GroupBy(q => new { q.IdTipoPersona, q.IdEntidad, q.IdPersona }).ToList();
+            foreach (var item in lst_prov)
+            {
+                i_validar.Lst_det.Where(q=> q.IdTipoPersona == item.Key.IdTipoPersona && q.IdEntidad == item.Key.IdEntidad && q.IdPersona == item.Key.IdPersona).ToList().ForEach(q => { q.Secuencial_reg_x_proceso = i_validar.SecuencialInicial; });
+                i_validar.SecuencialInicial++;
+            }
+
+            return true;
         }
         private void cargar_combos()
         {
@@ -90,7 +101,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Fecha = DateTime.Now,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
-                Lst_det = new List<ba_Archivo_Transferencia_Det_Info>()
+                Lst_det = new List<ba_Archivo_Transferencia_Det_Info>(),                
             };
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
             cargar_combos();
@@ -177,15 +188,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         #endregion
         #region Detalle
-        private void cargar_combos_Detalle()
-        {
-        }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_archivo_bancario_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            cargar_combos_Detalle();
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_archivo_bancario_det", model);
         }
@@ -193,7 +200,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            cargar_combos_Detalle();
             var model = Lst_det_op.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_archivo_bancario_det_op", model);
         }
@@ -225,14 +231,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (ModelState.IsValid)
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_Detalle();
             return PartialView("_GridViewPartial_archivo_bancario_det", model);
         }
         public ActionResult EditingDelete(decimal IdOrdenPago)
         {
             List_det.DeleteRow(IdOrdenPago, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_Detalle();
             return PartialView("_GridViewPartial_archivo_bancario_det", model);
         }
         #endregion
@@ -260,7 +264,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             try
             {
-                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
+                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");                
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
                 {
                     foreach (var item in info.Lst_det.Where(v => v.Valor > 0))
@@ -271,7 +275,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
 
                         linea += "PA\t";
-                        linea += item.num_cta_acreditacion.PadLeft(10, '0') + "\t";
+                        linea += string.IsNullOrEmpty(item.num_cta_acreditacion) ? "" : item.num_cta_acreditacion.PadLeft(10, '0') + "\t";
                         linea += item.Secuencial_reg_x_proceso.ToString().PadLeft(7, ' ') + "\t";
                         linea += "\t";//COMPROBANTE DE PAGO
                         linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? item.pe_cedulaRuc.Trim() : item.num_cta_acreditacion.Trim()) + "\t";
@@ -280,11 +284,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? "EFE" : "CTA") + "\t";
                         linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? "0017" : item.CodigoLegalBanco.ToString().PadLeft(4, '0')) + "\t";
                         linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) || string.IsNullOrEmpty(item.IdTipoCta_acreditacion_cat) ? "" : (item.IdTipoCta_acreditacion_cat.Trim() == "COR" ? "CTE" : item.IdTipoCta_acreditacion_cat)) + "\t";
-                        linea += item.num_cta_acreditacion.PadLeft(10, '0') + "\t";
+                        linea += string.IsNullOrEmpty(item.num_cta_acreditacion) ? "" : item.num_cta_acreditacion.PadLeft(10, '0') + "\t";
                         linea += (item.IdTipoDocumento == "CED" ? "C" : (item.IdTipoDocumento == "RUC" ? "R" : "P")) + "\t";
                         linea += item.pe_cedulaRuc.Trim() + "\t";
                         linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 40 ? item.Nom_Beneficiario.Substring(0, 40) : item.Nom_Beneficiario.Trim())) + "\t";
-                        linea += (string.IsNullOrEmpty(item.pr_direccion) ? "" : (item.pr_direccion.Length > 40 ? item.pr_direccion.Substring(0, 40) : item.pr_direccion.Trim())) + "\t";
+                        linea += "\t";//(string.IsNullOrEmpty(item.pr_direccion) ? "" : (item.pr_direccion.Length > 40 ? item.pr_direccion.Substring(0, 40) : item.pr_direccion.Trim())) + "\t";
                         linea += "\t";//Ciudad
                         linea += "\t";//Telefono
                         linea += "\t";//Localidad

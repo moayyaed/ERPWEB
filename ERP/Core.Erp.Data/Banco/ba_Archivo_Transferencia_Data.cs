@@ -88,7 +88,8 @@ namespace Core.Erp.Data.Banco
                             IdProceso_bancario = Entity.IdProceso_bancario,
                             Nom_Archivo = Entity.Nom_Archivo,
                             Observacion = Entity.Observacion,
-                            IdSucursal = Entity.IdSucursal
+                            IdSucursal = Entity.IdSucursal,
+                            SecuencialInicial = Entity.SecuencialInicial
                     };
                 }
                 return info;
@@ -137,15 +138,15 @@ namespace Core.Erp.Data.Banco
                         Cod_Empresa = info.Cod_Empresa,
                         Contabilizado = info.Contabilizado,
                         Estado = true,
-                        Fecha = info.Fecha,
-                        Fecha_Proceso = info.Fecha_Proceso,
+                        Fecha = info.Fecha.Date,
                         IdBanco = info.IdBanco,
                         IdProceso_bancario = info.IdProceso_bancario,
                         Nom_Archivo = info.Nom_Archivo,
                         Observacion = info.Observacion,
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now,
-                        IdSucursal = info.IdSucursal
+                        IdSucursal = info.IdSucursal,
+                        SecuencialInicial = info.SecuencialInicial                        
                     });
 
 
@@ -161,13 +162,12 @@ namespace Core.Erp.Data.Banco
                                 Estado = item.Estado,
                                 Fecha_proceso = item.Fecha_proceso,
                                 IdOrdenPago = item.IdOrdenPago,
-                                IdEmpresa_OP = item.IdEmpresa_OP,
+                                IdEmpresa_OP = info.IdEmpresa,
                                 Secuencia = item.Secuencia,
-                                Id_Item = item.Id_Item,
                                 Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
                                 Secuencia_OP = item.Secuencia_OP,
+                                Referencia = item.Referencia,
                                 Valor = item.Valor
-                               
                             });
                         }
                     }
@@ -192,7 +192,8 @@ namespace Core.Erp.Data.Banco
                 {
                     ba_Archivo_Transferencia Entity = Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault();
                     if (Entity == null) return false;
-                    
+
+                    Entity.Nom_Archivo = "PAGOS_MULTICASH_" + info.Fecha.ToString("yyyyMMdd") + "_01";
                     Entity.Observacion = info.Observacion;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
@@ -213,10 +214,10 @@ namespace Core.Erp.Data.Banco
                                 IdOrdenPago = item.IdOrdenPago,
                                 IdEmpresa_OP = item.IdEmpresa_OP,
                                 Secuencia = item.Secuencia,
-                                Id_Item = item.Id_Item,
                                 Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
                                 Secuencia_OP = item.Secuencia_OP,
-                                Valor = item.Valor
+                                Valor = item.Valor,
+                                Referencia = item.Referencia
                             });
                         }
                     }
@@ -238,12 +239,9 @@ namespace Core.Erp.Data.Banco
             {
                 using (Entities_banco Context = new Entities_banco())
                 {
-                    ba_Archivo_Transferencia Entity = Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault();
-                    if (Entity == null) return false;
-
-                    Entity.Estado = false;
-                    Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
-                    Entity.Fecha_UltAnu = DateTime.Now;
+                    var Lst_det = Context.ba_Archivo_Transferencia_Det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).ToList();
+                    Context.ba_Archivo_Transferencia_Det.RemoveRange(Lst_det);
+                    Context.ba_Archivo_Transferencia.Remove(Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault());
                     Context.SaveChanges();
                 }
                 return true;

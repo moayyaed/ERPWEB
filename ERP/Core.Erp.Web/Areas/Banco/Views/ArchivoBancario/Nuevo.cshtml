@@ -225,15 +225,15 @@
 }
 <script>
     $(function () {
-        cargar_procesos();
         GetListBancoPorSucursal();
+        cargar_procesos();
     });
         $("#IdBanco").change(function () {
-        $("#IdProceso").empty();
         cargar_procesos();
     });
     $("#IdSucursal").change(function () {
         GetListBancoPorSucursal();
+        cargar_procesos();
     });
         function GetListBancoPorSucursal() {
         $("#IdBanco").empty();
@@ -261,9 +261,10 @@
     }
     function cargar_procesos() {
         $("#IdProceso").empty();
-                var datos = {
-                    IdBanco: $("#IdBanco").val()
-                }
+        var datos = {
+            IdBanco: $("#IdBanco").val(),
+            SeContabiliza: 1
+        }
                 $.ajax({
                     type: 'POST',
                     data: JSON.stringify(datos),
