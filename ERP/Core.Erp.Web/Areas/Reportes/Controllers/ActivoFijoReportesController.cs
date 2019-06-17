@@ -85,6 +85,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult ACTF_001(decimal Id_Mejora_Baja_Activo = 0, string Id_Tipo = "" )
         {
             ACTF_001_Rpt model = new ACTF_001_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_Id_Mejora_Baja_Activo.Value = Id_Mejora_Baja_Activo;
             model.p_Id_Tipo.Value = Id_Tipo;
@@ -95,6 +105,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult ACTF_002(decimal IdVtaActivo = 0)
         {
             ACTF_002_Rpt model = new ACTF_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdVtaActivo.Value = IdVtaActivo;
             model.usuario = SessionFixed.IdUsuario.ToString();
@@ -104,6 +123,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult ACTF_003(decimal IdRetiroActivo = 0)
         {
             ACTF_003_Rpt model = new ACTF_003_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_003");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdRetiroActivo.Value = IdRetiroActivo;
             model.usuario = SessionFixed.IdUsuario.ToString();
@@ -118,7 +146,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Estado_Proceso = ""
             };
-
+  
             if (model.mostrar_agrupado)
             {
                 ACTF_004_detalle_Rpt model_detalle = new ACTF_004_detalle_Rpt();
@@ -133,7 +161,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 model_detalle.usuario = SessionFixed.IdUsuario;
                 model_detalle.empresa = SessionFixed.NomEmpresa;
                 ViewBag.report = model_detalle;
+           
             }
+
             else
             {
                 ACTF_004_resumen_Rpt model_resumen = new ACTF_004_resumen_Rpt();
@@ -257,6 +287,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             };
             ACTF_005_Rpt report = new ACTF_005_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(model.IdEmpresa, "ACTF_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdActivoFijoTipo.Value = model.IdActivoFijoTipo;
             report.p_IdCategoriaAF.Value = model.IdCategoriaAF;
@@ -272,6 +310,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult ACTF_005(cl_filtros_Info model)
         {
             ACTF_005_Rpt report = new ACTF_005_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(model.IdEmpresa, "ACTF_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdActivoFijoTipo.Value = model.IdActivoFijoTipo;
             report.p_IdCategoriaAF.Value = model.IdCategoriaAF;
@@ -292,6 +338,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdActivoFijo = 0
             };
             ACTF_006_Rpt report = new ACTF_006_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_006");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdActivoFijo.Value = model.IdActivoFijo;
             ViewBag.Report = report;
@@ -301,6 +356,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult ACTF_006(cl_filtros_Info model)
         {
             ACTF_006_Rpt report = new ACTF_006_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_006");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdActivoFijo.Value = model.IdActivoFijo;
             ViewBag.Report = report;
@@ -308,9 +372,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult ACTF_007(int IdActivoFijo = 0)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ACTF_007_Rpt model = new ACTF_007_Rpt();
             #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_007");
             if (reporte != null)
             {
@@ -337,6 +401,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(model);
             ACTF_008_Rpt report = new ACTF_008_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(model.IdEmpresa, "ACTF_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdDepartamento.Value = model.IdDepartamento;
@@ -351,6 +423,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult ACTF_008(cl_filtros_Info model)
         {
             ACTF_008_Rpt report = new ACTF_008_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(model.IdEmpresa, "ACTF_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdDepartamento.Value = model.IdDepartamento;

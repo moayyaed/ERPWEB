@@ -206,6 +206,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             FAC_001_Rpt report = new FAC_001_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
@@ -224,6 +233,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_001(cl_filtros_facturacion_Info model)
         {
             FAC_001_Rpt report = new FAC_001_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
@@ -250,6 +268,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             
             cargar_combos(model);
             FAC_002_Rpt report = new FAC_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fechaCorte.Value = model.fecha_fin;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -266,6 +293,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_002(cl_filtros_facturacion_Info model)
         {
             FAC_002_Rpt report = new FAC_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fechaCorte.Value = model.fecha_fin;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -323,6 +359,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_004(int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {
             FAC_004_Rpt model = new FAC_004_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_004");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBodega.Value = IdBodega;
             model.p_IdSucursal.Value = IdSucursal;
@@ -342,6 +387,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             FAC_005_Rpt report = new FAC_005_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_Fecha_ini.Value = model.fecha_ini;
             report.p_Fecha_fin.Value = model.fecha_fin;
@@ -358,6 +412,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_005(cl_filtros_facturacion_Info model)
         {
             FAC_005_Rpt report = new FAC_005_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_Fecha_ini.Value = model.fecha_ini;
             report.p_Fecha_fin.Value = model.fecha_fin;
@@ -374,6 +437,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_006(int IdSucursal = 0, decimal IdProforma = 0, bool mostrar_imagen = false)
         {  
             FAC_006_Rpt model = new FAC_006_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_006");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdProforma.Value = IdProforma;
@@ -405,6 +477,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_008(int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {
             FAC_008_Rpt model = new FAC_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBodega.Value = IdBodega;
             model.p_IdSucursal.Value = IdSucursal;
@@ -418,6 +499,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_009(int IdSucursal = 0, int IdBodega = 0, decimal IdGuiaRemision = 0)
         {
             FAC_009_Rpt model = new FAC_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBodega.Value = IdBodega;
             model.p_IdSucursal.Value = IdSucursal;
@@ -439,6 +529,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             
             cargar_FAC010(model);
             FAC_010_Rpt report = new FAC_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
@@ -454,6 +553,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_010(cl_filtros_facturacion_Info model)
         {
             FAC_010_Rpt report = new FAC_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
@@ -478,6 +586,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(model);
             FAC_011_Rpt report = new FAC_011_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_011");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCliente.Value = model.IdCliente;
             report.p_fechaIni.Value = model.fecha_ini;
@@ -493,6 +610,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_011(cl_filtros_facturacion_Info model)
         {
             FAC_011_Rpt report = new FAC_011_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_011");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCliente.Value = model.IdCliente;
             report.p_fechaIni.Value = model.fecha_ini;
@@ -509,6 +635,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_012(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdCambio = 0)
         {
             FAC_012_Rpt model = new FAC_012_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = IdEmpresa;
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdBodega.Value = IdBodega;
@@ -551,6 +685,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             
             FAC_014_Rpt report = new FAC_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
@@ -563,6 +706,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_014(cl_filtros_facturacion_Info model)
         {
             FAC_014_Rpt report = new FAC_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
@@ -583,6 +735,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
 
             FAC_015_Rpt report = new FAC_015_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_015");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -597,6 +758,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_015(cl_filtros_facturacion_Info model)
         {
             FAC_015_Rpt report = new FAC_015_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_015");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -620,6 +790,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             FAC_016_Rpt report = new FAC_016_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_016");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -634,6 +813,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_016(cl_filtros_facturacion_Info model)
         {
             FAC_016_Rpt report = new FAC_016_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_016");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -656,6 +844,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_marca_check(model.IdEmpresa, model.IntArray);
             FAC_017_Rpt report = new FAC_017_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_017");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdMarca.Value = model.IdMarca;
@@ -670,6 +867,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult FAC_017(cl_filtros_facturacion_Info model)
         {
             FAC_017_Rpt report = new FAC_017_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_017");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdMarca.Value = model.IdMarca;

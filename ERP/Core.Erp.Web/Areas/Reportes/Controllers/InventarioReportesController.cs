@@ -19,6 +19,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
     {
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         in_Producto_List List_decimal = new in_Producto_List();
+        tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
+        string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
 
         #region Metodos ComboBox bajo demanda
         public ActionResult CmbProducto_Inventario()
@@ -126,7 +128,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_001(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
         {
             INV_001_Rpt model = new INV_001_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
             model.p_IdNumMovi.Value = IdNumMovi;
@@ -139,6 +150,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_002(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
         {
             INV_002_Rpt model = new INV_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
@@ -166,6 +186,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             INV_003_Rpt report = new INV_003_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_003");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -189,6 +218,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_003(cl_filtros_inventario_Info model)
         {
             INV_003_Rpt report = new INV_003_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_003");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -222,6 +260,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             INV_004_Rpt report = new INV_004_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_004");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -237,6 +284,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_004(cl_filtros_inventario_Info model)
         {
             INV_004_Rpt report = new INV_004_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_004");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -512,6 +568,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_007(int IdSucursalOrigen = 0, int IdBodegaOrigen = 0, decimal IdTransferencia = 0)
         {
             INV_007_Rpt model = new INV_007_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_007");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
             model.p_IdSucursalOrigen.Value = IdSucursalOrigen;
             model.p_IdBodegaOrigen.Value = IdBodegaOrigen;
@@ -533,6 +598,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             List_decimal.set_list(new List<in_Producto_Info>());
             cargar_combos(model);
             INV_008_Rpt report = new INV_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -547,6 +621,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_008(cl_filtros_inventario_Info model)
         {
             INV_008_Rpt report = new INV_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -569,6 +652,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             List_decimal.set_list(new List<in_Producto_Info>());
             cargar_combos(model);
             INV_009_Rpt report = new INV_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -585,6 +677,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_009(cl_filtros_inventario_Info model)
         {
             INV_009_Rpt report = new INV_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -608,6 +709,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             INV_010_Rpt report = new INV_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdMarca.Value = model.IdMarca;
             report.p_IdUsuario.Value = SessionFixed.IdUsuario;
@@ -628,6 +738,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_010(cl_filtros_inventario_Info model)
         {
             INV_010_Rpt report = new INV_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdMarca.Value = model.IdMarca;
             report.p_IdUsuario.Value = SessionFixed.IdUsuario;
@@ -652,6 +771,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_011(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
         {
             INV_011_Rpt model = new INV_011_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_011");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
@@ -676,6 +804,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             INV_012_Rpt report = new INV_012_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -693,6 +830,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_012(cl_filtros_inventario_Info model)
         {
             INV_012_Rpt report = new INV_012_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -718,6 +864,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
 
             INV_013_Rpt report = new INV_013_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_013");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdProducto.Value = model.IdProductoPadre == null ? 0 : model.IdProductoPadre;
 
@@ -728,6 +883,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_013(cl_filtros_inventario_Info model)
         {
             INV_013_Rpt report = new INV_013_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_013");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdProducto.Value = model.IdProductoPadre == null ? 0 : model.IdProductoPadre;
 
@@ -738,6 +902,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_014(int IdEmpresa = 0, decimal IdConsignacion = 0)
         {
             INV_014_Rpt model = new INV_014_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = IdEmpresa;
             model.p_IdConsignacion.Value = IdConsignacion;
 
@@ -763,6 +935,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             INV_015_Rpt report = new INV_015_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_015");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -784,6 +965,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_015(cl_filtros_inventario_Info model)
         {
             INV_015_Rpt report = new INV_015_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_015");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
@@ -820,6 +1010,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cargar_combos(model);
             INV_016_Rpt report = new INV_016_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_016");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCategoria.Value = model.IdCategoria == null ? "" : model.IdCategoria;
@@ -840,6 +1039,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_016(cl_filtros_inventario_Info model)
         {
             INV_016_Rpt report = new INV_016_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_016");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCategoria.Value = model.IdCategoria;
