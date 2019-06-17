@@ -34,7 +34,7 @@
 
 
         settings.Columns.Add("IdOrdenCompra","ID").Width = Unit.Percentage(10);
-        settings.Columns.Add("Secuencia", "# Documento").Width = Unit.Percentage(20);
+        settings.Columns.Add("Secuencia", "# Documento").Width = Unit.Percentage(10);
         settings.Columns.Add(column => {
             column.Width = Unit.Percentage(10);
             column.FieldName = "oc_fecha";
@@ -48,6 +48,7 @@
             column.Caption = "Producto";
         });
         settings.Columns.Add("do_Cantidad_vw", "Cantidad").Width = Unit.Percentage(10);
+        settings.Columns.Add("Saldo", "Saldo").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(10);

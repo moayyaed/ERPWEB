@@ -63,7 +63,7 @@ namespace Core.Erp.Info.Compras
         public double do_Cantidad_vw { get; set; }
         public double do_precioFinal { get; set; }
         public int CantidadIngresada { get; set; }
-        public double Saldo_vw { get; set; }
+        public double Saldo { get; set; }
         public string IdUnidadMedida { get; set; }
         public string pe_NombreCompleto { get; set; }
         public string oc_Observacion { get; set; }
