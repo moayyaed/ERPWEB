@@ -1,10 +1,11 @@
 ﻿CREATE VIEW dbo.vwba_Archivo_Transferencia_Det
 AS
-SELECT        dbo.ba_Archivo_Transferencia_Det.IdEmpresa, dbo.ba_Archivo_Transferencia_Det.IdArchivo, dbo.ba_Archivo_Transferencia_Det.Secuencia, dbo.ba_Archivo_Transferencia_Det.Id_Item, 
-                         dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP, dbo.ba_Archivo_Transferencia_Det.IdOrdenPago, dbo.ba_Archivo_Transferencia_Det.Secuencia_OP, dbo.ba_Archivo_Transferencia_Det.Estado, 
-                         dbo.ba_Archivo_Transferencia_Det.Valor, dbo.ba_Archivo_Transferencia_Det.Secuencial_reg_x_proceso, dbo.ba_Archivo_Transferencia_Det.Contabilizado, dbo.ba_Archivo_Transferencia_Det.Fecha_proceso, 
-                         dbo.cp_proveedor.IdTipoCta_acreditacion_cat, dbo.cp_proveedor.num_cta_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion, dbo.cp_proveedor.pr_direccion, dbo.cp_proveedor.pr_correo, dbo.tb_persona.IdTipoDocumento, 
-                         dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, dbo.tb_banco.CodigoLegal AS CodigoLegalBanco
+SELECT        dbo.ba_Archivo_Transferencia_Det.IdEmpresa, dbo.ba_Archivo_Transferencia_Det.IdArchivo, dbo.ba_Archivo_Transferencia_Det.Secuencia, dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP, 
+                         dbo.ba_Archivo_Transferencia_Det.IdOrdenPago, dbo.ba_Archivo_Transferencia_Det.Secuencia_OP, dbo.ba_Archivo_Transferencia_Det.Estado, dbo.ba_Archivo_Transferencia_Det.Valor, 
+                         dbo.ba_Archivo_Transferencia_Det.Secuencial_reg_x_proceso, dbo.ba_Archivo_Transferencia_Det.Contabilizado, dbo.ba_Archivo_Transferencia_Det.Fecha_proceso, dbo.cp_proveedor.IdTipoCta_acreditacion_cat, 
+                         dbo.cp_proveedor.num_cta_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion, dbo.cp_proveedor.pr_direccion, dbo.cp_proveedor.pr_correo, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, 
+                         dbo.tb_persona.pe_nombreCompleto, dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, dbo.ba_Archivo_Transferencia_Det.Referencia, dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, 
+                         dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha
 FROM            dbo.ba_Archivo_Transferencia INNER JOIN
                          dbo.ba_Archivo_Transferencia_Det INNER JOIN
                          dbo.cp_orden_pago_det ON dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP = dbo.cp_orden_pago_det.IdEmpresa AND dbo.ba_Archivo_Transferencia_Det.IdOrdenPago = dbo.cp_orden_pago_det.IdOrdenPago AND 
@@ -14,13 +15,25 @@ FROM            dbo.ba_Archivo_Transferencia INNER JOIN
                          dbo.cp_proveedor ON dbo.tb_persona.IdPersona = dbo.cp_proveedor.IdPersona ON dbo.cp_orden_pago.IdPersona = dbo.cp_proveedor.IdPersona AND dbo.cp_orden_pago.IdEntidad = dbo.cp_proveedor.IdProveedor AND 
                          dbo.cp_orden_pago.IdEmpresa = dbo.cp_proveedor.IdEmpresa ON dbo.ba_Archivo_Transferencia.IdEmpresa = dbo.ba_Archivo_Transferencia_Det.IdEmpresa AND 
                          dbo.ba_Archivo_Transferencia.IdArchivo = dbo.ba_Archivo_Transferencia_Det.IdArchivo INNER JOIN
-                         dbo.tb_banco ON dbo.cp_proveedor.IdBanco_acreditacion = dbo.tb_banco.IdBanco
+                         dbo.tb_banco ON dbo.cp_proveedor.IdBanco_acreditacion = dbo.tb_banco.IdBanco INNER JOIN
+                         dbo.ct_cbtecble ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.ct_cbtecble.IdEmpresa AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.ct_cbtecble.IdTipoCbte AND 
+                         dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.ct_cbtecble.IdCbteCble
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Right = 531
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Right = 1255
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "ct_cbtecble"
+            Begin Extent = 
+               Top = 323
+               Left = 784
+               Bottom = 596
+               Right = 966
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -79,13 +92,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[51] 4[9] 2[5] 3) )"
+         Configuration = "(H (1[71] 4[3] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -147,15 +162,25 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -384
+         Top = 0
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "ba_Archivo_Transferencia"
+            Begin Extent = 
+               Top = 0
+               Left = 339
+               Bottom = 300
+               Right = 531
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "ba_Archivo_Transferencia_Det"
             Begin Extent = 
                Top = 0
                Left = 9
-               Bottom = 264
+               Bottom = 407
                Right = 233
             End
             DisplayFlags = 280
@@ -163,58 +188,50 @@ Begin DesignProperties =
          End
          Begin Table = "cp_orden_pago_det"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 244
+               Top = 156
+               Left = 668
+               Bottom = 286
+               Right = 874
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "cp_orden_pago"
             Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 239
+               Top = 313
+               Left = 340
+               Bottom = 609
+               Right = 531
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "tb_persona"
             Begin Extent = 
-               Top = 402
-               Left = 38
-               Bottom = 532
-               Right = 270
+               Top = 285
+               Left = 1019
+               Bottom = 415
+               Right = 1251
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "cp_proveedor"
             Begin Extent = 
-               Top = 534
-               Left = 38
-               Bottom = 664
-               Right = 270
+               Top = 55
+               Left = 842
+               Bottom = 185
+               Right = 1074
             End
             DisplayFlags = 280
-            TopColumn = 14
+            TopColumn = 0
          End
          Begin Table = "tb_banco"
             Begin Extent = 
-               Top = 510
-               Left = 399
-               Bottom = 640
-               Right = 633
-            End
-            DisplayFlags = 280
-            TopColumn = 1
-         End
-         Begin Table = "ba_Archivo_Transferencia"
-            Begin Extent = 
-               Top = 0
-               Left = 339
-               Bottom = 300
-              ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
+               Top = 425
+               Left = 1021
+               Bottom = 555
+           ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
+
+
 

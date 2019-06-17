@@ -17,11 +17,14 @@
     [Fecha_UltAnu]       DATETIME      NULL,
     [Motivo_anulacion]   VARCHAR (MAX) NULL,
     [Fecha_Proceso]      DATETIME      NULL,
-    [Contabilizado]      BIT           NULL,
+    [Contabilizado]      BIT           NOT NULL,
     [IdSucursal]         INT           NOT NULL,
+    [SecuencialInicial]  NUMERIC (18)  NOT NULL,
     CONSTRAINT [PK_ba_Archivo_Transferencia] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdArchivo] ASC),
     CONSTRAINT [FK_ba_Archivo_Transferencia_ba_Banco_Cuenta] FOREIGN KEY ([IdEmpresa], [IdBanco]) REFERENCES [dbo].[ba_Banco_Cuenta] ([IdEmpresa], [IdBanco])
 );
+
+
 
 
 

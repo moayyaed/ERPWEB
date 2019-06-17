@@ -1,5 +1,4 @@
-﻿
---exec [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data] 1,1,999999,'PROVEE',1,999999,'APRO','admin',0
+﻿--exec [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data] 1,1,999999,'PROVEE',1,999999,'APRO','admin',1,0
 CREATE PROCEDURE [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data]
 (
 @IdEmpresa int,
@@ -25,7 +24,7 @@ INSERT INTO [dbo].[cp_orden_pago_con_cancelacion_data]
            ,[IdEstadoAprobacion]		           ,[IdFormaPago]				           ,[Fecha_Pago]				           ,[IdCtaCble]				           ,[IdCentroCosto]
            ,[IdSubCentro_Costo]			           ,[Cbte_cxp]					           ,[Estado]					           ,[Nom_Beneficiario_2]	           ,[IdEmpresa_cxp]
            ,[IdTipoCbte_cxp]			           ,[IdCbteCble_cxp]			           ,[IdBanco])
-select		@IdUsuario, cp_orden_pago.IdEmpresa, cp_orden_pago.IdTipo_op, CASE WHEN cp_orden_pago.IdTipo_op = 'FACT_PROVEE' THEN cp_orden_pago_det.Referencia ELSE cp_orden_pago.Observacion END AS Expr1, CASE WHEN cp_orden_pago.IdTipo_op = 'FACT_PROVEE' THEN cp_orden_pago_det.Referencia ELSE cp_orden_pago.Observacion END AS Expr2, cp_orden_pago.IdOrdenPago, cp_orden_pago_det.Secuencia, cp_orden_pago.IdTipo_Persona, cp_orden_pago.IdPersona, cp_orden_pago.IdEntidad, 
+select		@IdUsuario, cp_orden_pago.IdEmpresa, cp_orden_pago.IdTipo_op, CASE WHEN cp_orden_pago.IdTipo_op = 'FACT_PROVEE' THEN cp_orden_pago_det.Referencia ELSE cp_orden_pago.Observacion END AS Expr1, 'OP#'+cast(cp_orden_pago.IdOrdenPago as varchar(20)) AS Expr2, cp_orden_pago.IdOrdenPago, cp_orden_pago_det.Secuencia, cp_orden_pago.IdTipo_Persona, cp_orden_pago.IdPersona, cp_orden_pago.IdEntidad, 
                   cp_orden_pago.Fecha, cp_orden_pago.Fecha AS Expr3, cp_orden_pago.Fecha AS Expr4, cp_orden_pago.Observacion, NULL AS Expr5, NULL AS Expr6, cp_orden_pago_det.Valor_a_pagar, cp_orden_pago_det.Valor_a_pagar AS valor_estimado_a_pagar, 
                   ISNULL(SUM(cp_orden_pago_cancelaciones.MontoAplicado),0) AS MontoAplicado, cp_orden_pago_det.Valor_a_pagar - ISNULL(SUM(cp_orden_pago_cancelaciones.MontoAplicado), 0) AS saldo, cp_orden_pago.IdEstadoAprobacion, 
                   cp_orden_pago.IdFormaPago, cp_orden_pago.Fecha Fecha_Pago, NULL AS IdCtaCble, NULL AS Expr7, NULL AS Expr8, NULL AS Expr10, cp_orden_pago.Estado, NULL AS Expr9, cp_orden_pago_det.IdEmpresa_cxp, 
@@ -37,6 +36,12 @@ FROM     cp_orden_pago INNER JOIN
 WHERE cp_orden_pago.IdEmpresa = @IdEmpresa and cp_orden_pago.IdTipo_Persona like '%'+@IdTipoPersona+'%' and cp_orden_pago.IdEntidad between @IdEntidad_ini and @IdEntidad_fin
 and cp_orden_pago.IdEstadoAprobacion like '%'+@IdEstado_Aprobacion+'%' and cp_orden_pago.IdPersona between @IdPersona_ini and @IdPersona_fin AND cp_orden_pago.Estado = 'A'
 and cp_orden_pago.IdSucursal = @IdSucursal
+and not exists(
+select f.IdEmpresa from ba_Archivo_Transferencia_Det as f
+where f.IdEmpresa_OP = cp_orden_pago_det.IdEmpresa
+and f.IdOrdenPago = cp_orden_pago_det.IdOrdenPago
+and f.Secuencia_OP = cp_orden_pago_det.Secuencia
+)
 GROUP BY cp_orden_pago.IdEmpresa, cp_orden_pago.IdTipo_op,cp_orden_pago_det.Referencia, cp_orden_pago.IdOrdenPago, cp_orden_pago_det.Secuencia, cp_orden_pago.IdTipo_Persona, cp_orden_pago.IdPersona, cp_orden_pago.IdEntidad, cp_orden_pago.Fecha, 
                   cp_orden_pago.Observacion, cp_orden_pago_det.Valor_a_pagar, cp_orden_pago.IdEstadoAprobacion, cp_orden_pago.IdFormaPago, cp_orden_pago.Fecha, cp_orden_pago_det.IdCbteCble_cxp, cp_orden_pago.Estado, 
                   cp_orden_pago_det.IdEmpresa_cxp, cp_orden_pago_det.IdTipoCbte_cxp
@@ -59,7 +64,7 @@ where data.IdUsuario = @IdUsuario
 
 update [cp_orden_pago_con_cancelacion_data] 
 set Referencia=OG.co_observacion--doc.Codigo+'#' + CAST( CAST( OG.co_factura AS NUMERIC)  AS VARCHAR(20))
-,Referencia2=OG.co_observacion--doc.Codigo+'#' + CAST( CAST(OG.co_factura AS NUMERIC) AS VARCHAR(20))
+,Referencia2= doc.Codigo+'#' + CAST( CAST(OG.co_factura AS NUMERIC) AS VARCHAR(20))
 ,Fecha_Fa_Prov=OG.co_FechaFactura
 ,Fecha_Venc_Fac_Prov=OG.co_FechaFactura_vct
 ,Girar_Cheque_a = ISNULL(suc.Su_Descripcion, Girar_Cheque_a)
