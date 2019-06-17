@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_empleados_sin_percibir_sueldo";
-        settings.CallbackRouteValues = new { Controller = "ProcesarRol", Action = "GridViewPartial_empleados_sin_percibir_sueldo" };
+        settings.CallbackRouteValues = new { Controller = "ProcesarRol", Action = "GridViewPartial_empleados_sin_percibir_sueldo", IdRol = ViewBag.IdRol };
         settings.KeyFieldName = "IdContrato";
         settings.Width = Unit.Percentage(100);
 

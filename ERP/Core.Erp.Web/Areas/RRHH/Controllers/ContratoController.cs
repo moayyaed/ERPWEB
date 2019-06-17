@@ -113,6 +113,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                ViewBag.FechaCorte = FechaCorte;
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_contrato_Info> model = bus_contrato.get_list_contratos_por_vencer(IdEmpresa, FechaCorte);
                 return PartialView("_GridViewPartial_contratos_por_vencer", model);
