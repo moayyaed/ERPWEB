@@ -268,6 +268,15 @@
     <Compile Include="com_parametro.cs">
       <DependentUpon>Model_compras.tt</DependentUpon>
     </Compile>
+    <Compile Include="com_solicitante.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="com_solicitud_compra.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="com_solicitud_compra_det.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
     <Compile Include="com_TerminoPago.cs">
       <DependentUpon>Model_compras.tt</DependentUpon>
     </Compile>
@@ -2023,7 +2032,7 @@
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="VWCOMP_001.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
+      <DependentUpon>Model_compras.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcom_ordencompra_local.cs">
       <DependentUpon>Model_compras.tt</DependentUpon>

@@ -16,9 +16,10 @@ namespace Core.Erp.Data
     {
         public com_catalogo()
         {
+            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
             this.com_parametro = new HashSet<com_parametro>();
             this.com_parametro1 = new HashSet<com_parametro>();
-            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
+            this.com_solicitud_compra = new HashSet<com_solicitud_compra>();
         }
     
         public string IdCatalogocompra { get; set; }
@@ -39,8 +40,9 @@ namespace Core.Erp.Data
         public string MotiAnula { get; set; }
     
         public virtual com_catalogo_tipo com_catalogo_tipo { get; set; }
+        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
         public virtual ICollection<com_parametro> com_parametro { get; set; }
         public virtual ICollection<com_parametro> com_parametro1 { get; set; }
-        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
+        public virtual ICollection<com_solicitud_compra> com_solicitud_compra { get; set; }
     }
 }

@@ -12,25 +12,20 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class com_estado_cierre
+    public partial class com_solicitante
     {
-        public com_estado_cierre()
-        {
-            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
-            this.com_parametro = new HashSet<com_parametro>();
-        }
-    
-        public string IdEstado_cierre { get; set; }
-        public string Descripcion { get; set; }
+        public int IdEmpresa { get; set; }
+        public decimal IdSolicitante { get; set; }
+        public string nom_solicitante { get; set; }
         public string estado { get; set; }
+        public string cedula { get; set; }
+        public Nullable<decimal> IdPersona { get; set; }
+        public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
-        public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltMod { get; set; }
-        public Nullable<System.DateTime> FechaHoraAnul { get; set; }
+        public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltAnu { get; set; }
-        public string MotivoAnulacion { get; set; }
-    
-        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
-        public virtual ICollection<com_parametro> com_parametro { get; set; }
+        public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
+        public string MotiAnula { get; set; }
     }
 }
