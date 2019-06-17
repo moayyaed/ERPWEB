@@ -2032,7 +2032,7 @@
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="VWCOMP_001.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
+      <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcom_ordencompra_local.cs">
       <DependentUpon>Model_compras.tt</DependentUpon>

@@ -16,6 +16,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
     public class ActivoFijoReportesController : Controller
     {
         Af_Activo_fijo_Bus bus_activo = new Af_Activo_fijo_Bus();
+        tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
+        string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
+
         public ActionResult CmbActivo_fijo()
         {
             int model = new int();
@@ -305,7 +308,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult ACTF_007(int IdActivoFijo = 0)
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ACTF_007_Rpt model = new ACTF_007_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ACTF_007");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdActivoFijo.Value = IdActivoFijo;
             model.empresa = SessionFixed.NomEmpresa.ToString();
