@@ -21,5 +21,6 @@ namespace Core.Erp.Info.Reportes.ActivoFijo
         public string NomDepartamento { get; set; }
         public string NomEncargado { get; set; }
         public string NomCustodio { get; set; }
+        public int Cantidad { get; set; }
     }
 }

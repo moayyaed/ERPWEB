@@ -30,7 +30,8 @@ namespace Core.Erp.Data.Reportes.ActivoFijo
                         NomDepartamento = q.NomDepartamento,
                         NomEncargado = q.NomEncargado,
                         NomTipo = q.NomTipo,
-                        Su_Descripcion = q.Su_Descripcion
+                        Su_Descripcion = q.Su_Descripcion,
+                        Cantidad = q.Cantidad
 
 
                     }).ToList();

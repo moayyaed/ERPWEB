@@ -47,7 +47,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_001(int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0)
         {
             CXP_001_Rpt model = new CXP_001_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdTipoCbte_Ogiro.Value = IdTipoCbte_Ogiro;
             model.p_IdCbteCble_Ogiro.Value = IdCbteCble_Ogiro;
             model.usuario = SessionFixed.IdUsuario;
@@ -58,6 +67,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_002(int IdEmpresa_Ogiro = 0, int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0)
         {
             CXP_002_Rpt model = new CXP_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa_Ogiro.Value = IdEmpresa_Ogiro;
             model.p_IdTipoCbte_Ogiro.Value = IdTipoCbte_Ogiro;
             model.p_IdCbteCble_Ogiro.Value = IdCbteCble_Ogiro;
@@ -67,7 +85,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_003( int IdTipoCbte = 0, decimal IdCbteCble = 0)
         {
             CXP_003_Rpt model = new CXP_003_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_003");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdTipoCbte.Value = IdTipoCbte;
             model.p_IdCbteCble.Value = IdCbteCble;
             model.usuario = SessionFixed.IdUsuario;
@@ -78,7 +105,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_004( decimal IdOrdenPago = 0)
         {
             CXP_004_Rpt model = new CXP_004_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_004");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdOrdenPago.Value = IdOrdenPago;
             model.usuario = SessionFixed.IdUsuario;
             model.empresa = SessionFixed.NomEmpresa;
@@ -88,7 +124,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_005( decimal IdConciliacion = 0)
         {
             CXP_005_Rpt model = new CXP_005_Rpt();
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdConciliacion.Value = IdConciliacion;
             model.usuario = SessionFixed.IdUsuario;
             model.empresa = SessionFixed.NomEmpresa;
@@ -98,6 +143,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_006( decimal IdRetencion = 0)
         {
             CXP_006_Rpt model = new CXP_006_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_006");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = SessionFixed.IdEmpresa;
             model.p_IdRetencion.Value = IdRetencion;
             model.usuario = SessionFixed.IdUsuario;
@@ -114,6 +168,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_007_Rpt report = new CXP_007_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_007");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -129,6 +192,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_007(cl_filtros_Info model)
         {
             CXP_007_Rpt report = new CXP_007_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_007");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -175,6 +247,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(true);
             CXP_008_Rpt report = new CXP_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha.Value = model.fecha_fin;
@@ -190,6 +271,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_008(cl_filtros_Info model)
         {
             CXP_008_Rpt report = new CXP_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha.Value = model.fecha_fin;
@@ -212,6 +302,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_009_Rpt report = new CXP_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -228,6 +327,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_009(cl_filtros_Info model)
         {
             CXP_009_Rpt report = new CXP_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
@@ -249,6 +357,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(true);
             CXP_010_Rpt report = new CXP_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_fechaIni.Value = model.fecha_ini;
@@ -265,6 +382,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_010(cl_filtros_Info model)
         {
             CXP_010_Rpt report = new CXP_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_fechaIni.Value = model.fecha_ini;
@@ -281,6 +407,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_011(decimal IdSolicitud = 0)
         {
             CXP_011_Rpt model = new CXP_011_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_011");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = SessionFixed.IdEmpresa;
             model.p_IdSolicitud.Value = IdSolicitud;
             model.RequestParameters = false;
@@ -342,6 +477,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_014_Rpt report = new CXP_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.IntArray = model.IntArray;
             report.p_IdProveedor.Value = model.IdProveedor;
@@ -359,6 +503,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_014(cl_filtros_Info model)
         {
             CXP_014_Rpt report = new CXP_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.IntArray = model.IntArray;
             report.p_IdProveedor.Value = model.IdProveedor;
@@ -385,6 +538,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_combos(true);
             CXP_015_Rpt report = new CXP_015_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_015");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
@@ -400,6 +562,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_015(cl_filtros_Info model)
         {
             CXP_015_Rpt report = new CXP_015_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_015");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
@@ -423,6 +594,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.IntArray = new int[] { model.IdSucursal};
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_016_Rpt report = new CXP_016_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_016");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_FechaIni.Value = model.fecha_ini;
             report.p_FechaFin.Value = model.fecha_fin;
@@ -440,6 +620,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CXP_016(cl_filtros_Info model)
         {
             CXP_016_Rpt report = new CXP_016_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_016");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_FechaIni.Value = model.fecha_ini;
