@@ -25,6 +25,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Archivo_Transferencia_Det_List List_det = new ba_Archivo_Transferencia_Det_List();
         ba_Archivo_Transferencia_Det_List_op Lst_det_op = new ba_Archivo_Transferencia_Det_List_op();
 
+        ba_Archivo_Flujo_List List_flujo = new ba_Archivo_Flujo_List();
+        ba_archivo_transferencia_x_ba_tipo_flujo_Bus bus_archivo_flujo = new ba_archivo_transferencia_x_ba_tipo_flujo_Bus();
+        ba_TipoFlujo_PlantillaDet_Bus bus_TipoFlujo_PlantillaDet = new ba_TipoFlujo_PlantillaDet_Bus();
+
         tb_banco_procesos_bancarios_x_empresa_Bus bus_procesos_bancarios = new tb_banco_procesos_bancarios_x_empresa_Bus();
         ba_Banco_Cuenta_Bus bus_cuentas_bancarias = new ba_Banco_Cuenta_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
@@ -101,9 +105,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Fecha = DateTime.Now,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
-                Lst_det = new List<ba_Archivo_Transferencia_Det_Info>(),                
+                Lst_det = new List<ba_Archivo_Transferencia_Det_Info>(), 
+                Lst_Flujo = new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>()               
             };
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+            List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
             cargar_combos();
             return View(model);
         }
@@ -112,6 +118,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             model.IdUsuario = SessionFixed.IdUsuario;
             model.Lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.Lst_Flujo = List_flujo.get_list(model.IdTransaccionSession);
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -139,6 +146,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+
+            model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
+            List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
             cargar_combos();
 
             if (Exito)
@@ -150,6 +160,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             model.Lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.Lst_Flujo = List_flujo.get_list(model.IdTransaccionSession);
+
             if (!bus_archivo.ModificarDB(model))
             {
                 cargar_combos();
@@ -187,7 +199,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-        #region Detalle
+        #region Detalle Archivo
         [ValidateInput(false)]
         public ActionResult GridViewPartial_archivo_bancario_det()
         {
@@ -248,6 +260,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region Archivo
+
         public FileResult get_archivo(int IdEmpresa = 0, int IdArchivo = 0)
         {
             byte[] archivo;
@@ -322,7 +336,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 throw;
             }
         }
-
+        #endregion
     }
     public class ba_Archivo_Transferencia_Det_List
     {
@@ -388,4 +402,49 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
+
+    public class ba_Archivo_Flujo_List
+    {
+        string Variable = "ba_archivo_transferencia_x_ba_tipo_flujo_Info";
+        public List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> list = new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(ba_archivo_transferencia_x_ba_tipo_flujo_Info info_det, decimal IdTransaccionSession)
+        {
+            List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> list = get_list(IdTransaccionSession);
+            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            
+        }
+
+        public void UpdateRow(ba_archivo_transferencia_x_ba_tipo_flujo_Info info_det, decimal IdTransaccionSession)
+        {
+            ba_archivo_transferencia_x_ba_tipo_flujo_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            edited_info.IdTipoFlujo = info_det.IdTipoFlujo;
+            edited_info.IdArchivo = info_det.IdArchivo;
+            edited_info.Porcentaje = info_det.Porcentaje;
+            edited_info.Valor = info_det.Valor;
+            edited_info.Secuencia = info_det.Secuencia;
+        }
+
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
+        {
+            List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+        }
     }
+
+}

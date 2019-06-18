@@ -51,6 +51,20 @@
           <Property Name="Fecha_proceso" Type="datetime" />
           <Property Name="Referencia" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="ba_archivo_transferencia_x_ba_tipo_flujo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdArchivo" />
+            <PropertyRef Name="IdTipoFlujo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTipoFlujo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Porcentaje" Type="float" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="ba_Banco_Cuenta">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -384,8 +398,8 @@
           <Property Name="IdTipoFlujo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Porcentaje" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_Archivo_Transferencia_Det' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Archivo_Transferencia_Det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -433,8 +447,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_Archivo_Transferencia_Det' does not
           <Property Name="IdEntidad" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="cb_Fecha" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -472,8 +486,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposi
           <Property Name="mba_IdTipocbte" Type="int" Nullable="false" />
           <Property Name="mba_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -507,8 +521,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposi
           <Property Name="ca_Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cbr_IdSucursal" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Cbte_Ban_x_ba_TipoFlujo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -529,8 +543,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' does not h
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="Descricion" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_Conciliacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Conciliacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Conciliacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -567,8 +581,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_Conciliacion' does not have a prima
           <Property Name="IdEstado_Concil_Cat" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="co_SaldoBanco_EstCta" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_TipoFlujo_Movimiento' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_TipoFlujo_Movimiento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_TipoFlujo_Movimiento">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -595,8 +609,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_TipoFlujo_Movimiento' does not have
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.dbo.vwba_TipoFlujoPlantillaDet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_TipoFlujoPlantillaDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_TipoFlujoPlantillaDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -613,8 +627,8 @@ warning 6002: The table/view 'DBERP.dbo.vwba_TipoFlujoPlantillaDet' does not hav
           <Property Name="Porcentaje" Type="float" Nullable="false" />
           <Property Name="Descricion" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.web.vwba_Cbte_Ban' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwba_Cbte_Ban' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Cbte_Ban">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -652,8 +666,8 @@ warning 6002: The table/view 'DBERP.web.vwba_Cbte_Ban' does not have a primary k
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Imprimir_Solo_el_cheque" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.web.vwba_Conciliacion_det_IngEgr' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwba_Conciliacion_det_IngEgr' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Conciliacion_det_IngEgr">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -684,8 +698,8 @@ warning 6002: The table/view 'DBERP.web.vwba_Conciliacion_det_IngEgr' does not h
           <Property Name="IdConciliacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.web.vwba_Conciliacion_det_IngEgr_x_conciliar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwba_Conciliacion_det_IngEgr_x_conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Conciliacion_det_IngEgr_x_conciliar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -712,8 +726,8 @@ warning 6002: The table/view 'DBERP.web.vwba_Conciliacion_det_IngEgr_x_conciliar
           <Property Name="cb_Cheque" Type="varchar" MaxLength="50" />
           <Property Name="tc_TipoCbte" Type="char" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwba_Talonario_cheques_x_banco_ID">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -748,6 +762,34 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
             <Dependent Role="ba_Archivo_Transferencia_Det">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdArchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia">
+          <End Role="ba_Archivo_Transferencia" Type="Self.ba_Archivo_Transferencia" Multiplicity="1" />
+          <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" Type="Self.ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Archivo_Transferencia">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArchivo" />
+            </Principal>
+            <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
+          <End Role="ba_TipoFlujo" Type="Self.ba_TipoFlujo" Multiplicity="1" />
+          <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" Type="Self.ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_TipoFlujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipoFlujo" />
+            </Principal>
+            <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipoFlujo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1030,6 +1072,7 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
         <EntityContainer Name="Model_bancoStoreContainer">
           <EntitySet Name="ba_Archivo_Transferencia" EntityType="Self.ba_Archivo_Transferencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Archivo_Transferencia_Det" EntityType="Self.ba_Archivo_Transferencia_Det" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ba_archivo_transferencia_x_ba_tipo_flujo" EntityType="Self.ba_archivo_transferencia_x_ba_tipo_flujo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Banco_Cuenta" EntityType="Self.ba_Banco_Cuenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Banco_Cuenta_x_tb_sucursal" EntityType="Self.ba_Banco_Cuenta_x_tb_sucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" EntityType="Self.ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" Schema="dbo" store:Type="Tables" />
@@ -1248,6 +1291,14 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
           <AssociationSet Name="FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" Association="Self.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1">
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
             <End Role="ba_Archivo_Transferencia_Det" EntitySet="ba_Archivo_Transferencia_Det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" Association="Self.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia">
+            <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
+            <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" Association="Self.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
+            <End Role="ba_TipoFlujo" EntitySet="ba_TipoFlujo" />
+            <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
           </AssociationSet>
           <AssociationSet Name="FK_ba_Banco_Cuenta_x_tb_sucursal_ba_Banco_Cuenta" Association="Self.FK_ba_Banco_Cuenta_x_tb_sucursal_ba_Banco_Cuenta">
             <End Role="ba_Banco_Cuenta" EntitySet="ba_Banco_Cuenta" />
@@ -1784,6 +1835,15 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
             <End Role="ba_Archivo_Transferencia_Det" EntitySet="ba_Archivo_Transferencia_Det" />
           </AssociationSet>
           <EntitySet Name="vwba_Archivo_Transferencia_Det" EntityType="Model_banco.vwba_Archivo_Transferencia_Det" />
+          <EntitySet Name="ba_archivo_transferencia_x_ba_tipo_flujo" EntityType="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" />
+          <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" Association="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia">
+            <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
+            <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" Association="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
+            <End Role="ba_TipoFlujo" EntitySet="ba_TipoFlujo" />
+            <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="vwba_Cbte_Ban">
           <Key>
@@ -1975,6 +2035,7 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
           <NavigationProperty Name="ba_TipoFlujo2" Relationship="Model_banco.FK_ba_TipoFlujo_ba_TipoFlujo" FromRole="ba_TipoFlujo1" ToRole="ba_TipoFlujo" />
           <NavigationProperty Name="ba_TipoFlujo_PlantillaDet" Relationship="Model_banco.FK_ba_TipoFlujo_PlantillaDet_ba_TipoFlujo" FromRole="ba_TipoFlujo" ToRole="ba_TipoFlujo_PlantillaDet" />
           <NavigationProperty Name="ba_TipoFlujo_Movimiento" Relationship="Model_banco.FK_ba_TipoFlujo_Movimiento_ba_TipoFlujo" FromRole="ba_TipoFlujo" ToRole="ba_TipoFlujo_Movimiento" />
+          <NavigationProperty Name="ba_archivo_transferencia_x_ba_tipo_flujo" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" FromRole="ba_TipoFlujo" ToRole="ba_archivo_transferencia_x_ba_tipo_flujo" />
         </EntityType>
         <EntityType Name="ba_TipoFlujo_PlantillaDet">
           <Key>
@@ -2401,6 +2462,7 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
           <Property Name="SecuencialInicial" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="ba_Banco_Cuenta" Relationship="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" FromRole="ba_Archivo_Transferencia" ToRole="ba_Banco_Cuenta" />
           <NavigationProperty Name="ba_Archivo_Transferencia_Det" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia" ToRole="ba_Archivo_Transferencia_Det" />
+          <NavigationProperty Name="ba_archivo_transferencia_x_ba_tipo_flujo" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" FromRole="ba_Archivo_Transferencia" ToRole="ba_archivo_transferencia_x_ba_tipo_flujo" />
         </EntityType>
         <EntityType Name="ba_Archivo_Transferencia_Det">
           <Key>
@@ -2497,6 +2559,50 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
           <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="ba_archivo_transferencia_x_ba_tipo_flujo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdArchivo" />
+            <PropertyRef Name="IdTipoFlujo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdTipoFlujo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Porcentaje" Type="Double" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" FromRole="ba_archivo_transferencia_x_ba_tipo_flujo" ToRole="ba_Archivo_Transferencia" />
+          <NavigationProperty Name="ba_TipoFlujo" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" FromRole="ba_archivo_transferencia_x_ba_tipo_flujo" ToRole="ba_TipoFlujo" />
+        </EntityType>
+        <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia">
+          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="1" />
+          <End Type="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" Role="ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Archivo_Transferencia">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArchivo" />
+            </Principal>
+            <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
+          <End Type="Model_banco.ba_TipoFlujo" Role="ba_TipoFlujo" Multiplicity="1" />
+          <End Type="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" Role="ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_TipoFlujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipoFlujo" />
+            </Principal>
+            <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipoFlujo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3081,6 +3187,18 @@ warning 6002: The table/view 'DBERP.web.vwba_Talonario_cheques_x_banco_ID' does 
                 <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
                 <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ba_archivo_transferencia_x_ba_tipo_flujo">
+            <EntityTypeMapping TypeName="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo">
+              <MappingFragment StoreEntitySet="ba_archivo_transferencia_x_ba_tipo_flujo">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdTipoFlujo" ColumnName="IdTipoFlujo" />
                 <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

@@ -170,45 +170,96 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="OpModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ordenes de pago</h4>
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_op" aria-controls="op" role="tab" data-toggle="tab">Ordenes de pago   </a>
+            </li>
+            <li>
+                <a href="#tab_flujo" aria-controls="flujo" role="tab" data-toggle="tab">Flujo</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_op">
+
+                <div class="modal fade" id="OpModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Ordenes de pago</h4>
+                            </div>
+                            <div class="modal-body">
+                                @Html.Action("GridViewPartial_archivo_bancario_det_op")
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="AddOP();">Aceptar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="modal-body">
-                    @Html.Action("GridViewPartial_archivo_bancario_det_op")
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="AddOP();">Aceptar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_archivo_bancario_det")
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_flujo">
+
+                <div class="modal fade" id="PlantillaModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Plantilla tipo de flujo</h4>
+                            </div>
+                            <div class="modal-body">
+                                @Html.Action("GridViewPartial_TipoFlujoPlantilla_Asignar", new { Area = "Banco", Controller = "TipoFlujoPlantilla" })
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
+                            <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
+                        </button>
+                    </div>
+                </div>
+                <br />
+                @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "TipoFlujoBanco" })
+            </div>
+
 
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    @Html.Action("GridViewPartial_archivo_bancario_det")
-
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index","ArchivoBancario",new { Area = "Banco" },null)">Cancelar</a>

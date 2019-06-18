@@ -173,6 +173,23 @@ namespace Core.Erp.Data.Banco
                         }
                     }
 
+                    info.Lst_Flujo = info.Lst_Flujo == null ? new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>() : info.Lst_Flujo;
+                    if (info.Lst_Flujo.Count()>0)
+                    {
+                        foreach (var item in info.Lst_Flujo)
+                             {
+                            Context.ba_archivo_transferencia_x_ba_tipo_flujo.Add(new ba_archivo_transferencia_x_ba_tipo_flujo
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdArchivo = info.IdArchivo,
+                                IdTipoFlujo = item.IdTipoFlujo,
+                                Porcentaje = item.Porcentaje,
+                                Secuencia = Secuencia++,
+                                Valor = item.Valor
+                            });
+                        }
+                    }
+
 
                     Context.SaveChanges();
                 }
