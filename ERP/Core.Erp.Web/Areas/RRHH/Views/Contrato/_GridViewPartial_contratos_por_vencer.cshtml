@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_contratos_por_vencer";
-        settings.CallbackRouteValues = new { Controller = "Contrato", Action = "GridViewPartial_contratos_por_vencer" };
+        settings.CallbackRouteValues = new { Controller = "Contrato", Action = "GridViewPartial_contratos_por_vencer", FechaCorte = ViewBag.FechaCorte };
         settings.KeyFieldName = "IdContrato";
         settings.Width = Unit.Percentage(100);
 

@@ -468,6 +468,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult GridViewPartial_empleados_sin_percibir_sueldo(decimal IdRol=0)
         {
+            ViewBag.IdRol = IdRol;
             var model = bus_detalle.get_list_nomina_sin_sueldo_percibir(Convert.ToInt32(SessionFixed.IdEmpresa), IdRol);
             return PartialView("_GridViewPartial_empleados_sin_percibir_sueldo", model);
         }

@@ -421,7 +421,7 @@ namespace Core.Erp.Data.Compras
                                      oc_fechaVencimiento = q.oc_fecha,
                                      oc_observacion = q.oc_observacion,
                                      IdProveedor = q.IdProveedor,
-                                     Saldo_vw = q.Saldo
+                                     Saldo = q.Saldo
                                  }).ToList();
 
                     Lista.ForEach(q=>q.IdInventarioOrdenCompra = (q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000")  + q.IdOrdenCompra.ToString("000000") + q.Secuencia.ToString("000000")) );                  

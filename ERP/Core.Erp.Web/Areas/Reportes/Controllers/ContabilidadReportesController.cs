@@ -43,9 +43,20 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
 
         #endregion
+        tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
+        string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
         public ActionResult CONTA_001(int IdTipoCbte = 0, decimal IdCbteCble = 0)
         {
             CONTA_001_Rpt model = new CONTA_001_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CONTA_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdTipoCbte.Value = IdTipoCbte;
             model.p_IdCbteCble.Value = IdCbteCble;
@@ -103,6 +114,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CONTA_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
@@ -119,6 +139,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CONTA_002(cl_filtros_Info model)
         {
             CONTA_002_Rpt report = new CONTA_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CONTA_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;

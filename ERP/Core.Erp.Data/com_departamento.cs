@@ -17,6 +17,7 @@ namespace Core.Erp.Data
         public com_departamento()
         {
             this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
+            this.com_solicitud_compra = new HashSet<com_solicitud_compra>();
         }
     
         public int IdEmpresa { get; set; }
@@ -32,5 +33,6 @@ namespace Core.Erp.Data
         public string MotiAnula { get; set; }
     
         public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
+        public virtual ICollection<com_solicitud_compra> com_solicitud_compra { get; set; }
     }
 }

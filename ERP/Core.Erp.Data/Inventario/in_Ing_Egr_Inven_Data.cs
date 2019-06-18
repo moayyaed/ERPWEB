@@ -470,6 +470,11 @@ namespace Core.Erp.Data.Inventario
                     q.IdMovi_inven_tipo_inv = null;
                     q.IdNumMovi_inv = null;
                     q.IdEstadoAproba = "PEND";
+
+                    q.IdEmpresa_oc = null;
+                    q.IdSucursal_oc = null;
+                    q.IdOrdenCompra = null;
+                    q.Secuencia_oc = null;
                 });
                 #endregion
 

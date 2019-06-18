@@ -12,9 +12,7 @@ namespace Core.Erp.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
-
+    
     public partial class Entities_compras : DbContext
     {
         public Entities_compras()
@@ -29,15 +27,19 @@ namespace Core.Erp.Data
     
         public DbSet<com_catalogo> com_catalogo { get; set; }
         public DbSet<com_catalogo_tipo> com_catalogo_tipo { get; set; }
-        public DbSet<com_estado_cierre> com_estado_cierre { get; set; }
+        public DbSet<com_comprador> com_comprador { get; set; }
         public DbSet<com_departamento> com_departamento { get; set; }
+        public DbSet<com_estado_cierre> com_estado_cierre { get; set; }
+        public DbSet<com_ordencompra_local> com_ordencompra_local { get; set; }
         public DbSet<com_ordencompra_local_det> com_ordencompra_local_det { get; set; }
         public DbSet<com_parametro> com_parametro { get; set; }
-        public DbSet<vwcom_ordencompra_local_det> vwcom_ordencompra_local_det { get; set; }
+        public DbSet<com_solicitante> com_solicitante { get; set; }
+        public DbSet<com_solicitud_compra> com_solicitud_compra { get; set; }
+        public DbSet<com_solicitud_compra_det> com_solicitud_compra_det { get; set; }
         public DbSet<com_TerminoPago> com_TerminoPago { get; set; }
         public DbSet<vwcom_ordencompra_local> vwcom_ordencompra_local { get; set; }
-        public DbSet<com_comprador> com_comprador { get; set; }
-        public DbSet<com_ordencompra_local> com_ordencompra_local { get; set; }
         public DbSet<vwcom_ordencompra_local_detPorIngresar> vwcom_ordencompra_local_detPorIngresar { get; set; }
+        public DbSet<vwcom_ordencompra_local_det> vwcom_ordencompra_local_det { get; set; }
+        public DbSet<VWCOMP_001> VWCOMP_001 { get; set; }
     }
 }

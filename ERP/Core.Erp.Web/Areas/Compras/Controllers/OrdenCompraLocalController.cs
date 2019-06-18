@@ -181,7 +181,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             }
             else
             {
-                model.IdComprador = info_comprador.IdComprador;
+                model.IdComprador   = info_comprador.IdComprador;
             }
 
             if (!Validar(model, ref mensaje))

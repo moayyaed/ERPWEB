@@ -44,6 +44,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult BAN_001( int IdTipoCbte = 0, decimal IdCbteCble = 0)
         {
             BAN_001_Rpt model = new BAN_001_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_001");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdTipoCbte.Value = IdTipoCbte;
             model.p_IdCbteCble.Value = IdCbteCble;
@@ -54,6 +63,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult BAN_002( int IdTipocbte = 0, decimal IdCbteCble = 0)
         {
             BAN_002_Rpt model = new BAN_002_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_002");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdTipocbte.Value = IdTipocbte;
             model.p_IdCbteCble.Value = IdCbteCble;
@@ -64,6 +82,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult BAN_003( int IdTipocbte = 0, decimal IdCbteCble = 0)
         {
             BAN_003_Rpt model = new BAN_003_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_003");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdTipocbte.Value = IdTipocbte;
             model.p_IdCbteCble.Value = IdCbteCble;
@@ -74,6 +101,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult BAN_004( int IdBanco = 0, decimal IdConciliacion = 0)
         {
             BAN_004_Rpt model = new BAN_004_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_004");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdBanco.Value = IdBanco;
             model.p_IdConciliacion.Value = IdConciliacion;
@@ -303,6 +339,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if(!mostrar_agrupado)
             {
                 BAN_009_Rpt report = new BAN_009_Rpt();
+                #region Cargo diseño desde base
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_009");
+                if (reporte != null)
+                {
+                    System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                    report.LoadLayout(RootReporte);
+                }
+                #endregion
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdSucursal.Value = model.IdSucursal;
                 report.p_fecha_ini.Value = model.fecha_ini;
@@ -315,6 +360,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             else
             {
                 BAN_009_Flujo_Rpt report_flujo = new BAN_009_Flujo_Rpt();
+                #region Cargo diseño desde base
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_009");
+                if (reporte != null)
+                {
+                    System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                    report_flujo.LoadLayout(RootReporte);
+                }
+                #endregion
                 report_flujo.p_IdEmpresa.Value = model.IdEmpresa;
                 report_flujo.p_IdSucursal.Value = model.IdSucursal;
                 report_flujo.p_fecha_ini.Value = model.fecha_ini;
@@ -332,6 +386,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             if(!model.mostrar_agrupado)
             {
                 BAN_009_Rpt report = new BAN_009_Rpt();
+                #region Cargo diseño desde base
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_009");
+                if (reporte != null)
+                {
+                    System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                    report.LoadLayout(RootReporte);
+                }
+                #endregion
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdSucursal.Value = model.IdSucursal;
                 report.p_fecha_ini.Value = model.fecha_ini;
@@ -345,6 +408,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             else
             {
                 BAN_009_Flujo_Rpt report_flujo = new BAN_009_Flujo_Rpt();
+                #region Cargo diseño desde base
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_009");
+                if (reporte != null)
+                {
+                    System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                    report_flujo.LoadLayout(RootReporte);
+                }
+                #endregion
                 report_flujo.p_IdEmpresa.Value = model.IdEmpresa;
                 report_flujo.p_IdSucursal.Value = model.IdSucursal;
                 report_flujo.p_fecha_fin.Value = model.fecha_fin;

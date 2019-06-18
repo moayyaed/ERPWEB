@@ -225,7 +225,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
             model.IdUsuarioUltModi = SessionFixed.IdUsuario;
-            model.IdResponsable = model.IdProveedor;
+            //model.IdResponsable = model.IdProveedor;
             
             if (!bus_ing_inv.modificarDB(model))
             {
@@ -320,20 +320,17 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     {
                         info_det_inv.IdEmpresa = info_det.IdEmpresa;
                         info_det_inv.IdSucursal = info_det.IdSucursal;
+                        info_det_inv.IdOrdenCompra = info_det.IdOrdenCompra;
                         info_det_inv.IdProducto = info_det.IdProducto;
                         info_det_inv.pr_descripcion = info_det.pr_descripcion;
-
-                        info_det_inv.IdEmpresa_oc = info_det.IdEmpresa;
-                        info_det_inv.IdSucursal_oc = info_det.IdSucursal;
-                        info_det_inv.IdOrdenCompra = info_det.IdOrdenCompra;
-                        info_det_inv.Secuencia_oc = info_det.Secuencia;
 
                         info_det_inv.mv_costo_sinConversion = info_det.do_precioFinal;
                         info_det_inv.dm_cantidad_sinConversion = info_det.do_Cantidad_vw;
                         info_det_inv.IdUnidadMedida_sinConversion = info_det.IdUnidadMedida;
-                        info_det_inv.Saldo = Convert.ToInt32(info_det.Saldo_vw);
+                        info_det_inv.Saldo = info_det.Saldo;
 
                         List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);
+                        
                     }
                 }
             }
@@ -344,9 +341,17 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] in_Ing_Egr_Inven_det_Info info_det)
         {
+            com_ordencompra_local_det_List Lista_OC = new com_ordencompra_local_det_List();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            if (info_det != null)
-                if (info_det.IdProducto != 0)
+
+            List<in_Ing_Egr_Inven_det_Info> lista_detalle = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<com_ordencompra_local_Info> lista_detalle_oc = Lista_OC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            in_Ing_Egr_Inven_det_Info info_det_editar = lista_detalle.Where(q=> q.Secuencia == info_det.Secuencia).FirstOrDefault();
+            com_ordencompra_local_Info info_oc = lista_detalle_oc.Where(q => q.IdEmpresa == info_det_editar.IdEmpresa && q.IdSucursal == info_det_editar.IdSucursal && q.IdOrdenCompra == info_det_editar.IdOrdenCompra && q.IdProducto == info_det_editar.IdProducto).FirstOrDefault();
+            info_det_editar.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
+
+            if (info_det_editar != null)
+                if (info_det_editar.IdProducto != 0)
                 {
                     in_Producto_Info info_producto = bus_producto.get_info(IdEmpresa, info_det.IdProducto);
                     if (info_producto != null)
@@ -355,8 +360,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                     }
                 }
-            if (info_det.dm_cantidad_sinConversion > 0)
-                List_in_Ing_Egr_Inven_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+
+            if (info_det_editar.dm_cantidad_sinConversion > 0 && info_det_editar.dm_cantidad_sinConversion <= info_oc.Saldo)
+                List_in_Ing_Egr_Inven_det.UpdateRow(info_det_editar, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_inv_det", model);
@@ -389,6 +396,25 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 mensaje = "Debe ingresar al menos un producto";
                 return false;
             }
+            else
+            {
+                com_ordencompra_local_det_List Lista_OC = new com_ordencompra_local_det_List();
+                List<com_ordencompra_local_Info> lista_detalle_oc = Lista_OC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+                if (i_validar.IdNumMovi == 0)
+                {
+                    foreach (var item in i_validar.lst_in_Ing_Egr_Inven_det)
+                    {
+                        com_ordencompra_local_Info info_oc = lista_detalle_oc.Where(q => q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal && q.IdOrdenCompra == item.IdOrdenCompra && q.IdProducto == item.IdProducto).FirstOrDefault();
+                        if (item.dm_cantidad_sinConversion > info_oc.Saldo)
+                        {
+                            mensaje = "La cantidad ingresada supera al saldo pendiente del producto: "+item.pr_descripcion;
+                            return false;
+                        }
+                    }                                      
+                }
+            }
+            
 
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cm_fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
             {
@@ -463,6 +489,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public void UpdateRow(in_Ing_Egr_Inven_det_Info info_det, decimal IdTransaccionSession)
         {
             in_Ing_Egr_Inven_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+
             edited_info.IdProducto = info_det.IdProducto;
             edited_info.IdUnidadMedida_sinConversion = info_det.IdUnidadMedida_sinConversion;
             edited_info.mv_costo_sinConversion = info_det.mv_costo_sinConversion;

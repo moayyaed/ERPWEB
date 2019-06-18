@@ -12,16 +12,22 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class VWCXC_007_Cobros
+    public partial class com_solicitud_compra_det
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
-        public decimal IdLiquidacion { get; set; }
+        public decimal IdSolicitudCompra { get; set; }
         public int Secuencia { get; set; }
-        public double Valor { get; set; }
-        public decimal IdCobro { get; set; }
-        public System.DateTime cr_fecha { get; set; }
-        public string pe_nombreCompleto { get; set; }
-        public string cr_observacion { get; set; }
+        public Nullable<decimal> IdProducto { get; set; }
+        public double do_Cantidad { get; set; }
+        public string NomProducto { get; set; }
+        public string IdCentroCosto { get; set; }
+        public string IdCentroCosto_sub_centro_costo { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string IdUnidadMedida { get; set; }
+        public string do_observacion { get; set; }
+    
+        public virtual com_solicitud_compra com_solicitud_compra { get; set; }
     }
 }
