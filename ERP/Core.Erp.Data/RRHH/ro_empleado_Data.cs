@@ -654,6 +654,7 @@ namespace Core.Erp.Data.RRHH
                         return false;
                     Entity.em_estado = info.em_estado = "I";
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                    Entity.em_status = "EST_LIQ";
                     Entity.Fecha_UltAnu = info.Fecha_UltAnu = DateTime.Now;
                     if(info.Tiene_ingresos_compartidos)
                     {

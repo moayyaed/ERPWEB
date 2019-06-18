@@ -135,7 +135,7 @@ namespace Core.Erp.Data.Banco
                         IdEmpresa = info.IdEmpresa,
                         IdArchivo = info.IdArchivo=GetId(info.IdEmpresa),
                         cod_archivo = info.cod_archivo,
-                        Cod_Empresa = info.Cod_Empresa,
+                        Cod_Empresa = info.Cod_Empresa = "",
                         Contabilizado = info.Contabilizado,
                         Estado = true,
                         Fecha = info.Fecha.Date,
@@ -146,10 +146,10 @@ namespace Core.Erp.Data.Banco
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now,
                         IdSucursal = info.IdSucursal,
-                        SecuencialInicial = info.SecuencialInicial                        
+                        SecuencialInicial = info.SecuencialInicial
                     });
 
-
+                    int Secuencia = 1;
                     if(info.Lst_det.Count()>0)
                     {
                         foreach (var item in info.Lst_det)
@@ -163,10 +163,11 @@ namespace Core.Erp.Data.Banco
                                 Fecha_proceso = item.Fecha_proceso,
                                 IdOrdenPago = item.IdOrdenPago,
                                 IdEmpresa_OP = info.IdEmpresa,
-                                Secuencia = item.Secuencia,
+                                Secuencia = Secuencia++,
                                 Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
                                 Secuencia_OP = item.Secuencia_OP,
                                 Referencia = item.Referencia,
+                                
                                 Valor = item.Valor
                             });
                         }

@@ -27,7 +27,7 @@ namespace Core.Erp.Data.RRHH
                                  IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
                                  Valor = q.Valor,
                                  IdRubro=q.IdRubro,
-                                 pe_nombreCompleto=q.pe_apellido+" "+q.pe_nombreCompleto,
+                                 pe_nombreCompleto=q.pe_nombreCompleto,
                                  Descripcion=q.Descripcion,
                                  DescripcionProcesoNomina=q.DescripcionProcesoNomina,
                                  ru_descripcion=q.ru_descripcion,
