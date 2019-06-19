@@ -1,4 +1,5 @@
-﻿--EXEC [web].[SPINV_016] 2,1,1,1,99999,1,99999,1,99999,1,99999,'2019/01/05','31/01/2019',0,'ADMIN'
+﻿
+--EXEC [web].[SPINV_016] 2,1,1,1,99999,1,99999,1,99999,1,99999,'2019/01/05','31/01/2019',0,'ADMIN'
 CREATE PROCEDURE [web].[SPINV_016]
 (
 @IdEmpresa int,
@@ -58,6 +59,7 @@ GROUP BY PB.IdEmpresa, PB.IdSucursal, PB.IdProducto, D.SaldoInicial, P.precio_1
 BEGIN --ACTUALIZO INGRESOS POR COMPRA
 update [web].[in_SPINV_016] set CantidadIngresada = A.Ingresos
 FROM(
+select G.IdEmpresa, G.IdSucursal, G.IdProducto, SUM(G.Ingresos)Ingresos from(
 SELECT di.IdEmpresa, di.IdSucursal, di.IdProducto, SUM(di.dm_cantidad) AS Ingresos
 FROM     in_Ing_Egr_Inven_det AS d INNER JOIN
                   in_movi_inve_detalle AS di ON d.IdEmpresa_inv = di.IdEmpresa AND d.IdSucursal_inv = di.IdSucursal AND d.IdBodega_inv = di.IdBodega AND d.IdMovi_inven_tipo_inv = di.IdMovi_inven_tipo AND d.IdNumMovi_inv = di.IdNumMovi AND 
@@ -66,7 +68,30 @@ FROM     in_Ing_Egr_Inven_det AS d INNER JOIN
                   cp_orden_giro_x_in_Ing_Egr_Inven AS r ON c.IdEmpresa = r.inv_IdEmpresa AND c.IdSucursal = r.inv_IdSucursal AND c.IdMovi_inven_tipo = r.inv_IdMovi_inven_tipo AND c.IdNumMovi = r.inv_IdNumMovi
 where c.IdEmpresa = @IdEmpresa and c.IdSucursal between @IdSucursalIni and @IdSucursalFin and
 c.cm_fecha between @FechaIni and @FechaFin
-GROUP BY di.IdEmpresa, di.IdSucursal, di.IdProducto) A
+GROUP BY di.IdEmpresa, di.IdSucursal, di.IdProducto
+union all
+SELECT d.IdEmpresa, d.IdSucursal, d.IdProducto, sum(m.dm_cantidad)
+FROM in_Ing_Egr_Inven_det as d inner join in_movi_inve_detalle as m
+on m.IdEmpresa = d.IdEmpresa_inv and m.IdSucursal = d.IdSucursal_inv and m.IdBodega = d.IdBodega_inv and m.IdMovi_inven_tipo = d.IdMovi_inven_tipo_inv and m.IdNumMovi = d.IdNumMovi_inv and m.Secuencia = d.secuencia_inv inner join
+in_Ing_Egr_Inven c on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdMovi_inven_tipo = d.IdMovi_inven_tipo and c.IdNumMovi = d.IdNumMovi
+where c.IdEmpresa = @IdEmpresa and c.IdSucursal between @IdSucursalIni and @IdSucursalFin and
+c.cm_fecha between @FechaIni and @FechaFin AND D.dm_cantidad > 0 AND NOT EXISTS (
+SELECT f.inv_IdEmpresa FROM cp_orden_giro_x_in_Ing_Egr_Inven f
+where f.inv_IdEmpresa = c.IdEmpresa
+and f.inv_IdSucursal = c.IdSucursal
+and f.inv_IdMovi_inven_tipo = c.IdMovi_inven_tipo
+and f.inv_IdNumMovi = c.IdNumMovi
+) and not exists(
+select f.IdEmpresa from in_transferencia as f
+where f.IdEmpresa_Ing_Egr_Inven_Destino = c.IdEmpresa
+and f.IdSucursal_Ing_Egr_Inven_Destino = c.IdSucursal
+and f.IdMovi_inven_tipo_SucuDest = c.IdMovi_inven_tipo
+and f.IdNumMovi_Ing_Egr_Inven_Destino = c.IdNumMovi
+)
+GROUP BY d.IdEmpresa, d.IdSucursal, d.IdProducto
+) G
+GROUP  BY G.IdEmpresa, G.IdSucursal, G.IdProducto
+) A
 WHERE [web].[in_SPINV_016].IdEmpresa = A.IdEmpresa
 AND [web].[in_SPINV_016].IdSucursal = A.IdSucursal
 AND [web].[in_SPINV_016].IdProducto = A.IdProducto
@@ -76,6 +101,9 @@ END
 BEGIN -- ACTUALIZO VENTAS
 update [web].[in_SPINV_016] set CantidadVendida = ABS(A.Ventas)
 FROM(
+
+SELECT G.IdEmpresa, G.IdSucursal, G.IdProducto, SUM(G.Ventas) Ventas
+FROM (
 SELECT di.IdEmpresa, di.IdSucursal, di.IdProducto, SUM(di.dm_cantidad) AS Ventas
 FROM     in_Ing_Egr_Inven_det AS d INNER JOIN
                   in_movi_inve_detalle AS di ON d.IdEmpresa_inv = di.IdEmpresa AND d.IdSucursal_inv = di.IdSucursal AND d.IdBodega_inv = di.IdBodega AND d.IdMovi_inven_tipo_inv = di.IdMovi_inven_tipo AND d.IdNumMovi_inv = di.IdNumMovi AND 
@@ -85,7 +113,34 @@ FROM     in_Ing_Egr_Inven_det AS d INNER JOIN
                   c.IdNumMovi = R.IdNumMovi_in_eg_x_inv
 where c.IdEmpresa = @IdEmpresa and c.IdSucursal between @IdSucursalIni and @IdSucursalFin and
 c.cm_fecha between @FechaIni and @FechaFin
-GROUP BY di.IdEmpresa, di.IdSucursal, di.IdProducto) A
+GROUP BY di.IdEmpresa, di.IdSucursal, di.IdProducto
+
+UNION ALL
+
+SELECT d.IdEmpresa, d.IdSucursal, d.IdProducto, sum(m.dm_cantidad)
+FROM in_Ing_Egr_Inven_det as d inner join in_movi_inve_detalle as m
+on m.IdEmpresa = d.IdEmpresa_inv and m.IdSucursal = d.IdSucursal_inv and m.IdBodega = d.IdBodega_inv and m.IdMovi_inven_tipo = d.IdMovi_inven_tipo_inv and m.IdNumMovi = d.IdNumMovi_inv and m.Secuencia = d.secuencia_inv inner join
+in_Ing_Egr_Inven c on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdMovi_inven_tipo = d.IdMovi_inven_tipo and c.IdNumMovi = d.IdNumMovi
+where c.IdEmpresa = @IdEmpresa and c.IdSucursal between @IdSucursalIni and @IdSucursalFin and
+c.cm_fecha between @FechaIni and @FechaFin AND D.dm_cantidad < 0 
+and not exists(
+select f.IdEmpresa from in_transferencia as f
+where f.IdEmpresa_Ing_Egr_Inven_Origen = c.IdEmpresa
+and f.IdSucursal_Ing_Egr_Inven_Origen = c.IdSucursal
+and f.IdMovi_inven_tipo_SucuOrig = c.IdMovi_inven_tipo
+and f.IdNumMovi_Ing_Egr_Inven_Origen = c.IdNumMovi
+)
+and not exists(
+select f.IdEmpresa_fa from fa_factura_det_x_in_Ing_Egr_Inven_det as f
+where f.IdEmpresa_eg = c.IdEmpresa
+and f.IdSucursal_eg = c.IdSucursal
+and f.IdMovi_inven_tipo_eg = c.IdMovi_inven_tipo
+and f.IdNumMovi_eg = c.IdNumMovi
+)
+GROUP BY d.IdEmpresa, d.IdSucursal, d.IdProducto
+) G
+GROUP BY G.IdEmpresa, G.IdSucursal, G.IdProducto
+) A
 WHERE [web].[in_SPINV_016].IdEmpresa = A.IdEmpresa
 AND [web].[in_SPINV_016].IdSucursal = A.IdSucursal
 AND [web].[in_SPINV_016].IdProducto = A.IdProducto

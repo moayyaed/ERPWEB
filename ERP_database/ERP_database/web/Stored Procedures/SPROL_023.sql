@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPROL_023] 5,1,1,1,2,201902,1,99999,1,99999,1,99999
+﻿--exec [web].[SPROL_023] 2,8,8,1,2,201906,1,99999,1,99999,1,99999
 CREATE PROCEDURE [web].[SPROL_023]
 (
 @IdEmpresa int,
@@ -222,7 +221,7 @@ FROM            dbo.tb_persona INNER JOIN
 						 WHERE X.IdEmpresa = @IdEmpresa
 						 GROUP BY X.IdEmpresa, IdEmpleado
 						 ) AS J ON ro_empleado.IdEmpresa = J.IdEmpresa AND ro_empleado.IdEmpleado = J.IdEmpleado
-				  --METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
+				  
 
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
 				  and ro_rol_detalle.IdSucursal>=@IdSucursalIni
@@ -327,8 +326,7 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 
 
-				  --METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
-
+				  
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
 				  and ro_rol_detalle.IdSucursal>=@IdSucursalIni
 				  and ro_rol_detalle.IdSucursal<=@IdSucursalFin
@@ -405,8 +403,8 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'ANTICIPO' THEN VALOR ELSE 0 END AS ANTICIPO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOC' THEN VALOR ELSE 0 END AS DECIMOC,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN VALOR ELSE 0 END AS DECIMOT,
-				
-				  case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
+				case when  (select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_fondo_reserva /*ro_rubro_tipo.rub_aplica_IESS=1*/ THEN  VALOR/**(0.0833)*/  ELSE 0 END ELSE 0 END AS FRESERVA,
+				  --case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
 				  CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'SOBRET' THEN VALOR ELSE 0 END AS SOBRET,
