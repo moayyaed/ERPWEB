@@ -1175,4 +1175,7 @@
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ERP_database.refactorlog" />
+  </ItemGroup>
 </Project>
