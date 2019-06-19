@@ -556,8 +556,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
-
-            if(bus_orden_giro.ValidarExisteOrdenPAgo(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro) == true)
+            var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
+            if (sucu != null)
+            {
+                model.info_retencion = model.info_retencion ?? new cp_retencion_Info();
+                model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
+                model.info_retencion.serie2 = "001";
+            }
+            if (bus_orden_giro.ValidarExisteOrdenPAgo(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro) == true)
             {
                if(!bus_orden_giro.ModificarDBCabecera(model))
                 {
