@@ -3,7 +3,7 @@ as
 SELECT        og.IdEmpresa, og.IdCbteCble_Ogiro, og.IdTipoCbte_Ogiro, og.IdOrden_giro_Tipo, og.IdProveedor, pe_nombreCompleto AS nombreProveedor, og.co_fechaOg, 
                          og.co_factura, og.co_FechaFactura, og.co_observacion, og.co_subtotal_iva, og.co_subtotal_siniva, og.co_baseImponible, og.co_total, og.Estado, 
                          rete.IdEmpresa AS IdEmpresa_ret, rete.IdRetencion, rete.serie1 + '-' + rete.serie2 AS re_serie, rete.NumRetencion AS re_NumRetencion, rete.re_EstaImpresa, 
-                         flu.Descricion AS TipoFlujo, og.IdIden_credito, (CASE WHEN (rtrim(ltrim(og.co_serie)) = '' OR
+                         '' AS TipoFlujo, og.IdIden_credito, (CASE WHEN (rtrim(ltrim(og.co_serie)) = '' OR
                          rtrim(ltrim(og.co_serie)) IS NULL) THEN '000' ELSE (substring(og.co_serie, 1, 3)) END) AS Serie, (CASE WHEN (rtrim(ltrim(og.co_serie)) = '' OR
                          rtrim(ltrim(og.co_serie)) IS NULL) THEN '000' ELSE (substring(og.co_serie, 5, 3)) END) AS Serie2, og.co_factura AS numDocFactura, og.Num_Autorizacion, 
                          og.Num_Autorizacion_Imprenta, 0 co_OtroValor_a_descontar, og.co_Por_iva, og.co_valoriva, og.fecha_autorizacion, dbo.vwct_cbtecble_con_ctacble_acreedora.IdCtaCble_Acreedora IdCtaCble_Gasto, '' IdCtaCble_IVA
@@ -15,7 +15,7 @@ FROM            dbo.cp_orden_giro AS og INNER JOIN
                          og.IdCbteCble_Ogiro = dbo.vwct_cbtecble_con_ctacble_acreedora.IdCbteCble LEFT OUTER JOIN
                          dbo.cp_retencion AS rete ON og.IdEmpresa = rete.IdEmpresa_Ogiro AND og.IdCbteCble_Ogiro = rete.IdCbteCble_Ogiro AND 
                          og.IdTipoCbte_Ogiro = rete.IdTipoCbte_Ogiro LEFT OUTER JOIN
-                         dbo.ba_TipoFlujo AS flu ON og.IdEmpresa = flu.IdEmpresa AND og.IdTipoFlujo = flu.IdTipoFlujo LEFT OUTER JOIN
+                         
                          dbo.tb_sucursal AS su ON og.IdSucursal = su.IdSucursal AND og.IdEmpresa = su.IdEmpresa inner join tb_persona as per
 						 on per.IdPersona = pro.IdPersona
 WHERE        (NOT EXISTS

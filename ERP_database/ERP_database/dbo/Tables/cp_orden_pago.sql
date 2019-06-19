@@ -11,7 +11,6 @@
     [IdEstadoAprobacion]  VARCHAR (10)   NOT NULL,
     [IdFormaPago]         VARCHAR (20)   NOT NULL,
     [Estado]              VARCHAR (1)    NOT NULL,
-    [IdTipoFlujo]         NUMERIC (18)   NULL,
     [IdSolicitudPago]     NUMERIC (18)   NULL,
     [IdUsuarioAprobacion] VARCHAR (20)   NULL,
     [MotivoAprobacion]    VARCHAR (1000) NULL,

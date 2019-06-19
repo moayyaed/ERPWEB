@@ -4,8 +4,8 @@ SELECT        OG.IdEmpresa, OG.IdCbteCble_Ogiro, OG.IdTipoCbte_Ogiro, OG.IdOrden
                          OG.co_observacion, OG.IdSucursal, OG.co_fechaOg, OG.co_subtotal_iva, OG.co_subtotal_siniva, OG.co_baseImponible, OG.co_Por_iva, OG.co_valoriva, OG.co_total, isnull(OG.co_total - isnull(ret.re_valor_retencion, 0), 0) 
                          co_valorpagar, ROUND(ISNULL(OP.Total_Cancelado_OP, 0), 2) AS Total_Pagado, ROUND(ROUND(isnull(OG.co_total - isnull(ret.re_valor_retencion, 0), 0), 2) - ROUND(ISNULL(OP.Total_Cancelado_OP, 0), 2), 2) AS Saldo_OG, 
                          dbo.cp_TipoDocumento.Descripcion AS nom_tipo_Documento, tb_persona.pe_nombreCompleto AS nom_proveedor, dbo.ct_cbtecble_tipo.CodTipoCbte, dbo.ct_cbtecble_tipo.tc_TipoCbte, 
-                         dbo.cp_orden_pago_tipo_x_empresa.IdTipo_op, dbo.cp_orden_pago_tipo_x_empresa.IdEstadoAprobacion, cast(isnull(a.Fecha_vcto_cuota, OG.co_FechaFactura_vct) AS datetime) co_FechaFactura_vct, OG.IdTipoFlujo, 
-                         dbo.ba_TipoFlujo.Descricion AS nom_flujo, dbo.tb_persona.IdPersona, dbo.cp_TipoDocumento.Codigo AS cod_Documento, OG.Estado, CASE WHEN conci.IdConciliacion_Caja IS NULL THEN cast(0 AS bit) ELSE cast(1 AS bit) 
+                         dbo.cp_orden_pago_tipo_x_empresa.IdTipo_op, dbo.cp_orden_pago_tipo_x_empresa.IdEstadoAprobacion, cast(isnull(a.Fecha_vcto_cuota, OG.co_FechaFactura_vct) AS datetime) co_FechaFactura_vct, null IdTipoFlujo, 
+                         '' AS nom_flujo, dbo.tb_persona.IdPersona, dbo.cp_TipoDocumento.Codigo AS cod_Documento, OG.Estado, CASE WHEN conci.IdConciliacion_Caja IS NULL THEN cast(0 AS bit) ELSE cast(1 AS bit) 
                          END en_conci_caja, a.IdCuota, a.Secuencia, A.Valor_cuota, OG.IdTipoMovi
 FROM            dbo.cp_orden_giro AS OG INNER JOIN
                          dbo.cp_orden_pago_tipo_x_empresa ON OG.IdEmpresa = dbo.cp_orden_pago_tipo_x_empresa.IdEmpresa INNER JOIN
@@ -14,7 +14,6 @@ FROM            dbo.cp_orden_giro AS OG INNER JOIN
                          dbo.ct_cbtecble_tipo ON OG.IdTipoCbte_Ogiro = dbo.ct_cbtecble_tipo.IdTipoCbte AND OG.IdEmpresa = dbo.ct_cbtecble_tipo.IdEmpresa INNER JOIN
                          dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
                          dbo.cp_conciliacion_Caja_det AS conci ON OG.IdEmpresa = conci.IdEmpresa_OGiro AND OG.IdCbteCble_Ogiro = conci.IdCbteCble_Ogiro AND OG.IdTipoCbte_Ogiro = conci.IdTipoCbte_Ogiro LEFT OUTER JOIN
-                         dbo.ba_TipoFlujo ON OG.IdEmpresa = dbo.ba_TipoFlujo.IdEmpresa AND OG.IdTipoFlujo = dbo.ba_TipoFlujo.IdTipoFlujo LEFT OUTER JOIN
                              (SELECT        IdEmpresa_cxp, IdCbteCble_cxp, IdTipoCbte_cxp, SUM(Valor_a_pagar) AS Total_Cancelado_OP
                                FROM            dbo.cp_orden_pago_det
                                GROUP BY IdEmpresa_cxp, IdCbteCble_cxp, IdTipoCbte_cxp) AS OP ON OG.IdEmpresa = OP.IdEmpresa_cxp AND OG.IdTipoCbte_Ogiro = OP.IdTipoCbte_cxp AND OG.IdCbteCble_Ogiro = OP.IdCbteCble_cxp LEFT JOIN
@@ -42,7 +41,7 @@ SELECT        dbo.cp_nota_DebCre.IdEmpresa, dbo.cp_nota_DebCre.IdCbteCble_Nota, 
                          dbo.cp_nota_DebCre.cn_Por_iva, dbo.cp_nota_DebCre.cn_valoriva, ROUND(dbo.cp_nota_DebCre.cn_total, 2) AS Expr2, ROUND(dbo.cp_nota_DebCre.cn_total, 2) AS Expr3, ROUND(ISNULL(OP.Total_Cancelado_OP, 0), 2) 
                          AS Total_Pagado, ROUND(ROUND(dbo.cp_nota_DebCre.cn_total, 2) - ROUND(ISNULL(OP.Total_Cancelado_OP, 0), 2), 2) AS Saldo, 'Nota de débito' AS Expr5, tb_persona.pe_nombreCompleto AS nom_proveedor, 
                          dbo.ct_cbtecble_tipo.CodTipoCbte, dbo.ct_cbtecble_tipo.tc_TipoCbte, dbo.cp_orden_pago_tipo_x_empresa.IdTipo_op, dbo.cp_orden_pago_tipo_x_empresa.IdEstadoAprobacion, isnull(a.Fecha_vcto_cuota, 
-                         dbo.cp_nota_DebCre.cn_Fecha_vcto) cn_Fecha_vcto, dbo.cp_nota_DebCre.IdTipoFlujo, dbo.ba_TipoFlujo.Descricion AS nom_flujo, dbo.tb_persona.IdPersona, 'N/D' AS Expr6, dbo.cp_nota_DebCre.Estado, 
+                         dbo.cp_nota_DebCre.cn_Fecha_vcto) cn_Fecha_vcto, null IdTipoFlujo, '' AS nom_flujo, dbo.tb_persona.IdPersona, 'N/D' AS Expr6, dbo.cp_nota_DebCre.Estado, 
                          CASE WHEN conci.IdConciliacion_Caja IS NULL THEN cast(0 AS bit) ELSE cast(1 AS bit) END en_conci_caja, a.IdCuota, a.Secuencia, A.Valor_cuota, NULL
 
 FROM            dbo.cp_conciliacion_Caja_det AS conci RIGHT OUTER JOIN
@@ -56,8 +55,7 @@ FROM            dbo.cp_conciliacion_Caja_det AS conci RIGHT OUTER JOIN
                              (SELECT        IdEmpresa_cxp, IdCbteCble_cxp, IdTipoCbte_cxp, SUM(Valor_a_pagar) AS Total_Cancelado_OP
                                FROM            dbo.cp_orden_pago_det
                                GROUP BY IdEmpresa_cxp, IdCbteCble_cxp, IdTipoCbte_cxp) AS OP ON dbo.cp_nota_DebCre.IdEmpresa = OP.IdEmpresa_cxp AND dbo.cp_nota_DebCre.IdCbteCble_Nota = OP.IdCbteCble_cxp AND 
-                         dbo.cp_nota_DebCre.IdTipoCbte_Nota = OP.IdTipoCbte_cxp LEFT OUTER JOIN
-                         dbo.ba_TipoFlujo ON dbo.cp_nota_DebCre.IdTipoFlujo = dbo.ba_TipoFlujo.IdTipoFlujo AND dbo.cp_nota_DebCre.IdEmpresa = dbo.ba_TipoFlujo.IdEmpresa LEFT JOIN
+                         dbo.cp_nota_DebCre.IdTipoCbte_Nota = OP.IdTipoCbte_cxp LEFT JOIN
                              (SELECT        TOP (1) cp_cuotas_x_doc_det.IdEmpresa, cp_cuotas_x_doc_det.IdCuota, cp_cuotas_x_doc_det.Secuencia, cp_cuotas_x_doc_det.Num_cuota, cp_cuotas_x_doc_det.Fecha_vcto_cuota, 
                                                          cp_cuotas_x_doc_det.Valor_cuota, cp_cuotas_x_doc_det.IdEmpresa_op, cp_cuotas_x_doc_det.IdOrdenPago, cp_cuotas_x_doc_det.Secuencia_op, cp_cuotas_x_doc.IdEmpresa_ct, cp_cuotas_x_doc.IdTipoCbte, 
                                                          cp_cuotas_x_doc.IdCbteCble

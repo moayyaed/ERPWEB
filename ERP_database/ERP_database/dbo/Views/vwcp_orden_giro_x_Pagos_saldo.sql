@@ -6,7 +6,7 @@ SELECT        A.IdEmpresa, A.IdCbteCble_Ogiro, A.IdTipoCbte_Ogiro, A.IdOrden_gir
                          A.co_valorpagar, A.co_valorpagar - ISNULL(pag.TotalPagado, 0) AS SaldoOG, pag.TotalPagado, A.co_vaCoa, A.IdIden_credito, A.IdCod_101, A.IdTipoServicio, 
                         A.IdUsuario, A.Fecha_Transac, A.Estado, A.IdUsuarioUltMod, A.Fecha_UltMod, A.IdUsuarioUltAnu, A.MotivoAnu,  
                          A.Fecha_UltAnu, em.em_nombre, cbtp.tc_TipoCbte, A.IdSucursal, 
-                         su.Su_Descripcion AS Sucursal, A.IdTipoFlujo, flu.Descricion AS TipoFlujo, A.PagoLocExt, A.PaisPago, A.PagoSujetoRetencion, A.ConvenioTributacion, 
+                         su.Su_Descripcion AS Sucursal, null IdTipoFlujo, '' AS TipoFlujo, A.PagoLocExt, A.PaisPago, A.PagoSujetoRetencion, A.ConvenioTributacion, 
                          A.co_FechaContabilizacion, A.BseImpNoObjDeIva, A.fecha_autorizacion, A.Num_Autorizacion, A.Num_Autorizacion_Imprenta, 
                          cp_retencion_1.IdEmpresa AS IdEmpresa_ret, cp_retencion_1.IdRetencion, cp_retencion_1.serie1 + '-' + cp_retencion_1.serie2 AS re_serie, 
                          cp_retencion_1.NumRetencion AS re_NumRetencion, cp_retencion_1.re_EstaImpresa,
@@ -30,7 +30,7 @@ FROM            dbo.cp_Aprobacion_Ing_Bod_x_OC RIGHT OUTER JOIN
                          dbo.cp_retencion AS cp_retencion_1 ON dbo.vwCP_Retencion_Valor_total.IdEmpresa = cp_retencion_1.IdEmpresa AND 
                          dbo.vwCP_Retencion_Valor_total.IdRetencion = cp_retencion_1.IdRetencion ON A.IdEmpresa = cp_retencion_1.IdEmpresa_Ogiro AND 
                          A.IdCbteCble_Ogiro = cp_retencion_1.IdCbteCble_Ogiro AND A.IdTipoCbte_Ogiro = cp_retencion_1.IdTipoCbte_Ogiro LEFT OUTER JOIN
-                         dbo.ba_TipoFlujo AS flu ON A.IdEmpresa = flu.IdEmpresa AND A.IdTipoFlujo = flu.IdTipoFlujo LEFT OUTER JOIN
+                         
                          dbo.tb_sucursal AS su ON A.IdSucursal = su.IdSucursal AND A.IdEmpresa = su.IdEmpresa LEFT OUTER JOIN
                              (SELECT        IdEmpresa_OGiro, IdTipoCbte_Ogiro, IdCbteCble_Ogiro, 1 AS En_conci
                                FROM            dbo.cp_conciliacion_Caja_det
@@ -41,7 +41,7 @@ GROUP BY A.IdEmpresa, A.IdCbteCble_Ogiro, A.IdTipoCbte_Ogiro, A.IdOrden_giro_Tip
                          A.co_total, 
                          A.co_valorpagar, A.co_vaCoa, A.IdIden_credito, A.IdCod_101, A.IdTipoServicio,  A.IdUsuario, A.Fecha_Transac, A.Estado, 
                          A.IdUsuarioUltMod, A.Fecha_UltMod, A.IdUsuarioUltAnu, A.MotivoAnu,  A.Fecha_UltAnu,  
-                         em.em_nombre, cbtp.tc_TipoCbte, A.IdSucursal, su.Su_Descripcion, A.IdTipoFlujo, flu.Descricion, A.PagoLocExt, 
+                         em.em_nombre, cbtp.tc_TipoCbte, A.IdSucursal, su.Su_Descripcion, A.PagoLocExt, 
                          A.PaisPago, A.PagoSujetoRetencion, A.ConvenioTributacion, A.co_FechaContabilizacion, A.BseImpNoObjDeIva, A.fecha_autorizacion, A.Num_Autorizacion, 
                          A.Num_Autorizacion_Imprenta, cp_retencion_1.IdEmpresa, cp_retencion_1.IdRetencion, cp_retencion_1.serie1 + '-' + cp_retencion_1.serie2, 
                          cp_retencion_1.NumRetencion, cp_retencion_1.re_EstaImpresa, pag.TotalPagado, dbo.vwCP_Retencion_Valor_total.Total_Retencion, 

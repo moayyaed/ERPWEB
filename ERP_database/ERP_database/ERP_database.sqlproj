@@ -460,7 +460,6 @@
     <Build Include="dbo\Views\vwseg_Usuario_x_Empresa.sql" />
     <Build Include="web\Views\VWCAJ_001.sql" />
     <Build Include="dbo\Views\vwfa_Nota_Credito.sql" />
-    <Build Include="dbo\Views\vwcp_comprobante_x_retencion.sql" />
     <Build Include="dbo\Views\vw_TipoCtaBancos.sql" />
     <Build Include="web\Views\VWCAJ_002.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb.sql" />
@@ -503,13 +502,11 @@
     <Build Include="web\Views\VWCXP_001.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_distribucion.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_x_fa_factura_NotaDeb_sin_cobros.sql" />
-    <Build Include="dbo\Views\vwcp_nota_DebCre.sql" />
     <Build Include="dbo\Views\vwCXC_EstadoCta_x_Cliente.sql" />
     <Build Include="dbo\Views\vwtb_persona_beneficiario.sql" />
     <Build Include="web\Views\VWCXP_002.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_distribucion_det.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_x_fa_factura_NotaDeb_x_cxc_cobro.sql" />
-    <Build Include="dbo\Views\vwcp_nota_DebCre_ATS.sql" />
     <Build Include="web\Views\VWFAC_004.sql" />
     <Build Include="dbo\Views\vwtb_persona_beneficiario_por_Banco_Acreditacion.sql" />
     <Build Include="web\Views\VWCXP_002_diario.sql" />
@@ -701,7 +698,6 @@
     <Build Include="dbo\Views\vwin_devolucion_inven_det.sql" />
     <Build Include="dbo\Views\vwcxc_cobros_x_vta_nota_x_RetFuente.sql" />
     <Build Include="dbo\Views\vwba_TipoFlujo.sql" />
-    <Build Include="dbo\Views\vwcp_orden_giro_x_Pagos_saldo.sql" />
     <Build Include="dbo\Views\vwRo_Motivo_Prestamo.sql" />
     <Build Include="dbo\Views\vwcxc_cobros_x_vta_nota_x_RetFuente_Sumatoria.sql" />
     <Build Include="dbo\Views\vwba_TransaccionesAConciliar.sql" />
@@ -1173,6 +1169,8 @@
     <Build Include="dbo\Views\vwin_Ing_Egr_InvenPorOrdenCompra.sql" />
     <Build Include="dbo\Views\vwct_CentroCosto.sql" />
     <Build Include="dbo\Views\vwcom_ordencompra_local_detPorIngresar.sql" />
+    <Build Include="dbo\Tables\ba_archivo_transferencia_x_ba_tipo_flujo.sql" />
+    <Build Include="dbo\Views\vwcp_orden_giro_x_Pagos_saldo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

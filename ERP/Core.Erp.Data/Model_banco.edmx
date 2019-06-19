@@ -55,13 +55,12 @@
           <Key>
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdArchivo" />
-            <PropertyRef Name="IdTipoFlujo" />
             <PropertyRef Name="Secuencia" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdTipoFlujo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdTipoFlujo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Porcentaje" Type="float" Nullable="false" />
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
@@ -1824,8 +1823,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_Conciliacion" EntitySet="ba_Conciliacion" />
             <End Role="ba_Conciliacion_det" EntitySet="ba_Conciliacion_det" />
           </AssociationSet>
+          <EntitySet Name="ba_archivo_transferencia_x_ba_tipo_flujo" EntityType="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" />
+          <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" Association="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
+            <End Role="ba_TipoFlujo" EntitySet="ba_TipoFlujo" />
+            <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
+          </AssociationSet>
           <EntitySet Name="ba_Archivo_Transferencia" EntityType="Model_banco.ba_Archivo_Transferencia" />
           <EntitySet Name="ba_Archivo_Transferencia_Det" EntityType="Model_banco.ba_Archivo_Transferencia_Det" />
+          <EntitySet Name="vwba_Archivo_Transferencia_Det" EntityType="Model_banco.vwba_Archivo_Transferencia_Det" />
           <AssociationSet Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" Association="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
             <End Role="ba_Banco_Cuenta" EntitySet="ba_Banco_Cuenta" />
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
@@ -1834,14 +1839,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
             <End Role="ba_Archivo_Transferencia_Det" EntitySet="ba_Archivo_Transferencia_Det" />
           </AssociationSet>
-          <EntitySet Name="vwba_Archivo_Transferencia_Det" EntityType="Model_banco.vwba_Archivo_Transferencia_Det" />
-          <EntitySet Name="ba_archivo_transferencia_x_ba_tipo_flujo" EntityType="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" />
           <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" Association="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia">
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
-            <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" Association="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
-            <End Role="ba_TipoFlujo" EntitySet="ba_TipoFlujo" />
             <End Role="ba_archivo_transferencia_x_ba_tipo_flujo" EntitySet="ba_archivo_transferencia_x_ba_tipo_flujo" />
           </AssociationSet>
           </EntityContainer>
@@ -2434,6 +2433,35 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ba_archivo_transferencia_x_ba_tipo_flujo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdArchivo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoFlujo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Porcentaje" Type="Double" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ba_TipoFlujo" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" FromRole="ba_archivo_transferencia_x_ba_tipo_flujo" ToRole="ba_TipoFlujo" />
+          <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" FromRole="ba_archivo_transferencia_x_ba_tipo_flujo" ToRole="ba_Archivo_Transferencia" />
+        </EntityType>
+        <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
+          <End Type="Model_banco.ba_TipoFlujo" Role="ba_TipoFlujo" Multiplicity="1" />
+          <End Type="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" Role="ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_TipoFlujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipoFlujo" />
+            </Principal>
+            <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipoFlujo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="ba_Archivo_Transferencia">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2484,34 +2512,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia_Det" ToRole="ba_Archivo_Transferencia" />
         </EntityType>
-        <Association Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
-          <End Type="Model_banco.ba_Banco_Cuenta" Role="ba_Banco_Cuenta" Multiplicity="1" />
-          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ba_Banco_Cuenta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdBanco" />
-            </Principal>
-            <Dependent Role="ba_Archivo_Transferencia">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdBanco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1">
-          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="1" />
-          <End Type="Model_banco.ba_Archivo_Transferencia_Det" Role="ba_Archivo_Transferencia_Det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ba_Archivo_Transferencia">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdArchivo" />
-            </Principal>
-            <Dependent Role="ba_Archivo_Transferencia_Det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdArchivo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="vwba_Archivo_Transferencia_Det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2559,22 +2559,34 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="ba_archivo_transferencia_x_ba_tipo_flujo">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdArchivo" />
-            <PropertyRef Name="IdTipoFlujo" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdTipoFlujo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="Porcentaje" Type="Double" Nullable="false" />
-          <Property Name="Valor" Type="Double" Nullable="false" />
-          <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia" FromRole="ba_archivo_transferencia_x_ba_tipo_flujo" ToRole="ba_Archivo_Transferencia" />
-          <NavigationProperty Name="ba_TipoFlujo" Relationship="Model_banco.FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo" FromRole="ba_archivo_transferencia_x_ba_tipo_flujo" ToRole="ba_TipoFlujo" />
-        </EntityType>
+        <Association Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
+          <End Type="Model_banco.ba_Banco_Cuenta" Role="ba_Banco_Cuenta" Multiplicity="1" />
+          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Banco_Cuenta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdBanco" />
+            </Principal>
+            <Dependent Role="ba_Archivo_Transferencia">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1">
+          <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="1" />
+          <End Type="Model_banco.ba_Archivo_Transferencia_Det" Role="ba_Archivo_Transferencia_Det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Archivo_Transferencia">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArchivo" />
+            </Principal>
+            <Dependent Role="ba_Archivo_Transferencia_Det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_Archivo_Transferencia">
           <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="1" />
           <End Type="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" Role="ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
@@ -2586,20 +2598,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdArchivo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ba_archivo_transferencia_x_ba_tipo_flujo_ba_TipoFlujo">
-          <End Type="Model_banco.ba_TipoFlujo" Role="ba_TipoFlujo" Multiplicity="1" />
-          <End Type="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo" Role="ba_archivo_transferencia_x_ba_tipo_flujo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ba_TipoFlujo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdTipoFlujo" />
-            </Principal>
-            <Dependent Role="ba_archivo_transferencia_x_ba_tipo_flujo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdTipoFlujo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3116,6 +3114,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ba_archivo_transferencia_x_ba_tipo_flujo">
+            <EntityTypeMapping TypeName="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo">
+              <MappingFragment StoreEntitySet="ba_archivo_transferencia_x_ba_tipo_flujo">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="IdTipoFlujo" ColumnName="IdTipoFlujo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ba_Archivo_Transferencia">
             <EntityTypeMapping TypeName="Model_banco.ba_Archivo_Transferencia">
               <MappingFragment StoreEntitySet="ba_Archivo_Transferencia">
@@ -3187,18 +3197,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
                 <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ba_archivo_transferencia_x_ba_tipo_flujo">
-            <EntityTypeMapping TypeName="Model_banco.ba_archivo_transferencia_x_ba_tipo_flujo">
-              <MappingFragment StoreEntitySet="ba_archivo_transferencia_x_ba_tipo_flujo">
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdTipoFlujo" ColumnName="IdTipoFlujo" />
                 <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

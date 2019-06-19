@@ -5,7 +5,7 @@ SELECT        dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdCbteCble_Ogiro, d
                          dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, 
                          dbo.cp_orden_giro.IdCod_ICE,  
                          dbo.cp_orden_giro.co_total, dbo.cp_orden_giro.co_vaCoa, dbo.cp_orden_giro.IdIden_credito, 
-                         dbo.cp_orden_giro.IdCod_101, dbo.cp_orden_giro.co_valorpagar, dbo.cp_orden_giro.IdTipoFlujo, dbo.cp_orden_giro.IdTipoServicio,  
+                         dbo.cp_orden_giro.IdCod_101, dbo.cp_orden_giro.co_valorpagar, null IdTipoFlujo, dbo.cp_orden_giro.IdTipoServicio,  
                          dbo.cp_orden_giro.Estado, dbo.cp_orden_giro.IdSucursal, 
                          dbo.cp_orden_giro.PagoLocExt, dbo.cp_orden_giro.PaisPago, dbo.cp_orden_giro.ConvenioTributacion, dbo.cp_orden_giro.PagoSujetoRetencion, dbo.cp_orden_giro.BseImpNoObjDeIva, dbo.cp_orden_giro.fecha_autorizacion, 
                          dbo.cp_orden_giro.Num_Autorizacion, dbo.cp_orden_giro.Num_Autorizacion_Imprenta, 

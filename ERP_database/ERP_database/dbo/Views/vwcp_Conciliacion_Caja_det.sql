@@ -5,7 +5,7 @@ SELECT        dbo.cp_conciliacion_Caja.IdEmpresa, dbo.cp_conciliacion_Caja.IdCon
                          dbo.cp_orden_giro.co_fechaOg, dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_FechaFactura, 
                          dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, 
                          dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.co_total, 
-                         dbo.cp_orden_giro.co_valorpagar, dbo.cp_orden_giro.IdIden_credito, dbo.cp_orden_giro.IdTipoFlujo, '' IdCtaCble_Gasto, dbo.cp_orden_giro.Estado, 
+                         dbo.cp_orden_giro.co_valorpagar, dbo.cp_orden_giro.IdIden_credito, null IdTipoFlujo, '' IdCtaCble_Gasto, dbo.cp_orden_giro.Estado, 
                          '' IdCentroCosto, dbo.cp_orden_giro.Num_Autorizacion, ISNULL(dbo.vwcp_Retencion_valor_total_x_cbte_cxp.Total_Retencion, 0) 
                          AS Total_Retencion, dbo.vwcp_Retencion_valor_total_x_cbte_cxp.IdRetencion, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, 
                          dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja.IdEstadoCierre, 
@@ -34,7 +34,7 @@ GROUP BY dbo.cp_conciliacion_Caja.IdEmpresa, dbo.cp_conciliacion_Caja.IdConcilia
                          dbo.cp_orden_giro.co_fechaOg, dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_FechaFactura, 
                          dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, 
                          dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.co_total, 
-                         dbo.cp_orden_giro.co_valorpagar, dbo.cp_orden_giro.IdIden_credito, dbo.cp_orden_giro.IdTipoFlujo, dbo.cp_orden_giro.Estado, 
+                         dbo.cp_orden_giro.co_valorpagar, dbo.cp_orden_giro.IdIden_credito, dbo.cp_orden_giro.Estado, 
                           dbo.cp_orden_giro.Num_Autorizacion, dbo.vwcp_Retencion_valor_total_x_cbte_cxp.Total_Retencion, 
                          dbo.vwcp_Retencion_valor_total_x_cbte_cxp.IdRetencion, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, 
                          dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja.IdEstadoCierre, dbo.cp_conciliacion_Caja.Observacion, 
@@ -222,7 +222,8 @@ Begin DesignProperties =
          Width = 1500
          Width = 1500
          Width = 1500
-         Width = 1500', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_Conciliacion_Caja_det';
+         Width = 1500
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_Conciliacion_Caja_det';
 
 
 GO
