@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.Helps;
+﻿using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.Helps;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

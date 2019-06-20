@@ -35,6 +35,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+
+        ba_Banco_Cuenta_Bus bus_banco_cuenta = new ba_Banco_Cuenta_Bus();
+        ba_parametros_Bus bus_param = new ba_parametros_Bus();
+
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -101,6 +105,28 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 i_validar.SecuencialInicial++;
             }
 
+
+            var cta = bus_banco_cuenta.get_info(i_validar.IdEmpresa, i_validar.IdBanco);
+
+            if (cta.EsFlujoObligatorio)
+            {
+                if (i_validar.Lst_det.Count == 0)
+                {
+                    mensaje = "Falta distribución de flujo";
+                    return false;
+                }
+            }
+
+            var param = bus_param.get_info(i_validar.IdEmpresa);
+            if (!(param.PermitirSobreGiro ?? false))
+            {
+                var Valor = Math.Round(i_validar.Lst_det.Where(q => q.IdBanco_acreditacion.ToString() == cta.IdCtaCble).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero);
+                if (!bus_banco_cuenta.ValidarSaldoCuenta(i_validar.IdEmpresa, cta.IdCtaCble, Valor))
+                {
+                    mensaje = "No se puede guardar la transacción por sobre giro en la cuenta";
+                    return false;
+                }
+            }
             return true;
         }
         private void cargar_combos()
