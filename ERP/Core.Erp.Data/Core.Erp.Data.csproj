@@ -1254,6 +1254,7 @@
     <Compile Include="Reportes\Banco\BAN_007_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_008_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_009_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_010_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />

@@ -428,5 +428,23 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             }
             return View(model);
         }
+        public ActionResult BAN_010(int IdEmpresa = 0, decimal IdArchivo = 0)
+        {
+            BAN_010_Rpt model = new BAN_010_Rpt();
+            #region Cargo diseño desde base
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = IdEmpresa;
+            model.p_IdArchivo.Value = IdArchivo;
+            model.usuario = SessionFixed.IdUsuario.ToString();
+            model.empresa = SessionFixed.NomEmpresa.ToString();
+            return View(model);
+        }
+
     }
 }

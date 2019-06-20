@@ -167,7 +167,11 @@
         GridView_archivo_bancario_det.PerformCallback();
         $("#OpModal").modal("hide");
     }
-
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/BancoReportes/BAN_010?IdEmpresa="+@Model.IdEmpresa+"&IdArchivo="+@Model.IdArchivo, '_blank');
+        win.focus();
+    }
 </script>
 
 @using (Html.BeginForm("Modificar", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -180,14 +184,22 @@
     <div class="row">
         <div class="col-md-12">
             
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="form-group">
                     <label for="ICatalogo">Nombre archivo*</label>
                     @Html.TextBoxFor(q => q.Nom_Archivo, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Nom_Archivo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            
+
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
             <div class="col-md-1">
                 <label for="IdImprimirtxt"></label>
                 <div class="form-group">
