@@ -216,7 +216,6 @@ namespace Core.Erp.Data.Caja
                     cp_orden_pago op = new cp_orden_pago
                     {
                         IdEmpresa = Entity_c.IdEmpresa,
-                        IdTipoFlujo = Entity_c.IdTipoFlujo,
                         IdSucursal = IdSucursal,
                         IdOrdenPago = IdOrdenPago++,
                         Observacion = "Caja #" + Entity_c.IdConciliacion_Caja + " "+info.ObservacionOP,
@@ -1095,7 +1094,6 @@ namespace Core.Erp.Data.Caja
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdSucursal = IdSucursal,
-                        IdTipoFlujo = info.IdTipoFlujo,
                         IdOrdenPago = IdOrdenPago++,
                         Observacion = "Caja #" + info.IdConciliacion_Caja+" "+info.ObservacionOP,
                         IdTipo_op = cl_enumeradores.eTipoOrdenPago.OTROS_CONC.ToString(),

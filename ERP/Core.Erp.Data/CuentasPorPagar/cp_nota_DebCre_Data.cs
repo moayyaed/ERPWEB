@@ -55,7 +55,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdCod_ICE = q.IdCod_ICE,
                                  IdIden_credito = q.IdIden_credito,
                                  IdCtaCble_Acre = q.IdCtaCble_Acre,
-                                 IdTipoFlujo = q.IdTipoFlujo,
                                  IdTipoServicio = q.IdTipoServicio,
                                  IdCtaCble_IVA = q.IdCtaCble_IVA,
                                  Estado = q.Estado,
@@ -127,7 +126,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdCod_ICE = Entity.IdCod_ICE,
                         IdIden_credito = Entity.IdIden_credito,
                         IdCtaCble_Acre = Entity.IdCtaCble_Acre,
-                        IdTipoFlujo = Entity.IdTipoFlujo,
                         IdTipoServicio = Entity.IdTipoServicio,
                         IdCtaCble_IVA = Entity.IdCtaCble_IVA,
                         ConvenioTributacion_bool = Entity.ConvenioTributacion == "SI" ? true : false,
@@ -182,7 +180,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         cn_num_doc_modificado = info.cn_num_doc_modificado,
                         IdIden_credito = info.IdIden_credito,
                         IdCtaCble_Acre = info.IdCtaCble_Acre,
-                        IdTipoFlujo = info.IdTipoFlujo,
                         IdTipoServicio = info.IdTipoServicio,
                         IdCtaCble_IVA = info.IdCtaCble_IVA,
                         IdUsuario = info.IdUsuario,
@@ -243,7 +240,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdCod_ICE = info.IdCod_ICE;
                         Entity.IdIden_credito = info.IdIden_credito;
                         Entity.IdCtaCble_Acre = info.IdCtaCble_Acre;
-                        Entity.IdTipoFlujo = info.IdTipoFlujo;
                         Entity.IdTipoServicio = info.IdTipoServicio;
                         Entity.IdCtaCble_IVA = info.IdCtaCble_IVA;
                         Entity.ConvenioTributacion = info.ConvenioTributacion_bool == true ? "SI" : "NO";

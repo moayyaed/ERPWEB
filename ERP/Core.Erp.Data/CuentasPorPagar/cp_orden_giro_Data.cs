@@ -44,7 +44,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         co_vaCoa = "S",
                         IdIden_credito = info.IdIden_credito,
                         IdCod_101 = info.IdCod_101,
-                        IdTipoFlujo = info.IdTipoFlujo,
                         IdTipoServicio = info.IdTipoServicio,
                         IdSucursal = info.IdSucursal,
                         PagoLocExt = info.PagoLocExt,
@@ -164,7 +163,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.co_vaCoa = "S";
                         Entity.IdIden_credito = info.IdIden_credito;
                         Entity.IdCod_101 = info.IdCod_101;
-                        Entity.IdTipoFlujo = info.IdTipoFlujo;
                         Entity.IdOrden_giro_Tipo = info.IdOrden_giro_Tipo;
                         Entity.IdTipoServicio = info.IdTipoServicio;
                         Entity.IdSucursal = info.IdSucursal;
@@ -383,7 +381,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  co_vaCoa = q.co_vaCoa,
                                  IdIden_credito = q.IdIden_credito,
                                  IdCod_101 = q.IdCod_101,
-                                 IdTipoFlujo = q.IdTipoFlujo,
                                  IdTipoServicio = q.IdTipoServicio,
                                  IdSucursal = q.IdSucursal,
                                  PagoLocExt = q.PagoLocExt,
@@ -468,7 +465,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  co_vaCoa = q.co_vaCoa,
                                  IdIden_credito = q.IdIden_credito,
                                  IdCod_101 = q.IdCod_101,
-                                 IdTipoFlujo = q.IdTipoFlujo,
                                  IdTipoServicio = q.IdTipoServicio,
                                  IdSucursal = q.IdSucursal,
                                  PagoLocExt = q.PagoLocExt,
@@ -625,7 +621,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         co_vaCoa = Entity.co_vaCoa,
                         IdIden_credito = Entity.IdIden_credito,
                         IdCod_101 = Entity.IdCod_101,
-                        IdTipoFlujo = Entity.IdTipoFlujo,
                         IdTipoServicio = Entity.IdTipoServicio,
                         IdSucursal = Entity.IdSucursal,
                         PagoLocExt = Entity.PagoLocExt,
@@ -692,7 +687,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         co_vaCoa = Entity.co_vaCoa,
                         IdIden_credito = Entity.IdIden_credito,
                         IdCod_101 = Entity.IdCod_101,
-                        IdTipoFlujo = Entity.IdTipoFlujo,
                         IdTipoServicio = Entity.IdTipoServicio,
                         IdSucursal = Entity.IdSucursal,
                         PagoLocExt = Entity.PagoLocExt,

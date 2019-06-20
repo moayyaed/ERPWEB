@@ -1978,6 +1978,9 @@
     <Compile Include="VWBAN_007.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="VWBAN_010.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwba_Archivo_Transferencia_Det.cs">
       <DependentUpon>Model_banco.tt</DependentUpon>
     </Compile>

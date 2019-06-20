@@ -427,6 +427,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+
+            var lst = new List<ba_Archivo_Transferencia_Det_Info>();
+            info_det.Valor = lst.Sum(q => q.Valor);
             
         }
 

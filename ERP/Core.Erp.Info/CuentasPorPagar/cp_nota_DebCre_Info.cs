@@ -70,7 +70,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string PaisPago { get; set; }
         public string ConvenioTributacion { get; set; }
         public string PagoSujetoRetencion { get; set; }
-        public Nullable<decimal> IdTipoFlujo { get; set; }
         public Nullable<System.DateTime> fecha_autorizacion { get; set; }
         public string cod_nota { get; set; }
         public string Nombre_proveedor { get; set; }

@@ -825,7 +825,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     IdTipoCbte_Ogiro = item.IdTipoCbte_Ogiro,
                     IdCbteCble_Ogiro = item.IdCbteCble_Ogiro,
                     IdProveedor = item.IdProveedor,
-                    IdTipoFlujo = item.IdTipoFlujo,
                     co_factura = item.co_factura,
                     co_valorpagar = item.co_valorpagar,
                     nom_tipo_Documento = item.nom_tipo_Documento,

@@ -151,9 +151,9 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="IdBanco_acreditacion">Flujo</label>
-                    @Html.Partial("_CmbFlujo_OP", Model.IdTipoFlujo)
-                    @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
+                    <label for="IdBanco_acreditacion">Referencia</label>
+                    @Html.TextBoxFor(q => q.ReferenciaGen, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.ReferenciaGen, "", new { @class = "text-danger" })
                 </div>
             </div> 
             <div class="col-md-9">
@@ -194,13 +194,6 @@
                     <label for="Fecha_PriPago">Valor a cancelar*</label>
                     @Html.TextBoxFor(q => q.Valor_a_pagar, new { @class = "form-control", @id = "Valor_a_pagar" })
                     @Html.ValidationMessageFor(q => q.Valor_a_pagar, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdSolicitudPago"># Solicitud</label>
-                    @Html.TextBoxFor(q => q.IdSolicitudPago, new { @class = "form-control", @id = "IdSolicitudPago" })
-                    @Html.ValidationMessageFor(q => q.IdSolicitudPago, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

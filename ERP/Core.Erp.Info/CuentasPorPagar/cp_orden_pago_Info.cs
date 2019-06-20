@@ -32,8 +32,8 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string IdFormaPago { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-        public Nullable<decimal> IdSolicitudPago { get; set; }
 
+        public string ReferenciaGen { get; set; }
         #region Campos auditoria
         public string IdUsuario { get; set; }
         public string IdUsuarioUltAnu { get; set; }
@@ -42,8 +42,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string MotivoAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         #endregion
-
-        public Nullable<decimal> IdTipoFlujo { get; set; }
+        
         public Nullable<System.DateTime> Fecha_Transac { get; set; }        
         [Required(ErrorMessage = "El campo valor a pagar a cancelar es obligatorio")]
         public double Valor_a_pagar { get; set; }

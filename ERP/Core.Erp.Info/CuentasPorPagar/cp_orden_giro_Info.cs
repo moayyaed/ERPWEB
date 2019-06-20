@@ -39,7 +39,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string co_vaCoa { get; set; }
         public Nullable<int> IdIden_credito { get; set; }
         public Nullable<int> IdCod_101 { get; set; }
-        public Nullable<decimal> IdTipoFlujo { get; set; }
         public string IdTipoServicio { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }

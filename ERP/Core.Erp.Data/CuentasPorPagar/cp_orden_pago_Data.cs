@@ -41,7 +41,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdEstadoAprobacion = q.IdEstadoAprobacion,
                                  Descripcion = q.Descripcion,
                                  IdFormaPago = q.IdFormaPago,
-                                 IdTipoFlujo = q.IdTipoFlujo,
                                  Estado =q.Estado,
                                  Nom_Beneficiario=q.pe_nombreCompleto,
                                  Total_OP=q.Total_OP,
@@ -89,7 +88,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                      IdEstadoAprobacion = q.IdEstadoAprobacion,
                                      Descripcion = q.Descripcion,
                                      IdFormaPago = q.IdFormaPago,
-                                     IdTipoFlujo = q.IdTipoFlujo,
                                      Estado = q.Estado,
                                      Nom_Beneficiario = q.pe_nombreCompleto,
                                      Total_OP = q.Total_OP,
@@ -127,10 +125,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Fecha = Entity.Fecha,
                         IdEstadoAprobacion = Entity.IdEstadoAprobacion,
                         IdFormaPago = Entity.IdFormaPago,
-                        IdTipoFlujo = Entity.IdTipoFlujo,
                         Estado = Entity.Estado,
-                        IdSolicitudPago = Entity.IdSolicitudPago,
-                        IdSucursal = Entity.IdSucursal
+                        IdSucursal = Entity.IdSucursal,
+                        ReferenciaGen = Entity.ReferenciaGen
                     };
                     info.detalle
                           = (from q in Context.cp_orden_pago_det
@@ -224,19 +221,11 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Fecha = info.Fecha.Date,
                         IdEstadoAprobacion = info.IdEstadoAprobacion,
                         IdFormaPago = info.IdFormaPago,
-                        IdTipoFlujo = info.IdTipoFlujo,
                         Estado = "A",
                         IdUsuario = info.IdUsuario,
-                        Fecha_Transac = info.Fecha_Transac = DateTime.Now
+                        Fecha_Transac = info.Fecha_Transac = DateTime.Now,
+                        ReferenciaGen = info.ReferenciaGen
                     };
-
-                    if (info.IdSolicitudPago != null)
-                    {
-                        decimal IdSolicitudPago = Convert.ToDecimal(info.IdSolicitudPago);
-                        var sol = Context.cp_SolicitudPago.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSolicitud == IdSolicitudPago).FirstOrDefault();
-                        if (sol != null)
-                            Entity.IdSolicitudPago = sol.IdSolicitud;
-                    }
 
                     Context.cp_orden_pago.Add(Entity);
               
@@ -296,21 +285,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.Fecha = info.Fecha.Date;
                         Entity.IdEstadoAprobacion = info.IdEstadoAprobacion;
                         Entity.IdFormaPago = info.IdFormaPago;
-                        Entity.IdTipoFlujo = info.IdTipoFlujo;
                         Entity.IdUsuarioUltMod = info.IdUsuario;
                         Entity.IdSucursal = info.IdSucursal;
-
-                        if (info.IdSolicitudPago != null)
-                        {
-                            decimal IdSolicitudPago = Convert.ToDecimal(info.IdSolicitudPago);
-                            var sol = Context.cp_SolicitudPago.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSolicitud == IdSolicitudPago).FirstOrDefault();
-                            if (sol != null)
-                                Entity.IdSolicitudPago = sol.IdSolicitud;
-                            else
-                                Entity.IdSolicitudPago = null;
-                        }
-                        else
-                            Entity.IdSolicitudPago = null;
+                        Entity.ReferenciaGen = info.ReferenciaGen;
                         Context.SaveChanges();        
                     }
                 }
@@ -442,8 +419,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                     {
                         Entity.IdEstadoAprobacion = info.IdEstadoAprobacion;
                         Context.SaveChanges();
-                        
-
                     }
 
                 }

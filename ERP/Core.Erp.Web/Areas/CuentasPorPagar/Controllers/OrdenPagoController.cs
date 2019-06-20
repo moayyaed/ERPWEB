@@ -195,8 +195,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipo_op = "OTROS_CONC",
-                IdFormaPago = "CHEQUE",
-                IdTipoFlujo = 1
+                IdFormaPago = "CHEQUE"
             };
             SessionFixed.TipoPersona = "PROVEE";
             lis_cp_orden_pago_det_Info.set_list(new List<cp_orden_pago_det_Info>(), model.IdTransaccionSession);

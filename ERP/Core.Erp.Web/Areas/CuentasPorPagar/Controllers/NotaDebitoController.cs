@@ -215,11 +215,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     return false;
                 }
             }
-            if (i_validar.IdTipoFlujo == null)
-            {
-                mensaje = "El campo tipo flujo es obligatorio";
-                return false;
-            }
+
             if (i_validar.lst_detalle_ct.Where(q => q.dc_Valor == 0).Count() > 0)
             {
                 mensaje = "Existen detalles con valor 0 en el debe o haber";
