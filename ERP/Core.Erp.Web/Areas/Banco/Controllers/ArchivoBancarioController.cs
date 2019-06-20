@@ -11,6 +11,7 @@ using Core.Erp.Info.Helps;
 using Core.Erp.Bus.Contabilidad;
 using DevExpress.Web.Mvc;
 using Core.Erp.Info.CuentasPorPagar;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -37,15 +38,43 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
+
         public ActionResult Index()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+            cargar_combos_consulta();
+            return View(model);
         }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_archivo_bancario()
+        [HttpPost]
+        public ActionResult Index(cl_filtros_Info model)
+        {
+            cargar_combos_consulta();
+            return View(model);
+        }
+        private void cargar_combos_consulta()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_archivo.GetList(IdEmpresa, true);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "Todos"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
+
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_archivo_bancario(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
+            ViewBag.IdSucursal = IdSucursal;
+            var model = bus_archivo.GetList(IdEmpresa,IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true);
             return PartialView("_GridViewPartial_archivo_bancario", model);
         }
         #endregion
@@ -106,7 +135,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 Fecha = DateTime.Now,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 Lst_det = new List<ba_Archivo_Transferencia_Det_Info>(), 
-                Lst_Flujo = new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>()               
+                Lst_Flujo = new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>(),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
             List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);

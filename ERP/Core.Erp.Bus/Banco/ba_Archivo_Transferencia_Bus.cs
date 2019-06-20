@@ -11,11 +11,11 @@ namespace Core.Erp.Bus.Banco
   public  class ba_Archivo_Transferencia_Bus
     {
         ba_Archivo_Transferencia_Data odata = new ba_Archivo_Transferencia_Data();
-        public List<ba_Archivo_Transferencia_Info> GetList(int IdEmpresa, bool mostrar_anulados)
+        public List<ba_Archivo_Transferencia_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fechaini, DateTime fechafin, bool mostrar_anulados)
         {
             try
             {
-                return odata.GetList(IdEmpresa, mostrar_anulados);
+                return odata.GetList(IdEmpresa,IdSucursal, fechaini, fechafin, mostrar_anulados);
             }
             catch (Exception)
             {

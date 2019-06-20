@@ -9,16 +9,23 @@ namespace Core.Erp.Data.Banco
 {
   public  class ba_Archivo_Transferencia_Data
     {
-        public List<ba_Archivo_Transferencia_Info> GetList(int IdEmpresa, bool mostrar_anulados)
+        public List<ba_Archivo_Transferencia_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fechaini, DateTime fechafin, bool mostrar_anulados)
         {
             try
             {
+                int IdSucursal_ini = IdSucursal;
+                int IdSucursal_fin = IdSucursal == 0 ? 9999 : IdSucursal;
                 List<ba_Archivo_Transferencia_Info> Lista;
                 using (Entities_banco Context = new Entities_banco())
                 {
                     if(mostrar_anulados)
                     {
-                        Lista = Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new ba_Archivo_Transferencia_Info
+                        Lista = Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == IdEmpresa
+                             && IdSucursal_ini <= q.IdSucursal 
+                             && q.IdSucursal <= IdSucursal_fin
+                             && fechaini <= q.Fecha 
+                             && q.Fecha <= fechafin
+                        ).Select(q => new ba_Archivo_Transferencia_Info
                         {
                             IdEmpresa = q.IdEmpresa,
                             cod_archivo = q.cod_archivo,
