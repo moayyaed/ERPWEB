@@ -9,11 +9,11 @@ namespace Core.Erp.Bus.General
     {
         tb_sis_Documento_Tipo_Talonario_Data odata = new tb_sis_Documento_Tipo_Talonario_Data();
 
-        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list(int IdEmpresa, bool mostrar_anulados)
+        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list(int IdEmpresa, int IdSucursal, string CodDocumentoTipo, bool mostrar_anulados)
         {
             try
             {
-                return odata.get_list(IdEmpresa, mostrar_anulados);
+                return odata.get_list(IdEmpresa, IdSucursal, CodDocumentoTipo, mostrar_anulados);
             }
             catch (Exception)
             {

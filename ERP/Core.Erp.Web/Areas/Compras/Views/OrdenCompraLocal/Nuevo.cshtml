@@ -40,7 +40,7 @@
     @Html.HiddenFor(q => q.IdEstadoAprobacion_cat)
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control" })
@@ -48,12 +48,12 @@
                 </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdEstadoAprobacion_cat">Estado de aprobación*</label>
                     @Html.DropDownListFor(q => q.IdEstadoAprobacion_cat, new SelectList(ViewBag.lst_apro, "IdCatalogocompra", "Nombre"), new { @class = "form-control", @id = "IdEstadoAprobacion_cat", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdEstadoAprobacion_cat, "", new { @class = "text-danger" })
-                </div>
+                </div>  
             </div>
 
             <div class="col-md-2">
@@ -108,7 +108,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
                     @Html.Partial("_CmbProveedor_COM", Model.IdProveedor)
@@ -123,7 +123,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdTerminoPago">Termino pago*</label>
                     @Html.DropDownListFor(q => q.IdTerminoPago, new SelectList(ViewBag.lst_termino, "IdTerminoPago", "Descripcion"), new { @class = "form-control" })
@@ -136,20 +136,18 @@
                     @Html.TextBoxFor(q => q.oc_plazo, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.oc_plazo, "", new { @class = "text-danger" })
                 </div>
-            </div>      
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4">
+            </div>  
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdDepartamento">Departamento</label>
                     @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_dep, "IdDepartamento", "nom_departamento"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
                 </div>
             </div>
+    
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

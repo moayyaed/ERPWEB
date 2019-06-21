@@ -152,7 +152,8 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 oc_fecha = DateTime.Now.Date,
                 oc_fechaVencimiento = DateTime.Now.Date,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
-                IdEstadoAprobacion_cat = i_param.IdEstadoAprobacion_OC
+                IdEstadoAprobacion_cat = i_param.IdEstadoAprobacion_OC,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
 
             };
             List_det.set_list(model.lst_det, model.IdTransaccionSession);

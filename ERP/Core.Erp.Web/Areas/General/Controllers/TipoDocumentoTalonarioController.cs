@@ -4,6 +4,7 @@ using Core.Erp.Info.General;
 using Core.Erp.Web.Helps;
 using System;
 using System.Web.Mvc;
+using Core.Erp.Info.Helps;
 
 namespace Core.Erp.Web.Areas.General.Controllers
 {
@@ -18,14 +19,51 @@ namespace Core.Erp.Web.Areas.General.Controllers
         #region Index / Metodos
         public ActionResult Index()
         {
-            return View();
+            tb_sis_Documento_Tipo_Talonario_Info model = new tb_sis_Documento_Tipo_Talonario_Info
+            {
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                CodDocumentoTipo = ""
+            };
+            cargar_combos_consulta();
+            return View(model);
         }
-
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_tipodocumentotal()
+        [HttpPost]
+        public ActionResult Index(tb_sis_Documento_Tipo_Talonario_Info model)
+        {
+            ViewBag.IdSucursal = model.IdSucursal;
+            ViewBag.CodDocumentoTipo = model.CodDocumentoTipo;
+            cargar_combos_consulta();
+            return View(model);
+        }
+        private void cargar_combos_consulta()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_talonario.get_list(IdEmpresa, true);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "Todos"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+
+            tb_sis_Documento_Tipo_Bus bus_tipo = new tb_sis_Documento_Tipo_Bus();
+            var lst_doc = bus_tipo.get_list(false);
+            lst_doc.Add(new tb_sis_Documento_Tipo_Info
+            {
+                codDocumentoTipo = "",
+                descripcion = "Todos"
+            });
+            ViewBag.lst_doc = lst_doc;
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_tipodocumentotal(int IdSucursal = 0, string CodDocumentoTipo = "")
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.IdSucursal = IdSucursal;
+            ViewBag.CodDocumentoTipo = CodDocumentoTipo;
+
+            var model = bus_talonario.get_list(IdEmpresa, IdSucursal , CodDocumentoTipo, true);
             return PartialView("_GridViewPartial_tipodocumentotal", model);
         }
         private void cargar_combos(int IdEmpresa)

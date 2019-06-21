@@ -9,49 +9,103 @@ namespace Core.Erp.Data.General
 {
     public class tb_sis_Documento_Tipo_Talonario_Data
     {
-        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list(int IdEmpresa, bool mostrar_anulados)
+        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list(int IdEmpresa, int IdSucursal,string CodDocumentoTipo,  bool mostrar_anulados)
         {
             try
             {
+                int IdSucursal_ini = IdSucursal;
+                int IdSucursal_fin = IdSucursal == 0 ? 9999 : IdSucursal;
+                
                 List<tb_sis_Documento_Tipo_Talonario_Info> Lista;
                 using (Entities_general Context = new Entities_general())
                 {
                     if (mostrar_anulados)
-                        Lista = (from q in Context.tb_sis_Documento_Tipo_Talonario
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new tb_sis_Documento_Tipo_Talonario_Info
-                                 {
-                                     CodDocumentoTipo = q.CodDocumentoTipo,
-                                     IdSucursal = q.IdSucursal,
-                                     IdEmpresa = q.IdEmpresa,
-                                     Establecimiento = q.Establecimiento,
-                                     Estado = q.Estado,
-                                     NumAutorizacion = q.NumAutorizacion,
-                                     NumDocumento = q.NumDocumento,
-                                     PuntoEmision = q.PuntoEmision,
+                    {
+                        if (!string.IsNullOrEmpty(CodDocumentoTipo))
+                            Lista = (from q in Context.tb_sis_Documento_Tipo_Talonario
+                                     where q.IdEmpresa == IdEmpresa
+                                      && IdSucursal_ini <= q.IdSucursal
+                                      && q.IdSucursal <= IdSucursal_fin
+                                      && q.CodDocumentoTipo == CodDocumentoTipo
+                                     select new tb_sis_Documento_Tipo_Talonario_Info
+                                     {
+                                         CodDocumentoTipo = q.CodDocumentoTipo,
+                                         IdSucursal = q.IdSucursal,
+                                         IdEmpresa = q.IdEmpresa,
+                                         Establecimiento = q.Establecimiento,
+                                         Estado = q.Estado,
+                                         NumAutorizacion = q.NumAutorizacion,
+                                         NumDocumento = q.NumDocumento,
+                                         PuntoEmision = q.PuntoEmision,
 
-                                     EstadoBool = q.Estado == "A" ? true : false
+                                         EstadoBool = q.Estado == "A" ? true : false
 
-                                 }).ToList();
+                                     }).ToList();
+                        else
+                            Lista = (from q in Context.tb_sis_Documento_Tipo_Talonario
+                                     where q.IdEmpresa == IdEmpresa
+                                      && IdSucursal_ini <= q.IdSucursal
+                                      && q.IdSucursal <= IdSucursal_fin
+                                      && q.CodDocumentoTipo == CodDocumentoTipo
+                                     select new tb_sis_Documento_Tipo_Talonario_Info
+                                     {
+                                         CodDocumentoTipo = q.CodDocumentoTipo,
+                                         IdSucursal = q.IdSucursal,
+                                         IdEmpresa = q.IdEmpresa,
+                                         Establecimiento = q.Establecimiento,
+                                         Estado = q.Estado,
+                                         FechaCaducidad = q.FechaCaducidad,
+                                         NumAutorizacion = q.NumAutorizacion,
+                                         NumDocumento = q.NumDocumento,
+                                         PuntoEmision = q.PuntoEmision,
+
+                                         EstadoBool = q.Estado == "A" ? true : false
+
+                                     }).ToList();
+                    }
                     else
-                        Lista = (from q in Context.tb_sis_Documento_Tipo_Talonario
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Estado =="A"
-                                 select new tb_sis_Documento_Tipo_Talonario_Info
-                                 {
-                                     CodDocumentoTipo = q.CodDocumentoTipo,
-                                     IdSucursal = q.IdSucursal,
-                                     IdEmpresa = q.IdEmpresa,
-                                     Establecimiento = q.Establecimiento,
-                                     Estado = q.Estado,
-                                     FechaCaducidad = q.FechaCaducidad,
-                                     NumAutorizacion = q.NumAutorizacion,
-                                     NumDocumento = q.NumDocumento,
-                                     PuntoEmision = q.PuntoEmision,
+                    {
+                        if (!string.IsNullOrEmpty(CodDocumentoTipo))
+                            Lista = (from q in Context.tb_sis_Documento_Tipo_Talonario
+                                     where q.IdEmpresa == IdEmpresa
+                                      && IdSucursal_ini <= q.IdSucursal
+                                      && q.IdSucursal <= IdSucursal_fin
+                                      && q.CodDocumentoTipo == CodDocumentoTipo
+                                     select new tb_sis_Documento_Tipo_Talonario_Info
+                                     {
+                                         CodDocumentoTipo = q.CodDocumentoTipo,
+                                         IdSucursal = q.IdSucursal,
+                                         IdEmpresa = q.IdEmpresa,
+                                         Establecimiento = q.Establecimiento,
+                                         Estado = q.Estado,
+                                         NumAutorizacion = q.NumAutorizacion,
+                                         NumDocumento = q.NumDocumento,
+                                         PuntoEmision = q.PuntoEmision,
 
-                                     EstadoBool = q.Estado == "A" ? true : false
+                                         EstadoBool = q.Estado == "A" ? true : false
 
-                                 }).ToList();
+                                     }).ToList();
+                        else
+                            Lista = (from q in Context.tb_sis_Documento_Tipo_Talonario
+                                     where q.IdEmpresa == IdEmpresa
+                                     && q.Estado == "A"
+                                     select new tb_sis_Documento_Tipo_Talonario_Info
+                                     {
+                                         CodDocumentoTipo = q.CodDocumentoTipo,
+                                         IdSucursal = q.IdSucursal,
+                                         IdEmpresa = q.IdEmpresa,
+                                         Establecimiento = q.Establecimiento,
+                                         Estado = q.Estado,
+                                         FechaCaducidad = q.FechaCaducidad,
+                                         NumAutorizacion = q.NumAutorizacion,
+                                         NumDocumento = q.NumDocumento,
+                                         PuntoEmision = q.PuntoEmision,
+
+                                         EstadoBool = q.Estado == "A" ? true : false
+
+                                     }).ToList();
+
+                    }
                 }
                 return Lista;
             }
