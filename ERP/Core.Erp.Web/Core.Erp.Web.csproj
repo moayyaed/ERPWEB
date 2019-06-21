@@ -10038,13 +10038,6 @@
     <Content Include="Areas\Contabilidad\Views\CentroCosto\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CentroCosto\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CentroCosto\Nuevo.cshtml" />
-    <Content Include="Areas\Reportes\Views\BancoReportes\BAN_010.cshtml" />
-    <None Include="Properties\PublishProfiles\Erp_web.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
-    <None Include="Properties\PublishProfiles\publicaciones.pubxml" />
-    <None Include="Properties\PublishProfiles\web.pubxml" />
-    <None Include="Properties\PublishProfiles\WEBRAPI.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
@@ -10132,6 +10125,7 @@
     <Folder Include="Content\imagenes\empleados\" />
     <Folder Include="Content\imagenes\productos\" />
     <Folder Include="Content\videos\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -10162,7 +10156,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
