@@ -7,32 +7,36 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Data.ActivoFijo
 {
-   public class Af_Departamento_Data
+  public  class Af_Area_Data
     {
-        public List<Af_Departamento_Info> GetList(int IdEmpresa,decimal IdArea, bool mostrar_anulados)
+        public List<Af_Area_Info> GetList(int IdEmpresa, bool mostrar_anulados)
         {
             try
             {
-                List<Af_Departamento_Info> Lista;
+                List<Af_Area_Info> Lista;
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    if(mostrar_anulados==true)
-                    Lista = Context.Af_Departamento.Where(q => q.IdEmpresa == IdEmpresa && q.IdArea == IdArea).Select(q => new Af_Departamento_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        IdDepartamento = q.IdDepartamento,
-                        Descripcion = q.Descripcion,
-                        Estado = q.Estado,
-                        IdArea = q.IdArea
-                    }).ToList();
-                    else
-                        Lista = Context.Af_Departamento.Where(q => q.IdEmpresa == IdEmpresa && q.IdArea == IdArea && q.Estado == true ).Select(q => new Af_Departamento_Info
+                    if (mostrar_anulados)
+                        Lista = Context.Af_Area.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new Af_Area_Info
                         {
-                            IdEmpresa = q.IdEmpresa,
-                            IdDepartamento = q.IdDepartamento,
+
+                            IdEmpresa = q.IdEmpresa, 
                             Descripcion = q.Descripcion,
                             Estado = q.Estado,
-                            IdArea = q.IdArea
+                            IdArea = q.IdArea,
+                            
+                        }).ToList();
+                    else
+                        Lista = Context.Af_Area.Where(q => 
+                        q.IdEmpresa == IdEmpresa 
+                        && q.Estado == true).Select(q => new Af_Area_Info
+                        {
+
+                            IdEmpresa = q.IdEmpresa,
+                            Descripcion = q.Descripcion,
+                            Estado = q.Estado,
+                            IdArea = q.IdArea,
+
                         }).ToList();
                 }
                 return Lista;
@@ -43,19 +47,19 @@ namespace Core.Erp.Data.ActivoFijo
                 throw;
             }
         }
-        public Af_Departamento_Info GetInfo(int IdEmpresa, decimal IdArea, decimal IdDepartamento)
+
+        public Af_Area_Info GetInfo (int IdEmpresa, decimal IdArea)
         {
             try
             {
-                Af_Departamento_Info info = new Af_Departamento_Info();
+                Af_Area_Info info = new Af_Area_Info();
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    Af_Departamento Entity = Context.Af_Departamento.Where(q => q.IdEmpresa == IdEmpresa && q.IdArea == IdArea && q.IdDepartamento == IdDepartamento).FirstOrDefault();
+                    Af_Area Entity = Context.Af_Area.Where(q => q.IdEmpresa == IdEmpresa && q.IdArea == IdArea).FirstOrDefault();
                     if (Entity == null) return null;
-                    info = new Af_Departamento_Info
+                    info = new Af_Area_Info
                     {
                         IdEmpresa = Entity.IdEmpresa,
-                        IdDepartamento = Entity.IdDepartamento,
                         Descripcion = Entity.Descripcion,
                         Estado = Entity.Estado,
                         IdArea = Entity.IdArea
@@ -69,6 +73,7 @@ namespace Core.Erp.Data.ActivoFijo
                 throw;
             }
         }
+
         private decimal GetId(int IdEmpresa)
         {
             try
@@ -76,9 +81,11 @@ namespace Core.Erp.Data.ActivoFijo
                 decimal Id = 1;
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    var lst = Context.Af_Departamento.Where(q => q.IdEmpresa == IdEmpresa).Select(q => q.IdDepartamento);
+                    var lst = from q in Context.Af_Area
+                              where q.IdEmpresa == IdEmpresa
+                              select q;
                     if (lst.Count() > 0)
-                        Id = lst.Max() + 1;
+                        Id = lst.Max(q => q.IdArea) + 1;
                 }
                 return Id;
             }
@@ -88,24 +95,23 @@ namespace Core.Erp.Data.ActivoFijo
                 throw;
             }
         }
-        public bool GuardarDB(Af_Departamento_Info info)
+
+        public bool GuardarDB(Af_Area_Info info)
         {
             try
             {
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    Context.Af_Departamento.Add(new Af_Departamento
+                    Context.Af_Area.Add(new Af_Area
                     {
                         IdEmpresa = info.IdEmpresa,
-                        IdArea = info.IdArea,
-                        IdDepartamento = info.IdDepartamento=GetId(info.IdEmpresa),
+                        IdArea = info.IdArea = GetId(info.IdEmpresa),
                         Descripcion = info.Descripcion,
                         Estado = true,
                         IdUsuarioCreacion = info.IdUsuarioCreacion,
                         FechaCreacion = DateTime.Now
                     });
                     Context.SaveChanges();
-
                 }
                 return true;
             }
@@ -115,20 +121,20 @@ namespace Core.Erp.Data.ActivoFijo
                 throw;
             }
         }
-        public bool ModificarDB(Af_Departamento_Info info)
+
+        public bool ModificarDB( Af_Area_Info info)
         {
             try
             {
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    Af_Departamento Entity = Context.Af_Departamento.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdDepartamento == info.IdDepartamento).FirstOrDefault();
+                    Af_Area Entity = Context.Af_Area.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArea == info.IdArea).FirstOrDefault();
                     if (Entity == null) return false;
 
                     Entity.Descripcion = info.Descripcion;
                     Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
                     Entity.FechaModificacion = DateTime.Now;
                     Context.SaveChanges();
-
                 }
                 return true;
             }
@@ -138,20 +144,19 @@ namespace Core.Erp.Data.ActivoFijo
                 throw;
             }
         }
-        public bool AnularDB(Af_Departamento_Info info)
+
+        public bool AnularDB(Af_Area_Info info)
         {
             try
             {
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    Af_Departamento Entity = Context.Af_Departamento.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdDepartamento == info.IdDepartamento).FirstOrDefault();
+                    Af_Area Entity = Context.Af_Area.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArea == info.IdArea).FirstOrDefault();
                     if (Entity == null) return false;
 
                     Entity.Estado = false;
-                    Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
                     Entity.FechaAnulacion = DateTime.Now;
                     Context.SaveChanges();
-
                 }
                 return true;
             }
@@ -161,7 +166,6 @@ namespace Core.Erp.Data.ActivoFijo
                 throw;
             }
         }
-
 
     }
 }

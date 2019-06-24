@@ -13,74 +13,97 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
     public class DepartamentoAFController : Controller
     {
         Af_Departamento_Bus bus_dep = new Af_Departamento_Bus();
-        public ActionResult Index()
+        public ActionResult Index(decimal IdArea = 0)
         {
+            ViewBag.IdArea = IdArea;
             return View();
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_departamento_af()
+        public ActionResult GridViewPartial_departamento_af(decimal IdArea = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_dep.GetList(IdEmpresa, true);
+            ViewBag.IdArea = IdArea;
+            var model = bus_dep.GetList(IdEmpresa,IdArea, true);
             return PartialView("_GridViewPartial_departamento_af", model);
         }
 
+        private void cargar_combos()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            Af_Area_Bus bus_area = new Af_Area_Bus();
+            var lst_area = bus_area.GetList(IdEmpresa, false);
+            ViewBag.lst_area = lst_area;
+        }
+
         #region Acciones
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(decimal IdArea = 0)
         {
             Af_Departamento_Info model = new Af_Departamento_Info
             {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdArea = IdArea
             };
+            ViewBag.IdArea = model.IdArea;
+            cargar_combos();
             return View(model);
         }
         [HttpPost]
         public ActionResult Nuevo(Af_Departamento_Info model)
         {
-            model.IdUsuarioCreacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioCreacion = SessionFixed.IdUsuario;
             if (!bus_dep.GuardarDB(model))
             {
+                ViewBag.IdArea = model.IdArea;
+                cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { IdArea = model.IdArea });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 ,decimal IdDepartamento = 0)
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdArea = 0, decimal IdDepartamento = 0)
         {
-            Af_Departamento_Info model = bus_dep.GetInfo(IdEmpresa, IdDepartamento);
+            Af_Departamento_Info model = bus_dep.GetInfo(IdEmpresa,IdArea, IdDepartamento);
             if (model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { IdArea = IdArea });
+            ViewBag.IdArea = model.IdArea;
+            cargar_combos();
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Modificar(Af_Departamento_Info model)
         {
-            model.IdUsuarioModificacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             if (!bus_dep.ModificarDB(model))
             {
+                ViewBag.IdArea = model.IdArea;
+                cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { IdArea = model.IdArea });
         }
-        public ActionResult Anular(int IdEmpresa = 0, decimal IdDepartamento = 0)
+        public ActionResult Anular(int IdEmpresa = 0, decimal IdArea = 0, decimal IdDepartamento = 0)
         {
-            Af_Departamento_Info model = bus_dep.GetInfo(IdEmpresa, IdDepartamento);
+            Af_Departamento_Info model = bus_dep.GetInfo(IdEmpresa,IdArea, IdDepartamento);
             if (model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { IdArea = IdArea });
+            ViewBag.IdArea = model.IdArea;
+            cargar_combos();
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Anular(Af_Departamento_Info model)
         {
-            model.IdUsuarioAnulacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
             if (!bus_dep.AnularDB(model))
             {
+                cargar_combos();
+                ViewBag.IdArea = model.IdArea;
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { IdArea = model.IdArea });
         }
 
         #endregion

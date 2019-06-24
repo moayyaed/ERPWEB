@@ -46,6 +46,7 @@
     <Compile Include="ActivoFijo\Af_Activo_fijo_CtaCble_Info.cs" />
     <Compile Include="ActivoFijo\Af_Activo_fijo_Info.cs" />
     <Compile Include="ActivoFijo\Af_Activo_fijo_tipo_Info.cs" />
+    <Compile Include="ActivoFijo\Af_Area_Info.cs" />
     <Compile Include="ActivoFijo\Af_CatalogoTipo_Info.cs" />
     <Compile Include="ActivoFijo\Af_Catalogo_Info.cs" />
     <Compile Include="ActivoFijo\Af_Departamento_Info.cs" />

@@ -12,15 +12,14 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Af_Departamento
+    public partial class Af_Area
     {
-        public Af_Departamento()
+        public Af_Area()
         {
             this.Af_Activo_fijo = new HashSet<Af_Activo_fijo>();
         }
     
         public int IdEmpresa { get; set; }
-        public decimal IdDepartamento { get; set; }
         public decimal IdArea { get; set; }
         public string Descripcion { get; set; }
         public bool Estado { get; set; }

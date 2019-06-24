@@ -83,10 +83,17 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdDepartamento">Area</label>
+                    @Html.DropDownListFor(q => q.IdArea, new SelectList(ViewBag.lst_area, "IdArea", "Descripcion"), new { @class = "form-control", @id = "IdArea" })
+                    @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdDepartamento">Departamento</label>
-                    @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_departamento, "IdDepartamento", "Descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_departamento, "IdDepartamento", "Descripcion"), new { @class = "form-control", @id = "IdDepartamento" })
                     @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -404,6 +411,7 @@
         cargar_categoria();
         get_info_tipo();
         calcular_fechas();
+        GetListAreaPorDepartamento();
     });
 
     $("#IdActivoFijoTipo").change(function () {
@@ -412,7 +420,34 @@
         calcular_fechas();
 
     });
+    $("#IdArea").change(function () {
+        GetListAreaPorDepartamento();
+    });
 
+    function GetListAreaPorDepartamento() {
+        $("#IdDepartamento").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdArea: $("#IdArea").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListAreaPorDepartamento", "ActivoFijo",new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdDepartamento").append("<option value=" + row.IdDepartamento + ">" + row.Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
 
     function get_info_tipo() {
         var activo = $("#IdActivoFijoTipo").val();

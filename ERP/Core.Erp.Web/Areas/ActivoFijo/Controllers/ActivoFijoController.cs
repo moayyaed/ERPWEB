@@ -28,6 +28,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         Af_Activo_fijo_Bus bus_activo = new Af_Activo_fijo_Bus();
         Af_Activo_fijo_tipo_Bus bus_tipo = new Af_Activo_fijo_tipo_Bus();
         Af_Activo_fijo_Categoria_Bus bus_categoria = new Af_Activo_fijo_Categoria_Bus();
+        Af_Area_Bus bus_area = new Af_Area_Bus();
         Af_Catalogo_Bus bus_catalogo = new Af_Catalogo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         //Af_Activo_fijo_CtaCble_List List_det = new Af_Activo_fijo_CtaCble_List();
@@ -116,9 +117,12 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #endregion
 
         #region Metodos
-        private void cargar_combos(int IdEmpresa, int IdActivoFijoTipo = 0)
+        private void cargar_combos(int IdEmpresa, int IdActivoFijoTipo = 0, decimal IdArea = 0)
         {
-            var lst_departamento = bus_dep.GetList(IdEmpresa, false);
+            var lst_area = bus_area.GetList(IdEmpresa, false);
+            ViewBag.lst_area = lst_area;
+
+            var lst_departamento = bus_dep.GetList(IdEmpresa,IdArea, false);
             ViewBag.lst_departamento = lst_departamento;
 
             var lst_tipo = bus_tipo.get_list(IdEmpresa, false);
@@ -414,13 +418,19 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetListAreaPorDepartamento(int IdEmpresa = 0, decimal IdArea = 0)
+        {
+            var lst = bus_dep.GetList(IdEmpresa, IdArea, false);
+            return Json(lst, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Detalle
-        private void cargar_combos_Detalle()
+        private void cargar_combos_Detalle(decimal IdArea = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_departamento = bus_dep.GetList(IdEmpresa, false);
+            var lst_departamento = bus_dep.GetList(IdEmpresa, IdArea,false);
             ViewBag.lst_departamento = lst_departamento;
         }        
         #endregion

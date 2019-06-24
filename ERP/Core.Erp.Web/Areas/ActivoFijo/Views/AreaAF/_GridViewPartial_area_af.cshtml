@@ -2,12 +2,9 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridView_departamento_af";
-        settings.CallbackRouteValues = new { Controller = "DepartamentoAF", Action = "GridViewPartial_departamento_af", IdArea = ViewBag.IdArea };
-
-
-        settings.KeyFieldName = "IdDepartamento";
-
+        settings.Name = "GridView_area_af";
+        settings.CallbackRouteValues = new { Controller = "AreaAF", Action = "GridViewPartial_area_af" };
+        settings.KeyFieldName = "IdArea";
         settings.Width = Unit.Percentage(100);
 
         //Configuración para que la grilla no muestre texto completo
@@ -46,12 +43,6 @@
             t.Items.Add(GridViewToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
             t.Items.Add(GridViewToolbarCommand.ExportToCsv).Text = "Exportar a CSV";
         });
-        settings.SettingsExport.RenderBrick = (sender, e) =>
-        {
-            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
-                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
-        };
-        //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
         {
             if (Convert.ToBoolean(e.GetValue("Estado")) == false)
@@ -67,8 +58,8 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdDepartamento = DataBinder.Eval(tc.DataItem, "IdDepartamento"), IdArea = DataBinder.Eval(tc.DataItem, "IdArea") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdDepartamento = DataBinder.Eval(tc.DataItem, "IdDepartamento"), IdArea = DataBinder.Eval(tc.DataItem, "IdArea") },
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdArea = DataBinder.Eval(tc.DataItem, "IdArea")}) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdArea = DataBinder.Eval(tc.DataItem, "IdArea")},
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -76,26 +67,44 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdArea = ViewBag.IdArea }).ToHtmlString()
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = Unit.Pixel(150);
+            c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
 
-        settings.Columns.Add("IdDepartamento", "Código").Width = Unit.Percentage(20);
-        settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(70);
+        settings.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(70);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Estado";
             column.Caption = "Estado";
-            column.Width = Unit.Percentage(10);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
             column.EditorProperties().CheckBox(sp =>
             {
 
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Departamento";
+            column.Width = Unit.Pixel(100);
+            column.SetDataItemTemplateContent(container =>
+            {
+                if (Convert.ToBoolean(DataBinder.Eval(container.DataItem, "Estado")) == true)
+                {
+                    Html.DevExpress().HyperLink(hyperlink =>
+                    {
+                        var keyValue = DataBinder.Eval(container.DataItem, "IdArea");
+                        hyperlink.Properties.Text = "Departamentos";
+                        hyperlink.NavigateUrl = Url.Action("Index", "DepartamentoAF", new { IdArea = keyValue });
+                    }).Render();
+                }
+            });
+        });
+
     });
 }
 @grid.Bind(Model).GetHtml()

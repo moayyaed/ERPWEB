@@ -22,6 +22,7 @@ namespace Core.Erp.Info.ActivoFijo
         public int IdCategoriaAF { get; set; }
         public int IdSucursal { get; set; }
         public decimal IdDepartamento { get; set; }
+        public decimal IdArea { get; set; }
         public string IdCatalogo_Marca { get; set; }
         public string IdCatalogo_Modelo { get; set; }
         public string Af_NumSerie { get; set; }

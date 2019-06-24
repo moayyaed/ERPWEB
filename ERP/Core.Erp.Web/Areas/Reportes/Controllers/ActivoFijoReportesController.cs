@@ -269,7 +269,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.lst_sucursal = lst_sucursal;
 
             Af_Departamento_Bus bus_dep = new Af_Departamento_Bus();
-            var lst_dep = bus_dep.GetList(model.IdEmpresa, false);
+            var lst_dep = bus_dep.GetList(model.IdEmpresa,0, false);
             lst_dep.Add(new Af_Departamento_Info
             {
                 IdEmpresa = model.IdEmpresa,

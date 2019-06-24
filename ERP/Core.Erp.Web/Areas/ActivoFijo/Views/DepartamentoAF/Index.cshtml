@@ -10,6 +10,9 @@
 
 @using (Html.BeginForm())
 {
+@Html.Action("GridViewPartial_departamento_af", new { IdArea = ViewBag.IdArea })
 
+<div class="box-footer">
+    <a class="btn btn-default" href="@Url.Action("Index", "AreaAF", new { IdArea = ViewBag.IdArea, Area = "ActivoFijo" }, null)">Volver</a>
+</div>
 }
-@Html.Action("GridViewPartial_departamento_af")

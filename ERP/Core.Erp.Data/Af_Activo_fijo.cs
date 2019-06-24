@@ -30,6 +30,7 @@ namespace Core.Erp.Data
         public int IdCategoriaAF { get; set; }
         public int IdSucursal { get; set; }
         public decimal IdDepartamento { get; set; }
+        public decimal IdArea { get; set; }
         public string IdCatalogo_Marca { get; set; }
         public string IdCatalogo_Modelo { get; set; }
         public string Af_NumSerie { get; set; }
@@ -62,6 +63,7 @@ namespace Core.Erp.Data
     
         public virtual Af_Activo_fijo_Categoria Af_Activo_fijo_Categoria { get; set; }
         public virtual Af_Activo_fijo_tipo Af_Activo_fijo_tipo { get; set; }
+        public virtual Af_Area Af_Area { get; set; }
         public virtual Af_Catalogo Af_Catalogo { get; set; }
         public virtual Af_Catalogo Af_Catalogo1 { get; set; }
         public virtual Af_Catalogo Af_Catalogo2 { get; set; }

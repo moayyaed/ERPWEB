@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Bus.ActivoFijo
 {
-   public class Af_Departamento_Bus
+    public class Af_Area_Bus
     {
-        Af_Departamento_Data odata = new Af_Departamento_Data();
-        public List<Af_Departamento_Info> GetList(int IdEmpresa, decimal IdArea, bool mostrar_anulados)
+        Af_Area_Data odata = new Af_Area_Data();
+    
+        public List<Af_Area_Info> GetList(int IdEmpresa, bool mostrar_anulados)
         {
             try
             {
-                return odata.GetList(IdEmpresa, IdArea, mostrar_anulados);
+                return odata.GetList(IdEmpresa, mostrar_anulados);
             }
             catch (Exception)
             {
@@ -23,11 +24,12 @@ namespace Core.Erp.Bus.ActivoFijo
                 throw;
             }
         }
-        public Af_Departamento_Info GetInfo(int IdEmpresa, decimal IdArea, decimal IdDepartamento)
+
+        public Af_Area_Info GetInfo(int IdEmpresa, decimal IdArea)
         {
             try
             {
-                return odata.GetInfo(IdEmpresa, IdArea, IdDepartamento);
+                return odata.GetInfo(IdEmpresa, IdArea);
             }
             catch (Exception)
             {
@@ -35,7 +37,8 @@ namespace Core.Erp.Bus.ActivoFijo
                 throw;
             }
         }
-        public bool GuardarDB(Af_Departamento_Info info)
+
+        public bool GuardarDB(Af_Area_Info info)
         {
             try
             {
@@ -47,7 +50,8 @@ namespace Core.Erp.Bus.ActivoFijo
                 throw;
             }
         }
-        public bool ModificarDB(Af_Departamento_Info info)
+
+        public bool ModificarDB(Af_Area_Info info)
         {
             try
             {
@@ -59,7 +63,8 @@ namespace Core.Erp.Bus.ActivoFijo
                 throw;
             }
         }
-        public bool AnularDB(Af_Departamento_Info info)
+
+        public bool AnularDB(Af_Area_Info info)
         {
             try
             {

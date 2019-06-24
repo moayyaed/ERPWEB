@@ -244,6 +244,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\ActivoFijo\ActivoFijoAreaRegistration.cs" />
     <Compile Include="Areas\ActivoFijo\Controllers\ActivoFijoController.cs" />
+    <Compile Include="Areas\ActivoFijo\Controllers\AreaAFController.cs" />
     <Compile Include="Areas\ActivoFijo\Controllers\CatalogoAFController.cs" />
     <Compile Include="Areas\ActivoFijo\Controllers\CatalogoTipoAFController.cs" />
     <Compile Include="Areas\ActivoFijo\Controllers\CategoriaAFController.cs" />
@@ -10038,6 +10039,11 @@
     <Content Include="Areas\Contabilidad\Views\CentroCosto\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CentroCosto\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CentroCosto\Nuevo.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\_GridViewPartial_area_af.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\Index.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\Nuevo.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\Modificar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\Anular.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
