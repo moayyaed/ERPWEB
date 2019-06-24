@@ -26,6 +26,8 @@ namespace Core.Erp.Info.Helps
         public string IdUsuario { get; set; }
         public DateTime fecha { get; set; }
         public int IdActivoFijo { get; set; }
+        public decimal IdAreaAF { get; set; }
+
         #endregion
 
         #region Filtros cuentas por pagar
