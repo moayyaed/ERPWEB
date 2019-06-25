@@ -1,6 +1,5 @@
-﻿CREATE TABLE [dbo].[Af_Departamento] (
+﻿CREATE TABLE [dbo].[Af_Area] (
     [IdEmpresa]             INT           NOT NULL,
-    [IdDepartamento]        NUMERIC (18)  NOT NULL,
     [IdArea]                NUMERIC (18)  NOT NULL,
     [Descripcion]           VARCHAR (MAX) NOT NULL,
     [Estado]                BIT           NOT NULL,
@@ -11,8 +10,6 @@
     [IdUsuarioAnulacion]    VARCHAR (50)  NULL,
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
-    CONSTRAINT [PK_Af_Departamento] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdDepartamento] ASC)
+    CONSTRAINT [PK_Af_Area] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdArea] ASC)
 );
-
-
 
