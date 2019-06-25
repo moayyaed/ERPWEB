@@ -13,6 +13,8 @@
         settings.Properties.TextFormatString = "[{0}] {1}";
         settings.Properties.ValueField = "IdProducto";
         settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.DropDownButton.Enabled = false;
+        settings.ReadOnly = true;
 
         settings.Properties.Columns.Add("IdProducto", "ID", 5);
         settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
@@ -22,7 +24,7 @@
     })
 
      .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.IngresoInventarioController().get_list_bajo_demanda,
-      new Core.Erp.Web.Areas.Inventario.Controllers.IngresoInventarioController().get_info_bajo_demanda).Bind((Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_Info)) || (Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info>)) ? "" : (Model == 0 ? "" : Model));
+      new Core.Erp.Web.Areas.Inventario.Controllers.IngresoInventarioController().get_info_bajo_demanda).Bind( (Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_Info)) || (Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info>)) ? "" : (Model == 0 ? "" : Model));
 
 
 }

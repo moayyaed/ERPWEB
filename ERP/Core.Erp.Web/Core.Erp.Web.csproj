@@ -10044,6 +10044,7 @@
     <Content Include="Areas\ActivoFijo\Views\AreaAF\Nuevo.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\AreaAF\Modificar.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\AreaAF\Anular.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbProducto_IngresoOrdenCompra_ReadOnly.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />

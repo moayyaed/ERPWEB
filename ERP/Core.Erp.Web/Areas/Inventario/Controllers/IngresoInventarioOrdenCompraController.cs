@@ -176,6 +176,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.signo = "+";
             model.IdMovi_inven_tipo = info_param_oc.IdMovi_inven_tipo_OC;
             model.lst_in_Ing_Egr_Inven_det.ForEach(q => q.IdBodega_inv = model.IdBodega);
+            model.lst_in_Ing_Egr_Inven_det.ForEach(q => { q.IdEmpresa_oc = model.IdEmpresa; });
             if (!bus_ing_inv.guardarDB(model, "+"))
             {
                 cargar_combos(model);
@@ -329,8 +330,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det_inv.IdUnidadMedida_sinConversion = info_det.IdUnidadMedida;
                         info_det_inv.Saldo = info_det.Saldo;
 
+                        info_det_inv.IdEmpresa_oc = IdEmpresaOC;
+                        info_det_inv.IdSucursal_oc = IdSucursalOC;
+
                         List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);
-                        
                     }
                 }
             }
@@ -353,16 +356,18 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             if (info_det_editar != null)
                 if (info_det_editar.IdProducto != 0)
                 {
-                    in_Producto_Info info_producto = bus_producto.get_info(IdEmpresa, info_det.IdProducto);
+                    in_Producto_Info info_producto = bus_producto.get_info(IdEmpresa, info_det_editar.IdProducto);
                     if (info_producto != null)
                     {
+                        info_det.Saldo = info_det_editar.Saldo;
+                        info_det.IdProducto = info_det_editar.IdProducto;
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                     }
                 }
 
 
-            if (info_det_editar.dm_cantidad_sinConversion > 0 && info_det_editar.dm_cantidad_sinConversion <= info_oc.Saldo)
+            if (info_det_editar.dm_cantidad_sinConversion > 0 && info_det_editar.dm_cantidad_sinConversion <= info_det_editar.Saldo)
                 List_in_Ing_Egr_Inven_det.UpdateRow(info_det_editar, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
@@ -482,6 +487,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             List<in_Ing_Egr_Inven_det_Info> list = get_list(IdTransaccionSession);
             info_det_inv.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
             info_det_inv.secuencia_inv = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            info_det_inv.Secuencia_oc = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
 
             list.Add(info_det_inv);
         }
@@ -496,6 +502,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             edited_info.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
             edited_info.pr_descripcion = info_det.pr_descripcion;
             edited_info.IdProducto = info_det.IdProducto;
+            edited_info.Saldo = info_det.Saldo;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
