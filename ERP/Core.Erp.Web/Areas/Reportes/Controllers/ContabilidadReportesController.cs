@@ -70,6 +70,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
+
+            ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
+            var lst_tipo = bus_tipo.get_list(IdEmpresa, false);
+            ViewBag.lst_tipo = lst_tipo;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -110,8 +114,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdCtaCble = "",
                 IdCtaCbleFin = "",
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTipoCbte = 1
             };
+            cargar_combos(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
             #region Cargo diseño desde base
@@ -158,6 +164,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_combos(model.IdEmpresa);
             ViewBag.Report = report;
             return View(model);
         }
