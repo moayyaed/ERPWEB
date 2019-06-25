@@ -1726,6 +1726,9 @@
     <Compile Include="SPBAN_009_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="SPBAN_011_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="SPCONTA_002_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
