@@ -7,7 +7,8 @@ SELECT distinct dbo.tb_persona.pe_apellido + ' ' + dbo.tb_persona.pe_nombre AS E
 FROM     dbo.ro_empleado INNER JOIN
                   dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
                   dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
-where dbo.ro_contrato.EstadoContrato <> 'EST_LIQ'
+where dbo.ro_contrato.EstadoContrato <> 'EST_LIQ' 
+and dbo.ro_contrato.EstadoContrato<>'ECT_PLQ'-- se añadio este filtro 21/06/2019
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

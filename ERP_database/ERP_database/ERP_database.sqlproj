@@ -1172,6 +1172,7 @@
     <Build Include="dbo\Tables\ba_archivo_transferencia_x_ba_tipo_flujo.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_x_Pagos_saldo.sql" />
     <Build Include="web\Views\VWBAN_010.sql" />
+    <Build Include="web\Views\VWINV_017.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
