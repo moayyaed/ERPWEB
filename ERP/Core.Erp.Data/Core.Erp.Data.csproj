@@ -343,6 +343,9 @@
     <Compile Include="cp_orden_giro_det.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
+    <Compile Include="cp_orden_giro_det_ing_x_oc.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="cp_orden_giro_pagos_sri.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
@@ -2078,6 +2081,12 @@
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_orden_giro_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det_ing_x_oc.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det_ing_x_oc_x_cruzar.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_orden_giro_x_pagar.cs">
