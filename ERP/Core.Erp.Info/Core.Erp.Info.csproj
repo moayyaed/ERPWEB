@@ -334,6 +334,7 @@
     <Compile Include="Reportes\Banco\BAN_008_Info.cs" />
     <Compile Include="Reportes\Banco\BAN_009_Info.cs" />
     <Compile Include="Reportes\Banco\BAN_010_Info.cs" />
+    <Compile Include="Reportes\Banco\BAN_011_Info.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Info.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Info.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Info.cs" />

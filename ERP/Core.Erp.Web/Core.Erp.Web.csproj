@@ -640,6 +640,12 @@
     <Compile Include="Reportes\Banco\BAN_010_Rpt.Designer.cs">
       <DependentUpon>BAN_010_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Banco\BAN_011_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_011_Rpt.Designer.cs">
+      <DependentUpon>BAN_011_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Caja\CAJ_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10055,6 +10061,8 @@
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_oc_x_ingresar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_oc_det.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_CmbCuenta_OC_det.cshtml" />
+    <Content Include="Areas\Reportes\Views\BancoReportes\BAN_010.cshtml" />
+    <Content Include="Areas\Reportes\Views\BancoReportes\BAN_011.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
@@ -10173,6 +10181,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10241,6 +10250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_010_Rpt.resx">
       <DependentUpon>BAN_010_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_011_Rpt.resx">
+      <DependentUpon>BAN_011_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Caja\CAJ_001_Rpt.resx">
       <DependentUpon>CAJ_001_Rpt.cs</DependentUpon>
