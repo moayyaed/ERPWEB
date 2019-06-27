@@ -1179,6 +1179,10 @@
     <Build Include="dbo\Tables\cp_orden_giro_det_ing_x_oc.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_det_ing_x_oc_x_cruzar.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_det_ing_x_oc.sql" />
+    <Build Include="dbo\Tables\in_AjusteDet.sql" />
+    <Build Include="dbo\Tables\in_Ajuste.sql" />
+    <Build Include="web\Views\VWINV_018.sql" />
+    <Build Include="dbo\Views\vwin_Ajuste.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
