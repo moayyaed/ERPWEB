@@ -20,7 +20,76 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
 <script type="text/javascript">
-   
+    var selectedIDs;
+    function OnBeginCallback(s, e) {
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs["selectedIDs"] = selectedIDs;
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdGenerado", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+
+    function MostrarModal() {
+        selectedIDs = "";
+        var datos = {
+            IdTransaccionSession:$("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdProveedor: IdProveedor.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListIng_Inv_OC_PorIngresar", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_ing_inv_oc_x_ingresar.PerformCallback();
+                GridViewPartial_ing_inv_oc_x_ingresar.UnselectRows();
+                $("#OcModal").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function AddOC() {
+        var datos = {
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNew_IOC", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+        GridViewPartial_ing_inv_oc_x_ingresar.PerformCallback();
+        GridViewPartial_ing_inv_oc_x_ingresar.UnselectRows();
+        GridViewPartial_ing_inv_oc_det.PerformCallback();
+        $("#OcModal").modal("hide");
+    }
+
     function SetValorRetencion(s, e) {
         var datos = {
             IdCodigoSRI: s.GetValue()
@@ -73,6 +142,27 @@
     @Html.HiddenFor(q => q.IdCbteCble_Ogiro)
     @Html.HiddenFor(q => q.IdTipoCbte_Ogiro)
     @Html.HiddenFor(q => q.co_fechaOg)
+
+    <div class="modal fade" id="OcModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ordenes de compra</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_ing_inv_oc_x_ingresar")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddOC();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
@@ -254,6 +344,9 @@
                 <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Detalle de ingreso</a>
             </li> 
             <li>
+                <a href="#tab_orden_compra" aria-controls="contabilidad" role="tab" data-toggle="tab">Orden de compra</a>
+            </li>   
+            <li>
                 <a href="#tab_informacion_pago" aria-controls="contabilidad" role="tab" data-toggle="tab">Información adicional</a>
             </li>                       
         </ul>
@@ -369,7 +462,30 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>          
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_compra">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar ingreso por orden de compra">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="orden_compra"></label>
+                                @Html.Action("GridViewPartial_ing_inv_oc_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_informacion_pago">
                 <div class="row">
                     <div class="col-md-12">
@@ -497,11 +613,11 @@
     }
 
     ValidarCompraSucursales();
-    
+
     $("#IdSucursal").change(function () {
         cargar_bodega();
     });
-    
+
     $("#co_subtotal_iva").change(function () {
 
         actualizar_valores();
@@ -528,7 +644,7 @@
             get_list_tipo_doc();
         }
     });
-    $("#co_plazo").change(function () {        
+    $("#co_plazo").change(function () {
         CambiarVcto();
     });
 
@@ -603,7 +719,7 @@
 
         $("#num_docu_Modificar").val(doc);
     }
-    
+
   // obtener tipo de documento
     function get_list_tipo_doc() {
 
@@ -664,7 +780,7 @@
                     $("#co_subtotal_siniva").val(data.Subtotal0);
                     $("#co_valoriva").val(data.IVA);
                     $("#co_Por_iva").val(12);
-                    $("#co_total").val(data.Total); 
+                    $("#co_total").val(data.Total);
                     GridViewPartial_deudas_dc.PerformCallback();
                 },
                 error: function (error) {
@@ -675,7 +791,7 @@
 
 
 
-    function get_info_proveedor() {      
+    function get_info_proveedor() {
 
         if (IdProveedor.GetValue() > 0)  {
             var datos = {
@@ -805,6 +921,7 @@
                     }
                 });
 
-    };
+     };
+    
 </script>
 

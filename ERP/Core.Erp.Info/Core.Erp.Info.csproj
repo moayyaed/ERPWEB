@@ -156,6 +156,7 @@
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_nota_DebCre_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_det_Info.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_ing_x_oc_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_pagos_sri_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_pago_cancelaciones_Info.cs" />

@@ -131,6 +131,7 @@
     <Compile Include="CuentasPorPagar\cp_nota_DebCre_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_det_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_ing_x_oc_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_pagos_sri_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_pago_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_pago_cancelaciones_Bus.cs" />

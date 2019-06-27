@@ -67,7 +67,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdBodega = info.IdBodega,    
                         IdSucursal_cxp = info.IdSucursal_cxp
                     };
-                                       
+
                     if (info.lst_det.Count > 0)
                     {
                         int secuencia = 1;
@@ -101,6 +101,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         }
 
                         var movi = armar_movi_inven(info, null);
+
                         if (movi != null)
                         {
                             if (data_inv.guardarDB(movi, "+"))
@@ -120,13 +121,47 @@ namespace Core.Erp.Data.CuentasPorPagar
                         }
                     }
 
+                    if (info.lst_det_oc.Count > 0)
+                    {
+                        int secuencia_det_oc = 1;
+                        foreach (var item in info.lst_det_oc)
+                        {
+                            Context.cp_orden_giro_det_ing_x_oc.Add(new cp_orden_giro_det_ing_x_oc
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                Secuencia = secuencia_det_oc++,
+                                inv_IdSucursal = item.inv_IdSucursal,
+                                inv_IdMovi_inven_tipo = item.inv_IdMovi_inven_tipo,
+                                inv_IdNumMovi = item.inv_IdNumMovi,
+                                inv_Secuencia = item.inv_Secuencia,
+                                oc_IdSucursal = item.oc_IdSucursal,
+                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
+                                oc_Secuencia = item.oc_Secuencia,
+                                IdCtaCble = item.IdCtaCble,
+                                dm_cantidad = item.dm_cantidad,
+                                do_porc_des = item.do_porc_des,
+                                do_descuento = item.do_descuento,
+                                do_precioFinal = item.do_precioFinal,
+                                do_subtotal = item.do_subtotal,
+                                IdCod_Impuesto = item.IdCod_Impuesto,
+                                do_iva = item.do_iva,
+                                Por_Iva = item.Por_Iva,
+                                do_total = item.do_total,
+                                IdUnidadMedida = item.IdUnidadMedida,
+                                IdProducto = item.IdProducto
+                            });
+                        }
+                    }                                      
+
                     Context.cp_orden_giro.Add(Entity);
 
                     Context.SaveChanges();
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -244,6 +279,45 @@ namespace Core.Erp.Data.CuentasPorPagar
                         }
                     }
 
+
+                    if (info.lst_det_oc.Count > 0)
+                    {
+                        var lst_det_oc = Context.cp_orden_giro_det_ing_x_oc.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
+                        Context.cp_orden_giro_det_ing_x_oc.RemoveRange(lst_det_oc);
+
+                        int secuencia_det_oc = 1;
+                        foreach (var item in info.lst_det_oc)
+                        {
+                            Context.cp_orden_giro_det_ing_x_oc.Add(new cp_orden_giro_det_ing_x_oc
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                Secuencia = secuencia_det_oc++,
+                                inv_IdSucursal = item.inv_IdSucursal,
+                                inv_IdMovi_inven_tipo = item.inv_IdMovi_inven_tipo,
+                                inv_IdNumMovi = item.inv_IdNumMovi,
+                                inv_Secuencia = item.inv_Secuencia,
+                                oc_IdSucursal = item.oc_IdSucursal,
+                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
+                                oc_Secuencia = item.oc_Secuencia,
+                                IdCtaCble = item.IdCtaCble,
+                                dm_cantidad = item.dm_cantidad,
+                                do_porc_des = item.do_porc_des,
+                                do_descuento = item.do_descuento,
+                                do_precioFinal = item.do_precioFinal,
+                                do_subtotal = item.do_subtotal,
+                                IdCod_Impuesto = item.IdCod_Impuesto,
+                                do_iva = item.do_iva,
+                                Por_Iva = item.Por_Iva,
+                                do_total = item.do_total,
+                                IdUnidadMedida = item.IdUnidadMedida,
+                                IdProducto = item.IdProducto
+                            });
+                        }
+                    }
+                    
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -331,8 +405,14 @@ namespace Core.Erp.Data.CuentasPorPagar
                     var rel = Context.cp_orden_giro_x_in_Ing_Egr_Inven.Where(q => q.og_IdEmpresa == info.IdEmpresa && q.og_IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.og_IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).FirstOrDefault();
                     if (rel != null)
                         data_inv.anularDB(new in_Ing_Egr_Inven_Info { IdEmpresa = rel.inv_IdEmpresa, IdSucursal = rel.inv_IdSucursal, IdMovi_inven_tipo = rel.inv_IdMovi_inven_tipo, IdNumMovi = rel.inv_IdNumMovi, IdusuarioUltAnu = info.IdUsuarioUltAnu });
-                    
-                    Context.SaveChanges();
+
+
+                    if (info.lst_det_oc.Count > 0)
+                    {
+                        var lst_det_oc = Context.cp_orden_giro_det_ing_x_oc.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
+                        Context.cp_orden_giro_det_ing_x_oc.RemoveRange(lst_det_oc);
+                    }
+                        Context.SaveChanges();
                 }
                 return true;
             }

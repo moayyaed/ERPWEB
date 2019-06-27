@@ -10052,6 +10052,9 @@
     <Content Include="Areas\ActivoFijo\Views\AreaAF\Anular.cshtml" />
     <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbProducto_IngresoOrdenCompra_ReadOnly.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_017.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_oc_x_ingresar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_oc_det.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_CmbCuenta_OC_det.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />

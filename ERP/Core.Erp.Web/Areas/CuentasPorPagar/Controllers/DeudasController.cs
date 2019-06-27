@@ -44,6 +44,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_giro_det_Bus bus_det = new cp_orden_giro_det_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sis_Documento_Tipo_Talonario_Bus bus_documento = new tb_sis_Documento_Tipo_Talonario_Bus();
+        cp_orden_giro_det_ing_x_oc_Bus bus_orden_giro_det_ing_x_oc = new cp_orden_giro_det_ing_x_oc_Bus();
+        cp_orden_giro_det_ing_x_oc_List ListaPorIngresar = new cp_orden_giro_det_ing_x_oc_List();
+        cp_orden_giro_det_ing_x_oc_ListaDetalle ListaDetalleOC = new cp_orden_giro_det_ing_x_oc_ListaDetalle();
 
         ct_cbtecble_det_List_re List_ct_cbtecble_det_List_retencion = new ct_cbtecble_det_List_re();
         cp_retencion_det_lst List_cp_retencion_det = new cp_retencion_det_lst();
@@ -86,7 +89,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
         #endregion
 
-
         #region Metodos ComboBox bajo demanda flujo
         ba_TipoFlujo_Bus bus_tipo = new ba_TipoFlujo_Bus();
         public ActionResult CmbFlujo_Deudas()
@@ -117,6 +119,22 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public in_Producto_Info get_info_bajo_demanda_producto(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
+        #region MyRegion
+        public ActionResult CmbCuenta_OC()
+        {
+            cp_orden_giro_det_ing_x_oc_Info model = new cp_orden_giro_det_ing_x_oc_Info();
+            return PartialView("_CmbCuenta_OC_det", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_cmbCuenta_OC_det(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_cmbCuenta_OC_det(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
 
@@ -333,6 +351,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             Lis_ct_cbtecble_det_List.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
             List_det.set_list(new List<cp_orden_giro_det_Info>(), model.IdTransaccionSession);
+
+            ListaDetalleOC.set_list(new List<cp_orden_giro_det_ing_x_oc_Info>(), model.IdTransaccionSession);
+
             cargar_combos(model);
             return View(model);
         }
@@ -369,7 +390,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.info_retencion.detalle = List_cp_retencion_det.get_list(model.IdTransaccionSession);
             model.info_retencion.info_comprobante.lst_ct_cbtecble_det = List_ct_cbtecble_det_List_retencion.get_list(model.IdTransaccionSession);
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(model.IdTransaccionSession);
-
 
             if (model.info_retencion.detalle.Count() > 0)
             {
@@ -425,7 +445,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
+
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
+
             if (!bus_orden_giro.guardarDB(model))
             {
                 cargar_combos(model);
@@ -456,6 +479,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             model.info_retencion = bus_retencion.get_info(model.info_retencion.IdEmpresa, model.info_retencion.IdRetencion);
+
+            model.lst_det_oc = bus_orden_giro_det_ing_x_oc.get_list(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
+
             if (model.info_retencion.IdEmpresa == 0)
             {
                 tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
@@ -468,6 +494,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
+            ListaDetalleOC.set_list(model.lst_det_oc, model.IdTransaccionSession);
+
             cargar_combos(model);
             cargar_combos_detalle();
 
@@ -604,6 +632,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             model.info_retencion = bus_retencion.get_info(model.info_retencion.IdEmpresa, model.info_retencion.IdRetencion);
 
+            model.lst_det_oc = bus_orden_giro_det_ing_x_oc.get_list(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
+            ListaDetalleOC.set_list(model.lst_det_oc, model.IdTransaccionSession);
+
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
 
@@ -657,6 +688,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             model.IdUsuario = SessionFixed.IdUsuario;
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
 
             if (!bus_orden_giro.anularDB(model))
             {
@@ -892,6 +924,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetListIng_Inv_OC_PorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdSucursal = 0, decimal IdProveedor= 0)
+        {
+            var lst = bus_orden_giro_det_ing_x_oc.get_list_x_ingresar(IdEmpresa, IdSucursal, IdProveedor);
+            ListaPorIngresar.set_list(lst, IdTransaccionSession);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Detalle de inventario
@@ -1013,6 +1054,112 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         #endregion
+
+        #region Funciones del detalle IOC
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_ing_inv_oc_det()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListaDetalleOC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle_oc();
+            return PartialView("_GridViewPartial_ing_inv_oc_det", model);
+        }
+        private void cargar_combos_detalle_oc()
+        {
+            in_UnidadMedida_Bus bus_unidad = new in_UnidadMedida_Bus();
+            var lst_unidad = bus_unidad.get_list(false);
+            ViewBag.lst_unidad = lst_unidad;
+
+            tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
+            var lst_impuestos = bus_impuesto.get_list("IVA", false);
+            ViewBag.lst_impuestos = lst_impuestos;
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public JsonResult EditingAddNew_IOC(string IDs = "", decimal IdTransaccionSession = 0)
+        {
+            if (IDs != "")
+            {
+                int IdEmpresaSesion = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var lst_x_ingresar = ListaPorIngresar.get_list(IdTransaccionSession);
+                string[] array = IDs.Split(',');
+                foreach (var item in array)
+                {
+                    int IdEmpresa = Convert.ToInt32(item.Substring(0, 3));
+                    int IdSucursal = Convert.ToInt32(item.Substring(3, 3));
+                    int IdMovi_inven_tipo = Convert.ToInt32(item.Substring(6, 6));
+                    int IdNumMovi = Convert.ToInt32(item.Substring(12, 6));
+                    int Secuencia = Convert.ToInt32(item.Substring(18, 6));
+
+                    var info_det = lst_x_ingresar.Where(q => q.IdEmpresa == IdEmpresa && q.inv_IdSucursal == IdSucursal && q.inv_IdMovi_inven_tipo == IdMovi_inven_tipo && q.inv_IdNumMovi == IdNumMovi && q.inv_Secuencia == Secuencia).FirstOrDefault();
+
+                    cp_orden_giro_det_ing_x_oc_Info info_det_inv = new cp_orden_giro_det_ing_x_oc_Info();
+                    
+                    if (info_det != null)
+                    {
+                        info_det_inv.IdEmpresa = info_det.IdEmpresa;
+                        info_det_inv.inv_IdSucursal = info_det.inv_IdSucursal;
+                        info_det_inv.inv_IdMovi_inven_tipo = info_det.inv_IdMovi_inven_tipo;
+                        info_det_inv.inv_Secuencia = info_det.inv_Secuencia;
+                        info_det_inv.inv_IdNumMovi = info_det.inv_IdNumMovi;
+                        info_det_inv.oc_IdSucursal = info_det.oc_IdSucursal;
+                        info_det_inv.oc_IdOrdenCompra = info_det.oc_IdOrdenCompra;
+                        info_det_inv.oc_Secuencia = info_det.oc_Secuencia;
+                        info_det_inv.pr_descripcion = info_det.pr_descripcion;
+                        info_det_inv.IdCtaCble = info_det.IdCtaCble_oc;
+                        info_det_inv.IdCtaCble_oc = info_det.IdCtaCble_oc;
+                        info_det_inv.dm_cantidad = info_det.dm_cantidad;
+                        info_det_inv.do_precioCompra = info_det.do_precioCompra;
+                        //info_det_inv.do_porc_des = info_det.do_porc_des;
+                        // info_det_inv.do_descuento = info_det.do_descuento;
+                        info_det_inv.do_precioFinal = info_det.do_precioFinal;
+                        //info_det_inv.do_subtotal = info_det.do_subtotal;
+                        //info_det_inv.do_iva = info_det.do_iva;
+                        //info_det_inv.do_total = info_det.do_total;
+                        info_det_inv.IdUnidadMedida = info_det.IdUnidadMedida;
+                        //info_det_inv.Por_Iva = info_det.Por_Iva;
+                        info_det_inv.IdCod_Impuesto = info_det.IdCod_Impuesto;
+                        info_det_inv.NomUnidadMedida = info_det.NomUnidadMedida;
+                        info_det_inv.IdProveedor = info_det.IdProveedor;
+                        info_det_inv.IdProducto = info_det.IdProducto;
+                        info_det_inv.pc_Cuenta = info_det.pc_Cuenta;
+
+                        ListaDetalleOC.AddRow(info_det_inv, IdTransaccionSession);
+                    }
+                }
+            }
+            List<cp_orden_giro_det_ing_x_oc_Info> lista = ListaDetalleOC.get_list(IdTransaccionSession);
+            var model = ListaDetalleOC.get_list(IdTransaccionSession);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate_IOC([ModelBinder(typeof(DevExpressEditorsBinder))] cp_orden_giro_det_ing_x_oc_Info info_det)
+        {            
+            ListaDetalleOC.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = ListaDetalleOC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
+            return PartialView("_GridViewPartial_ing_inv_oc_det", model);
+        }
+
+        public ActionResult EditingDelete_IOC(int Secuencia)
+        {
+            ListaDetalleOC.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<cp_orden_giro_det_ing_x_oc_Info> model = new List<cp_orden_giro_det_ing_x_oc_Info>();
+            model = ListaDetalleOC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
+            return PartialView("_GridViewPartial_ing_inv_oc_det", model);
+        }
+        #endregion
+
+        #region OC por ingresar
+        public ActionResult GridViewPartial_ing_inv_oc_x_ingresar()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListaPorIngresar.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_ing_inv_oc_x_ingresar", model);
+        }
+        #endregion
     }
 
 
@@ -1101,6 +1248,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
+
     public class cp_orden_giro_det_Info_List
     {
         in_categorias_Bus bus_categoria = new in_categorias_Bus();
@@ -1143,6 +1291,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public void UpdateRow(cp_orden_giro_det_Info info_det, decimal IdTransaccionSession)
         {
             cp_orden_giro_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+
             edited_info.IdProducto = info_det.IdProducto;
             edited_info.pr_descripcion = info_det.pr_descripcion;
             edited_info.Cantidad = info_det.Cantidad;
@@ -1170,4 +1319,92 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
     }
 
+    public class cp_orden_giro_det_ing_x_oc_ListaDetalle
+    {
+        string Variable = "cp_orden_giro_det_ing_x_oc_Info";
+        tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
+
+        public List<cp_orden_giro_det_ing_x_oc_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_orden_giro_det_ing_x_oc_Info> list = new List<cp_orden_giro_det_ing_x_oc_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_orden_giro_det_ing_x_oc_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_orden_giro_det_ing_x_oc_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(cp_orden_giro_det_ing_x_oc_Info info_det_inv, decimal IdTransaccionSession)
+        {
+            List<cp_orden_giro_det_ing_x_oc_Info> list = get_list(IdTransaccionSession);
+
+            tb_sis_Impuesto_Info info_impuesto = bus_impuesto.get_info(info_det_inv.IdCod_Impuesto);
+           
+            info_det_inv.Por_Iva = info_impuesto.porcentaje;        
+            info_det_inv.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            info_det_inv.do_descuento = info_det_inv.do_precioCompra * (info_det_inv.do_porc_des/ 100);
+            info_det_inv.do_precioFinal = info_det_inv.do_precioCompra - info_det_inv.do_descuento;
+            info_det_inv.do_subtotal = info_det_inv.dm_cantidad * info_det_inv.do_precioFinal;
+            info_det_inv.do_iva = info_det_inv.do_subtotal * (info_det_inv.Por_Iva/100);
+            info_det_inv.do_total = info_det_inv.do_subtotal + info_det_inv.do_iva;
+
+            list.Add(info_det_inv);
+        }
+
+        public void UpdateRow(cp_orden_giro_det_ing_x_oc_Info info_det, decimal IdTransaccionSession)
+        {
+            tb_sis_Impuesto_Info info_impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
+            cp_orden_giro_det_ing_x_oc_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            edited_info.IdCtaCble = info_det.IdCtaCble_oc;
+            edited_info.IdCtaCble_oc = info_det.IdCtaCble_oc;
+
+            edited_info.dm_cantidad = info_det.dm_cantidad;
+            edited_info.do_porc_des = info_det.do_porc_des;
+            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
+
+            edited_info.Por_Iva = info_impuesto.porcentaje;
+            edited_info.do_descuento = edited_info.do_precioCompra * (edited_info.do_porc_des / 100);
+            edited_info.do_precioFinal = edited_info.do_precioCompra - edited_info.do_descuento;
+            edited_info.do_subtotal = edited_info.dm_cantidad * edited_info.do_precioFinal;
+            edited_info.do_iva = edited_info.do_subtotal * (edited_info.Por_Iva / 100);
+            edited_info.do_total = edited_info.do_subtotal + edited_info.do_iva;
+
+        }
+
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
+        {
+            List<cp_orden_giro_det_ing_x_oc_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+        }
+    }
+
+    public class cp_orden_giro_det_ing_x_oc_List
+    {
+        string Variable = "cp_orden_giro_det_ing_x_oc_Info";
+        public List<cp_orden_giro_det_ing_x_oc_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_orden_giro_det_ing_x_oc_Info> list = new List<cp_orden_giro_det_ing_x_oc_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_orden_giro_det_ing_x_oc_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_orden_giro_det_ing_x_oc_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
 }

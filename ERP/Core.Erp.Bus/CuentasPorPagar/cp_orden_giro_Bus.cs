@@ -146,7 +146,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -540,5 +540,5 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
-        }
+    }
 }
