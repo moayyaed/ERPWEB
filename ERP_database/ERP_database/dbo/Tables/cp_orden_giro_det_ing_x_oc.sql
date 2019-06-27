@@ -14,6 +14,7 @@
     [dm_cantidad]           FLOAT (53)   NOT NULL,
     [do_porc_des]           FLOAT (53)   NOT NULL,
     [do_descuento]          FLOAT (53)   NOT NULL,
+    [do_precioCompra]       FLOAT (53)   NOT NULL,
     [do_precioFinal]        FLOAT (53)   NOT NULL,
     [do_subtotal]           FLOAT (53)   NOT NULL,
     [IdCod_Impuesto]        VARCHAR (25) NOT NULL,
@@ -28,4 +29,6 @@
     CONSTRAINT [FK_cp_orden_giro_det_ing_x_oc_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_cp_orden_giro_det_ing_x_oc_in_Ing_Egr_Inven_det] FOREIGN KEY ([IdEmpresa], [inv_IdSucursal], [inv_IdMovi_inven_tipo], [inv_IdNumMovi], [inv_Secuencia]) REFERENCES [dbo].[in_Ing_Egr_Inven_det] ([IdEmpresa], [IdSucursal], [IdMovi_inven_tipo], [IdNumMovi], [Secuencia])
 );
+
+
 
