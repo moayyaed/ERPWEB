@@ -17,7 +17,6 @@ namespace Core.Erp.Data
         public in_ProductoTipo()
         {
             this.in_Producto = new HashSet<in_Producto>();
-            this.in_parametro = new HashSet<in_parametro>();
         }
     
         public int IdEmpresa { get; set; }
@@ -39,6 +38,5 @@ namespace Core.Erp.Data
         public bool Aparece_fabricacion { get; set; }
     
         public virtual ICollection<in_Producto> in_Producto { get; set; }
-        public virtual ICollection<in_parametro> in_parametro { get; set; }
     }
 }

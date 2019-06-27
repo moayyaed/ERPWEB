@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public in_movi_inven_tipo()
         {
-            this.in_movi_inven_tipo_x_tb_bodega = new HashSet<in_movi_inven_tipo_x_tb_bodega>();
             this.in_movi_inve = new HashSet<in_movi_inve>();
+            this.in_movi_inven_tipo_x_tb_bodega = new HashSet<in_movi_inven_tipo_x_tb_bodega>();
             this.in_parametro = new HashSet<in_parametro>();
             this.in_parametro1 = new HashSet<in_parametro>();
             this.in_parametro2 = new HashSet<in_parametro>();
@@ -45,16 +45,14 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
         public Nullable<bool> Genera_Movi_Inven { get; set; }
         public Nullable<bool> Genera_Diario_Contable { get; set; }
     
-        public virtual ICollection<in_movi_inven_tipo_x_tb_bodega> in_movi_inven_tipo_x_tb_bodega { get; set; }
         public virtual ICollection<in_movi_inve> in_movi_inve { get; set; }
+        public virtual ICollection<in_movi_inven_tipo_x_tb_bodega> in_movi_inven_tipo_x_tb_bodega { get; set; }
         public virtual ICollection<in_parametro> in_parametro { get; set; }
         public virtual ICollection<in_parametro> in_parametro1 { get; set; }
         public virtual ICollection<in_parametro> in_parametro2 { get; set; }

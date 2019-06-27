@@ -19,15 +19,9 @@ namespace Core.Erp.Info.Inventario
         public string Nombre { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-
-        [StringLength(10, MinimumLength = 1, ErrorMessage = ("El campo abreviatura debe tener mínimo 1 caracter máximo 10"))]
-        public string Abrebiatura { get; set; }
-        public string NombreIngles { get; set; }
         public Nullable<int> Orden { get; set; }
         public string IdUsuario { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> FechaUltMod { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
     }
 }

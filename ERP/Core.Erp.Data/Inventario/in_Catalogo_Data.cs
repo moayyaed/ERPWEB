@@ -23,7 +23,6 @@ namespace Core.Erp.Data.Inventario
                                  {
                                      IdCatalogo_tipo = q.IdCatalogo_tipo,
                                      IdCatalogo = q.IdCatalogo,
-                                     Abrebiatura = q.Abrebiatura,
                                      Nombre = q.Nombre,
                                      Estado = q.Estado,
                                      Orden = q.Orden,
@@ -39,7 +38,6 @@ namespace Core.Erp.Data.Inventario
                                  {
                                      IdCatalogo_tipo = q.IdCatalogo_tipo,
                                      IdCatalogo = q.IdCatalogo,
-                                     Abrebiatura = q.Abrebiatura,
                                      Nombre = q.Nombre,
                                      Estado = q.Estado,
                                      Orden = q.Orden,
@@ -69,7 +67,6 @@ namespace Core.Erp.Data.Inventario
                     {
                         IdCatalogo_tipo = Entity.IdCatalogo_tipo,
                         IdCatalogo = Entity.IdCatalogo,
-                        Abrebiatura = Entity.Abrebiatura,
                         Nombre = Entity.Nombre,
                         Estado = Entity.Estado,
                         Orden = Entity.Orden
@@ -95,7 +92,6 @@ namespace Core.Erp.Data.Inventario
                     {
                         IdCatalogo_tipo = info.IdCatalogo_tipo,
                         IdCatalogo = info.IdCatalogo,
-                        Abrebiatura = info.Abrebiatura,
                         Nombre = info.Nombre,
                         Estado = info.Estado="A",
                         Orden = info.Orden
@@ -120,7 +116,6 @@ namespace Core.Erp.Data.Inventario
                     if (Entity == null) return false;
 
                     Entity.Nombre = info.Nombre;
-                    Entity.Abrebiatura = info.Abrebiatura;
 
                     Context.SaveChanges();
                 }
