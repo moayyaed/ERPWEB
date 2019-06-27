@@ -113,7 +113,6 @@
             this.xrTableCell39 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell40 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell41 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.detalle_firma_pago = new DevExpress.XtraReports.UI.XRSubreport();
             this.resumen_forma_pago = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTable6 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -831,7 +830,6 @@
             // 
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable2,
-            this.detalle_firma_pago,
             this.resumen_forma_pago,
             this.xrTable6});
             this.ReportFooter.HeightF = 245.4166F;
@@ -935,14 +933,6 @@
             this.xrTableCell41.Name = "xrTableCell41";
             this.xrTableCell41.Text = "xrTableCell41";
             this.xrTableCell41.Weight = 0.667262030658321D;
-            // 
-            // detalle_firma_pago
-            // 
-            this.detalle_firma_pago.LocationFloat = new DevExpress.Utils.PointFloat(0F, 49.91665F);
-            this.detalle_firma_pago.Name = "detalle_firma_pago";
-            this.detalle_firma_pago.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_010_detalle_forma_pago_Rpte();
-            this.detalle_firma_pago.SizeF = new System.Drawing.SizeF(750.9999F, 23F);
-            this.detalle_firma_pago.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.detalle_firma_pago_BeforePrint);
             // 
             // resumen_forma_pago
             // 
@@ -1172,7 +1162,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell28;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell34;
         private DevExpress.XtraReports.UI.XRSubreport resumen_forma_pago;
-        private DevExpress.XtraReports.UI.XRSubreport detalle_firma_pago;
         private DevExpress.XtraReports.UI.XRTable xrTable8;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow13;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell21;
