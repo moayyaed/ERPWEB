@@ -39,7 +39,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         [HttpPost]
         public ActionResult Nuevo(Af_Area_Info model)
         {
-            
+           model.IdUsuarioCreacion = SessionFixed.IdUsuario;
             if (!bus_area.GuardarDB(model))
             {
                 return View(model);
@@ -58,6 +58,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         [HttpPost]
         public ActionResult Modificar(Af_Area_Info model)
         {
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             if (!bus_area.ModificarDB(model))
             {
                 return View(model);
@@ -76,6 +77,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         [HttpPost]
         public ActionResult Anular(Af_Area_Info model)
         {
+            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
             if (!bus_area.AnularDB(model))
             {
                 return View(model);
