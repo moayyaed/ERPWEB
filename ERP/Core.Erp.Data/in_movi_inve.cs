@@ -59,12 +59,12 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_despacho { get; set; }
         public Nullable<int> IdMotivo_Inv { get; set; }
     
-        public virtual in_Catalogo in_Catalogo { get; set; }
         public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public virtual ICollection<in_movi_inve> in_movi_inve1 { get; set; }
         public virtual in_movi_inve in_movi_inve2 { get; set; }
-        public virtual in_movi_inven_tipo in_movi_inven_tipo { get; set; }
         public virtual ICollection<in_movi_inve_x_ct_cbteCble> in_movi_inve_x_ct_cbteCble { get; set; }
         public virtual in_Motivo_Inven in_Motivo_Inven { get; set; }
+        public virtual in_Catalogo in_Catalogo { get; set; }
+        public virtual in_movi_inven_tipo in_movi_inven_tipo { get; set; }
     }
 }

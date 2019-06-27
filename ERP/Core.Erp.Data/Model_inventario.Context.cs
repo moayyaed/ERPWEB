@@ -21,16 +21,17 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
+
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<in_Catalogo> in_Catalogo { get; set; }
         public DbSet<in_CatalogoTipo> in_CatalogoTipo { get; set; }
         public DbSet<in_categorias> in_categorias { get; set; }
         public DbSet<in_devolucion_inven> in_devolucion_inven { get; set; }
@@ -39,7 +40,6 @@ namespace Core.Erp.Data
         public DbSet<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public DbSet<in_linea> in_linea { get; set; }
         public DbSet<in_Marca> in_Marca { get; set; }
-        public DbSet<in_movi_inven_tipo> in_movi_inven_tipo { get; set; }
         public DbSet<in_movi_inven_tipo_x_tb_bodega> in_movi_inven_tipo_x_tb_bodega { get; set; }
         public DbSet<in_presentacion> in_presentacion { get; set; }
         public DbSet<in_Producto_Composicion> in_Producto_Composicion { get; set; }
@@ -83,9 +83,11 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_det_conversion> vwin_Ing_Egr_Inven_det_conversion { get; set; }
         public DbSet<vwin_Producto_Composicion> vwin_Producto_Composicion { get; set; }
         public DbSet<in_Motivo_Inven> in_Motivo_Inven { get; set; }
-        public DbSet<in_parametro> in_parametro { get; set; }
         public DbSet<in_Ing_Egr_Inven> in_Ing_Egr_Inven { get; set; }
         public DbSet<vwin_Ing_Egr_InvenPorOrdenCompra> vwin_Ing_Egr_InvenPorOrdenCompra { get; set; }
+        public DbSet<in_Catalogo> in_Catalogo { get; set; }
+        public DbSet<in_movi_inven_tipo> in_movi_inven_tipo { get; set; }
+        public DbSet<in_parametro> in_parametro { get; set; }
     
         public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
         {
