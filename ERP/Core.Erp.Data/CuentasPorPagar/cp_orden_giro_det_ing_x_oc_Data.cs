@@ -82,6 +82,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  oc_IdSucursal = q.oc_IdSucursal,
                                  oc_IdOrdenCompra = q.oc_IdOrdenCompra,
                                  oc_Secuencia = q.oc_Secuencia,
+                                 Secuencia = q.Secuencia,
                                  pr_descripcion = q.pr_descripcion,
                                  IdCtaCble = q.IdCtaCble,
                                  dm_cantidad = q.dm_cantidad,
@@ -96,7 +97,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  Por_Iva = q.Por_Iva,
                                  IdCod_Impuesto = q.IdCod_Impuesto,
                                  NomUnidadMedida = q.NomUnidadMedida,
-                                 IdProducto = q.IdProducto
+                                 IdProducto = q.IdProducto,
+                                 do_precioCompra = q.do_precioCompra
 
                              }).ToList();                    
                 }

@@ -583,7 +583,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
+
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
+
             var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
             if (sucu != null)
             {
@@ -758,16 +761,27 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             double IVA = 0;
             double Total = 0;
             double Diferencia = 0;
-
+            
             Lis_ct_cbtecble_det_List.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
             var lst_det = List_det.get_list(IdTransaccionSession);
-            if (lst_det.Count == 0)
+            var lst_det_oc = ListaDetalleOC.get_list(IdTransaccionSession);
+            string TipoDiario = lst_det_oc.Count > 0 ? "OC" : (lst_det.Count> 0 ? "INV" : "NA");
+
+            if (TipoDiario == "NA")
             {
-                Subtotal0 = Math.Round(co_subtotal_siniva,2,MidpointRounding.AwayFromZero);
-                SubtotalIVA = Math.Round(co_subtotal_iva,2,MidpointRounding.AwayFromZero);
-                IVA = Math.Round(co_valoriva,2,MidpointRounding.AwayFromZero);
-                Total = Math.Round(co_total,2,MidpointRounding.AwayFromZero);
-            }else
+                Subtotal0 = Math.Round(co_subtotal_siniva, 2, MidpointRounding.AwayFromZero);
+                SubtotalIVA = Math.Round(co_subtotal_iva, 2, MidpointRounding.AwayFromZero);
+                IVA = Math.Round(co_valoriva, 2, MidpointRounding.AwayFromZero);
+                Total = Math.Round(co_total, 2, MidpointRounding.AwayFromZero);
+            }
+            else if (TipoDiario == "OC")
+            {
+                Subtotal0 = Math.Round((lst_det_oc.Where(q => q.Por_Iva == 0).ToList().Sum(q => q.do_subtotal)), 2, MidpointRounding.AwayFromZero);
+                SubtotalIVA = Math.Round((lst_det_oc.Where(q => q.Por_Iva > 0).ToList().Sum(q => q.do_subtotal)), 2, MidpointRounding.AwayFromZero);
+                IVA = Math.Round(lst_det_oc.Sum(q => q.do_iva), 2, MidpointRounding.AwayFromZero);
+                Total = Math.Round(lst_det_oc.Sum(q => q.do_total), 2, MidpointRounding.AwayFromZero);                
+            }
+            else
             {
                 Subtotal0 = Math.Round(lst_det.Where(q=>q.PorIva == 0).Sum(q=>q.Subtotal), 2, MidpointRounding.AwayFromZero);
                 SubtotalIVA = Math.Round(lst_det.Where(q => q.PorIva > 0).Sum(q => q.Subtotal), 2, MidpointRounding.AwayFromZero);
@@ -804,7 +818,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             #endregion
 
             #region Subtotal
-            if (lst_det.Count == 0)
+            if (TipoDiario == "NA")
             {
                 Lis_ct_cbtecble_det_List.AddRow(new ct_cbtecble_det_Info
                 {
@@ -813,6 +827,30 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     dc_Valor = Math.Round(Subtotal0 + SubtotalIVA, 2),
                     dc_Observacion = observacion
                 }, IdTransaccionSession);
+            }
+            else if(TipoDiario =="OC")
+            {
+                var lst_g = (from q in lst_det_oc
+                             group q by new { q.IdCtaCble } into g
+                             select new
+                             {
+                                 IdCtaCble = g.Key.IdCtaCble,
+                                 Valor = g.Sum(q => q.do_subtotal)
+                             }).ToList();
+
+                int cont = 1;
+                foreach (var item in lst_g)
+                {
+                    ct_cbtecble_det_Info det = new ct_cbtecble_det_Info
+                    {
+                        IdCtaCble = item.IdCtaCble,
+                        dc_Valor_debe = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
+                        dc_Valor = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
+                        dc_Observacion = observacion
+                    };
+                    Lis_ct_cbtecble_det_List.AddRow(det, IdTransaccionSession);
+                    cont++;
+                }
             }
             else
             {
@@ -1085,13 +1123,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
-                    int IdEmpresa = Convert.ToInt32(item.Substring(0, 3));
-                    int IdSucursal = Convert.ToInt32(item.Substring(3, 3));
-                    int IdMovi_inven_tipo = Convert.ToInt32(item.Substring(6, 6));
-                    int IdNumMovi = Convert.ToInt32(item.Substring(12, 6));
-                    int Secuencia = Convert.ToInt32(item.Substring(18, 6));
-
-                    var info_det = lst_x_ingresar.Where(q => q.IdEmpresa == IdEmpresa && q.inv_IdSucursal == IdSucursal && q.inv_IdMovi_inven_tipo == IdMovi_inven_tipo && q.inv_IdNumMovi == IdNumMovi && q.inv_Secuencia == Secuencia).FirstOrDefault();
+                    var info_det = lst_x_ingresar.Where(q => q.IdGenerado == item).FirstOrDefault();
 
                     cp_orden_giro_det_ing_x_oc_Info info_det_inv = new cp_orden_giro_det_ing_x_oc_Info();
                     
@@ -1110,19 +1142,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         info_det_inv.IdCtaCble_oc = info_det.IdCtaCble_oc;
                         info_det_inv.dm_cantidad = info_det.dm_cantidad;
                         info_det_inv.do_precioCompra = info_det.do_precioCompra;
-                        //info_det_inv.do_porc_des = info_det.do_porc_des;
-                        // info_det_inv.do_descuento = info_det.do_descuento;
                         info_det_inv.do_precioFinal = info_det.do_precioFinal;
-                        //info_det_inv.do_subtotal = info_det.do_subtotal;
-                        //info_det_inv.do_iva = info_det.do_iva;
-                        //info_det_inv.do_total = info_det.do_total;
                         info_det_inv.IdUnidadMedida = info_det.IdUnidadMedida;
-                        //info_det_inv.Por_Iva = info_det.Por_Iva;
                         info_det_inv.IdCod_Impuesto = info_det.IdCod_Impuesto;
                         info_det_inv.NomUnidadMedida = info_det.NomUnidadMedida;
                         info_det_inv.IdProveedor = info_det.IdProveedor;
                         info_det_inv.IdProducto = info_det.IdProducto;
                         info_det_inv.pc_Cuenta = info_det.pc_Cuenta;
+                        info_det_inv.do_precioCompra = info_det.do_precioCompra;
 
                         ListaDetalleOC.AddRow(info_det_inv, IdTransaccionSession);
                     }
@@ -1389,7 +1416,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
     public class cp_orden_giro_det_ing_x_oc_List
     {
-        string Variable = "cp_orden_giro_det_ing_x_oc_Info";
+        string Variable = "cp_orden_giro_det_ing_x_oc_x_cruzar_Info";
         public List<cp_orden_giro_det_ing_x_oc_Info> get_list(decimal IdTransaccionSession)
         {
 

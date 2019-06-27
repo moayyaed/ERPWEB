@@ -22,13 +22,14 @@ namespace Core.Erp.Data
         public int inv_IdMovi_inven_tipo { get; set; }
         public decimal inv_IdNumMovi { get; set; }
         public int inv_Secuencia { get; set; }
-        public Nullable<int> oc_IdSucursal { get; set; }
-        public Nullable<decimal> oc_IdOrdenCompra { get; set; }
-        public Nullable<int> oc_Secuencia { get; set; }
+        public int oc_IdSucursal { get; set; }
+        public decimal oc_IdOrdenCompra { get; set; }
+        public int oc_Secuencia { get; set; }
         public string IdCtaCble { get; set; }
         public double dm_cantidad { get; set; }
         public double do_porc_des { get; set; }
         public double do_descuento { get; set; }
+        public double do_precioCompra { get; set; }
         public double do_precioFinal { get; set; }
         public double do_subtotal { get; set; }
         public string IdCod_Impuesto { get; set; }

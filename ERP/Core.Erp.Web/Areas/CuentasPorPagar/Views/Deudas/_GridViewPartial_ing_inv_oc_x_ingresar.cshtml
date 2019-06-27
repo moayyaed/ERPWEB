@@ -34,12 +34,6 @@
 
         settings.Columns.Add("inv_IdNumMovi", "# Documento").Width = Unit.Percentage(10);
         settings.Columns.Add("inv_Secuencia", "Secuencia").Width = Unit.Percentage(10);
-        //settings.Columns.Add(column => {
-        //    column.Width = Unit.Percentage(10);
-        //    column.FieldName = "oc_fecha";
-        //    column.Caption = "Fecha";
-        //    column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-        //});
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(20);
@@ -47,8 +41,13 @@
             column.Caption = "Producto";
         });
         settings.Columns.Add("dm_cantidad", "Cantidad").Width = Unit.Percentage(10);
-        settings.Columns.Add("NomUnidadMedida", "Unidad Medida").Width = Unit.Percentage(10);
-        
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "do_precioFinal";
+            column.Caption = "Precio";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(10);
