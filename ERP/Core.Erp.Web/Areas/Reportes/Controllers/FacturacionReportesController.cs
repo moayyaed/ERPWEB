@@ -545,8 +545,26 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdCatalogo_FormaPago.Value = model.IdCatalogo_FormaPago;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-
             ViewBag.Report = report;
+
+            FAC_010_detalle_forma_pago_Rpte report_detalle = new FAC_010_detalle_forma_pago_Rpte();
+            #region Cargo diseño desde base
+            var reporte_ = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_010");
+            if (reporte_ != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte_.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report_detalle.p_IdEmpresa.Value = model.IdEmpresa;
+            report_detalle.p_IdSucursal.Value = model.IdSucursal;
+            report_detalle.p_fecha_ini.Value = model.fecha_ini;
+            report_detalle.p_fecha_fin.Value = model.fecha_fin;
+            report_detalle.p_IdCatalogo_FormaPago.Value = model.IdCatalogo_FormaPago;
+            report_detalle.usuario = SessionFixed.IdUsuario;
+            report_detalle.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report_detalle = report_detalle;
+
             return View(model);
         }
         [HttpPost]
@@ -567,15 +585,34 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_IdCatalogo_FormaPago.Value = model.IdCatalogo_FormaPago;
-
             cargar_FAC010(model);
-
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-
             ViewBag.Report = report;
+
+
+
+            FAC_010_detalle_forma_pago_Rpte report_detalle = new FAC_010_detalle_forma_pago_Rpte();
+            #region Cargo diseño desde base
+            var reporte_ = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_010");
+            if (reporte_ != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte_.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report_detalle.p_IdEmpresa.Value = model.IdEmpresa;
+            report_detalle.p_IdSucursal.Value = model.IdSucursal;
+            report_detalle.p_fecha_ini.Value = model.fecha_ini;
+            report_detalle.p_fecha_fin.Value = model.fecha_fin;
+            report_detalle.p_IdCatalogo_FormaPago.Value = model.IdCatalogo_FormaPago;
+            report_detalle.usuario = SessionFixed.IdUsuario;
+            report_detalle.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report_detalle = report_detalle;
             return View(model);
         }
+
+
         public ActionResult FAC_011()
         {
 

@@ -83,9 +83,5 @@ namespace Core.Erp.Web.Reportes.Facturacion
             ((XRSubreport)sender).ReportSource.DataSource = Lista;
         }
 
-        private void detalle_firma_pago_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-        {
-            ((XRSubreport)sender).ReportSource.DataSource = Lista_detalle;
-        }
     }
 }
