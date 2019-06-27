@@ -41,5 +41,7 @@ namespace Core.Erp.Data
         public string NomUnidadMedida { get; set; }
         public string ca_Categoria { get; set; }
         public string nom_linea { get; set; }
+        public double Total { get; set; }
+        public string NombreEstado { get; set; }
     }
 }
