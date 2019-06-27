@@ -1198,6 +1198,12 @@
     <Compile Include="Reportes\Inventario\INV_017_Rpt.Designer.cs">
       <DependentUpon>INV_017_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Inventario\INV_018_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_018_Rpt.Designer.cs">
+      <DependentUpon>INV_018_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Presupuesto\PRE_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10063,6 +10069,7 @@
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_CmbCuenta_OC_det.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_010.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_011.cshtml" />
+    <Content Include="Areas\Reportes\Views\InventarioReportes\INV_018.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
@@ -10181,6 +10188,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10528,6 +10536,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_017_Rpt.resx">
       <DependentUpon>INV_017_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_018_Rpt.resx">
+      <DependentUpon>INV_018_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Presupuesto\PRE_001_Rpt.resx">
       <DependentUpon>PRE_001_Rpt.cs</DependentUpon>

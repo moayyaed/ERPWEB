@@ -1088,6 +1088,28 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.RequestParameters = false;
             return View(model);
         }
+
+
+        public ActionResult INV_018(decimal IdAjuste = 0)
+        {
+            INV_018_Rpt model = new INV_018_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_018");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.p_IdAjuste.Value = IdAjuste;
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa;
+            model.RequestParameters = false;
+            return View(model);
+        }
+
     }
 
 }

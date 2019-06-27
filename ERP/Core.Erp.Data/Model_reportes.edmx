@@ -3151,8 +3151,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWINV_018' no tiene definida ningu
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="Su_Descripcion" />
             <PropertyRef Name="bo_Descripcion" />
-            <PropertyRef Name="tm_descripcion_ing" />
-            <PropertyRef Name="tm_descripcion_egr" />
             <PropertyRef Name="IdProducto" />
             <PropertyRef Name="IdUnidadMedida" />
             <PropertyRef Name="StockSistema" />
@@ -3163,6 +3161,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWINV_018' no tiene definida ningu
             <PropertyRef Name="NomUnidadMedida" />
             <PropertyRef Name="ca_Categoria" />
             <PropertyRef Name="nom_linea" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="NombreEstado" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdAjuste" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -3179,8 +3179,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWINV_018' no tiene definida ningu
           <Property Name="Observacion" Type="varchar(max)" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="tm_descripcion_ing" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="tm_descripcion_egr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tm_descripcion_ing" Type="nvarchar" MaxLength="50" />
+          <Property Name="tm_descripcion_egr" Type="nvarchar" MaxLength="50" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="StockSistema" Type="float" Nullable="false" />
@@ -3191,6 +3191,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWINV_018' no tiene definida ningu
           <Property Name="NomUnidadMedida" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="ca_Categoria" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="nom_linea" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Total" Type="float" Nullable="false" />
+          <Property Name="NombreEstado" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWPRE_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6576,7 +6578,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWINV_018].[pr_descripcion] AS [pr_descripcion], 
     [VWINV_018].[NomUnidadMedida] AS [NomUnidadMedida], 
     [VWINV_018].[ca_Categoria] AS [ca_Categoria], 
-    [VWINV_018].[nom_linea] AS [nom_linea]
+    [VWINV_018].[nom_linea] AS [nom_linea], 
+    [VWINV_018].[Total] AS [Total], 
+    [VWINV_018].[NombreEstado] AS [NombreEstado]
     FROM [web].[VWINV_018] AS [VWINV_018]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWPRE_001" EntityType="Self.VWPRE_001" store:Type="Views" store:Schema="web">
@@ -12633,8 +12637,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="Su_Descripcion" />
             <PropertyRef Name="bo_Descripcion" />
-            <PropertyRef Name="tm_descripcion_ing" />
-            <PropertyRef Name="tm_descripcion_egr" />
             <PropertyRef Name="IdProducto" />
             <PropertyRef Name="IdUnidadMedida" />
             <PropertyRef Name="StockSistema" />
@@ -12645,6 +12647,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <PropertyRef Name="NomUnidadMedida" />
             <PropertyRef Name="ca_Categoria" />
             <PropertyRef Name="nom_linea" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="NombreEstado" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdAjuste" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
@@ -12661,8 +12665,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="tm_descripcion_ing" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="tm_descripcion_egr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion_ing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion_egr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="StockSistema" Type="Double" Nullable="false" />
@@ -12673,6 +12677,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="NomUnidadMedida" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="nom_linea" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="NombreEstado" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -16445,6 +16451,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySetMapping Name="VWINV_018">
             <EntityTypeMapping TypeName="Model_reportes.VWINV_018">
               <MappingFragment StoreEntitySet="VWINV_018">
+                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
                 <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
                 <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
