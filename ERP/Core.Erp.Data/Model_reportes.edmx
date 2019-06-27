@@ -3138,6 +3138,61 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWINV_017' no tiene definida ningu
           <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.VWINV_018' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWINV_018">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAjuste" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCatalogo_Estado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="tm_descripcion_ing" />
+            <PropertyRef Name="tm_descripcion_egr" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="StockSistema" />
+            <PropertyRef Name="StockFisico" />
+            <PropertyRef Name="Ajuste" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="NomUnidadMedida" />
+            <PropertyRef Name="ca_Categoria" />
+            <PropertyRef Name="nom_linea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdAjuste" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo_ing" Type="int" />
+          <Property Name="IdMovi_inven_tipo_egr" Type="int" />
+          <Property Name="IdNumMovi_ing" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdNumMovi_egr" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdCatalogo_Estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="tm_descripcion_ing" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tm_descripcion_egr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="StockSistema" Type="float" Nullable="false" />
+          <Property Name="StockFisico" Type="float" Nullable="false" />
+          <Property Name="Ajuste" Type="float" Nullable="false" />
+          <Property Name="Costo" Type="float" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="NomUnidadMedida" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ca_Categoria" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nom_linea" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWPRE_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWPRE_001">
           <Key>
@@ -6493,6 +6548,37 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWINV_017].[IdOrdenCompra] AS [IdOrdenCompra]
     FROM [web].[VWINV_017] AS [VWINV_017]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VWINV_018" EntityType="Self.VWINV_018" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWINV_018].[IdEmpresa] AS [IdEmpresa], 
+    [VWINV_018].[IdAjuste] AS [IdAjuste], 
+    [VWINV_018].[Secuencia] AS [Secuencia], 
+    [VWINV_018].[IdSucursal] AS [IdSucursal], 
+    [VWINV_018].[IdBodega] AS [IdBodega], 
+    [VWINV_018].[IdMovi_inven_tipo_ing] AS [IdMovi_inven_tipo_ing], 
+    [VWINV_018].[IdMovi_inven_tipo_egr] AS [IdMovi_inven_tipo_egr], 
+    [VWINV_018].[IdNumMovi_ing] AS [IdNumMovi_ing], 
+    [VWINV_018].[IdNumMovi_egr] AS [IdNumMovi_egr], 
+    [VWINV_018].[IdCatalogo_Estado] AS [IdCatalogo_Estado], 
+    [VWINV_018].[Estado] AS [Estado], 
+    [VWINV_018].[Fecha] AS [Fecha], 
+    [VWINV_018].[Observacion] AS [Observacion], 
+    [VWINV_018].[Su_Descripcion] AS [Su_Descripcion], 
+    [VWINV_018].[bo_Descripcion] AS [bo_Descripcion], 
+    [VWINV_018].[tm_descripcion_ing] AS [tm_descripcion_ing], 
+    [VWINV_018].[tm_descripcion_egr] AS [tm_descripcion_egr], 
+    [VWINV_018].[IdProducto] AS [IdProducto], 
+    [VWINV_018].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [VWINV_018].[StockSistema] AS [StockSistema], 
+    [VWINV_018].[StockFisico] AS [StockFisico], 
+    [VWINV_018].[Ajuste] AS [Ajuste], 
+    [VWINV_018].[Costo] AS [Costo], 
+    [VWINV_018].[pr_descripcion] AS [pr_descripcion], 
+    [VWINV_018].[NomUnidadMedida] AS [NomUnidadMedida], 
+    [VWINV_018].[ca_Categoria] AS [ca_Categoria], 
+    [VWINV_018].[nom_linea] AS [nom_linea]
+    FROM [web].[VWINV_018] AS [VWINV_018]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VWPRE_001" EntityType="Self.VWPRE_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [VWPRE_001].[IdEmpresa] AS [IdEmpresa], 
@@ -8911,6 +8997,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="VWINV_018" EntityType="Model_reportes.VWINV_018" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12534,6 +12621,59 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Double" Name="Egreso" Nullable="false" />
           <Property Type="Double" Name="SaldoFinal" Nullable="false" />
         </ComplexType>
+        <EntityType Name="VWINV_018">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAjuste" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCatalogo_Estado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="tm_descripcion_ing" />
+            <PropertyRef Name="tm_descripcion_egr" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="StockSistema" />
+            <PropertyRef Name="StockFisico" />
+            <PropertyRef Name="Ajuste" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="NomUnidadMedida" />
+            <PropertyRef Name="ca_Categoria" />
+            <PropertyRef Name="nom_linea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdAjuste" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo_ing" Type="Int32" />
+          <Property Name="IdMovi_inven_tipo_egr" Type="Int32" />
+          <Property Name="IdNumMovi_ing" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdNumMovi_egr" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdCatalogo_Estado" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tm_descripcion_ing" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion_egr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="StockSistema" Type="Double" Nullable="false" />
+          <Property Name="StockFisico" Type="Double" Nullable="false" />
+          <Property Name="Ajuste" Type="Double" Nullable="false" />
+          <Property Name="Costo" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NomUnidadMedida" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_linea" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16302,6 +16442,39 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="VWINV_018">
+            <EntityTypeMapping TypeName="Model_reportes.VWINV_018">
+              <MappingFragment StoreEntitySet="VWINV_018">
+                <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Ajuste" ColumnName="Ajuste" />
+                <ScalarProperty Name="StockFisico" ColumnName="StockFisico" />
+                <ScalarProperty Name="StockSistema" ColumnName="StockSistema" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="tm_descripcion_egr" ColumnName="tm_descripcion_egr" />
+                <ScalarProperty Name="tm_descripcion_ing" ColumnName="tm_descripcion_ing" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdCatalogo_Estado" ColumnName="IdCatalogo_Estado" />
+                <ScalarProperty Name="IdNumMovi_egr" ColumnName="IdNumMovi_egr" />
+                <ScalarProperty Name="IdNumMovi_ing" ColumnName="IdNumMovi_ing" />
+                <ScalarProperty Name="IdMovi_inven_tipo_egr" ColumnName="IdMovi_inven_tipo_egr" />
+                <ScalarProperty Name="IdMovi_inven_tipo_ing" ColumnName="IdMovi_inven_tipo_ing" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdAjuste" ColumnName="IdAjuste" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
