@@ -236,7 +236,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 #endregion
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

@@ -40,5 +40,6 @@ namespace Core.Erp.Data
         public string NomUnidadMedida { get; set; }
         public string pr_descripcion { get; set; }
         public string pc_Cuenta { get; set; }
+        public double do_precioCompra { get; set; }
     }
 }

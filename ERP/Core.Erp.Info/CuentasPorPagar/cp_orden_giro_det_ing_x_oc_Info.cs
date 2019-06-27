@@ -14,6 +14,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public int Secuencia { get; set; }
         public int inv_IdSucursal { get; set; }
         public int inv_IdMovi_inven_tipo { get; set; }
+        public double do_precioCompra { get; set; }
         public decimal inv_IdNumMovi { get; set; }
         public int inv_Secuencia { get; set; }
         public Nullable<int> oc_IdSucursal { get; set; }
@@ -35,7 +36,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         #region Campos que no existen en la tabla
         public string IdGenerado { get; set; }
         public string pr_descripcion { get; set; }
-        public double do_precioCompra { get; set; }
         public string NomUnidadMedida { get; set; }
         public decimal IdProveedor { get; set; }
         public string pc_Cuenta { get; set; }

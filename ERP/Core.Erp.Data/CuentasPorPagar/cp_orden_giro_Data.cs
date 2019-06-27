@@ -136,9 +136,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 inv_IdMovi_inven_tipo = item.inv_IdMovi_inven_tipo,
                                 inv_IdNumMovi = item.inv_IdNumMovi,
                                 inv_Secuencia = item.inv_Secuencia,
-                                oc_IdSucursal = item.oc_IdSucursal,
-                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
-                                oc_Secuencia = item.oc_Secuencia,
+                                oc_IdSucursal = item.oc_IdSucursal??0,
+                                oc_IdOrdenCompra = item.oc_IdOrdenCompra??0,
+                                oc_Secuencia = item.oc_Secuencia??0,
                                 IdCtaCble = item.IdCtaCble,
                                 dm_cantidad = item.dm_cantidad,
                                 do_porc_des = item.do_porc_des,
@@ -150,7 +150,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 Por_Iva = item.Por_Iva,
                                 do_total = item.do_total,
                                 IdUnidadMedida = item.IdUnidadMedida,
-                                IdProducto = item.IdProducto
+                                IdProducto = item.IdProducto,
+                                do_precioCompra = item.do_precioCompra
                             });
                         }
                     }                                      
@@ -298,9 +299,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 inv_IdMovi_inven_tipo = item.inv_IdMovi_inven_tipo,
                                 inv_IdNumMovi = item.inv_IdNumMovi,
                                 inv_Secuencia = item.inv_Secuencia,
-                                oc_IdSucursal = item.oc_IdSucursal,
-                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
-                                oc_Secuencia = item.oc_Secuencia,
+                                oc_IdSucursal = item.oc_IdSucursal??0,
+                                oc_IdOrdenCompra = item.oc_IdOrdenCompra??0,
+                                oc_Secuencia = item.oc_Secuencia??0,
                                 IdCtaCble = item.IdCtaCble,
                                 dm_cantidad = item.dm_cantidad,
                                 do_porc_des = item.do_porc_des,
@@ -312,7 +313,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 Por_Iva = item.Por_Iva,
                                 do_total = item.do_total,
                                 IdUnidadMedida = item.IdUnidadMedida,
-                                IdProducto = item.IdProducto
+                                IdProducto = item.IdProducto,
+                                do_precioCompra = item.do_precioCompra
                             });
                         }
                     }
@@ -322,7 +324,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception )
+            catch (Exception ex)
             {
 
                 throw;
