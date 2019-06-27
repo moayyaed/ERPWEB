@@ -382,6 +382,7 @@
     <Compile Include="Areas\Importacion\Controllers\PartidaArancelariaController.cs" />
     <Compile Include="Areas\Importacion\Controllers\RecepcionOrdenCompraController.cs" />
     <Compile Include="Areas\Importacion\ImportacionAreaRegistration.cs" />
+    <Compile Include="Areas\Inventario\Controllers\AjusteFisicoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\AuditoriaInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\CatalogoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\CatalogoTipoInventarioController.cs" />
@@ -10135,6 +10136,7 @@
     <Folder Include="Areas\General\Models\" />
     <Folder Include="Areas\Importacion\Models\" />
     <Folder Include="Areas\Inventario\Models\" />
+    <Folder Include="Areas\Inventario\Views\AjusteFisicoInventario\" />
     <Folder Include="Areas\Migraciones\Models\" />
     <Folder Include="Areas\Migraciones\Views\Shared\" />
     <Folder Include="Areas\Presupuesto\Models\" />

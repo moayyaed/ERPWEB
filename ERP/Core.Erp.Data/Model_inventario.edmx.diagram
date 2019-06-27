@@ -128,6 +128,17 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo5" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo6" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo7" />
+        <EntityTypeShape EntityType="Model_inventario.in_Ajuste" Width="1.5" PointX="27.5" PointY="29" />
+        <EntityTypeShape EntityType="Model_inventario.in_AjusteDet" Width="1.5" PointX="29.75" PointY="22.875" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ajuste" Width="1.5" PointX="4.375" PointY="0.75" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ajuste_in_Catalogo" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ajuste_in_Ing_Egr_Inven" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ajuste_in_Ing_Egr_Inven1" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ajuste_in_movi_inven_tipo" />
+        <AssociationConnector Association="Model_inventario.FK_in_Ajuste_in_movi_inven_tipo1" />
+        <AssociationConnector Association="Model_inventario.FK_in_AjusteDet_in_Ajuste" />
+        <AssociationConnector Association="Model_inventario.FK_in_AjusteDet_in_Producto" />
+        <AssociationConnector Association="Model_inventario.FK_in_AjusteDet_in_UnidadMedida" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

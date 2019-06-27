@@ -27,6 +27,7 @@ namespace Core.Erp.Data
             this.in_Producto1 = new HashSet<in_Producto>();
             this.in_movi_inve_detalle = new HashSet<in_movi_inve_detalle>();
             this.in_movi_inve_detalle1 = new HashSet<in_movi_inve_detalle>();
+            this.in_AjusteDet = new HashSet<in_AjusteDet>();
         }
     
         public string IdUnidadMedida { get; set; }
@@ -49,5 +50,6 @@ namespace Core.Erp.Data
         public virtual ICollection<in_Producto> in_Producto1 { get; set; }
         public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle1 { get; set; }
+        public virtual ICollection<in_AjusteDet> in_AjusteDet { get; set; }
     }
 }

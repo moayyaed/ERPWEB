@@ -764,6 +764,8 @@
     <Compile Include="imp_partida_arancelaria.cs">
       <DependentUpon>Model_importacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Inventario\in_AjusteDet_Data.cs" />
+    <Compile Include="Inventario\in_Ajuste_Data.cs" />
     <Compile Include="Inventario\in_CatalogoTipo_Data.cs" />
     <Compile Include="Inventario\in_Catalogo_Data.cs" />
     <Compile Include="Inventario\in_categorias_Data.cs" />
@@ -792,6 +794,12 @@
     <Compile Include="Inventario\in_transferencia_det_Data.cs" />
     <Compile Include="Inventario\in_UnidadMedida_Data.cs" />
     <Compile Include="Inventario\in_UnidadMedida_Equiv_conversion_Data.cs" />
+    <Compile Include="in_Ajuste.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_AjusteDet.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="in_Catalogo.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
@@ -2451,6 +2459,9 @@
     </Compile>
     <Compile Include="VWINV_018.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ajuste.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Consignacion.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>

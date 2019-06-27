@@ -30,6 +30,8 @@ namespace Core.Erp.Data
             this.in_parametro9 = new HashSet<in_parametro>();
             this.in_parametro10 = new HashSet<in_parametro>();
             this.in_parametro11 = new HashSet<in_parametro>();
+            this.in_Ajuste = new HashSet<in_Ajuste>();
+            this.in_Ajuste1 = new HashSet<in_Ajuste>();
         }
     
         public int IdEmpresa { get; set; }
@@ -65,5 +67,7 @@ namespace Core.Erp.Data
         public virtual ICollection<in_parametro> in_parametro9 { get; set; }
         public virtual ICollection<in_parametro> in_parametro10 { get; set; }
         public virtual ICollection<in_parametro> in_parametro11 { get; set; }
+        public virtual ICollection<in_Ajuste> in_Ajuste { get; set; }
+        public virtual ICollection<in_Ajuste> in_Ajuste1 { get; set; }
     }
 }

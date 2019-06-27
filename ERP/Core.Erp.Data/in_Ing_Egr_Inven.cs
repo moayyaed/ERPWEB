@@ -22,6 +22,8 @@ namespace Core.Erp.Data
             this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
             this.in_transferencia = new HashSet<in_transferencia>();
             this.in_transferencia1 = new HashSet<in_transferencia>();
+            this.in_Ajuste = new HashSet<in_Ajuste>();
+            this.in_Ajuste1 = new HashSet<in_Ajuste>();
         }
     
         public int IdEmpresa { get; set; }
@@ -51,5 +53,7 @@ namespace Core.Erp.Data
         public virtual in_Motivo_Inven in_Motivo_Inven { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia1 { get; set; }
+        public virtual ICollection<in_Ajuste> in_Ajuste { get; set; }
+        public virtual ICollection<in_Ajuste> in_Ajuste1 { get; set; }
     }
 }

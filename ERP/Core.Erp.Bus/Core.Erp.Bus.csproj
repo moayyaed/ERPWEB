@@ -228,6 +228,7 @@
     <Compile Include="Importacion\imp_orden_compra_ext_recepcion_Bus.cs" />
     <Compile Include="Importacion\imp_parametro_Bus.cs" />
     <Compile Include="Importacion\imp_partida_arancelaria_Bus.cs" />
+    <Compile Include="Inventario\in_Ajuste_Bus.cs" />
     <Compile Include="Inventario\in_CatalogoTipo_Bus.cs" />
     <Compile Include="Inventario\in_Catalogo_Bus.cs" />
     <Compile Include="Inventario\in_categorias_Bus.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Inventario\in_transferencia_det_Bus.cs" />
     <Compile Include="Inventario\in_UnidadMedida_Bus.cs" />
     <Compile Include="Inventario\in_UnidadMedida_Equiv_conversion_Bus.cs" />
+    <Compile Include="in_AjusteDet_Bus.cs" />
     <Compile Include="Migraciones\FacturasEventos_Bus.cs" />
     <Compile Include="Migraciones\ImportacionDiarios_Bus.cs" />
     <Compile Include="Presupuesto\pre_Grupo_Bus.cs" />

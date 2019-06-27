@@ -69,6 +69,20 @@
                                     @Html.ValidationMessageFor(q => q.IdMotivo_Inv_elaboracion_ing, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Tipo movimiento ajuste ingreso</label>
+                                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo_ajuste_ing, new SelectList(ViewBag.lst_tipo_movimiento_ing, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_ajuste_ing, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Movimiento para ajuste ingreso</label>
+                                    @Html.DropDownListFor(q => q.IdMotivo_Inv_ajuste_ing, new SelectList(ViewBag.lst_motivo_ing, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_ajuste_ing, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
@@ -77,6 +91,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -104,6 +119,27 @@
                                     <label for="IdMotivo_Inv_elaboracion_egr">Motivo para egreso de elaboración</label>
                                     @Html.DropDownListFor(q => q.IdMotivo_Inv_elaboracion_egr, new SelectList(ViewBag.lst_motivo_egr, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(q => q.IdMotivo_Inv_elaboracion_egr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Tipo movimiento ajuste egreso</label>
+                                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo_ajuste_egr, new SelectList(ViewBag.lst_tipo_movimiento_egr, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_ajuste_egr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Movimiento para ajuste egreso</label>
+                                    @Html.DropDownListFor(q => q.IdMotivo_Inv_ajuste_egr, new SelectList(ViewBag.lst_motivo_egr, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdMotivo_Inv_ajuste_egr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Estado de ajuste</label>
+                                    @Html.DropDownListFor(q => q.IdCatalogoEstadoAjuste, new SelectList(ViewBag.lst_aprobacion, "IdCatalogo", "Nombre"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdCatalogoEstadoAjuste, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
