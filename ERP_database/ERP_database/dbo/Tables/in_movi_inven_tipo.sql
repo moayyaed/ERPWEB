@@ -12,8 +12,6 @@
     [Fecha_Transac]          DATETIME      NULL,
     [IdUsuarioUltMod]        VARCHAR (50)  NULL,
     [Fecha_UltMod]           DATETIME      NULL,
-    [nom_pc]                 VARCHAR (50)  NULL,
-    [ip]                     VARCHAR (50)  NULL,
     [IdUsuarioUltAnu]        VARCHAR (20)  NULL,
     [Fecha_UltAnu]           DATETIME      NULL,
     [MotiAnula]              VARCHAR (200) NULL,
@@ -21,4 +19,6 @@
     [Genera_Diario_Contable] BIT           NULL,
     CONSTRAINT [PK_in_movi_inven_tipo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMovi_inven_tipo] ASC)
 );
+
+
 
