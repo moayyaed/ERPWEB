@@ -1184,6 +1184,7 @@
     <Build Include="web\Views\VWINV_018.sql" />
     <Build Include="dbo\Views\vwin_Ajuste.sql" />
     <Build Include="dbo\Stored Procedures\SPINV_GetStock.sql" />
+    <Build Include="web\Views\VWFAC_018.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
