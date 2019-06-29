@@ -10071,6 +10071,13 @@
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_010.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_011.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_018.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Nuevo.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\_GridViewPartial_ajuste_fisico_det.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\_GridViewPartial_ajuste_fisico.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\_CmbProducto_AjusteFisico.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Modificar.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Anular.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
@@ -10143,7 +10150,6 @@
     <Folder Include="Areas\General\Models\" />
     <Folder Include="Areas\Importacion\Models\" />
     <Folder Include="Areas\Inventario\Models\" />
-    <Folder Include="Areas\Inventario\Views\AjusteFisicoInventario\" />
     <Folder Include="Areas\Migraciones\Models\" />
     <Folder Include="Areas\Migraciones\Views\Shared\" />
     <Folder Include="Areas\Presupuesto\Models\" />
@@ -10190,7 +10196,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
