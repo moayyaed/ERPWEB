@@ -1333,6 +1333,7 @@
     <Compile Include="Reportes\Facturacion\FAC_015_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_017_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_018_Data.cs" />
     <Compile Include="Reportes\Importacion\IMP_001_Data.cs" />
     <Compile Include="Reportes\Importacion\IMP_002_Data.cs" />
     <Compile Include="Reportes\Importacion\IMP_002_gastos_Data.cs" />
@@ -2290,6 +2291,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWFAC_014.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_018.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_CambioProducto.cs">

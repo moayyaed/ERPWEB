@@ -2539,6 +2539,47 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_014' no tiene definida ningu
           <Property Name="Observacion" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_018' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWFAC_018">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="no_fecha" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="ValorAplicado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="NomEstado" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdNota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="no_fecha" Type="datetime" Nullable="false" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTipoNota" Type="int" />
+          <Property Name="No_Descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="NumNota" Type="varchar" MaxLength="28" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ValorAplicado" Type="float" Nullable="false" />
+          <Property Name="NumDocumentoAplica" Type="varchar" MaxLength="49" />
+          <Property Name="NumDocumentoReemplazo" Type="varchar" MaxLength="300" />
+          <Property Name="Subtotal0" Type="float" />
+          <Property Name="SubtotalIVA" Type="float" />
+          <Property Name="ValorIva" Type="float" />
+          <Property Name="Total" Type="float" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NomEstado" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWIMP_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWIMP_001">
           <Key>
@@ -6197,6 +6238,32 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWFAC_014].[Observacion] AS [Observacion]
     FROM [web].[VWFAC_014] AS [VWFAC_014]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VWFAC_018" EntityType="Self.VWFAC_018" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWFAC_018].[IdEmpresa] AS [IdEmpresa], 
+    [VWFAC_018].[IdSucursal] AS [IdSucursal], 
+    [VWFAC_018].[IdBodega] AS [IdBodega], 
+    [VWFAC_018].[IdNota] AS [IdNota], 
+    [VWFAC_018].[Su_Descripcion] AS [Su_Descripcion], 
+    [VWFAC_018].[no_fecha] AS [no_fecha], 
+    [VWFAC_018].[IdCliente] AS [IdCliente], 
+    [VWFAC_018].[IdTipoNota] AS [IdTipoNota], 
+    [VWFAC_018].[No_Descripcion] AS [No_Descripcion], 
+    [VWFAC_018].[NumNota] AS [NumNota], 
+    [VWFAC_018].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [VWFAC_018].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [VWFAC_018].[ValorAplicado] AS [ValorAplicado], 
+    [VWFAC_018].[NumDocumentoAplica] AS [NumDocumentoAplica], 
+    [VWFAC_018].[NumDocumentoReemplazo] AS [NumDocumentoReemplazo], 
+    [VWFAC_018].[Subtotal0] AS [Subtotal0], 
+    [VWFAC_018].[SubtotalIVA] AS [SubtotalIVA], 
+    [VWFAC_018].[ValorIva] AS [ValorIva], 
+    [VWFAC_018].[Total] AS [Total], 
+    [VWFAC_018].[Estado] AS [Estado], 
+    [VWFAC_018].[NomEstado] AS [NomEstado], 
+    [VWFAC_018].[Orden] AS [Orden]
+    FROM [web].[VWFAC_018] AS [VWFAC_018]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VWIMP_001" EntityType="Self.VWIMP_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [VWIMP_001].[IdEmpresa] AS [IdEmpresa], 
@@ -9001,6 +9068,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="VWFAC_018" EntityType="Model_reportes.VWFAC_018" />
           <EntitySet Name="VWINV_018" EntityType="Model_reportes.VWINV_018" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
@@ -12625,6 +12693,45 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Double" Name="Egreso" Nullable="false" />
           <Property Type="Double" Name="SaldoFinal" Nullable="false" />
         </ComplexType>
+        <EntityType Name="VWFAC_018">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdNota" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="no_fecha" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="ValorAplicado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="NomEstado" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdNota" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="no_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdTipoNota" Type="Int32" />
+          <Property Name="No_Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="NumNota" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValorAplicado" Type="Double" Nullable="false" />
+          <Property Name="NumDocumentoAplica" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
+          <Property Name="NumDocumentoReemplazo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Subtotal0" Type="Double" />
+          <Property Name="SubtotalIVA" Type="Double" />
+          <Property Name="ValorIva" Type="Double" />
+          <Property Name="Total" Type="Double" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NomEstado" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="VWINV_018">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -16448,6 +16555,34 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="VWFAC_018">
+            <EntityTypeMapping TypeName="Model_reportes.VWFAC_018">
+              <MappingFragment StoreEntitySet="VWFAC_018">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="NomEstado" ColumnName="NomEstado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ValorIva" ColumnName="ValorIva" />
+                <ScalarProperty Name="SubtotalIVA" ColumnName="SubtotalIVA" />
+                <ScalarProperty Name="Subtotal0" ColumnName="Subtotal0" />
+                <ScalarProperty Name="NumDocumentoReemplazo" ColumnName="NumDocumentoReemplazo" />
+                <ScalarProperty Name="NumDocumentoAplica" ColumnName="NumDocumentoAplica" />
+                <ScalarProperty Name="ValorAplicado" ColumnName="ValorAplicado" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="NumNota" ColumnName="NumNota" />
+                <ScalarProperty Name="No_Descripcion" ColumnName="No_Descripcion" />
+                <ScalarProperty Name="IdTipoNota" ColumnName="IdTipoNota" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="no_fecha" ColumnName="no_fecha" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="VWINV_018">
             <EntityTypeMapping TypeName="Model_reportes.VWINV_018">
               <MappingFragment StoreEntitySet="VWINV_018">
