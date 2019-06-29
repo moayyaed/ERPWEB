@@ -17,5 +17,15 @@ namespace Core.Erp.Info.Inventario
         public double StockFisico { get; set; }
         public double Ajuste { get; set; }
         public double Costo { get; set; }
+
+        #region Campos que no existen en la tabla
+        public string pr_descripcion { get; set; }
+        public int IdSucursal { get; set; }
+        public int IdBodega { get; set; }
+        public double Stock { get; set; }
+        public double UltimoCosto { get; set; }
+        public int IdFecha { get; set; }
+        public string pr_codigo { get; set; }
+        #endregion
     }
 }

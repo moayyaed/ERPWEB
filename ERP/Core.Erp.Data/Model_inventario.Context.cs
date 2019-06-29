@@ -21,7 +21,6 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
-
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
@@ -207,6 +206,27 @@ namespace Core.Erp.Data
                 new ObjectParameter("cant_Decimales", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSys_Inv_Recosteo_Inventario", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fecha_iniParameter, cant_DecimalesParameter);
+        }
+    
+        public virtual ObjectResult<SPINV_GetStock_Result> SPINV_GetStock(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<System.DateTime> fechaCorte)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var idBodegaParameter = idBodega.HasValue ?
+                new ObjectParameter("IdBodega", idBodega) :
+                new ObjectParameter("IdBodega", typeof(int));
+    
+            var fechaCorteParameter = fechaCorte.HasValue ?
+                new ObjectParameter("FechaCorte", fechaCorte) :
+                new ObjectParameter("FechaCorte", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_GetStock_Result>("SPINV_GetStock", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fechaCorteParameter);
         }
     }
 }

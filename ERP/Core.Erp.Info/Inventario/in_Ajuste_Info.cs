@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Inventario
 {
     public class in_Ajuste_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdAjuste { get; set; }
         public int IdSucursal { get; set; }
@@ -33,6 +34,7 @@ namespace Core.Erp.Info.Inventario
         public string Su_Descripcion { get; set; }
         public string bo_Descripcion { get; set; }
         public List<in_AjusteDet_Info> lst_detalle { get; set; }
+        public List<in_AjusteDet_Info> lst_movimiento { get; set; }
         #endregion
     }
 }

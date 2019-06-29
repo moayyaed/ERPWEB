@@ -123,7 +123,7 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-        private decimal get_id(int IdEmpresa, int IdSucursal, int IdMovi_inven_tipo)
+        public decimal get_id(int IdEmpresa, int IdSucursal, int IdMovi_inven_tipo)
         {
             try
             {

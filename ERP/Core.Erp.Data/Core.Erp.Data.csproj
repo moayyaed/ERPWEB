@@ -1819,6 +1819,9 @@
     <Compile Include="SPINV_016_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="SPINV_GetStock_Result.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="sppro_GetProductoFacturadosPorFecha_Result.cs">
       <DependentUpon>Model_produccion.tt</DependentUpon>
     </Compile>
