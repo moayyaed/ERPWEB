@@ -14,6 +14,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
 
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
         public FAC_018_Rpt()
         {
             InitializeComponent();

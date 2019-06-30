@@ -172,6 +172,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Descripcion_tip_cliente = "Todos"
             });
             ViewBag.lst_cliente_tipo = lst_cliente_tipo;
+
+            fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
+            var lst_nota = bus_nota.get_list(IdEmpresa, false);
+            ViewBag.lst_nota = lst_nota;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -921,6 +925,69 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_marca_check(model.IdEmpresa, model.IntArray);
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        public ActionResult FAC_018()
+        {
+
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCliente = 0
+            };
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            FAC_018_Rpt report = new FAC_018_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_018");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdTipoNota.Value = model.IdTipoNota;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_mostrar_anulados.Value = model.mostrarAnulados;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_combos(model);
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult FAC_018(cl_filtros_facturacion_Info model)
+        {
+            FAC_018_Rpt report = new FAC_018_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_018");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdTipoNota.Value = model.IdTipoNota;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_mostrar_anulados.Value = model.mostrarAnulados;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_combos(model);
             ViewBag.Report = report;
             return View(model);
         }
