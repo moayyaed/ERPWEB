@@ -159,7 +159,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_001");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -181,7 +181,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_002");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -202,7 +202,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_003");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -221,7 +221,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_004");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -249,7 +249,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_005");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -266,7 +266,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_006");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -284,7 +284,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_007");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -303,7 +303,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_008");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -336,7 +336,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_009");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -372,7 +372,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_009");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -441,7 +441,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_010");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -469,7 +469,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_010");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -495,7 +495,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_011");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
@@ -565,7 +565,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_012");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -587,7 +587,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_012");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -615,7 +615,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_013");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -639,7 +639,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_013");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -673,7 +673,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_014");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -697,7 +697,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_014");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -725,7 +725,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_015");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -747,7 +747,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_015");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -774,7 +774,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_016");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -796,7 +796,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_016");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -822,7 +822,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_017");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -844,7 +844,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_017");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -870,7 +870,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_018");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -892,7 +892,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_018");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -954,7 +954,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_019");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -1071,7 +1071,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_021_Rpt report = new ROL_021_Rpt();
             #region Cargo diseño desde base
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_021");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -1102,7 +1102,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_021");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -1137,7 +1137,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_022_Rpt report = new ROL_022_Rpt();
             #region Cargo diseño desde base
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_022");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -1166,7 +1166,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_022");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -1201,7 +1201,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_023");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 reportDetallado.LoadLayout(RootReporte);
@@ -1252,7 +1252,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_023");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 reportDetallado.LoadLayout(RootReporte);
@@ -1511,7 +1511,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_027");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 report.LoadLayout(RootReporte);
@@ -1536,7 +1536,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ROL_028_Rpt model = new ROL_028_Rpt();
             #region Cargo diseño desde base
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_028");
-            if (report)
+            if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
                 model.LoadLayout(RootReporte);
