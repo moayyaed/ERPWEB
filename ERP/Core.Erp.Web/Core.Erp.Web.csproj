@@ -1061,6 +1061,12 @@
     <Compile Include="Reportes\Facturacion\FAC_017_Rpt.Designer.cs">
       <DependentUpon>FAC_017_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_018_resumen_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_018_resumen_Rpt.Designer.cs">
+      <DependentUpon>FAC_018_resumen_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_018_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10207,6 +10213,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10485,6 +10492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_017_Rpt.resx">
       <DependentUpon>FAC_017_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_018_resumen_Rpt.resx">
+      <DependentUpon>FAC_018_resumen_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_018_Rpt.resx">
       <DependentUpon>FAC_018_Rpt.cs</DependentUpon>

@@ -61,7 +61,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal</label>
                             @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
@@ -107,7 +107,7 @@
                        }).GetHtml()
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdCliente">Cliente</label>
                             @Html.Partial("_CmbCliente_Facturacion", Model.IdCliente)
@@ -115,13 +115,17 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdNivel">Tipo nota</label>
                             @Html.DropDownListFor(q => q.IdTipoNota, new SelectList(ViewBag.lst_nota, "IdTipoNota", "No_Descripcion"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "form", @role = "text-danger" })
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
@@ -162,7 +166,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="checkbox">
                             <div class="form-group">
                                 @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados,
