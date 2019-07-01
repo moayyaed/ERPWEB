@@ -34,7 +34,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
             int IdTipoNota = string.IsNullOrEmpty(p_IdTipoNota.Value.ToString()) ? 0 : Convert.ToInt32(p_IdTipoNota.Value);
             DateTime fecha_ini = string.IsNullOrEmpty(p_fecha_ini.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_ini.Value);
             DateTime fecha_fin = string.IsNullOrEmpty(p_fecha_fin.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
-            bool mostrar_anulados = string.IsNullOrEmpty(p_mostrar_anulados.Value.ToString()) ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
+            bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
 
             FAC_018_Bus bus_rpt = new FAC_018_Bus();
             List<FAC_018_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdCliente, IdTipoNota, fecha_ini, fecha_fin, mostrar_anulados);
