@@ -10091,6 +10091,7 @@
     <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Modificar.cshtml" />
     <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Anular.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_018.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Contabilizar.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />

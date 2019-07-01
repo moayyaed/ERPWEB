@@ -254,6 +254,23 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Contabilizar(int IdEmpresa = 0, decimal IdArchivo = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            ba_Archivo_Transferencia_Info model = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
+            if (model == null)
+                return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
+            List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+            return View(model);
+        }
         #endregion
         #region Detalle Archivo
         [ValidateInput(false)]
