@@ -684,6 +684,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             fa_notaCreDeb_x_fa_factura_NotaDeb_Info edited_info = list.Where(m => m.secuencial == info_det.secuencial).FirstOrDefault();
             edited_info.Saldo_final = Convert.ToDouble(edited_info.Saldo) - info_det.Valor_Aplicado;
             edited_info.Valor_Aplicado = info_det.Valor_Aplicado;
+            edited_info.NumDocumento = info_det.NumDocumento;
+
         }
 
         public void DeleteRow(string secuencial, decimal IdTransaccion)

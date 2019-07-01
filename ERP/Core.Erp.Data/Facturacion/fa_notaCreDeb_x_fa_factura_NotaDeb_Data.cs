@@ -39,6 +39,7 @@ namespace Core.Erp.Data.Facturacion
                                  Saldo = q.Saldo,
                                  vt_Subtotal = q.vt_Subtotal,
                                  vt_iva = q.vt_iva,
+                                 NumDocumento = q.vt_NunDocumento
                              }).ToList();
                     else
                         Lista = (from q in Context.vwcxc_cartera_x_cobrar
@@ -60,6 +61,7 @@ namespace Core.Erp.Data.Facturacion
                                      Saldo = q.Saldo,
                                      vt_Subtotal = q.vt_Subtotal,
                                      vt_iva = q.vt_iva,
+                                     NumDocumento = q.vt_NunDocumento
                                  }).ToList();
 
                     Lista.ForEach(q => { q.secuencial = q.vt_tipoDoc + "-" + q.IdBodega_fac_nd_doc_mod.ToString() + "-" + q.IdCbteVta_fac_nd_doc_mod.ToString(); q.Valor_Aplicado = Convert.ToDouble(q.Saldo); });
@@ -102,7 +104,8 @@ namespace Core.Erp.Data.Facturacion
                                  vt_iva = q.vt_iva,
                                  Saldo_final = q.saldo,
                                  seleccionado = true,
-                                 Valor_Aplicado = q.Valor_Aplicado
+                                 Valor_Aplicado = q.Valor_Aplicado,
+                                 NumDocumento = q.vt_NumFactura
                              }).ToList();
                 }
                 Lista.ForEach(q => { q.secuencial = q.vt_tipoDoc + "-" + q.IdBodega_fac_nd_doc_mod.ToString() + "-" + q.IdCbteVta_fac_nd_doc_mod.ToString(); });

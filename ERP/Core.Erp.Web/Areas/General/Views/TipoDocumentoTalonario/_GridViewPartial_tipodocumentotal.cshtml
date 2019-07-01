@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_tipodocumentotal";
-        settings.CallbackRouteValues = new { Controller = "TipoDocumentoTalonario", Action = "GridViewPartial_tipodocumentotal"};
+        settings.CallbackRouteValues = new { Controller = "TipoDocumentoTalonario", Action = "GridViewPartial_tipodocumentotal", IdSucursal = ViewBag.IdSucursal, CodDocumentoTipo = ViewBag.CodDocumentoTipo };
 
         settings.KeyFieldName = "CodDocumentoTipo";
         settings.Width = Unit.Percentage(100);

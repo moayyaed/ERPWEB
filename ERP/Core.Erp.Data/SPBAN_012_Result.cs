@@ -10,16 +10,19 @@
 namespace Core.Erp.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vwfa_factura_sin_automatico
+    public partial class SPBAN_012_Result
     {
         public int IdEmpresa { get; set; }
-        public int IdSucursal { get; set; }
-        public Nullable<int> IdBodega_Cbte { get; set; }
-        public decimal IdCbte_vta_nota { get; set; }
-        public string dc_TipoDocumento { get; set; }
-        public string estado { get; set; }
-        public Nullable<decimal> IdCobro { get; set; }
+        public int IdBanco { get; set; }
+        public int IdTipoFlujo { get; set; }
+        public string IdUsuario { get; set; }
+        public string ba_descripcion { get; set; }
+        public string nom_tipo_flujo { get; set; }
+        public double SaldoInicial { get; set; }
+        public double Ingresos { get; set; }
+        public double Egresos { get; set; }
+        public double SaldoFinal { get; set; }
+        public double SaldoFinalBanco { get; set; }
     }
 }

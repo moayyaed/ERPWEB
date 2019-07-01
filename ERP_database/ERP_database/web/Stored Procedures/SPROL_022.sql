@@ -1,4 +1,7 @@
 ﻿--exec [web].[SPROL_022]  1,1,2,201904
+
+-- exec [web].[SPROL_022]  5,1,2,201906
+
 CREATE  PROCEDURE [web].[SPROL_022]  
 	@idempresa int,
 	@idnomina_tipo int,
@@ -101,8 +104,12 @@ FROM            dbo.ro_rol AS r INNER JOIN
 						 and d.IdPeriodo = @idperiodo
 						 )
 
-
-						delete web.ro_SPROL_022 where IdRubro=@IdRubroBrigada and Descripcion is null and IdPeriodo=@idperiodo
+						--delete web.ro_SPROL_022 where IdRubro=@IdRubroBrigada and Descripcion is null and IdPeriodo=@idperiodo -- SE comentareo 26/06/2019
+						 if(@idempresa<>5)-- se añadio x estas lineas del if
+						 Begin
+						 	delete web.ro_SPROL_022 where IdRubro=@IdRubroBrigada and Descripcion is null and IdPeriodo=@idperiodo 
+						 End
+					
 
 						SELECT r.IdEmpresa, r.IdDivision, r.IdSucursal, r.IdNomina_TipoLiqui, r.IdArea, r.IdEmpleado, r.IdJornada, r.IdNomina_Tipo, r.IdPeriodo, r.Descripcion, r.ru_descripcion, r.empleado, r.ca_descripcion, r.ru_tipo, r.ru_orden, r.Valor, r.IdRubro, 
 										  ro_Nomina_Tipo.Descripcion AS NomNomina, ro_Nomina_Tipoliqui.DescripcionProcesoNomina AS NomNominaTipo, tb_sucursal.Su_Descripcion, @FechaInicio AS FechaIni, @FechaFin AS FechaFin, ro_Division.Descripcion AS NomDivision, 
@@ -116,8 +123,11 @@ FROM            dbo.ro_rol AS r INNER JOIN
 										  ro_Nomina_Tipo ON ro_Nomina_Tipoliqui.IdEmpresa = ro_Nomina_Tipo.IdEmpresa AND ro_Nomina_Tipoliqui.IdNomina_Tipo = ro_Nomina_Tipo.IdNomina_Tipo AND ro_Nomina_Tipoliqui.IdEmpresa = ro_Nomina_Tipo.IdEmpresa AND 
 										  ro_Nomina_Tipoliqui.IdNomina_Tipo = ro_Nomina_Tipo.IdNomina_Tipo ON r.IdEmpresa = ro_Nomina_Tipoliqui.IdEmpresa AND r.IdNomina_TipoLiqui = ro_Nomina_Tipoliqui.IdNomina_TipoLiqui AND 
 										  r.IdNomina_Tipo = ro_Nomina_Tipoliqui.IdNomina_Tipo
-										  WHERE R.IdPeriodo = @idperiodo
+										  WHERE R.IdPeriodo = @idperiodo   
+										  -- Se añadio filtro x empresa, y agrupamiento  , para q no salgan repetidos los rubros(brigada) 27/06/2019
+										  and  r.IdEmpresa =@idempresa Group By r.IdEmpresa, r.IdDivision, r.IdSucursal, r.IdNomina_TipoLiqui, r.IdArea,IdEmpleado, r.IdJornada,r.IdNomina_Tipo, r.IdPeriodo, r.Descripcion, r.ru_descripcion, r.empleado, r.ca_descripcion, r.ru_tipo, r.ru_orden, r.Valor, r.IdRubro
+										    ,ro_Nomina_Tipo.Descripcion, ro_Nomina_Tipoliqui.DescripcionProcesoNomina,tb_sucursal.Su_Descripcion, ro_Division.Descripcion, ro_area.Descripcion
 				  --and r.IdEmpleado = 222
-ORDER BY r.empleado
+			ORDER BY r.empleado
 
 END

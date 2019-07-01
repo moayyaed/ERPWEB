@@ -208,7 +208,7 @@
             <div class="col-md-4">
                 <div class="form-group" id="DivSucursalCxp">
                     <label for="IdSucursal_cxp">Sucursal compra*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal_cxp, new SelectList(ViewBag.lst_sucursales, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal_cxp" })
+                    @Html.DropDownListFor(q => q.IdSucursal_cxp, new SelectList(ViewBag.lst_sucursales_cxp, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal_cxp" })
                     @Html.ValidationMessageFor(q => q.IdSucursal_cxp, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdOrden_giro_Tipo">Tipo documento*</label>
                     @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
@@ -247,7 +247,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="co_serie">Serie*</label>
                     @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control", @id = "co_serie" })
@@ -261,7 +261,7 @@
                     @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="co_factura">Número autorización*</label>
                     @Html.TextBoxFor(q => q.Num_Autorizacion, new { @class = "form-control" })

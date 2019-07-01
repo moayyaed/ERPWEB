@@ -1,4 +1,4 @@
-﻿
+﻿--exec [EntidadRegulatoria].[generarATS] 2,201905,1,8
 CREATE  PROCEDURE [EntidadRegulatoria].[generarATS]
 @idempresa int,
 @idPeriodo int,
@@ -82,7 +82,7 @@ FROM            dbo.cp_orden_giro AS fac INNER JOIN
 
 --*****************************************************************************************************************************************************************++
 --**************************************************************************VENTAS*****************************************************************************+*****
-
+PRINT 'VENTAS'
 insert into EntidadRegulatoria.ATS_ventas
 (IdEmpresa,									IdPeriodo,											Secuencia,															tpIdCliente,
 idCliente,									parteRel,											tipoCliente,														DenoCli,									
@@ -238,6 +238,7 @@ FROM            dbo.fa_notaCreDeb AS fac INNER JOIN
                          dbo.fa_formaPago AS f_pago ON cli.FormaPago = f_pago.IdFormaPago
 						  where  fac.no_fecha between @fecha_inicio and @fecha_fin
 						 and  fac.Estado='A' 
+						 AND FAC.NaturalezaNota = 'SRI'
 						 and fac.no_fecha between @fecha_inicio and @fecha_fin
 						-- and per.IdTipoDocumento!='PAS'
 						 and fac.IdEmpresa = @idempresa
@@ -328,14 +329,15 @@ ISNULL(CASE WHEN ret_det.re_Porcen_retencion = '70' THEN ret_det.re_valor_retenc
 ret_det.re_Codigo_impuesto,																			ret_det.re_baseRetencion,
 ret_det.re_Porcen_retencion,																	ret_det.re_valor_retencion,
 ret.serie1,																						ret.serie2,
-ret.NumRetencion,																				ret.NAutorizacion,
+ret.NumRetencion,																				CASE WHEN T.es_Documento_Electronico = 1 THEN ret.NAutorizacion ELSE T.NumAutorizacion END AS NumAutorizacion,
 cast(ret.fecha as date),																		ret_det.re_tipoRet,
 per.pe_nombreCompleto, fac.IdSucursal																					
 FROM            dbo.cp_orden_giro AS fac left JOIN
                          dbo.cp_retencion AS ret ON fac.IdEmpresa = ret.IdEmpresa_Ogiro AND fac.IdCbteCble_Ogiro = ret.IdCbteCble_Ogiro AND fac.IdTipoCbte_Ogiro = ret.IdTipoCbte_Ogiro INNER JOIN
                          dbo.cp_retencion_det AS ret_det ON ret.IdEmpresa = ret_det.IdEmpresa AND ret.IdRetencion = ret_det.IdRetencion INNER JOIN
                          dbo.cp_proveedor AS prov ON fac.IdEmpresa = prov.IdEmpresa AND fac.IdProveedor = prov.IdProveedor INNER JOIN
-                         dbo.tb_persona AS per ON prov.IdPersona = per.IdPersona
+                         dbo.tb_persona AS per ON prov.IdPersona = per.IdPersona LEFT JOIN
+						 tb_sis_Documento_Tipo_Talonario AS T ON RET.IdEmpresa = T.IdEmpresa AND RET.CodDocumentoTipo = T.CodDocumentoTipo AND RET.serie1 = T.Establecimiento AND RET.serie2 = T.PuntoEmision AND RET.NumRetencion = T.NumDocumento
 						 where fac.co_fechaOg between @fecha_inicio and @fecha_fin
 						 and fac.Estado='A'
 						 and ret.Estado='A'

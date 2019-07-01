@@ -60,6 +60,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         public ActionResult GridViewPartial_tipodocumentotal(int IdSucursal = 0, string CodDocumentoTipo = "")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
             ViewBag.CodDocumentoTipo = CodDocumentoTipo;
 
