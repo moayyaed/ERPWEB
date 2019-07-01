@@ -18,6 +18,7 @@ namespace Core.Erp.Info.Facturacion
         public int IdBodega_fac_nd_doc_mod { get; set; }
         public decimal IdCbteVta_fac_nd_doc_mod { get; set; }
         public string vt_tipoDoc { get; set; }
+        public string NumDocumento { get; set; }
         public double Valor_Aplicado { get; set; }
         public System.DateTime fecha_cruce { get; set; }
         #region Campos que no existen en la tabla
