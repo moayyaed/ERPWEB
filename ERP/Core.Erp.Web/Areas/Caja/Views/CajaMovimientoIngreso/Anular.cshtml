@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Caja.caj_Caja_Movimiento_Info
 @{
     ViewBag.Title = ("Anular ingreso" + " con ID #" + @Model.IdCbteCble);
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
