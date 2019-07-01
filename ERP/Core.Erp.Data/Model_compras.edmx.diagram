@@ -10,30 +10,30 @@
         <EntityTypeShape EntityType="Model_compras.com_comprador" Width="1.5" PointX="3.75" PointY="18.875" />
         <EntityTypeShape EntityType="Model_compras.com_departamento" Width="1.5" PointX="3.75" PointY="14.625" />
         <EntityTypeShape EntityType="Model_compras.com_estado_cierre" Width="1.5" PointX="0.75" PointY="4.875" />
-        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local" Width="1.5" PointX="6" PointY="3.125" />
-        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_det" Width="1.5" PointX="8.25" PointY="3.875" />
         <EntityTypeShape EntityType="Model_compras.com_parametro" Width="1.5" PointX="3" PointY="5.125" />
         <EntityTypeShape EntityType="Model_compras.com_solicitante" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_compras.com_solicitud_compra" Width="1.5" PointX="6" PointY="18.5" />
         <EntityTypeShape EntityType="Model_compras.com_solicitud_compra_det" Width="1.5" PointX="8.25" PointY="19.625" />
         <EntityTypeShape EntityType="Model_compras.com_TerminoPago" Width="1.5" PointX="3.75" PointY="10.5" />
         <AssociationConnector Association="Model_compras.FK_com_catalogo_com_catalogo_tipo" />
-        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_catalogo" />
         <AssociationConnector Association="Model_compras.FK_com_parametro_com_catalogo" />
         <AssociationConnector Association="Model_compras.FK_com_parametro_com_catalogo1" />
         <AssociationConnector Association="Model_compras.FK_com_solicitud_compra_com_catalogo" />
-        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_comprador" />
         <AssociationConnector Association="Model_compras.FK_com_solicitud_compra_com_comprador" />
-        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_departamento" />
         <AssociationConnector Association="Model_compras.FK_com_solicitud_compra_com_departamento" />
-        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_estado_cierre" />
         <AssociationConnector Association="Model_compras.FK_com_parametro_com_estado_cierre" />
+        <AssociationConnector Association="Model_compras.FK_com_solicitud_compra_det_com_solicitud_compra" />
+        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local" Width="1.5" PointX="6" PointY="10.125" />
+        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_det" Width="1.5" PointX="8.25" PointY="10.875" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_detPorIngresar" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_det" Width="1.5" PointX="9.375" PointY="0.75" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_catalogo" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_comprador" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_departamento" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_estado_cierre" />
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_TerminoPago1" />
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_det_com_ordencompra_local" />
-        <AssociationConnector Association="Model_compras.FK_com_solicitud_compra_det_com_solicitud_compra" />
-        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_detPorIngresar" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_det" Width="1.5" PointX="10.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
