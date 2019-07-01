@@ -50,9 +50,13 @@
         //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
         {
-            if (Convert.ToBoolean(e.GetValue("Estado")) == false)
+            if (Convert.ToBoolean(e.GetValue("Estado")) == false || Convert.ToString(e.GetValue("IdCatalogo_Estado")) == "REP")
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
+            }
+            else if (Convert.ToString(e.GetValue("IdCatalogo_Estado")) == "APRO")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
             }
         };
         settings.Columns.Add(c =>
@@ -62,11 +66,21 @@
             {
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
                 {
-                    ViewContext.Writer.Write(
+                    if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdCatalogo_Estado")) == "APRO")
+                    {
+                        ViewContext.Writer.Write(
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdAjuste = DataBinder.Eval(tc.DataItem, "IdAjuste") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                        );
+                    }
+                    else
+                    {
+                        ViewContext.Writer.Write(
                         Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdAjuste = DataBinder.Eval(tc.DataItem, "IdAjuste") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdAjuste = DataBinder.Eval(tc.DataItem, "IdAjuste") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
+                        );
+                    }                    
                 }
             });
             c.SetHeaderTemplateContent(tc =>
@@ -82,7 +96,6 @@
         settings.Columns.Add("IdAjuste", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("bo_Descripcion", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("NombreEstado", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
@@ -90,6 +103,7 @@
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
         });
+        settings.Columns.Add("NombreEstado", "Estado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("Observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(30);
         settings.Columns.Add(column =>
         {

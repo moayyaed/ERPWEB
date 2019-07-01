@@ -193,45 +193,48 @@ namespace Core.Erp.Data.Inventario
                     List<in_AjusteDet_Info> lst_egreso = info.lst_detalle.Where(q => q.Ajuste < 0).ToList();
 
                     if (info_parametro == null)
-                        return false;                    
+                        return false;
 
-                    if (lst_ingreso.Count() > 0)
+                    if (info.IdCatalogo_Estado == "APRO")
                     {
-                        in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
-                        IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
-                        info.lst_movimiento = lst_ingreso;
-
-                        info_movi = GenerarMoviInven(info, "+", info_parametro.IdMotivo_Inv_ajuste_ing);
-                        if (info_movi == null)
-                            return true;
-
-                        if (info.IdNumMovi_ing == null && odata_i.guardarDB(info_movi, "+"))
+                        if (lst_ingreso.Count() > 0)
                         {
-                            info.IdNumMovi_ing = info_movi.IdNumMovi;
-                            Entity.IdNumMovi_ing = info.IdNumMovi_ing;
+                            in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
+                            IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
+                            info.lst_movimiento = lst_ingreso;
 
-                            Context.SaveChanges();
+                            info_movi = GenerarMoviInven(info, "+", info_parametro.IdMotivo_Inv_ajuste_ing);
+                            if (info_movi == null)
+                                return true;
+
+                            if (info.IdNumMovi_ing == null && odata_i.guardarDB(info_movi, "+"))
+                            {
+                                info.IdNumMovi_ing = info_movi.IdNumMovi;
+                                Entity.IdNumMovi_ing = info.IdNumMovi_ing;
+
+                                Context.SaveChanges();
+                            }
                         }
-                    }
 
-                    if (lst_egreso.Count() > 0)
-                    {
-                        in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
-                        IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
-                        info.lst_movimiento = lst_egreso;
-
-                        info_movi = GenerarMoviInven(info, "-", info_parametro.IdMotivo_Inv_ajuste_egr);
-                        if (info_movi == null)
-                            return true;
-
-                        if (info.IdNumMovi_egr == null && odata_i.guardarDB(info_movi, "-"))
+                        if (lst_egreso.Count() > 0)
                         {
-                            info.IdNumMovi_egr = info_movi.IdNumMovi;
-                            Entity.IdNumMovi_egr = info.IdNumMovi_egr;
+                            in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
+                            IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
+                            info.lst_movimiento = lst_egreso;
 
-                            Context.SaveChanges();
+                            info_movi = GenerarMoviInven(info, "-", info_parametro.IdMotivo_Inv_ajuste_egr);
+                            if (info_movi == null)
+                                return true;
+
+                            if (info.IdNumMovi_egr == null && odata_i.guardarDB(info_movi, "-"))
+                            {
+                                info.IdNumMovi_egr = info_movi.IdNumMovi;
+                                Entity.IdNumMovi_egr = info.IdNumMovi_egr;
+
+                                Context.SaveChanges();
+                            }
                         }
-                    }
+                    }                                       
                     #endregion
 
                     Context.Dispose();
@@ -261,8 +264,8 @@ namespace Core.Erp.Data.Inventario
                     Entity.IdSucursal = info.IdSucursal;
                     Entity.IdAjuste = info.IdAjuste;
                     Entity.IdBodega = info.IdBodega;
-                    Entity.IdMovi_inven_tipo_ing = info.IdMovi_inven_tipo_ing = info_parametro.IdMovi_inven_tipo_ajuste_ing;
-                    Entity.IdMovi_inven_tipo_egr = info.IdMovi_inven_tipo_egr = info_parametro.IdMovi_inven_tipo_ajuste_egr;
+                    Entity.IdMovi_inven_tipo_ing = info.IdMovi_inven_tipo_ing;
+                    Entity.IdMovi_inven_tipo_egr = info.IdMovi_inven_tipo_egr;
                     Entity.IdNumMovi_ing = info.IdNumMovi_ing;
                     Entity.IdNumMovi_egr = info.IdNumMovi_egr;
                     Entity.IdCatalogo_Estado = info.IdCatalogo_Estado;
@@ -307,43 +310,46 @@ namespace Core.Erp.Data.Inventario
                     if (info_parametro == null)
                         return false;
 
-                    if (lst_ingreso.Count() > 0)
+                    if (info.IdCatalogo_Estado == "APRO")
                     {
-                        in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
-                        IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
-                        info.lst_movimiento = lst_ingreso;
-
-                        info_movi = GenerarMoviInven(info, "+", info_parametro.IdMotivo_Inv_ajuste_ing);
-                        if (info_movi == null)
-                            return true;
-
-                        if (info.IdNumMovi_ing == null && odata_i.guardarDB(info_movi, "+"))
+                        if (lst_ingreso.Count() > 0)
                         {
-                            info.IdNumMovi_ing = info_movi.IdNumMovi;
-                            Entity.IdNumMovi_ing = info.IdNumMovi_ing;
+                            in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
+                            IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
+                            info.lst_movimiento = lst_ingreso;
 
-                            Context.SaveChanges();
+                            info_movi = GenerarMoviInven(info, "+", info_parametro.IdMotivo_Inv_ajuste_ing);
+                            if (info_movi == null)
+                                return true;
+
+                            if (info.IdNumMovi_ing == null && odata_i.guardarDB(info_movi, "+"))
+                            {
+                                info.IdNumMovi_ing = info_movi.IdNumMovi;
+                                Entity.IdNumMovi_ing = info.IdNumMovi_ing;
+
+                                Context.SaveChanges();
+                            }
                         }
-                    }
 
-                    if (lst_egreso.Count() > 0)
-                    {
-                        in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
-                        IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
-                        info.lst_movimiento = lst_egreso;
-
-                        info_movi = GenerarMoviInven(info, "-", info_parametro.IdMotivo_Inv_ajuste_egr);
-                        if (info_movi == null)
-                            return true;
-
-                        if (info.IdNumMovi_egr == null && odata_i.guardarDB(info_movi, "-"))
+                        if (lst_egreso.Count() > 0)
                         {
-                            info.IdNumMovi_egr = info_movi.IdNumMovi;
-                            Entity.IdNumMovi_egr = info.IdNumMovi_egr;
+                            in_Ing_Egr_Inven_Info info_movi = new in_Ing_Egr_Inven_Info();
+                            IdMovi_inven_tipo = info_parametro.IdMovi_inven_tipo_ajuste_ing ?? 0;
+                            info.lst_movimiento = lst_egreso;
 
-                            Context.SaveChanges();
+                            info_movi = GenerarMoviInven(info, "-", info_parametro.IdMotivo_Inv_ajuste_egr);
+                            if (info_movi == null)
+                                return true;
+
+                            if (info.IdNumMovi_egr == null && odata_i.guardarDB(info_movi, "-"))
+                            {
+                                info.IdNumMovi_egr = info_movi.IdNumMovi;
+                                Entity.IdNumMovi_egr = info.IdNumMovi_egr;
+
+                                Context.SaveChanges();
+                            }
                         }
-                    }
+                    }                    
                     #endregion
                 }
                 return true;
@@ -365,9 +371,28 @@ namespace Core.Erp.Data.Inventario
                         return false;
 
                     Entity.Estado = info.Estado;
-
+                    Entity.MotivoAnulacion = info.MotivoAnulacion;
                     Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
                     Entity.FechaAnulacion = DateTime.Now;
+
+                    in_Ing_Egr_Inven Entity_Ingreso = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo_ing && q.IdNumMovi == info.IdNumMovi_ing);
+                    if (Entity_Ingreso == null)
+                        return false;
+
+                    Entity_Ingreso.Estado = "I";
+                    Entity_Ingreso.MotivoAnulacion = info.MotivoAnulacion;
+                    Entity_Ingreso.IdusuarioUltAnu = info.IdUsuarioAnulacion;
+                    Entity_Ingreso.Fecha_UltAnu = DateTime.Now;
+
+                    in_Ing_Egr_Inven Entity_Egreso = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo_egr && q.IdNumMovi == info.IdNumMovi_egr);
+                    if (Entity_Egreso == null)
+                        return false;
+
+                    Entity_Egreso.Estado = "I";
+                    Entity_Egreso.MotivoAnulacion = info.MotivoAnulacion;
+                    Entity_Egreso.IdusuarioUltAnu = info.IdUsuarioAnulacion;
+                    Entity_Egreso.Fecha_UltAnu = DateTime.Now;
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -397,8 +422,10 @@ namespace Core.Erp.Data.Inventario
                         lst_in_Ing_Egr_Inven_det = new List<in_Ing_Egr_Inven_det_Info>(),
                         IdSucursal = info.IdSucursal,
                         IdBodega = info.IdBodega,
+                        cm_observacion = info.Observacion,
                         IdMotivo_Inv = IdMotivo_inv
                     };
+
                     int secuencia = 1;
                     foreach (var item in info.lst_movimiento)
                     {
@@ -415,6 +442,7 @@ namespace Core.Erp.Data.Inventario
                             dm_cantidad_sinConversion = item.Ajuste,
                             mv_costo = item.Costo,
                             mv_costo_sinConversion = item.Costo,
+                            dm_observacion = info.Observacion,
                             IdUnidadMedida = item.IdUnidadMedida,
                             IdUnidadMedida_sinConversion = item.IdUnidadMedida,
                         });

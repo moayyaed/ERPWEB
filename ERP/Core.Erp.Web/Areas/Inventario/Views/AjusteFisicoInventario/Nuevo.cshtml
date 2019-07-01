@@ -38,7 +38,7 @@
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdMotivo_Inv">Estado*</label>
                     @Html.DropDownListFor(q => q.IdCatalogo_Estado, new SelectList(ViewBag.lst_estado, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdCatalogo_Estado" })

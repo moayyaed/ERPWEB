@@ -129,6 +129,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
             model.IdUsuarioCreacion = SessionFixed.IdUsuario;
+            model.Estado = true;
+
             if (!bus_ajuste.guardarDB(model))
             {
                 cargar_combos(model);
@@ -177,14 +179,15 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost]
         public ActionResult Modificar(in_Ajuste_Info model)
         {
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             model.lst_detalle = ListaDetalle.get_list(model.IdTransaccionSession);
+
             if (!validar(model, ref mensaje))
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
-            }
-            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
+            }            
 
             if (!bus_ajuste.modificarDB(model))
             {
@@ -206,8 +209,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_Ajuste_Info model = bus_ajuste.get_info(IdEmpresa, IdSucursal, IdAjuste);
             if (model == null)
                 return RedirectToAction("Index");
-
+            
             model.lst_detalle = bus_ajuste_det.get_list(IdEmpresa, IdAjuste);
+
             foreach (var item in model.lst_detalle)
             {
                 in_Producto_Info info_producto = bus_producto.get_info(model.IdEmpresa, item.IdProducto);
@@ -232,6 +236,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost]
         public ActionResult Anular(in_Ajuste_Info model)
         {
+            model.Estado = false;
+            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
             model.lst_detalle = ListaDetalle.get_list(model.IdTransaccionSession);
 
             if (!validar(model, ref mensaje))
@@ -239,10 +245,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
-            }
-
-            model.Estado = false;
-            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
+            }            
 
             if (!bus_ajuste.anularDB(model))
             {
