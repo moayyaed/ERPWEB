@@ -1,4 +1,4 @@
-﻿ using Core.Erp.Bus.Banco;
+﻿using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.General;
@@ -8,6 +8,7 @@ using Core.Erp.Web.Reportes.Banco;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -41,6 +42,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
 
         #endregion
+        private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            foreach (var item in lst_sucursal)
+            {
+                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+            }
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
 
         public ActionResult BAN_001( int IdTipoCbte = 0, decimal IdCbteCble = 0)
         {
@@ -503,6 +515,61 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
-
+        public ActionResult BAN_012(bool mostrar_agrupado = false)
+        {
+            cl_filtros_banco_Info model = new cl_filtros_banco_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdUsuario = Convert.ToString(SessionFixed.IdUsuario)
+            };
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            BAN_012_Rpt report = new BAN_012_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult BAN_012(cl_filtros_banco_Info model)
+        {
+            BAN_012_Rpt report = new BAN_012_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }

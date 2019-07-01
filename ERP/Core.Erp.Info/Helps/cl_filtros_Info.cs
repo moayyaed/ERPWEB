@@ -158,6 +158,7 @@ namespace Core.Erp.Info.Helps
         public int NumDesde { get; set; }
         public int NumHasta { get; set; }
         public bool mostrar_agrupado { get; set; }
+        public bool mostrarSaldo0 { get; set; }
     }
 
     public class cl_filtros_contabilidad_Info
