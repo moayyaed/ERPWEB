@@ -3,7 +3,7 @@
 @model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_Info
 @{
     ViewBag.Title = "Modificar activo";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
