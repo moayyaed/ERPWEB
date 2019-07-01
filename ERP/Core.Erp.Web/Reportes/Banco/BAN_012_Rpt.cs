@@ -6,13 +6,18 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.Banco;
 using Core.Erp.Info.Reportes.Banco;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Erp.Web.Reportes.Banco
 {
     public partial class BAN_012_Rpt : DevExpress.XtraReports.UI.XtraReport
     {
+        List<BAN_012_Info> Lista = new List<BAN_012_Info>();
+
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
+
         public BAN_012_Rpt()
         {
             InitializeComponent();
@@ -32,7 +37,32 @@ namespace Core.Erp.Web.Reportes.Banco
 
             BAN_012_Bus bus_rpt = new BAN_012_Bus();
             List<BAN_012_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, fechaIni, fechaFin, mostrarSaldo0, IdUsuario);
+            #region Grupo
+
+            Lista = (from q in lst_rpt
+                     group q by new
+                     {
+                         q.IdEmpresa,
+                         q.ba_descripcion
+                     } into Area
+                     select new BAN_012_Info
+                     {
+                         SaldoFinalBanco = Area.Sum(q => q.SaldoFinalBanco),
+                         IdEmpresa = Area.Key.IdEmpresa,
+                         ba_descripcion = Area.Key.ba_descripcion
+
+                     }).ToList();
+
+            #endregion
+
+
             this.DataSource = lst_rpt;
+
+        }
+
+        private void subreport_cuentas_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            ((XRSubreport)sender).ReportSource.DataSource = Lista;
 
         }
     }
