@@ -243,6 +243,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             var lst_sucursales = bus_sucursal.GetList(model.IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursales = lst_sucursales;
 
+            var lst_sucursales_cxp = bus_sucursal.get_list(model.IdEmpresa, false);
+            ViewBag.lst_sucursales_cxp = lst_sucursales_cxp;
+
             var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
             ViewBag.lst_bodega = lst_bodega;
 

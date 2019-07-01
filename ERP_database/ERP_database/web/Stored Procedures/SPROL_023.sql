@@ -166,7 +166,7 @@ UNION ALL
 			
 			
 			
---caso				  
+				  
 SELECT A.IdEmpresa, A.IdRol,A.IdEmpleado,IdDivision,IdArea,IdDepartamento,IdSucursal,IdNominaTipo, Descripcion, IdNominaTipoLiqui,DescripcionProcesoNomina, IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea, NombreDepartamento,Su_Descripcion, SUM(SUELDO) SUELDO, SUM(ANTICIPO) ANTICIPO, SUM(DECIMOC) DECIMOC, SUM(DECIMOT) DECIMOT, SUM(FRESERVA)FRESERVA,SUM(IESS)IESS, SUM(PRESTAMO)PRESTAMO,SUM(SOBRET) SOBRET, 
 SUM(TOTALE)TOTALE, SUM(TOTALI)TOTALI,SUM(OTROEGR)OTROEGR, SUM(OTROING) OTROING, SUM(DIASTRABAJADOS) DIASTRABAJADOS, (SUM(TOTALI) - SUM(TOTALE)) NETO,NombreCargo, JORNADA, '' UBICACION, 0 PORCENTAJE,
 IESS_TOTAL, FRESERVA_TOTAL
@@ -181,8 +181,7 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN VALOR ELSE 0 END AS DECIMOT,
 				
 				   case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva AND d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
-				  CASE WHEN ro_contrato.IdNomina= 1
-				  THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
+				  CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'SOBRET' THEN VALOR ELSE 0 END AS SOBRET,
 				  CASE WHEN ro_rubro_tipo.ru_tipo = 'E' THEN VALOR ELSE 0 END AS TOTALE,
