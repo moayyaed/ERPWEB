@@ -14,5 +14,6 @@ namespace Core.Erp.Info.Banco
         public int Secuencia { get; set; }
         public double Porcentaje { get; set; }
         public double Valor { get; set; }
+        public string Descricion { get; set; }
     }
 }

@@ -218,7 +218,7 @@ namespace Core.Erp.Data.Banco
                     ba_Archivo_Transferencia Entity = Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault();
                     if (Entity == null) return false;
 
-                    Entity.Nom_Archivo = "PAGOS_MULTICASH_" + info.Fecha.ToString("yyyyMMdd") + "_01";
+                    Entity.Nom_Archivo = info.Nom_Archivo;
                     Entity.Observacion = info.Observacion;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
@@ -237,12 +237,31 @@ namespace Core.Erp.Data.Banco
                                 Estado = item.Estado,
                                 Fecha_proceso = item.Fecha_proceso,
                                 IdOrdenPago = item.IdOrdenPago,
-                                IdEmpresa_OP = item.IdEmpresa_OP,
+                                IdEmpresa_OP = info.IdEmpresa,
                                 Secuencia = item.Secuencia,
                                 Secuencial_reg_x_proceso = item.Secuencial_reg_x_proceso,
                                 Secuencia_OP = item.Secuencia_OP,
                                 Valor = item.Valor,
                                 Referencia = item.Referencia
+                            });
+                        }
+                    }
+                    int Secuencia = 1;
+                    info.Lst_Flujo = info.Lst_Flujo == null ? new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>() : info.Lst_Flujo;
+                    var Lst_flujo = Context.ba_archivo_transferencia_x_ba_tipo_flujo.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).ToList();
+                    Context.ba_archivo_transferencia_x_ba_tipo_flujo.RemoveRange(Lst_flujo);
+                    if (info.Lst_Flujo.Count() > 0)
+                    {
+                        foreach (var item in info.Lst_Flujo)
+                        {
+                            Context.ba_archivo_transferencia_x_ba_tipo_flujo.Add(new ba_archivo_transferencia_x_ba_tipo_flujo
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdArchivo = info.IdArchivo,
+                                IdTipoFlujo = item.IdTipoFlujo,
+                                Porcentaje = item.Porcentaje,
+                                Secuencia = Secuencia++,
+                                Valor = item.Valor
                             });
                         }
                     }

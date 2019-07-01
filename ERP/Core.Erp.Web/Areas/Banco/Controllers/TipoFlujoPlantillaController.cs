@@ -19,6 +19,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_TipoFlujo_PlantillaDet_Bus bus_TipoFlujo_PlantillaDet = new ba_TipoFlujo_PlantillaDet_Bus();
         ba_TipoFlujo_PlantillaDet_List TipoFlujo_PlantillaDet_Lista = new ba_TipoFlujo_PlantillaDet_List();
         ba_Banco_Flujo_Det_List List_Det = new ba_Banco_Flujo_Det_List();
+        ba_Archivo_Flujo_List List_flujo = new ba_Archivo_Flujo_List();
         string mensaje = string.Empty;
         #endregion
 
@@ -298,6 +299,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_Det.set_list(ListaDetFlujo, IdTransaccionSession);            
             return Json(ListaDetFlujo, JsonRequestBehavior.AllowGet);
         }
+
+        
         #endregion
     }
 

@@ -39,6 +39,7 @@ namespace Core.Erp.Info.Banco
         public int IdSucursal { get; set; }
         public decimal SecuencialInicial { get; set; }
 
+        public double cb_Valor { get; set; }
         public cl_enumeradores.eTipoProcesoBancario TipoFile { get; set; }
         public List<ba_Archivo_Transferencia_Det_Info> Lst_det { get; set; }
         public List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> Lst_Flujo { get; set; }

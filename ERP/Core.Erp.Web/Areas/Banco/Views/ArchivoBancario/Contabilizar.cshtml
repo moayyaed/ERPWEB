@@ -36,16 +36,39 @@
     function MostrarModalPlantilla() {
         $("#PlantillaModal").modal("show");
     }
-
-    function AgregarPlantilla(IdPlantilla) {
+    function GetValor()
+    {
         var datos = {
-            Valor: $("#cb_Valor").val(),
-            IdPlantillaTipoFlujo: IdPlantilla,
+            IdTransaccionSession : $("#IdTransaccionSession").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_PlantillaTipoFlujo", "TipoFlujoPlantilla",new { Area = "Banco"})',
+            url: '@Url.Action("GetValor", "ArchivoBancario",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#cb_Valor").val(data);
+                actualizarGridDetFlujo();
+            },
+            error: function (error) {
+            }
+        });
+    }
+    function AgregarPlantilla(IdPlantilla) {
+        var datos = {
+            Valor: $("#cb_Valor").val(),
+            IdPlantillaTipoFlujo: IdPlantilla,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_PlantillaTipoFlujoArchivo", "ArchivoBancario",new { Area = "Banco"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -63,12 +86,14 @@
 
     function actualizarGridDetFlujo() {
         var datos = {
-            Valor: $("#cb_Valor").val()
+            Valor: $("#cb_Valor").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("actualizarGridDetFlujo", "TipoFlujoBanco",new { Area = "Banco"})',
+            url: '@Url.Action("actualizarGridDetFlujoArchivo", "ArchivoBancario", new { Area = "Banco"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -270,10 +295,17 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="ICatalogo">Observación*</label>
                     @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ICatalogo">Valor*</label>
+                    @Html.TextBoxFor(q => q.cb_Valor, new { @class = "form-control", @id = "cb_Valor", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -344,7 +376,7 @@
                                 <h4 class="modal-title">Plantilla tipo de flujo</h4>
                             </div>
                             <div class="modal-body">
-                                @Html.Action("GridViewPartial_TipoFlujoPlantilla_Asignar", new { Area = "Banco", Controller = "TipoFlujoPlantilla" })
+                                @Html.Action("GridViewPartial_TipoFlujoPlantilla_Asignar", new { Area = "Banco", Controller = "ArchivoBancario" })
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -362,7 +394,7 @@
                     </div>
                 </div>
                 <br />
-                @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "TipoFlujoBanco" })
+                @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "ArchivoBancario" })
             </div>
 
 

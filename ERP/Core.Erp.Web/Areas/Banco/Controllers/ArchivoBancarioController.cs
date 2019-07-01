@@ -12,6 +12,7 @@ using Core.Erp.Bus.Contabilidad;
 using DevExpress.Web.Mvc;
 using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Info.General;
+using DevExpress.Web;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -35,9 +36,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        ba_TipoFlujo_Plantilla_Bus bus_TipoFlujo_Plantilla = new ba_TipoFlujo_Plantilla_Bus();
 
         ba_Banco_Cuenta_Bus bus_banco_cuenta = new ba_Banco_Cuenta_Bus();
         ba_parametros_Bus bus_param = new ba_parametros_Bus();
+        ba_TipoFlujo_Bus bus_flujo = new ba_TipoFlujo_Bus();
 
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -105,14 +108,18 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 i_validar.SecuencialInicial++;
             }
 
-
+            i_validar.Lst_Flujo = List_flujo.get_list(i_validar.IdTransaccionSession);
             var cta = bus_banco_cuenta.get_info(i_validar.IdEmpresa, i_validar.IdBanco);
-
             if (cta.EsFlujoObligatorio)
             {
-                if (i_validar.Lst_det.Count == 0)
+                if (i_validar.Lst_Flujo.Count == 0)
                 {
                     mensaje = "Falta distribución de flujo";
+                    return false;
+                }
+                if (Math.Round(i_validar.Lst_Flujo.Sum(q=> q.Valor),2,MidpointRounding.AwayFromZero) != Math.Round(i_validar.Lst_det.Sum(q=> q.Valor),2,MidpointRounding.AwayFromZero))
+                {
+                    mensaje = "Existe una diferencia entre la distribución del flujo y el total a pagar";
                     return false;
                 }
             }
@@ -144,6 +151,23 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             
         }
 
+        #endregion
+        #region CmbTipoFlujo
+        public ActionResult CmbFlujo_Tipo()
+        {
+            int model = new int();
+            return PartialView("_CmbFlujo_Tipo", model);
+        }
+        public List<ba_TipoFlujo_Info> get_list_bajo_demanda_tipoflujo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            var TipoFlujo_GetList = bus_flujo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+            return TipoFlujo_GetList;
+        }
+        public ba_TipoFlujo_Info get_info_bajo_demanda_tipoflujo(ListEditItemRequestedByValueEventArgs args)
+        {
+            var TipoFlujo_GetInfo = bus_flujo.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+            return TipoFlujo_GetInfo;
+        }
         #endregion
         #region Acciones
 
@@ -217,7 +241,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             model.Lst_det = List_det.get_list(model.IdTransaccionSession);
             model.Lst_Flujo = List_flujo.get_list(model.IdTransaccionSession);
-
+            if (!validar(model,ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                cargar_combos();
+                return View(model);
+            }
             if (!bus_archivo.ModificarDB(model))
             {
                 cargar_combos();
@@ -332,6 +361,54 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             Lst_det_op.set_list(lst, IdTransaccionSession);
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetValor(decimal IdTransaccionSession = 0)
+        {
+            double Valor = Math.Round(List_det.get_list(IdTransaccionSession).Sum(q => q.Valor),2,MidpointRounding.AwayFromZero);
+            return Json(Valor,JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult cargar_PlantillaTipoFlujoArchivo(float Valor = 0, decimal IdPlantillaTipoFlujo = 0, decimal IdTransaccionSession = 0, int IdEmpresa = 0)
+        {
+            var ListaPlantillaTipoFlujo = bus_TipoFlujo_PlantillaDet.GetList(IdEmpresa, IdPlantillaTipoFlujo);
+            var ListaFlujoArchivo = List_flujo.get_list(IdTransaccionSession);
+            var secuencia = 1;
+
+            foreach (var item in ListaPlantillaTipoFlujo)
+            {
+                ListaFlujoArchivo.Add(new ba_archivo_transferencia_x_ba_tipo_flujo_Info
+                {
+                    Secuencia = secuencia++,
+                    IdTipoFlujo = item.IdTipoFlujo,
+                    Descricion = item.Descricion,
+                    Porcentaje = item.Porcentaje,
+                    Valor = (item.Porcentaje * Valor) / 100
+                });
+            }
+
+            List_flujo.set_list(ListaFlujoArchivo, IdTransaccionSession);
+            return Json(ListaFlujoArchivo, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult actualizarGridDetFlujoArchivo(float Valor = 0, decimal IdTransaccionSession = 0, int IdEmpresa = 0)
+        {
+
+            var ListaPlantillaTipoFlujo = List_flujo.get_list(IdTransaccionSession);
+
+            var ListaDetFlujo = new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>();
+            foreach (var item in ListaPlantillaTipoFlujo)
+            {
+                ListaDetFlujo.Add(new ba_archivo_transferencia_x_ba_tipo_flujo_Info
+                {
+                    Secuencia = item.Secuencia,
+                    IdTipoFlujo = item.IdTipoFlujo,
+                    Descricion = item.Descricion,
+                    Porcentaje = item.Porcentaje,
+                    Valor = (item.Porcentaje * Valor) / 100
+                });
+            }
+
+            List_flujo.set_list(ListaDetFlujo, IdTransaccionSession);
+            return Json(ListaDetFlujo, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region Archivo
 
@@ -408,6 +485,87 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
                 throw;
             }
+        }
+        #endregion
+        #region DetalleFlujo
+        #region Detalle
+        private void cargar_combos_Detalle()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_flujo = bus_flujo.get_list(IdEmpresa, false);
+            ViewBag.lst_flujo = lst_flujo;
+
+
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_flujo_det()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            
+            cargar_combos_Detalle();
+            var model = List_flujo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_flujo_det", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNewFlujo([ModelBinder(typeof(DevExpressEditorsBinder))] ba_archivo_transferencia_x_ba_tipo_flujo_Info info_det)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            if (info_det != null)
+                if (info_det.IdTipoFlujo != 0)
+                {
+                    ba_TipoFlujo_Info info_TipoFlujo = bus_flujo.get_info(IdEmpresa, info_det.IdTipoFlujo);
+                    if (info_TipoFlujo != null)
+                    {
+                        info_det.Descricion = info_TipoFlujo.Descricion;
+                    }
+                }
+
+            if (ModelState.IsValid)
+                List_flujo.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = List_flujo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_Detalle();
+            return PartialView("_GridViewPartial_flujo_det", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdateFlujo([ModelBinder(typeof(DevExpressEditorsBinder))] ba_archivo_transferencia_x_ba_tipo_flujo_Info info_det)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            if (info_det != null)
+                if (info_det.IdTipoFlujo != 0)
+                {
+                    ba_TipoFlujo_Info info_TipoFlujo = bus_flujo.get_info(IdEmpresa, info_det.IdTipoFlujo);
+                    if (info_TipoFlujo != null)
+                    {
+                        info_det.IdTipoFlujo = info_TipoFlujo.IdTipoFlujo;
+                        info_det.Descricion = info_TipoFlujo.Descricion;
+                    }
+                }
+
+            if (ModelState.IsValid)
+                List_flujo.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = List_flujo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_Detalle();
+            return PartialView("_GridViewPartial_flujo_det", model);
+        }
+        public ActionResult EditingDeleteFlujo(int Secuencia)
+        {
+            List_flujo.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = List_flujo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_Detalle();
+            return PartialView("_GridViewPartial_flujo_det", model);
+        }
+        #endregion
+        #endregion
+        #region Plantilla por asignar
+        public ActionResult GridViewPartial_TipoFlujoPlantilla_Asignar()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            List<ba_TipoFlujo_Plantilla_Info> model = bus_TipoFlujo_Plantilla.GetList(IdEmpresa, true);
+
+            return PartialView("_GridViewPartial_flujo_Asignar", model);
         }
         #endregion
     }
@@ -500,10 +658,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-
-            var lst = new List<ba_Archivo_Transferencia_Det_Info>();
-            info_det.Valor = lst.Sum(q => q.Valor);
-            
+            list.Add(info_det);
         }
 
         public void UpdateRow(ba_archivo_transferencia_x_ba_tipo_flujo_Info info_det, decimal IdTransaccionSession)

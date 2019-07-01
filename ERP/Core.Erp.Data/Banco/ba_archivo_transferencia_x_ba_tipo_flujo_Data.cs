@@ -16,15 +16,15 @@ namespace Core.Erp.Data.Banco
                 List<ba_archivo_transferencia_x_ba_tipo_flujo_Info> Lista;
                 using (Entities_banco Context = new Entities_banco())
                 {
-                    Lista = Context.ba_archivo_transferencia_x_ba_tipo_flujo.Where(q => q.IdEmpresa == IdEmpresa && q.IdArchivo == IdArchivo).Select(q => new ba_archivo_transferencia_x_ba_tipo_flujo_Info
+                    Lista = Context.ba_archivo_transferencia_x_ba_tipo_flujo.Include("ba_TipoFlujo").Where(q => q.IdEmpresa == IdEmpresa && q.IdArchivo == IdArchivo).Select(q => new ba_archivo_transferencia_x_ba_tipo_flujo_Info
                     {
                         IdEmpresa = q.IdEmpresa, 
                         IdArchivo = q.IdArchivo,
                         IdTipoFlujo = q.IdTipoFlujo,
                         Porcentaje = q.Porcentaje,
                         Secuencia = q.Secuencia,
-                        Valor = q.Valor
-
+                        Valor = q.Valor,
+                        Descricion = q.ba_TipoFlujo.Descricion
                     }).ToList();
                 }
                 return Lista;

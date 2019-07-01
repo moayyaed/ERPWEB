@@ -19,6 +19,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_TipoFlujo_Bus bus_flujo = new ba_TipoFlujo_Bus();
         ba_Banco_Flujo_Det_List List_Det = new ba_Banco_Flujo_Det_List();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo_det = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
+        ba_Archivo_Flujo_List List_flujo = new ba_Archivo_Flujo_List();
         #endregion
 
         #region Metodos ComboBox bajo demanda flujo
@@ -219,6 +220,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_Det.set_list(ListaDetFlujo, IdTransaccionSession);
             return Json(ListaDetFlujo, JsonRequestBehavior.AllowGet);
         }
+
+        
         #endregion
 
     }
