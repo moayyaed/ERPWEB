@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Compras.com_ordencompra_local_Info
 @{
-    ViewBag.Title = "Modificar orden de compra";
+    ViewBag.Title = "Modificar orden de servicio";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -50,7 +50,7 @@
         }
     }
 </script>
-@using (Html.BeginForm("Modificar", "OrdenCompraLocal", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Modificar", "OrdenServicio", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
 
     @Html.HiddenFor(q => q.IdEmpresa)
@@ -135,7 +135,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProveedor_COM", Model.IdProveedor)
+                    @Html.Partial("_CmbProveedor_OS", Model.IdProveedor)
                     @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -179,7 +179,7 @@
                 </button>
             </div>
             <div class="col-md-1">
-                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","OrdenCompraLocal",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
+                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","OrdenServicio",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
@@ -201,7 +201,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    @Html.Action("GridViewPartial_ordencompralocal_det")
+                    @Html.Action("GridViewPartial_orden_servicio_det")
                 </div>
             </div>
         </div>
@@ -209,7 +209,7 @@
 
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","OrdenCompraLocal", new { Area = "Compras"  },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index","OrdenServicio", new { Area = "Compras"  },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
@@ -227,14 +227,14 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("GetInfoProducto", "OrdenCompraLocal",new { Area = "Compras"})',
+            url: '@Url.Action("GetInfoProducto", "OrdenServicio",new { Area = "Compras"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridView_ordencompralocal_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+                GridViewPartial_orden_servicio_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
             },
             error: function (error) {
             }

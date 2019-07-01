@@ -741,6 +741,9 @@ namespace Core.Erp.Data.Inventario
                 case cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL:
                     Lista = get_list_PorSucursal(IdEmpresa, skip, take, args.Filter, IdSucursal);
                     break;
+                case cl_enumeradores.eTipoBusquedaProducto.PORTIPO:
+                    Lista = get_list_PorTipo(IdEmpresa, skip, take, args.Filter, IdSucursal, 2);
+                    break;
             }
             return Lista;
         }
@@ -1130,6 +1133,39 @@ namespace Core.Erp.Data.Inventario
             }
         }
 
+        public List<in_Producto_Info> get_list_PorTipo(int IdEmpresa, int skip, int take, string filter, int IdSucursal, int IdTipo)
+        {
+            try
+            {
+                List<in_Producto_Info> Lista = new List<in_Producto_Info>();
+
+                Entities_inventario Context = new Entities_inventario();
+
+                Lista = Context.vwin_Producto_PorSucursal.Where(p => p.IdEmpresa == IdEmpresa
+                           && p.IdSucursal == IdSucursal
+                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)).Select(p => new in_Producto_Info
+                            {
+                                IdEmpresa = p.IdEmpresa,
+                                IdProducto = p.IdProducto,
+                                pr_descripcion = p.pr_descripcion,
+                                nom_categoria = p.ca_Categoria,
+                                precio_1 = p.precio_1 ?? 0,
+                                stock = p.Stock ?? 0
+                            })
+                             .OrderBy(p => p.IdProducto)
+                             .Skip(skip)
+                             .Take(take)
+                             .ToList();
+                Context.Dispose();
+                Lista = get_list_nombre_combo(Lista);
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
         #region Validaciones
 

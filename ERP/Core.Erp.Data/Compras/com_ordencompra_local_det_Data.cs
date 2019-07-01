@@ -39,6 +39,7 @@ namespace Core.Erp.Data.Compras
                                  do_total = q.do_total,
                                  Por_Iva = q.Por_Iva,
                                  Secuencia = q.Secuencia,
+                                 SecuenciaTipo = q.SecuenciaTipo,
                                  pr_descripcion = q.pr_descripcion
                              }).ToList();
                 }

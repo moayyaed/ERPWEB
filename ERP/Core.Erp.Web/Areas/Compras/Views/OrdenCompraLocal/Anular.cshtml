@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Compras.com_ordencompra_local_Info
 @{
-    ViewBag.Title = "Anular orden";
+    ViewBag.Title = "Anular orden de compra";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -45,6 +45,9 @@
     @Html.HiddenFor(q => q.IdSucursal)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdEstadoAprobacion_cat)
+    @Html.HiddenFor(q => q.Tipo)
+    @Html.HiddenFor(q => q.SecuenciaTipo)
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">

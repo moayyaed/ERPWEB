@@ -286,6 +286,7 @@
     <Compile Include="Areas\Compras\Controllers\DepartamentoComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\EstadoCierreComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\OrdenCompraLocalController.cs" />
+    <Compile Include="Areas\Compras\Controllers\OrdenServicioController.cs" />
     <Compile Include="Areas\Compras\Controllers\ParametrosComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\TerminoPagoComprasController.cs" />
     <Compile Include="Areas\Contabilidad\ContabilidadAreaRegistration.cs" />
@@ -10101,6 +10102,14 @@
     <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_flujo_det.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\_GridViewPartial_flujo_Asignar.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\_CmbFlujo_Tipo.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\_CmbProveedor_OS.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\_CmbProducto_OS.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\_GridViewPartial_orden_servicio.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\_GridViewPartial_orden_servicio_det.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\Anular.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\Index.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\Modificar.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\Nuevo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

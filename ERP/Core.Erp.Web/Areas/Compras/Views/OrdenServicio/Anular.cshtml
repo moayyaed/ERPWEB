@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Compras.com_ordencompra_local_Info
 @{
-    ViewBag.Title = "Modificar orden de compra";
+    ViewBag.Title = "Anular orden de servicio";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -15,25 +15,12 @@
             </h4>
         </div>
     }
-
-    if (ViewBag.MensajeSuccess != null)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-success alert-dismissible">
-                    <h4>
-                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
-                    </h4>
-                </div>
-            </div>
-        </div>
-    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script type="text/javascript">
     function Imprimir() {
         var location = GetPathServer();
-        var win = window.open(location +"/Reportes/CompraReportes/COMP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdOrdenCompra="+@Model.IdOrdenCompra, '_blank');
+        var win = window.open(location +"/Reportes/ComprasReportes/COMP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursak="+@Model.IdSucursal+"&IdOrdenCompra="+@Model.IdOrdenCompra, '_blank');
         win.focus();
     }
 
@@ -50,15 +37,14 @@
         }
     }
 </script>
-@using (Html.BeginForm("Modificar", "OrdenCompraLocal", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Anular", "OrdenServicio", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
 
     @Html.HiddenFor(q => q.IdEmpresa)
-    @Html.HiddenFor(q => q.IdSucursal)
     @Html.HiddenFor(q => q.IdOrdenCompra)
+    @Html.HiddenFor(q => q.IdSucursal)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdEstadoAprobacion_cat)
-    @Html.HiddenFor(q => q.IdComprador)
     @Html.HiddenFor(q => q.Tipo)
     @Html.HiddenFor(q => q.SecuenciaTipo)
 
@@ -67,7 +53,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control" ,@disabled="disabled"})
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -83,7 +69,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdEstado_cierre">Estado de cierre*</label>
-                    @Html.DropDownListFor(q => q.IdEstado_cierre, new SelectList(ViewBag.lst_estado, "IdEstado_cierre", "Descripcion"), new { @class = "form-control", @readonly = "readonly" })
+                    @Html.DropDownListFor(q => q.IdEstado_cierre, new SelectList(ViewBag.lst_estado, "IdEstado_cierre", "Descripcion"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.IdEstado_cierre, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -135,7 +121,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProveedor_COM", Model.IdProveedor)
+                    @Html.Partial("_CmbProveedor_OS", Model.IdProveedor)
                     @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -179,7 +165,7 @@
                 </button>
             </div>
             <div class="col-md-1">
-                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","OrdenCompraLocal",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
+                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","OrdenServicio",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
@@ -201,43 +187,17 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    @Html.Action("GridViewPartial_ordencompralocal_det")
+                    @Html.Action("GridViewPartial_orden_servicio_det")
                 </div>
             </div>
         </div>
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","OrdenCompraLocal", new { Area = "Compras"  },null)">Cancelar</a>
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","OrdenServicio", new { Area = "Compras"  },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-<script type="text/javascript">
-
-        function GetInfoProducto(s, e) {
-        $("#Secuencia").text(0);
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdProducto: s.GetValue()
-
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetInfoProducto", "OrdenCompraLocal",new { Area = "Compras"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridView_ordencompralocal_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
-            },
-            error: function (error) {
-            }
-        });
-    }
-</script>

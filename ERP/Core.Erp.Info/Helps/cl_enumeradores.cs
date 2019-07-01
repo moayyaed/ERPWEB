@@ -67,7 +67,8 @@
             PORMODULO,
             TODOS,
             TODOS_MENOS_PADRES,
-            PORSUCURSAL
+            PORSUCURSAL,
+            PORTIPO
         }        
 
         public enum eTipoCatalogoInventario

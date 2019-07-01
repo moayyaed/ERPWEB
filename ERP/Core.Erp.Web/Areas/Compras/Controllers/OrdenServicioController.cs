@@ -1,26 +1,24 @@
-﻿using DevExpress.Web.Mvc;
+﻿using Core.Erp.Bus.Compras;
+using Core.Erp.Bus.CuentasPorPagar;
+using Core.Erp.Bus.General;
+using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.Compras;
+using Core.Erp.Info.CuentasPorPagar;
+using Core.Erp.Info.General;
+using Core.Erp.Info.Helps;
+using Core.Erp.Info.Inventario;
+using Core.Erp.Web.Helps;
+using DevExpress.Web;
+using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Core.Erp.Bus.Compras;
-using Core.Erp.Bus.CuentasPorPagar;
-using Core.Erp.Info.Compras;
-using Core.Erp.Web.Helps;
-using Core.Erp.Info.Helps;
-using Core.Erp.Bus.General;
-using Core.Erp.Info.General;
-using DevExpress.Web;
-using Core.Erp.Info.Inventario;
-using Core.Erp.Bus.Inventario;
-using Core.Erp.Info.CuentasPorPagar;
 
 namespace Core.Erp.Web.Areas.Compras.Controllers
 {
-    [SessionTimeout]
-
-    public class OrdenCompraLocalController : Controller
+    public class OrdenServicioController : Controller
     {
         #region Variables
         com_ordencompra_local_Bus bus_ordencompra = new com_ordencompra_local_Bus();
@@ -44,7 +42,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         public ActionResult CmbProveedor_COM()
         {
             decimal model = new decimal();
-            return PartialView("_CmbProveedor_COM", model);
+            return PartialView("_CmbProveedor_OS", model);
         }
         public List<tb_persona_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
@@ -65,7 +63,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         }
         public List<in_Producto_Info> get_list_bajo_demandaProducto(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            List<in_Producto_Info> Lista = bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL, cl_enumeradores.eModulo.FAC, 0,Convert.ToInt32(SessionFixed.IdSucursal));
+            List<in_Producto_Info> Lista = bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL, cl_enumeradores.eModulo.FAC, 0, Convert.ToInt32(SessionFixed.IdSucursal));
             return Lista;
         }
         public in_Producto_Info get_info_bajo_demandaProducto(ListEditItemRequestedByValueEventArgs args)
@@ -93,15 +91,16 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ordencompralocal(int IdSucursal, DateTime? fecha_ini, DateTime? fecha_fin)
+        public ActionResult GridViewPartial_orden_servicio(int IdSucursal, DateTime? fecha_ini, DateTime? fecha_fin)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
             ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
-            ViewBag.tipo = "OC";
+            ViewBag.tipo = "OS";
+
             var model = bus_ordencompra.get_list(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true, ViewBag.tipo);
-            return PartialView("_GridViewPartial_ordencompralocal", model);
+            return PartialView("_GridViewPartial_orden_servicio", model);
         }
 
         private void CargarCombosConsulta(int IdEmpresa)
@@ -123,7 +122,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             var lst_estado = bus_estado.get_list(false);
             ViewBag.lst_estado = lst_estado;
 
-            var lst_comprador = bus_comprador.get_list(IdEmpresa,false);
+            var lst_comprador = bus_comprador.get_list(IdEmpresa, false);
             ViewBag.lst_comprador = lst_comprador;
 
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
@@ -154,7 +153,8 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 oc_fechaVencimiento = DateTime.Now.Date,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEstadoAprobacion_cat = i_param.IdEstadoAprobacion_OC,
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                Tipo = "OC"
 
             };
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
@@ -183,7 +183,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             }
             else
             {
-                model.IdComprador   = info_comprador.IdComprador;
+                model.IdComprador = info_comprador.IdComprador;
             }
 
             if (!Validar(model, ref mensaje))
@@ -204,7 +204,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdOrdenCompra = model.IdOrdenCompra, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0 ,  decimal IdOrdenCompra  = 0, bool Exito = false)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdOrdenCompra = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -281,13 +281,13 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
         #endregion
 
-        #region Grids
+        #region Funciones del detalle
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ordencompralocal_det()
+        public ActionResult GridViewPartial_orden_servicio_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_ordencompralocal_det", model);
+            return PartialView("_GridViewPartial_orden_servicio_det", model);
         }
 
         [HttpPost, ValidateInput(false)]
@@ -297,12 +297,12 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
-                         info_det.pr_descripcion = producto.pr_descripcion_combo;
+                info_det.pr_descripcion = producto.pr_descripcion_combo;
 
-                if (ModelState.IsValid)
-                    List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            if (ModelState.IsValid)
+                List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_ordencompralocal_det", model);
+            return PartialView("_GridViewPartial_orden_servicio_det", model);
         }
 
         [HttpPost, ValidateInput(false)]
@@ -313,24 +313,24 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
-               info_det.pr_descripcion = producto.pr_descripcion_combo;
+                info_det.pr_descripcion = producto.pr_descripcion_combo;
 
             if (ModelState.IsValid)
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_ordencompralocal_det", model);
+            return PartialView("_GridViewPartial_orden_servicio_det", model);
         }
 
         public ActionResult EditingDelete(int Secuencia)
         {
             List_det.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_ordencompralocal_det", model);
+            return PartialView("_GridViewPartial_orden_servicio_det", model);
         }
         #endregion
 
         #region Json
-        public JsonResult GetInfoProducto(int IdEmpresa = 0 ,int IdProducto = 0)
+        public JsonResult GetInfoProducto(int IdEmpresa = 0, int IdProducto = 0)
         {
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
@@ -353,11 +353,11 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             {
                 info_termino_pago = info_termino_pago_mayor;
             }
-            
+
             return Json(info_termino_pago, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult get_info_termino_pago(int IdEmpresa = 0, int IdTerminoPago=0)
+        public JsonResult get_info_termino_pago(int IdEmpresa = 0, int IdTerminoPago = 0)
         {
             var info_termino_pago = bus_termino.get_info(IdEmpresa, IdTerminoPago);
             return Json(info_termino_pago, JsonRequestBehavior.AllowGet);
@@ -404,11 +404,11 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         #endregion
 
     }
-    public class com_ordencompra_local_det_List
+    public class com_orden_servicio_det_List
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
-        string variable = "com_ordencompra_local_det_Info";
+        string variable = "com_orden_servicio_det_Info";
         public List<com_ordencompra_local_det_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)

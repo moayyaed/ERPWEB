@@ -9,19 +9,24 @@ namespace Core.Erp.Data.Compras
 {
     public class com_ordencompra_local_Data
     {
-        public List<com_ordencompra_local_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime  fecha_fin, bool mostrar_anulados)
+        public List<com_ordencompra_local_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime  fecha_fin, bool mostrar_anulados, string Tipo)
         {
             try
             {
+                int IdSucursal_ini = IdSucursal;
+                int IdSucursal_fin = IdSucursal == 0 ? 999999 : IdSucursal;
+
                 List<com_ordencompra_local_Info> Lista;
                 using (Entities_compras Context = new Entities_compras())
                 {
                     if (mostrar_anulados)
                         Lista = (from q in Context.vwcom_ordencompra_local
                                  where q.IdEmpresa == IdEmpresa
-                                 && q.IdSucursal == IdSucursal
+                                 && q.IdSucursal >= IdSucursal_ini
+                                 && q.IdSucursal <= IdSucursal_fin
                                  && q.oc_fecha >= fecha_ini
                                  && q.oc_fecha <= fecha_fin
+                                 && q.Tipo == Tipo
                                  select new com_ordencompra_local_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -29,6 +34,8 @@ namespace Core.Erp.Data.Compras
                                      IdEstadoAprobacion_cat = q.IdEstadoAprobacion_cat,
                                      IdEstado_cierre = q.IdEstado_cierre,
                                      IdSucursal = q.IdSucursal,
+                                     Tipo = q.Tipo,
+                                     SecuenciaTipo = q.SecuenciaTipo,
                                      Estado = q.Estado,
                                      oc_plazo = q.oc_plazo,
                                      oc_observacion = q.oc_observacion,
@@ -55,6 +62,8 @@ namespace Core.Erp.Data.Compras
                                      IdEstadoAprobacion_cat = q.IdEstadoAprobacion_cat,
                                      IdEstado_cierre = q.IdEstado_cierre,
                                      IdSucursal = q.IdSucursal,
+                                     Tipo = q.Tipo,
+                                     SecuenciaTipo = q.SecuenciaTipo,
                                      Estado = q.Estado,
                                      oc_plazo = q.oc_plazo,
                                      oc_observacion = q.oc_observacion,
@@ -96,6 +105,8 @@ namespace Core.Erp.Data.Compras
                         IdEstado_cierre = Entity.IdEstado_cierre,
                         IdProveedor = Entity.IdProveedor,
                         IdSucursal = Entity.IdSucursal,
+                        Tipo = Entity.Tipo,
+                        SecuenciaTipo = Entity.SecuenciaTipo,
                         IdTerminoPago = Entity.IdTerminoPago,
                         Estado = Entity.Estado,
                         oc_plazo = Entity.oc_plazo,
@@ -136,6 +147,30 @@ namespace Core.Erp.Data.Compras
             }
         }
 
+        private int get_id_by_tipo(int IdEmpresa, int idSucursal, string Tipo)
+        {
+            try
+            {
+                int Id = 1;
+                using (Entities_compras Context = new Entities_compras())
+                {
+                    var lst = from q in Context.com_ordencompra_local
+                              where q.IdEmpresa == IdEmpresa
+                              && q.IdSucursal == idSucursal
+                              && q.Tipo == Tipo
+                              select q;
+                    if (lst.Count() > 0)
+                        Id = lst.Max(q => q.SecuenciaTipo) + 1;
+                }
+                return Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(com_ordencompra_local_Info info)
         {
             try
@@ -146,12 +181,14 @@ namespace Core.Erp.Data.Compras
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdComprador = info.IdComprador,
-                        IdOrdenCompra = info.IdOrdenCompra=get_id(info.IdEmpresa , info.IdSucursal),
+                        IdOrdenCompra = info.IdOrdenCompra = get_id(info.IdEmpresa, info.IdSucursal),
                         IdDepartamento = info.IdDepartamento,
                         IdEstadoAprobacion_cat = info.IdEstadoAprobacion_cat,
                         IdEstado_cierre = info.IdEstado_cierre,
                         IdProveedor = info.IdProveedor,
                         IdSucursal = info.IdSucursal,
+                        Tipo = info.Tipo,
+                        SecuenciaTipo = info.SecuenciaTipo = get_id_by_tipo(info.IdEmpresa, info.IdSucursal, info.Tipo),
                         IdTerminoPago = info.IdTerminoPago,
                         Estado = "A",
                         oc_plazo = info.oc_plazo,
@@ -171,6 +208,7 @@ namespace Core.Erp.Data.Compras
                              {
                                 IdEmpresa = info.IdEmpresa,
                                 IdOrdenCompra = info.IdOrdenCompra,
+                                SecuenciaTipo = info.SecuenciaTipo,
                                 IdSucursal = info.IdSucursal,
                                 IdProducto = item.IdProducto,
                                 IdCod_Impuesto = item.IdCod_Impuesto,
@@ -210,20 +248,23 @@ namespace Core.Erp.Data.Compras
                     com_ordencompra_local Entity = Context.com_ordencompra_local.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdOrdenCompra == info.IdOrdenCompra).FirstOrDefault();
                     if (Entity == null) return false;
 
-                     Entity.IdComprador = info.IdComprador;
-                     Entity.IdDepartamento = info.IdDepartamento;
-                     Entity.IdEstadoAprobacion_cat = info.IdEstadoAprobacion_cat;
-                     Entity.IdEstado_cierre = info.IdEstado_cierre;
-                     Entity.IdProveedor = info.IdProveedor;
-                     Entity.IdSucursal = info.IdSucursal;
-                     Entity.IdTerminoPago = info.IdTerminoPago;
-                     Entity.oc_plazo = info.oc_plazo;
-                     Entity.oc_observacion = info.oc_observacion;
-                     Entity.oc_fecha = info.oc_fecha;
-                     Entity.oc_fechaVencimiento = info.oc_fechaVencimiento;
+                    Entity.IdComprador = info.IdComprador;
+                    Entity.IdDepartamento = info.IdDepartamento;
+                    Entity.Tipo = info.Tipo;
+                    Entity.SecuenciaTipo = info.SecuenciaTipo;
+                    Entity.IdEstadoAprobacion_cat = info.IdEstadoAprobacion_cat;
+                    Entity.IdEstado_cierre = info.IdEstado_cierre;
+                    Entity.IdProveedor = info.IdProveedor;
+                    Entity.IdSucursal = info.IdSucursal;
+                    Entity.IdTerminoPago = info.IdTerminoPago;
+                    Entity.oc_plazo = info.oc_plazo;
+                    Entity.oc_observacion = info.oc_observacion;
+                    Entity.oc_fecha = info.oc_fecha;
+                    Entity.oc_fechaVencimiento = info.oc_fechaVencimiento;
 
-                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
-                     Entity.Fecha_UltMod = DateTime.Now;
+                    Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                    Entity.Fecha_UltMod = DateTime.Now;
+
                     var det = Context.com_ordencompra_local_det.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdSucursal == info.IdSucursal && v.IdOrdenCompra == info.IdOrdenCompra);
                     Context.com_ordencompra_local_det.RemoveRange(det);
                     foreach (var item in info.lst_det)
@@ -233,6 +274,7 @@ namespace Core.Erp.Data.Compras
                             IdEmpresa = info.IdEmpresa,
                             IdSucursal = info.IdSucursal,
                             IdOrdenCompra = info.IdOrdenCompra,
+                            SecuenciaTipo = info.SecuenciaTipo,
                             IdProducto = item.IdProducto,
                             IdCod_Impuesto = item.IdCod_Impuesto,
                             IdUnidadMedida = item.IdUnidadMedida,
@@ -373,6 +415,7 @@ namespace Core.Erp.Data.Compras
                             IdEmpresa = q.IdEmpresa,
                             IdSucursal = q.IdSucursal,
                             IdOrdenCompra = q.IdOrdenCompra,
+                            SecuenciaTipo = q.SecuenciaTipo,
                             IdEstadoAprobacion_cat = q.IdEstadoAprobacion_cat,
                             oc_observacion = q.oc_observacion,
                             EstadoBool = q.Estado == "A" ? true : false,
@@ -411,6 +454,7 @@ namespace Core.Erp.Data.Compras
                                      IdSucursal = q.IdSucursal,
                                      IdOrdenCompra = q.IdOrdenCompra,
                                      Secuencia = q.Secuencia,
+                                     SecuenciaTipo = q.SecuenciaTipo,
                                      oc_fecha = q.oc_fecha,
                                      IdProducto = q.IdProducto,
                                      pr_descripcion = q.pr_descripcion,
