@@ -16,8 +16,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
 
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
-
-
+                
                 decimal IdClienteIni = IdCliente;
                 decimal IdClienteFin = IdCliente == 0 ? 99999999 : IdCliente;
                 List<FAC_018_Info> Lista;

@@ -141,8 +141,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
 
             ViewBag.lst_formapago = lst_formapago;
-
+            
         }
+
+        private void cargar_FAC018(cl_filtros_facturacion_Info model)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+           
+            fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
+            var lst_nota = bus_nota.get_list(IdEmpresa, false);
+            ViewBag.lst_nota = lst_nota;
+        }
+
         private void cargar_combos(cl_filtros_facturacion_Info model)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -173,9 +183,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_cliente_tipo = lst_cliente_tipo;
 
-            fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
-            var lst_nota = bus_nota.get_list(IdEmpresa, false);
-            ViewBag.lst_nota = lst_nota;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -939,6 +946,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCliente = 0
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_FAC018(model);
             FAC_018_Rpt report = new FAC_018_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -959,7 +967,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos(model);
             ViewBag.Report = report;
             return View(model);
         }
@@ -987,7 +994,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
-            cargar_combos(model);
+            cargar_FAC018(model);
             ViewBag.Report = report;
             return View(model);
         }
