@@ -54,6 +54,7 @@ namespace Core.Erp.Data.Compras
                                  && q.IdSucursal == IdSucursal
                                  && q.oc_fecha >= fecha_ini
                                  && q.oc_fecha <= fecha_fin
+                                 && q.Tipo == Tipo
                                  && q.Estado == "A"
                                  select new com_ordencompra_local_Info
                                  {

@@ -31,6 +31,7 @@ namespace Core.Erp.Web.Reportes.Compra
 
             COMP_001_Bus bus_rpt = new COMP_001_Bus();
             List<COMP_001_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdOrdenCompra);
+            
             this.DataSource = lst_rpt;
         }
     }

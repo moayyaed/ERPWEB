@@ -33,7 +33,9 @@ namespace Core.Erp.Data.Reportes
                         do_subtotal = q.do_subtotal,
                         do_total = q.do_total,
                         Estado = q.Estado,
-                        IdOrdenCompra = q.IdOrdenCompra,
+                        IdOrdenCompra = q.IdOrdenCompra,  
+                        SecuenciaTipo = q.SecuenciaTipo,
+                        Tipo = q.Tipo,                      
                         IdProducto = q.IdProducto,
                         IdProveedor = q.IdProveedor,
                         IdSucursal = q.IdSucursal,
@@ -52,6 +54,7 @@ namespace Core.Erp.Data.Reportes
                         SubtotalIVA = q.SubtotalIVA,
                         Su_Descripcion = q.Su_Descripcion,
                         TelefonosProveedor = q.TelefonosProveedor
+                        
                     }).ToList();
                 }
                 return Lista;

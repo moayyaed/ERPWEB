@@ -97,7 +97,7 @@
         });
         settings.Columns.Add("pr_codigo", "Código").Width = Unit.Percentage(10);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
-        settings.Columns.Add("pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(40);
+        settings.Columns.Add("pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(30);
         settings.Columns.Add("oc_observacion", "Observación").Width = Unit.Percentage(30);
         settings.Columns.Add("IdEstadoAprobacion_cat", "Estado Aprobación").Width = Unit.Percentage(20);
         settings.Columns.Add(column =>
@@ -109,6 +109,14 @@
             {
 
             });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("COMP_001", "CompraReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal").ToString(), IdOrdenCompra = DataBinder.Eval(c.DataItem, "IdOrdenCompra").ToString() }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
         });
     });
 }

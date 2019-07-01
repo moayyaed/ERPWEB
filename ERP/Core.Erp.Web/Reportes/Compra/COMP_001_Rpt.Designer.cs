@@ -85,7 +85,7 @@
             this.lbl_empresa = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.lbl_titulo = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
@@ -617,20 +617,22 @@
             // xrTableRow2
             // 
             this.xrTableRow2.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.xrTableCell1});
+            this.lbl_titulo});
             this.xrTableRow2.Name = "xrTableRow2";
             this.xrTableRow2.Weight = 1D;
             // 
-            // xrTableCell1
+            // lbl_titulo
             // 
-            this.xrTableCell1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "CONCAT(\'ORDEN DE COMPRA # \',[IdOrdenCompra])")});
-            this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
-            this.xrTableCell1.Name = "xrTableCell1";
-            this.xrTableCell1.StylePriority.UseFont = false;
-            this.xrTableCell1.StylePriority.UseTextAlignment = false;
-            this.xrTableCell1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell1.Weight = 2D;
+            this.lbl_titulo.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(Iif([Tipo]==\'OC\',\'ORDEN DE COMPRA\' ,\'ORDEN DE SERVICIO\' ), [SecuenciaTipo]" +
+                    ")")});
+            this.lbl_titulo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
+            this.lbl_titulo.Name = "lbl_titulo";
+            this.lbl_titulo.StylePriority.UseFont = false;
+            this.lbl_titulo.StylePriority.UseTextAlignment = false;
+            this.lbl_titulo.Text = "lbl_titulo";
+            this.lbl_titulo.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.lbl_titulo.Weight = 2D;
             // 
             // xrTableRow3
             // 
@@ -988,7 +990,7 @@
         private DevExpress.XtraReports.UI.XRTableCell lbl_empresa;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell2;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow2;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
+        private DevExpress.XtraReports.UI.XRTableCell lbl_titulo;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow3;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;
         private DevExpress.XtraReports.UI.XRTable xrTable2;
