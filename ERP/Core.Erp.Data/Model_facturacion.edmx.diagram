@@ -18,7 +18,6 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision_det_x_factura" Width="1.5" PointX="18" PointY="42.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_ct_cbtecble" Width="1.5" PointX="15.75" PointY="28" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_cxc_cobro" Width="1.5" PointX="15.75" PointY="38.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_proforma_det" Width="1.5" PointX="7.5" PointY="40.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_TerminoPago" Width="1.5" PointX="0.75" PointY="33.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_TerminoPago_Distribucion" Width="1.5" PointX="3" PointY="41" IsExpanded="true" />
@@ -107,6 +106,7 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_cxc_cobro_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="0.75" PointY="21.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
