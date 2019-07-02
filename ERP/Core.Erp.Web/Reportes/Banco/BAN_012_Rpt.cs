@@ -7,6 +7,7 @@ using Core.Erp.Bus.Reportes.Banco;
 using Core.Erp.Info.Reportes.Banco;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Banco
 {
@@ -55,6 +56,18 @@ namespace Core.Erp.Web.Reportes.Banco
 
             #endregion
 
+            tb_sucursal_Bus bus_suc = new tb_sucursal_Bus();
+            var suc = bus_suc.get_info(IdEmpresa, IdSucursal);
+
+            lbl_sucursal.Text = suc.Su_Descripcion;
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
 
             this.DataSource = lst_rpt;
 

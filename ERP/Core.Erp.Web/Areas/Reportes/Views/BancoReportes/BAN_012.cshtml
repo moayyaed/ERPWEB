@@ -66,49 +66,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal</label>
-                            @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
-                       {
-                           settings.Name = "checkComboBox";
-                           settings.Width = Unit.Percentage(100);
-
-                           settings.SetDropDownWindowTemplateContent(c =>
-                           {
-                               @Html.DevExpress().ListBox(listBoxSettings =>
-                               {
-                                   listBoxSettings.Name = "IntArray";
-                                   listBoxSettings.ControlStyle.Border.BorderWidth = 0;
-                                   listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
-
-                                   listBoxSettings.Height = Unit.Pixel(350);
-                                   listBoxSettings.Width = Unit.Percentage(100);
-
-                                   listBoxSettings.Properties.EnableSelectAll = true;
-                                   listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
-                                   listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
-                                   foreach (var item in ViewBag.lst_sucursal)
-                                   {
-                                       listBoxSettings.Properties.Items.Add(item.Su_Descripcion, item.IdSucursal).Selected = item.Seleccionado;
-                                   }
-                                   listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
-                                   listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
-                               }).Render();
-                               ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
-                               @Html.DevExpress().Button(buttonSettings =>
-                               {
-                                   buttonSettings.Name = "buttonClose";
-                                   buttonSettings.Text = "Close";
-                                   buttonSettings.Style.Add("float", "right");
-                                   buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBox.HideDropDown(); }";
-                                   buttonSettings.Height = 26;
-                               }).Render();
-                               ViewContext.Writer.Write("</div>");
-                           });
-                           settings.Properties.AnimationType = AnimationType.None;
-                           settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
-                           settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
-                       }).GetHtml()
-
-
+                            @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_suc, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-2">

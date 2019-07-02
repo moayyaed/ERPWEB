@@ -351,7 +351,7 @@
             // 
             // lbl_sucursal
             // 
-            this.lbl_sucursal.Font = new System.Drawing.Font("Verdana", 10F);
+            this.lbl_sucursal.Font = new System.Drawing.Font("Verdana", 12F);
             this.lbl_sucursal.Name = "lbl_sucursal";
             this.lbl_sucursal.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 70, 0, 0, 100F);
             this.lbl_sucursal.StylePriority.UseFont = false;

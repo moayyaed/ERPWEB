@@ -251,6 +251,12 @@ AND web.ba_SPBAN_012.IdBanco = A.IdBanco
 AND web.ba_SPBAN_012.IdTipoFlujo = A.IdTipoFlujo
 END
 
+IF(@MostrarSaldo0 = 0)
+BEGIN
+DELETE [web].[ba_SPBAN_012]
+where IdUsuario = @IdUsuario AND SaldoFinal = 0 AND SaldoInicial = 0 AND Ingresos = 0 AND Egresos = 0
+END
+
 select [IdEmpresa]            ,[IdBanco]           ,[IdTipoFlujo]           ,[IdUsuario]           ,[ba_descripcion]           ,[nom_tipo_flujo]
            ,[SaldoInicial]           ,[Ingresos]           ,[Egresos]           ,[SaldoFinal]           ,[SaldoFinalBanco] from [web].[ba_SPBAN_012]
 		   where IdUsuario = @IdUsuario
