@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Migraciones.ImportacionDiarios_Info
 @{
     ViewBag.Title = "Importación de diarios contable";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

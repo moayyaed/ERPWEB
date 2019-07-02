@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_cobro_tipo_Info
 @{
     ViewBag.Title = "Anular tipo cobro";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

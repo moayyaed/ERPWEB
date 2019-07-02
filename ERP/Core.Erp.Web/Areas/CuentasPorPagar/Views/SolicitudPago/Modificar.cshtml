@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_SolicitudPago_Info
 @{
     ViewBag.Title = ("Modificar solicitud de pago" + " con ID #" + @Model.IdSolicitud);
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

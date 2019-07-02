@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_codigo_SRI_Info
 @{
     ViewBag.Title = "Nuevo código SRI";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

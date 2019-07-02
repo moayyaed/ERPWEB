@@ -1,15 +1,15 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = ("Anular factura por proveedor" + " con ID #" + @Model.IdCbteCble_Ogiro);
-                if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
-                {
-                    Response.Redirect("~/Account/Login");
-                }
-                Layout = "~/Views/Shared/_Layout.cshtml";
-                if (ViewBag.mensaje != null)
-                {
+    ViewBag.Title = ("Anular factura por proveedor" + " con ID #" + @Model.IdCbteCble_Ogiro);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
                     <div class="alert alert-warning alert-dismissible">
                         <h4>
                             <i class="icon fa fa-warning"></i> @ViewBag.mensaje

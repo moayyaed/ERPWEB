@@ -1,13 +1,13 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_factura_Info
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = ("Modificar factura" + " con ID #" + @Model.IdCbteVta);
-                if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
-                {
-                    Response.Redirect("~/Account/Login");
-                }
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ("Modificar factura" + " con ID #" + @Model.IdCbteVta);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script src="~/Scripts/ScriptsGenerales.js"></script>

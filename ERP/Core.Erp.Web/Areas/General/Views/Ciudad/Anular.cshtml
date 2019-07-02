@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.General.tb_ciudad_Info
 @{
     ViewBag.Title = "Anular Ciudad";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

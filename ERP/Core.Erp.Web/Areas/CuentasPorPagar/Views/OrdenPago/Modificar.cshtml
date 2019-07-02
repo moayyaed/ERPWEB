@@ -3,7 +3,7 @@
 @model Core.Erp.Info.CuentasPorPagar.cp_orden_pago_Info
 @{
     ViewBag.Title = ("Modificar orden" + " con ID #" + @Model.IdOrdenPago);
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

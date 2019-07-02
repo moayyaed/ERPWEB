@@ -2,7 +2,7 @@
 @model Core.Erp.Info.Contabilidad.ATS.ATS_Info.ats_Info
 @{
     ViewBag.Title = "Anexo transaccional simplificado";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
