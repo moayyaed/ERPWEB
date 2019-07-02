@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Inventario.in_UnidadMedida_Info
 @{
     ViewBag.Title = "Nueva unidad de medida";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

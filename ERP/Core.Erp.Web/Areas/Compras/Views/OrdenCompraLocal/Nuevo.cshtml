@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Compras.com_ordencompra_local_Info
 @{
     ViewBag.Title = "Nueva orden de compra";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
