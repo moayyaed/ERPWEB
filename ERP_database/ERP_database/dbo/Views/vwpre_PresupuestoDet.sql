@@ -1,5 +1,5 @@
 ﻿CREATE view  [dbo].[vwpre_PresupuestoDet] as
-seLECT        dbo.pre_Presupuesto.IdEmpresa, dbo.pre_Presupuesto.IdPresupuesto, dbo.pre_Presupuesto.IdSucursal, dbo.pre_Presupuesto.IdPeriodo, dbo.pre_PresupuestoPeriodo.EstadoCierre, dbo.pre_Presupuesto.IdGrupo, 
+seLECT        dbo.pre_Presupuesto.IdEmpresa, dbo.pre_Presupuesto.IdPresupuesto, dbo.pre_Presupuesto.IdSucursal, dbo.pre_Presupuesto.IdPeriodo, dbo.pre_PresupuestoPeriodo.EstadoCierre,  
                          dbo.pre_Presupuesto.Observacion, dbo.pre_Presupuesto.Estado, dbo.pre_Presupuesto.MontoSolicitado, dbo.pre_Presupuesto.MontoAprobado, dbo.pre_PresupuestoDet.Secuencia, dbo.pre_PresupuestoDet.IdRubro, 
                          dbo.pre_Rubro.Descripcion, dbo.pre_PresupuestoDet.IdCtaCble, dbo.pre_PresupuestoDet.Monto
 FROM            dbo.pre_Presupuesto INNER JOIN

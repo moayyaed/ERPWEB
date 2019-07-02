@@ -3,7 +3,6 @@
     [IdPresupuesto]         NUMERIC (18)  NOT NULL,
     [IdSucursal]            INT           NOT NULL,
     [IdPeriodo]             NUMERIC (18)  NOT NULL,
-    [IdGrupo]               INT           NOT NULL,
     [Observacion]           VARCHAR (MAX) NULL,
     [Estado]                BIT           NOT NULL,
     [MontoSolicitado]       FLOAT (53)    NOT NULL,
@@ -20,8 +19,7 @@
     [MotivoAprobacion]      VARCHAR (MAX) NULL,
     CONSTRAINT [PK_pre_Presupuesto_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPresupuesto] ASC),
     CONSTRAINT [FK_pre_Presupuesto_pre_PresupuestoPeriodo] FOREIGN KEY ([IdEmpresa], [IdPeriodo]) REFERENCES [dbo].[pre_PresupuestoPeriodo] ([IdEmpresa], [IdPeriodo]),
-    CONSTRAINT [FK_pre_Presupuesto_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal]),
-    CONSTRAINT [FK_pre_Presupuesto_x_grupo_pre_Grupo] FOREIGN KEY ([IdEmpresa], [IdGrupo]) REFERENCES [dbo].[pre_Grupo] ([IdEmpresa], [IdGrupo])
+    CONSTRAINT [FK_pre_Presupuesto_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
 
 

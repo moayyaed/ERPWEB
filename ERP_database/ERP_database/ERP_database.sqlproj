@@ -986,8 +986,6 @@
     <Build Include="web\Views\VWCOMP_001.sql" />
     <Build Include="EntidadRegulatoria\Stored Procedures\spROL_DecimosCSV.sql" />
     <Build Include="dbo\Tables\pre_rubro.sql" />
-    <Build Include="dbo\Tables\pre_Grupo_x_seg_usuario.sql" />
-    <Build Include="dbo\Tables\pre_Grupo.sql" />
     <Build Include="dbo\Views\vwRo_rol_detalle_saldo_por_pagar.sql" />
     <Build Include="dbo\Views\vwro_archivos_bancos_generacion.sql" />
     <Build Include="dbo\Views\vwpre_rubro.sql" />
@@ -1005,7 +1003,6 @@
     <Build Include="dbo\Tables\pre_Presupuesto.sql" />
     <Build Include="web\Views\VWROL_020.sql" />
     <Build Include="EntidadRegulatoria\Views\vwro_ArchivosIess.sql" />
-    <Build Include="dbo\Views\vwpre_Grupo.sql" />
     <Build Include="dbo\Views\vwAf_Activo_fijo_CtaCble.sql" />
     <Build Include="dbo\Views\vwro_nomina_sin_percebir_sueldo.sql" />
     <Build Include="dbo\Views\vwro_HorasProfesores_det.sql" />
@@ -1023,7 +1020,6 @@
     <Build Include="dbo\Tables\ro_FormulaHorasRecargo.sql" />
     <Build Include="dbo\Stored Procedures\spRo_procesa_Rol_bono.sql" />
     <Build Include="dbo\Views\vwro_empleado_novedad_det.sql" />
-    <Build Include="dbo\Views\vwpre_Grupo_x_CtaCble.sql" />
     <Build Include="dbo\Tables\in_Producto_x_fa_NivelDescuento.sql" />
     <Build Include="dbo\Tables\ro_NominasPagosCheques_det.sql" />
     <Build Include="dbo\Tables\ro_NominasPagosCheques.sql" />

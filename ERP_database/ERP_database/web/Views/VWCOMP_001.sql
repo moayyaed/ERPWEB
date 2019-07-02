@@ -1,6 +1,6 @@
 ﻿CREATE VIEW web.VWCOMP_001
 AS
-SELECT        d.IdEmpresa, d.IdSucursal, d.IdOrdenCompra, d.Secuencia, c.Tipo, d.SecuenciaTipo, d.IdProducto, su.Su_Descripcion, c.oc_fecha, c.oc_observacion, c.Estado, term.Descripcion AS NombreTerminoPago, 
+SELECT        d.IdEmpresa, d.IdSucursal, d.IdOrdenCompra, d.Secuencia, c.Tipo, d.IdProducto, su.Su_Descripcion, c.oc_fecha, c.oc_observacion, c.Estado, term.Descripcion AS NombreTerminoPago, 
                          CAST(c.oc_plazo AS varchar(20)) + ' días' AS oc_plazo, c.IdProveedor, per.pe_nombreCompleto AS NombreProveedor, CASE WHEN prov.pr_telefonos IS NULL 
                          THEN '' ELSE prov.pr_telefonos END + CASE WHEN prov.pr_telefonos IS NOT NULL AND prov.pr_celular IS NOT NULL THEN '-' ELSE '' END + CASE WHEN prov.pr_celular IS NULL 
                          THEN '' ELSE prov.pr_celular END AS TelefonosProveedor, prov.pr_direccion AS DireccionProveedor, per.pe_cedulaRuc AS RucProveedor, com.Descripcion AS NombreComprador, pro.pr_descripcion AS NombreProducto, 

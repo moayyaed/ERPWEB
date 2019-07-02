@@ -7,11 +7,9 @@
     [dc_Valor]           FLOAT (53)    NOT NULL,
     [dc_Observacion]     VARCHAR (MAX) NULL,
     [dc_para_conciliar]  BIT           NULL,
-    [IdGrupoPresupuesto] INT           NULL,
     CONSTRAINT [PK_ct_cbtecble_det_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdTipoCbte] ASC, [IdCbteCble] ASC, [secuencia] ASC),
     CONSTRAINT [FK_ct_cbtecble_det_ct_cbtecble] FOREIGN KEY ([IdEmpresa], [IdTipoCbte], [IdCbteCble]) REFERENCES [dbo].[ct_cbtecble] ([IdEmpresa], [IdTipoCbte], [IdCbteCble]),
-    CONSTRAINT [FK_ct_cbtecble_det_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
-    CONSTRAINT [FK_ct_cbtecble_det_pre_Grupo] FOREIGN KEY ([IdEmpresa], [IdGrupoPresupuesto]) REFERENCES [dbo].[pre_Grupo] ([IdEmpresa], [IdGrupo])
+    CONSTRAINT [FK_ct_cbtecble_det_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble])
 );
 
 

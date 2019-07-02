@@ -1,11 +1,11 @@
 ﻿CREATE VIEW dbo.vwpre_Presupuesto
 AS
 SELECT        dbo.pre_Presupuesto.IdEmpresa, dbo.pre_Presupuesto.IdPresupuesto, dbo.pre_Presupuesto.IdSucursal, dbo.tb_sucursal.Su_Descripcion, dbo.pre_Presupuesto.IdPeriodo, dbo.pre_PresupuestoPeriodo.FechaInicio, 
-                         dbo.pre_PresupuestoPeriodo.FechaFin, dbo.pre_PresupuestoPeriodo.EstadoCierre, dbo.pre_Presupuesto.IdGrupo, dbo.pre_Grupo.Descripcion, dbo.pre_Presupuesto.Observacion, dbo.pre_Presupuesto.Estado, 
+                         dbo.pre_PresupuestoPeriodo.FechaFin, dbo.pre_PresupuestoPeriodo.EstadoCierre, dbo.pre_Presupuesto.Observacion, dbo.pre_Presupuesto.Estado, 
                          dbo.pre_Presupuesto.MontoSolicitado, dbo.pre_Presupuesto.MontoAprobado, dbo.pre_PresupuestoPeriodo.DescripciónPeriodo, dbo.pre_Presupuesto.IdUsuarioAprobacion, dbo.pre_Presupuesto.FechaAprobacion, 
                          dbo.pre_Presupuesto.MotivoAprobacion
-FROM            dbo.pre_Grupo INNER JOIN
-                         dbo.pre_Presupuesto ON dbo.pre_Grupo.IdEmpresa = dbo.pre_Presupuesto.IdEmpresa AND dbo.pre_Grupo.IdGrupo = dbo.pre_Presupuesto.IdGrupo INNER JOIN
+FROM          
+                         dbo.pre_Presupuesto INNER JOIN
                          dbo.pre_PresupuestoPeriodo ON dbo.pre_Presupuesto.IdEmpresa = dbo.pre_PresupuestoPeriodo.IdEmpresa AND dbo.pre_Presupuesto.IdPeriodo = dbo.pre_PresupuestoPeriodo.IdPeriodo INNER JOIN
                          dbo.tb_sucursal ON dbo.pre_Presupuesto.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.pre_Presupuesto.IdSucursal = dbo.tb_sucursal.IdSucursal
 GO
