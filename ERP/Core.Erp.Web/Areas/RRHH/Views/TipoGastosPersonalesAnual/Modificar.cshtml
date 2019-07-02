@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_tipo_gastos_personales_maxim_x_anio_Info
 @{
     ViewBag.Title = "Modificar tipo de gasto";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
