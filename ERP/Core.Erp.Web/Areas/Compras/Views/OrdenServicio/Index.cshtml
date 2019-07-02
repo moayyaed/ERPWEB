@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_Info
 
 @{
-    ViewBag.Title = "Orden compra";
+    ViewBag.Title = "Orden de servicio";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_ordencompralocal", new { IdSucursal = Model.IdSucursal, fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin })
+            @Html.Action("GridViewPartial_orden_servicio", new { IdSucursal = Model.IdSucursal, fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin })
 
   </div>
         <!-- /.box-body -->

@@ -39,7 +39,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
         #region Metodos ComboBox bajo demanda proveedor
         tb_persona_Bus bus_persona = new tb_persona_Bus();
-        public ActionResult CmbProveedor_COM()
+        public ActionResult CmbProveedor_OS()
         {
             decimal model = new decimal();
             return PartialView("_CmbProveedor_OS", model);
@@ -56,14 +56,14 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
         #region Metodos ComboBox bajo demanda producto
 
-        public ActionResult CmbProducto_Compras()
+        public ActionResult CmbProducto_OS()
         {
             decimal model = new decimal();
-            return PartialView("_CmbProducto_Compras", model);
+            return PartialView("_CmbProducto_OS", model);
         }
         public List<in_Producto_Info> get_list_bajo_demandaProducto(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            List<in_Producto_Info> Lista = bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL, cl_enumeradores.eModulo.FAC, 0, Convert.ToInt32(SessionFixed.IdSucursal));
+            List<in_Producto_Info> Lista = bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoBusquedaProducto.SOLOSERVICIOS, cl_enumeradores.eModulo.FAC, 0, Convert.ToInt32(SessionFixed.IdSucursal));
             return Lista;
         }
         public in_Producto_Info get_info_bajo_demandaProducto(ListEditItemRequestedByValueEventArgs args)
