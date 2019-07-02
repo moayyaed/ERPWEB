@@ -741,8 +741,8 @@ namespace Core.Erp.Data.Inventario
                 case cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL:
                     Lista = get_list_PorSucursal(IdEmpresa, skip, take, args.Filter, IdSucursal);
                     break;
-                case cl_enumeradores.eTipoBusquedaProducto.PORTIPO:
-                    Lista = get_list_PorTipo(IdEmpresa, skip, take, args.Filter, IdSucursal, 2);
+                case cl_enumeradores.eTipoBusquedaProducto.SOLOSERVICIOS:
+                    Lista = get_list_Servicios(IdEmpresa, skip, take, args.Filter, IdSucursal);
                     break;
             }
             return Lista;
@@ -1133,7 +1133,7 @@ namespace Core.Erp.Data.Inventario
             }
         }
 
-        public List<in_Producto_Info> get_list_PorTipo(int IdEmpresa, int skip, int take, string filter, int IdSucursal, int IdTipo)
+        public List<in_Producto_Info> get_list_Servicios(int IdEmpresa, int skip, int take, string filter, int IdSucursal)
         {
             try
             {
@@ -1143,6 +1143,7 @@ namespace Core.Erp.Data.Inventario
 
                 Lista = Context.vwin_Producto_PorSucursal.Where(p => p.IdEmpresa == IdEmpresa
                            && p.IdSucursal == IdSucursal
+                           && p.tp_ManejaInven == "N"
                             && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)).Select(p => new in_Producto_Info
                             {
                                 IdEmpresa = p.IdEmpresa,

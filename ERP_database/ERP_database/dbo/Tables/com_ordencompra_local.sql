@@ -2,6 +2,8 @@
     [IdEmpresa]              INT            NOT NULL,
     [IdSucursal]             INT            NOT NULL,
     [IdOrdenCompra]          NUMERIC (18)   NOT NULL,
+    [Tipo]                   VARCHAR (2)    NOT NULL,
+    [SecuenciaTipo]          INT            NOT NULL,
     [IdProveedor]            NUMERIC (18)   NOT NULL,
     [IdTerminoPago]          INT            NOT NULL,
     [oc_plazo]               INT            NOT NULL,
@@ -32,6 +34,8 @@
     CONSTRAINT [FK_com_ordencompra_local_cp_proveedor] FOREIGN KEY ([IdEmpresa], [IdProveedor]) REFERENCES [dbo].[cp_proveedor] ([IdEmpresa], [IdProveedor]),
     CONSTRAINT [FK_com_ordencompra_local_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

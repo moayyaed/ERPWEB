@@ -209,7 +209,6 @@ namespace Core.Erp.Data.Compras
                              {
                                 IdEmpresa = info.IdEmpresa,
                                 IdOrdenCompra = info.IdOrdenCompra,
-                                SecuenciaTipo = info.SecuenciaTipo,
                                 IdSucursal = info.IdSucursal,
                                 IdProducto = item.IdProducto,
                                 IdCod_Impuesto = item.IdCod_Impuesto,
@@ -275,7 +274,6 @@ namespace Core.Erp.Data.Compras
                             IdEmpresa = info.IdEmpresa,
                             IdSucursal = info.IdSucursal,
                             IdOrdenCompra = info.IdOrdenCompra,
-                            SecuenciaTipo = info.SecuenciaTipo,
                             IdProducto = item.IdProducto,
                             IdCod_Impuesto = item.IdCod_Impuesto,
                             IdUnidadMedida = item.IdUnidadMedida,

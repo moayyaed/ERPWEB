@@ -1138,6 +1138,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorSucursal' no tien
           <Property Name="ca_Categoria" Type="varchar" MaxLength="100" />
           <Property Name="Stock" Type="float" />
           <Property Name="precio_1" Type="float" />
+          <Property Name="tp_ManejaInven" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_Stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2936,7 +2937,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Producto_PorSucursal].[pr_descripcion] AS [pr_descripcion], 
     [vwin_Producto_PorSucursal].[ca_Categoria] AS [ca_Categoria], 
     [vwin_Producto_PorSucursal].[Stock] AS [Stock], 
-    [vwin_Producto_PorSucursal].[precio_1] AS [precio_1]
+    [vwin_Producto_PorSucursal].[precio_1] AS [precio_1], 
+    [vwin_Producto_PorSucursal].[tp_ManejaInven] AS [tp_ManejaInven]
     FROM [dbo].[vwin_Producto_PorSucursal] AS [vwin_Producto_PorSucursal]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_Producto_Stock" EntityType="Self.vwin_Producto_Stock" store:Type="Views" store:Schema="dbo">
@@ -4422,7 +4424,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_transferencia" EntitySet="in_transferencia" />
             <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
           </AssociationSet>
-          <EntitySet Name="vwin_Producto_PorSucursal" EntityType="Model_inventario.vwin_Producto_PorSucursal" />
           <EntitySet Name="in_movi_inve" EntityType="Model_inventario.in_movi_inve" />
           <EntitySet Name="in_movi_inve_detalle" EntityType="Model_inventario.in_movi_inve_detalle" />
           <EntitySet Name="in_movi_inve_x_ct_cbteCble" EntityType="Model_inventario.in_movi_inve_x_ct_cbteCble" />
@@ -4645,6 +4646,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="IdBodega" Mode="In" Type="Int32" />
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="vwin_Producto_PorSucursal" EntityType="Model_inventario.vwin_Producto_PorSucursal" />
           </EntityContainer>
         <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -5253,20 +5255,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwin_Producto_PorSucursal">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ca_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Stock" Type="Double" />
-          <Property Name="precio_1" Type="Double" />
-        </EntityType>
         <EntityType Name="in_movi_inve">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -6652,6 +6640,21 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Type="String" Name="pr_descripcion" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="pr_codigo" Nullable="true" MaxLength="40" />
         </ComplexType>
+        <EntityType Name="vwin_Producto_PorSucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ca_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Stock" Type="Double" />
+          <Property Name="precio_1" Type="Double" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7419,19 +7422,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwin_Producto_PorSucursal">
-            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_PorSucursal">
-              <MappingFragment StoreEntitySet="vwin_Producto_PorSucursal">
-                <ScalarProperty Name="precio_1" ColumnName="precio_1" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="in_movi_inve">
             <EntityTypeMapping TypeName="Model_inventario.in_movi_inve">
               <MappingFragment StoreEntitySet="in_movi_inve">
@@ -7948,6 +7938,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vwin_Producto_PorSucursal">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_PorSucursal">
+              <MappingFragment StoreEntitySet="vwin_Producto_PorSucursal">
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="precio_1" ColumnName="precio_1" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -24,7 +24,7 @@
         <AssociationConnector Association="Model_compras.FK_com_parametro_com_estado_cierre" />
         <AssociationConnector Association="Model_compras.FK_com_solicitud_compra_det_com_solicitud_compra" />
         <EntityTypeShape EntityType="Model_compras.com_ordencompra_local" Width="1.5" PointX="6" PointY="10.125" />
-        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_det" Width="1.5" PointX="8.25" PointY="10.875" />
+        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_det" Width="1.5" PointX="8.25" PointY="11" />
         <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_detPorIngresar" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_det" Width="1.5" PointX="9.375" PointY="0.75" />
@@ -34,7 +34,7 @@
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_estado_cierre" />
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_TerminoPago1" />
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_det_com_ordencompra_local" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

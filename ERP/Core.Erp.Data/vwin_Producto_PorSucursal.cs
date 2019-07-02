@@ -21,5 +21,6 @@ namespace Core.Erp.Data
         public string ca_Categoria { get; set; }
         public Nullable<double> Stock { get; set; }
         public Nullable<double> precio_1 { get; set; }
+        public string tp_ManejaInven { get; set; }
     }
 }

@@ -68,7 +68,7 @@
             TODOS,
             TODOS_MENOS_PADRES,
             PORSUCURSAL,
-            PORTIPO
+            SOLOSERVICIOS
         }        
 
         public enum eTipoCatalogoInventario

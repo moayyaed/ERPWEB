@@ -1,8 +1,9 @@
 ﻿CREATE VIEW dbo.vwcom_ordencompra_local
 AS
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdOrdenCompra, s.codigo + '-' + CAST(c.IdOrdenCompra AS VARCHAR(18)) AS Codigo, s.Su_Descripcion, c.oc_fecha, per.pe_nombreCompleto, d.Total, c.IdEstadoAprobacion_cat, 
-                         CASE WHEN c.IdEstadoAprobacion_cat = 'APRO' THEN 'Aprobado' WHEN c.IdEstadoAprobacion_cat = 'XAPRO' THEN 'Por Aprobar' ELSE 'Anulado' END AS EstadoAprobacion, c.oc_observacion, com.Descripcion, 
-                         c.IdEstado_cierre, CASE WHEN c.IdEstado_cierre = 'ABI' THEN 'Abierta' WHEN c.IdEstado_cierre = 'CERR' THEN 'Cerrada' ELSE 'Pendiente' END AS EstadoCierre, c.Estado, tp.Descripcion AS TerminoPago, c.oc_plazo
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdOrdenCompra, c.Tipo, c.SecuenciaTipo, s.codigo + '-' + CAST(c.IdOrdenCompra AS VARCHAR(18)) AS Codigo, s.Su_Descripcion, c.oc_fecha, per.pe_nombreCompleto, d.Total, 
+                         c.IdEstadoAprobacion_cat, CASE WHEN c.IdEstadoAprobacion_cat = 'APRO' THEN 'Aprobado' WHEN c.IdEstadoAprobacion_cat = 'XAPRO' THEN 'Por Aprobar' ELSE 'Anulado' END AS EstadoAprobacion, c.oc_observacion, 
+                         com.Descripcion, c.IdEstado_cierre, CASE WHEN c.IdEstado_cierre = 'ABI' THEN 'Abierta' WHEN c.IdEstado_cierre = 'CERR' THEN 'Cerrada' ELSE 'Pendiente' END AS EstadoCierre, c.Estado, tp.Descripcion AS TerminoPago, 
+                         c.oc_plazo
 FROM            dbo.com_ordencompra_local AS c LEFT OUTER JOIN
                          dbo.tb_sucursal AS s ON c.IdEmpresa = s.IdEmpresa AND c.IdSucursal = s.IdSucursal LEFT OUTER JOIN
                          dbo.cp_proveedor AS pro ON c.IdEmpresa = pro.IdEmpresa AND c.IdProveedor = pro.IdProveedor INNER JOIN
@@ -18,7 +19,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[48] 4[5] 2[43] 3) )"
+         Configuration = "(H (1[55] 4[17] 2[12] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -81,7 +82,7 @@ Begin DesignProperties =
    Begin DiagramPane = 
       Begin Origin = 
          Top = 0
-         Left = 0
+         Left = -474
       End
       Begin Tables = 
          Begin Table = "c"
@@ -102,7 +103,7 @@ Begin DesignProperties =
                Right = 246
             End
             DisplayFlags = 280
-            TopColumn = 4
+            TopColumn = 6
          End
          Begin Table = "pro"
             Begin Extent = 
@@ -128,7 +129,7 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 6
                Left = 286
-               Bottom = 136
+               Bottom = 218
                Right = 477
             End
             DisplayFlags = 280
@@ -153,7 +154,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
-         En', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+
+
 
 
 
@@ -163,7 +166,7 @@ Begin DesignProperties =
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
       End
    End
    Begin SQLPane = 
@@ -171,8 +174,19 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 20
          Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -202,6 +216,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+
+
 
 
 

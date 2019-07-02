@@ -17,6 +17,8 @@ namespace Core.Erp.Data
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public decimal IdOrdenCompra { get; set; }
+        public string Tipo { get; set; }
+        public int SecuenciaTipo { get; set; }
         public string Codigo { get; set; }
         public string Su_Descripcion { get; set; }
         public System.DateTime oc_fecha { get; set; }
@@ -31,7 +33,5 @@ namespace Core.Erp.Data
         public string Estado { get; set; }
         public string TerminoPago { get; set; }
         public int oc_plazo { get; set; }
-        public string Tipo { get; set; }
-        public int SecuenciaTipo { get; set; }
     }
 }

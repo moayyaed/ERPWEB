@@ -699,6 +699,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCOMP_001' no tiene definida ning
             <PropertyRef Name="IdSucursal" />
             <PropertyRef Name="IdOrdenCompra" />
             <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
             <PropertyRef Name="IdProducto" />
             <PropertyRef Name="Su_Descripcion" />
             <PropertyRef Name="oc_fecha" />
@@ -721,13 +723,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCOMP_001' no tiene definida ning
             <PropertyRef Name="SubtotalIVA" />
             <PropertyRef Name="Subtotal0" />
             <PropertyRef Name="DescuentoTotal" />
-            <PropertyRef Name="SecuenciaTipo" />
-            <PropertyRef Name="Tipo" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="int" Nullable="false" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="oc_fecha" Type="datetime" Nullable="false" />
@@ -755,8 +757,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCOMP_001' no tiene definida ning
           <Property Name="SubtotalIVA" Type="float" Nullable="false" />
           <Property Name="Subtotal0" Type="float" Nullable="false" />
           <Property Name="DescuentoTotal" Type="float" Nullable="false" />
-          <Property Name="SecuenciaTipo" Type="int" Nullable="false" />
-          <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCONTA_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -5126,6 +5126,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCOMP_001].[IdSucursal] AS [IdSucursal], 
     [VWCOMP_001].[IdOrdenCompra] AS [IdOrdenCompra], 
     [VWCOMP_001].[Secuencia] AS [Secuencia], 
+    [VWCOMP_001].[Tipo] AS [Tipo], 
+    [VWCOMP_001].[SecuenciaTipo] AS [SecuenciaTipo], 
     [VWCOMP_001].[IdProducto] AS [IdProducto], 
     [VWCOMP_001].[Su_Descripcion] AS [Su_Descripcion], 
     [VWCOMP_001].[oc_fecha] AS [oc_fecha], 
@@ -5152,9 +5154,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCOMP_001].[Por_Iva] AS [Por_Iva], 
     [VWCOMP_001].[SubtotalIVA] AS [SubtotalIVA], 
     [VWCOMP_001].[Subtotal0] AS [Subtotal0], 
-    [VWCOMP_001].[DescuentoTotal] AS [DescuentoTotal], 
-    [VWCOMP_001].[SecuenciaTipo] AS [SecuenciaTipo], 
-    [VWCOMP_001].[Tipo] AS [Tipo]
+    [VWCOMP_001].[DescuentoTotal] AS [DescuentoTotal]
     FROM [web].[VWCOMP_001] AS [VWCOMP_001]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCONTA_001" EntityType="Self.VWCONTA_001" store:Type="Views" store:Schema="web">
@@ -12767,6 +12767,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <PropertyRef Name="IdSucursal" />
             <PropertyRef Name="IdOrdenCompra" />
             <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
             <PropertyRef Name="IdProducto" />
             <PropertyRef Name="Su_Descripcion" />
             <PropertyRef Name="oc_fecha" />
@@ -12789,13 +12791,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <PropertyRef Name="SubtotalIVA" />
             <PropertyRef Name="Subtotal0" />
             <PropertyRef Name="DescuentoTotal" />
-            <PropertyRef Name="SecuenciaTipo" />
-            <PropertyRef Name="Tipo" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="IdOrdenCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
           <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
@@ -12823,8 +12825,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="SubtotalIVA" Type="Double" Nullable="false" />
           <Property Name="Subtotal0" Type="Double" Nullable="false" />
           <Property Name="DescuentoTotal" Type="Double" Nullable="false" />
-          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
-          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -16640,8 +16640,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySetMapping Name="VWCOMP_001">
             <EntityTypeMapping TypeName="Model_reportes.VWCOMP_001">
               <MappingFragment StoreEntitySet="VWCOMP_001">
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
                 <ScalarProperty Name="DescuentoTotal" ColumnName="DescuentoTotal" />
                 <ScalarProperty Name="Subtotal0" ColumnName="Subtotal0" />
                 <ScalarProperty Name="SubtotalIVA" ColumnName="SubtotalIVA" />
@@ -16669,6 +16667,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
                 <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />

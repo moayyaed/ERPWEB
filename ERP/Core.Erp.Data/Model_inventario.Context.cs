@@ -68,7 +68,6 @@ namespace Core.Erp.Data
         public DbSet<in_Producto_x_fa_NivelDescuento> in_Producto_x_fa_NivelDescuento { get; set; }
         public DbSet<in_Producto> in_Producto { get; set; }
         public DbSet<in_transferencia> in_transferencia { get; set; }
-        public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
         public DbSet<in_movi_inve> in_movi_inve { get; set; }
         public DbSet<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public DbSet<in_movi_inve_x_ct_cbteCble> in_movi_inve_x_ct_cbteCble { get; set; }
@@ -90,6 +89,7 @@ namespace Core.Erp.Data
         public DbSet<in_Ajuste> in_Ajuste { get; set; }
         public DbSet<in_AjusteDet> in_AjusteDet { get; set; }
         public DbSet<vwin_Ajuste> vwin_Ajuste { get; set; }
+        public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
     
         public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
         {
