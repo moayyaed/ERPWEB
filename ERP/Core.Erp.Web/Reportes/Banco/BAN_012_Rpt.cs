@@ -43,14 +43,14 @@ namespace Core.Erp.Web.Reportes.Banco
                      group q by new
                      {
                          q.IdEmpresa,
-                         q.ba_descripcion
+                         q.ba_descripcion,
+                         q.SaldoFinalBanco
                      } into Area
                      select new BAN_012_Info
                      {
-                         SaldoFinalBanco = Area.Sum(q => q.SaldoFinalBanco),
+                         SaldoFinalBanco = Area.Key.SaldoFinalBanco,
                          IdEmpresa = Area.Key.IdEmpresa,
                          ba_descripcion = Area.Key.ba_descripcion
-
                      }).ToList();
 
             #endregion
