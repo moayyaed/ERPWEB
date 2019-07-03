@@ -180,6 +180,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdNivel">nota</label>
+                            @Html.DropDownListFor(q => q.CreDeb, new SelectList(ViewBag.lst_cre, "Key", "Value"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.CreDeb, "", new { @class = "form", @role = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->

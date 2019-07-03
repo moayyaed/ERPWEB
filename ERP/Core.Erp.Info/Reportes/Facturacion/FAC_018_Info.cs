@@ -30,5 +30,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public string Estado { get; set; }
         public string NomEstado { get; set; }
         public int Orden { get; set; }
+        public string CreDeb { get; set; }
     }
 }

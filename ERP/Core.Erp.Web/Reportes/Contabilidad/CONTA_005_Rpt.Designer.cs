@@ -38,8 +38,7 @@
             this.p_fechaIni = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fechaFin = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_mostrarSaldo0 = new DevExpress.XtraReports.Parameters.Parameter();
-            this.parameter6 = new DevExpress.XtraReports.Parameters.Parameter();
-            this.parameter7 = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_IdUsuario = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -93,13 +92,10 @@
             this.p_mostrarSaldo0.Name = "p_mostrarSaldo0";
             this.p_mostrarSaldo0.Visible = false;
             // 
-            // parameter6
+            // p_IdUsuario
             // 
-            this.parameter6.Name = "parameter6";
-            // 
-            // parameter7
-            // 
-            this.parameter7.Name = "parameter7";
+            this.p_IdUsuario.Name = "p_IdUsuario";
+            this.p_IdUsuario.Visible = false;
             // 
             // CONTA_005_Rpt
             // 
@@ -116,8 +112,7 @@
             this.p_fechaIni,
             this.p_fechaFin,
             this.p_mostrarSaldo0,
-            this.parameter6,
-            this.parameter7});
+            this.p_IdUsuario});
             this.Version = "17.2";
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -135,7 +130,6 @@
         public DevExpress.XtraReports.Parameters.Parameter p_fechaIni;
         public DevExpress.XtraReports.Parameters.Parameter p_fechaFin;
         public DevExpress.XtraReports.Parameters.Parameter p_mostrarSaldo0;
-        private DevExpress.XtraReports.Parameters.Parameter parameter6;
-        private DevExpress.XtraReports.Parameters.Parameter parameter7;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdUsuario;
     }
 }

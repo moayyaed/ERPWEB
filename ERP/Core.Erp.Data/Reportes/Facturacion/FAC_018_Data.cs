@@ -53,7 +53,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                         Su_Descripcion = q.Su_Descripcion,
                         Total = q.Total,
                         ValorAplicado = q.ValorAplicado,
-                        ValorIva = q.ValorIva
+                        ValorIva = q.ValorIva,
+                        CreDeb = q.CreDeb
                     }).ToList();
                     
                                  }

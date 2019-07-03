@@ -147,10 +147,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         private void cargar_FAC018(cl_filtros_facturacion_Info model)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-           
+
             fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
             var lst_nota = bus_nota.get_list(IdEmpresa, false);
             ViewBag.lst_nota = lst_nota;
+
+
+            Dictionary<string, string> lst_cre = new Dictionary<string, string>();
+            lst_cre.Add("C", "Nota de crédito");
+            lst_cre.Add("D", "Nota de débito");
+            ViewBag.lst_cre = lst_cre;
+
+
         }
 
         private void cargar_combos(cl_filtros_facturacion_Info model)

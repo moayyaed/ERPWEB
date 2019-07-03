@@ -223,7 +223,7 @@ namespace Core.Erp.Info.Helps
         public string IdCobro_tipo { get; set; }
         public int[] IntArray { get; set; }
         public int IdTipoNota { get; set; }
-
+        public string CreDeb { get; set; }
         public cl_filtros_facturacion_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
