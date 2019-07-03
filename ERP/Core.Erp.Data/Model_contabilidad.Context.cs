@@ -34,7 +34,6 @@ namespace Core.Erp.Data
         public DbSet<ct_grupocble> ct_grupocble { get; set; }
         public DbSet<ct_periodo> ct_periodo { get; set; }
         public DbSet<ct_plancta_nivel> ct_plancta_nivel { get; set; }
-        public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
         public DbSet<vwct_cbtecble_con_ctacble_acreedora> vwct_cbtecble_con_ctacble_acreedora { get; set; }
         public DbSet<ct_parametro> ct_parametro { get; set; }
         public DbSet<ct_plancta> ct_plancta { get; set; }
@@ -52,8 +51,10 @@ namespace Core.Erp.Data
         public DbSet<ct_CentroCostoNivel> ct_CentroCostoNivel { get; set; }
         public DbSet<ct_CentroCosto> ct_CentroCosto { get; set; }
         public DbSet<vwct_CentroCosto> vwct_CentroCosto { get; set; }
-        public DbSet<ct_cbtecble_det> ct_cbtecble_det { get; set; }
         public DbSet<vwct_cbtecble_det> vwct_cbtecble_det { get; set; }
+        public DbSet<ct_cbtecble_det> ct_cbtecble_det { get; set; }
+        public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
+        public DbSet<ct_punto_cargo_grupo> ct_punto_cargo_grupo { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

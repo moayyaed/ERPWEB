@@ -22,8 +22,14 @@ namespace Core.Erp.Data
         public double dc_Valor { get; set; }
         public string dc_Observacion { get; set; }
         public Nullable<bool> dc_para_conciliar { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string IdCentroCosto { get; set; }
     
         public virtual ct_cbtecble ct_cbtecble { get; set; }
+        public virtual ct_CentroCosto ct_CentroCosto { get; set; }
         public virtual ct_plancta ct_plancta { get; set; }
+        public virtual ct_punto_cargo ct_punto_cargo { get; set; }
+        public virtual ct_punto_cargo_grupo ct_punto_cargo_grupo { get; set; }
     }
 }

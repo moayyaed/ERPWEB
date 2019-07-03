@@ -451,6 +451,9 @@
     <Compile Include="ct_punto_cargo.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="ct_punto_cargo_grupo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="CuentasPorCobrar\cxc_CatalogoTipo_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Catalogo_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_cobro_Data.cs" />

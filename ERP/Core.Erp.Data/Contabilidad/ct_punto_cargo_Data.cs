@@ -23,19 +23,17 @@ namespace Core.Erp.Data.Contabilidad
                                      IdEmpresa = q.IdEmpresa,
                                      IdPunto_cargo = q.IdPunto_cargo,
                                      IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                                     codPunto_cargo = q.codPunto_cargo,
                                      Estado = q.Estado
                                  }).ToList();
                     else
                         Lista = (from q in Context.ct_punto_cargo
                                  where q.IdEmpresa == IdEmpresa
-                                 && q.Estado == "A"
+                                 && q.Estado == true
                                  select new ct_punto_cargo_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
                                      IdPunto_cargo = q.IdPunto_cargo,
                                      IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                                     codPunto_cargo = q.codPunto_cargo,
                                      Estado = q.Estado
                                  }).ToList();
                 }
@@ -62,7 +60,6 @@ namespace Core.Erp.Data.Contabilidad
                         IdEmpresa = Entity.IdEmpresa,
                         IdPunto_cargo_grupo = Entity.IdPunto_cargo_grupo,
                         IdPunto_cargo = Entity.IdPunto_cargo,
-                        codPunto_cargo = Entity.codPunto_cargo,
                         nom_punto_cargo = Entity.nom_punto_cargo,
                         Estado = Entity.Estado
                     };
@@ -86,9 +83,8 @@ namespace Core.Erp.Data.Contabilidad
                         IdEmpresa = info.IdEmpresa,
                         IdPunto_cargo = info.IdPunto_cargo = get_id(info.IdEmpresa),
                         IdPunto_cargo_grupo = info.IdPunto_cargo_grupo,
-                        codPunto_cargo = info.codPunto_cargo,
                         nom_punto_cargo = info.nom_punto_cargo,
-                        Estado = info.Estado = "A"
+                        Estado = info.Estado = true
                     };
                     Context.ct_punto_cargo.Add(Entity);
                     Context.SaveChanges();
@@ -110,7 +106,6 @@ namespace Core.Erp.Data.Contabilidad
                     ct_punto_cargo Entity = Context.ct_punto_cargo.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdPunto_cargo == info.IdPunto_cargo);
                     if (Entity == null)
                         return false;
-                    Entity.codPunto_cargo = info.codPunto_cargo;
                     Entity.IdPunto_cargo_grupo = info.IdPunto_cargo_grupo;
                     Entity.nom_punto_cargo = info.nom_punto_cargo;
 
@@ -133,7 +128,7 @@ namespace Core.Erp.Data.Contabilidad
                     ct_punto_cargo Entity = Context.ct_punto_cargo.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdPunto_cargo == info.IdPunto_cargo);
                     if (Entity == null)
                         return false;
-                    Entity.Estado = info.Estado = "I";
+                    Entity.Estado = info.Estado = false;
 
                     Context.SaveChanges();
                 }

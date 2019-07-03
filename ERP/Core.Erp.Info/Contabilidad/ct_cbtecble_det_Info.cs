@@ -20,6 +20,10 @@ namespace Core.Erp.Info.Contabilidad
         public bool dc_para_conciliar { get; set; }
         public bool? dc_para_conciliar_null { get; set; }
 
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string IdCentroCosto { get; set; }
+
         //campos que no existen en la tabla
         [Required(ErrorMessage = "El campo cuenta valor debe es obligatorio")]
         public double dc_Valor_debe { get; set; }
