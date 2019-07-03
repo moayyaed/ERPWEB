@@ -75,8 +75,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_tipo = bus_tipo.get_list(IdEmpresa, false);
             ViewBag.lst_tipo = lst_tipo;
 
-            ct_punto_cargo_Bus bus_punto = new ct_punto_cargo_Bus();
-            var lst_punto = bus_punto.get_list(IdEmpresa, false);
+            ct_punto_cargo_grupo_Bus bus_punto = new ct_punto_cargo_grupo_Bus();
+            var lst_punto = bus_punto.GetList(IdEmpresa, false);
             ViewBag.lst_punto = lst_punto;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)

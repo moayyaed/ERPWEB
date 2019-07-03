@@ -2,16 +2,20 @@
 using Core.Erp.Info.Contabilidad;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Core.Erp.Bus.Contabilidad
 {
-    public class ct_punto_cargo_Bus
+    public class ct_punto_cargo_grupo_Bus
     {
-         ct_punto_cargo_Data odata = new  ct_punto_cargo_Data();
-        public List<ct_punto_cargo_Info> GetList(int IdEmpresa, int IdPunto_cargo_grupo, bool mostrar_anulados)
+        ct_punto_cargo_grupo_Data odata = new ct_punto_cargo_grupo_Data();
+        public List<ct_punto_cargo_grupo_Info> GetList(int IdEmpresa, bool mostrar_anulados)
         {
             try
             {
-                return odata.GetList(IdEmpresa, IdPunto_cargo_grupo, mostrar_anulados);
+                return odata.GetList(IdEmpresa, mostrar_anulados);
             }
             catch (Exception)
             {
@@ -20,11 +24,11 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public ct_punto_cargo_Info GetInfo(int IdEmpresa, int IdPunto_cargo_grupo, int IdPunto_cargo)
+        public ct_punto_cargo_grupo_Info GetInfo(int IdEmpresa, int IdPunto_cargo_grupo)
         {
             try
             {
-                return odata.GetInfo(IdEmpresa, IdPunto_cargo_grupo, IdPunto_cargo);
+                return odata.GetInfo(IdEmpresa, IdPunto_cargo_grupo);
             }
             catch (Exception)
             {
@@ -32,7 +36,8 @@ namespace Core.Erp.Bus.Contabilidad
                 throw;
             }
         }
-        public bool GuardarDB( ct_punto_cargo_Info info)
+
+        public bool GuardarDB(ct_punto_cargo_grupo_Info info)
         {
             try
             {
@@ -45,7 +50,7 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public bool ModificarDB( ct_punto_cargo_Info info)
+        public bool ModificarDB(ct_punto_cargo_grupo_Info info)
         {
             try
             {
@@ -58,7 +63,8 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public bool AnularDB( ct_punto_cargo_Info info)
+
+        public bool AnularDB(ct_punto_cargo_grupo_Info info)
         {
             try
             {
@@ -70,5 +76,6 @@ namespace Core.Erp.Bus.Contabilidad
                 throw;
             }
         }
+
     }
 }
