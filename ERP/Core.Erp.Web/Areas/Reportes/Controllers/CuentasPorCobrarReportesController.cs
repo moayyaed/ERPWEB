@@ -426,5 +426,52 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             return View(model);
         }
+
+        public ActionResult CXC_009()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdCliente = 0,
+            };
+            CXC_009_Rpt report = new CXC_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdCliente.Value = model.IdCliente ?? 0;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CXC_009(cl_filtros_facturacion_Info model)
+        {
+            CXC_009_Rpt report = new CXC_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdCliente.Value = model.IdCliente ?? 0;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }
