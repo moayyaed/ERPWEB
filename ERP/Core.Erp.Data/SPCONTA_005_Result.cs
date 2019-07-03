@@ -11,7 +11,7 @@ namespace Core.Erp.Data
 {
     using System;
     
-    public partial class SPCONTA_004_Result
+    public partial class SPCONTA_005_Result
     {
         public int IdEmpresa { get; set; }
         public int IdPunto_cargo { get; set; }

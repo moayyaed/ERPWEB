@@ -1277,6 +1277,7 @@
     <Compile Include="Reportes\Contabilidad\CONTA_002_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_004_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_003_balances_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_005_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Data.cs" />
@@ -1751,7 +1752,7 @@
     <Compile Include="SPCONTA_003_balances_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="SPCONTA_004_Result.cs">
+    <Compile Include="SPCONTA_005_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="spcp_Get_Data_orden_pago_con_cancelacion_data_Result.cs">
