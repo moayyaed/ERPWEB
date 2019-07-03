@@ -186,11 +186,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            foreach (var item in lst_sucursal)
+            if (intArray == null || intArray.Count() == 0)
             {
-                item.Seleccionado = intArray == null || intArray.Count() == 0 ? false : (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+                lst_sucursal.Where(q => q.IdSucursal == Convert.ToInt32(SessionFixed.IdSucursal)).FirstOrDefault().Seleccionado = true;
             }
+            else
+                foreach (var item in lst_sucursal)
+                {
+                    item.Seleccionado = (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+                }
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
@@ -995,6 +1001,69 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.empresa = SessionFixed.NomEmpresa;
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_FAC018(model);
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        public ActionResult FAC_019()
+        {
+
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCliente = 0
+            };
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_combos(model);
+            FAC_019_Rpt report = new FAC_019_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_019");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdVendedor.Value = model.IdVendedor;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.p_mostrarSoloVencido.Value = model.mostrarSoloVencido;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.p_IdUsuario.Value = Convert.ToString(SessionFixed.IdUsuario);
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult FAC_019(cl_filtros_facturacion_Info model)
+        {
+            FAC_019_Rpt report = new FAC_019_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_019");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdVendedor.Value = model.IdVendedor;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.p_mostrarSoloVencido.Value = model.mostrarSoloVencido;
+            report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.p_IdUsuario.Value = Convert.ToString(SessionFixed.IdUsuario);
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_combos(model);
             ViewBag.Report = report;
             return View(model);
         }

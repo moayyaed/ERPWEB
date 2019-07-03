@@ -211,6 +211,7 @@ namespace Core.Erp.Info.Helps
         public int IdGrupo { get; set; }
         public int IdSubGrupo { get; set; }
         public bool mostrarSaldo0 { get; set; }
+        public bool mostrarSoloVencido { get; set; }
 
         public decimal IdLiquidacion { get; set; }
         public bool mostrarAnulados { get; set; }

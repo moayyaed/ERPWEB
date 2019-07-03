@@ -1085,6 +1085,12 @@
     <Compile Include="Reportes\Facturacion\FAC_018_Rpt.Designer.cs">
       <DependentUpon>FAC_018_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_019_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_019_Rpt.Designer.cs">
+      <DependentUpon>FAC_019_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Importacion\IMP_002_gastos_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10109,6 +10115,7 @@
     <Content Include="Areas\Compras\Views\OrdenServicio\Modificar.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenServicio\Nuevo.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_012.cshtml" />
+    <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_019.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10518,6 +10525,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_018_Rpt.resx">
       <DependentUpon>FAC_018_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_019_Rpt.resx">
+      <DependentUpon>FAC_019_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Importacion\IMP_002_gastos_Rpt.resx">
       <DependentUpon>IMP_002_gastos_Rpt.cs</DependentUpon>
