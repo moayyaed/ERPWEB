@@ -27,14 +27,6 @@
         CargarEstadoAprobacion();
     });
 
-       function OnSelectedCtaCbleChanged() {
-        GridViewPartial_orden_pago_dc.GetEditor("IdGrupoPresupuesto").PerformCallback();
-    }
-    function GrupoComboBox_BeginCallback(s, e) {
-        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
-        e.customArgs["pre_fecha"] = moment(Fecha.GetDate()).format('DD/MM/YYYY');
-    }
-
     var selectedIDs;
     function OnBeginCallback(s, e) {
         e.customArgs["IdTipo_Persona"] = $("#IdTipo_Persona").val();

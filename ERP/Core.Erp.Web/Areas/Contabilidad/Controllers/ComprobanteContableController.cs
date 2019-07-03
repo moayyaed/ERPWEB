@@ -27,7 +27,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_cbtecble_det_List list_ct_cbtecble_det = new ct_cbtecble_det_List();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
-        pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         //tb_sis_log_error_List SisLogError = new tb_sis_log_error_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -131,20 +130,20 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
-        public ActionResult CargarGrupo()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            DateTime cb_Fecha = Request.Params["pre_fecha"] != null && !string.IsNullOrEmpty(Request.Params["pre_fecha"].ToString()) ? Convert.ToDateTime(Request.Params["pre_fecha"]).Date : DateTime.Now.Date; 
-            string IdCtaCble = Request.Params["pre_IdCtaCble"] != null ? Request.Params["pre_IdCtaCble"].ToString() : "";
-            return GridViewExtension.GetComboBoxCallbackResult(p =>
-            {
-                p.TextField = "Descripcion";
-                p.ValueField = "IdGrupo";
-                p.ValueType = typeof(int);
-                p.BindList(bus_grupo.get_list_x_CtaCble(IdEmpresa, IdSucursal, IdCtaCble, cb_Fecha));
-            });
-        }
+        //public ActionResult CargarGrupo()
+        //{
+        //    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+        //    int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+        //    DateTime cb_Fecha = Request.Params["pre_fecha"] != null && !string.IsNullOrEmpty(Request.Params["pre_fecha"].ToString()) ? Convert.ToDateTime(Request.Params["pre_fecha"]).Date : DateTime.Now.Date; 
+        //    string IdCtaCble = Request.Params["pre_IdCtaCble"] != null ? Request.Params["pre_IdCtaCble"].ToString() : "";
+        //    return GridViewExtension.GetComboBoxCallbackResult(p =>
+        //    {
+        //        p.TextField = "Descripcion";
+        //        p.ValueField = "IdGrupo";
+        //        p.ValueType = typeof(int);
+        //        p.BindList(bus_grupo.get_list_x_CtaCble(IdEmpresa, IdSucursal, IdCtaCble, cb_Fecha));
+        //    });
+        //}
         #endregion
 
         #region Acciones
@@ -324,8 +323,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             var lst_cuentas = bus_cuenta.get_list(IdEmpresa, false , true);
             ViewBag.lst_cuentas = lst_cuentas;
             */
-            var lst_grupos = bus_grupo.GetList(IdEmpresa, false);
-            ViewBag.lst_grupos = lst_grupos;
+            //var lst_grupos = bus_grupo.GetList(IdEmpresa, false);
+            //ViewBag.lst_grupos = lst_grupos;
         }
 
         [HttpPost, ValidateInput(false)]
@@ -456,7 +455,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                                 IdEmpresa = IdEmpresa,
                                 secuencia = SecDet++,
                                 IdCtaCble = IdCtaCble,
-                                Descripcion = infoCtaCble.pc_Cuenta,
+                                pc_Cuenta = infoCtaCble.pc_Cuenta,
                                 dc_Valor = Convert.ToDouble(reader.GetValue(2)) > 0 ? Convert.ToDouble(reader.GetValue(2)) : (Convert.ToDouble(reader.GetValue(3)) * -1),
                                 dc_Valor_debe = Convert.ToDouble(reader.GetValue(2)),
                                 dc_Valor_haber = Convert.ToDouble(reader.GetValue(3))
@@ -499,8 +498,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             List<ct_cbtecble_det_Info> list = get_list(IdTransaccionSession);
             info_det.secuencia = list.Count == 0 ? 1 : list.Max(q => q.secuencia) + 1;
             info_det.dc_Valor = info_det.dc_Valor_debe > 0 ? info_det.dc_Valor_debe : info_det.dc_Valor_haber * -1;
-            info_det.IdGrupoPresupuesto = info_det.IdGrupoPresupuesto;
-            info_det.Descripcion = info_det.Descripcion;
             if (info_det.IdCtaCble != null)
             {
                 var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
@@ -527,9 +524,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             if (cta != null)
                 info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
             edited_info.pc_Cuenta = info_det.pc_Cuenta;
-
-            edited_info.IdGrupoPresupuesto = info_det.IdGrupoPresupuesto;
-            edited_info.Descripcion = info_det.Descripcion;
         }
 
         public void DeleteRow(int secuencia, decimal IdTransaccionSession)

@@ -38,7 +38,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         List<cp_orden_pago_tipo_x_empresa_Info> lst_tipo_orden_pago = new List<cp_orden_pago_tipo_x_empresa_Info>();
         cp_orden_pago_det_Info_list lis_cp_orden_pago_det_Info = new cp_orden_pago_det_Info_list();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
-        pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
@@ -97,7 +96,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_orden_pago_dc", model);
         }
         #endregion
@@ -228,7 +227,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
-                cargar_combos_detalle();
+
                 return View(model);
             }
             else
@@ -242,7 +241,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 {
                     ViewBag.mensaje = mensaje;
                     cargar_combos(model.IdEmpresa);
-                    cargar_combos_detalle();
+
                     return View(model);
                 }
             }
@@ -258,8 +257,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             #endregion
 
             bus_orden_pago = new cp_orden_pago_Bus();
-            cargar_combos(IdEmpresa);
-            cargar_combos_detalle();            
+            cargar_combos(IdEmpresa);            
 
             cp_orden_pago_Info model = bus_orden_pago.get_info(IdEmpresa, IdOrdenPago);
             if (model == null)
@@ -300,7 +298,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 mensaje = "La orden de pago tiene cancelaciones no se puede modificar";
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa);
-                cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -309,7 +306,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 mensaje = "No se puede modificar una orden de pago de tipo factura por proveedor";
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa);
-                cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -331,7 +327,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
-                cargar_combos_detalle();
                 return View(model);
             }
             else
@@ -345,7 +340,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 {
                     ViewBag.mensaje = mensaje;
                     cargar_combos(model.IdEmpresa);
-                    cargar_combos_detalle();
                     return View(model);
                 }
             }
@@ -359,8 +353,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            cargar_combos(IdEmpresa);
-            cargar_combos_detalle();            
+            cargar_combos(IdEmpresa);            
             cp_orden_pago_Info model = bus_orden_pago.get_info(IdEmpresa, IdOrdenPago);
             if (model == null)
                 return RedirectToAction("Index");
@@ -390,7 +383,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 mensaje = "La orden de pago tiene cancelaciones no se puede anular";
                 cargar_combos(model.IdEmpresa);
-                cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -402,7 +394,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 else
                 {
                     cargar_combos(model.IdEmpresa);
-                    cargar_combos_detalle();
                     return View(model);
                 }
         }
@@ -481,14 +472,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return PartialView("_GridViewPartial_deudas", model);
         }
 
-        private void cargar_combos_detalle()
-        {
-            
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var lst_grupos = bus_grupo.GetList(IdEmpresa, false);
-            ViewBag.lst_grupos = lst_grupos;
-        }
-
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
         {
@@ -498,7 +481,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 comprobante_contable_fp.AddRow(info_det,IdTransaccionSession);
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
-            cargar_combos_detalle();
+            
             return PartialView("_GridViewPartial_orden_pago_dc", model);
         }
 
@@ -510,7 +493,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 comprobante_contable_fp.UpdateRow(info_det,IdTransaccionSession);
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_orden_pago_dc", model);
         }
 
@@ -520,7 +503,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             comprobante_contable_fp.DeleteRow(secuencia,IdTransaccionSession);
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_orden_pago_dc", model);
         }
         #endregion

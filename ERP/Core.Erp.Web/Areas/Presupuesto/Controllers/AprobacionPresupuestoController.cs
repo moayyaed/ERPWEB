@@ -17,7 +17,6 @@ namespace Core.Erp.Web.Areas.Presupuesto
         #region Variables
         pre_Presupuesto_Bus bus_Presupuesto = new pre_Presupuesto_Bus();
         pre_PresupuestoDet_Bus bus_PresupuestoDet = new pre_PresupuestoDet_Bus();
-        pre_Grupo_Bus bus_Grupo = new pre_Grupo_Bus();
         tb_sucursal_Bus bus_Sucursal = new tb_sucursal_Bus();
         pre_rubro_Bus bus_Rubro = new pre_rubro_Bus();
         pre_Periodo_Bus bus_Periodo = new pre_Periodo_Bus();
@@ -94,9 +93,6 @@ namespace Core.Erp.Web.Areas.Presupuesto
 
                 var lst_Periodo = bus_Periodo.GetList(IdEmpresa, false, false);
                 ViewBag.lst_Periodo = lst_Periodo;
-
-                var lst_Grupo = bus_Grupo.GetList(IdEmpresa, false);
-                ViewBag.lst_Grupo = lst_Grupo;
             }
             catch (Exception)
             {
@@ -138,7 +134,7 @@ namespace Core.Erp.Web.Areas.Presupuesto
                 ViewBag.mensaje = "No se ha podido aprobar el registro";
 
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-                model.ListaPresupuestoDet = bus_PresupuestoDet.GetList(model.IdEmpresa, Convert.ToInt32(model.IdGrupo));
+                //model.ListaPresupuestoDet = bus_PresupuestoDet.GetList(model.IdEmpresa, Convert.ToInt32(model.IdGrupo));
                 Lista_PresupuestoDet.set_list(model.ListaPresupuestoDet, model.IdTransaccionSession);
 
                 cargar_combos(model.IdEmpresa);

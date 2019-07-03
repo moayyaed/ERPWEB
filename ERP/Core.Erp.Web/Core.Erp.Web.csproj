@@ -410,7 +410,6 @@
     <Compile Include="Areas\Migraciones\Controllers\FacturasEventosController.cs" />
     <Compile Include="Areas\Migraciones\MigracionesAreaRegistration.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\AprobacionPresupuestoController.cs" />
-    <Compile Include="Areas\Presupuesto\Controllers\GrupoPresupuestoController.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\PeriodoPresupuestoController.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\PresupuestoController.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\RubroPresupuestoController.cs" />
@@ -9735,12 +9734,7 @@
     <Content Include="Areas\Presupuesto\Views\RubroPresupuesto\Modificar.cshtml" />
     <Content Include="Areas\Presupuesto\Views\RubroPresupuesto\Anular.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\TipoAF\_CmbCuenta_TipoAF1.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\_GridViewPartial_Grupo.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\_CmbUsuario_Grupo.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\Index.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ParametroAF\_CmbCuenta_Param1.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\Nuevo.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\_GridViewPartial_GrupoDet.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\TipoAF\_CmbCuenta_TipoAF2.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\TipoAF\_CmbCuenta_TipoAF3.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\TipoAF\_CmbCuenta_TipoAF6.cshtml" />
@@ -9748,8 +9742,6 @@
     <Content Include="Areas\ActivoFijo\Views\TipoAF\_CmbCuenta_TipoAF5.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\TipoAF\_CmbCuenta_TipoAF7.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_activo_fijo_ctacble.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\Modificar.cshtml" />
-    <Content Include="Areas\Presupuesto\Views\GrupoPresupuesto\Anular.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_CmbCuenta_AF.cshtml" />
     <Content Include="Areas\RRHH\Views\ArchivosActualizacionSueldo\Nuevo.cshtml" />
     <Content Include="Areas\RRHH\Views\ArchivosActualizacionSueldo\_GridViewPartial_archivos_iess.cshtml" />

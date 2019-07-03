@@ -50,7 +50,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWINV_014" Width="1.5" PointX="31.375" PointY="29.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_003" Width="1.5" PointX="25.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_reportes.VWPRO_001" Width="1.5" PointX="33.375" PointY="12.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWPRE_001" Width="1.5" PointX="33.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_011" Width="1.5" PointX="9.375" PointY="21.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_005" Width="1.5" PointX="15.75" PointY="10.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_006" Width="1.5" PointX="0.75" PointY="35.75" />
@@ -104,6 +103,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWFAC_018" Width="1.5" PointX="19.375" PointY="42.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_018" Width="1.5" PointX="21.375" PointY="42.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCOMP_001" Width="1.5" PointX="43.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWPRE_001" Width="1.5" PointX="13.375" PointY="32.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

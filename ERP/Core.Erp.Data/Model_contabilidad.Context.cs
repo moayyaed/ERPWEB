@@ -38,10 +38,8 @@ namespace Core.Erp.Data
         public DbSet<vwct_cbtecble_con_ctacble_acreedora> vwct_cbtecble_con_ctacble_acreedora { get; set; }
         public DbSet<ct_parametro> ct_parametro { get; set; }
         public DbSet<ct_plancta> ct_plancta { get; set; }
-        public DbSet<ct_cbtecble_det> ct_cbtecble_det { get; set; }
         public DbSet<ct_cbtecble> ct_cbtecble { get; set; }
         public DbSet<vwct_cbtecble> vwct_cbtecble { get; set; }
-        public DbSet<vwct_cbtecble_det> vwct_cbtecble_det { get; set; }
         public DbSet<vwct_RevisionContableFacturas> vwct_RevisionContableFacturas { get; set; }
         public DbSet<ct_CierrePorModuloPorSucursal> ct_CierrePorModuloPorSucursal { get; set; }
         public DbSet<vwct_CierrePorModuloPorSucursal> vwct_CierrePorModuloPorSucursal { get; set; }
@@ -54,6 +52,8 @@ namespace Core.Erp.Data
         public DbSet<ct_CentroCostoNivel> ct_CentroCostoNivel { get; set; }
         public DbSet<ct_CentroCosto> ct_CentroCosto { get; set; }
         public DbSet<vwct_CentroCosto> vwct_CentroCosto { get; set; }
+        public DbSet<ct_cbtecble_det> ct_cbtecble_det { get; set; }
+        public DbSet<vwct_cbtecble_det> vwct_cbtecble_det { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

@@ -40,7 +40,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_giro_det_Info_List List_det = new cp_orden_giro_det_Info_List();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
-        pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
         cp_orden_giro_det_Bus bus_det = new cp_orden_giro_det_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sis_Documento_Tipo_Talonario_Bus bus_documento = new tb_sis_Documento_Tipo_Talonario_Bus();
@@ -219,7 +218,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_deudas_dc", model);
         }
 
@@ -281,29 +280,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
-        public ActionResult CargarGrupo()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            DateTime cb_Fecha = Request.Params["pre_fecha"] != null && !string.IsNullOrEmpty(Request.Params["pre_fecha"].ToString()) ? Convert.ToDateTime(Request.Params["pre_fecha"]).Date : DateTime.Now.Date;
-            string IdCtaCble = Request.Params["pre_IdCtaCble"] != null ? Request.Params["pre_IdCtaCble"].ToString() : "";
-            return GridViewExtension.GetComboBoxCallbackResult(p =>
-            {
-                p.TextField = "Descripcion";
-                p.ValueField = "IdGrupo";
-                p.ValueType = typeof(int);
-                p.BindList(bus_grupo.get_list_x_CtaCble(IdEmpresa, IdSucursal, IdCtaCble, cb_Fecha));
-            });
-        }
-
-        private void cargar_combos_detalle()
-        {
-            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            pre_Grupo_Bus bus_grupo = new pre_Grupo_Bus();
-
-            var lst_grupos = bus_grupo.GetList(IdEmpresa, false);
-            ViewBag.lst_grupos = lst_grupos;
-        }
         private bool validar(cp_orden_giro_Info i_validar, ref string msg)
         {
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.co_FechaFactura, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
@@ -371,7 +347,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "El documento " + model.co_serie + " " + model.co_factura + ", ya se encuentra registrado";
                 cargar_combos(model);
-                cargar_combos_detalle();
 
                 return View(model);
             }
@@ -380,7 +355,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta parametrizar el módulo de cuentas por pagar";
                 cargar_combos(model);
-                cargar_combos_detalle();
 
                 return View(model);
             }
@@ -424,7 +398,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta diario contable";
                 cargar_combos(model);
-                cargar_combos_detalle();
 
                 return View(model);
 
@@ -435,7 +408,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (mensaje != "")
             {
                 cargar_combos(model);
-                cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
 
                 return View(model);
@@ -500,7 +472,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ListaDetalleOC.set_list(model.lst_det_oc, model.IdTransaccionSession);
 
             cargar_combos(model);
-            cargar_combos_detalle();
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
@@ -528,7 +499,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta parametros del modulo cuenta por pagar";
                 cargar_combos(model);
-                cargar_combos_detalle();
                 return View(model);
             }
 
@@ -564,7 +534,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta diario contable";
                 cargar_combos(model);
-                cargar_combos_detalle();
                 return View(model);
 
             }
@@ -575,7 +544,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (mensaje != "")
             {
                 cargar_combos(model);
-                cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -654,7 +622,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             #endregion
 
             cargar_combos(model);
-            cargar_combos_detalle();
             return View(model);
         }
 
@@ -669,7 +636,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta parametros del modulo cuenta por pagar";
                 cargar_combos(model);
-                cargar_combos_detalle();
                 return View(model);
             }
 
@@ -682,7 +648,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (mensaje != "")
             {
                 cargar_combos(model);
-                cargar_combos_detalle();
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -982,8 +947,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             cp_orden_giro_Info model = new cp_orden_giro_Info();
-            model.lst_det = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();            
+            model.lst_det = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));         
             return PartialView("_GridViewPartial_deudas_det", model);
         }
 
@@ -1039,7 +1003,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 Lis_ct_cbtecble_det_List.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list( Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
             return PartialView("_GridViewPartial_deudas_dc", model);
         }
 
@@ -1050,7 +1013,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 Lis_ct_cbtecble_det_List.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+            
             return PartialView("_GridViewPartial_deudas_dc", model);
         }
 
@@ -1059,7 +1022,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             Lis_ct_cbtecble_det_List.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List.get_list( Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_deudas_dc", model);
         }
 
@@ -1168,7 +1131,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {            
             ListaDetalleOC.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = ListaDetalleOC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_ing_inv_oc_det", model);
         }
 
@@ -1177,7 +1140,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ListaDetalleOC.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             List<cp_orden_giro_det_ing_x_oc_Info> model = new List<cp_orden_giro_det_ing_x_oc_Info>();
             model = ListaDetalleOC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+           
             return PartialView("_GridViewPartial_ing_inv_oc_det", model);
         }
         #endregion
@@ -1220,8 +1183,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             List<ct_cbtecble_det_Info> list = get_list(IdTransaccionSession);
             info_det.secuencia = list.Count == 0 ? 1 : list.Max(q => q.secuencia) + 1;
             info_det.dc_Valor = info_det.dc_Valor_debe > 0 ? info_det.dc_Valor_debe : info_det.dc_Valor_haber * -1;
-            info_det.IdGrupoPresupuesto = info_det.IdGrupoPresupuesto;
-            info_det.Descripcion = info_det.Descripcion;
             if (!string.IsNullOrEmpty(info_det.IdCtaCble))
             {
                 var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
@@ -1241,8 +1202,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             edited_info.dc_Valor = info_det.dc_Valor_debe > 0 ? info_det.dc_Valor_debe : info_det.dc_Valor_haber * -1;
             edited_info.dc_Valor_debe = info_det.dc_Valor_debe;
             edited_info.dc_Valor_haber = info_det.dc_Valor_haber;
-            edited_info.IdGrupoPresupuesto = info_det.IdGrupoPresupuesto;
-            edited_info.Descripcion = info_det.Descripcion;
 
             if (!string.IsNullOrEmpty(info_det.IdCtaCble))
             {

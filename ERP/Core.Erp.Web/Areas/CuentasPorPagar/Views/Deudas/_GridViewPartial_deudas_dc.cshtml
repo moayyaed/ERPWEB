@@ -50,36 +50,19 @@
         {
             column.FieldName = "pc_Cuenta";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(35);
+            column.Width = Unit.Percentage(60);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCtaCble";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(35);
+            column.Width = Unit.Percentage(60);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
             {
                 Html.RenderPartial("_CmbCuenta_Deuda", DataBinder.Eval(c.DataItem, "IdCtaCble"));
-            });
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "IdGrupoPresupuesto";
-            column.Caption = "Presupuesto";
-            column.Width = Unit.Percentage(20);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.CallbackRouteValues = new { Controller = "Deudas", Action = "CargarGrupo", TextField = "Descripcion" };
-                p.TextField = "Descripcion";
-                p.ValueField = "IdGrupo";
-                p.ValueType = typeof(int);
-                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
-                p.BindList(ViewBag.lst_grupos);
-                p.ClientSideEvents.BeginCallback = "GrupoComboBox_BeginCallback";
-                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
         settings.Columns.Add(column =>

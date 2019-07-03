@@ -30,7 +30,6 @@ namespace Core.Erp.Data.Contabilidad
                                  IdTipoCbte = q.IdTipoCbte,
                                  secuencia = q.secuencia,
                                  dc_para_conciliar_null = q.dc_para_conciliar,
-                                 IdGrupoPresupuesto = q.IdGrupoPresupuesto,
                                  pc_Cuenta = q.pc_Cuenta
                              }).ToList();
                 }

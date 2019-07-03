@@ -261,8 +261,6 @@
     <Compile Include="in_AjusteDet_Bus.cs" />
     <Compile Include="Migraciones\FacturasEventos_Bus.cs" />
     <Compile Include="Migraciones\ImportacionDiarios_Bus.cs" />
-    <Compile Include="Presupuesto\pre_Grupo_Bus.cs" />
-    <Compile Include="Presupuesto\pre_Grupo_x_seg_usuario_Bus.cs" />
     <Compile Include="Presupuesto\pre_Periodo_Bus.cs" />
     <Compile Include="Presupuesto\pre_PresupuestoDet_Bus.cs" />
     <Compile Include="Presupuesto\pre_Presupuesto_Bus.cs" />

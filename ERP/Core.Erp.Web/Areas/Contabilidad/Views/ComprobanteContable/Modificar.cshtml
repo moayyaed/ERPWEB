@@ -152,14 +152,6 @@
 }
 
 <script>
-    function OnSelectedCtaCbleChanged() {
-        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
-    }
-    function GrupoComboBox_BeginCallback(s, e) {
-        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
-        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
-    }
-
     function Imprimir() {
         var location = GetPathServer();
         var win = window.open(location +"/Reportes/ContabilidadReportes/CONTA_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte="+@Model.IdTipoCbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');

@@ -19,7 +19,6 @@ namespace Core.Erp.Info.Contabilidad
         public string dc_Observacion { get; set; }
         public bool dc_para_conciliar { get; set; }
         public bool? dc_para_conciliar_null { get; set; }
-        public Nullable<int> IdGrupoPresupuesto { get; set; }
 
         //campos que no existen en la tabla
         [Required(ErrorMessage = "El campo cuenta valor debe es obligatorio")]
@@ -27,7 +26,6 @@ namespace Core.Erp.Info.Contabilidad
         [Required(ErrorMessage = "El campo cuenta valor haber es obligatorio")]
         public double dc_Valor_haber { get; set; }
         public string pc_Cuenta { get; set; }
-        public string Descripcion { get; set; }
         public int? IdSucursal { get; set; }
         public string Su_Descripcion { get; set; }
     }

@@ -18,7 +18,6 @@ namespace Core.Erp.Info.Presupuesto
         [Required(ErrorMessage = ("El campo periodo es obligatorio"))]
         public decimal IdPeriodo { get; set; }
         [Required(ErrorMessage = ("El campo grupo es obligatorio"))]
-        public int IdGrupo { get; set; }
         public string Observacion { get; set; }
         public bool Estado { get; set; }
         public double MontoSolicitado { get; set; }
@@ -47,7 +46,6 @@ namespace Core.Erp.Info.Presupuesto
         public string Su_Descripcion { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
-        public bool EstadoCierre { get; set; }
-        public string Descripcion { get; set; }        
+        public bool EstadoCierre { get; set; }      
     }
 }

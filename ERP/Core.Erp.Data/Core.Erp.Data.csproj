@@ -1213,19 +1213,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Presupuesto\pre_Grupo_Data.cs" />
-    <Compile Include="Presupuesto\pre_Grupo_x_seg_usuario_Data.cs" />
     <Compile Include="Presupuesto\pre_Periodo_Data.cs" />
     <Compile Include="Presupuesto\pre_PresupuestoDet_Data.cs" />
     <Compile Include="Presupuesto\pre_Presupuesto_Data.cs" />
     <Compile Include="Presupuesto\pre_RubroTipo_Data.cs" />
     <Compile Include="Presupuesto\pre_rubro_Data.cs" />
-    <Compile Include="pre_Grupo.cs">
-      <DependentUpon>Model_presupuesto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="pre_Grupo_x_seg_usuario.cs">
-      <DependentUpon>Model_presupuesto.tt</DependentUpon>
-    </Compile>
     <Compile Include="pre_Presupuesto.cs">
       <DependentUpon>Model_presupuesto.tt</DependentUpon>
     </Compile>
@@ -2548,12 +2540,6 @@
     </Compile>
     <Compile Include="VWPRE_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwpre_Grupo.cs">
-      <DependentUpon>Model_presupuesto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwpre_Grupo_x_CtaCble.cs">
-      <DependentUpon>Model_presupuesto.tt</DependentUpon>
     </Compile>
     <Compile Include="vwpre_Presupuesto.cs">
       <DependentUpon>Model_presupuesto.tt</DependentUpon>

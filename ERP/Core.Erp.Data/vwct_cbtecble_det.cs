@@ -22,7 +22,6 @@ namespace Core.Erp.Data
         public double dc_Valor { get; set; }
         public string dc_Observacion { get; set; }
         public Nullable<bool> dc_para_conciliar { get; set; }
-        public Nullable<int> IdGrupoPresupuesto { get; set; }
         public string pc_Cuenta { get; set; }
     }
 }

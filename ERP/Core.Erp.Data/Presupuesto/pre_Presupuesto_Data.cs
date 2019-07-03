@@ -39,8 +39,6 @@ namespace Core.Erp.Data.Presupuesto
                             IdPeriodo = q.IdPeriodo,
                             FechaInicio = q.FechaInicio,
                             FechaFin = q.FechaFin,
-                            IdGrupo = q.IdGrupo,
-                            Descripcion = q.Descripcion,
                             Observacion = q.Observacion,
                             Estado = q.Estado,
                             MontoSolicitado = q.MontoSolicitado,
@@ -65,8 +63,6 @@ namespace Core.Erp.Data.Presupuesto
                             IdPeriodo = q.IdPeriodo,
                             FechaInicio = q.FechaInicio,
                             FechaFin = q.FechaFin,
-                            IdGrupo = q.IdGrupo,
-                            Descripcion = q.Descripcion,
                             Observacion = q.Observacion,
                             Estado = q.Estado,
                             MontoSolicitado = q.MontoSolicitado,
@@ -102,7 +98,6 @@ namespace Core.Erp.Data.Presupuesto
                         IdPresupuesto = Entity.IdPresupuesto,
                         IdSucursal = Entity.IdSucursal,
                         IdPeriodo = Entity.IdPeriodo,
-                        IdGrupo = Entity.IdGrupo,
                         Observacion = Entity.Observacion,
                         MontoAprobado = Entity.MontoAprobado,
                         MontoSolicitado = Entity.MontoSolicitado,
@@ -153,7 +148,6 @@ namespace Core.Erp.Data.Presupuesto
                         IdEmpresa = info.IdEmpresa,
                         IdPresupuesto = info.IdPresupuesto = get_id(info.IdEmpresa),
                         IdSucursal = info.IdSucursal,
-                        IdGrupo = info.IdGrupo,
                         IdPeriodo = info.IdPeriodo,
                         Observacion =  info.Observacion,
                         MontoSolicitado = monto_solicitado,
@@ -211,7 +205,6 @@ namespace Core.Erp.Data.Presupuesto
 
                     entity.IdSucursal = info.IdSucursal;
                     entity.IdPeriodo = info.IdPeriodo;
-                    entity.IdGrupo = info.IdGrupo;
                     entity.Observacion = info.Observacion;
                     entity.MontoSolicitado = monto_solicitado;
                     entity.IdUsuarioModificacion = info.IdUsuarioModificacion;

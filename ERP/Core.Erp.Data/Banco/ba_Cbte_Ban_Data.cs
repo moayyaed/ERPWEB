@@ -186,7 +186,6 @@ namespace Core.Erp.Data.Banco
                         IdEmpresa = info.IdEmpresa,
                         IdTipoCbte = info.IdTipocbte,
                         IdCbteCble = info.IdCbteCble,
-                        IdGrupoPresupuesto = item.IdGrupoPresupuesto,
                         secuencia = secuencia++,
                         IdCtaCble = item.IdCtaCble,
                         dc_Valor = Math.Round(item.dc_Valor, 2, MidpointRounding.AwayFromZero),
@@ -422,7 +421,6 @@ namespace Core.Erp.Data.Banco
                         IdTipoCbte = info.IdTipocbte,
                         IdCbteCble = info.IdCbteCble,
                         secuencia = secuencia++,
-                        IdGrupoPresupuesto = item.IdGrupoPresupuesto,
                         IdCtaCble = item.IdCtaCble,
                         dc_Valor = Math.Round(item.dc_Valor, 2, MidpointRounding.AwayFromZero),
                         dc_para_conciliar = item.dc_para_conciliar

@@ -19,7 +19,6 @@ namespace Core.Erp.Data
         public int IdSucursal { get; set; }
         public decimal IdPeriodo { get; set; }
         public bool EstadoCierre { get; set; }
-        public int IdGrupo { get; set; }
         public string Observacion { get; set; }
         public bool Estado { get; set; }
         public double MontoSolicitado { get; set; }

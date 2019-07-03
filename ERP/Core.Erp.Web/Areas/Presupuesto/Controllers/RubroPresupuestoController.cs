@@ -17,8 +17,6 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
     {
         #region Variables
         pre_rubro_Bus bus_Rubro = new pre_rubro_Bus();
-        pre_Grupo_Bus bus_Grupo = new pre_Grupo_Bus();
-        pre_Grupo_x_seg_usuario_Bus bus_GrupoDet = new pre_Grupo_x_seg_usuario_Bus();
         pre_RubroTipo_Bus bus_RubroTipo = new pre_RubroTipo_Bus();
         #endregion
 
@@ -53,12 +51,12 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
 
         private bool cargar_permiso_asignacion_cuenta(int IdEmpresa, string IdUsuario)
         {
-            var info = bus_GrupoDet.GetInfoPermiso(IdEmpresa, IdUsuario);
+            //var info = bus_GrupoDet.GetInfoPermiso(IdEmpresa, IdUsuario);
 
-            if (info == null)
-            {                
-                return false;
-            }
+            //if (info == null)
+            //{                
+            //    return false;
+            //}
 
             return true;
         }

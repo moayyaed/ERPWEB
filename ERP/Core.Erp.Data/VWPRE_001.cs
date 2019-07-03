@@ -21,8 +21,6 @@ namespace Core.Erp.Data
         public string Su_Descripcion { get; set; }
         public decimal IdPeriodo { get; set; }
         public string DescripciónPeriodo { get; set; }
-        public int IdGrupo { get; set; }
-        public string DescripcionGrupo { get; set; }
         public int IdRubro { get; set; }
         public string DescripcionRubro { get; set; }
         public string IdCtaCble { get; set; }

@@ -27,8 +27,6 @@ namespace Core.Erp.Data.Reportes.Presupuesto
                                  Su_Descripcion = q.Su_Descripcion,
                                  IdPeriodo = q.IdPeriodo,
                                  DescripciónPeriodo = q.DescripciónPeriodo,
-                                 IdGrupo = q.IdGrupo,
-                                 DescripcionGrupo = q.DescripcionGrupo,
                                  Observacion = q.Observacion,
                                  Estado = q.Estado,
                                  MontoSolicitado = q.MontoSolicitado,

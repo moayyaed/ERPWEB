@@ -167,8 +167,7 @@ namespace Core.Erp.Data.Contabilidad
                                 dc_Valor = item.dc_Valor,
                                 IdCtaCble = item.IdCtaCble,                                
                                 secuencia = secuencia++,
-                                dc_para_conciliar = item.dc_para_conciliar,
-                                IdGrupoPresupuesto = item.IdGrupoPresupuesto
+                                dc_para_conciliar = item.dc_para_conciliar
                             };
                             Context.ct_cbtecble_det.Add(Entity_det);                        
                     }
@@ -217,8 +216,7 @@ namespace Core.Erp.Data.Contabilidad
                             dc_Valor = item.dc_Valor,
                             IdCtaCble = item.IdCtaCble,
                             secuencia = secuencia++,
-                            dc_para_conciliar = item.dc_para_conciliar,
-                            IdGrupoPresupuesto = item.IdGrupoPresupuesto
+                            dc_para_conciliar = item.dc_para_conciliar
                         };
                         Context.ct_cbtecble_det.Add(Entity_det);
                     }
@@ -285,7 +283,6 @@ namespace Core.Erp.Data.Contabilidad
                             IdCtaCble = item.IdCtaCble,
                             dc_Observacion = "**REVERSO DE DIARIO tipo: " + Entity.IdTipoCbte.ToString() + " #cbte: " + Entity.IdCbteCble.ToString() + "** " + item.dc_Observacion,
                             dc_Valor = item.dc_Valor * -1,
-                            IdGrupoPresupuesto = item.IdGrupoPresupuesto,
                             dc_para_conciliar = false
                         };
                         Context.ct_cbtecble_det.Add(Entity_reverso_det);

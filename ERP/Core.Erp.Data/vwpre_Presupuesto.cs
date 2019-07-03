@@ -22,8 +22,6 @@ namespace Core.Erp.Data
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
         public bool EstadoCierre { get; set; }
-        public int IdGrupo { get; set; }
-        public string Descripcion { get; set; }
         public string Observacion { get; set; }
         public bool Estado { get; set; }
         public double MontoSolicitado { get; set; }
