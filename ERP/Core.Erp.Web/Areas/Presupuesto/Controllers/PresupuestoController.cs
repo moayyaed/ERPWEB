@@ -234,67 +234,6 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
         }
         #endregion
 
-        #region Importacion
-        public ActionResult UploadControlUpload()
-        {
-            UploadControlExtension.GetUploadedFiles("UploadControlFile", UploadControlSettings.UploadValidationSettings, UploadControlSettings.FileUploadComplete);
-            return null;
-        }
-        public ActionResult Importar(int IdEmpresa = 0)
-        {
-            #region Validar Session
-            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
-                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
-            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
-            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
-            #endregion
-
-            pre_Presupuesto_Info model = new pre_Presupuesto_Info
-            {
-                IdEmpresa = IdEmpresa,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
-            };
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Importar(pre_Presupuesto_Info model)
-        {
-            try
-            {
-                var ListaDet = Lista_PresupuestoDet.get_list(model.IdTransaccionSession);
-                model.ListaPresupuestoDet = ListaDet;
-
-                if (!bus_Presupuesto.GuardarBD(model))
-                {
-                    ViewBag.mensaje = "Error al importar el archivo";
-                    return View(model);
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.error = ex.Message.ToString();
-                return View(model);
-            }
-
-            return RedirectToAction("Index");
-        }
-        //public ActionResult GridViewPartial_PresupuestoDet_importacion()
-        //{
-        //    SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-        //    var model = Lista_PresupuestoDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-        //    return PartialView("_GridViewPartial_PresupuestoDet", model);
-        //}
-
-        public JsonResult ActualizarVariablesSession(int IdEmpresa = 0, decimal IdTransaccionSession = 0)
-        {
-            string retorno = string.Empty;
-            SessionFixed.IdEmpresa = IdEmpresa.ToString();
-            SessionFixed.IdTransaccionSession = IdTransaccionSession.ToString();
-            SessionFixed.IdTransaccionSessionActual = IdTransaccionSession.ToString();
-            return Json(retorno, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
         #region Metodos del detalle
         public ActionResult GridViewPartial_PresupuestoDet()
         {
@@ -395,62 +334,6 @@ namespace Core.Erp.Web.Areas.Presupuesto.Controllers
             return true;
         }
         #endregion        
-    }
-
-
-    public class UploadControlSettings
-    {
-        public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
-        {
-            AllowedFileExtensions = new string[] { ".xlsx" },
-            MaxFileSize = 40000000
-        };
-        public static void FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
-        {
-            #region Variables
-            pre_rubro_Bus bus_rubro = new pre_rubro_Bus();
-            pre_PresupuestoDet_List ListaDet = new pre_PresupuestoDet_List();
-            List<pre_PresupuestoDet_Info> Lista_Det = new List<pre_PresupuestoDet_Info>();
-
-            int cont = 0;
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            #endregion
-
-
-            Stream stream = new MemoryStream(e.UploadedFile.FileBytes);
-            if (stream.Length > 0)
-            {
-                IExcelDataReader reader = null;
-                reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-
-                var SecDet = 1;
-                #region Presupuesto                
-                while (reader.Read())
-                {                    
-                    if (!reader.IsDBNull(0) && cont > 0)
-                    {
-                        var IdRubroDet = Convert.ToInt32(reader.GetValue(0));
-                        pre_rubro_Info infoRubro = bus_rubro.GetInfo(IdEmpresa, IdRubroDet);
-                        
-                        pre_PresupuestoDet_Info info = new pre_PresupuestoDet_Info
-                        {
-                            IdEmpresa = IdEmpresa,
-                            Secuencia = SecDet++,
-                            IdRubro = IdRubroDet,
-                            Descripcion = infoRubro.Descripcion,
-                            Monto = Convert.ToDouble(reader.GetValue(1)),
-
-                        };
-                        Lista_Det.Add(info);
-                    }
-                    else
-                        cont++;
-                }
-                ListaDet.set_list(Lista_Det, IdTransaccionSession);
-                #endregion
-            }
-        }
     }
 
     public class pre_PresupuestoDet_List
