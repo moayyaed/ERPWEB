@@ -232,7 +232,7 @@ namespace Core.Erp.Data.Compras
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

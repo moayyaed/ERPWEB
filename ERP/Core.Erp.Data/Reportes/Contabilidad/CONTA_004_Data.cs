@@ -18,7 +18,6 @@ namespace Core.Erp.Data.Reportes.Contabilidad
             {
                 List<CONTA_004_Info> Lista;
                 List<CONTA_003_balances_Info> Lista1;
-                List<CONTA_003_balances_Info> Lista2;
 
                 Entities_contabilidad db = new Entities_contabilidad();
                 Lista = db.ct_plancta.Where(q => q.IdEmpresa == IdEmpresa && q.pc_Estado == "A").Select(q => new CONTA_004_Info

@@ -336,7 +336,7 @@ namespace Core.Erp.Data.Contabilidad
                     Context.SPATS_MigrarEventos();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 
             }

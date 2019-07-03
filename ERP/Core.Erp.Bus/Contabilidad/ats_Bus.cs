@@ -430,7 +430,7 @@ namespace Core.Erp.Bus.Contabilidad
 
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

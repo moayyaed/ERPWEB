@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_rubro_tipo_Info
 @{
     ViewBag.Title = "Nuevo rubro";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }

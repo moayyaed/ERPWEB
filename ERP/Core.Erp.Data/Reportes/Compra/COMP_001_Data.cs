@@ -59,7 +59,7 @@ namespace Core.Erp.Data.Reportes
                 }
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

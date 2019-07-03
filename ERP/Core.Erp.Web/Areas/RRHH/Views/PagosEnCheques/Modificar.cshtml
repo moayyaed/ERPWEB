@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_NominasPagosCheques_Info
 @{
     ViewBag.Title = "Modificar pagos en cheques";
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
