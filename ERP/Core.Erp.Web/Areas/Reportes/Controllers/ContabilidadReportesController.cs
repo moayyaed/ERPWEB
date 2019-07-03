@@ -74,6 +74,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
             var lst_tipo = bus_tipo.get_list(IdEmpresa, false);
             ViewBag.lst_tipo = lst_tipo;
+
+            ct_punto_cargo_Bus bus_punto = new ct_punto_cargo_Bus();
+            var lst_punto = bus_punto.get_list(IdEmpresa, false);
+            ViewBag.lst_punto = lst_punto;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -266,6 +270,62 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 ViewBag.Report = report;
             }
             cargar_nivel();
+            return View(model);
+        }
+        public ActionResult CONTA_005()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+            cargar_combos(model.IdEmpresa);
+            CONTA_005_Rpt report = new CONTA_005_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CONTA_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdPunto_cargo_grupo.Value = model.IdPunto_cargo_grupo;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+            report.p_fechaIni.Value = model.fecha_ini;
+            report.p_fechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_005(cl_filtros_contabilidad_Info model)
+        {
+            CONTA_005_Rpt report = new CONTA_005_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CONTA_005");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdPunto_cargo_grupo.Value = model.IdPunto_cargo_grupo;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+            report.p_fechaIni.Value = model.fecha_ini;
+            report.p_fechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_combos(model.IdEmpresa);
+            ViewBag.Report = report;
             return View(model);
         }
     }

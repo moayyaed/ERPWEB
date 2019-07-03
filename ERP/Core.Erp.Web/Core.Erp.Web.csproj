@@ -10129,6 +10129,7 @@
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_012.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_019.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_009.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_005.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

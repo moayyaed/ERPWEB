@@ -23,7 +23,8 @@ namespace Core.Erp.Data.Contabilidad
                                      IdEmpresa = q.IdEmpresa,
                                      IdPunto_cargo = q.IdPunto_cargo,
                                      IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                                     Estado = q.Estado
+                                     Estado = q.Estado,
+                                     nom_punto_cargo = q.nom_punto_cargo
                                  }).ToList();
                     else
                         Lista = (from q in Context.ct_punto_cargo
@@ -34,7 +35,9 @@ namespace Core.Erp.Data.Contabilidad
                                      IdEmpresa = q.IdEmpresa,
                                      IdPunto_cargo = q.IdPunto_cargo,
                                      IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                                     Estado = q.Estado
+                                     Estado = q.Estado,
+                                     nom_punto_cargo = q.nom_punto_cargo
+
                                  }).ToList();
                 }
 
