@@ -302,6 +302,8 @@
     <Compile Include="Areas\Contabilidad\Controllers\PeriodoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasNivelController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\PuntoCargoController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\PuntoCargoGrupoController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\RevisionContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\TipoComprobanteController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CatalogoCXCController.cs" />
@@ -10130,6 +10132,16 @@
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_019.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_009.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_005.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\_GridViewPartial_punto_cargo_grupo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Anular.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\_GridViewPartial_punto_cargo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

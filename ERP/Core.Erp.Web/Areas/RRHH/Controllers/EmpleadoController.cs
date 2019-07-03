@@ -534,7 +534,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_pais = bus_pais.get_list(false);
                 ViewBag.lst_ciudad = bus_ciudad.get_list("", false);
                 ViewBag.lst_empleado = bus_empleado.get_list_combo(IdEmpresa);
-                ViewBag.lst_punto_cargo = bus_puntocargo.get_list(IdEmpresa, false);
+               // ViewBag.lst_punto_cargo = bus_puntocargo.GetList(IdEmpresa, 0,false);
                 ViewBag.lst_horario = bus_horario.get_list(IdEmpresa, false);
                 ViewBag.lst_tipo_discapacidad = bus_catalogorrhh.get_list_x_tipo(26);
                 ViewBag.lst_tipo_doc_sustutuido = bus_catalogorrhh.get_list_x_tipo(29);
