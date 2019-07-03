@@ -32,6 +32,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
+
+        public ActionResult CmbClientePorTipo()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info();
+            SessionFixed.Idtipo_cliente = Request.Params["Idtipo_cliente"] != null ? Request.Params["Idtipo_cliente"].ToString() : SessionFixed.Idtipo_cliente;
+            return PartialView("_CmbClientePorTipo", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda_cliente_x_tipo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda_cliente_x_tipo(args, Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.Idtipo_cliente));
+        }
+        public tb_persona_Info get_info_bajo_demanda_cliente_x_tipo(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda_cliente_x_tipo(args, Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.Idtipo_cliente));
+        }
         #endregion
         #region Json
         private void cargar_cliente_contacto(cl_filtros_facturacion_Info model)
@@ -102,6 +117,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 tc_descripcion = "TODOS"
             });
             ViewBag.lst_cobro = lst_cobro;
+
+            fa_cliente_tipo_Bus bus_cliente_tipo = new fa_cliente_tipo_Bus();
+            var lst_cliente_tipo = bus_cliente_tipo.get_list(IdEmpresa, false);
+            lst_cliente_tipo.Add(new Info.Facturacion.fa_cliente_tipo_Info
+            {
+                Idtipo_cliente = 0,
+                Descripcion_tip_cliente = "Todos"
+            });
+            ViewBag.lst_cliente_tipo = lst_cliente_tipo;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -470,6 +494,65 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fechaCorte.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        public ActionResult CXC_010()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                Idtipo_cliente = Convert.ToInt32(SessionFixed.Idtipo_cliente)
+            };
+
+            cargar_combos(model.IdEmpresa);
+            CXC_010_Rpt report = new CXC_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
+            report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CXC_010(cl_filtros_facturacion_Info model)
+        {
+            CXC_010_Rpt report = new CXC_010_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_010");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
+            report.p_Idtipo_cliente.Value = model.Idtipo_cliente == 0 ? 0 : model.Idtipo_cliente;
+            report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_combos(model.IdEmpresa);
+            report.RequestParameters = false;
             ViewBag.Report = report;
             return View(model);
         }

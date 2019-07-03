@@ -811,6 +811,12 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Rpt.Designer.cs">
       <DependentUpon>CXC_009_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.Designer.cs">
+      <DependentUpon>CXC_010_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_detalle_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10132,6 +10138,7 @@
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_019.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_009.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_005.cshtml" />
+
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\_GridViewPartial_punto_cargo_grupo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Nuevo.cshtml" />
@@ -10142,6 +10149,10 @@
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Anular.cshtml" />
+
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_010.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\_CmbClientePorTipo.cshtml" />
+
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10413,6 +10424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_009_Rpt.resx">
       <DependentUpon>CXC_009_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.resx">
+      <DependentUpon>CXC_010_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_001_detalle_Rpt.resx">
       <DependentUpon>CXP_001_detalle_Rpt.cs</DependentUpon>

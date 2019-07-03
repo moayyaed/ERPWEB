@@ -1293,6 +1293,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_detalle_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_002_Data.cs" />
@@ -1769,6 +1770,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPCXC_009_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXC_010_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPCXP_007_Result.cs">
