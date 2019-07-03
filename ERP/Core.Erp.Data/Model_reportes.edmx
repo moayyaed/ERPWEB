@@ -4430,7 +4430,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Parameter Name="Balance" Type="varchar" Mode="In" />
           <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
         </Function>
-        <Function Name="SPCONTA_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+        <Function Name="SPCONTA_005" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdPunto_cargo_grupo" Type="int" Mode="In" />
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
@@ -9113,14 +9113,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           </FunctionImport>
           <EntitySet Name="VWCOMP_001" EntityType="Model_reportes.VWCOMP_001" />
           <EntitySet Name="VWPRE_001" EntityType="Model_reportes.VWPRE_001" />
-          <FunctionImport Name="SPCONTA_004" ReturnType="Collection(Model_reportes.SPCONTA_004_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdPunto_cargo_grupo" Mode="In" Type="Int32" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="SPCXC_009" ReturnType="Collection(Model_reportes.SPCXC_009_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdCliente" Mode="In" Type="Decimal" />
@@ -9136,6 +9128,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="MostrarSoloVencido" Mode="In" Type="Boolean" />
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPCONTA_005" ReturnType="Collection(Model_reportes.SPCONTA_005_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPunto_cargo_grupo" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
@@ -12869,18 +12869,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdUsuarioAprobacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
         </EntityType>
-        <ComplexType Name="SPCONTA_004_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdPunto_cargo" Nullable="false" />
-          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdPunto_cargo_grupo" Nullable="false" />
-          <Property Type="String" Name="nom_punto_cargo" Nullable="false" />
-          <Property Type="String" Name="nom_punto_cargo_grupo" Nullable="false" />
-          <Property Type="Double" Name="SaldoAnterior" Nullable="false" />
-          <Property Type="Double" Name="Debitos" Nullable="false" />
-          <Property Type="Double" Name="Creditos" Nullable="false" />
-          <Property Type="Double" Name="SaldoFinal" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="SPCXC_009_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Int32" Name="IdSucursal" Nullable="false" />
@@ -12925,6 +12913,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Int32" Name="DiasVencido" Nullable="true" />
           <Property Type="Double" Name="TotalCobrado" Nullable="false" />
           <Property Type="Double" Name="Saldo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPCONTA_005_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdPunto_cargo" Nullable="false" />
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdPunto_cargo_grupo" Nullable="false" />
+          <Property Type="String" Name="nom_punto_cargo" Nullable="false" />
+          <Property Type="String" Name="nom_punto_cargo_grupo" Nullable="false" />
+          <Property Type="Double" Name="SaldoAnterior" Nullable="false" />
+          <Property Type="Double" Name="Debitos" Nullable="false" />
+          <Property Type="Double" Name="Creditos" Nullable="false" />
+          <Property Type="Double" Name="SaldoFinal" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -16775,22 +16775,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_004" FunctionName="Model_reportes.Store.SPCONTA_004">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_004_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
-                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
-                <ScalarProperty Name="SaldoAnterior" ColumnName="SaldoAnterior" />
-                <ScalarProperty Name="Debitos" ColumnName="Debitos" />
-                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
-                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPCXC_009" FunctionName="Model_reportes.Store.SPCXC_009">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_reportes.SPCXC_009_Result">
@@ -16841,6 +16825,22 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="DiasVencido" ColumnName="DiasVencido" />
                 <ScalarProperty Name="TotalCobrado" ColumnName="TotalCobrado" />
                 <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_005" FunctionName="Model_reportes.Store.SPCONTA_005">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_005_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
+                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
+                <ScalarProperty Name="SaldoAnterior" ColumnName="SaldoAnterior" />
+                <ScalarProperty Name="Debitos" ColumnName="Debitos" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

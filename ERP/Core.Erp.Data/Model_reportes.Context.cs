@@ -1487,35 +1487,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_012_Result>("SPBAN_012", idEmpresaParameter, idSucursalParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter, idUsuarioParameter);
         }
     
-        public virtual ObjectResult<SPCONTA_004_Result> SPCONTA_004(Nullable<int> idEmpresa, Nullable<int> idPunto_cargo_grupo, string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarSaldo0)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idPunto_cargo_grupoParameter = idPunto_cargo_grupo.HasValue ?
-                new ObjectParameter("IdPunto_cargo_grupo", idPunto_cargo_grupo) :
-                new ObjectParameter("IdPunto_cargo_grupo", typeof(int));
-    
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var fechaIniParameter = fechaIni.HasValue ?
-                new ObjectParameter("FechaIni", fechaIni) :
-                new ObjectParameter("FechaIni", typeof(System.DateTime));
-    
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(System.DateTime));
-    
-            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
-                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
-                new ObjectParameter("MostrarSaldo0", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_004_Result>("SPCONTA_004", idEmpresaParameter, idPunto_cargo_grupoParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter);
-        }
-    
         public virtual ObjectResult<SPCXC_009_Result> SPCXC_009(Nullable<int> idEmpresa, Nullable<decimal> idCliente, Nullable<System.DateTime> fechaCorte)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -1572,6 +1543,35 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPFAC_019_Result>("SPFAC_019", idEmpresaParameter, idClienteIniParameter, idClienteFinParameter, idVendedorIniParameter, idVendedorFinParameter, fechaCorteParameter, mostrarSoloVencidoParameter, mostrarSaldo0Parameter, idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<SPCONTA_005_Result> SPCONTA_005(Nullable<int> idEmpresa, Nullable<int> idPunto_cargo_grupo, string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarSaldo0)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idPunto_cargo_grupoParameter = idPunto_cargo_grupo.HasValue ?
+                new ObjectParameter("IdPunto_cargo_grupo", idPunto_cargo_grupo) :
+                new ObjectParameter("IdPunto_cargo_grupo", typeof(int));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
+                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
+                new ObjectParameter("MostrarSaldo0", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_005_Result>("SPCONTA_005", idEmpresaParameter, idPunto_cargo_grupoParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter);
         }
     }
 }
