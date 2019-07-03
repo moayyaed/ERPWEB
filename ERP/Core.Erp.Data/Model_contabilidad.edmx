@@ -515,6 +515,9 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble_det' no tiene defini
           <Property Name="dc_Observacion" Type="varchar(max)" />
           <Property Name="dc_para_conciliar" Type="bit" />
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="523" Nullable="false" />
+          <Property Name="IdPunto_cargo_grupo" Type="int" />
+          <Property Name="IdPunto_cargo" Type="int" />
+          <Property Name="IdCentroCosto" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_CentroCosto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -952,7 +955,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
     [vwct_cbtecble_det].[dc_Valor] AS [dc_Valor], 
     [vwct_cbtecble_det].[dc_Observacion] AS [dc_Observacion], 
     [vwct_cbtecble_det].[dc_para_conciliar] AS [dc_para_conciliar], 
-    [vwct_cbtecble_det].[pc_Cuenta] AS [pc_Cuenta]
+    [vwct_cbtecble_det].[pc_Cuenta] AS [pc_Cuenta], 
+    [vwct_cbtecble_det].[IdPunto_cargo_grupo] AS [IdPunto_cargo_grupo], 
+    [vwct_cbtecble_det].[IdPunto_cargo] AS [IdPunto_cargo], 
+    [vwct_cbtecble_det].[IdCentroCosto] AS [IdCentroCosto]
     FROM [dbo].[vwct_cbtecble_det] AS [vwct_cbtecble_det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwct_CentroCosto" EntityType="Self.vwct_CentroCosto" store:Type="Views" store:Schema="dbo">
@@ -1332,7 +1338,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
           </AssociationSet>
           <EntitySet Name="vwct_CentroCosto" EntityType="Model_contabilidad.vwct_CentroCosto" />
-          <EntitySet Name="vwct_cbtecble_det" EntityType="Model_contabilidad.vwct_cbtecble_det" />
           <EntitySet Name="ct_cbtecble_det" EntityType="Model_contabilidad.ct_cbtecble_det" />
           <AssociationSet Name="FK_ct_cbtecble_det_ct_cbtecble" Association="Model_contabilidad.FK_ct_cbtecble_det_ct_cbtecble">
             <End Role="ct_cbtecble" EntitySet="ct_cbtecble" />
@@ -1360,6 +1365,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
             <End Role="ct_punto_cargo" EntitySet="ct_punto_cargo" />
           </AssociationSet>
+          <EntitySet Name="vwct_cbtecble_det" EntityType="Model_contabilidad.vwct_cbtecble_det" />
           </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -1950,26 +1956,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="nv_Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="cc_Descripcion_Padre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vwct_cbtecble_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdTipoCbte" />
-            <PropertyRef Name="IdCbteCble" />
-            <PropertyRef Name="secuencia" />
-            <PropertyRef Name="IdCtaCble" />
-            <PropertyRef Name="dc_Valor" />
-            <PropertyRef Name="pc_Cuenta" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dc_Valor" Type="Double" Nullable="false" />
-          <Property Name="dc_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="dc_para_conciliar" Type="Boolean" />
-          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="523" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="ct_cbtecble_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2121,6 +2107,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwct_cbtecble_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="secuencia" />
+            <PropertyRef Name="IdCtaCble" />
+            <PropertyRef Name="dc_Valor" />
+            <PropertyRef Name="pc_Cuenta" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dc_Valor" Type="Double" Nullable="false" />
+          <Property Name="dc_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="dc_para_conciliar" Type="Boolean" />
+          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="523" FixedLength="false" Unicode="false" />
+          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
+          <Property Name="IdPunto_cargo" Type="Int32" />
+          <Property Name="IdCentroCosto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2590,21 +2599,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwct_cbtecble_det">
-            <EntityTypeMapping TypeName="Model_contabilidad.vwct_cbtecble_det">
-              <MappingFragment StoreEntitySet="vwct_cbtecble_det">
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="dc_para_conciliar" ColumnName="dc_para_conciliar" />
-                <ScalarProperty Name="dc_Observacion" ColumnName="dc_Observacion" />
-                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ct_cbtecble_det">
             <EntityTypeMapping TypeName="Model_contabilidad.ct_cbtecble_det">
               <MappingFragment StoreEntitySet="ct_cbtecble_det">
@@ -2655,6 +2649,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
                 <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
                 <ScalarProperty Name="cod_Punto_cargo_grupo" ColumnName="cod_Punto_cargo_grupo" />
                 <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwct_cbtecble_det">
+            <EntityTypeMapping TypeName="Model_contabilidad.vwct_cbtecble_det">
+              <MappingFragment StoreEntitySet="vwct_cbtecble_det">
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="dc_para_conciliar" ColumnName="dc_para_conciliar" />
+                <ScalarProperty Name="dc_Observacion" ColumnName="dc_Observacion" />
+                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

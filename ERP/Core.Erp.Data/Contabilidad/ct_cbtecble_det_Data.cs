@@ -30,7 +30,10 @@ namespace Core.Erp.Data.Contabilidad
                                  IdTipoCbte = q.IdTipoCbte,
                                  secuencia = q.secuencia,
                                  dc_para_conciliar_null = q.dc_para_conciliar,
-                                 pc_Cuenta = q.pc_Cuenta
+                                 pc_Cuenta = q.pc_Cuenta,
+                                 IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                                 IdPunto_cargo = q.IdPunto_cargo,
+                                 IdCentroCosto = q.IdCentroCosto
                              }).ToList();
                 }
                 Lista.ForEach(q => { q.dc_Valor_debe = q.dc_Valor > 0 ? q.dc_Valor : 0; q.dc_Valor_haber = q.dc_Valor < 0 ? Math.Abs( q.dc_Valor) : 0; q.dc_para_conciliar = q.dc_para_conciliar_null == null ? false : Convert.ToBoolean(q.dc_para_conciliar_null); });

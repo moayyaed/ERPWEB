@@ -167,7 +167,10 @@ namespace Core.Erp.Data.Contabilidad
                                 dc_Valor = item.dc_Valor,
                                 IdCtaCble = item.IdCtaCble,                                
                                 secuencia = secuencia++,
-                                dc_para_conciliar = item.dc_para_conciliar
+                                dc_para_conciliar = item.dc_para_conciliar,
+                                IdCentroCosto = item.IdCentroCosto,
+                                IdPunto_cargo = item.IdPunto_cargo,
+                                IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                             };
                             Context.ct_cbtecble_det.Add(Entity_det);                        
                     }
@@ -216,7 +219,10 @@ namespace Core.Erp.Data.Contabilidad
                             dc_Valor = item.dc_Valor,
                             IdCtaCble = item.IdCtaCble,
                             secuencia = secuencia++,
-                            dc_para_conciliar = item.dc_para_conciliar
+                            dc_para_conciliar = item.dc_para_conciliar,
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo = item.IdPunto_cargo,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         };
                         Context.ct_cbtecble_det.Add(Entity_det);
                     }
@@ -283,7 +289,10 @@ namespace Core.Erp.Data.Contabilidad
                             IdCtaCble = item.IdCtaCble,
                             dc_Observacion = "**REVERSO DE DIARIO tipo: " + Entity.IdTipoCbte.ToString() + " #cbte: " + Entity.IdCbteCble.ToString() + "** " + item.dc_Observacion,
                             dc_Valor = item.dc_Valor * -1,
-                            dc_para_conciliar = false
+                            dc_para_conciliar = false,
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo = item.IdPunto_cargo,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         };
                         Context.ct_cbtecble_det.Add(Entity_reverso_det);
                     }

@@ -129,21 +129,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
         }
-
-        //public ActionResult CargarGrupo()
-        //{
-        //    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-        //    int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-        //    DateTime cb_Fecha = Request.Params["pre_fecha"] != null && !string.IsNullOrEmpty(Request.Params["pre_fecha"].ToString()) ? Convert.ToDateTime(Request.Params["pre_fecha"]).Date : DateTime.Now.Date; 
-        //    string IdCtaCble = Request.Params["pre_IdCtaCble"] != null ? Request.Params["pre_IdCtaCble"].ToString() : "";
-        //    return GridViewExtension.GetComboBoxCallbackResult(p =>
-        //    {
-        //        p.TextField = "Descripcion";
-        //        p.ValueField = "IdGrupo";
-        //        p.ValueType = typeof(int);
-        //        p.BindList(bus_grupo.get_list_x_CtaCble(IdEmpresa, IdSucursal, IdCtaCble, cb_Fecha));
-        //    });
-        //}
         #endregion
 
         #region Acciones
@@ -166,7 +151,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>();
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det, model.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
-            cargar_combos_detalle();
+           
             return View(model);
         }
 
@@ -300,7 +285,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+            
             return PartialView("_GridViewPartial_comprobante_detalle", model);
         }
 
@@ -311,20 +296,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+            
             return PartialView("_GridViewPartial_comprobante_detalle_readonly", model);
-        }
-
-        private void cargar_combos_detalle()
-        {
-            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            /*
-            ct_plancta_Bus bus_cuenta = new ct_plancta_Bus();
-            var lst_cuentas = bus_cuenta.get_list(IdEmpresa, false , true);
-            ViewBag.lst_cuentas = lst_cuentas;
-            */
-            //var lst_grupos = bus_grupo.GetList(IdEmpresa, false);
-            //ViewBag.lst_grupos = lst_grupos;
         }
 
         [HttpPost, ValidateInput(false)]
@@ -334,7 +307,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 list_ct_cbtecble_det.AddRow(info_det,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+            
             return PartialView("_GridViewPartial_comprobante_detalle", model);
         }
 
@@ -347,7 +320,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+            
             return PartialView("_GridViewPartial_comprobante_detalle", model);
         }
 
@@ -356,7 +329,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             list_ct_cbtecble_det.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ct_cbtecble_Info model = new ct_cbtecble_Info();
             model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            cargar_combos_detalle();
+
             return PartialView("_GridViewPartial_comprobante_detalle", model);
         }
         #endregion

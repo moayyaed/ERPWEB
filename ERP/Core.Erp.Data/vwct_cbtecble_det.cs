@@ -23,5 +23,8 @@ namespace Core.Erp.Data
         public string dc_Observacion { get; set; }
         public Nullable<bool> dc_para_conciliar { get; set; }
         public string pc_Cuenta { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string IdCentroCosto { get; set; }
     }
 }
