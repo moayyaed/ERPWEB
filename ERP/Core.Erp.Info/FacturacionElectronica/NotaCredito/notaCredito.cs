@@ -26,7 +26,6 @@ namespace Core.Erp.Info.FacturacionElectronica.NotaCredito
         private List<notaCreditoCampoAdicional> infoAdicionalField;
 
         private notaCreditoID idField;
-        private bool idFieldSpecified;
         private string versionField;
 
         /// <comentarios/>

@@ -289,7 +289,6 @@ namespace Core.Erp.Info.Helps
                     var longitud_ruc = 13;
                     var establecimiento = "001";
                     var tercer_digito_persona_juridica = 9;
-                    var tercer_digito_sector_publico = 6;
                     var tercer_digito_persona_natural = 6;
                     long num_valido = 0;
                     var modulo = 11;

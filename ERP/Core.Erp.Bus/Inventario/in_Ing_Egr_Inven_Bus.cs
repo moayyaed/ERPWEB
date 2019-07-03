@@ -42,7 +42,7 @@ namespace Core.Erp.Bus.Inventario
             {
                 return odata.guardarDB(info, signo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

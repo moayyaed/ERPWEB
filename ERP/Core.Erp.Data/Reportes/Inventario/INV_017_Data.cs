@@ -55,7 +55,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                 }
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

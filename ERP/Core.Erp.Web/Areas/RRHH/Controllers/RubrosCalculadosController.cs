@@ -13,7 +13,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class RubrosCalculadosController : Controller
     {
         ro_rubros_calculados_Bus bus_cargo = new ro_rubros_calculados_Bus();
-        int IdEmpresa = 0;
         ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
         public ActionResult Index()
         {

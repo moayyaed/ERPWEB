@@ -230,7 +230,7 @@ namespace Core.Erp.Data.Inventario
                 Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
@@ -304,8 +304,8 @@ namespace Core.Erp.Data.Inventario
                             IdUnidadMedida = (item.IdUnidadMedida) == null ? "UNID" : item.IdUnidadMedida,
                             IdUnidadMedida_sinConversion = (item.IdUnidadMedida_sinConversion) == null ? "UNID" : item.IdUnidadMedida_sinConversion,
 
-                            mv_costo_sinConversion = (item.mv_costo_sinConversion) == null ? 0 : item.mv_costo_sinConversion,
-                            mv_costo = (item.mv_costo_sinConversion) == null ? 0 : Convert.ToDouble(item.mv_costo_sinConversion),
+                            mv_costo_sinConversion = item.mv_costo_sinConversion,
+                            mv_costo =  item.mv_costo_sinConversion,
                         });                        
                         sec++;
                     }
