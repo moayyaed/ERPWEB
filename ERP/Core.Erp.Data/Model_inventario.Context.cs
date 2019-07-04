@@ -15,6 +15,7 @@ namespace Core.Erp.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
+
     public partial class Entities_inventario : DbContext
     {
         public Entities_inventario()
@@ -129,31 +130,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spin_Producto_validar_anulacion", idEmpresaParameter, idProductoParameter);
         }
     
-        public virtual int spINV_aprobacion_ing_egr(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idSucursalParameter = idSucursal.HasValue ?
-                new ObjectParameter("IdSucursal", idSucursal) :
-                new ObjectParameter("IdSucursal", typeof(int));
-    
-            var idBodegaParameter = idBodega.HasValue ?
-                new ObjectParameter("IdBodega", idBodega) :
-                new ObjectParameter("IdBodega", typeof(int));
-    
-            var idMovi_inven_tipoParameter = idMovi_inven_tipo.HasValue ?
-                new ObjectParameter("IdMovi_inven_tipo", idMovi_inven_tipo) :
-                new ObjectParameter("IdMovi_inven_tipo", typeof(int));
-    
-            var idNumMoviParameter = idNumMovi.HasValue ?
-                new ObjectParameter("IdNumMovi", idNumMovi) :
-                new ObjectParameter("IdNumMovi", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spINV_aprobacion_ing_egr", idEmpresaParameter, idSucursalParameter, idBodegaParameter, idMovi_inven_tipoParameter, idNumMoviParameter);
-        }
-    
         public virtual int spSys_Inv_Recosteo_Inventario_x_rango_fechas(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<System.DateTime> fecha_ini, Nullable<System.DateTime> fecha_fin, Nullable<int> cant_Decimales)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -229,7 +205,7 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_GetStock_Result>("SPINV_GetStock", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fechaCorteParameter);
         }
     
-        public virtual int spINV_aprobacion_ing_egr1(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi)
+        public virtual int spINV_aprobacion_ing_egr(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
@@ -251,7 +227,7 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdNumMovi", idNumMovi) :
                 new ObjectParameter("IdNumMovi", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spINV_aprobacion_ing_egr1", idEmpresaParameter, idSucursalParameter, idBodegaParameter, idMovi_inven_tipoParameter, idNumMoviParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spINV_aprobacion_ing_egr", idEmpresaParameter, idSucursalParameter, idBodegaParameter, idMovi_inven_tipoParameter, idNumMoviParameter);
         }
     }
 }

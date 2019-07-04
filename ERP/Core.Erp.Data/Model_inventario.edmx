@@ -4201,13 +4201,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdProducto" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="spINV_aprobacion_ing_egr">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
-            <Parameter Name="IdBodega" Mode="In" Type="Int32" />
-            <Parameter Name="IdMovi_inven_tipo" Mode="In" Type="Int32" />
-            <Parameter Name="IdNumMovi" Mode="In" Type="Decimal" />
-          </FunctionImport>
           <EntitySet Name="vwin_producto_x_tb_bodega_stock_x_lote" EntityType="Model_inventario.vwin_producto_x_tb_bodega_stock_x_lote" />
           <EntitySet Name="vwin_Producto_Stock" EntityType="Model_inventario.vwin_Producto_Stock" />
           <EntitySet Name="in_producto_x_tb_bodega" EntityType="Model_inventario.in_producto_x_tb_bodega" />
@@ -4530,7 +4523,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
           </AssociationSet>
-          <FunctionImport Name="spINV_aprobacion_ing_egr1">
+          <FunctionImport Name="spINV_aprobacion_ing_egr">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
             <Parameter Name="IdBodega" Mode="In" Type="Int32" />
@@ -7958,7 +7951,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spINV_aprobacion_ing_egr1" FunctionName="Model_inventario.Store.spINV_aprobacion_ing_egr" />
+          <FunctionImportMapping FunctionImportName="spINV_aprobacion_ing_egr" FunctionName="Model_inventario.Store.spINV_aprobacion_ing_egr" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
