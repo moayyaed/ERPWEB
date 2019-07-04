@@ -520,9 +520,7 @@ namespace Core.Erp.Data.Caja
                         Valor_a_aplicar = item.Valor_a_aplicar,
 
                         IdEmpresa_OP = item.IdEmpresa_OP,
-                        IdOrdenPago_OP = item.IdOrdenPago_OP,
-                        IdUsuario = info.IdUsuario,
-                        Fecha_Transac = DateTime.Now
+                        IdOrdenPago_OP = item.IdOrdenPago_OP
                     };
                     Context.cp_conciliacion_Caja_det.Add(Entity_d);
                 }
@@ -889,9 +887,7 @@ namespace Core.Erp.Data.Caja
                         Valor_a_aplicar = item.Valor_a_aplicar,
 
                         IdEmpresa_OP = item.IdEmpresa_OP,
-                        IdOrdenPago_OP = item.IdOrdenPago_OP,
-                        IdUsuario = info.IdUsuario,
-                        Fecha_Transac = DateTime.Now
+                        IdOrdenPago_OP = item.IdOrdenPago_OP
                     };
                     Context.cp_conciliacion_Caja_det.Add(Entity_d);
 

@@ -18,7 +18,6 @@ namespace Core.Erp.Info.Banco
         public string Descripcion { get; set; }
         [Required(ErrorMessage = ("el campo cuenta es obligatorio"))]
         public string IdCtaCble { get; set; }
-        public string IdCentroCosto { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
     }

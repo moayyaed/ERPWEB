@@ -10142,6 +10142,7 @@
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Anular.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_010.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\_CmbClientePorTipo.cshtml" />
+    <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_003.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

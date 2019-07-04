@@ -16,17 +16,15 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string IdTipo_op { get; set; }
 
         public string IdCtaCble { get; set; }
-        public string IdCentroCosto { get; set; }
         [Required(ErrorMessage = ("el campotipo comprobante es obligatorio es obligatorio"))]
 
         public Nullable<int> IdTipoCbte_OP { get; set; }
         [Required(ErrorMessage = ("el campotipo comprobante anulación es obligatorio es obligatorio"))]
 
-        public Nullable<int> IdTipoCbte_OP_anulacion { get; set; }
         public string IdEstadoAprobacion { get; set; }
         public string Buscar_FactxPagar { get; set; }
         public string IdCtaCble_Credito { get; set; }
-        public Nullable<bool> Dispara_Alerta { get; set; }
+        public bool Dispara_Alerta { get; set; }
         [Required(ErrorMessage = ("el campo descripción es obligatorio"))]
         [StringLength(500, MinimumLength = 5, ErrorMessage = "el campo descripción debe tener mínimo 5 caracter y máximo 500")]
         public string Descripcion { get; set; }

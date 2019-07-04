@@ -20,7 +20,6 @@ namespace Core.Erp.Data
             this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
             this.com_parametro = new HashSet<com_parametro>();
             this.com_parametro1 = new HashSet<com_parametro>();
-            this.com_solicitud_compra = new HashSet<com_solicitud_compra>();
         }
     
         public string IdCatalogocompra { get; set; }
@@ -47,7 +46,5 @@ namespace Core.Erp.Data
         public virtual ICollection<com_parametro> com_parametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<com_parametro> com_parametro1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<com_solicitud_compra> com_solicitud_compra { get; set; }
     }
 }

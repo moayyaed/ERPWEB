@@ -42,16 +42,11 @@ namespace Core.Erp.Data
         public decimal cn_total { get; set; }
         public string cn_vaCoa { get; set; }
         public string cn_Autorizacion { get; set; }
-        public string cn_Autorizacion_Imprenta { get; set; }
         public string cn_num_doc_modificado { get; set; }
         public Nullable<int> IdCod_ICE { get; set; }
         public string IdTipoServicio { get; set; }
         public Nullable<int> IdIden_credito { get; set; }
-        public string IdCtaCble_Acre { get; set; }
-        public string IdCtaCble_IVA { get; set; }
         public string Estado { get; set; }
-        public Nullable<decimal> IdCbteCble_Anulacion { get; set; }
-        public Nullable<int> IdTipoCbte_Anulacion { get; set; }
         public string cn_tipoLocacion { get; set; }
         public string cod_nota { get; set; }
         public Nullable<System.DateTime> fecha_autorizacion { get; set; }
@@ -59,8 +54,6 @@ namespace Core.Erp.Data
         public string ConvenioTributacion { get; set; }
         public string PaisPago { get; set; }
         public string PagoLocExt { get; set; }
-        public string IdCentroCosto { get; set; }
-        public Nullable<int> IdTipoFlujo { get; set; }
         public string pe_apellido { get; set; }
         public string pe_nombre { get; set; }
         public string pe_cedulaRuc { get; set; }

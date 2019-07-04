@@ -21,6 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
+
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
@@ -36,7 +37,6 @@ namespace Core.Erp.Data
         public DbSet<in_devolucion_inven> in_devolucion_inven { get; set; }
         public DbSet<in_devolucion_inven_det> in_devolucion_inven_det { get; set; }
         public DbSet<in_grupo> in_grupo { get; set; }
-        public DbSet<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public DbSet<in_linea> in_linea { get; set; }
         public DbSet<in_Marca> in_Marca { get; set; }
         public DbSet<in_movi_inven_tipo_x_tb_bodega> in_movi_inven_tipo_x_tb_bodega { get; set; }
@@ -44,7 +44,6 @@ namespace Core.Erp.Data
         public DbSet<in_Producto_Composicion> in_Producto_Composicion { get; set; }
         public DbSet<in_producto_x_tb_bodega_Costo_Historico> in_producto_x_tb_bodega_Costo_Historico { get; set; }
         public DbSet<in_subgrupo> in_subgrupo { get; set; }
-        public DbSet<in_transferencia_det> in_transferencia_det { get; set; }
         public DbSet<in_UnidadMedida> in_UnidadMedida { get; set; }
         public DbSet<in_UnidadMedida_Equiv_conversion> in_UnidadMedida_Equiv_conversion { get; set; }
         public DbSet<vwin_devolucion_inven_det> vwin_devolucion_inven_det { get; set; }
@@ -68,14 +67,11 @@ namespace Core.Erp.Data
         public DbSet<in_Producto_x_fa_NivelDescuento> in_Producto_x_fa_NivelDescuento { get; set; }
         public DbSet<in_Producto> in_Producto { get; set; }
         public DbSet<in_transferencia> in_transferencia { get; set; }
-        public DbSet<in_movi_inve> in_movi_inve { get; set; }
-        public DbSet<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public DbSet<in_movi_inve_x_ct_cbteCble> in_movi_inve_x_ct_cbteCble { get; set; }
         public DbSet<in_movi_inve_detalle_x_ct_cbtecble_det> in_movi_inve_detalle_x_ct_cbtecble_det { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
         public DbSet<vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo> vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo { get; set; }
         public DbSet<vwin_producto_x_tb_bodega_Costo_Historico> vwin_producto_x_tb_bodega_Costo_Historico { get; set; }
-        public DbSet<vwin_movi_inve_x_estado_contabilizacion> vwin_movi_inve_x_estado_contabilizacion { get; set; }
         public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
         public DbSet<vwin_UnidadMedida_Equiv_conversion> vwin_UnidadMedida_Equiv_conversion { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_det_conversion> vwin_Ing_Egr_Inven_det_conversion { get; set; }
@@ -90,6 +86,12 @@ namespace Core.Erp.Data
         public DbSet<in_AjusteDet> in_AjusteDet { get; set; }
         public DbSet<vwin_Ajuste> vwin_Ajuste { get; set; }
         public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
+        public DbSet<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
+        public DbSet<in_movi_inve> in_movi_inve { get; set; }
+        public DbSet<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
+        public DbSet<in_transferencia_det> in_transferencia_det { get; set; }
+        public DbSet<vwin_movi_inve_x_estado_contabilizacion> vwin_movi_inve_x_estado_contabilizacion { get; set; }
+        public DbSet<vwin_Ing_Egr_Inven_det> vwin_Ing_Egr_Inven_det { get; set; }
     
         public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
         {

@@ -26,7 +26,6 @@ namespace Core.Erp.Data.Banco
                                      IdEmpresa = q.IdEmpresa,
                                      IdTipoNota = q.IdTipoNota,
                                      Descripcion = q.Descripcion,
-                                     IdCentroCosto = q.IdCentroCosto,
                                      IdCtaCble = q.IdCtaCble,
                                      Tipo = q.Tipo,
                                      Estado = q.Estado,
@@ -43,7 +42,6 @@ namespace Core.Erp.Data.Banco
                                      IdEmpresa = q.IdEmpresa,
                                      IdTipoNota = q.IdTipoNota,
                                      Descripcion = q.Descripcion,
-                                     IdCentroCosto = q.IdCentroCosto,
                                      IdCtaCble = q.IdCtaCble,
                                      Tipo = q.Tipo,
                                      Estado = q.Estado,
@@ -74,7 +72,6 @@ namespace Core.Erp.Data.Banco
                     {
                         IdEmpresa = Entity.IdEmpresa,
                         IdTipoNota = Entity.IdTipoNota,
-                        IdCentroCosto = Entity.IdCentroCosto,
                         IdCtaCble = Entity.IdCtaCble,
                         Descripcion = Entity.Descripcion,
                         Estado = Entity.Estado,
@@ -122,7 +119,6 @@ namespace Core.Erp.Data.Banco
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdTipoNota = info.IdTipoNota=get_id(info.IdEmpresa),
-                        IdCentroCosto = info.IdCentroCosto,
                         IdCtaCble = info.IdCtaCble,
                         Descripcion = info.Descripcion,
                         Estado = info.Estado="A",

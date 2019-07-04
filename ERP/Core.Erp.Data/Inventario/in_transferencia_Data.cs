@@ -99,10 +99,6 @@ namespace Core.Erp.Data.Inventario
                             dt_cantidad = item.dt_cantidad,
                             IdUnidadMedida = item.IdUnidadMedida,
                             tr_Observacion = item.tr_Observacion,
-                            IdCentroCosto = item.IdCentroCosto,
-                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
-                            IdPunto_cargo = item.IdPunto_cargo,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo == "" ? null : item.IdCentroCosto_sub_centro_costo,
                             dt_secuencia = item.dt_secuencia = c,
                         };
                         c++;
@@ -150,10 +146,6 @@ namespace Core.Erp.Data.Inventario
                             dt_cantidad = item.dt_cantidad,
                             IdUnidadMedida = item.IdUnidadMedida,
                             tr_Observacion = item.tr_Observacion,
-                            IdCentroCosto = item.IdCentroCosto,
-                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
-                            IdPunto_cargo = item.IdPunto_cargo,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo == "" ? null : item.IdCentroCosto_sub_centro_costo,
                             dt_secuencia = item.dt_secuencia = c,
                         };
                         c++;

@@ -17,8 +17,8 @@ namespace Core.Erp.Data
         public cp_proveedor()
         {
             this.cp_SolicitudPago = new HashSet<cp_SolicitudPago>();
-            this.cp_nota_DebCre = new HashSet<cp_nota_DebCre>();
             this.cp_orden_giro = new HashSet<cp_orden_giro>();
+            this.cp_nota_DebCre = new HashSet<cp_nota_DebCre>();
         }
     
         public int IdEmpresa { get; set; }
@@ -50,7 +50,7 @@ namespace Core.Erp.Data
     
         public virtual cp_proveedor_clase cp_proveedor_clase { get; set; }
         public virtual ICollection<cp_SolicitudPago> cp_SolicitudPago { get; set; }
-        public virtual ICollection<cp_nota_DebCre> cp_nota_DebCre { get; set; }
         public virtual ICollection<cp_orden_giro> cp_orden_giro { get; set; }
+        public virtual ICollection<cp_nota_DebCre> cp_nota_DebCre { get; set; }
     }
 }

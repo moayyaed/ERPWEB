@@ -244,16 +244,12 @@
           <Property Name="dm_cantidad" Type="float" Nullable="false" />
           <Property Name="dm_observacion" Type="nvarchar" MaxLength="1000" />
           <Property Name="mv_costo" Type="float" Nullable="false" />
-          <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="varchar" MaxLength="20" />
           <Property Name="IdEstadoAproba" Type="varchar" MaxLength="15" />
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="IdEmpresa_oc" Type="int" />
           <Property Name="IdSucursal_oc" Type="int" />
           <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Secuencia_oc" Type="int" />
-          <Property Name="IdPunto_cargo_grupo" Type="int" />
-          <Property Name="IdPunto_cargo" Type="int" />
           <Property Name="IdEmpresa_inv" Type="int" />
           <Property Name="IdSucursal_inv" Type="int" />
           <Property Name="IdBodega_inv" Type="int" />
@@ -343,35 +339,16 @@
           <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CodMoviInven" Type="varchar" MaxLength="25" />
           <Property Name="cm_tipo" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="cm_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="cm_observacion" Type="varchar(max)" />
           <Property Name="cm_fecha" Type="datetime" Nullable="false" />
-          <Property Name="IdCbteCble_Tipo" Type="int" />
-          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
-          <Property Name="cm_anio" Type="int" />
-          <Property Name="cm_mes" Type="int" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltModi" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltMod" Type="datetime" />
           <Property Name="IdusuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
-          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
-          <Property Name="ip" Type="varchar" MaxLength="30" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="varchar" MaxLength="20" />
-          <Property Name="IdProvedor" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="NumDocumentoRelacionado" Type="varchar" MaxLength="25" />
-          <Property Name="NumFactura" Type="varchar" MaxLength="25" />
-          <Property Name="IdEmpresa_x_Anu" Type="int" />
-          <Property Name="IdSucursal_x_Anu" Type="int" />
-          <Property Name="IdBodega_x_Anu" Type="int" />
-          <Property Name="IdMovi_inven_tipo_x_Anu" Type="int" />
-          <Property Name="IdNumMovi_x_Anu" Type="numeric" Precision="18" Scale="0" />
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
-          <Property Name="IdEstadoDespacho_cat" Type="varchar" MaxLength="15" />
-          <Property Name="Fecha_despacho" Type="datetime" />
           <Property Name="IdMotivo_Inv" Type="int" />
         </EntityType>
         <EntityType Name="in_movi_inve_detalle">
@@ -394,16 +371,12 @@
           <Property Name="dm_cantidad" Type="float" Nullable="false" />
           <Property Name="dm_observacion" Type="nvarchar" MaxLength="1000" />
           <Property Name="mv_costo" Type="float" Nullable="false" />
-          <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="varchar" MaxLength="20" />
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="dm_cantidad_sinConversion" Type="float" Nullable="false" />
           <Property Name="IdUnidadMedida_sinConversion" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="mv_costo_sinConversion" Type="float" />
-          <Property Name="IdPunto_cargo" Type="int" />
-          <Property Name="IdPunto_cargo_grupo" Type="int" />
           <Property Name="IdMotivo_Inv" Type="int" />
-          <Property Name="Costeado" Type="bit" />
+          <Property Name="Costeado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="in_movi_inve_detalle_x_ct_cbtecble_det">
           <Key>
@@ -734,12 +707,8 @@
           <Property Name="dt_secuencia" Type="int" Nullable="false" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="dt_cantidad" Type="float" Nullable="false" />
-          <Property Name="tr_Observacion" Type="varchar" MaxLength="1000" />
-          <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="varchar" MaxLength="20" />
+          <Property Name="tr_Observacion" Type="varchar(max)" />
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="IdPunto_cargo_grupo" Type="int" />
-          <Property Name="IdPunto_cargo" Type="int" />
         </EntityType>
         <EntityType Name="in_UnidadMedida">
           <Key>
@@ -1091,7 +1060,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_movi_inve_x_estado_contabiliz
           <Property Name="nom_tipo_movi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="cm_fecha" Type="datetime" Nullable="false" />
           <Property Name="cm_tipo" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="cm_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="cm_observacion" Type="varchar(max)" />
           <Property Name="IdEmpresa_ct" Type="int" />
           <Property Name="IdTipoCbte" Type="int" />
           <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
@@ -1415,6 +1384,57 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_UnidadMedida_Equiv_conversion
           <Property Name="IdUnidadMedida_equiva" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="valor_equiv" Type="float" Nullable="false" />
           <Property Name="interpretacion" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwin_Ing_Egr_Inven_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="dm_cantidad" />
+            <PropertyRef Name="mv_costo" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="dm_cantidad_sinConversion" />
+            <PropertyRef Name="IdUnidadMedida_sinConversion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="int" Nullable="false" />
+          <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dm_cantidad" Type="float" Nullable="false" />
+          <Property Name="dm_observacion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="mv_costo" Type="float" Nullable="false" />
+          <Property Name="IdEstadoAproba" Type="varchar" MaxLength="15" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdEmpresa_oc" Type="int" />
+          <Property Name="IdSucursal_oc" Type="int" />
+          <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Secuencia_oc" Type="int" />
+          <Property Name="IdEmpresa_inv" Type="int" />
+          <Property Name="IdSucursal_inv" Type="int" />
+          <Property Name="IdBodega_inv" Type="int" />
+          <Property Name="IdMovi_inven_tipo_inv" Type="int" />
+          <Property Name="IdNumMovi_inv" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="secuencia_inv" Type="int" />
+          <Property Name="Motivo_Aprobacion" Type="varchar" MaxLength="200" />
+          <Property Name="dm_cantidad_sinConversion" Type="float" Nullable="false" />
+          <Property Name="IdUnidadMedida_sinConversion" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="mv_costo_sinConversion" Type="float" />
+          <Property Name="IdMotivo_Inv" Type="int" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="nom_presentacion" Type="varchar" MaxLength="150" />
+          <Property Name="lote_fecha_vcto" Type="datetime" />
+          <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
+          <Property Name="tp_ManejaInven" Type="char" MaxLength="1" />
+          <Property Name="se_distribuye" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det_x_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1984,18 +2004,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_movi_inve_in_Catalogo">
-          <End Role="in_Catalogo" Type="Self.in_Catalogo" Multiplicity="0..1" />
-          <End Role="in_movi_inve" Type="Self.in_movi_inve" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Catalogo">
-              <PropertyRef Name="IdCatalogo" />
-            </Principal>
-            <Dependent Role="in_movi_inve">
-              <PropertyRef Name="IdEstadoDespacho_cat" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_movi_inve_in_Motivo_Inven">
           <End Role="in_Motivo_Inven" Type="Self.in_Motivo_Inven" Multiplicity="0..1" />
           <End Role="in_movi_inve" Type="Self.in_movi_inve" Multiplicity="*" />
@@ -2007,26 +2015,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Dependent Role="in_movi_inve">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdMotivo_Inv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_in_movi_inve">
-          <End Role="in_movi_inve" Type="Self.in_movi_inve" Multiplicity="0..1" />
-          <End Role="in_movi_inve1" Type="Self.in_movi_inve" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_movi_inve1">
-              <PropertyRef Name="IdEmpresa_x_Anu" />
-              <PropertyRef Name="IdSucursal_x_Anu" />
-              <PropertyRef Name="IdBodega_x_Anu" />
-              <PropertyRef Name="IdMovi_inven_tipo_x_Anu" />
-              <PropertyRef Name="IdNumMovi_x_Anu" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2636,13 +2624,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdProducto" Type="decimal" Mode="In" />
         </Function>
-        <Function Name="spINV_aprobacion_ing_egr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
-          <Parameter Name="IdSucursal" Type="int" Mode="In" />
-          <Parameter Name="IdBodega" Type="int" Mode="In" />
-          <Parameter Name="IdMovi_inven_tipo" Type="int" Mode="In" />
-          <Parameter Name="IdNumMovi" Type="numeric" Mode="In" />
-        </Function>
         <Function Name="SPINV_GetStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdSucursal" Type="int" Mode="In" />
@@ -3106,6 +3087,43 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_UnidadMedida_Equiv_conversion].[interpretacion] AS [interpretacion]
     FROM [dbo].[vwin_UnidadMedida_Equiv_conversion] AS [vwin_UnidadMedida_Equiv_conversion]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwin_Ing_Egr_Inven_det" EntityType="Self.vwin_Ing_Egr_Inven_det" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [vwin_Ing_Egr_Inven_det].[IdEmpresa] AS [IdEmpresa], 
+    [vwin_Ing_Egr_Inven_det].[IdSucursal] AS [IdSucursal], 
+    [vwin_Ing_Egr_Inven_det].[IdMovi_inven_tipo] AS [IdMovi_inven_tipo], 
+    [vwin_Ing_Egr_Inven_det].[IdNumMovi] AS [IdNumMovi], 
+    [vwin_Ing_Egr_Inven_det].[Secuencia] AS [Secuencia], 
+    [vwin_Ing_Egr_Inven_det].[IdBodega] AS [IdBodega], 
+    [vwin_Ing_Egr_Inven_det].[IdProducto] AS [IdProducto], 
+    [vwin_Ing_Egr_Inven_det].[dm_cantidad] AS [dm_cantidad], 
+    [vwin_Ing_Egr_Inven_det].[dm_observacion] AS [dm_observacion], 
+    [vwin_Ing_Egr_Inven_det].[mv_costo] AS [mv_costo], 
+    [vwin_Ing_Egr_Inven_det].[IdEstadoAproba] AS [IdEstadoAproba], 
+    [vwin_Ing_Egr_Inven_det].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [vwin_Ing_Egr_Inven_det].[IdEmpresa_oc] AS [IdEmpresa_oc], 
+    [vwin_Ing_Egr_Inven_det].[IdSucursal_oc] AS [IdSucursal_oc], 
+    [vwin_Ing_Egr_Inven_det].[IdOrdenCompra] AS [IdOrdenCompra], 
+    [vwin_Ing_Egr_Inven_det].[Secuencia_oc] AS [Secuencia_oc], 
+    [vwin_Ing_Egr_Inven_det].[IdEmpresa_inv] AS [IdEmpresa_inv], 
+    [vwin_Ing_Egr_Inven_det].[IdSucursal_inv] AS [IdSucursal_inv], 
+    [vwin_Ing_Egr_Inven_det].[IdBodega_inv] AS [IdBodega_inv], 
+    [vwin_Ing_Egr_Inven_det].[IdMovi_inven_tipo_inv] AS [IdMovi_inven_tipo_inv], 
+    [vwin_Ing_Egr_Inven_det].[IdNumMovi_inv] AS [IdNumMovi_inv], 
+    [vwin_Ing_Egr_Inven_det].[secuencia_inv] AS [secuencia_inv], 
+    [vwin_Ing_Egr_Inven_det].[Motivo_Aprobacion] AS [Motivo_Aprobacion], 
+    [vwin_Ing_Egr_Inven_det].[dm_cantidad_sinConversion] AS [dm_cantidad_sinConversion], 
+    [vwin_Ing_Egr_Inven_det].[IdUnidadMedida_sinConversion] AS [IdUnidadMedida_sinConversion], 
+    [vwin_Ing_Egr_Inven_det].[mv_costo_sinConversion] AS [mv_costo_sinConversion], 
+    [vwin_Ing_Egr_Inven_det].[IdMotivo_Inv] AS [IdMotivo_Inv], 
+    [vwin_Ing_Egr_Inven_det].[pr_descripcion] AS [pr_descripcion], 
+    [vwin_Ing_Egr_Inven_det].[nom_presentacion] AS [nom_presentacion], 
+    [vwin_Ing_Egr_Inven_det].[lote_fecha_vcto] AS [lote_fecha_vcto], 
+    [vwin_Ing_Egr_Inven_det].[lote_num_lote] AS [lote_num_lote], 
+    [vwin_Ing_Egr_Inven_det].[tp_ManejaInven] AS [tp_ManejaInven], 
+    [vwin_Ing_Egr_Inven_det].[se_distribuye] AS [se_distribuye]
+    FROM [web].[vwin_Ing_Egr_Inven_det] AS [vwin_Ing_Egr_Inven_det]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwin_Ing_Egr_Inven_det_x_devolver" EntityType="Self.vwin_Ing_Egr_Inven_det_x_devolver" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [vwin_Ing_Egr_Inven_det_x_devolver].[IdEmpresa] AS [IdEmpresa], 
@@ -3298,17 +3316,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_in_Catalogo" Association="Self.FK_in_movi_inve_in_Catalogo">
-            <End Role="in_Catalogo" EntitySet="in_Catalogo" />
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_movi_inve_in_Motivo_Inven" Association="Self.FK_in_movi_inve_in_Motivo_Inven">
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
             <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_in_movi_inve" Association="Self.FK_in_movi_inve_in_movi_inve">
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-            <End Role="in_movi_inve1" EntitySet="in_movi_inve" />
           </AssociationSet>
           <AssociationSet Name="FK_in_movi_inve_in_movi_inven_tipo" Association="Self.FK_in_movi_inve_in_movi_inven_tipo">
             <End Role="in_movi_inven_tipo" EntitySet="in_movi_inven_tipo" />
@@ -3566,7 +3576,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="inv_Secuencia" Type="Int32" Nullable="false" />
           <Property Name="cant_devuelta" Type="Double" Nullable="false" />
           <NavigationProperty Name="in_devolucion_inven" Relationship="Self.FK_in_devolucion_inven_det_in_devolucion_inven" FromRole="in_devolucion_inven_det" ToRole="in_devolucion_inven" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Self.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" FromRole="in_devolucion_inven_det" ToRole="in_Ing_Egr_Inven_det" />
+          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" FromRole="in_devolucion_inven_det" ToRole="in_Ing_Egr_Inven_det" />
         </EntityType>
         <EntityType Name="in_grupo">
           <Key>
@@ -3594,52 +3604,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
           <NavigationProperty Name="in_linea" Relationship="Self.FK_in_grupo_in_linea" FromRole="in_grupo" ToRole="in_linea" />
           <NavigationProperty Name="in_subgrupo" Relationship="Self.FK_in_subgrupo_in_grupo" FromRole="in_grupo" ToRole="in_subgrupo" />
-        </EntityType>
-        <EntityType Name="in_Ing_Egr_Inven_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdMovi_inven_tipo" />
-            <PropertyRef Name="IdNumMovi" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
-          <Property Name="IdNumMovi" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="dm_cantidad" Type="Double" Nullable="false" />
-          <Property Name="dm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="mv_costo" Type="Double" Nullable="false" />
-          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoAproba" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdEmpresa_oc" Type="Int32" />
-          <Property Name="IdSucursal_oc" Type="Int32" />
-          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Secuencia_oc" Type="Int32" />
-          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
-          <Property Name="IdPunto_cargo" Type="Int32" />
-          <Property Name="IdEmpresa_inv" Type="Int32" />
-          <Property Name="IdSucursal_inv" Type="Int32" />
-          <Property Name="IdBodega_inv" Type="Int32" />
-          <Property Name="IdMovi_inven_tipo_inv" Type="Int32" />
-          <Property Name="IdNumMovi_inv" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="secuencia_inv" Type="Int32" />
-          <Property Name="Motivo_Aprobacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="dm_cantidad_sinConversion" Type="Double" Nullable="false" />
-          <Property Name="IdUnidadMedida_sinConversion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="mv_costo_sinConversion" Type="Double" />
-          <Property Name="IdMotivo_Inv" Type="Int32" />
-          <NavigationProperty Name="in_devolucion_inven_det" Relationship="Self.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" FromRole="in_Ing_Egr_Inven_det" ToRole="in_devolucion_inven_det" />
-          <NavigationProperty Name="in_UnidadMedida" Relationship="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" FromRole="in_Ing_Egr_Inven_det" ToRole="in_UnidadMedida" />
-          <NavigationProperty Name="in_UnidadMedida1" Relationship="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" FromRole="in_Ing_Egr_Inven_det" ToRole="in_UnidadMedida" />
-          <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto" FromRole="in_Ing_Egr_Inven_det" ToRole="in_Producto" />
-          <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" FromRole="in_Ing_Egr_Inven_det" ToRole="in_movi_inve_detalle" />
-          <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven_det" ToRole="in_Ing_Egr_Inven" />
         </EntityType>
         <EntityType Name="in_linea">
           <Key>
@@ -3777,31 +3741,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_grupo" Relationship="Self.FK_in_subgrupo_in_grupo" FromRole="in_subgrupo" ToRole="in_grupo" />
           <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_Producto_in_subgrupo" FromRole="in_subgrupo" ToRole="in_Producto" />
         </EntityType>
-        <EntityType Name="in_transferencia_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursalOrigen" />
-            <PropertyRef Name="IdBodegaOrigen" />
-            <PropertyRef Name="IdTransferencia" />
-            <PropertyRef Name="dt_secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursalOrigen" Type="Int32" Nullable="false" />
-          <Property Name="IdBodegaOrigen" Type="Int32" Nullable="false" />
-          <Property Name="IdTransferencia" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="dt_secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="dt_cantidad" Type="Double" Nullable="false" />
-          <Property Name="tr_Observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
-          <Property Name="IdPunto_cargo" Type="Int32" />
-          <NavigationProperty Name="in_UnidadMedida" Relationship="Self.FK_in_transferencia_det_in_UnidadMedida" FromRole="in_transferencia_det" ToRole="in_UnidadMedida" />
-          <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_transferencia_det_in_Producto" FromRole="in_transferencia_det" ToRole="in_Producto" />
-          <NavigationProperty Name="in_transferencia" Relationship="Model_inventario.FK_in_transferencia_det_in_transferencia" FromRole="in_transferencia_det" ToRole="in_transferencia" />
-        </EntityType>
         <EntityType Name="in_UnidadMedida">
           <Key>
             <PropertyRef Name="IdUnidadMedida" />
@@ -3814,18 +3753,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
           <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" FromRole="in_UnidadMedida" ToRole="in_Ing_Egr_Inven_det" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_det1" Relationship="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" FromRole="in_UnidadMedida" ToRole="in_Ing_Egr_Inven_det" />
           <NavigationProperty Name="in_Producto_Composicion" Relationship="Self.FK_in_Producto_Composicion_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_Producto_Composicion" />
-          <NavigationProperty Name="in_transferencia_det" Relationship="Self.FK_in_transferencia_det_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_transferencia_det" />
           <NavigationProperty Name="in_UnidadMedida_Equiv_conversion" Relationship="Self.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_UnidadMedida_Equiv_conversion" />
           <NavigationProperty Name="in_UnidadMedida_Equiv_conversion1" Relationship="Self.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" FromRole="in_UnidadMedida" ToRole="in_UnidadMedida_Equiv_conversion" />
           <NavigationProperty Name="in_ConsignacionDet" Relationship="Model_inventario.FK_in_ConsignacionDet_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_ConsignacionDet" />
           <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_Producto_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_Producto" />
           <NavigationProperty Name="in_Producto1" Relationship="Model_inventario.FK_in_Producto_in_UnidadMedida1" FromRole="in_UnidadMedida" ToRole="in_Producto" />
+          <NavigationProperty Name="in_AjusteDet" Relationship="Model_inventario.FK_in_AjusteDet_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_AjusteDet" />
+          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" FromRole="in_UnidadMedida" ToRole="in_Ing_Egr_Inven_det" />
+          <NavigationProperty Name="in_Ing_Egr_Inven_det1" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" FromRole="in_UnidadMedida" ToRole="in_Ing_Egr_Inven_det" />
           <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_movi_inve_detalle" />
           <NavigationProperty Name="in_movi_inve_detalle1" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida1" FromRole="in_UnidadMedida" ToRole="in_movi_inve_detalle" />
-          <NavigationProperty Name="in_AjusteDet" Relationship="Model_inventario.FK_in_AjusteDet_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_AjusteDet" />
+          <NavigationProperty Name="in_transferencia_det" Relationship="Model_inventario.FK_in_transferencia_det_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_transferencia_det" />
         </EntityType>
         <EntityType Name="in_UnidadMedida_Equiv_conversion">
           <Key>
@@ -4122,26 +4061,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det">
-          <End Role="in_Ing_Egr_Inven_det" Type="Self.in_Ing_Egr_Inven_det" Multiplicity="1" />
-          <End Role="in_devolucion_inven_det" Type="Self.in_devolucion_inven_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Ing_Egr_Inven_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-              <PropertyRef Name="Secuencia" />
-            </Principal>
-            <Dependent Role="in_devolucion_inven_det">
-              <PropertyRef Name="inv_IdEmpresa" />
-              <PropertyRef Name="inv_IdSucursal" />
-              <PropertyRef Name="inv_IdMovi_inven_tipo" />
-              <PropertyRef Name="inv_IdNumMovi" />
-              <PropertyRef Name="inv_Secuencia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_grupo_in_linea">
           <End Role="in_linea" Type="Self.in_linea" Multiplicity="1" />
           <End Role="in_grupo" Type="Self.in_grupo" Multiplicity="*" />
@@ -4176,30 +4095,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida2">
-          <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
-          <End Role="in_Ing_Egr_Inven_det" Type="Self.in_Ing_Egr_Inven_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_UnidadMedida">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_det">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida3">
-          <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
-          <End Role="in_Ing_Egr_Inven_det" Type="Self.in_Ing_Egr_Inven_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_UnidadMedida">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_det">
-              <PropertyRef Name="IdUnidadMedida_sinConversion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_Producto_Composicion_in_UnidadMedida">
           <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
           <End Role="in_Producto_Composicion" Type="Self.in_Producto_Composicion" Multiplicity="*" />
@@ -4208,18 +4103,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               <PropertyRef Name="IdUnidadMedida" />
             </Principal>
             <Dependent Role="in_Producto_Composicion">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_transferencia_det_in_UnidadMedida">
-          <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
-          <End Role="in_transferencia_det" Type="Self.in_transferencia_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_UnidadMedida">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Principal>
-            <Dependent Role="in_transferencia_det">
               <PropertyRef Name="IdUnidadMedida" />
             </Dependent>
           </ReferentialConstraint>
@@ -4254,7 +4137,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="in_devolucion_inven" EntityType="Self.in_devolucion_inven" />
           <EntitySet Name="in_devolucion_inven_det" EntityType="Self.in_devolucion_inven_det" />
           <EntitySet Name="in_grupo" EntityType="Self.in_grupo" />
-          <EntitySet Name="in_Ing_Egr_Inven_det" EntityType="Self.in_Ing_Egr_Inven_det" />
           <EntitySet Name="in_linea" EntityType="Self.in_linea" />
           <EntitySet Name="in_Marca" EntityType="Self.in_Marca" />
           <EntitySet Name="in_movi_inven_tipo_x_tb_bodega" EntityType="Self.in_movi_inven_tipo_x_tb_bodega" />
@@ -4262,7 +4144,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="in_Producto_Composicion" EntityType="Self.in_Producto_Composicion" />
           <EntitySet Name="in_producto_x_tb_bodega_Costo_Historico" EntityType="Self.in_producto_x_tb_bodega_Costo_Historico" />
           <EntitySet Name="in_subgrupo" EntityType="Self.in_subgrupo" />
-          <EntitySet Name="in_transferencia_det" EntityType="Self.in_transferencia_det" />
           <EntitySet Name="in_UnidadMedida" EntityType="Self.in_UnidadMedida" />
           <EntitySet Name="in_UnidadMedida_Equiv_conversion" EntityType="Self.in_UnidadMedida_Equiv_conversion" />
           <EntitySet Name="vwin_devolucion_inven_det" EntityType="Self.vwin_devolucion_inven_det" />
@@ -4282,10 +4163,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_devolucion_inven" EntitySet="in_devolucion_inven" />
             <End Role="in_devolucion_inven_det" EntitySet="in_devolucion_inven_det" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" Association="Self.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det">
-            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-            <End Role="in_devolucion_inven_det" EntitySet="in_devolucion_inven_det" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_grupo_in_linea" Association="Self.FK_in_grupo_in_linea">
             <End Role="in_linea" EntitySet="in_linea" />
             <End Role="in_grupo" EntitySet="in_grupo" />
@@ -4294,21 +4171,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_grupo" EntitySet="in_grupo" />
             <End Role="in_subgrupo" EntitySet="in_subgrupo" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" Association="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2">
-            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
-            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" Association="Self.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3">
-            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
-            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_Producto_Composicion_in_UnidadMedida" Association="Self.FK_in_Producto_Composicion_in_UnidadMedida">
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_Producto_Composicion" EntitySet="in_Producto_Composicion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_transferencia_det_in_UnidadMedida" Association="Self.FK_in_transferencia_det_in_UnidadMedida">
-            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
-            <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
           </AssociationSet>
           <AssociationSet Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" Association="Self.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida">
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
@@ -4367,10 +4232,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_Producto" EntitySet="in_Producto" />
             <End Role="in_ConsignacionDet" EntitySet="in_ConsignacionDet" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_Producto" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto">
-            <End Role="in_Producto" EntitySet="in_Producto" />
-            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_Producto_in_Marca" Association="Model_inventario.FK_in_Producto_in_Marca">
             <End Role="in_Marca" EntitySet="in_Marca" />
             <End Role="in_Producto" EntitySet="in_Producto" />
@@ -4415,46 +4276,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_Producto" EntitySet="in_Producto" />
             <End Role="in_producto_x_tb_bodega" EntitySet="in_producto_x_tb_bodega" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_transferencia_det_in_Producto" Association="Model_inventario.FK_in_transferencia_det_in_Producto">
-            <End Role="in_Producto" EntitySet="in_Producto" />
-            <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
-          </AssociationSet>
           <EntitySet Name="in_transferencia" EntityType="Model_inventario.in_transferencia" />
-          <AssociationSet Name="FK_in_transferencia_det_in_transferencia" Association="Model_inventario.FK_in_transferencia_det_in_transferencia">
-            <End Role="in_transferencia" EntitySet="in_transferencia" />
-            <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
-          </AssociationSet>
-          <EntitySet Name="in_movi_inve" EntityType="Model_inventario.in_movi_inve" />
-          <EntitySet Name="in_movi_inve_detalle" EntityType="Model_inventario.in_movi_inve_detalle" />
           <EntitySet Name="in_movi_inve_x_ct_cbteCble" EntityType="Model_inventario.in_movi_inve_x_ct_cbteCble" />
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle">
-            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
-            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_detalle_in_movi_inve" Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve">
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_in_movi_inve" Association="Model_inventario.FK_in_movi_inve_in_movi_inve">
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-            <End Role="in_movi_inve1" EntitySet="in_movi_inve" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" Association="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve">
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-            <End Role="in_movi_inve_x_ct_cbteCble" EntitySet="in_movi_inve_x_ct_cbteCble" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_detalle_in_Producto" Association="Model_inventario.FK_in_movi_inve_detalle_in_Producto">
-            <End Role="in_Producto" EntitySet="in_Producto" />
-            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_detalle_in_UnidadMedida" Association="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida">
-            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
-            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_detalle_in_UnidadMedida1" Association="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida1">
-            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
-            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
-          </AssociationSet>
           <EntitySet Name="in_movi_inve_detalle_x_ct_cbtecble_det" EntityType="Model_inventario.in_movi_inve_detalle_x_ct_cbtecble_det" />
           <EntitySet Name="vwin_Ing_Egr_Inven_PorContabilizar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" />
           <EntitySet Name="vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo" EntityType="Model_inventario.vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo" />
@@ -4474,16 +4297,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="cant_Decimales" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="vwin_producto_x_tb_bodega_Costo_Historico" EntityType="Model_inventario.vwin_producto_x_tb_bodega_Costo_Historico" />
-          <EntitySet Name="vwin_movi_inve_x_estado_contabilizacion" EntityType="Model_inventario.vwin_movi_inve_x_estado_contabilizacion" />
           <EntitySet Name="vwin_producto_x_tb_bodega" EntityType="Model_inventario.vwin_producto_x_tb_bodega" />
           <EntitySet Name="vwin_UnidadMedida_Equiv_conversion" EntityType="Model_inventario.vwin_UnidadMedida_Equiv_conversion" />
           <EntitySet Name="vwin_Ing_Egr_Inven_det_conversion" EntityType="Model_inventario.vwin_Ing_Egr_Inven_det_conversion" />
           <EntitySet Name="vwin_Producto_Composicion" EntityType="Model_inventario.vwin_Producto_Composicion" />
           <EntitySet Name="in_Motivo_Inven" EntityType="Model_inventario.in_Motivo_Inven" />
-          <AssociationSet Name="FK_in_movi_inve_in_Motivo_Inven" Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven">
-            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-          </AssociationSet>
           <EntitySet Name="in_Ing_Egr_Inven" EntityType="Model_inventario.in_Ing_Egr_Inven" />
           <AssociationSet Name="FK_in_Consignacion_in_Ing_Egr_Inven2" Association="Model_inventario.FK_in_Consignacion_in_Ing_Egr_Inven2">
             <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
@@ -4496,10 +4314,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <AssociationSet Name="FK_in_devolucion_inven_in_Ing_Egr_Inven1" Association="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven1">
             <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
             <End Role="in_devolucion_inven" EntitySet="in_devolucion_inven" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven">
-            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
-            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
           </AssociationSet>
           <AssociationSet Name="FK_in_Ing_Egr_Inven_in_Motivo_Inven" Association="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven">
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
@@ -4525,10 +4339,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_Catalogo" EntitySet="in_Catalogo" />
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
           </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_in_Catalogo" Association="Model_inventario.FK_in_movi_inve_in_Catalogo">
-            <End Role="in_Catalogo" EntitySet="in_Catalogo" />
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
-          </AssociationSet>
           <AssociationSet Name="FK_in_parametro_in_Catalogo2" Association="Model_inventario.FK_in_parametro_in_Catalogo2">
             <End Role="in_Catalogo" EntitySet="in_Catalogo" />
             <End Role="in_parametro" EntitySet="in_parametro" />
@@ -4548,10 +4358,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <AssociationSet Name="FK_in_parametro_in_Motivo_Inven1" Association="Model_inventario.FK_in_parametro_in_Motivo_Inven1">
             <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
             <End Role="in_parametro" EntitySet="in_parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_in_movi_inve_in_movi_inven_tipo" Association="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo">
-            <End Role="in_movi_inven_tipo" EntitySet="in_movi_inven_tipo" />
-            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
           </AssociationSet>
           <AssociationSet Name="FK_in_movi_inven_tipo_x_tb_bodega_in_movi_inven_tipo" Association="Model_inventario.FK_in_movi_inven_tipo_x_tb_bodega_in_movi_inven_tipo">
             <End Role="in_movi_inven_tipo" EntitySet="in_movi_inven_tipo" />
@@ -4647,6 +4453,76 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="vwin_Producto_PorSucursal" EntityType="Model_inventario.vwin_Producto_PorSucursal" />
+          <EntitySet Name="in_Ing_Egr_Inven_det" EntityType="Model_inventario.in_Ing_Egr_Inven_det" />
+          <EntitySet Name="in_movi_inve" EntityType="Model_inventario.in_movi_inve" />
+          <EntitySet Name="in_movi_inve_detalle" EntityType="Model_inventario.in_movi_inve_detalle" />
+          <EntitySet Name="in_transferencia_det" EntityType="Model_inventario.in_transferencia_det" />
+          <EntitySet Name="vwin_movi_inve_x_estado_contabilizacion" EntityType="Model_inventario.vwin_movi_inve_x_estado_contabilizacion" />
+          <EntitySet Name="vwin_Ing_Egr_Inven_det" EntityType="Model_inventario.vwin_Ing_Egr_Inven_det" />
+          <AssociationSet Name="FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" Association="Model_inventario.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det">
+            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
+            <End Role="in_devolucion_inven_det" EntitySet="in_devolucion_inven_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven">
+            <End Role="in_Ing_Egr_Inven" EntitySet="in_Ing_Egr_Inven" />
+            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle">
+            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
+            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_Producto" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto">
+            <End Role="in_Producto" EntitySet="in_Producto" />
+            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_Ing_Egr_Inven_det" EntitySet="in_Ing_Egr_Inven_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_in_Motivo_Inven" Association="Model_inventario.FK_in_movi_inve_in_Motivo_Inven">
+            <End Role="in_Motivo_Inven" EntitySet="in_Motivo_Inven" />
+            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_detalle_in_movi_inve" Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve">
+            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
+            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_in_movi_inven_tipo" Association="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo">
+            <End Role="in_movi_inven_tipo" EntitySet="in_movi_inven_tipo" />
+            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" Association="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve">
+            <End Role="in_movi_inve" EntitySet="in_movi_inve" />
+            <End Role="in_movi_inve_x_ct_cbteCble" EntitySet="in_movi_inve_x_ct_cbteCble" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_detalle_in_Producto" Association="Model_inventario.FK_in_movi_inve_detalle_in_Producto">
+            <End Role="in_Producto" EntitySet="in_Producto" />
+            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_detalle_in_UnidadMedida" Association="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_movi_inve_detalle_in_UnidadMedida1" Association="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida1">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_movi_inve_detalle" EntitySet="in_movi_inve_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_transferencia_det_in_Producto" Association="Model_inventario.FK_in_transferencia_det_in_Producto">
+            <End Role="in_Producto" EntitySet="in_Producto" />
+            <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_transferencia_det_in_transferencia" Association="Model_inventario.FK_in_transferencia_det_in_transferencia">
+            <End Role="in_transferencia" EntitySet="in_transferencia" />
+            <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_transferencia_det_in_UnidadMedida" Association="Model_inventario.FK_in_transferencia_det_in_UnidadMedida">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -4970,7 +4846,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="pr_imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="in_categorias" Relationship="Model_inventario.FK_in_Producto_in_categorias" FromRole="in_Producto" ToRole="in_categorias" />
           <NavigationProperty Name="in_ConsignacionDet" Relationship="Model_inventario.FK_in_consignacion_det_in_Producto" FromRole="in_Producto" ToRole="in_ConsignacionDet" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto" FromRole="in_Producto" ToRole="in_Ing_Egr_Inven_det" />
           <NavigationProperty Name="in_Marca" Relationship="Model_inventario.FK_in_Producto_in_Marca" FromRole="in_Producto" ToRole="in_Marca" />
           <NavigationProperty Name="in_presentacion" Relationship="Model_inventario.FK_in_Producto_in_presentacion" FromRole="in_Producto" ToRole="in_presentacion" />
           <NavigationProperty Name="in_Producto_Composicion" Relationship="Model_inventario.FK_in_Producto_Composicion_in_Producto" FromRole="in_Producto" ToRole="in_Producto_Composicion" />
@@ -4983,9 +4858,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_UnidadMedida1" Relationship="Model_inventario.FK_in_Producto_in_UnidadMedida1" FromRole="in_Producto" ToRole="in_UnidadMedida" />
           <NavigationProperty Name="in_Producto_x_fa_NivelDescuento" Relationship="Model_inventario.FK_in_Producto_x_fa_NivelDescuento_in_Producto" FromRole="in_Producto" ToRole="in_Producto_x_fa_NivelDescuento" />
           <NavigationProperty Name="in_producto_x_tb_bodega" Relationship="Model_inventario.FK_in_producto_x_tb_bodega_in_Producto" FromRole="in_Producto" ToRole="in_producto_x_tb_bodega" />
-          <NavigationProperty Name="in_transferencia_det" Relationship="Model_inventario.FK_in_transferencia_det_in_Producto" FromRole="in_Producto" ToRole="in_transferencia_det" />
-          <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_Producto" FromRole="in_Producto" ToRole="in_movi_inve_detalle" />
           <NavigationProperty Name="in_AjusteDet" Relationship="Model_inventario.FK_in_AjusteDet_in_Producto" FromRole="in_Producto" ToRole="in_AjusteDet" />
+          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto" FromRole="in_Producto" ToRole="in_Ing_Egr_Inven_det" />
+          <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_Producto" FromRole="in_Producto" ToRole="in_movi_inve_detalle" />
+          <NavigationProperty Name="in_transferencia_det" Relationship="Model_inventario.FK_in_transferencia_det_in_Producto" FromRole="in_Producto" ToRole="in_transferencia_det" />
         </EntityType>
         <Association Name="FK_in_Producto_in_categorias">
           <End Type="Model_inventario.in_categorias" Role="in_categorias" Multiplicity="1" />
@@ -5010,20 +4886,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               <PropertyRef Name="IdProducto" />
             </Principal>
             <Dependent Role="in_ConsignacionDet">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_det_in_Producto">
-          <End Type="Model_inventario.in_Producto" Role="in_Producto" Multiplicity="1" />
-          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Producto">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_det">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdProducto" />
             </Dependent>
@@ -5185,20 +5047,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_transferencia_det_in_Producto">
-          <End Type="Model_inventario.in_Producto" Role="in_Producto" Multiplicity="1" />
-          <End Type="Model_inventario.in_transferencia_det" Role="in_transferencia_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Producto">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="in_transferencia_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="in_transferencia">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5232,117 +5080,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
           <Property Name="motivo_anula" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="IdEstadoAprobacion_cat" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="in_transferencia_det" Relationship="Model_inventario.FK_in_transferencia_det_in_transferencia" FromRole="in_transferencia" ToRole="in_transferencia_det" />
           <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven" FromRole="in_transferencia" ToRole="in_Ing_Egr_Inven" />
           <NavigationProperty Name="in_Ing_Egr_Inven1" Relationship="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven1" FromRole="in_transferencia" ToRole="in_Ing_Egr_Inven" />
           <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_transferencia_in_Catalogo" FromRole="in_transferencia" ToRole="in_Catalogo" />
-        </EntityType>
-        <Association Name="FK_in_transferencia_det_in_transferencia">
-          <End Type="Model_inventario.in_transferencia" Role="in_transferencia" Multiplicity="1" />
-          <End Type="Model_inventario.in_transferencia_det" Role="in_transferencia_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_transferencia">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursalOrigen" />
-              <PropertyRef Name="IdBodegaOrigen" />
-              <PropertyRef Name="IdTransferencia" />
-            </Principal>
-            <Dependent Role="in_transferencia_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursalOrigen" />
-              <PropertyRef Name="IdBodegaOrigen" />
-              <PropertyRef Name="IdTransferencia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="in_movi_inve">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdMovi_inven_tipo" />
-            <PropertyRef Name="IdNumMovi" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
-          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="CodMoviInven" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="cm_tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="cm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdCbteCble_Tipo" Type="Int32" />
-          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="cm_anio" Type="Int32" />
-          <Property Name="cm_mes" Type="Int32" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdusuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdProvedor" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NumDocumentoRelacionado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="NumFactura" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa_x_Anu" Type="Int32" />
-          <Property Name="IdSucursal_x_Anu" Type="Int32" />
-          <Property Name="IdBodega_x_Anu" Type="Int32" />
-          <Property Name="IdMovi_inven_tipo_x_Anu" Type="Int32" />
-          <Property Name="IdNumMovi_x_Anu" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoDespacho_cat" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_despacho" Type="DateTime" Precision="3" />
-          <Property Name="IdMotivo_Inv" Type="Int32" />
-          <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve_detalle" />
-          <NavigationProperty Name="in_movi_inve1" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve1" />
-          <NavigationProperty Name="in_movi_inve2" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inve" FromRole="in_movi_inve1" ToRole="in_movi_inve" />
-          <NavigationProperty Name="in_movi_inve_x_ct_cbteCble" Relationship="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve_x_ct_cbteCble" />
-          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_movi_inve" ToRole="in_Motivo_Inven" />
-          <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_movi_inve_in_Catalogo" FromRole="in_movi_inve" ToRole="in_Catalogo" />
-          <NavigationProperty Name="in_movi_inven_tipo" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" FromRole="in_movi_inve" ToRole="in_movi_inven_tipo" />
-        </EntityType>
-        <EntityType Name="in_movi_inve_detalle">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdMovi_inven_tipo" />
-            <PropertyRef Name="IdNumMovi" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
-          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="mv_tipo_movi" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="dm_cantidad" Type="Double" Nullable="false" />
-          <Property Name="dm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="mv_costo" Type="Double" Nullable="false" />
-          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="dm_cantidad_sinConversion" Type="Double" Nullable="false" />
-          <Property Name="IdUnidadMedida_sinConversion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="mv_costo_sinConversion" Type="Double" />
-          <Property Name="IdPunto_cargo" Type="Int32" />
-          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
-          <Property Name="IdMotivo_Inv" Type="Int32" />
-          <Property Name="Costeado" Type="Boolean" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" FromRole="in_movi_inve_detalle" ToRole="in_Ing_Egr_Inven_det" />
-          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" FromRole="in_movi_inve_detalle" ToRole="in_movi_inve" />
-          <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_Producto" FromRole="in_movi_inve_detalle" ToRole="in_Producto" />
-          <NavigationProperty Name="in_UnidadMedida" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida" FromRole="in_movi_inve_detalle" ToRole="in_UnidadMedida" />
-          <NavigationProperty Name="in_UnidadMedida1" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida1" FromRole="in_movi_inve_detalle" ToRole="in_UnidadMedida" />
+          <NavigationProperty Name="in_transferencia_det" Relationship="Model_inventario.FK_in_transferencia_det_in_transferencia" FromRole="in_transferencia" ToRole="in_transferencia_det" />
         </EntityType>
         <EntityType Name="in_movi_inve_x_ct_cbteCble">
           <Key>
@@ -5366,126 +5107,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="IdEmpresa_ct" Type="Int32" Nullable="false" />
           <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" FromRole="in_movi_inve_x_ct_cbteCble" ToRole="in_movi_inve" />
         </EntityType>
-        <Association Name="FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle">
-          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_movi_inve_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-              <PropertyRef Name="Secuencia" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_det">
-              <PropertyRef Name="IdEmpresa_inv" />
-              <PropertyRef Name="IdSucursal_inv" />
-              <PropertyRef Name="IdBodega_inv" />
-              <PropertyRef Name="IdMovi_inven_tipo_inv" />
-              <PropertyRef Name="IdNumMovi_inv" />
-              <PropertyRef Name="secuencia_inv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_detalle_in_movi_inve">
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="1" />
-          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_movi_inve_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_in_movi_inve">
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_movi_inve1">
-              <PropertyRef Name="IdEmpresa_x_Anu" />
-              <PropertyRef Name="IdSucursal_x_Anu" />
-              <PropertyRef Name="IdBodega_x_Anu" />
-              <PropertyRef Name="IdMovi_inven_tipo_x_Anu" />
-              <PropertyRef Name="IdNumMovi_x_Anu" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_x_ct_cbteCble_in_movi_inve">
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="1" />
-          <End Type="Model_inventario.in_movi_inve_x_ct_cbteCble" Role="in_movi_inve_x_ct_cbteCble" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_movi_inve_x_ct_cbteCble">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_detalle_in_Producto">
-          <End Type="Model_inventario.in_Producto" Role="in_Producto" Multiplicity="1" />
-          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Producto">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="in_movi_inve_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_detalle_in_UnidadMedida">
-          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
-          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_UnidadMedida">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Principal>
-            <Dependent Role="in_movi_inve_detalle">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_detalle_in_UnidadMedida1">
-          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
-          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_UnidadMedida">
-              <PropertyRef Name="IdUnidadMedida" />
-            </Principal>
-            <Dependent Role="in_movi_inve_detalle">
-              <PropertyRef Name="IdUnidadMedida_sinConversion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="in_movi_inve_detalle_x_ct_cbtecble_det">
           <Key>
             <PropertyRef Name="IdEmpresa_inv" />
@@ -5595,36 +5216,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Stock_a_la_fecha" Type="Double" Nullable="false" />
           <Property Name="Observacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fecha_trans" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="vwin_movi_inve_x_estado_contabilizacion">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdMovi_inven_tipo" />
-            <PropertyRef Name="IdNumMovi" />
-            <PropertyRef Name="nom_tipo_movi" />
-            <PropertyRef Name="cm_fecha" />
-            <PropertyRef Name="cm_tipo" />
-            <PropertyRef Name="Estado_contabilizacion" />
-            <PropertyRef Name="TotalContabilidad" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
-          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="nom_sucursal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="nom_bodega" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="nom_tipo_movi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="cm_tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="cm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa_ct" Type="Int32" />
-          <Property Name="IdTipoCbte" Type="Int32" />
-          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Estado_contabilizacion" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="TotalModulo" Type="Double" />
-          <Property Name="TotalContabilidad" Type="Double" Nullable="false" />
-          <Property Name="Diferencia" Type="Double" />
         </EntityType>
         <EntityType Name="vwin_producto_x_tb_bodega">
           <Key>
@@ -5828,26 +5419,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Tipo_Ing_Egr" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_movi_inve" />
           <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_Ing_Egr_Inven" />
           <NavigationProperty Name="in_Catalogo" Relationship="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" FromRole="in_Motivo_Inven" ToRole="in_Catalogo" />
           <NavigationProperty Name="in_parametro" Relationship="Model_inventario.FK_in_parametro_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_parametro" />
           <NavigationProperty Name="in_parametro1" Relationship="Model_inventario.FK_in_parametro_in_Motivo_Inven1" FromRole="in_Motivo_Inven" ToRole="in_parametro" />
+          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_Motivo_Inven" ToRole="in_movi_inve" />
         </EntityType>
-        <Association Name="FK_in_movi_inve_in_Motivo_Inven">
-          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Motivo_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
-            </Principal>
-            <Dependent Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMotivo_Inv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="in_Ing_Egr_Inven">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5877,12 +5454,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_Consignacion" Relationship="Model_inventario.FK_in_Consignacion_in_Ing_Egr_Inven2" FromRole="in_Ing_Egr_Inven" ToRole="in_Consignacion" />
           <NavigationProperty Name="in_devolucion_inven" Relationship="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_devolucion_inven" />
           <NavigationProperty Name="in_devolucion_inven1" Relationship="Model_inventario.FK_in_devolucion_inven_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven" ToRole="in_devolucion_inven" />
-          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_Ing_Egr_Inven_det" />
           <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_in_Motivo_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_Motivo_Inven" />
           <NavigationProperty Name="in_transferencia" Relationship="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_transferencia" />
           <NavigationProperty Name="in_transferencia1" Relationship="Model_inventario.FK_in_transferencia_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven" ToRole="in_transferencia" />
           <NavigationProperty Name="in_Ajuste" Relationship="Model_inventario.FK_in_Ajuste_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_Ajuste" />
           <NavigationProperty Name="in_Ajuste1" Relationship="Model_inventario.FK_in_Ajuste_in_Ing_Egr_Inven1" FromRole="in_Ing_Egr_Inven" ToRole="in_Ajuste" />
+          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven" ToRole="in_Ing_Egr_Inven_det" />
         </EntityType>
         <Association Name="FK_in_Consignacion_in_Ing_Egr_Inven2">
           <End Type="Model_inventario.in_Ing_Egr_Inven" Role="in_Ing_Egr_Inven" Multiplicity="1" />
@@ -5935,24 +5512,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               <PropertyRef Name="IdSucursal_inv" />
               <PropertyRef Name="IdMovi_inven_tipo_inv" />
               <PropertyRef Name="IdNumMovi_inv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven">
-          <End Type="Model_inventario.in_Ing_Egr_Inven" Role="in_Ing_Egr_Inven" Multiplicity="1" />
-          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Ing_Egr_Inven">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
-            </Principal>
-            <Dependent Role="in_Ing_Egr_Inven_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-              <PropertyRef Name="IdNumMovi" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6047,7 +5606,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
           <NavigationProperty Name="in_CatalogoTipo" Relationship="Model_inventario.FK_in_Catalogo_in_CatalogoTipo" FromRole="in_Catalogo" ToRole="in_CatalogoTipo" />
           <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_Motivo_Inven_in_Catalogo1" FromRole="in_Catalogo" ToRole="in_Motivo_Inven" />
-          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_Catalogo" FromRole="in_Catalogo" ToRole="in_movi_inve" />
           <NavigationProperty Name="in_parametro" Relationship="Model_inventario.FK_in_parametro_in_Catalogo2" FromRole="in_Catalogo" ToRole="in_parametro" />
           <NavigationProperty Name="in_parametro1" Relationship="Model_inventario.FK_in_parametro_in_Catalogo3" FromRole="in_Catalogo" ToRole="in_parametro" />
           <NavigationProperty Name="in_transferencia" Relationship="Model_inventario.FK_in_transferencia_in_Catalogo" FromRole="in_Catalogo" ToRole="in_transferencia" />
@@ -6076,7 +5634,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="MotiAnula" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Genera_Movi_Inven" Type="Boolean" />
           <Property Name="Genera_Diario_Contable" Type="Boolean" />
-          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" FromRole="in_movi_inven_tipo" ToRole="in_movi_inve" />
           <NavigationProperty Name="in_movi_inven_tipo_x_tb_bodega" Relationship="Model_inventario.FK_in_movi_inven_tipo_x_tb_bodega_in_movi_inven_tipo" FromRole="in_movi_inven_tipo" ToRole="in_movi_inven_tipo_x_tb_bodega" />
           <NavigationProperty Name="in_parametro" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo" FromRole="in_movi_inven_tipo" ToRole="in_parametro" />
           <NavigationProperty Name="in_parametro1" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo1" FromRole="in_movi_inven_tipo" ToRole="in_parametro" />
@@ -6092,6 +5649,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <NavigationProperty Name="in_parametro11" Relationship="Model_inventario.FK_in_parametro_in_movi_inven_tipo7" FromRole="in_movi_inven_tipo" ToRole="in_parametro" />
           <NavigationProperty Name="in_Ajuste" Relationship="Model_inventario.FK_in_Ajuste_in_movi_inven_tipo" FromRole="in_movi_inven_tipo" ToRole="in_Ajuste" />
           <NavigationProperty Name="in_Ajuste1" Relationship="Model_inventario.FK_in_Ajuste_in_movi_inven_tipo1" FromRole="in_movi_inven_tipo" ToRole="in_Ajuste" />
+          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" FromRole="in_movi_inven_tipo" ToRole="in_movi_inve" />
         </EntityType>
         <EntityType Name="in_parametro">
           <Key>
@@ -6161,18 +5719,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_in_movi_inve_in_Catalogo">
-          <End Type="Model_inventario.in_Catalogo" Role="in_Catalogo" Multiplicity="0..1" />
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_Catalogo">
-              <PropertyRef Name="IdCatalogo" />
-            </Principal>
-            <Dependent Role="in_movi_inve">
-              <PropertyRef Name="IdEstadoDespacho_cat" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_in_parametro_in_Catalogo2">
           <End Type="Model_inventario.in_Catalogo" Role="in_Catalogo" Multiplicity="0..1" />
           <End Type="Model_inventario.in_parametro" Role="in_parametro" Multiplicity="*" />
@@ -6234,20 +5780,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Dependent Role="in_parametro">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdMotivo_Inv_ajuste_egr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_in_movi_inve_in_movi_inven_tipo">
-          <End Type="Model_inventario.in_movi_inven_tipo" Role="in_movi_inven_tipo" Multiplicity="1" />
-          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="in_movi_inven_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
-            </Principal>
-            <Dependent Role="in_movi_inve">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdMovi_inven_tipo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6655,6 +6187,459 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="precio_1" Type="Double" />
           <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="in_Ing_Egr_Inven_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dm_cantidad" Type="Double" Nullable="false" />
+          <Property Name="dm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="mv_costo" Type="Double" Nullable="false" />
+          <Property Name="IdEstadoAproba" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa_oc" Type="Int32" />
+          <Property Name="IdSucursal_oc" Type="Int32" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Secuencia_oc" Type="Int32" />
+          <Property Name="IdEmpresa_inv" Type="Int32" />
+          <Property Name="IdSucursal_inv" Type="Int32" />
+          <Property Name="IdBodega_inv" Type="Int32" />
+          <Property Name="IdMovi_inven_tipo_inv" Type="Int32" />
+          <Property Name="IdNumMovi_inv" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="secuencia_inv" Type="Int32" />
+          <Property Name="Motivo_Aprobacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dm_cantidad_sinConversion" Type="Double" Nullable="false" />
+          <Property Name="IdUnidadMedida_sinConversion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="mv_costo_sinConversion" Type="Double" />
+          <Property Name="IdMotivo_Inv" Type="Int32" />
+          <NavigationProperty Name="in_devolucion_inven_det" Relationship="Model_inventario.FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det" FromRole="in_Ing_Egr_Inven_det" ToRole="in_devolucion_inven_det" />
+          <NavigationProperty Name="in_Ing_Egr_Inven" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven" FromRole="in_Ing_Egr_Inven_det" ToRole="in_Ing_Egr_Inven" />
+          <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" FromRole="in_Ing_Egr_Inven_det" ToRole="in_movi_inve_detalle" />
+          <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto" FromRole="in_Ing_Egr_Inven_det" ToRole="in_Producto" />
+          <NavigationProperty Name="in_UnidadMedida" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" FromRole="in_Ing_Egr_Inven_det" ToRole="in_UnidadMedida" />
+          <NavigationProperty Name="in_UnidadMedida1" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" FromRole="in_Ing_Egr_Inven_det" ToRole="in_UnidadMedida" />
+        </EntityType>
+        <EntityType Name="in_movi_inve">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CodMoviInven" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="cm_tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdusuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdMotivo_Inv" Type="Int32" />
+          <NavigationProperty Name="in_Motivo_Inven" Relationship="Model_inventario.FK_in_movi_inve_in_Motivo_Inven" FromRole="in_movi_inve" ToRole="in_Motivo_Inven" />
+          <NavigationProperty Name="in_movi_inve_detalle" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve_detalle" />
+          <NavigationProperty Name="in_movi_inven_tipo" Relationship="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" FromRole="in_movi_inve" ToRole="in_movi_inven_tipo" />
+          <NavigationProperty Name="in_movi_inve_x_ct_cbteCble" Relationship="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" FromRole="in_movi_inve" ToRole="in_movi_inve_x_ct_cbteCble" />
+        </EntityType>
+        <EntityType Name="in_movi_inve_detalle">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="mv_tipo_movi" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dm_cantidad" Type="Double" Nullable="false" />
+          <Property Name="dm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="mv_costo" Type="Double" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="dm_cantidad_sinConversion" Type="Double" Nullable="false" />
+          <Property Name="IdUnidadMedida_sinConversion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="mv_costo_sinConversion" Type="Double" />
+          <Property Name="IdMotivo_Inv" Type="Int32" />
+          <Property Name="Costeado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="in_Ing_Egr_Inven_det" Relationship="Model_inventario.FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle" FromRole="in_movi_inve_detalle" ToRole="in_Ing_Egr_Inven_det" />
+          <NavigationProperty Name="in_movi_inve" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" FromRole="in_movi_inve_detalle" ToRole="in_movi_inve" />
+          <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_Producto" FromRole="in_movi_inve_detalle" ToRole="in_Producto" />
+          <NavigationProperty Name="in_UnidadMedida" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida" FromRole="in_movi_inve_detalle" ToRole="in_UnidadMedida" />
+          <NavigationProperty Name="in_UnidadMedida1" Relationship="Model_inventario.FK_in_movi_inve_detalle_in_UnidadMedida1" FromRole="in_movi_inve_detalle" ToRole="in_UnidadMedida" />
+        </EntityType>
+        <EntityType Name="in_transferencia_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursalOrigen" />
+            <PropertyRef Name="IdBodegaOrigen" />
+            <PropertyRef Name="IdTransferencia" />
+            <PropertyRef Name="dt_secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursalOrigen" Type="Int32" Nullable="false" />
+          <Property Name="IdBodegaOrigen" Type="Int32" Nullable="false" />
+          <Property Name="IdTransferencia" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dt_secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dt_cantidad" Type="Double" Nullable="false" />
+          <Property Name="tr_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="in_Producto" Relationship="Model_inventario.FK_in_transferencia_det_in_Producto" FromRole="in_transferencia_det" ToRole="in_Producto" />
+          <NavigationProperty Name="in_transferencia" Relationship="Model_inventario.FK_in_transferencia_det_in_transferencia" FromRole="in_transferencia_det" ToRole="in_transferencia" />
+          <NavigationProperty Name="in_UnidadMedida" Relationship="Model_inventario.FK_in_transferencia_det_in_UnidadMedida" FromRole="in_transferencia_det" ToRole="in_UnidadMedida" />
+        </EntityType>
+        <EntityType Name="vwin_movi_inve_x_estado_contabilizacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="nom_tipo_movi" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="cm_tipo" />
+            <PropertyRef Name="Estado_contabilizacion" />
+            <PropertyRef Name="TotalContabilidad" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="nom_sucursal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_bodega" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_tipo_movi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cm_tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte" Type="Int32" />
+          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Estado_contabilizacion" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="TotalModulo" Type="Double" />
+          <Property Name="TotalContabilidad" Type="Double" Nullable="false" />
+          <Property Name="Diferencia" Type="Double" />
+        </EntityType>
+        <EntityType Name="vwin_Ing_Egr_Inven_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="dm_cantidad" />
+            <PropertyRef Name="mv_costo" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="dm_cantidad_sinConversion" />
+            <PropertyRef Name="IdUnidadMedida_sinConversion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dm_cantidad" Type="Double" Nullable="false" />
+          <Property Name="dm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="mv_costo" Type="Double" Nullable="false" />
+          <Property Name="IdEstadoAproba" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa_oc" Type="Int32" />
+          <Property Name="IdSucursal_oc" Type="Int32" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Secuencia_oc" Type="Int32" />
+          <Property Name="IdEmpresa_inv" Type="Int32" />
+          <Property Name="IdSucursal_inv" Type="Int32" />
+          <Property Name="IdBodega_inv" Type="Int32" />
+          <Property Name="IdMovi_inven_tipo_inv" Type="Int32" />
+          <Property Name="IdNumMovi_inv" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="secuencia_inv" Type="Int32" />
+          <Property Name="Motivo_Aprobacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dm_cantidad_sinConversion" Type="Double" Nullable="false" />
+          <Property Name="IdUnidadMedida_sinConversion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="mv_costo_sinConversion" Type="Double" />
+          <Property Name="IdMotivo_Inv" Type="Int32" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="nom_presentacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
+          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="se_distribuye" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_in_devolucion_inven_det_in_Ing_Egr_Inven_det">
+          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="1" />
+          <End Type="Model_inventario.in_devolucion_inven_det" Role="in_devolucion_inven_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Ing_Egr_Inven_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+              <PropertyRef Name="Secuencia" />
+            </Principal>
+            <Dependent Role="in_devolucion_inven_det">
+              <PropertyRef Name="inv_IdEmpresa" />
+              <PropertyRef Name="inv_IdSucursal" />
+              <PropertyRef Name="inv_IdMovi_inven_tipo" />
+              <PropertyRef Name="inv_IdNumMovi" />
+              <PropertyRef Name="inv_Secuencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_Ing_Egr_Inven_det_in_Ing_Egr_Inven">
+          <End Type="Model_inventario.in_Ing_Egr_Inven" Role="in_Ing_Egr_Inven" Multiplicity="1" />
+          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Ing_Egr_Inven">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+            </Principal>
+            <Dependent Role="in_Ing_Egr_Inven_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_Ing_Egr_Inven_det_in_movi_inve_detalle">
+          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="0..1" />
+          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_movi_inve_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+              <PropertyRef Name="Secuencia" />
+            </Principal>
+            <Dependent Role="in_Ing_Egr_Inven_det">
+              <PropertyRef Name="IdEmpresa_inv" />
+              <PropertyRef Name="IdSucursal_inv" />
+              <PropertyRef Name="IdBodega_inv" />
+              <PropertyRef Name="IdMovi_inven_tipo_inv" />
+              <PropertyRef Name="IdNumMovi_inv" />
+              <PropertyRef Name="secuencia_inv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_Ing_Egr_Inven_det_in_Producto">
+          <End Type="Model_inventario.in_Producto" Role="in_Producto" Multiplicity="1" />
+          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Producto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="in_Ing_Egr_Inven_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida2">
+          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_Ing_Egr_Inven_det">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_Ing_Egr_Inven_det_in_UnidadMedida3">
+          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_inventario.in_Ing_Egr_Inven_det" Role="in_Ing_Egr_Inven_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_Ing_Egr_Inven_det">
+              <PropertyRef Name="IdUnidadMedida_sinConversion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_in_Motivo_Inven">
+          <End Type="Model_inventario.in_Motivo_Inven" Role="in_Motivo_Inven" Multiplicity="0..1" />
+          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Motivo_Inven">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo_Inv" />
+            </Principal>
+            <Dependent Role="in_movi_inve">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo_Inv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_detalle_in_movi_inve">
+          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="1" />
+          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_movi_inve">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+            </Principal>
+            <Dependent Role="in_movi_inve_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_in_movi_inven_tipo">
+          <End Type="Model_inventario.in_movi_inven_tipo" Role="in_movi_inven_tipo" Multiplicity="1" />
+          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_movi_inven_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+            </Principal>
+            <Dependent Role="in_movi_inve">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_x_ct_cbteCble_in_movi_inve">
+          <End Type="Model_inventario.in_movi_inve" Role="in_movi_inve" Multiplicity="1" />
+          <End Type="Model_inventario.in_movi_inve_x_ct_cbteCble" Role="in_movi_inve_x_ct_cbteCble" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_movi_inve">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+            </Principal>
+            <Dependent Role="in_movi_inve_x_ct_cbteCble">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdMovi_inven_tipo" />
+              <PropertyRef Name="IdNumMovi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_detalle_in_Producto">
+          <End Type="Model_inventario.in_Producto" Role="in_Producto" Multiplicity="1" />
+          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Producto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="in_movi_inve_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_detalle_in_UnidadMedida">
+          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_movi_inve_detalle">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_movi_inve_detalle_in_UnidadMedida1">
+          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_inventario.in_movi_inve_detalle" Role="in_movi_inve_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_movi_inve_detalle">
+              <PropertyRef Name="IdUnidadMedida_sinConversion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_transferencia_det_in_Producto">
+          <End Type="Model_inventario.in_Producto" Role="in_Producto" Multiplicity="1" />
+          <End Type="Model_inventario.in_transferencia_det" Role="in_transferencia_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_Producto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="in_transferencia_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_transferencia_det_in_transferencia">
+          <End Type="Model_inventario.in_transferencia" Role="in_transferencia" Multiplicity="1" />
+          <End Type="Model_inventario.in_transferencia_det" Role="in_transferencia_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_transferencia">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursalOrigen" />
+              <PropertyRef Name="IdBodegaOrigen" />
+              <PropertyRef Name="IdTransferencia" />
+            </Principal>
+            <Dependent Role="in_transferencia_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursalOrigen" />
+              <PropertyRef Name="IdBodegaOrigen" />
+              <PropertyRef Name="IdTransferencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_transferencia_det_in_UnidadMedida">
+          <End Type="Model_inventario.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_inventario.in_transferencia_det" Role="in_transferencia_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_transferencia_det">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6758,43 +6743,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
                 <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
                 <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="in_Ing_Egr_Inven_det">
-            <EntityTypeMapping TypeName="Model_inventario.in_Ing_Egr_Inven_det">
-              <MappingFragment StoreEntitySet="in_Ing_Egr_Inven_det">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
-                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="dm_cantidad" ColumnName="dm_cantidad" />
-                <ScalarProperty Name="dm_observacion" ColumnName="dm_observacion" />
-                <ScalarProperty Name="mv_costo" ColumnName="mv_costo" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
-                <ScalarProperty Name="IdEstadoAproba" ColumnName="IdEstadoAproba" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
-                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
-                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
-                <ScalarProperty Name="Secuencia_oc" ColumnName="Secuencia_oc" />
-                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
-                <ScalarProperty Name="IdEmpresa_inv" ColumnName="IdEmpresa_inv" />
-                <ScalarProperty Name="IdSucursal_inv" ColumnName="IdSucursal_inv" />
-                <ScalarProperty Name="IdBodega_inv" ColumnName="IdBodega_inv" />
-                <ScalarProperty Name="IdMovi_inven_tipo_inv" ColumnName="IdMovi_inven_tipo_inv" />
-                <ScalarProperty Name="IdNumMovi_inv" ColumnName="IdNumMovi_inv" />
-                <ScalarProperty Name="secuencia_inv" ColumnName="secuencia_inv" />
-                <ScalarProperty Name="Motivo_Aprobacion" ColumnName="Motivo_Aprobacion" />
-                <ScalarProperty Name="dm_cantidad_sinConversion" ColumnName="dm_cantidad_sinConversion" />
-                <ScalarProperty Name="IdUnidadMedida_sinConversion" ColumnName="IdUnidadMedida_sinConversion" />
-                <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
-                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6909,25 +6857,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
                 <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
                 <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="in_transferencia_det">
-            <EntityTypeMapping TypeName="Model_inventario.in_transferencia_det">
-              <MappingFragment StoreEntitySet="in_transferencia_det">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursalOrigen" ColumnName="IdSucursalOrigen" />
-                <ScalarProperty Name="IdBodegaOrigen" ColumnName="IdBodegaOrigen" />
-                <ScalarProperty Name="IdTransferencia" ColumnName="IdTransferencia" />
-                <ScalarProperty Name="dt_secuencia" ColumnName="dt_secuencia" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="dt_cantidad" ColumnName="dt_cantidad" />
-                <ScalarProperty Name="tr_Observacion" ColumnName="tr_Observacion" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7178,7 +7107,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spin_Producto_validar_anulacion" FunctionName="Model_inventario.Store.spin_Producto_validar_anulacion" />
-          <FunctionImportMapping FunctionImportName="spINV_aprobacion_ing_egr" FunctionName="Model_inventario.Store.spINV_aprobacion_ing_egr" />
           <EntitySetMapping Name="vwin_producto_x_tb_bodega_stock_x_lote">
             <EntityTypeMapping TypeName="Model_inventario.vwin_producto_x_tb_bodega_stock_x_lote">
               <MappingFragment StoreEntitySet="vwin_producto_x_tb_bodega_stock_x_lote">
@@ -7422,76 +7350,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="in_movi_inve">
-            <EntityTypeMapping TypeName="Model_inventario.in_movi_inve">
-              <MappingFragment StoreEntitySet="in_movi_inve">
-                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
-                <ScalarProperty Name="Fecha_despacho" ColumnName="Fecha_despacho" />
-                <ScalarProperty Name="IdEstadoDespacho_cat" ColumnName="IdEstadoDespacho_cat" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="IdNumMovi_x_Anu" ColumnName="IdNumMovi_x_Anu" />
-                <ScalarProperty Name="IdMovi_inven_tipo_x_Anu" ColumnName="IdMovi_inven_tipo_x_Anu" />
-                <ScalarProperty Name="IdBodega_x_Anu" ColumnName="IdBodega_x_Anu" />
-                <ScalarProperty Name="IdSucursal_x_Anu" ColumnName="IdSucursal_x_Anu" />
-                <ScalarProperty Name="IdEmpresa_x_Anu" ColumnName="IdEmpresa_x_Anu" />
-                <ScalarProperty Name="NumFactura" ColumnName="NumFactura" />
-                <ScalarProperty Name="NumDocumentoRelacionado" ColumnName="NumDocumentoRelacionado" />
-                <ScalarProperty Name="IdProvedor" ColumnName="IdProvedor" />
-                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdusuarioUltAnu" ColumnName="IdusuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="cm_mes" ColumnName="cm_mes" />
-                <ScalarProperty Name="cm_anio" ColumnName="cm_anio" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="IdCbteCble_Tipo" ColumnName="IdCbteCble_Tipo" />
-                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
-                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
-                <ScalarProperty Name="cm_tipo" ColumnName="cm_tipo" />
-                <ScalarProperty Name="CodMoviInven" ColumnName="CodMoviInven" />
-                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
-                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="in_movi_inve_detalle">
-            <EntityTypeMapping TypeName="Model_inventario.in_movi_inve_detalle">
-              <MappingFragment StoreEntitySet="in_movi_inve_detalle">
-                <ScalarProperty Name="Costeado" ColumnName="Costeado" />
-                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
-                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
-                <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
-                <ScalarProperty Name="IdUnidadMedida_sinConversion" ColumnName="IdUnidadMedida_sinConversion" />
-                <ScalarProperty Name="dm_cantidad_sinConversion" ColumnName="dm_cantidad_sinConversion" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="mv_costo" ColumnName="mv_costo" />
-                <ScalarProperty Name="dm_observacion" ColumnName="dm_observacion" />
-                <ScalarProperty Name="dm_cantidad" ColumnName="dm_cantidad" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="mv_tipo_movi" ColumnName="mv_tipo_movi" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
-                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="in_movi_inve_x_ct_cbteCble">
             <EntityTypeMapping TypeName="Model_inventario.in_movi_inve_x_ct_cbteCble">
               <MappingFragment StoreEntitySet="in_movi_inve_x_ct_cbteCble">
@@ -7583,29 +7441,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="nom_sucursal" ColumnName="nom_sucursal" />
                 <ScalarProperty Name="cod_sucursal" ColumnName="cod_sucursal" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwin_movi_inve_x_estado_contabilizacion">
-            <EntityTypeMapping TypeName="Model_inventario.vwin_movi_inve_x_estado_contabilizacion">
-              <MappingFragment StoreEntitySet="vwin_movi_inve_x_estado_contabilizacion">
-                <ScalarProperty Name="Diferencia" ColumnName="Diferencia" />
-                <ScalarProperty Name="TotalContabilidad" ColumnName="TotalContabilidad" />
-                <ScalarProperty Name="TotalModulo" ColumnName="TotalModulo" />
-                <ScalarProperty Name="Estado_contabilizacion" ColumnName="Estado_contabilizacion" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
-                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
-                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
-                <ScalarProperty Name="cm_tipo" ColumnName="cm_tipo" />
-                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
-                <ScalarProperty Name="nom_tipo_movi" ColumnName="nom_tipo_movi" />
-                <ScalarProperty Name="nom_bodega" ColumnName="nom_bodega" />
-                <ScalarProperty Name="nom_sucursal" ColumnName="nom_sucursal" />
-                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
-                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
@@ -7947,6 +7782,163 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
                 <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_Ing_Egr_Inven_det">
+            <EntityTypeMapping TypeName="Model_inventario.in_Ing_Egr_Inven_det">
+              <MappingFragment StoreEntitySet="in_Ing_Egr_Inven_det">
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
+                <ScalarProperty Name="IdUnidadMedida_sinConversion" ColumnName="IdUnidadMedida_sinConversion" />
+                <ScalarProperty Name="dm_cantidad_sinConversion" ColumnName="dm_cantidad_sinConversion" />
+                <ScalarProperty Name="Motivo_Aprobacion" ColumnName="Motivo_Aprobacion" />
+                <ScalarProperty Name="secuencia_inv" ColumnName="secuencia_inv" />
+                <ScalarProperty Name="IdNumMovi_inv" ColumnName="IdNumMovi_inv" />
+                <ScalarProperty Name="IdMovi_inven_tipo_inv" ColumnName="IdMovi_inven_tipo_inv" />
+                <ScalarProperty Name="IdBodega_inv" ColumnName="IdBodega_inv" />
+                <ScalarProperty Name="IdSucursal_inv" ColumnName="IdSucursal_inv" />
+                <ScalarProperty Name="IdEmpresa_inv" ColumnName="IdEmpresa_inv" />
+                <ScalarProperty Name="Secuencia_oc" ColumnName="Secuencia_oc" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
+                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdEstadoAproba" ColumnName="IdEstadoAproba" />
+                <ScalarProperty Name="mv_costo" ColumnName="mv_costo" />
+                <ScalarProperty Name="dm_observacion" ColumnName="dm_observacion" />
+                <ScalarProperty Name="dm_cantidad" ColumnName="dm_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_movi_inve">
+            <EntityTypeMapping TypeName="Model_inventario.in_movi_inve">
+              <MappingFragment StoreEntitySet="in_movi_inve">
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdusuarioUltAnu" ColumnName="IdusuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="cm_tipo" ColumnName="cm_tipo" />
+                <ScalarProperty Name="CodMoviInven" ColumnName="CodMoviInven" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_movi_inve_detalle">
+            <EntityTypeMapping TypeName="Model_inventario.in_movi_inve_detalle">
+              <MappingFragment StoreEntitySet="in_movi_inve_detalle">
+                <ScalarProperty Name="Costeado" ColumnName="Costeado" />
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
+                <ScalarProperty Name="IdUnidadMedida_sinConversion" ColumnName="IdUnidadMedida_sinConversion" />
+                <ScalarProperty Name="dm_cantidad_sinConversion" ColumnName="dm_cantidad_sinConversion" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="mv_costo" ColumnName="mv_costo" />
+                <ScalarProperty Name="dm_observacion" ColumnName="dm_observacion" />
+                <ScalarProperty Name="dm_cantidad" ColumnName="dm_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="mv_tipo_movi" ColumnName="mv_tipo_movi" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_transferencia_det">
+            <EntityTypeMapping TypeName="Model_inventario.in_transferencia_det">
+              <MappingFragment StoreEntitySet="in_transferencia_det">
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="tr_Observacion" ColumnName="tr_Observacion" />
+                <ScalarProperty Name="dt_cantidad" ColumnName="dt_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="dt_secuencia" ColumnName="dt_secuencia" />
+                <ScalarProperty Name="IdTransferencia" ColumnName="IdTransferencia" />
+                <ScalarProperty Name="IdBodegaOrigen" ColumnName="IdBodegaOrigen" />
+                <ScalarProperty Name="IdSucursalOrigen" ColumnName="IdSucursalOrigen" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_movi_inve_x_estado_contabilizacion">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_movi_inve_x_estado_contabilizacion">
+              <MappingFragment StoreEntitySet="vwin_movi_inve_x_estado_contabilizacion">
+                <ScalarProperty Name="Diferencia" ColumnName="Diferencia" />
+                <ScalarProperty Name="TotalContabilidad" ColumnName="TotalContabilidad" />
+                <ScalarProperty Name="TotalModulo" ColumnName="TotalModulo" />
+                <ScalarProperty Name="Estado_contabilizacion" ColumnName="Estado_contabilizacion" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="cm_tipo" ColumnName="cm_tipo" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="nom_tipo_movi" ColumnName="nom_tipo_movi" />
+                <ScalarProperty Name="nom_bodega" ColumnName="nom_bodega" />
+                <ScalarProperty Name="nom_sucursal" ColumnName="nom_sucursal" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_Ing_Egr_Inven_det">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven_det">
+              <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven_det">
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
+                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
+                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
+                <ScalarProperty Name="IdUnidadMedida_sinConversion" ColumnName="IdUnidadMedida_sinConversion" />
+                <ScalarProperty Name="dm_cantidad_sinConversion" ColumnName="dm_cantidad_sinConversion" />
+                <ScalarProperty Name="Motivo_Aprobacion" ColumnName="Motivo_Aprobacion" />
+                <ScalarProperty Name="secuencia_inv" ColumnName="secuencia_inv" />
+                <ScalarProperty Name="IdNumMovi_inv" ColumnName="IdNumMovi_inv" />
+                <ScalarProperty Name="IdMovi_inven_tipo_inv" ColumnName="IdMovi_inven_tipo_inv" />
+                <ScalarProperty Name="IdBodega_inv" ColumnName="IdBodega_inv" />
+                <ScalarProperty Name="IdSucursal_inv" ColumnName="IdSucursal_inv" />
+                <ScalarProperty Name="IdEmpresa_inv" ColumnName="IdEmpresa_inv" />
+                <ScalarProperty Name="Secuencia_oc" ColumnName="Secuencia_oc" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
+                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdEstadoAproba" ColumnName="IdEstadoAproba" />
+                <ScalarProperty Name="mv_costo" ColumnName="mv_costo" />
+                <ScalarProperty Name="dm_observacion" ColumnName="dm_observacion" />
+                <ScalarProperty Name="dm_cantidad" ColumnName="dm_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

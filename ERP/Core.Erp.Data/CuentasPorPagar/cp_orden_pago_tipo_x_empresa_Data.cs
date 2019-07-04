@@ -29,9 +29,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdEmpresa = q.IdEmpresa,
                                  IdTipo_op = q.IdTipo_op,
                                  IdCtaCble = q.IdCtaCble,
-                                 IdCentroCosto = q.IdCentroCosto,
                                  IdTipoCbte_OP = q.IdTipoCbte_OP,
-                                 IdTipoCbte_OP_anulacion = q.IdTipoCbte_OP_anulacion,
                                  IdEstadoAprobacion = q.IdEstadoAprobacion,
                                  Buscar_FactxPagar = q.Buscar_FactxPagar,
                                  IdCtaCble_Credito = q.IdCtaCble_Credito,
@@ -74,9 +72,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdEmpresa = q.IdEmpresa,
                                  IdTipo_op = q.IdTipo_op,
                                  IdCtaCble = q.IdCtaCble,
-                                 IdCentroCosto = q.IdCentroCosto,
                                  IdTipoCbte_OP = q.IdTipoCbte_OP,
-                                 IdTipoCbte_OP_anulacion = q.IdTipoCbte_OP_anulacion,
                                  IdEstadoAprobacion = q.IdEstadoAprobacion,
                                  Buscar_FactxPagar = q.Buscar_FactxPagar,
                                  IdCtaCble_Credito = q.IdCtaCble_Credito,
@@ -112,9 +108,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             IdEmpresa = item.IdEmpresa,
                             IdTipo_op = item.IdTipo_op,
                             IdCtaCble = item.IdCtaCble,
-                            IdCentroCosto = item.IdCentroCosto,
                             IdTipoCbte_OP = item.IdTipoCbte_OP,
-                            IdTipoCbte_OP_anulacion = item.IdTipoCbte_OP_anulacion,
                             IdEstadoAprobacion = item.IdEstadoAprobacion,
                             Buscar_FactxPagar = item.Buscar_FactxPagar,
                             IdCtaCble_Credito = item.IdCtaCble_Credito,
@@ -146,8 +140,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Entity.IdCtaCble_Credito = info.IdCtaCble_Credito;
                     Entity.IdEstadoAprobacion = info.IdEstadoAprobacion;
                     Entity.IdTipoCbte_OP = info.IdTipoCbte_OP;
-                    Entity.IdTipoCbte_OP_anulacion = info.IdTipoCbte_OP_anulacion;
-
             
                     Context.SaveChanges();
                 }

@@ -37,11 +37,7 @@ namespace Core.Erp.Data.Inventario
                                  IdProducto = p.IdProducto,
                                  dt_cantidad = p.dt_cantidad,
                                  tr_Observacion = p.tr_Observacion,
-                                 IdCentroCosto = p.IdCentroCosto,
-                                 IdCentroCosto_sub_centro_costo = p.IdCentroCosto_sub_centro_costo,
                                  IdUnidadMedida = p.IdUnidadMedida,
-                                 IdPunto_cargo_grupo = p.IdPunto_cargo_grupo,
-                                 IdPunto_cargo = p.IdPunto_cargo,
                                  pr_descripcion=q.pr_descripcion,
                                  tp_ManejaInven = t.tp_ManejaInven,
                                  se_distribuye = q.se_distribuye ?? false,
@@ -79,11 +75,7 @@ namespace Core.Erp.Data.Inventario
                             IdProducto = item.IdProducto,
                             dt_cantidad = item.dt_cantidad,
                             tr_Observacion = item.tr_Observacion,
-                            IdCentroCosto = item.IdCentroCosto,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
                             IdUnidadMedida = item.IdUnidadMedida,
-                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
-                            IdPunto_cargo = item.IdPunto_cargo,
                            
                         };
                         c++;

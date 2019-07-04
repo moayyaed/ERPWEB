@@ -188,11 +188,6 @@ namespace Core.Erp.Data.Inventario
                             IdBodega =(int) info.IdBodega,
                             IdProducto = item.IdProducto,
 
-                            IdCentroCosto = item.IdCentroCosto,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
-                            IdPunto_cargo = item.IdPunto_cargo,
-                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
-
                             dm_observacion = item.dm_observacion,
                             IdMotivo_Inv = info.IdMotivo_Inv,
                             IdEstadoAproba = "APRO",
@@ -274,11 +269,6 @@ namespace Core.Erp.Data.Inventario
                             Secuencia = sec,
                             IdBodega = (int)info.IdBodega,
                             IdProducto = item.IdProducto,
-
-                            IdCentroCosto = item.IdCentroCosto,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
-                            IdPunto_cargo = item.IdPunto_cargo,
-                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
 
                             dm_observacion = item.dm_observacion,
                             IdMotivo_Inv = item.IdMotivo_Inv,
@@ -863,8 +853,6 @@ namespace Core.Erp.Data.Inventario
                                 dm_cantidad = det.dm_cantidad,
                                 mv_costo = det.mv_costo,
 
-                                IdCentroCosto = item.IdCentroCosto,
-                                IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
                                 Costeado = true,
                                 IdMotivo_Inv = item.IdMotivo_Inv,                                
                             });

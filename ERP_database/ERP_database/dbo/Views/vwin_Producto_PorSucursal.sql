@@ -1,16 +1,20 @@
-﻿CREATE VIEW [dbo].[vwin_Producto_PorSucursal]
+﻿CREATE VIEW dbo.vwin_Producto_PorSucursal
 AS
-SELECT dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, 
-                  SUM(ISNULL(dbo.in_movi_inve_detalle.dm_cantidad, 0)) AS Stock, dbo.in_Producto.precio_1
-FROM     dbo.in_producto_x_tb_bodega LEFT OUTER JOIN
-                  dbo.in_Producto ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_Producto.IdProducto LEFT OUTER JOIN
-                  dbo.in_movi_inve_detalle ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_movi_inve_detalle.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_movi_inve_detalle.IdSucursal AND 
-                  dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_movi_inve_detalle.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_movi_inve_detalle.IdProducto LEFT OUTER JOIN
-                  dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria
-WHERE  (dbo.in_Producto.Estado = 'A') AND in_producto_x_tb_bodega.IdBodega = 1
-GROUP BY dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.precio_1
+SELECT        dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, 
+                         SUM(ISNULL(dbo.in_movi_inve_detalle.dm_cantidad, 0)) AS Stock, dbo.in_Producto.precio_1, dbo.in_ProductoTipo.tp_ManejaInven
+FROM            dbo.in_ProductoTipo INNER JOIN
+                         dbo.in_Producto ON dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo RIGHT OUTER JOIN
+                         dbo.in_producto_x_tb_bodega ON dbo.in_Producto.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto LEFT OUTER JOIN
+                         dbo.in_movi_inve_detalle ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_movi_inve_detalle.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_movi_inve_detalle.IdSucursal AND 
+                         dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_movi_inve_detalle.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_movi_inve_detalle.IdProducto LEFT OUTER JOIN
+                         dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria
+WHERE        (dbo.in_Producto.Estado = 'A') AND (dbo.in_producto_x_tb_bodega.IdBodega = 1)
+GROUP BY dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.precio_1, 
+                         dbo.in_ProductoTipo.tp_ManejaInven
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
+
+
 
 
 GO
@@ -19,7 +23,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[56] 4[5] 2[21] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -93,7 +97,7 @@ Begin DesignProperties =
                Right = 310
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 2
          End
          Begin Table = "in_Producto"
             Begin Extent = 
@@ -103,7 +107,7 @@ Begin DesignProperties =
                Right = 683
             End
             DisplayFlags = 280
-            TopColumn = 29
+            TopColumn = 25
          End
          Begin Table = "in_movi_inve_detalle"
             Begin Extent = 
@@ -125,6 +129,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "in_ProductoTipo"
+            Begin Extent = 
+               Top = 174
+               Left = 38
+               Bottom = 304
+               Right = 281
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
       End
    End
    Begin SQLPane = 
@@ -132,19 +146,36 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 12
-         Column = 1440
+         ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350

@@ -35,8 +35,6 @@ namespace Core.Erp.Data.Inventario
                                  IdOrdenCompra = d.IdOrdenCompra,
                                  IdProducto = d.IdProducto,
                                  IdUnidadMedida = d.IdUnidadMedida,
-                                 IdPunto_cargo = d.IdPunto_cargo,
-                                 IdPunto_cargo_grupo = d.IdPunto_cargo_grupo,
                                  mv_costo = d.mv_costo,
                                  Secuencia = d.Secuencia,
 
@@ -98,8 +96,6 @@ namespace Core.Erp.Data.Inventario
                         IdOrdenCompra = Entity.IdOrdenCompra,
                         IdProducto = Entity.IdProducto,
                         IdUnidadMedida = Entity.IdUnidadMedida,
-                        IdPunto_cargo = Entity.IdPunto_cargo,
-                        IdPunto_cargo_grupo = Entity.IdPunto_cargo_grupo,
                         mv_costo = Entity.mv_costo,
                         Secuencia = Entity.Secuencia,
 
@@ -142,11 +138,6 @@ namespace Core.Erp.Data.Inventario
                         Secuencia = info.Secuencia,
                         IdBodega = info.IdBodega,
                         IdProducto = info.IdProducto,                        
-                        
-                        IdCentroCosto = info.IdCentroCosto,
-                        IdCentroCosto_sub_centro_costo = info.IdCentroCosto_sub_centro_costo,
-                        IdPunto_cargo = info.IdPunto_cargo,
-                        IdPunto_cargo_grupo = info.IdPunto_cargo_grupo,
 
                         dm_observacion = info.dm_observacion,
                         IdMotivo_Inv = info.IdMotivo_Inv,

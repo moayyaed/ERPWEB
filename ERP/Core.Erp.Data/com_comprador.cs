@@ -18,7 +18,6 @@ namespace Core.Erp.Data
         public com_comprador()
         {
             this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
-            this.com_solicitud_compra = new HashSet<com_solicitud_compra>();
         }
     
         public int IdEmpresa { get; set; }
@@ -36,7 +35,5 @@ namespace Core.Erp.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<com_solicitud_compra> com_solicitud_compra { get; set; }
     }
 }

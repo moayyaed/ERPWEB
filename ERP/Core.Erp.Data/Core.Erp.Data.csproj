@@ -279,12 +279,6 @@
     <Compile Include="com_solicitante.cs">
       <DependentUpon>Model_compras.tt</DependentUpon>
     </Compile>
-    <Compile Include="com_solicitud_compra.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_solicitud_compra_det.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
     <Compile Include="com_TerminoPago.cs">
       <DependentUpon>Model_compras.tt</DependentUpon>
     </Compile>
@@ -318,7 +312,7 @@
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="cp_conciliacion_Caja_det.cs">
-      <DependentUpon>Model_caja.tt</DependentUpon>
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="cp_conciliacion_Caja_det_Ing_Caja.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
@@ -417,6 +411,12 @@
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="ct_cbtecble_det.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_Plantilla.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_Plantilla_det.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="ct_cbtecble_Reversado.cs">
@@ -2096,7 +2096,7 @@
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_conciliacion_Caja_det.cs">
-      <DependentUpon>Model_caja.tt</DependentUpon>
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_conciliacion_Caja_det_x_ValeCaja.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
@@ -2492,6 +2492,9 @@
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_InvenPorOrdenCompra.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_det.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_det_conversion.cs">

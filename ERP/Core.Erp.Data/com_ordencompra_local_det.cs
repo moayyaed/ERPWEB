@@ -28,8 +28,6 @@ namespace Core.Erp.Data
         public double do_iva { get; set; }
         public double do_total { get; set; }
         public string do_observacion { get; set; }
-        public string IdCentroCosto { get; set; }
-        public string IdCentroCosto_sub_centro_costo { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }
         public string IdUnidadMedida { get; set; }

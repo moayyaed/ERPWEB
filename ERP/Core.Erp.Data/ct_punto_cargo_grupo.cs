@@ -18,6 +18,7 @@ namespace Core.Erp.Data
         {
             this.ct_cbtecble_det = new HashSet<ct_cbtecble_det>();
             this.ct_punto_cargo = new HashSet<ct_punto_cargo>();
+            this.ct_cbtecble_Plantilla_det = new HashSet<ct_cbtecble_Plantilla_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -35,5 +36,6 @@ namespace Core.Erp.Data
     
         public virtual ICollection<ct_cbtecble_det> ct_cbtecble_det { get; set; }
         public virtual ICollection<ct_punto_cargo> ct_punto_cargo { get; set; }
+        public virtual ICollection<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
     }
 }

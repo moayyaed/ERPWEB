@@ -46,9 +46,9 @@ namespace Core.Erp.Data
         public string motivo_anula { get; set; }
         public string IdEstadoAprobacion_cat { get; set; }
     
-        public virtual ICollection<in_transferencia_det> in_transferencia_det { get; set; }
         public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven { get; set; }
         public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven1 { get; set; }
         public virtual in_Catalogo in_Catalogo { get; set; }
+        public virtual ICollection<in_transferencia_det> in_transferencia_det { get; set; }
     }
 }

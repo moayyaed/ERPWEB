@@ -18,6 +18,7 @@ namespace Core.Erp.Data
         {
             this.ct_CentroCosto1 = new HashSet<ct_CentroCosto>();
             this.ct_cbtecble_det = new HashSet<ct_cbtecble_det>();
+            this.ct_cbtecble_Plantilla_det = new HashSet<ct_cbtecble_Plantilla_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -39,5 +40,6 @@ namespace Core.Erp.Data
         public virtual ct_CentroCosto ct_CentroCosto2 { get; set; }
         public virtual ct_CentroCostoNivel ct_CentroCostoNivel { get; set; }
         public virtual ICollection<ct_cbtecble_det> ct_cbtecble_det { get; set; }
+        public virtual ICollection<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
     }
 }

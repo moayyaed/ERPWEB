@@ -54,6 +54,14 @@
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" />
         <EntityTypeShape EntityType="Model_contabilidad.vwct_cbtecble_det" Width="1.5" PointX="10.375" PointY="13.75" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_cbtecble_Plantilla" Width="1.5" PointX="5.25" PointY="6.875" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_cbtecble_Plantilla_det" Width="1.5" PointX="21.875" PointY="13.875" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_ct_cbtecble_tipo" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_cbtecble_Plantilla" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_CentroCosto" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

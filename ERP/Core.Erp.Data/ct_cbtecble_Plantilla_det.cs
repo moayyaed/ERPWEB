@@ -12,21 +12,22 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class cp_conciliacion_Caja_det_x_ValeCaja
+    public partial class ct_cbtecble_Plantilla_det
     {
         public int IdEmpresa { get; set; }
-        public decimal IdConciliacion_Caja { get; set; }
-        public int Secuencia { get; set; }
-        public int IdEmpresa_movcaja { get; set; }
-        public decimal IdCbteCble_movcaja { get; set; }
-        public int IdTipocbte_movcaja { get; set; }
+        public decimal IdPlantilla { get; set; }
+        public int secuencia { get; set; }
         public string IdCtaCble { get; set; }
-        public Nullable<int> IdPunto_cargo { get; set; }
+        public double dc_Valor { get; set; }
+        public string dc_Observacion { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
         public string IdCentroCosto { get; set; }
-        public string IdCentroCosto_sub_centro_costo { get; set; }
     
-        public virtual caj_Caja_Movimiento caj_Caja_Movimiento { get; set; }
-        public virtual cp_conciliacion_Caja cp_conciliacion_Caja { get; set; }
+        public virtual ct_cbtecble_Plantilla ct_cbtecble_Plantilla { get; set; }
+        public virtual ct_CentroCosto ct_CentroCosto { get; set; }
+        public virtual ct_plancta ct_plancta { get; set; }
+        public virtual ct_punto_cargo ct_punto_cargo { get; set; }
+        public virtual ct_punto_cargo_grupo ct_punto_cargo_grupo { get; set; }
     }
 }

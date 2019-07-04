@@ -46,13 +46,10 @@ namespace Core.Erp.Info.CuentasPorPagar
         public decimal cn_total { get; set; }
         public string cn_vaCoa { get; set; }
         public string cn_Autorizacion { get; set; }
-        public string cn_Autorizacion_Imprenta { get; set; }
         public string cn_num_doc_modificado { get; set; }
         public Nullable<int> IdCod_ICE { get; set; }
         public string IdTipoServicio { get; set; }
         public Nullable<int> IdIden_credito { get; set; }
-        public string IdCtaCble_Acre { get; set; }
-        public string IdCtaCble_IVA { get; set; }
         public string IdUsuario { get; set; }
         public System.DateTime Fecha_Transac { get; set; }
         public string Estado { get; set; }
@@ -62,8 +59,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string IdUsuarioUltAnu { get; set; }
         public string MotivoAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public Nullable<decimal> IdCbteCble_Anulacion { get; set; }
-        public Nullable<int> IdTipoCbte_Anulacion { get; set; }
         public string cn_tipoLocacion { get; set; }
         public string IdCentroCosto { get; set; }
         public string PagoLocExt { get; set; }

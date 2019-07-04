@@ -50,13 +50,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  cn_total = q.cn_total,
                                  cn_vaCoa = q.cn_vaCoa,
                                  cn_Autorizacion = q.cn_Autorizacion,
-                                 cn_Autorizacion_Imprenta = q.cn_Autorizacion_Imprenta,
                                  cn_num_doc_modificado = q.cn_num_doc_modificado,
                                  IdCod_ICE = q.IdCod_ICE,
                                  IdIden_credito = q.IdIden_credito,
-                                 IdCtaCble_Acre = q.IdCtaCble_Acre,
                                  IdTipoServicio = q.IdTipoServicio,
-                                 IdCtaCble_IVA = q.IdCtaCble_IVA,
                                  Estado = q.Estado,
                                  info_proveedor = new cp_proveedor_Info
                                  {
@@ -121,13 +118,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                         cn_total = Entity.cn_total,
                         cn_vaCoa = Entity.cn_vaCoa,
                         cn_Autorizacion = Entity.cn_Autorizacion,
-                        cn_Autorizacion_Imprenta = Entity.cn_Autorizacion_Imprenta,
                         cn_num_doc_modificado = Entity.cn_num_doc_modificado,
                         IdCod_ICE = Entity.IdCod_ICE,
                         IdIden_credito = Entity.IdIden_credito,
-                        IdCtaCble_Acre = Entity.IdCtaCble_Acre,
                         IdTipoServicio = Entity.IdTipoServicio,
-                        IdCtaCble_IVA = Entity.IdCtaCble_IVA,
                         ConvenioTributacion_bool = Entity.ConvenioTributacion == "SI" ? true : false,
                         PagoSujetoRetencion_bool = Entity.PagoSujetoRetencion == "SI" ? true : false
                     };
@@ -176,12 +170,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         cn_total = info.cn_total,
                         cn_vaCoa = info.cn_vaCoa,
                         cn_Autorizacion = info.cn_Autorizacion,
-                        cn_Autorizacion_Imprenta = info.cn_Autorizacion_Imprenta,
                         cn_num_doc_modificado = info.cn_num_doc_modificado,
                         IdIden_credito = info.IdIden_credito,
-                        IdCtaCble_Acre = info.IdCtaCble_Acre,
                         IdTipoServicio = info.IdTipoServicio,
-                        IdCtaCble_IVA = info.IdCtaCble_IVA,
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now,
                         Estado = info.Estado,
@@ -235,13 +226,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.cn_BaseSeguro = info.cn_BaseSeguro;
                         Entity.cn_total = info.cn_total;
                         Entity.cn_Autorizacion = info.cn_Autorizacion;
-                        Entity.cn_Autorizacion_Imprenta = info.cn_Autorizacion_Imprenta;
                         Entity.cn_num_doc_modificado = info.cn_num_doc_modificado;
                         Entity.IdCod_ICE = info.IdCod_ICE;
                         Entity.IdIden_credito = info.IdIden_credito;
-                        Entity.IdCtaCble_Acre = info.IdCtaCble_Acre;
                         Entity.IdTipoServicio = info.IdTipoServicio;
-                        Entity.IdCtaCble_IVA = info.IdCtaCble_IVA;
                         Entity.ConvenioTributacion = info.ConvenioTributacion_bool == true ? "SI" : "NO";
                         Entity.PagoSujetoRetencion = info.PagoSujetoRetencion_bool == true ? "SI" : "NO";
 
@@ -269,8 +257,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                     && q.IdCbteCble_Nota == info.IdCbteCble_Nota);
                     if (Entity == null) return false;
                     {
-                        Entity.IdTipoCbte_Anulacion = info.IdTipoCbte_Anulacion;
-                        Entity.IdCbteCble_Anulacion = info.IdCbteCble_Anulacion;
                         Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
                         Entity.Fecha_UltAnu = info.Fecha_UltAnu;
                         Entity.Estado = "I";

@@ -17,15 +17,15 @@ namespace Core.Erp.Data
         public in_Producto()
         {
             this.in_ConsignacionDet = new HashSet<in_ConsignacionDet>();
-            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
             this.in_Producto_Composicion = new HashSet<in_Producto_Composicion>();
             this.in_Producto_Composicion1 = new HashSet<in_Producto_Composicion>();
             this.in_Producto1 = new HashSet<in_Producto>();
             this.in_Producto_x_fa_NivelDescuento = new HashSet<in_Producto_x_fa_NivelDescuento>();
             this.in_producto_x_tb_bodega = new HashSet<in_producto_x_tb_bodega>();
-            this.in_transferencia_det = new HashSet<in_transferencia_det>();
-            this.in_movi_inve_detalle = new HashSet<in_movi_inve_detalle>();
             this.in_AjusteDet = new HashSet<in_AjusteDet>();
+            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
+            this.in_movi_inve_detalle = new HashSet<in_movi_inve_detalle>();
+            this.in_transferencia_det = new HashSet<in_transferencia_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -70,7 +70,6 @@ namespace Core.Erp.Data
     
         public virtual in_categorias in_categorias { get; set; }
         public virtual ICollection<in_ConsignacionDet> in_ConsignacionDet { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public virtual in_Marca in_Marca { get; set; }
         public virtual in_presentacion in_presentacion { get; set; }
         public virtual ICollection<in_Producto_Composicion> in_Producto_Composicion { get; set; }
@@ -83,8 +82,9 @@ namespace Core.Erp.Data
         public virtual in_UnidadMedida in_UnidadMedida1 { get; set; }
         public virtual ICollection<in_Producto_x_fa_NivelDescuento> in_Producto_x_fa_NivelDescuento { get; set; }
         public virtual ICollection<in_producto_x_tb_bodega> in_producto_x_tb_bodega { get; set; }
-        public virtual ICollection<in_transferencia_det> in_transferencia_det { get; set; }
-        public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public virtual ICollection<in_AjusteDet> in_AjusteDet { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
+        public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
+        public virtual ICollection<in_transferencia_det> in_transferencia_det { get; set; }
     }
 }
