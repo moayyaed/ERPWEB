@@ -23,7 +23,7 @@ FROM     dbo.in_Ing_Egr_Inven_det INNER JOIN
 				  group by ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdTipoCbte, ct_cbtecble_det.IdCbteCble 
 				  ) as ct on in_movi_inve_x_ct_cbteCble.IdEmpresa_ct = ct.IdEmpresa and in_movi_inve_x_ct_cbteCble.IdTipoCbte = ct.IdTipoCbte
 				  and in_movi_inve_x_ct_cbteCble.IdCbteCble = ct.IdCbteCble
-WHERE  (dbo.in_movi_inve.Estado = 'A') AND (dbo.in_movi_inven_tipo.Genera_Diario_Contable = 1) AND (dbo.in_movi_inve.IdEmpresa_x_Anu IS NULL)
+WHERE  (dbo.in_movi_inve.Estado = 'A') AND (dbo.in_movi_inven_tipo.Genera_Diario_Contable = 1) 
 GROUP BY dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, dbo.in_movi_inven_tipo.tm_descripcion, dbo.in_movi_inve.cm_fecha, dbo.in_movi_inve.cm_tipo, dbo.in_movi_inve.cm_observacion, 
                   dbo.in_movi_inve_x_ct_cbteCble.IdEmpresa_ct, dbo.in_movi_inve_x_ct_cbteCble.IdTipoCbte, dbo.in_movi_inve_x_ct_cbteCble.IdCbteCble, dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, 
                   dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi,ct.TotalContabilidad

@@ -4,11 +4,11 @@ SELECT        dbo.cp_nota_DebCre.IdEmpresa, dbo.cp_nota_DebCre.IdCbteCble_Nota, 
                          dbo.cp_nota_DebCre.IdSucursal, dbo.cp_nota_DebCre.cn_fecha, dbo.cp_nota_DebCre.Fecha_contable, dbo.cp_nota_DebCre.cn_Fecha_vcto, dbo.cp_nota_DebCre.cn_serie1, dbo.cp_nota_DebCre.cn_serie2, 
                          dbo.cp_nota_DebCre.cn_Nota, dbo.cp_nota_DebCre.cn_observacion, dbo.cp_nota_DebCre.cn_subtotal_iva, dbo.cp_nota_DebCre.cn_subtotal_siniva, dbo.cp_nota_DebCre.cn_baseImponible, dbo.cp_nota_DebCre.cn_Por_iva, 
                          dbo.cp_nota_DebCre.cn_valoriva, dbo.cp_nota_DebCre.cn_Ice_base, dbo.cp_nota_DebCre.cn_Ice_por, dbo.cp_nota_DebCre.cn_Ice_valor, dbo.cp_nota_DebCre.cn_Serv_por, dbo.cp_nota_DebCre.cn_Serv_valor, 
-                         dbo.cp_nota_DebCre.cn_BaseSeguro, dbo.cp_nota_DebCre.cn_total, dbo.cp_nota_DebCre.cn_vaCoa, dbo.cp_nota_DebCre.cn_Autorizacion, dbo.cp_nota_DebCre.cn_Autorizacion_Imprenta, 
-                         dbo.cp_nota_DebCre.cn_num_doc_modificado, dbo.cp_nota_DebCre.IdCod_ICE, dbo.cp_nota_DebCre.IdTipoServicio, dbo.cp_nota_DebCre.IdIden_credito, dbo.cp_nota_DebCre.IdCtaCble_Acre, 
-                         dbo.cp_nota_DebCre.IdCtaCble_IVA, dbo.cp_nota_DebCre.Estado, dbo.cp_nota_DebCre.IdCbteCble_Anulacion, dbo.cp_nota_DebCre.IdTipoCbte_Anulacion, dbo.cp_nota_DebCre.cn_tipoLocacion, dbo.cp_nota_DebCre.cod_nota, 
+                         dbo.cp_nota_DebCre.cn_BaseSeguro, dbo.cp_nota_DebCre.cn_total, dbo.cp_nota_DebCre.cn_vaCoa, dbo.cp_nota_DebCre.cn_Autorizacion, 
+                         dbo.cp_nota_DebCre.cn_num_doc_modificado, dbo.cp_nota_DebCre.IdCod_ICE, dbo.cp_nota_DebCre.IdTipoServicio, dbo.cp_nota_DebCre.IdIden_credito,  dbo.cp_nota_DebCre.Estado, 
+						 dbo.cp_nota_DebCre.cn_tipoLocacion, dbo.cp_nota_DebCre.cod_nota, 
                          dbo.cp_nota_DebCre.fecha_autorizacion, dbo.cp_nota_DebCre.PagoSujetoRetencion, dbo.cp_nota_DebCre.ConvenioTributacion, dbo.cp_nota_DebCre.PaisPago, dbo.cp_nota_DebCre.PagoLocExt, 
-                         dbo.cp_nota_DebCre.IdCentroCosto, null IdTipoFlujo, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, 
+                         dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, 
                          dbo.tb_persona.pe_razonSocial
 FROM            dbo.cp_nota_DebCre INNER JOIN
                          dbo.cp_proveedor ON dbo.cp_nota_DebCre.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_nota_DebCre.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN

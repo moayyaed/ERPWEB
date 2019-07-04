@@ -3,8 +3,7 @@ AS
 SELECT        dbo.com_ordencompra_local_det.IdEmpresa, dbo.com_ordencompra_local_det.IdSucursal, dbo.com_ordencompra_local_det.IdOrdenCompra, dbo.com_ordencompra_local_det.Secuencia, 
                          dbo.com_ordencompra_local_det.IdProducto, dbo.com_ordencompra_local_det.do_Cantidad, dbo.com_ordencompra_local_det.do_precioCompra, dbo.com_ordencompra_local_det.do_porc_des, 
                          dbo.com_ordencompra_local_det.do_descuento, dbo.com_ordencompra_local_det.do_precioFinal, dbo.com_ordencompra_local_det.do_subtotal, dbo.com_ordencompra_local_det.do_iva, 
-                         dbo.com_ordencompra_local_det.do_total, dbo.com_ordencompra_local_det.do_observacion, dbo.com_ordencompra_local_det.IdCentroCosto, dbo.com_ordencompra_local_det.IdCentroCosto_sub_centro_costo, 
-                         dbo.com_ordencompra_local_det.IdPunto_cargo_grupo, dbo.com_ordencompra_local_det.IdPunto_cargo, dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local_det.Por_Iva, 
+                         dbo.com_ordencompra_local_det.do_total, dbo.com_ordencompra_local_det.do_observacion, dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local_det.Por_Iva, 
                          dbo.com_ordencompra_local_det.IdCod_Impuesto, dbo.in_Producto.pr_descripcion + ' ' + dbo.in_presentacion.nom_presentacion AS pr_descripcion
 FROM            dbo.in_presentacion INNER JOIN
                          dbo.in_Producto ON dbo.in_presentacion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_presentacion.IdPresentacion = dbo.in_Producto.IdPresentacion RIGHT OUTER JOIN

@@ -291,18 +291,6 @@ where not exists(
 		END
 END
 
-BEGIN --MOVIMIENTOS POR ANULACION
-select 'MOVIMIENTOS POR ANULACION',* from in_Ing_Egr_Inven_det where exists(
-			select * from in_movi_inve det
-			where in_Ing_Egr_Inven_det.IdEmpresa_inv = det.IdEmpresa
-			and in_Ing_Egr_Inven_det.IdSucursal_inv = det.IdSucursal
-			and in_Ing_Egr_Inven_det.IdBodega_inv = det.IdBodega
-			and in_Ing_Egr_Inven_det.IdMovi_inven_tipo_inv = det.IdMovi_inven_tipo
-			and in_Ing_Egr_Inven_det.IdNumMovi_inv = det.IdNumMovi
-			and det.IdEmpresa_x_Anu is not null
-			)
-END
-
 BEGIN --CABECERAS DE MOVI SIN DETALLE CON CABECERAS DE DIARIOS --in_movi_inve_x_ct_cbteCble
 SELECT 'CABECERAS DE MOVI SIN DETALLE CON CABECERAS DE DIARIOS --in_movi_inve_x_ct_cbteCble'
 		SELECT * FROM in_movi_inve_x_ct_cbteCble ct
