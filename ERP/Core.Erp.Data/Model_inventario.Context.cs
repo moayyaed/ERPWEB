@@ -21,12 +21,10 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
-
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -229,6 +227,31 @@ namespace Core.Erp.Data
                 new ObjectParameter("FechaCorte", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_GetStock_Result>("SPINV_GetStock", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fechaCorteParameter);
+        }
+    
+        public virtual int spINV_aprobacion_ing_egr1(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var idBodegaParameter = idBodega.HasValue ?
+                new ObjectParameter("IdBodega", idBodega) :
+                new ObjectParameter("IdBodega", typeof(int));
+    
+            var idMovi_inven_tipoParameter = idMovi_inven_tipo.HasValue ?
+                new ObjectParameter("IdMovi_inven_tipo", idMovi_inven_tipo) :
+                new ObjectParameter("IdMovi_inven_tipo", typeof(int));
+    
+            var idNumMoviParameter = idNumMovi.HasValue ?
+                new ObjectParameter("IdNumMovi", idNumMovi) :
+                new ObjectParameter("IdNumMovi", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spINV_aprobacion_ing_egr1", idEmpresaParameter, idSucursalParameter, idBodegaParameter, idMovi_inven_tipoParameter, idNumMoviParameter);
         }
     }
 }

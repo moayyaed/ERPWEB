@@ -2624,6 +2624,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdProducto" Type="decimal" Mode="In" />
         </Function>
+        <Function Name="spINV_aprobacion_ing_egr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdSucursal" Type="int" Mode="In" />
+          <Parameter Name="IdBodega" Type="int" Mode="In" />
+          <Parameter Name="IdMovi_inven_tipo" Type="int" Mode="In" />
+          <Parameter Name="IdNumMovi" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="SPINV_GetStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdSucursal" Type="int" Mode="In" />
@@ -4523,6 +4530,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_transferencia_det" EntitySet="in_transferencia_det" />
           </AssociationSet>
+          <FunctionImport Name="spINV_aprobacion_ing_egr1">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodega" Mode="In" Type="Int32" />
+            <Parameter Name="IdMovi_inven_tipo" Mode="In" Type="Int32" />
+            <Parameter Name="IdNumMovi" Mode="In" Type="Decimal" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -7944,6 +7958,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spINV_aprobacion_ing_egr1" FunctionName="Model_inventario.Store.spINV_aprobacion_ing_egr" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
