@@ -25,5 +25,7 @@ namespace Core.Erp.Data
         public string Tipo_documento { get; set; }
         public Nullable<int> IdEmpresa_OP { get; set; }
         public Nullable<decimal> IdOrdenPago_OP { get; set; }
+    
+        public virtual cp_conciliacion_Caja cp_conciliacion_Caja { get; set; }
     }
 }

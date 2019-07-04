@@ -30,6 +30,7 @@
         <AssociationConnector Association="Model_caja.FK_caj_Caja_Movimiento_caj_Caja" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_caj_Caja" />
         <EntityTypeShape EntityType="Model_caja.vwcp_conciliacion_Caja_det" Width="1.5" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="Model_caja.vwcp_Conciliacion_Caja_det1" Width="1.5" PointX="7.375" PointY="13.75" />
         <EntityTypeShape EntityType="Model_caja.cp_conciliacion_Caja_det" Width="1.5" PointX="15.5" PointY="17.625" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_cp_conciliacion_Caja" />
       </Diagram>

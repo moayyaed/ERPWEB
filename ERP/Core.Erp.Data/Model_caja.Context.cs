@@ -40,6 +40,7 @@ namespace Core.Erp.Data
         public DbSet<vwcaj_Caja_Movimiento> vwcaj_Caja_Movimiento { get; set; }
         public DbSet<caj_Caja> caj_Caja { get; set; }
         public DbSet<vwcp_conciliacion_Caja_det> vwcp_conciliacion_Caja_det { get; set; }
+        public DbSet<vwcp_Conciliacion_Caja_det1> vwcp_Conciliacion_Caja_det1Set { get; set; }
         public DbSet<cp_conciliacion_Caja_det> cp_conciliacion_Caja_det { get; set; }
     }
 }
