@@ -189,7 +189,10 @@ namespace Core.Erp.Data.Banco
                         secuencia = secuencia++,
                         IdCtaCble = item.IdCtaCble,
                         dc_Valor = Math.Round(item.dc_Valor, 2, MidpointRounding.AwayFromZero),
-                        dc_para_conciliar = item.dc_para_conciliar
+                        dc_para_conciliar = item.dc_para_conciliar,
+                        IdPunto_cargo = item.IdPunto_cargo,
+                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                        IdCentroCosto = item.IdCentroCosto,
                     });
                 }
                 #endregion
@@ -423,7 +426,10 @@ namespace Core.Erp.Data.Banco
                         secuencia = secuencia++,
                         IdCtaCble = item.IdCtaCble,
                         dc_Valor = Math.Round(item.dc_Valor, 2, MidpointRounding.AwayFromZero),
-                        dc_para_conciliar = item.dc_para_conciliar
+                        dc_para_conciliar = item.dc_para_conciliar,
+                        IdPunto_cargo = item.IdPunto_cargo,
+                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                        IdCentroCosto = item.IdCentroCosto,
                     });
                 }
                 #endregion
