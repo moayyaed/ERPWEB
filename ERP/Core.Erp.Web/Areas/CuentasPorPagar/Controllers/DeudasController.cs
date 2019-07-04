@@ -547,7 +547,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            model.IdUsuario = SessionFixed.IdUsuario;
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!validar(model, ref mensaje))
             {
                 cargar_combos(model);
@@ -657,7 +657,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            model.IdUsuario = SessionFixed.IdUsuario;
+            model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
             model.lst_det = List_det.get_list(model.IdTransaccionSession);
             model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
 

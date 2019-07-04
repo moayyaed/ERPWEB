@@ -208,7 +208,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            model.IdUsuario = SessionFixed.IdUsuario;
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             if (!bus_conciliacion.modificarDB(model))
             {
                 ViewBag.mensaje = "No se ha podido modificar el registro";

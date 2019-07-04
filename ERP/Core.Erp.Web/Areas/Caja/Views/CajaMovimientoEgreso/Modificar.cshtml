@@ -308,13 +308,10 @@
 
     
         <div class="box-footer">
-            if ((@ViewBag.NoMostrarBotones ?? true) == false)
-            {
                 @if (ViewBag.MostrarBoton ?? false)
                 {
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                }
-            }        
+                } 
             <a class="btn btn-default" href="@Url.Action("Index", "CajaMovimientoEgreso", new { Area = "Caja" }, null)">Cancelar</a>
         </div>
     

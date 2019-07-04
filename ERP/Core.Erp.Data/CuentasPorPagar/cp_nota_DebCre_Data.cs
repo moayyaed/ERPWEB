@@ -232,6 +232,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdTipoServicio = info.IdTipoServicio;
                         Entity.ConvenioTributacion = info.ConvenioTributacion_bool == true ? "SI" : "NO";
                         Entity.PagoSujetoRetencion = info.PagoSujetoRetencion_bool == true ? "SI" : "NO";
+                        Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                        Entity.Fecha_UltMod = DateTime.Now;
 
 
                     };

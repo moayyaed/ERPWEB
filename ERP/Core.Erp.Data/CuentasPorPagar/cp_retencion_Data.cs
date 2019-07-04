@@ -250,7 +250,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         contact.fecha = info.fecha;
                         contact.observacion = info.observacion;
                         contact.IdUsuarioUltMod = info.IdUsuarioUltMod;
-                        contact.Fecha_UltMod = info.Fecha_UltMod;
+                        contact.Fecha_UltMod = DateTime.Now;
                         contact.ip = info.ip;
                         if (info.detalle != null)
                         {
@@ -337,7 +337,7 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                         contact.Estado = "I";
                         contact.observacion = "*ANULADO* " + contact.observacion;
-                        contact.Fecha_UltAnu = info.Fecha_UltAnu;
+                        contact.Fecha_UltAnu = DateTime.Now;
                         contact.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
                         Context.SaveChanges();
                         res = true;

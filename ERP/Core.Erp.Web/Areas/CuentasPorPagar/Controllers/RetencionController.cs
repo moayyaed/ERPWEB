@@ -239,7 +239,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
 
             bus_retencion = new cp_retencion_Bus();
-            model.IdUsuario = Session["IdUsuario"].ToString();
+            model.IdUsuarioUltMod = Session["IdUsuario"].ToString();
             model.detalle = List_cp_retencion_det.get_list(Convert.ToDecimal(model.IdTransaccionSession));
             model.info_comprobante.lst_ct_cbtecble_det = List_ct_cbtecble_det_List.get_list(Convert.ToDecimal(model.IdTransaccionSession));
             //info_param_op = Session["info_param_op"] as cp_parametros_Info;
@@ -334,7 +334,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
 
             bus_retencion = new cp_retencion_Bus();
-            model.IdUsuario = SessionFixed.IdUsuario.ToString();
+            model.IdUsuarioUltAnu = SessionFixed.IdUsuario.ToString();
             model.detalle = List_cp_retencion_det.get_list(Convert.ToDecimal(model.IdTransaccionSession));
             model.info_comprobante.lst_ct_cbtecble_det = List_ct_cbtecble_det_List.get_list(Convert.ToDecimal(model.IdTransaccionSession));
             info_param_op = Session["info_param_op"] as cp_parametros_Info;
