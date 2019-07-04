@@ -244,6 +244,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdCtaCble_IVA = info.IdCtaCble_IVA;
                         Entity.ConvenioTributacion = info.ConvenioTributacion_bool == true ? "SI" : "NO";
                         Entity.PagoSujetoRetencion = info.PagoSujetoRetencion_bool == true ? "SI" : "NO";
+                        Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                        Entity.Fecha_UltMod = DateTime.Now;
 
 
                     };

@@ -219,6 +219,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdTipoMovi = info.IdTipoMovi;
                         Entity.IdBodega = info.IdBodega;
                         Entity.IdSucursal_cxp = info.IdSucursal_cxp;
+                        Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                        Entity.Fecha_UltMod = DateTime.Now;
                     }
 
                     if (info.lst_det.Count > 0)
@@ -401,7 +403,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     if (Entity == null) return false;
 
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
-                    Entity.Fecha_UltAnu = info.Fecha_UltAnu;
+                    Entity.Fecha_UltAnu = DateTime.Now;
                     Entity.Estado = "I";
 
                     var rel = Context.cp_orden_giro_x_in_Ing_Egr_Inven.Where(q => q.og_IdEmpresa == info.IdEmpresa && q.og_IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.og_IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).FirstOrDefault();

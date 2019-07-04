@@ -357,7 +357,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         [HttpPost]
         public ActionResult Modificar(cp_nota_DebCre_Info model)
         {
-            model.IdUsuario = SessionFixed.IdUsuario.ToString();
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario.ToString();
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List_nd.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!validar(model, ref mensaje))
@@ -405,7 +405,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult Anular(cp_nota_DebCre_Info model)
         {
 
-            model.IdUsuario = SessionFixed.IdUsuario.ToString();
+            model.IdUsuarioUltAnu = SessionFixed.IdUsuario.ToString();
             model.info_comrobante.lst_ct_cbtecble_det = Lis_ct_cbtecble_det_List_nd.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
