@@ -115,6 +115,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
+            model.IdUsuario = Convert.ToString(SessionFixed.IdUsuario);
             if (!bus_devolucion.guardarDB(model))
             {
                 ViewBag.mensaje = "No se ha podido guardar el registro";
@@ -153,6 +154,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
+            model.IdUsuarioUltModi = Convert.ToString(SessionFixed.IdUsuario);
             if (!bus_devolucion.modificarDB(model))
             {
                 ViewBag.mensaje = "No se ha podido modificar el registro";
