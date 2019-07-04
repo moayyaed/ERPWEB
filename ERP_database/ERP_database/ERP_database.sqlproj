@@ -1186,9 +1186,7 @@
     <Build Include="web\Stored Procedures\SPFAC_019.sql" />
     <Build Include="web\Stored Procedures\SPCXC_009.sql" />
     <Build Include="web\Tables\ct_SPCONTA_005.sql" />
-    <Build Include="web\Views\VWFAC_014.sql" />
     <Build Include="web\Stored Procedures\SPCONTA_005.sql" />
-    <Build Include="web\Stored Procedures\SPCONTA_004.sql" />
     <Build Include="web\Stored Procedures\SPCXC_010.sql" />
   </ItemGroup>
   <ItemGroup>
