@@ -1316,7 +1316,6 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
-    <Compile Include="Reportes\Facturacion\FAC_002_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_004_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_005_Data.cs" />
@@ -1788,9 +1787,6 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPCXP_016_Result.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SPFAC_002_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPFAC_005_Result.cs">

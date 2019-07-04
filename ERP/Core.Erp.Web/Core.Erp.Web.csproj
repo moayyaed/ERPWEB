@@ -967,12 +967,6 @@
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.Designer.cs">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\Facturacion\FAC_002_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\Facturacion\FAC_002_Rpt.Designer.cs">
-      <DependentUpon>FAC_002_Rpt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_003_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -9284,7 +9278,6 @@
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_007.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_GridViewPartial_conciliacion_facturas_x_cruzar.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_008.cshtml" />
-    <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_002.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_GridViewPartial_conciliacion_facturas.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_GridViewPartial_conciliacion_ingresos.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_001.cshtml" />
@@ -9304,7 +9297,6 @@
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\_GridViewPartial_cobranza_det.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\_GridViewPartial_cobranza_facturas_x_cruzar.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\_CmbCliente_Facturacion.cshtml" />
-    <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_003.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_004.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Index.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\AplicarRetencion.cshtml" />
@@ -10138,7 +10130,6 @@
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_019.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_009.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_005.cshtml" />
-
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\_GridViewPartial_punto_cargo_grupo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Nuevo.cshtml" />
@@ -10149,10 +10140,8 @@
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Anular.cshtml" />
-
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_010.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\_CmbClientePorTipo.cshtml" />
-
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10502,9 +10491,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_001_Rpt.resx">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Facturacion\FAC_002_Rpt.resx">
-      <DependentUpon>FAC_002_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_003_Rpt.resx">
       <DependentUpon>FAC_003_Rpt.cs</DependentUpon>

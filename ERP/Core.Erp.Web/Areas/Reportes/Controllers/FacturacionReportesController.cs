@@ -282,65 +282,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
 
-        public ActionResult FAC_002()
-        {
-            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
-            {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal= Convert.ToInt32(SessionFixed.IdSucursal),
-                Idtipo_cliente = Convert.ToInt32(SessionFixed.Idtipo_cliente)
-            };
-            
-            cargar_combos(model);
-            FAC_002_Rpt report = new FAC_002_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_002");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_fechaCorte.Value = model.fecha_fin;
-            report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
-            report.p_MostrarSoloCarteraVencida.Value = model.Check1;
-            report.usuario = SessionFixed.IdUsuario;
-            report.empresa = SessionFixed.NomEmpresa;
-            report.RequestParameters = false;
-            ViewBag.Report = report;
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult FAC_002(cl_filtros_facturacion_Info model)
-        {
-            FAC_002_Rpt report = new FAC_002_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_002");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_fechaCorte.Value = model.fecha_fin;
-            report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
-            report.p_Idtipo_cliente.Value = model.Idtipo_cliente == 0 ? 0 : model.Idtipo_cliente;
-            report.p_MostrarSoloCarteraVencida.Value = model.Check1;
-            report.usuario = SessionFixed.IdUsuario;
-            report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos(model);
-                report.RequestParameters = false;
-            ViewBag.Report = report;
-            return View(model);
-        }
-
         public JsonResult cargar_cliente(decimal IdCliente = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
