@@ -35,7 +35,9 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         caj_Caja_Bus bus_caja = new caj_Caja_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
-        
+
+        cp_conciliacion_Caja_det_x_Ingresar_List List_x_Cruzar = new cp_conciliacion_Caja_det_x_Ingresar_List();
+
         string mensaje = string.Empty;
         #endregion
 
@@ -104,6 +106,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             ViewBag.lst_caja = lst_caja;
         }
         #endregion
+
         #region Acciones        
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
@@ -311,17 +314,18 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         }
         #endregion
 
-
-
         #region Vales
         [ValidateInput(false)]
         public ActionResult GridViewPartial_conciliacion_caja_movimiento()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdCaja = Request.Params["IdCajaConciliacion"] != null ? Convert.ToInt32(Request.Params["IdCajaConciliacion"]) : 0;
-            
-            var model = bus_det.get_list_x_movimientos_caja(IdEmpresa, IdCaja);
-            list_vale_x_ingresar.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //int IdCaja = Request.Params["IdCajaConciliacion"] != null ? Convert.ToInt32(Request.Params["IdCajaConciliacion"]) : 0;
+
+            //var model = bus_det.get_list_x_movimientos_caja(IdEmpresa, IdCaja);
+            //list_vale_x_ingresar.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = list_vale_x_ingresar.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_conciliacion_caja_movimiento", model);
         }
@@ -376,17 +380,20 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_conciliacion_facturas_x_cruzar()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdCaja = Request.Params["IdCajaConciliacion"] != null ? Convert.ToInt32(Request.Params["IdCajaConciliacion"]) : 0;
-            List<cp_conciliacion_Caja_det_Info> model;
-            if (IdCaja != 0)
-            {
-                var Caja = bus_caja.get_info(IdEmpresa, IdCaja);
-                model = bus_det.get_list_x_pagar(IdEmpresa, Caja.IdSucursal);
-            }
-            else
-                model = new List<cp_conciliacion_Caja_det_Info>();
-            
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //int IdCaja = Request.Params["IdCajaConciliacion"] != null ? Convert.ToInt32(Request.Params["IdCajaConciliacion"]) : 0;
+            //List<cp_conciliacion_Caja_det_Info> model;
+            //if (IdCaja != 0)
+            //{
+            //    var Caja = bus_caja.get_info(IdEmpresa, IdCaja);
+            //    model = bus_det.get_list_x_pagar(IdEmpresa, Caja.IdSucursal);
+            //}
+            //else
+            //    model = new List<cp_conciliacion_Caja_det_Info>();
+
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_x_Cruzar.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_conciliacion_facturas_x_cruzar", model);
         }
 
@@ -404,7 +411,8 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             if (IDs != "")
             {
                 var caja = bus_caja.get_info(IdEmpresa, IdCaja);
-                var lst_x_cruzar = bus_det.get_list_x_pagar(IdEmpresa,caja.IdSucursal);
+                //var lst_x_cruzar = bus_det.get_list_x_pagar(IdEmpresa,caja.IdSucursal);
+                var lst_x_cruzar = List_x_Cruzar.get_list(IdTransaccionFixed);
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
@@ -533,6 +541,30 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                     }
                 }
             }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetListFacturas_PorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdCaja = 0)
+        {
+            List<cp_conciliacion_Caja_det_Info> model = new List<cp_conciliacion_Caja_det_Info>();
+            if (IdCaja != 0)
+            {
+                var Caja = bus_caja.get_info(IdEmpresa, IdCaja);
+                model = bus_det.get_list_x_pagar(IdEmpresa, Caja.IdSucursal);
+            }
+            else
+                model = new List<cp_conciliacion_Caja_det_Info>();
+
+            List_x_Cruzar.set_list(model, IdTransaccionSession);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetListVales_PorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdCaja = 0)
+        {
+            var model = bus_det.get_list_x_movimientos_caja(IdEmpresa, IdCaja);
+            list_vale_x_ingresar.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
             return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -727,6 +759,25 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         public void set_list(List<cp_conciliacion_Caja_det_x_ValeCaja_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session["cp_conciliacion_Caja_det_x_ValeCaja_x_Ingresar_List" + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
+    public class cp_conciliacion_Caja_det_x_Ingresar_List
+    {
+        public List<cp_conciliacion_Caja_det_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session["cp_conciliacion_Caja_det_x_Ingresar_Info" + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_conciliacion_Caja_det_Info> list = new List<cp_conciliacion_Caja_det_Info>();
+
+                HttpContext.Current.Session["cp_conciliacion_Caja_det_x_Ingresar_Info" + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_conciliacion_Caja_det_Info>)HttpContext.Current.Session["cp_conciliacion_Caja_det_x_Ingresar_Info" + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_conciliacion_Caja_det_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session["cp_conciliacion_Caja_det_x_Ingresar_Info" + IdTransaccionSession.ToString()] = list;
         }
     }
 }

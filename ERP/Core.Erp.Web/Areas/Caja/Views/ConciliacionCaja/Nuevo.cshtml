@@ -69,9 +69,30 @@
 
     function MostrarModal() {
         selectedIDs = "";
-        GridView_conciliacion_facturas_x_cruzar.PerformCallback();
-        GridView_conciliacion_facturas_x_cruzar.UnselectRows();
-        $("#FacturasModal").modal("show");
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListFacturas_PorIngresar", "ConciliacionCaja", new { Area = "Caja" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridView_conciliacion_facturas_x_cruzar.PerformCallback();
+                GridView_conciliacion_facturas_x_cruzar.UnselectRows();
+                $("#FacturasModal").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddFacturas() {
@@ -120,10 +141,34 @@
     }
 
     function MostrarCajaMovimientoConciliacionModal() {
-        selectedCajaIDs = "";
-        GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
-        GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
-        $("#CajaMovimientoModal").modal("show");
+        //selectedCajaIDs = "";
+        //GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+        //GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+        //$("#CajaMovimientoModal").modal("show");
+        selectedIDs = "";
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListVales_PorIngresar", "ConciliacionCaja", new { Area = "Caja" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+                GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+                $("#CajaMovimientoModal").modal("show");
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddCajaMovimiento()

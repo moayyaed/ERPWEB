@@ -33,6 +33,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         cxc_cobro_det_Bus bus_det = new cxc_cobro_det_Bus();
         cxc_cobro_det_List list_det = new cxc_cobro_det_List();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        cxc_cobro_det_x_cruzar_List List_x_Cruzar = new cxc_cobro_det_x_cruzar_List();
+        List<cxc_cobro_det_Info> ListaDetalleXCruzar = new List<cxc_cobro_det_Info>();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -231,6 +233,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 lst_det = new List<cxc_cobro_det_Info>(),
             };
             list_det.set_list(new List<cxc_cobro_det_Info>(), model.IdTransaccionSession);
+            List_x_Cruzar.set_list(new List<cxc_cobro_det_Info>(), model.IdTransaccionSession);
+
             cargar_combos(IdEmpresa,model.IdSucursal);
             return View(model);
         }
@@ -245,6 +249,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
             model.IdUsuario = SessionFixed.IdUsuario;
+
             if (!bus_cobro.guardarDB(model))
             {
                 ViewBag.mensaje = mensaje;
@@ -362,7 +367,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
             ViewBag.IdSucursal = IdSucursal;
             var model = bus_cobro.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
-            return PartialView("_GridViewPartial_cobranza", model);
+
+            return PartialView("_GridViewPartial_cobranza", model);            
         }
 
         [ValidateInput(false)]
@@ -376,14 +382,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_cobranza_facturas_x_cruzar()
         {
-            Session["IdSucursalCobranza"] = (Request.Params["IdSucursalCobranza"] != null ? Convert.ToInt32(Request.Params["IdSucursalCobranza"]) : 0);
-            Session["IdClienteCobranza"] = Request.Params["IdClienteCobranza"] != null ? Convert.ToDecimal(Request.Params["IdClienteCobranza"]) : 0;
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            int IdSucursal = Convert.ToInt32(Session["IdSucursalCobranza"]);
-            decimal IdCliente = Convert.ToDecimal(Session["IdClienteCobranza"]);
-            var model = bus_det.get_list_cartera(IdEmpresa, IdSucursal, IdCliente);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_x_Cruzar.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_cobranza_facturas_x_cruzar", model);
         }
+
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdateFactura([ModelBinder(typeof(DevExpressEditorsBinder))] cxc_cobro_det_Info info_det)
         {
@@ -402,18 +406,26 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #endregion
 
         #region Json
+        public JsonResult GetListFacturas_PorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdSucursal = 0, decimal IdCliente = 0)
+        {
+            var lst = bus_det.get_list_cartera(IdEmpresa, IdSucursal, IdCliente);
+            List_x_Cruzar.set_list(lst, IdTransaccionSession);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
         [HttpPost, ValidateInput(false)]
         public JsonResult EditingAddNewFactura(string IDs = "", double TotalACobrar = 0, decimal IdTransaccionSession = 0)
         {
             double saldo = TotalACobrar;
             if (IDs != "")
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                var lst_x_cruzar = bus_det.get_list_cartera(IdEmpresa, Convert.ToInt32(Session["IdSucursalCobranza"]), Convert.ToDecimal(Session["IdClienteCobranza"]));
+                int IdEmpresaSesion = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var lst_x_ingresar = List_x_Cruzar.get_list(IdTransaccionSession);
                 string[] array = IDs.Split(',');
+
                 foreach (var item in array)
                 {
-                    var info_det = lst_x_cruzar.Where(q => q.secuencia == item).FirstOrDefault();
+                    var info_det = lst_x_ingresar.Where(q => q.secuencia == item).FirstOrDefault();
                     if (info_det != null)
                         list_det.AddRow(info_det, IdTransaccionSession);
                 }
@@ -430,7 +442,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 else
                     item.dc_ValorPago = 0;
             }
-            list_det.set_list(lst, IdTransaccionSession);
+            list_det.set_list(lst, IdTransaccionSession);            
+
             var resultado = saldo;
             return Json(Math.Round(resultado,2,MidpointRounding.AwayFromZero), JsonRequestBehavior.AllowGet);
         }
@@ -505,6 +518,27 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         {
             List<cxc_cobro_det_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.secuencia == secuencia).First());
+        }
+    }
+
+    public class cxc_cobro_det_x_cruzar_List
+    {
+        string Variable = "cxc_cobro_det_x_cruzar_Info";
+        public List<cxc_cobro_det_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cxc_cobro_det_Info> list = new List<cxc_cobro_det_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cxc_cobro_det_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cxc_cobro_det_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 }
