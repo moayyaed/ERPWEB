@@ -14,7 +14,9 @@
         settings.Properties.ValueField = "IdCtaCble";
         settings.Properties.ValueType = typeof(string);
         settings.Properties.Columns.Add("IdCtaCble", "ID", 10);
-        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta", 90);
+        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta", 40);
+        settings.Properties.Columns.Add("IdCtaCblePadre", "ID Padre", 10);
+        settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
         settings.Properties.FilterMinLength = 3;
     })
      .BindList(new Core.Erp.Web.Areas.CuentasPorCobrar.Controllers.MotivoLiquidacionController().get_list_bajo_demanda, new Core.Erp.Web.Areas.CuentasPorCobrar.Controllers.MotivoLiquidacionController().get_info_bajo_demanda)
