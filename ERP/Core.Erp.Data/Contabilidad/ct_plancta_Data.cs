@@ -216,7 +216,7 @@ namespace Core.Erp.Data.Contabilidad
 
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
-                    ct_plancta Entity = Context.ct_plancta.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdCtaCble == IdCtaCble);
+                    ct_plancta Entity = Context.ct_plancta.Include("ct_plancta2").FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdCtaCble == IdCtaCble);
                     if (Entity == null) return null;
                     info = new ct_plancta_Info
                     {
@@ -224,6 +224,7 @@ namespace Core.Erp.Data.Contabilidad
                         IdCtaCble = Entity.IdCtaCble,
                         pc_Cuenta = Entity.pc_Cuenta,
                         IdCtaCblePadre = Entity.IdCtaCblePadre,
+                        pc_Cuenta_padre = Entity.ct_plancta2.pc_Cuenta,
                         pc_Naturaleza = Entity.pc_Naturaleza,
                         IdNivelCta = Entity.IdNivelCta,
                         IdGrupoCble = Entity.IdGrupoCble,
@@ -236,7 +237,7 @@ namespace Core.Erp.Data.Contabilidad
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

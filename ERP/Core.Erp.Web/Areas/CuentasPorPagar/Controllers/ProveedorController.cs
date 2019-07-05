@@ -62,7 +62,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_cxp(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            return bus_cuenta.get_list_bajo_demanda(args, IdEmpresa);
+            return bus_cuenta.get_list_bajo_demanda(args, IdEmpresa, true);
         }
         public ct_plancta_Info get_info_bajo_demanda_ctacble_cxp(ListEditItemRequestedByValueEventArgs args)
         {
@@ -80,7 +80,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_gasto(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            return bus_cuenta.get_list_bajo_demanda(args, IdEmpresa);
+            return bus_cuenta.get_list_bajo_demanda(args, IdEmpresa,true);
         }
         public ct_plancta_Info get_info_bajo_demanda_ctacble_gasto(ListEditItemRequestedByValueEventArgs args)
         {
