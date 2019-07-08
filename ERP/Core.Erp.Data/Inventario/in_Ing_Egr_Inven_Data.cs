@@ -48,7 +48,11 @@ namespace Core.Erp.Data.Inventario
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
                                      tm_descripcion = t.tm_descripcion,
-
+                                     IdEstadoAproba = q.IdEstadoAproba,
+                                     IdUsuarioAR = q.IdUsuarioAR,
+                                     FechaAR = q.FechaAR,
+                                     FechaDespacho = q.FechaDespacho,
+                                     IdUsuarioDespacho = q.IdUsuarioDespacho,
                                      EstadoBool = q.Estado == "A" ? true : false
 
                                  }).ToList();
@@ -78,7 +82,11 @@ namespace Core.Erp.Data.Inventario
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
                                      tm_descripcion = t.tm_descripcion,
-
+                                     IdEstadoAproba = q.IdEstadoAproba,
+                                     IdUsuarioAR = q.IdUsuarioAR,
+                                     FechaAR = q.FechaAR,
+                                     FechaDespacho = q.FechaDespacho,
+                                     IdUsuarioDespacho = q.IdUsuarioDespacho,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
@@ -112,7 +120,12 @@ namespace Core.Erp.Data.Inventario
                         CodMoviInven = Entity.CodMoviInven,
                         Estado = Entity.Estado,
                         IdResponsable = Entity.IdResponsable,
-                        signo = Entity.signo
+                        signo = Entity.signo,
+                        IdEstadoAproba = Entity.IdEstadoAproba,
+                        IdUsuarioAR = Entity.IdUsuarioAR,
+                        FechaAR = Entity.FechaAR,
+                        FechaDespacho = Entity.FechaDespacho,
+                        IdUsuarioDespacho = Entity.IdUsuarioDespacho
                     };
                 }
                 return info;
@@ -167,6 +180,11 @@ namespace Core.Erp.Data.Inventario
                         Estado = info.Estado = "A",
                         IdResponsable = info.IdResponsable,
                         signo = info.signo,
+                        IdEstadoAproba = info.IdEstadoAproba,
+                        IdUsuarioAR = info.IdUsuarioAR,
+                        FechaAR = info.FechaAR,
+                        FechaDespacho = info.FechaDespacho,
+                        IdUsuarioDespacho = info.IdUsuarioDespacho,
 
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
@@ -190,8 +208,6 @@ namespace Core.Erp.Data.Inventario
 
                             dm_observacion = item.dm_observacion,
                             IdMotivo_Inv = info.IdMotivo_Inv,
-                            IdEstadoAproba = "APRO",
-                            Motivo_Aprobacion = item.Motivo_Aprobacion,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,
@@ -272,8 +288,6 @@ namespace Core.Erp.Data.Inventario
 
                             dm_observacion = item.dm_observacion,
                             IdMotivo_Inv = item.IdMotivo_Inv,
-                            IdEstadoAproba = item.IdEstadoAproba,
-                            Motivo_Aprobacion = item.Motivo_Aprobacion,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,
@@ -459,7 +473,6 @@ namespace Core.Erp.Data.Inventario
                     q.IdBodega_inv = null;
                     q.IdMovi_inven_tipo_inv = null;
                     q.IdNumMovi_inv = null;
-                    q.IdEstadoAproba = "PEND";
 
                     q.IdEmpresa_oc = null;
                     q.IdSucursal_oc = null;

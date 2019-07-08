@@ -16,14 +16,14 @@ namespace Core.Erp.Data
     {
         public in_Ing_Egr_Inven()
         {
+            this.in_Ajuste = new HashSet<in_Ajuste>();
+            this.in_Ajuste1 = new HashSet<in_Ajuste>();
             this.in_Consignacion = new HashSet<in_Consignacion>();
             this.in_devolucion_inven = new HashSet<in_devolucion_inven>();
             this.in_devolucion_inven1 = new HashSet<in_devolucion_inven>();
+            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
             this.in_transferencia = new HashSet<in_transferencia>();
             this.in_transferencia1 = new HashSet<in_transferencia>();
-            this.in_Ajuste = new HashSet<in_Ajuste>();
-            this.in_Ajuste1 = new HashSet<in_Ajuste>();
-            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -45,15 +45,20 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public Nullable<int> IdMotivo_Inv { get; set; }
         public Nullable<decimal> IdResponsable { get; set; }
+        public string IdEstadoAproba { get; set; }
+        public string IdUsuarioAR { get; set; }
+        public Nullable<System.DateTime> FechaAR { get; set; }
+        public string IdUsuarioDespacho { get; set; }
+        public Nullable<System.DateTime> FechaDespacho { get; set; }
     
+        public virtual ICollection<in_Ajuste> in_Ajuste { get; set; }
+        public virtual ICollection<in_Ajuste> in_Ajuste1 { get; set; }
         public virtual ICollection<in_Consignacion> in_Consignacion { get; set; }
         public virtual ICollection<in_devolucion_inven> in_devolucion_inven { get; set; }
         public virtual ICollection<in_devolucion_inven> in_devolucion_inven1 { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public virtual in_Motivo_Inven in_Motivo_Inven { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia1 { get; set; }
-        public virtual ICollection<in_Ajuste> in_Ajuste { get; set; }
-        public virtual ICollection<in_Ajuste> in_Ajuste1 { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
     }
 }

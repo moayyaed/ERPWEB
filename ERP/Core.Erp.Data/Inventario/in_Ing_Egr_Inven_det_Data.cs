@@ -31,7 +31,6 @@ namespace Core.Erp.Data.Inventario
                                  dm_cantidad = d.dm_cantidad,
                                  dm_observacion = d.dm_observacion,
                                  IdMotivo_Inv = d.IdMotivo_Inv,
-                                 IdEstadoAproba = d.IdEstadoAproba,
                                  IdOrdenCompra = d.IdOrdenCompra,
                                  IdProducto = d.IdProducto,
                                  IdUnidadMedida = d.IdUnidadMedida,
@@ -92,7 +91,6 @@ namespace Core.Erp.Data.Inventario
                         dm_cantidad = Entity.dm_cantidad,
                         dm_observacion = Entity.dm_observacion,
                         IdMotivo_Inv = Entity.IdMotivo_Inv,
-                        IdEstadoAproba = Entity.IdEstadoAproba,
                         IdOrdenCompra = Entity.IdOrdenCompra,
                         IdProducto = Entity.IdProducto,
                         IdUnidadMedida = Entity.IdUnidadMedida,
@@ -141,8 +139,6 @@ namespace Core.Erp.Data.Inventario
 
                         dm_observacion = info.dm_observacion,
                         IdMotivo_Inv = info.IdMotivo_Inv,
-                        IdEstadoAproba = info.IdEstadoAproba,
-                        Motivo_Aprobacion = info.Motivo_Aprobacion,
 
                         IdEmpresa_oc = info.IdEmpresa_oc,
                         IdSucursal_oc = info.IdSucursal_oc,

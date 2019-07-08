@@ -37,10 +37,10 @@ namespace Core.Erp.Data
         public Nullable<int> IdMotivo_Inv { get; set; }
         public bool Costeado { get; set; }
     
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public virtual in_movi_inve in_movi_inve { get; set; }
         public virtual in_Producto in_Producto { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida1 { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
     }
 }

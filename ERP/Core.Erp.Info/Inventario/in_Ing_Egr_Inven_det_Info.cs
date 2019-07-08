@@ -22,7 +22,6 @@ namespace Core.Erp.Info.Inventario
         public double dm_cantidad { get; set; }
         public string dm_observacion { get; set; }
         public double mv_costo { get; set; }
-        public string IdEstadoAproba { get; set; }
         public string IdUnidadMedida { get; set; }
         public Nullable<int> IdEmpresa_oc { get; set; }
         public Nullable<int> IdSucursal_oc { get; set; }
@@ -34,7 +33,6 @@ namespace Core.Erp.Info.Inventario
         public Nullable<int> IdMovi_inven_tipo_inv { get; set; }
         public Nullable<decimal> IdNumMovi_inv { get; set; }
         public Nullable<int> secuencia_inv { get; set; }
-        public string Motivo_Aprobacion { get; set; }
         public double dm_cantidad_sinConversion { get; set; }
         public string IdUnidadMedida_sinConversion { get; set; }
         //[Required(ErrorMessage = ("El campo costo es obligatorio"))]
