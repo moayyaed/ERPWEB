@@ -361,7 +361,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public void DeleteRow(int secuencia, decimal IdTransaccionSession)
         {
             List<ct_cbtecble_Plantilla_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.secuencia == secuencia).First());
+            list.Remove(list.Where(m => m.secuencia == secuencia).FirstOrDefault());
         }
     }
 }
