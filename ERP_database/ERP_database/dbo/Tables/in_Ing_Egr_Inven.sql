@@ -18,6 +18,11 @@
     [Fecha_UltAnu]      DATETIME       NULL,
     [IdMotivo_Inv]      INT            NULL,
     [IdResponsable]     NUMERIC (18)   NULL,
+	[IdEstadoAproba]   VARCHAR (15)    NULL,
+	[IdUsuarioAR]         VARCHAR (20)   NULL,
+	[FechaAR]      DATETIME       NULL,
+	[IdUsuarioDespacho]         VARCHAR (20)   NULL,
+	[FechaDespacho]      DATETIME       NULL,
     CONSTRAINT [PK_in_Ing_Egr_Inven] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdMovi_inven_tipo] ASC, [IdNumMovi] ASC),
     CONSTRAINT [FK_in_Ing_Egr_Inven_in_Motivo_Inven] FOREIGN KEY ([IdEmpresa], [IdMotivo_Inv]) REFERENCES [dbo].[in_Motivo_Inven] ([IdEmpresa], [IdMotivo_Inv]),
     CONSTRAINT [FK_in_Ing_Egr_Inven_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])

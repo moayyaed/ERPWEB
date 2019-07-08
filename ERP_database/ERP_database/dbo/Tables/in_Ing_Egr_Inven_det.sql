@@ -21,7 +21,6 @@
     [IdMovi_inven_tipo_inv]          INT             NULL,
     [IdNumMovi_inv]                  NUMERIC (18)    NULL,
     [secuencia_inv]                  INT             NULL,
-    [Motivo_Aprobacion]              VARCHAR (200)   NULL,
     [dm_cantidad_sinConversion]      FLOAT (53)      NOT NULL,
     [IdUnidadMedida_sinConversion]   VARCHAR (25)    NOT NULL,
     [mv_costo_sinConversion]         FLOAT (53)      NULL,
