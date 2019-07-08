@@ -15,13 +15,12 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                 using (Entities_cuentas_por_cobrar Context = new Entities_cuentas_por_cobrar())
                 {
-                    Lista = (from q in Context.vwcxc_cartera_x_cobrar
-                             where q.IdEmpresa == IdEmpresa
+                    Lista = Context.vwcxc_cartera_x_cobrar.Where(q=> q.IdEmpresa == IdEmpresa
                              && q.IdSucursal == IdSucursal
                              && q.IdCliente == IdCliente
                              && q.Saldo > 0
                              && q.Estado == "A"
-                             select new cxc_cobro_det_Info
+                             ).Select(q=> new cxc_cobro_det_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,

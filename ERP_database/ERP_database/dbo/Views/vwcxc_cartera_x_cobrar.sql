@@ -18,6 +18,7 @@ FROM     fa_factura_resumen AS detfac INNER JOIN
                   cabfac.IdBodega = Cob_RtIVA.IdBodega_Cbte AND cabfac.IdCbteVta = Cob_RtIVA.IdCbte_vta_nota LEFT OUTER JOIN
                   vwcxc_total_cobros_x_Docu ON cabfac.IdEmpresa = vwcxc_total_cobros_x_Docu.IdEmpresa AND cabfac.IdSucursal = vwcxc_total_cobros_x_Docu.IdSucursal AND cabfac.IdBodega = vwcxc_total_cobros_x_Docu.IdBodega_Cbte AND 
                   cabfac.vt_tipoDoc = vwcxc_total_cobros_x_Docu.dc_TipoDocumento AND cabfac.IdCbteVta = vwcxc_total_cobros_x_Docu.IdCbte_vta_nota
+WHERE cabfac.Estado = 'A'
 UNION
 SELECT A.IdEmpresa, A.IdSucursal, A.IdBodega, 'NTDB' AS CreDeb, CASE WHEN A.NumNota_Impresa IS NULL THEN 'N/D#' + CAST(A.IdNota AS varchar(20)) ELSE 'N/D#' + A.Serie1 + '-' + A.Serie2 + '' + A.NumNota_Impresa END AS Documento, 
                   A.sc_observacion, A.IdNota, A.CodNota, su.Su_Descripcion, A.IdCliente, A.no_fecha, ROUND(SUM(B.sc_total), 2) AS sc_total, ROUND(SUM(B.sc_total) - ISNULL(SUM(CB.dc_ValorPago), 0), 2) AS Saldo, ISNULL(SUM(CB.dc_ValorPago), 0) 
@@ -38,7 +39,8 @@ FROM     fa_notaCreDeb AS A INNER JOIN
                   A.CodDocumentoTipo = vwcxc_cobros_x_vta_nota_x_RetFuente_Sumatoria.dc_TipoDocumento LEFT OUTER JOIN
                   vwcxc_total_cobros_x_Docu AS CB ON A.IdEmpresa = CB.IdEmpresa AND A.IdSucursal = CB.IdSucursal AND A.IdBodega = CB.IdBodega_Cbte AND A.IdNota = CB.IdCbte_vta_nota AND 
                   A.CodDocumentoTipo = CB.dc_TipoDocumento
-WHERE  NOT EXISTS
+WHERE  A.Estado = 'A' AND
+NOT EXISTS
                       (SELECT *
                        FROM      fa_notaCreDeb_x_fa_factura_NotaDeb Cruce
                        WHERE   Cruce.IdEmpresa_nt = A.IdEmpresa AND Cruce.IdSucursal_nt = A.IdSucursal AND Cruce.IdBodega_nt = A.IdBodega AND Cruce.IdNota_nt = A.IdNota AND Cruce.Valor_Aplicado <> 0)
