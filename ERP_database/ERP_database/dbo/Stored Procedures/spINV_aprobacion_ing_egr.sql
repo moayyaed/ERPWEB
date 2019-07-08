@@ -97,7 +97,6 @@ IdBodega_inv = A.IdBodega,
 IdMovi_inven_tipo_inv = A.IdMovi_inven_tipo,
 IdNumMovi_inv = A.IdNumMovi,
 secuencia_inv = A.Secuencia,
-IdEstadoAproba = 'APRO',
 IdUnidadMedida = a.IdUnidadMedida,
 mv_costo = a.mv_costo,
 dm_cantidad = a.dm_cantidad
@@ -116,6 +115,17 @@ and in_Ing_Egr_Inven_det.IdBodega = @IdBodega
 and in_Ing_Egr_Inven_det.IdMovi_inven_tipo = @IdMovi_inven_tipo
 and in_Ing_Egr_Inven_det.IdNumMovi = @IdNumMovi
 and in_Ing_Egr_Inven_det.Secuencia = A.Secuencia
+END
+
+BEGIN --ACTUALIZAR IN_ING_EGR CON PK DE IN_MOVI_INVE_DETALLE
+PRINT 'ACTUALIZAR IN_ING_EGR CON PK DE IN_MOVI_INVE_DETALLE'
+UPDATE in_Ing_Egr_Inven
+set IdEstadoAproba = 'APRO',
+FechaAR = GETDATE()
+WHERE in_Ing_Egr_Inven.IdEmpresa = @IdEmpresa
+and in_Ing_Egr_Inven.IdSucursal = @IdSucursal
+and in_Ing_Egr_Inven.IdMovi_inven_tipo = @IdMovi_inven_tipo
+and in_Ing_Egr_Inven.IdNumMovi = @IdNumMovi
 END
 
 BEGIN --SI ES INGRESO REGISTRO COSTO HISTORICO

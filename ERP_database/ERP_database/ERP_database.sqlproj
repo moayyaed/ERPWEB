@@ -753,10 +753,8 @@
     <Build Include="web\Views\vwfa_factura_x_fa_guia_remision.sql" />
     <Build Include="web\Views\vwfa_guia_remision.sql" />
     <Build Include="Fj_servindustrias\Views\vwfa_tarifario_horometro.sql" />
-    <Build Include="dbo\Views\vwin_producto_x_sucursal.sql" />
     <Build Include="dbo\Views\vwin_Presentacion.sql" />
     <Build Include="web\Views\vwfa_guia_remision_det.sql" />
-    <Build Include="dbo\Views\vwin_prt_transferencia.sql" />
     <Build Include="dbo\Views\vwin_presupuesto.sql" />
     <Build Include="web\Views\vwfa_notaCreDeb.sql" />
     <Build Include="dbo\Views\vwcom_cotizacion_compra.sql" />
@@ -775,7 +773,6 @@
     <Build Include="dbo\Views\vwin_Producto_Marca_Tipo_Categoria.sql" />
     <Build Include="web\Views\VWFAC_007.sql" />
     <Build Include="dbo\Views\vwRo_Rubros_x_Empresa.sql" />
-    <Build Include="dbo\Views\vwin_Producto_Pedidos_Egresos_x_Bodega.sql" />
     <Build Include="web\Views\VWFAC_008.sql" />
     <Build Include="dbo\Views\vwRo_Solicitud_Vacaciones.sql" />
     <Build Include="dbo\Views\vwin_producto_x_tb_bodega_stock_x_lote.sql" />
@@ -862,7 +859,6 @@
     <Build Include="dbo\Stored Procedures\spcp_Get_Data_orden_pago_con_Transferencia_data.sql" />
     <Build Include="dbo\Stored Procedures\spSys_Inv_Recosteo_Inventario.sql" />
     <Build Include="dbo\Stored Procedures\spSys_Inv_Recosteo_Inventario_x_rango_fechas.sql" />
-    <Build Include="dbo\Stored Procedures\spSys_inv_Reversar_aprobacion.sql" />
     <Build Include="web\Stored Procedures\SPCONTA_003_balances.sql" />
     <Build Include="Security\Academico.sql" />
     <Build Include="Security\CAH.sql" />

@@ -9,7 +9,6 @@
     [dm_cantidad]                    FLOAT (53)      NOT NULL,
     [dm_observacion]                 NVARCHAR (1000) NULL,
     [mv_costo]                       FLOAT (53)      NOT NULL,
-    [IdEstadoAproba]                 VARCHAR (15)    NULL,
     [IdUnidadMedida]                 VARCHAR (25)    NOT NULL,
     [IdEmpresa_oc]                   INT             NULL,
     [IdSucursal_oc]                  INT             NULL,

@@ -9,7 +9,7 @@ BEGIN
 BEGIN --REGISTROS EN TABLA DE PRE-APROBACION QUE ESTAN APROBADOS Y DEBERIAN GENERAR MOVIMIENTO PERO NO LO HICIERON
 SELECT 'REGISTROS EN TABLA DE PRE-APROBACION QUE ESTAN APROBADOS Y DEBERIAN GENERAR MOVIMIENTO PERO NO LO HICIERON'
 SELECT        in_Ing_Egr_Inven_det.IdEmpresa,in_Ing_Egr_Inven_det.IdSucursal,in_Ing_Egr_Inven_det.IdBodega,in_Ing_Egr_Inven_det.IdMovi_inven_tipo, in_Ing_Egr_Inven_det.IdNumMovi,in_Ing_Egr_Inven_det.Secuencia,
-			 in_Ing_Egr_Inven_det.IdEstadoAproba,
+			 in_Ing_Egr_Inven.IdEstadoAproba,
 			in_Ing_Egr_Inven.cm_fecha
 FROM            in_Ing_Egr_Inven_det INNER JOIN
                 in_movi_inven_tipo ON in_Ing_Egr_Inven_det.IdEmpresa = in_movi_inven_tipo.IdEmpresa AND in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_movi_inven_tipo.IdMovi_inven_tipo INNER JOIN
@@ -17,14 +17,14 @@ FROM            in_Ing_Egr_Inven_det INNER JOIN
                 in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_Ing_Egr_Inven.IdMovi_inven_tipo AND in_Ing_Egr_Inven_det.IdNumMovi = in_Ing_Egr_Inven.IdNumMovi INNER JOIN
                 in_Motivo_Inven ON in_Ing_Egr_Inven.IdEmpresa = in_Motivo_Inven.IdEmpresa AND in_Ing_Egr_Inven.IdMotivo_Inv = in_Motivo_Inven.IdMotivo_Inv
 WHERE		in_Motivo_Inven.Genera_Movi_Inven = 'S' AND in_movi_inven_tipo.Genera_Movi_Inven = 1 and in_Ing_Egr_Inven_det.IdEmpresa_inv is null and in_Ing_Egr_Inven.Estado = 'A'
-and in_Ing_Egr_Inven_det.IdEstadoAproba = 'APRO'
+and in_Ing_Egr_Inven.IdEstadoAproba = 'APRO'
 
 IF(@Corregir = 1 )
 BEGIN
-UPDATE in_Ing_Egr_Inven_det set IdEstadoAproba = 'PEND' from
+UPDATE in_Ing_Egr_Inven set IdEstadoAproba = 'PEND' from
 (
 SELECT        in_Ing_Egr_Inven_det.IdEmpresa,in_Ing_Egr_Inven_det.IdSucursal,in_Ing_Egr_Inven_det.IdBodega,in_Ing_Egr_Inven_det.IdMovi_inven_tipo, in_Ing_Egr_Inven_det.IdNumMovi,in_Ing_Egr_Inven_det.Secuencia,
-			 in_Ing_Egr_Inven_det.IdEstadoAproba,
+			 in_Ing_Egr_Inven.IdEstadoAproba,
 			in_Ing_Egr_Inven.cm_fecha
 FROM            in_Ing_Egr_Inven_det INNER JOIN
                 in_movi_inven_tipo ON in_Ing_Egr_Inven_det.IdEmpresa = in_movi_inven_tipo.IdEmpresa AND in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_movi_inven_tipo.IdMovi_inven_tipo INNER JOIN
@@ -32,13 +32,12 @@ FROM            in_Ing_Egr_Inven_det INNER JOIN
                 in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_Ing_Egr_Inven.IdMovi_inven_tipo AND in_Ing_Egr_Inven_det.IdNumMovi = in_Ing_Egr_Inven.IdNumMovi INNER JOIN
                 in_Motivo_Inven ON in_Ing_Egr_Inven.IdEmpresa = in_Motivo_Inven.IdEmpresa AND in_Ing_Egr_Inven.IdMotivo_Inv = in_Motivo_Inven.IdMotivo_Inv
 WHERE		in_Motivo_Inven.Genera_Movi_Inven = 'S' AND in_movi_inven_tipo.Genera_Movi_Inven = 1 and in_Ing_Egr_Inven_det.IdEmpresa_inv is null and in_Ing_Egr_Inven.Estado = 'A'
-and in_Ing_Egr_Inven_det.IdEstadoAproba = 'APRO'
+and in_Ing_Egr_Inven.IdEstadoAproba = 'APRO'
 ) A
-WHERE in_Ing_Egr_Inven_det.IdEmpresa = A.IdEmpresa
-AND in_Ing_Egr_Inven_det.IdSucursal = A.IdSucursal
-AND in_Ing_Egr_Inven_det.IdMovi_inven_tipo = A.IdMovi_inven_tipo
-AND in_Ing_Egr_Inven_det.IdNumMovi = A.IdNumMovi
-AND in_Ing_Egr_Inven_det.Secuencia = A.Secuencia
+WHERE in_Ing_Egr_Inven.IdEmpresa = A.IdEmpresa
+AND in_Ing_Egr_Inven.IdSucursal = A.IdSucursal
+AND in_Ing_Egr_Inven.IdMovi_inven_tipo = A.IdMovi_inven_tipo
+AND in_Ing_Egr_Inven.IdNumMovi = A.IdNumMovi
 
 END
 END
