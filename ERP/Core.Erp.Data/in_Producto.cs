@@ -23,9 +23,9 @@ namespace Core.Erp.Data
             this.in_Producto_x_fa_NivelDescuento = new HashSet<in_Producto_x_fa_NivelDescuento>();
             this.in_producto_x_tb_bodega = new HashSet<in_producto_x_tb_bodega>();
             this.in_AjusteDet = new HashSet<in_AjusteDet>();
-            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
             this.in_movi_inve_detalle = new HashSet<in_movi_inve_detalle>();
             this.in_transferencia_det = new HashSet<in_transferencia_det>();
+            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -83,8 +83,8 @@ namespace Core.Erp.Data
         public virtual ICollection<in_Producto_x_fa_NivelDescuento> in_Producto_x_fa_NivelDescuento { get; set; }
         public virtual ICollection<in_producto_x_tb_bodega> in_producto_x_tb_bodega { get; set; }
         public virtual ICollection<in_AjusteDet> in_AjusteDet { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public virtual ICollection<in_transferencia_det> in_transferencia_det { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
     }
 }

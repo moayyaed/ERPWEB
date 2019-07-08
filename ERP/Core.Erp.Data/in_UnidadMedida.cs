@@ -23,11 +23,11 @@ namespace Core.Erp.Data
             this.in_Producto = new HashSet<in_Producto>();
             this.in_Producto1 = new HashSet<in_Producto>();
             this.in_AjusteDet = new HashSet<in_AjusteDet>();
-            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
-            this.in_Ing_Egr_Inven_det1 = new HashSet<in_Ing_Egr_Inven_det>();
             this.in_movi_inve_detalle = new HashSet<in_movi_inve_detalle>();
             this.in_movi_inve_detalle1 = new HashSet<in_movi_inve_detalle>();
             this.in_transferencia_det = new HashSet<in_transferencia_det>();
+            this.in_Ing_Egr_Inven_det = new HashSet<in_Ing_Egr_Inven_det>();
+            this.in_Ing_Egr_Inven_det1 = new HashSet<in_Ing_Egr_Inven_det>();
         }
     
         public string IdUnidadMedida { get; set; }
@@ -46,10 +46,10 @@ namespace Core.Erp.Data
         public virtual ICollection<in_Producto> in_Producto { get; set; }
         public virtual ICollection<in_Producto> in_Producto1 { get; set; }
         public virtual ICollection<in_AjusteDet> in_AjusteDet { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det1 { get; set; }
         public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle { get; set; }
         public virtual ICollection<in_movi_inve_detalle> in_movi_inve_detalle1 { get; set; }
         public virtual ICollection<in_transferencia_det> in_transferencia_det { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det1 { get; set; }
     }
 }

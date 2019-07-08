@@ -27,6 +27,11 @@ namespace Core.Erp.Info.Inventario
         public bool EstadoBool { get; set; }
         public Nullable<int> IdMotivo_Inv { get; set; }        
         public Nullable<decimal> IdResponsable { get; set; }
+        public string IdEstadoAproba { get; set; }
+        public string IdUsuarioAR { get; set; }
+        public Nullable<System.DateTime> FechaAR { get; set; }
+        public string IdUsuarioDespacho { get; set; }
+        public Nullable<System.DateTime> FechaDespacho { get; set; }
 
         #region Campos de Orden de compra
         public int IdProveedor { get; set; }
