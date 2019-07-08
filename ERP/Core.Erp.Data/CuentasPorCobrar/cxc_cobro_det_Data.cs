@@ -19,7 +19,6 @@ namespace Core.Erp.Data.CuentasPorCobrar
                              && q.IdSucursal == IdSucursal
                              && q.IdCliente == IdCliente
                              && q.Saldo > 0
-                             && q.Estado == "A"
                              ).Select(q=> new cxc_cobro_det_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
