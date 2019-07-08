@@ -1166,6 +1166,7 @@
     <Build Include="web\Stored Procedures\SPCONTA_005.sql" />
     <Build Include="web\Stored Procedures\SPCXC_010.sql" />
     <Build Include="dbo\Stored Procedures\spINV_aprobacion_ing_egr.sql" />
+    <Build Include="dbo\Views\vwct_cbtecble_Plantilla_det.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

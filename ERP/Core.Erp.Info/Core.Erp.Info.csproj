@@ -125,6 +125,8 @@
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Info.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_det_Info.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Info.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_det_Info.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_Info.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_tipo_Info.cs" />
     <Compile Include="Contabilidad\ct_CentroCostoNivel_Info.cs" />
     <Compile Include="Contabilidad\ct_CentroCosto_Info.cs" />

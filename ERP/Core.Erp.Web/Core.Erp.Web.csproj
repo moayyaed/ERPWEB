@@ -302,6 +302,7 @@
     <Compile Include="Areas\Contabilidad\Controllers\PeriodoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasNivelController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\PlantillaComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PuntoCargoController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PuntoCargoGrupoController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\RevisionContableController.cs" />
@@ -10143,6 +10144,14 @@
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_010.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\_CmbClientePorTipo.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_003.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\_CmbCuentaContable.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\_GridViewPartial_ComprobanteContablePlantillaDet.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\_GridViewPartial_ComprobanteContablePlantilla_Asignar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\_GridViewPartial_ComprobanteContablePlantilla.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

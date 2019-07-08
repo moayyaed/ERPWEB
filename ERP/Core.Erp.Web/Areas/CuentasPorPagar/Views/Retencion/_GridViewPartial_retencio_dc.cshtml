@@ -51,6 +51,8 @@
             {
                 p.Columns.Add("IdCtaCble", "Código").Width = Unit.Percentage(30);
                 p.Columns.Add("pc_Cuenta", "Cuenta").Width = Unit.Percentage(70);
+                //p.Columns.Add("IdCtaCblePadre", "ID Padre").Width = Unit.Percentage(10);
+                //p.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = Unit.Percentage(40);
                 p.ValueField = "IdCtaCble";
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_cuentas;

@@ -57,6 +57,7 @@ namespace Core.Erp.Data
         public DbSet<vwct_cbtecble_det> vwct_cbtecble_det { get; set; }
         public DbSet<ct_cbtecble_Plantilla> ct_cbtecble_Plantilla { get; set; }
         public DbSet<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
+        public DbSet<vwct_cbtecble_Plantilla_det> vwct_cbtecble_Plantilla_det { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

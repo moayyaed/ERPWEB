@@ -287,6 +287,8 @@
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Data.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Data.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_det_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_det_Data.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_tipo_Data.cs" />
     <Compile Include="Contabilidad\ct_CentroCostoNivel_Data.cs" />
     <Compile Include="Contabilidad\ct_CentroCosto_Data.cs" />
@@ -2144,6 +2146,9 @@
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="vwct_cbtecble_det.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_cbtecble_Plantilla_det.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="vwct_CentroCosto.cs">
