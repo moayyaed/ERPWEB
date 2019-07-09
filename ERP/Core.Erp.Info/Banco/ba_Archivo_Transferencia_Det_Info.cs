@@ -25,6 +25,7 @@ namespace Core.Erp.Info.Banco
         public bool Contabilizado { get; set; }
         public Nullable<System.DateTime> Fecha_proceso { get; set; }        
         public string Referencia { get; set; }
+        
 
         #region Campos que no existen en la tabla
         public Nullable<System.DateTime> Fecha_Factura { get; set; }
@@ -37,6 +38,8 @@ namespace Core.Erp.Info.Banco
         public string CodigoLegalBanco { get; set; }
         public string Observacion { get; set; }
         public decimal? IdEntidad { get; set; }
+        public string IdCtaCble { get; set; }
+        public string pc_Cuenta { get; set; }
         #endregion
 
     }

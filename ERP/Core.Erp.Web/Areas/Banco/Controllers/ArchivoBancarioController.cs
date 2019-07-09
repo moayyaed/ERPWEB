@@ -13,6 +13,8 @@ using DevExpress.Web.Mvc;
 using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Info.General;
 using DevExpress.Web;
+using Core.Erp.Web.Areas.Contabilidad.Controllers;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -41,7 +43,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Banco_Cuenta_Bus bus_banco_cuenta = new ba_Banco_Cuenta_Bus();
         ba_parametros_Bus bus_param = new ba_parametros_Bus();
         ba_TipoFlujo_Bus bus_flujo = new ba_TipoFlujo_Bus();
-
+        ct_cbtecble_det_List List_Cbte = new ct_cbtecble_det_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -364,7 +366,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             Lst_det_op.set_list(lst, IdTransaccionSession);
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult GetValor(decimal IdTransaccionSession = 0)
         {
             double Valor = Math.Round(List_det.get_list(IdTransaccionSession).Sum(q => q.Valor),2,MidpointRounding.AwayFromZero);
@@ -411,6 +412,47 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             List_flujo.set_list(ListaDetFlujo, IdTransaccionSession);
             return Json(ListaDetFlujo, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ArmarDiario(int IdEmpresa = 0, decimal IdTransaccionSession = 0, int IdBanco = 0)
+        {
+            List<ct_cbtecble_det_Info> Lista = new List<ct_cbtecble_det_Info>();
+            var ListaD = List_det.get_list(IdTransaccionSession);
+            var banco = bus_banco_cuenta.get_info(IdEmpresa, IdBanco);
+            int Secuencia = 1;
+            if (banco != null)
+            {
+                var LG = ListaD.GroupBy(q => new { q.IdCtaCble }).Select(q => new
+                {
+                    IdCtaCble = q.Key.IdCtaCble,
+                    Valor = q.Sum(g => g.Valor)
+                });
+
+                #region Cuentas proveedores
+                foreach (var item in LG)
+                {
+                    Lista.Add(new ct_cbtecble_det_Info
+                    {
+                        secuencia = Secuencia++,
+                        IdCtaCble = item.IdCtaCble,
+                        dc_Valor = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
+                        dc_Valor_debe = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero) * -1
+                    });
+                }
+                #endregion
+
+                #region Cuenta banco
+                Lista.Add(new ct_cbtecble_det_Info
+                {
+                    secuencia = Secuencia++,
+                    IdCtaCble = banco.IdCtaCble,
+                    dc_Valor = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),
+                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero) * -1
+                });
+                #endregion
+            }
+            List_Cbte.set_list(Lista, IdTransaccionSession);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region Archivo

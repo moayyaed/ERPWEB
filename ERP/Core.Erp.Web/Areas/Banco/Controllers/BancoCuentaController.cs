@@ -14,6 +14,8 @@ using System.Web.Mvc;
 
 using System.Linq;
 using Core.Erp.Web.Reportes.Banco;
+using Core.Erp.Web.Areas.Contabilidad.Controllers;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -29,6 +31,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         ba_Banco_Cuenta_x_tb_sucursal_Bus bus_cta_det = new ba_Banco_Cuenta_x_tb_sucursal_Bus();
         ba_Banco_Det_List List_Det = new ba_Banco_Det_List();
+        
 
         #endregion
 
@@ -275,6 +278,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             var lst = bus_cuenta.get_list(IdEmpresa, IdSucursal, false);
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
+
+       
         #endregion
 
         #region Detalle
