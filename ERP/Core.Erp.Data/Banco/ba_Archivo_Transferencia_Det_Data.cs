@@ -44,7 +44,9 @@ namespace Core.Erp.Data.Banco
                         IdTipoPersona = q.IdTipo_Persona,
                         IdEntidad = q.IdEntidad,
                         IdPersona = q.IdPersona,
-                        Fecha_Factura = q.cb_Fecha
+                        Fecha_Factura = q.cb_Fecha,
+                        IdCtaCble = q.IdCtaCble_Acreedora,
+                        pc_Cuenta = q.pc_Cuenta
                     }).ToList();
                 }
                 return Lista;

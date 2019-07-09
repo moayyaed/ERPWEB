@@ -444,6 +444,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no
           <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdEntidad" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="cb_Fecha" Type="datetime" Nullable="false" />
+          <Property Name="IdCtaCble_Acreedora" Type="varchar" MaxLength="20" />
+          <Property Name="pc_Cuenta" Type="varchar" MaxLength="523" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1115,7 +1117,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
     [vwba_Archivo_Transferencia_Det].[IdTipo_Persona] AS [IdTipo_Persona], 
     [vwba_Archivo_Transferencia_Det].[IdPersona] AS [IdPersona], 
     [vwba_Archivo_Transferencia_Det].[IdEntidad] AS [IdEntidad], 
-    [vwba_Archivo_Transferencia_Det].[cb_Fecha] AS [cb_Fecha]
+    [vwba_Archivo_Transferencia_Det].[cb_Fecha] AS [cb_Fecha], 
+    [vwba_Archivo_Transferencia_Det].[IdCtaCble_Acreedora] AS [IdCtaCble_Acreedora], 
+    [vwba_Archivo_Transferencia_Det].[pc_Cuenta] AS [pc_Cuenta]
     FROM [dbo].[vwba_Archivo_Transferencia_Det] AS [vwba_Archivo_Transferencia_Det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" EntityType="Self.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito" store:Type="Views" store:Schema="dbo">
@@ -1810,7 +1814,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           </AssociationSet>
           <EntitySet Name="ba_Archivo_Transferencia" EntityType="Model_banco.ba_Archivo_Transferencia" />
           <EntitySet Name="ba_Archivo_Transferencia_Det" EntityType="Model_banco.ba_Archivo_Transferencia_Det" />
-          <EntitySet Name="vwba_Archivo_Transferencia_Det" EntityType="Model_banco.vwba_Archivo_Transferencia_Det" />
           <AssociationSet Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta" Association="Model_banco.FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
             <End Role="ba_Banco_Cuenta" EntitySet="ba_Banco_Cuenta" />
             <End Role="ba_Archivo_Transferencia" EntitySet="ba_Archivo_Transferencia" />
@@ -1828,6 +1831,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_tipo_nota" EntitySet="ba_tipo_nota" />
             <End Role="ba_Cbte_Ban" EntitySet="ba_Cbte_Ban" />
           </AssociationSet>
+          <EntitySet Name="vwba_Archivo_Transferencia_Det" EntityType="Model_banco.vwba_Archivo_Transferencia_Det" />
           </EntityContainer>
         <EntityType Name="vwba_Cbte_Ban">
           <Key>
@@ -2483,53 +2487,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ba_Archivo_Transferencia" Relationship="Model_banco.FK_ba_Archivo_Transferencia_Det_ba_Archivo_Transferencia1" FromRole="ba_Archivo_Transferencia_Det" ToRole="ba_Archivo_Transferencia" />
         </EntityType>
-        <EntityType Name="vwba_Archivo_Transferencia_Det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdArchivo" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdEmpresa_OP" />
-            <PropertyRef Name="IdOrdenPago" />
-            <PropertyRef Name="Secuencia_OP" />
-            <PropertyRef Name="Estado" />
-            <PropertyRef Name="Valor" />
-            <PropertyRef Name="Secuencial_reg_x_proceso" />
-            <PropertyRef Name="Contabilizado" />
-            <PropertyRef Name="IdTipoDocumento" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="CodigoLegalBanco" />
-            <PropertyRef Name="IdTipo_Persona" />
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdEntidad" />
-            <PropertyRef Name="cb_Fecha" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa_OP" Type="Int32" Nullable="false" />
-          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia_OP" Type="Int32" Nullable="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="Valor" Type="Double" Nullable="false" />
-          <Property Name="Secuencial_reg_x_proceso" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Contabilizado" Type="Boolean" Nullable="false" />
-          <Property Name="Fecha_proceso" Type="DateTime" Precision="3" />
-          <Property Name="IdTipoCta_acreditacion_cat" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdBanco_acreditacion" Type="Int32" />
-          <Property Name="pr_direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="pr_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CodigoLegalBanco" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <Association Name="FK_ba_Archivo_Transferencia_ba_Banco_Cuenta">
           <End Type="Model_banco.ba_Banco_Cuenta" Role="ba_Banco_Cuenta" Multiplicity="1" />
           <End Type="Model_banco.ba_Archivo_Transferencia" Role="ba_Archivo_Transferencia" Multiplicity="*" />
@@ -2599,6 +2556,55 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwba_Archivo_Transferencia_Det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdArchivo" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdEmpresa_OP" />
+            <PropertyRef Name="IdOrdenPago" />
+            <PropertyRef Name="Secuencia_OP" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="Secuencial_reg_x_proceso" />
+            <PropertyRef Name="Contabilizado" />
+            <PropertyRef Name="IdTipoDocumento" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="CodigoLegalBanco" />
+            <PropertyRef Name="IdTipo_Persona" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdEntidad" />
+            <PropertyRef Name="cb_Fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdArchivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa_OP" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia_OP" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="Secuencial_reg_x_proceso" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Contabilizado" Type="Boolean" Nullable="false" />
+          <Property Name="Fecha_proceso" Type="DateTime" Precision="3" />
+          <Property Name="IdTipoCta_acreditacion_cat" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdBanco_acreditacion" Type="Int32" />
+          <Property Name="pr_direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pr_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoLegalBanco" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdCtaCble_Acreedora" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3156,9 +3162,23 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ba_tipo_nota">
+            <EntityTypeMapping TypeName="Model_banco.ba_tipo_nota">
+              <MappingFragment StoreEntitySet="ba_tipo_nota">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="IdTipoNota" ColumnName="IdTipoNota" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vwba_Archivo_Transferencia_Det">
             <EntityTypeMapping TypeName="Model_banco.vwba_Archivo_Transferencia_Det">
               <MappingFragment StoreEntitySet="vwba_Archivo_Transferencia_Det">
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCble_Acreedora" ColumnName="IdCtaCble_Acreedora" />
                 <ScalarProperty Name="cb_Fecha" ColumnName="cb_Fecha" />
                 <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
@@ -3183,18 +3203,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdArchivo" ColumnName="IdArchivo" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ba_tipo_nota">
-            <EntityTypeMapping TypeName="Model_banco.ba_tipo_nota">
-              <MappingFragment StoreEntitySet="ba_tipo_nota">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="IdTipoNota" ColumnName="IdTipoNota" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
