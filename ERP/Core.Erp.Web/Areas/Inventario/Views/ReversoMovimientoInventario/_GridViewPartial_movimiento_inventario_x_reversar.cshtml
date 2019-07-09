@@ -1,8 +1,8 @@
 @using System.Web.UI.WebControls;
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "GridViewPartial_movimiento_inventario_x_aprobar";
-        settings.CallbackRouteValues = new { Controller = "AprobacionMovimientoInventario", Action = "GridViewPartial_movimiento_inventario_x_aprobar", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+        settings.Name = "GridViewPartial_movimiento_inventario_x_reversar";
+        settings.CallbackRouteValues = new { Controller = "ReversoMovimientoInventario", Action = "GridViewPartial_movimiento_inventario_x_reversar", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
         settings.KeyFieldName = "SecuencialID";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -89,7 +89,7 @@
                 Html.DevExpress().Button(settingsBtn =>
                 {
                     settingsBtn.Name = "btn" + c.KeyValue;
-                    settingsBtn.Text = "Aprobar";
+                    settingsBtn.Text = "Reversar";
                     settingsBtn.ClientSideEvents.Click = "function(s, e) {AprobarMovimiento('" + c.KeyValue + "');}";
                 }).Render();
             });

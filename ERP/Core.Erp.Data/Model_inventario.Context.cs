@@ -93,31 +93,6 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_PorAprobar> vwin_Ing_Egr_Inven_PorAprobar { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorReversar> vwin_Ing_Egr_Inven_PorReversar { get; set; }
     
-        public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idSucursalParameter = idSucursal.HasValue ?
-                new ObjectParameter("IdSucursal", idSucursal) :
-                new ObjectParameter("IdSucursal", typeof(int));
-    
-            var idMovi_inven_tipoParameter = idMovi_inven_tipo.HasValue ?
-                new ObjectParameter("IdMovi_inven_tipo", idMovi_inven_tipo) :
-                new ObjectParameter("IdMovi_inven_tipo", typeof(int));
-    
-            var idNumMoviParameter = idNumMovi.HasValue ?
-                new ObjectParameter("IdNumMovi", idNumMovi) :
-                new ObjectParameter("IdNumMovi", typeof(decimal));
-    
-            var borarParameter = borar.HasValue ?
-                new ObjectParameter("Borar", borar) :
-                new ObjectParameter("Borar", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spSys_inv_Reversar_aprobacion_Result>("spSys_inv_Reversar_aprobacion", idEmpresaParameter, idSucursalParameter, idMovi_inven_tipoParameter, idNumMoviParameter, borarParameter);
-        }
-    
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?

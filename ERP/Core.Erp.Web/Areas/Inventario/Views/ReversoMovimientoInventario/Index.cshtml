@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_Info
 @{
-    ViewBag.Title = "Aprobación de ingresos y egresos de inventario";
+    ViewBag.Title = "Reverso de ingresos y egresos de inventario";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_movimiento_inventario_x_aprobar", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_movimiento_inventario_x_reversar", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
@@ -119,7 +119,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("AprobarMovimiento", "AprobacionMovimientoInventario", new { Area = "Inventario"})',
+            url: '@Url.Action("ReversarMovimiento", "ReversoMovimientoInventario", new { Area = "Inventario"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -128,7 +128,7 @@
             success: function (data) {
                 if (data.length > 0) {
                     alert(data);
-                    GridViewPartial_movimiento_inventario_x_aprobar.PerformCallback();
+                    GridViewPartial_movimiento_inventario_x_reversar.PerformCallback();
                 } else {
                     alert("No se ha podido aprobar el movimiento de inventario");
                 }

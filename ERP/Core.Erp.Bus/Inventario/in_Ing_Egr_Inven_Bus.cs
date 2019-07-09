@@ -159,5 +159,31 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                return odata.get_list_x_reversar(IdEmpresa, IdSucursal, mostrar_anulados, fecha_ini, fecha_fin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool reversarDB(in_Ing_Egr_Inven_Info info)
+        {
+            try
+            {
+                return odata.reversarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

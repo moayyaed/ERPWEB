@@ -1111,6 +1111,7 @@ namespace Core.Erp.Data.Inventario
                     Entity.FechaAR = DateTime.Now;
 
                     Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
+                    Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
 
                     Context.SaveChanges();
                 }
@@ -1120,7 +1121,6 @@ namespace Core.Erp.Data.Inventario
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }
@@ -1191,9 +1191,7 @@ namespace Core.Erp.Data.Inventario
 
                     Entity.IdUsuarioAR = info.IdUsuarioAR;
                     Entity.IdEstadoAproba = info.IdEstadoAproba = "XAPRO";
-                    Entity.FechaAR = DateTime.Now;
-
-                    Context.spSys_inv_Reversar_aprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, false);
+                    Entity.FechaAR = DateTime.Now;                    
 
                     Context.SaveChanges();
                 }

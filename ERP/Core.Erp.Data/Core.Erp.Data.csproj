@@ -1869,9 +1869,6 @@
     <Compile Include="spro_nomina_x_pago_utilidad_Result.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="spSys_inv_Reversar_aprobacion_Result.cs">
-      <DependentUpon>Model_inventario.tt</DependentUpon>
-    </Compile>
     <Compile Include="tbl_TransaccionesAutorizadas.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>

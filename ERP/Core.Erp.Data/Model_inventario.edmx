@@ -4115,13 +4115,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_UnidadMedida_Equiv_conversion" EntitySet="in_UnidadMedida_Equiv_conversion" />
           </AssociationSet>
-          <FunctionImport Name="spSys_inv_Reversar_aprobacion" ReturnType="Collection(Model_inventario.spSys_inv_Reversar_aprobacion_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
-            <Parameter Name="IdMovi_inven_tipo" Mode="In" Type="Int32" />
-            <Parameter Name="IdNumMovi" Mode="In" Type="Decimal" />
-            <Parameter Name="Borar" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="spin_Producto_validar_anulacion" ReturnType="Collection(String)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdProducto" Mode="In" Type="Decimal" />
@@ -4459,39 +4452,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="vwin_Ing_Egr_Inven_PorAprobar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorAprobar" />
           <EntitySet Name="vwin_Ing_Egr_Inven_PorReversar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorReversar" />
           </EntityContainer>
-        <ComplexType Name="spSys_inv_Reversar_aprobacion_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="Int32" Name="IdMovi_inven_tipo" Nullable="false" />
-          <Property Type="Decimal" Name="IdNumMovi" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="Secuencia" Nullable="false" />
-          <Property Type="Int32" Name="IdBodega" Nullable="false" />
-          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Double" Name="dm_cantidad" Nullable="false" />
-          <Property Type="String" Name="dm_observacion" Nullable="true" MaxLength="1000" />
-          <Property Type="Double" Name="mv_costo" Nullable="false" />
-          <Property Type="String" Name="IdCentroCosto" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="IdCentroCosto_sub_centro_costo" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="IdEstadoAproba" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="25" />
-          <Property Type="Int32" Name="IdEmpresa_oc" Nullable="true" />
-          <Property Type="Int32" Name="IdSucursal_oc" Nullable="true" />
-          <Property Type="Decimal" Name="IdOrdenCompra" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="Secuencia_oc" Nullable="true" />
-          <Property Type="Int32" Name="IdPunto_cargo_grupo" Nullable="true" />
-          <Property Type="Int32" Name="IdPunto_cargo" Nullable="true" />
-          <Property Type="Int32" Name="IdEmpresa_inv" Nullable="true" />
-          <Property Type="Int32" Name="IdSucursal_inv" Nullable="true" />
-          <Property Type="Int32" Name="IdBodega_inv" Nullable="true" />
-          <Property Type="Int32" Name="IdMovi_inven_tipo_inv" Nullable="true" />
-          <Property Type="Decimal" Name="IdNumMovi_inv" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="secuencia_inv" Nullable="true" />
-          <Property Type="String" Name="Motivo_Aprobacion" Nullable="true" MaxLength="200" />
-          <Property Type="Double" Name="dm_cantidad_sinConversion" Nullable="false" />
-          <Property Type="String" Name="IdUnidadMedida_sinConversion" Nullable="false" MaxLength="25" />
-          <Property Type="Double" Name="mv_costo_sinConversion" Nullable="true" />
-          <Property Type="Int32" Name="IdMotivo_Inv" Nullable="true" />
-        </ComplexType>
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
             <PropertyRef Name="IdEmpresa" />
