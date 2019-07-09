@@ -76,5 +76,18 @@ namespace Core.Erp.Bus.Banco
             }
         }
 
+        public bool ContabilizarDB(ba_Archivo_Transferencia_Info info)
+        {
+            try
+            {
+                return odata.ContabilizarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

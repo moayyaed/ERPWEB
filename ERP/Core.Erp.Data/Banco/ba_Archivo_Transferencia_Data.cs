@@ -1,4 +1,8 @@
-﻿using Core.Erp.Info.Banco;
+﻿using Core.Erp.Data.Contabilidad;
+using Core.Erp.Data.General;
+using Core.Erp.Info.Banco;
+using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.CuentasPorPagar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +43,10 @@ namespace Core.Erp.Data.Banco
                             IdProceso_bancario = q.IdProceso_bancario,
                             Nom_Archivo = q.Nom_Archivo,
                             Observacion = q.Observacion,
-                            IdSucursal = q.IdSucursal
+                            IdSucursal = q.IdSucursal,
+                            cb_Valor = q.cb_Valor,
+                            IdCbteCble = q.IdCbteCble,
+                            IdTipoCbte = q.IdTipoCbte
                         }).ToList();
 
                     }
@@ -59,7 +66,10 @@ namespace Core.Erp.Data.Banco
                             IdProceso_bancario = q.IdProceso_bancario,
                             Nom_Archivo = q.Nom_Archivo,
                             Observacion = q.Observacion,
-                            IdSucursal = q.IdSucursal
+                            IdSucursal = q.IdSucursal,
+                            cb_Valor = q.cb_Valor,
+                            IdCbteCble = q.IdCbteCble,
+                            IdTipoCbte = q.IdTipoCbte
                         }).ToList();
                     }
                 }
@@ -165,9 +175,7 @@ namespace Core.Erp.Data.Banco
                             {
                                 IdEmpresa = info.IdEmpresa,
                                 IdArchivo = info.IdArchivo,
-                                Contabilizado = item.Contabilizado,
                                 Estado = item.Estado,
-                                Fecha_proceso = item.Fecha_proceso,
                                 IdOrdenPago = item.IdOrdenPago,
                                 IdEmpresa_OP = info.IdEmpresa,
                                 Secuencia = Secuencia++,
@@ -233,9 +241,7 @@ namespace Core.Erp.Data.Banco
                             {
                                 IdEmpresa = info.IdEmpresa,
                                 IdArchivo = info.IdArchivo,
-                                Contabilizado = item.Contabilizado,
                                 Estado = item.Estado,
-                                Fecha_proceso = item.Fecha_proceso,
                                 IdOrdenPago = item.IdOrdenPago,
                                 IdEmpresa_OP = info.IdEmpresa,
                                 Secuencia = item.Secuencia,
@@ -288,6 +294,83 @@ namespace Core.Erp.Data.Banco
                     Context.ba_Archivo_Transferencia.Remove(Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault());
                     Context.SaveChanges();
                 }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ContabilizarDB(ba_Archivo_Transferencia_Info info)
+        {
+            try
+            {
+                ba_Cbte_Ban_Data odata_cbte = new ba_Cbte_Ban_Data();
+                tb_banco_procesos_bancarios_x_empresa_Data odataProceso = new tb_banco_procesos_bancarios_x_empresa_Data();
+                using (Entities_banco db = new Entities_banco())
+                {
+
+                    var proceso = odataProceso.get_info(info.IdEmpresa, info.IdProceso_bancario);
+                    if (proceso == null)
+                        return false;
+
+                    var cbte = new ba_Cbte_Ban_Info
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        cb_Fecha = info.Fecha,
+                        IdSucursal = info.IdSucursal,
+                        IdBanco = info.IdBanco,
+                        cb_Observacion = "Archivo # " + info.IdArchivo.ToString() + " " + info.Observacion,
+                        IdTipoNota = proceso.IdTipoNota,
+                        IdUsuario = info.IdUsuario,
+                        list_det = new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>(info.Lst_Flujo.Select(q => new ba_Cbte_Ban_x_ba_TipoFlujo_Info
+                        {
+                            IdTipoFlujo = q.IdTipoFlujo,
+                            Valor = q.Valor,
+                            Porcentaje = q.Porcentaje,
+                            IdEmpresa = info.IdEmpresa
+                        }).ToList()),
+                        lst_det_ct = new List<ct_cbtecble_det_Info>(info.Lst_diario.Select(q => new ct_cbtecble_det_Info
+                        {
+                            IdCtaCble = q.IdCtaCble,
+                            dc_Valor = q.dc_Valor,
+                            dc_para_conciliar = q.dc_para_conciliar,
+                            IdCentroCosto = q.IdCentroCosto,
+                            IdPunto_cargo = q.IdPunto_cargo,
+                            IdPunto_cargo_grupo = q.IdPunto_cargo_grupo
+                        }).ToList()),
+                        lst_det_canc_op = new List<cp_orden_pago_cancelaciones_Info>(info.Lst_det.Select(q => new cp_orden_pago_cancelaciones_Info
+                        {
+                            IdEmpresa_op = q.IdEmpresa_OP,
+                            IdOrdenPago_op = q.IdOrdenPago,
+                            Secuencia_op = q.Secuencia_OP,
+
+                            IdEmpresa_cxp = q.IdEmpresa_cxp,
+                            IdTipoCbte_cxp = q.IdTipoCbte_cxp,
+                            IdCbteCble_cxp = q.IdCbteCble_cxp,
+                            MontoAplicado = q.Valor,
+
+                            Observacion = "Archivo # " + info.IdArchivo.ToString() + " " +q.Referencia
+                        }).ToList())
+                    };
+                    if (odata_cbte.guardarDB(cbte, Info.Helps.cl_enumeradores.eTipoCbteBancario.NDBA))
+                    {
+                        var Entity = db.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault();
+                        if(Entity != null)
+                        {
+                            Entity.Contabilizado = true;
+                            Entity.Fecha_Proceso = DateTime.Now;
+                            Entity.IdUsuarioContabiliza = info.IdUsuario;
+                            Entity.IdTipoCbte = cbte.IdTipocbte;
+                            Entity.IdCbteCble = cbte.IdCbteCble;
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                
+
                 return true;
             }
             catch (Exception)

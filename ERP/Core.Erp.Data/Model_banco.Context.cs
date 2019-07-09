@@ -53,9 +53,9 @@ namespace Core.Erp.Data
         public DbSet<ba_parametros> ba_parametros { get; set; }
         public DbSet<ba_Conciliacion_det> ba_Conciliacion_det { get; set; }
         public DbSet<ba_archivo_transferencia_x_ba_tipo_flujo> ba_archivo_transferencia_x_ba_tipo_flujo { get; set; }
-        public DbSet<ba_Archivo_Transferencia> ba_Archivo_Transferencia { get; set; }
-        public DbSet<ba_Archivo_Transferencia_Det> ba_Archivo_Transferencia_Det { get; set; }
         public DbSet<ba_tipo_nota> ba_tipo_nota { get; set; }
+        public DbSet<ba_Archivo_Transferencia_Det> ba_Archivo_Transferencia_Det { get; set; }
         public DbSet<vwba_Archivo_Transferencia_Det> vwba_Archivo_Transferencia_Det { get; set; }
+        public DbSet<ba_Archivo_Transferencia> ba_Archivo_Transferencia { get; set; }
     }
 }

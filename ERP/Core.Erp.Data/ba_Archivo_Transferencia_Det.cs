@@ -23,8 +23,6 @@ namespace Core.Erp.Data
         public bool Estado { get; set; }
         public double Valor { get; set; }
         public decimal Secuencial_reg_x_proceso { get; set; }
-        public bool Contabilizado { get; set; }
-        public Nullable<System.DateTime> Fecha_proceso { get; set; }
         public string Referencia { get; set; }
     
         public virtual ba_Archivo_Transferencia ba_Archivo_Transferencia { get; set; }

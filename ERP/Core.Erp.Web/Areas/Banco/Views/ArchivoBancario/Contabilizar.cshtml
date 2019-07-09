@@ -27,12 +27,6 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script>
 
-    $(function () {
-        $("#cb_Valor").change(function () {
-            actualizarGridDetFlujo();
-        });
-    });
-
     function MostrarModalPlantilla() {
         $("#PlantillaModal").modal("show");
     }
@@ -75,7 +69,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridView_flujo_det.PerformCallback();
             },
             error: function (error) {
@@ -101,6 +94,29 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 GridView_flujo_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function ArmarDiario() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdBanco: $("#IdBanco").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ArmarDiario", "ArchivoBancario", new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_comprobante_detalle.PerformCallback();
             },
             error: function (error) {
             }
@@ -199,7 +215,7 @@
     }
 </script>
 
-@using (Html.BeginForm("Modificar", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Contabilizar", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdArchivo)
@@ -314,7 +330,10 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_op" aria-controls="op" role="tab" data-toggle="tab">Ordenes de pago   </a>
+                <a href="#tab_op" aria-controls="op" role="tab" data-toggle="tab">Ordenes de pago</a>
+            </li>
+            <li>
+                <a href="#tab_diario" aria-controls="vales" role="tab" data-toggle="tab">Diario</a>
             </li>
             <li>
                 <a href="#tab_flujo" aria-controls="flujo" role="tab" data-toggle="tab">Flujo</a>
@@ -342,17 +361,18 @@
 
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-1">
-                            <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <br />
+                @*
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br />
+                *@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -385,18 +405,21 @@
 
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
-                            <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
-                        </button>
-                    </div>
-                </div>
-                <br />
+                @*
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
+                <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
+            </button>
+        </div>
+    </div>
+    <br />
+                *@
                 @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "ArchivoBancario" })
             </div>
-
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario">
+                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+            </div>
 
         </div>
     </div>

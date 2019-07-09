@@ -21,9 +21,7 @@ namespace Core.Erp.Info.Banco
         public int Secuencia_OP { get; set; }
         public bool Estado { get; set; }
         public double Valor { get; set; }
-        public decimal Secuencial_reg_x_proceso { get; set; }
-        public bool Contabilizado { get; set; }
-        public Nullable<System.DateTime> Fecha_proceso { get; set; }        
+        public decimal Secuencial_reg_x_proceso { get; set; }       
         public string Referencia { get; set; }
         
 
@@ -40,6 +38,9 @@ namespace Core.Erp.Info.Banco
         public decimal? IdEntidad { get; set; }
         public string IdCtaCble { get; set; }
         public string pc_Cuenta { get; set; }
+        public int? IdEmpresa_cxp { get; set; }
+        public int? IdTipoCbte_cxp { get; set; }
+        public decimal? IdCbteCble_cxp { get; set; }
         #endregion
 
     }

@@ -23,8 +23,6 @@ namespace Core.Erp.Data
         public bool Estado { get; set; }
         public double Valor { get; set; }
         public decimal Secuencial_reg_x_proceso { get; set; }
-        public bool Contabilizado { get; set; }
-        public Nullable<System.DateTime> Fecha_proceso { get; set; }
         public string IdTipoCta_acreditacion_cat { get; set; }
         public string num_cta_acreditacion { get; set; }
         public Nullable<int> IdBanco_acreditacion { get; set; }
@@ -41,5 +39,8 @@ namespace Core.Erp.Data
         public System.DateTime cb_Fecha { get; set; }
         public string IdCtaCble_Acreedora { get; set; }
         public string pc_Cuenta { get; set; }
+        public Nullable<int> IdEmpresa_cxp { get; set; }
+        public Nullable<int> IdTipoCbte_cxp { get; set; }
+        public Nullable<decimal> IdCbteCble_cxp { get; set; }
     }
 }

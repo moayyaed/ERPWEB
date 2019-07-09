@@ -175,7 +175,7 @@ namespace Core.Erp.Data.Banco
                     
                     cb_FechaTransac = DateTime.Now,
                     cb_Estado = "A",
-                    cb_Valor = info.cb_Valor,
+                    cb_Valor = Math.Round(info.lst_det_ct.Where(q=> q.dc_Valor > 0).Sum(q=> q.dc_Valor),2,MidpointRounding.AwayFromZero),
                     IdUsuario = info.IdUsuario
                 });
 
@@ -208,7 +208,7 @@ namespace Core.Erp.Data.Banco
                     IdBanco = info.IdBanco,
                     cb_Fecha = info.cb_Fecha,
                     cb_Observacion = info.cb_Observacion,
-                    cb_Valor = info.cb_Valor,
+                    cb_Valor = info.cb_Valor = Math.Round(info.lst_det_ct.Where(q => q.dc_Valor > 0).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero),
                     cb_Cheque = info.cb_Cheque,
                     Estado = "A",
                     IdPersona_Girado_a = info.IdPersona_Girado_a,
@@ -235,6 +235,7 @@ namespace Core.Erp.Data.Banco
                 info.list_det = info.list_det == null ? new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>() : info.list_det;
                 if (info.list_det.Count > 0)
                 {
+                    int Secuencia = 1;
                     foreach (var item in info.list_det)
                     {
                         Context_b.ba_Cbte_Ban_x_ba_TipoFlujo.Add(new ba_Cbte_Ban_x_ba_TipoFlujo
@@ -245,7 +246,7 @@ namespace Core.Erp.Data.Banco
                             IdTipoFlujo = item.IdTipoFlujo,
                             Valor = item.Valor,
                             Porcentaje = item.Porcentaje,
-                            Secuencia = item.Secuencia
+                            Secuencia = Secuencia ++
                         });
                     }
                 }
