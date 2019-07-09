@@ -21,9 +21,7 @@ namespace Core.Erp.Data.Banco
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdArchivo = q.IdArchivo,
-                        Contabilizado = q.Contabilizado,
                         Estado = q.Estado,
-                        Fecha_proceso = q.Fecha_proceso,
                         IdEmpresa_OP = q.IdEmpresa_OP,
                         IdOrdenPago = q.IdOrdenPago,
                         Secuencia = q.Secuencia,
@@ -46,7 +44,11 @@ namespace Core.Erp.Data.Banco
                         IdPersona = q.IdPersona,
                         Fecha_Factura = q.cb_Fecha,
                         IdCtaCble = q.IdCtaCble_Acreedora,
-                        pc_Cuenta = q.pc_Cuenta
+                        pc_Cuenta = q.pc_Cuenta,
+
+                        IdCbteCble_cxp = q.IdCbteCble_cxp,
+                        IdEmpresa_cxp = q.IdEmpresa_cxp,
+                        IdTipoCbte_cxp = q.IdTipoCbte_cxp
                     }).ToList();
                 }
                 return Lista;
@@ -86,7 +88,10 @@ namespace Core.Erp.Data.Banco
                                  Fecha_Factura = q.Fecha_Fa_Prov,
                                  Observacion = q.Referencia,
                                  IdEntidad = q.IdEntidad,
-                                 IdPersona = q.IdPersona
+                                 IdPersona = q.IdPersona,
+                                 IdEmpresa_cxp = q.IdEmpresa_cxp,
+                                 IdTipoCbte_cxp = q.IdTipoCbte_cxp,
+                                 IdCbteCble_cxp = q.IdCbteCble_cxp
                              }).ToList();
                 }
                 return Lista;

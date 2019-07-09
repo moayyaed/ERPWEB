@@ -44,6 +44,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_parametros_Bus bus_param = new ba_parametros_Bus();
         ba_TipoFlujo_Bus bus_flujo = new ba_TipoFlujo_Bus();
         ct_cbtecble_det_List List_Cbte = new ct_cbtecble_det_List();
+        ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -233,7 +234,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
             List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
             cargar_combos();
-
+            model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
             return View(model);
@@ -244,6 +245,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             model.Lst_det = List_det.get_list(model.IdTransaccionSession);
             model.Lst_Flujo = List_flujo.get_list(model.IdTransaccionSession);
+            
             if (!validar(model,ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -275,6 +277,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
             #endregion
             cargar_combos();
+            model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
             return View(model);
         }
         [HttpPost]
@@ -303,7 +306,48 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+
+            ArmarDiario(model.IdEmpresa, model.IdTransaccionSession, model.IdBanco);           
+
+            model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
+            List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
+            cargar_combos();
+            #region Validacion Periodo Banco
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(model.IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+            model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
+
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult Contabilizar(ba_Archivo_Transferencia_Info model)
+        {
+            model.Lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.Lst_Flujo = List_flujo.get_list(model.IdTransaccionSession);
+            model.Lst_diario = List_Cbte.get_list(model.IdTransaccionSession);
+            model.IdUsuario = SessionFixed.IdUsuario;
+
+            if (Math.Round(model.Lst_diario.Sum(q=> q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
+            {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos();
+                ViewBag.mensaje = "El diario se encuentra descuadrado";
+                return View(model);
+            }
+
+            if (!bus_archivo.ContabilizarDB(model))
+            {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos();
+                ViewBag.mensaje = "No se ha podido contabilizar el archivo bancario";
+                return View(model);
+            }
+            return RedirectToAction("Index");
         }
         #endregion
         #region Detalle Archivo
@@ -413,7 +457,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_flujo.set_list(ListaDetFlujo, IdTransaccionSession);
             return Json(ListaDetFlujo, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult ArmarDiario(int IdEmpresa = 0, decimal IdTransaccionSession = 0, int IdBanco = 0)
         {
             List<ct_cbtecble_det_Info> Lista = new List<ct_cbtecble_det_Info>();
@@ -422,9 +465,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             int Secuencia = 1;
             if (banco != null)
             {
-                var LG = ListaD.GroupBy(q => new { q.IdCtaCble }).Select(q => new
+                var LG = ListaD.GroupBy(q => new { q.IdCtaCble, q.pc_Cuenta }).Select(q => new
                 {
                     IdCtaCble = q.Key.IdCtaCble,
+                    pc_Cuenta = q.Key.pc_Cuenta,
                     Valor = q.Sum(g => g.Valor)
                 });
 
@@ -435,19 +479,22 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                     {
                         secuencia = Secuencia++,
                         IdCtaCble = item.IdCtaCble,
+                        pc_Cuenta = item.pc_Cuenta,
                         dc_Valor = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
-                        dc_Valor_debe = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero) * -1
+                        dc_Valor_debe = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)
                     });
                 }
                 #endregion
 
                 #region Cuenta banco
+                var cuenta = bus_plancta.get_info(IdEmpresa, banco.IdCtaCble);
                 Lista.Add(new ct_cbtecble_det_Info
                 {
                     secuencia = Secuencia++,
-                    IdCtaCble = banco.IdCtaCble,
-                    dc_Valor = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),
-                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero) * -1
+                    IdCtaCble = banco == null ? string.Empty : banco.IdCtaCble,
+                    pc_Cuenta = cuenta == null ? string.Empty : cuenta.pc_Cuenta,
+                    dc_Valor = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)*-1,
+                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)
                 });
                 #endregion
             }

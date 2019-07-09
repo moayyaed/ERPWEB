@@ -37,10 +37,14 @@ namespace Core.Erp.Data
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string Motivo_anulacion { get; set; }
+        public string IdUsuarioContabiliza { get; set; }
         public Nullable<System.DateTime> Fecha_Proceso { get; set; }
         public bool Contabilizado { get; set; }
         public int IdSucursal { get; set; }
         public decimal SecuencialInicial { get; set; }
+        public Nullable<int> IdTipoCbte { get; set; }
+        public Nullable<decimal> IdCbteCble { get; set; }
+        public double cb_Valor { get; set; }
     
         public virtual ba_Banco_Cuenta ba_Banco_Cuenta { get; set; }
         public virtual ICollection<ba_Archivo_Transferencia_Det> ba_Archivo_Transferencia_Det { get; set; }

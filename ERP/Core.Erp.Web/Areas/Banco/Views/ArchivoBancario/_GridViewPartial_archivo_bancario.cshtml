@@ -61,10 +61,11 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Contabilizado")) == false)
                 {
                     ViewContext.Writer.Write(
                 Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdArchivo = DataBinder.Eval(tc.DataItem, "IdArchivo") }) + "&nbsp;" +
+                Html.ActionLink("Contabilizar", "Contabilizar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdArchivo = DataBinder.Eval(tc.DataItem, "IdArchivo") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdArchivo = DataBinder.Eval(tc.DataItem, "IdArchivo") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
@@ -78,18 +79,18 @@
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = Unit.Pixel(150);
+            c.Width = Unit.Pixel(250);
         });
 
 
-        settings.Columns.Add("cod_archivo", "Código archivo").Width = Unit.Percentage(15);
-        settings.Columns.Add("Nom_Archivo", "Nombre archivo").Width = Unit.Percentage(15);
-        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(60);
+        settings.Columns.Add("IdArchivo", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("Nom_Archivo", "Nombre archivo").Width = Unit.Percentage(20);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(40);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Estado";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
             column.EditorProperties().CheckBox(sp =>
             {
 

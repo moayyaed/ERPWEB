@@ -175,7 +175,7 @@ namespace Core.Erp.Data.Banco
                     
                     cb_FechaTransac = DateTime.Now,
                     cb_Estado = "A",
-                    cb_Valor = info.cb_Valor,
+                    cb_Valor = Math.Round(info.lst_det_ct.Where(q=> q.dc_Valor > 0).Sum(q=> q.dc_Valor),2,MidpointRounding.AwayFromZero),
                     IdUsuario = info.IdUsuario
                 });
 
