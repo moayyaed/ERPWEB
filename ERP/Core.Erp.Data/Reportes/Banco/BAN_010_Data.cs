@@ -43,7 +43,12 @@ namespace Core.Erp.Data.Reportes.Banco
                         Secuencia = q.Secuencia,
                         Secuencial_reg_x_proceso = q.Secuencial_reg_x_proceso,
                         Secuencia_OP = q.Secuencia_OP,
-                        Valor = q.Valor
+                        Valor = q.Valor,
+                        Fecha= q.Fecha,
+                        NombreProceso= q.NombreProceso,
+                        NomCuenta = q.NomCuenta,
+                        Observacion = q.Observacion
+
                     }).ToList();
                 }
                 return Lista;
