@@ -44,7 +44,9 @@ namespace Core.Erp.Data.Banco
                             Nom_Archivo = q.Nom_Archivo,
                             Observacion = q.Observacion,
                             IdSucursal = q.IdSucursal,
-                            cb_Valor = q.cb_Valor
+                            cb_Valor = q.cb_Valor,
+                            IdCbteCble = q.IdCbteCble,
+                            IdTipoCbte = q.IdTipoCbte
                         }).ToList();
 
                     }
@@ -66,7 +68,8 @@ namespace Core.Erp.Data.Banco
                             Observacion = q.Observacion,
                             IdSucursal = q.IdSucursal,
                             cb_Valor = q.cb_Valor,
-                            
+                            IdCbteCble = q.IdCbteCble,
+                            IdTipoCbte = q.IdTipoCbte
                         }).ToList();
                     }
                 }
@@ -361,7 +364,7 @@ namespace Core.Erp.Data.Banco
                             Entity.Fecha_Proceso = DateTime.Now;
                             Entity.IdUsuarioContabiliza = info.IdUsuario;
                             Entity.IdTipoCbte = cbte.IdTipocbte;
-                            Entity.IdCbteCble = cbte.IdTipocbte;
+                            Entity.IdCbteCble = cbte.IdCbteCble;
                             db.SaveChanges();
                         }
                     }

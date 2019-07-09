@@ -215,7 +215,7 @@
     }
 </script>
 
-@using (Html.BeginForm("Modificar", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Contabilizar", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdArchivo)
@@ -361,17 +361,18 @@
 
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-1">
-                            <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <br />
+                @*
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br />
+                *@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -404,15 +405,16 @@
 
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
-                            <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
-                        </button>
-                    </div>
-                </div>
-                <br />
+                @*
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
+                <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
+            </button>
+        </div>
+    </div>
+    <br />
+                *@
                 @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "ArchivoBancario" })
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario">
