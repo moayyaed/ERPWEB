@@ -1,11 +1,11 @@
-﻿CREATE VIEW vwba_Archivo_Transferencia_Det
+﻿CREATE VIEW dbo.vwba_Archivo_Transferencia_Det
 AS
 SELECT dbo.ba_Archivo_Transferencia_Det.IdEmpresa, dbo.ba_Archivo_Transferencia_Det.IdArchivo, dbo.ba_Archivo_Transferencia_Det.Secuencia, dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP, 
                   dbo.ba_Archivo_Transferencia_Det.IdOrdenPago, dbo.ba_Archivo_Transferencia_Det.Secuencia_OP, dbo.ba_Archivo_Transferencia_Det.Estado, dbo.ba_Archivo_Transferencia_Det.Valor, 
-                  dbo.ba_Archivo_Transferencia_Det.Secuencial_reg_x_proceso, dbo.ba_Archivo_Transferencia_Det.Contabilizado, dbo.ba_Archivo_Transferencia_Det.Fecha_proceso, dbo.cp_proveedor.IdTipoCta_acreditacion_cat, 
-                  dbo.cp_proveedor.num_cta_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion, dbo.cp_proveedor.pr_direccion, dbo.cp_proveedor.pr_correo, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, 
-                  dbo.tb_persona.pe_nombreCompleto, dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, dbo.ba_Archivo_Transferencia_Det.Referencia, dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, 
-                  dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, ct.IdCtaCble_Acreedora, pc.IdCtaCble +' - '+ pc.pc_Cuenta pc_Cuenta
+                  dbo.ba_Archivo_Transferencia_Det.Secuencial_reg_x_proceso, dbo.cp_proveedor.IdTipoCta_acreditacion_cat, dbo.cp_proveedor.num_cta_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion, dbo.cp_proveedor.pr_direccion, 
+                  dbo.cp_proveedor.pr_correo, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, dbo.ba_Archivo_Transferencia_Det.Referencia, 
+                  dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, ct.IdCtaCble_Acreedora, pc.IdCtaCble + ' - ' + pc.pc_Cuenta AS pc_Cuenta, 
+                  dbo.cp_orden_pago_det.IdEmpresa_cxp, dbo.cp_orden_pago_det.IdTipoCbte_cxp, dbo.cp_orden_pago_det.IdCbteCble_cxp
 FROM     dbo.ba_Archivo_Transferencia INNER JOIN
                   dbo.ba_Archivo_Transferencia_Det INNER JOIN
                   dbo.cp_orden_pago_det ON dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP = dbo.cp_orden_pago_det.IdEmpresa AND dbo.ba_Archivo_Transferencia_Det.IdOrdenPago = dbo.cp_orden_pago_det.IdOrdenPago AND 
@@ -17,8 +17,10 @@ FROM     dbo.ba_Archivo_Transferencia INNER JOIN
                   dbo.ba_Archivo_Transferencia.IdArchivo = dbo.ba_Archivo_Transferencia_Det.IdArchivo INNER JOIN
                   dbo.tb_banco ON dbo.cp_proveedor.IdBanco_acreditacion = dbo.tb_banco.IdBanco INNER JOIN
                   dbo.ct_cbtecble ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.ct_cbtecble.IdEmpresa AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.ct_cbtecble.IdTipoCbte AND 
-                  dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.ct_cbtecble.IdCbteCble left join vwct_cbtecble_con_ctacble_acreedora as ct on ct.IdEmpresa = cp_orden_pago_det.IdEmpresa
-				  and ct.IdTipoCbte = cp_orden_pago_det.IdTipoCbte_cxp and ct.IdCbteCble = cp_orden_pago_det.IdCbteCble_cxp left outer join ct_plancta as pc on ct.IdEmpresa = pc.IdEmpresa and ct.IdCtaCble_Acreedora = pc.IdCtaCble
+                  dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.ct_cbtecble.IdCbteCble LEFT OUTER JOIN
+                  dbo.vwct_cbtecble_con_ctacble_acreedora AS ct ON ct.IdEmpresa = dbo.cp_orden_pago_det.IdEmpresa AND ct.IdTipoCbte = dbo.cp_orden_pago_det.IdTipoCbte_cxp AND 
+                  ct.IdCbteCble = dbo.cp_orden_pago_det.IdCbteCble_cxp LEFT OUTER JOIN
+                  dbo.ct_plancta AS pc ON ct.IdEmpresa = pc.IdEmpresa AND ct.IdCtaCble_Acreedora = pc.IdCtaCble
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
 
@@ -94,7 +96,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     Right
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 1440
+         Column = 4392
          Alias = 900
          Table = 1176
          Output = 720
@@ -117,13 +119,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[38] 4[3] 2[37] 3) )"
+         Configuration = "(H (1[28] 4[60] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -213,7 +217,7 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 156
                Left = 668
-               Bottom = 286
+               Bottom = 509
                Right = 874
             End
             DisplayFlags = 280
@@ -255,6 +259,8 @@ Begin DesignProperties =
                Left = 1021
                Bottom = 555
           ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
+
+
 
 
 
