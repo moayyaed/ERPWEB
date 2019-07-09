@@ -21,7 +21,6 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
-
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
@@ -74,7 +73,6 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_det_conversion> vwin_Ing_Egr_Inven_det_conversion { get; set; }
         public DbSet<vwin_Producto_Composicion> vwin_Producto_Composicion { get; set; }
         public DbSet<in_Motivo_Inven> in_Motivo_Inven { get; set; }
-        public DbSet<vwin_Ing_Egr_InvenPorOrdenCompra> vwin_Ing_Egr_InvenPorOrdenCompra { get; set; }
         public DbSet<in_Catalogo> in_Catalogo { get; set; }
         public DbSet<in_movi_inven_tipo> in_movi_inven_tipo { get; set; }
         public DbSet<in_parametro> in_parametro { get; set; }
@@ -91,6 +89,9 @@ namespace Core.Erp.Data
         public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
         public DbSet<vwin_Transferencias> vwin_Transferencias { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_det> vwin_Ing_Egr_Inven_det { get; set; }
+        public DbSet<vwin_Ing_Egr_InvenPorOrdenCompra> vwin_Ing_Egr_InvenPorOrdenCompra { get; set; }
+        public DbSet<vwin_Ing_Egr_Inven_PorAprobar> vwin_Ing_Egr_Inven_PorAprobar { get; set; }
+        public DbSet<vwin_Ing_Egr_Inven_PorReversar> vwin_Ing_Egr_Inven_PorReversar { get; set; }
     
         public virtual ObjectResult<spSys_inv_Reversar_aprobacion_Result> spSys_inv_Reversar_aprobacion(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi, Nullable<bool> borar)
         {

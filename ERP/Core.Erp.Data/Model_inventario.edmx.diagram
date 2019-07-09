@@ -71,7 +71,6 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_det_conversion" Width="1.5" PointX="25.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Composicion" Width="1.5" PointX="25.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_inventario.in_Motivo_Inven" Width="1.5" PointX="14" PointY="31.125" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="26.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_inventario.in_Catalogo" Width="1.5" PointX="5.75" PointY="27.75" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inven_tipo" Width="1.5" PointX="0.75" PointY="21.25" />
         <EntityTypeShape EntityType="Model_inventario.in_parametro" Width="1.5" PointX="22.25" PointY="29.25" />
@@ -138,6 +137,9 @@
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_Producto" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida2" />
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="26.375" PointY="16.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorAprobar" Width="1.5" PointX="29.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorReversar" Width="1.5" PointX="0.75" PointY="29.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

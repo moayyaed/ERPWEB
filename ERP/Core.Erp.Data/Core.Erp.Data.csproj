@@ -2520,7 +2520,13 @@
     <Compile Include="vwin_Ing_Egr_Inven_distribucion_x_distribuir.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorAprobar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_PorContabilizar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorReversar.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_por_devolver.cs">

@@ -1,11 +1,9 @@
 @using System.Web.UI.WebControls;
-
 @{
-    var grid = Html.DevExpress().GridView(settings =>
-    {
-        settings.Name = "GridView_egreso_inventario";
-        settings.CallbackRouteValues = new { Controller = "EgresoInventario", Action = "GridViewPartial_egreso_inventario", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
-        settings.KeyFieldName = "IdNumMovi";
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_movimiento_inventario_x_aprobar";
+        settings.CallbackRouteValues = new { Controller = "AprobacionMovimientoInventario", Action = "GridViewPartial_movimiento_inventario_x_aprobar", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+        settings.KeyFieldName = "SecuencialID";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -56,44 +54,9 @@
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
-
-            if (Convert.ToString(e.GetValue("IdEstadoAproba")) == "APRO" &&  e.GetValue("FechaDespacho") == null )
-            {
-                e.Row.ForeColor = System.Drawing.Color.Blue;
-            }
-
-            if ( e.GetValue("FechaDespacho") != null)
-            {
-                e.Row.ForeColor = System.Drawing.Color.Green;
-            }
         };
-        settings.Columns.Add(c =>
-        {
-            c.Caption = "#";
-            c.SetDataItemTemplateContent(tc =>
-            {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new  { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
-            });
-            c.SetHeaderTemplateContent(tc =>
-            {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa  = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
-            });
-            c.Settings.AllowDragDrop = DefaultBoolean.False;
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
-        });
-
-        settings.Columns.Add("IdBodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add(column =>
         {
             column.FieldName = "cm_fecha";
@@ -102,26 +65,34 @@
             column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
         });
         settings.Columns.Add("tm_descripcion", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
-        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        settings.Columns.Add("IdMotivo_Inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(24);
+        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("EstadoAprobacion", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
             column.EditorProperties().CheckBox(sp =>
             {
 
             });
         });
-        settings.Columns.Add("IdEstadoAproba", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
         settings.Columns.Add(column =>
         {
+            column.Caption = "";
+            column.FieldName = "";
+            column.Width = Unit.Percentage(8);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_002", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(c.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(c.DataItem, "IdNumMovi") }, Request.Url.Scheme) + "');\"></span>");
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + c.KeyValue;
+                    settingsBtn.Text = "Aprobar";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {AprobarMovimiento('" + c.KeyValue + "');}";
+                }).Render();
             });
-            column.Width = Unit.Percentage(5);
         });
     });
 }

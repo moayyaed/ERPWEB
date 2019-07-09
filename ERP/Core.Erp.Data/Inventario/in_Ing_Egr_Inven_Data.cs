@@ -28,6 +28,8 @@ namespace Core.Erp.Data.Inventario
                         Lista = (from q in Context.in_Ing_Egr_Inven
                                  join t in Context.in_movi_inven_tipo
                                  on new { q.IdEmpresa, q.IdMovi_inven_tipo} equals new { t.IdEmpresa, t.IdMovi_inven_tipo}
+                                 //join m in Context.in_Motivo_Inven
+                                 //on new { q.IdEmpresa, q.IdMotivo_Inv } equals new { m.IdEmpresa, m.IdMotivo_Inv }
                                  where q.IdEmpresa == IdEmpresa
                                  && q.signo == signo 
                                  && IdSucursalIni <= q.IdSucursal
@@ -953,6 +955,7 @@ namespace Core.Erp.Data.Inventario
                                      cm_observacion = q.cm_observacion,
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
+                                     Desc_mov_inv = q.Desc_mov_inv,
                                      EstadoBool = q.Estado == "A" ? true : false
 
                                  }).ToList();
@@ -983,6 +986,7 @@ namespace Core.Erp.Data.Inventario
                                      cm_observacion = q.cm_observacion,
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
+                                     Desc_mov_inv = q.Desc_mov_inv,
                                      EstadoBool = q.Estado == "A" ? true : false
 
                                  }).ToList();
@@ -1032,6 +1036,172 @@ namespace Core.Erp.Data.Inventario
                 return Lista;
             }
             catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<in_Ing_Egr_Inven_Info> get_list_x_aprobar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
+                List<in_Ing_Egr_Inven_Info> Lista;
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    Lista = (from q in Context.vwin_Ing_Egr_Inven_PorAprobar
+                                where q.IdEmpresa == IdEmpresa
+                                && IdSucursalIni <= q.IdSucursal
+                                && q.IdSucursal <= IdSucursalFin
+                                && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
+                                orderby new { q.IdNumMovi } descending
+                                select new in_Ing_Egr_Inven_Info
+                                {
+                                    IdEmpresa = q.IdEmpresa,
+                                    IdSucursal = q.IdSucursal,
+                                    IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                    IdBodega = q.IdBodega,
+                                    nom_bodega = q.bo_Descripcion,
+                                    IdNumMovi = q.IdNumMovi,
+                                    IdMotivo_Inv = q.IdMotivo_Inv,
+                                    Estado = q.Estado,
+                                    signo = q.signo,
+                                    cm_observacion = q.cm_observacion,
+                                    CodMoviInven = q.CodMoviInven,
+                                    cm_fecha = q.cm_fecha,
+                                    tm_descripcion = q.tm_descripcion,
+                                    Desc_mov_inv = q.Desc_mov_inv,
+                                    IdEstadoAproba = q.IdEstadoAproba,
+                                    IdUsuarioAR = q.IdUsuarioAR,
+                                    FechaAR = q.FechaAR,
+                                    FechaDespacho = q.FechaDespacho,
+                                    IdUsuarioDespacho = q.IdUsuarioDespacho,
+                                    EstadoAprobacion = q.EstadoAprobacion,
+                                    EstadoBool = q.Estado == "A" ? true : false
+
+                                }).ToList();
+
+                    Lista.ForEach(q => q.SecuencialID = q.IdEmpresa.ToString("00") + q.IdSucursal.ToString("00") + q.IdMovi_inven_tipo.ToString("00") + q.IdNumMovi.ToString("00000000"));
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool aprobarDB(in_Ing_Egr_Inven_Info info)
+        {
+            try
+            {
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    in_Ing_Egr_Inven Entity = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo && q.IdNumMovi == info.IdNumMovi);
+                    if (Entity == null) return false;
+
+                    Entity.IdUsuarioAR = info.IdUsuarioAR;
+                    Entity.IdEstadoAproba = info.IdEstadoAproba = "APRO";
+                    Entity.FechaAR = DateTime.Now;
+
+                    Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
+
+                    Context.SaveChanges();
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
+                List<in_Ing_Egr_Inven_Info> Lista;
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    Lista = (from q in Context.vwin_Ing_Egr_Inven_PorReversar
+                             where q.IdEmpresa == IdEmpresa
+                             && IdSucursalIni <= q.IdSucursal
+                             && q.IdSucursal <= IdSucursalFin
+                             && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
+                             orderby new { q.IdNumMovi } descending
+                             select new in_Ing_Egr_Inven_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                 IdBodega = q.IdBodega,
+                                 nom_bodega = q.bo_Descripcion,
+                                 IdNumMovi = q.IdNumMovi,
+                                 IdMotivo_Inv = q.IdMotivo_Inv,
+                                 Estado = q.Estado,
+                                 signo = q.signo,
+                                 cm_observacion = q.cm_observacion,
+                                 CodMoviInven = q.CodMoviInven,
+                                 cm_fecha = q.cm_fecha,
+                                 tm_descripcion = q.tm_descripcion,
+                                 Desc_mov_inv = q.Desc_mov_inv,
+                                 IdEstadoAproba = q.IdEstadoAproba,
+                                 IdUsuarioAR = q.IdUsuarioAR,
+                                 FechaAR = q.FechaAR,
+                                 FechaDespacho = q.FechaDespacho,
+                                 IdUsuarioDespacho = q.IdUsuarioDespacho,
+                                 EstadoAprobacion = q.EstadoAprobacion,
+                                 EstadoBool = q.Estado == "A" ? true : false
+
+                             }).ToList();
+
+                    Lista.ForEach(q => q.SecuencialID = q.IdEmpresa.ToString("00") + q.IdSucursal.ToString("00") + q.IdMovi_inven_tipo.ToString("00") + q.IdNumMovi.ToString("00000000"));
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool reversarDB(in_Ing_Egr_Inven_Info info)
+        {
+            try
+            {
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    in_Ing_Egr_Inven Entity = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo && q.IdNumMovi == info.IdNumMovi);
+                    if (Entity == null) return false;
+
+                    Entity.IdUsuarioAR = info.IdUsuarioAR;
+                    Entity.IdEstadoAproba = info.IdEstadoAproba = "XAPRO";
+                    Entity.FechaAR = DateTime.Now;
+
+                    Context.spSys_inv_Reversar_aprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, false);
+
+                    Context.SaveChanges();
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
             {
 
                 throw;
