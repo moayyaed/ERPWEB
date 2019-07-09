@@ -117,7 +117,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                     mensaje = "Falta distribución de flujo";
                     return false;
                 }
-                if (Math.Round(i_validar.Lst_Flujo.Sum(q=> q.Valor),2,MidpointRounding.AwayFromZero) != Math.Round(i_validar.Lst_det.Sum(q=> q.Valor),2,MidpointRounding.AwayFromZero))
+                double Diferencia = Math.Round(i_validar.Lst_Flujo.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero) - Math.Round(i_validar.Lst_det.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero);
+                if (Diferencia != 0)
                 {
                     mensaje = "Existe una diferencia entre la distribución del flujo y el total a pagar";
                     return false;
@@ -245,11 +246,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             {
                 ViewBag.mensaje = mensaje;
                 cargar_combos();
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 return View(model);
             }
             if (!bus_archivo.ModificarDB(model))
             {
                 cargar_combos();
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 return View(model);
             }
 
@@ -431,7 +434,20 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 System.IO.File.Delete(rutafile + NombreArchivo + ".txt");                
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
                 {
-                    foreach (var item in info.Lst_det.Where(v => v.Valor > 0))
+                    /*
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario }).Select(q => new
+                    {
+                        num_cta_acreditacion = q.Key.num_cta_acreditacion,
+                        Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
+                        pe_cedulaRuc = q.Key.pe_cedulaRuc,
+                        CodigoLegalBanco = q.Key.CodigoLegalBanco,
+                        IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
+                        IdTipoDocumento = q.Key.IdTipoDocumento,
+                        Nom_Beneficiario = q.Key.Nom_Beneficiario,
+                        Valor = q.Sum(g=> g.Valor)
+                    }).ToList();
+                    */
+                    foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
                     {
                         string linea = "";
                         double valor = Convert.ToDouble(item.Valor);
@@ -456,7 +472,16 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         linea += "\t";//Ciudad
                         linea += "\t";//Telefono
                         linea += "\t";//Localidad
-                        linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0,200) : item.Referencia.Trim())) + "\t";
+                        var Referencia = string.Empty;
+                        /*
+                        foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
+                        {
+                            if(!string.IsNullOrEmpty(refe.Referencia))
+                                Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
+                        }
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 200 ? Referencia.Substring(0, 200) : Referencia.Trim())) + "\t";
+                        */
+                        linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
                         linea += "\t";//Ref adicional
 
                         file.WriteLine(linea);
