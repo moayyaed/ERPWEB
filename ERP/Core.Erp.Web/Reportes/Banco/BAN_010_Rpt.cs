@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Info.Reportes.Banco;
 using Core.Erp.Bus.Reportes.Banco;
 using System.Collections.Generic;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Banco
 {
@@ -29,6 +30,13 @@ namespace Core.Erp.Web.Reportes.Banco
             BAN_010_Bus bus_rpt = new BAN_010_Bus();
             List<BAN_010_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdArchivo);
             this.DataSource = lst_rpt;
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }

@@ -34,5 +34,9 @@ namespace Core.Erp.Info.Reportes.Banco
         public decimal IdEntidad { get; set; }
         public System.DateTime cb_Fecha { get; set; }
         public string ba_descripcion { get; set; }
+        public string NomCuenta { get; set; }
+        public string NombreProceso { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public string Observacion { get; set; }
     }
 }
