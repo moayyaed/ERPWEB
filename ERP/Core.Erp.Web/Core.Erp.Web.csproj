@@ -387,6 +387,7 @@
     <Compile Include="Areas\Importacion\Controllers\RecepcionOrdenCompraController.cs" />
     <Compile Include="Areas\Importacion\ImportacionAreaRegistration.cs" />
     <Compile Include="Areas\Inventario\Controllers\AjusteFisicoInventarioController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\AprobacionDespachoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\AprobacionMovimientoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\AuditoriaInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\CatalogoInventarioController.cs" />
@@ -10158,6 +10159,8 @@
     <Content Include="Areas\Inventario\Views\AprobacionMovimientoInventario\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\ReversoMovimientoInventario\_GridViewPartial_movimiento_inventario_x_reversar.cshtml" />
     <Content Include="Areas\Inventario\Views\ReversoMovimientoInventario\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\AprobacionDespacho\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\AprobacionDespacho\_GridViewPartial_aprobacion_despacho.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
