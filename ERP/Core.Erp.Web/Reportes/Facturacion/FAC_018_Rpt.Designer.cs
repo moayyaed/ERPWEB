@@ -138,6 +138,7 @@
             this.xrTableCell41 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell51 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.p_CreDeb = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -1177,6 +1178,11 @@
             this.xrTableCell51.TextFormatString = "{0:n2}";
             this.xrTableCell51.Weight = 0.5522641613640088D;
             // 
+            // p_CreDeb
+            // 
+            this.p_CreDeb.Name = "p_CreDeb";
+            this.p_CreDeb.Visible = false;
+            // 
             // FAC_018_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1204,7 +1210,8 @@
             this.p_IdTipoNota,
             this.p_mostrar_anulados,
             this.p_fecha_ini,
-            this.p_fecha_fin});
+            this.p_fecha_fin,
+            this.p_CreDeb});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_018_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -1320,5 +1327,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell17;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow10;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
+        public DevExpress.XtraReports.Parameters.Parameter p_CreDeb;
     }
 }

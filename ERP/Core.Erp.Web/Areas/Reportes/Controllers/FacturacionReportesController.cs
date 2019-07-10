@@ -898,7 +898,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdCliente = 0
+                IdCliente = 0,
+                CreDeb = "C"
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_FAC018(model);
@@ -919,6 +920,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdTipoNota.Value = model.IdTipoNota;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_CreDeb.Value = model.CreDeb;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
@@ -945,6 +947,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdTipoNota.Value = model.IdTipoNota;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_CreDeb.Value = model.CreDeb;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;

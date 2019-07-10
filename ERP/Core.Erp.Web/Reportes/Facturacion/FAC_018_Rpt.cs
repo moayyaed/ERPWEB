@@ -7,6 +7,7 @@ using Core.Erp.Info.Reportes.Facturacion;
 using Core.Erp.Bus.Reportes.Facturacion;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Facturacion
 {
@@ -17,6 +18,8 @@ namespace Core.Erp.Web.Reportes.Facturacion
         public string usuario { get; set; }
         public string empresa { get; set; }
         public int[] IntArray { get; set; }
+        List<FAC_018_Info> lst_rpt = new List<FAC_018_Info>();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         public FAC_018_Rpt()
         {
             InitializeComponent();
@@ -35,9 +38,15 @@ namespace Core.Erp.Web.Reportes.Facturacion
             DateTime fecha_ini = string.IsNullOrEmpty(p_fecha_ini.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_ini.Value);
             DateTime fecha_fin = string.IsNullOrEmpty(p_fecha_fin.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
-
+            string CreDeb = string.IsNullOrEmpty(p_CreDeb.Value.ToString()) ? "" : Convert.ToString(p_CreDeb.Value);
             FAC_018_Bus bus_rpt = new FAC_018_Bus();
-            List<FAC_018_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdCliente, IdTipoNota, fecha_ini, fecha_fin, mostrar_anulados);
+            string Sucursal = "";
+
+            tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
+            Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, "");
+
+            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdCliente, IdTipoNota, fecha_ini, fecha_fin, CreDeb, mostrar_anulados));
+            lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
 
             #region Grupo
 
@@ -58,10 +67,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
                      }).ToList();
             
             #endregion
-
-
             this.DataSource = lst_rpt;
-
         }
 
         private void SubReporte_resumen_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
