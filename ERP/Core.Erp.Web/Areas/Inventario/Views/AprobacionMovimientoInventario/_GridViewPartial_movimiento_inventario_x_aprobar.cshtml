@@ -66,17 +66,14 @@
         });
         settings.Columns.Add("tm_descripcion", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
         settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(22);
-        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("EstadoAprobacion", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
         settings.Columns.Add(column =>
         {
-            column.FieldName = "EstadoBool";
-            column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
-            column.EditorProperties().CheckBox(sp =>
+            column.SetDataItemTemplateContent(c =>
             {
-
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_002", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(c.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(c.DataItem, "IdNumMovi") }, Request.Url.Scheme) + "');\"></span>");
             });
+            column.Width = Unit.Percentage(10);
         });
         settings.Columns.Add(column =>
         {

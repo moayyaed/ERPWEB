@@ -139,7 +139,9 @@
         <AssociationConnector Association="Model_inventario.FK_in_Ing_Egr_Inven_det_in_UnidadMedida3" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="26.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorAprobar" Width="1.5" PointX="29.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorReversar" Width="1.5" PointX="0.75" PointY="29.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorDespachar" Width="1.5" PointX="0.75" PointY="29.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorReversar" Width="1.5" PointX="2.75" PointY="29.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven" Width="1.5" PointX="29.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

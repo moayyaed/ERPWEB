@@ -21,10 +21,12 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
+
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -91,7 +93,9 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_det> vwin_Ing_Egr_Inven_det { get; set; }
         public DbSet<vwin_Ing_Egr_InvenPorOrdenCompra> vwin_Ing_Egr_InvenPorOrdenCompra { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorAprobar> vwin_Ing_Egr_Inven_PorAprobar { get; set; }
+        public DbSet<vwin_Ing_Egr_Inven_PorDespachar> vwin_Ing_Egr_Inven_PorDespachar { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorReversar> vwin_Ing_Egr_Inven_PorReversar { get; set; }
+        public DbSet<vwin_Ing_Egr_Inven> vwin_Ing_Egr_Inven { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {

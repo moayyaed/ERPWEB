@@ -855,6 +855,41 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_devolucion_inven_det' no tien
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwin_Ing_Egr_Inven">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="signo" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Desc_mov_inv" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="int" Nullable="false" />
+          <Property Name="tm_descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdBodega" Type="int" />
+          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="signo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CodMoviInven" Type="varchar" MaxLength="25" />
+          <Property Name="cm_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="cm_fecha" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdMotivo_Inv" Type="int" />
+          <Property Name="Desc_mov_inv" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IdResponsable" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdEstadoAproba" Type="varchar" MaxLength="15" />
+          <Property Name="FechaDespacho" Type="datetime" />
+          <Property Name="IdUsuarioAR" Type="varchar" MaxLength="20" />
+          <Property Name="FechaAR" Type="datetime" />
+          <Property Name="IdUsuarioDespacho" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_det_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det_conversion">
           <Key>
@@ -1047,6 +1082,43 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorContabilizar
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="EsTransferencia" Type="bit" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorDespachar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwin_Ing_Egr_Inven_PorDespachar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="signo" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="Desc_mov_inv" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="EstadoAprobacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="int" Nullable="false" />
+          <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdBodega" Type="int" />
+          <Property Name="signo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CodMoviInven" Type="varchar" MaxLength="25" />
+          <Property Name="cm_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="cm_fecha" Type="datetime" Nullable="false" />
+          <Property Name="IdMotivo_Inv" Type="int" />
+          <Property Name="IdResponsable" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdEstadoAproba" Type="varchar" MaxLength="15" />
+          <Property Name="IdUsuarioAR" Type="varchar" MaxLength="20" />
+          <Property Name="FechaAR" Type="datetime" />
+          <Property Name="IdUsuarioDespacho" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDespacho" Type="datetime" />
+          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Desc_mov_inv" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="tm_descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EstadoAprobacion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorReversar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2742,6 +2814,30 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_devolucion_inven_det].[IdProducto] AS [IdProducto]
     FROM [dbo].[vwin_devolucion_inven_det] AS [vwin_devolucion_inven_det]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwin_Ing_Egr_Inven" EntityType="Self.vwin_Ing_Egr_Inven" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwin_Ing_Egr_Inven].[IdEmpresa] AS [IdEmpresa], 
+    [vwin_Ing_Egr_Inven].[IdSucursal] AS [IdSucursal], 
+    [vwin_Ing_Egr_Inven].[IdMovi_inven_tipo] AS [IdMovi_inven_tipo], 
+    [vwin_Ing_Egr_Inven].[tm_descripcion] AS [tm_descripcion], 
+    [vwin_Ing_Egr_Inven].[IdNumMovi] AS [IdNumMovi], 
+    [vwin_Ing_Egr_Inven].[IdBodega] AS [IdBodega], 
+    [vwin_Ing_Egr_Inven].[bo_Descripcion] AS [bo_Descripcion], 
+    [vwin_Ing_Egr_Inven].[signo] AS [signo], 
+    [vwin_Ing_Egr_Inven].[CodMoviInven] AS [CodMoviInven], 
+    [vwin_Ing_Egr_Inven].[cm_observacion] AS [cm_observacion], 
+    [vwin_Ing_Egr_Inven].[cm_fecha] AS [cm_fecha], 
+    [vwin_Ing_Egr_Inven].[Estado] AS [Estado], 
+    [vwin_Ing_Egr_Inven].[IdMotivo_Inv] AS [IdMotivo_Inv], 
+    [vwin_Ing_Egr_Inven].[Desc_mov_inv] AS [Desc_mov_inv], 
+    [vwin_Ing_Egr_Inven].[IdResponsable] AS [IdResponsable], 
+    [vwin_Ing_Egr_Inven].[IdEstadoAproba] AS [IdEstadoAproba], 
+    [vwin_Ing_Egr_Inven].[FechaDespacho] AS [FechaDespacho], 
+    [vwin_Ing_Egr_Inven].[IdUsuarioAR] AS [IdUsuarioAR], 
+    [vwin_Ing_Egr_Inven].[FechaAR] AS [FechaAR], 
+    [vwin_Ing_Egr_Inven].[IdUsuarioDespacho] AS [IdUsuarioDespacho]
+    FROM [dbo].[vwin_Ing_Egr_Inven] AS [vwin_Ing_Egr_Inven]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwin_Ing_Egr_Inven_det_conversion" EntityType="Self.vwin_Ing_Egr_Inven_det_conversion" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwin_Ing_Egr_Inven_det_conversion].[IdEmpresa] AS [IdEmpresa], 
@@ -2862,6 +2958,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Ing_Egr_Inven_PorContabilizar].[Estado] AS [Estado], 
     [vwin_Ing_Egr_Inven_PorContabilizar].[EsTransferencia] AS [EsTransferencia]
     FROM [dbo].[vwin_Ing_Egr_Inven_PorContabilizar] AS [vwin_Ing_Egr_Inven_PorContabilizar]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwin_Ing_Egr_Inven_PorDespachar" EntityType="Self.vwin_Ing_Egr_Inven_PorDespachar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdEmpresa] AS [IdEmpresa], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdSucursal] AS [IdSucursal], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdMovi_inven_tipo] AS [IdMovi_inven_tipo], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdNumMovi] AS [IdNumMovi], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdBodega] AS [IdBodega], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[signo] AS [signo], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[CodMoviInven] AS [CodMoviInven], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[cm_observacion] AS [cm_observacion], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[cm_fecha] AS [cm_fecha], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdMotivo_Inv] AS [IdMotivo_Inv], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdResponsable] AS [IdResponsable], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdEstadoAproba] AS [IdEstadoAproba], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdUsuarioAR] AS [IdUsuarioAR], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[FechaAR] AS [FechaAR], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[IdUsuarioDespacho] AS [IdUsuarioDespacho], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[FechaDespacho] AS [FechaDespacho], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[bo_Descripcion] AS [bo_Descripcion], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[Desc_mov_inv] AS [Desc_mov_inv], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[tm_descripcion] AS [tm_descripcion], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[Estado] AS [Estado], 
+    [vwin_Ing_Egr_Inven_PorDespachar].[EstadoAprobacion] AS [EstadoAprobacion]
+    FROM [dbo].[vwin_Ing_Egr_Inven_PorDespachar] AS [vwin_Ing_Egr_Inven_PorDespachar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_Ing_Egr_Inven_PorReversar" EntityType="Self.vwin_Ing_Egr_Inven_PorReversar" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -4450,7 +4571,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           </AssociationSet>
           <EntitySet Name="vwin_Ing_Egr_InvenPorOrdenCompra" EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" />
           <EntitySet Name="vwin_Ing_Egr_Inven_PorAprobar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorAprobar" />
+          <EntitySet Name="vwin_Ing_Egr_Inven_PorDespachar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorDespachar" />
           <EntitySet Name="vwin_Ing_Egr_Inven_PorReversar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorReversar" />
+          <EntitySet Name="vwin_Ing_Egr_Inven" EntityType="Model_inventario.vwin_Ing_Egr_Inven" />
           </EntityContainer>
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
@@ -6526,6 +6649,41 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="EstadoAprobacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vwin_Ing_Egr_Inven_PorDespachar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="signo" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="Desc_mov_inv" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="EstadoAprobacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdBodega" Type="Int32" />
+          <Property Name="signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CodMoviInven" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdMotivo_Inv" Type="Int32" />
+          <Property Name="IdResponsable" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdEstadoAproba" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioAR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAR" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioDespacho" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDespacho" Type="DateTime" Precision="3" />
+          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Desc_mov_inv" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="tm_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EstadoAprobacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="vwin_Ing_Egr_Inven_PorReversar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -6560,6 +6718,39 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="tm_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="EstadoAprobacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwin_Ing_Egr_Inven">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="signo" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Desc_mov_inv" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="tm_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdBodega" Type="Int32" />
+          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CodMoviInven" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdMotivo_Inv" Type="Int32" />
+          <Property Name="Desc_mov_inv" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IdResponsable" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdEstadoAproba" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDespacho" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAR" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioDespacho" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -7806,6 +7997,33 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vwin_Ing_Egr_Inven_PorDespachar">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven_PorDespachar">
+              <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven_PorDespachar">
+                <ScalarProperty Name="EstadoAprobacion" ColumnName="EstadoAprobacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
+                <ScalarProperty Name="Desc_mov_inv" ColumnName="Desc_mov_inv" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="FechaDespacho" ColumnName="FechaDespacho" />
+                <ScalarProperty Name="IdUsuarioDespacho" ColumnName="IdUsuarioDespacho" />
+                <ScalarProperty Name="FechaAR" ColumnName="FechaAR" />
+                <ScalarProperty Name="IdUsuarioAR" ColumnName="IdUsuarioAR" />
+                <ScalarProperty Name="IdEstadoAproba" ColumnName="IdEstadoAproba" />
+                <ScalarProperty Name="IdResponsable" ColumnName="IdResponsable" />
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="CodMoviInven" ColumnName="CodMoviInven" />
+                <ScalarProperty Name="signo" ColumnName="signo" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vwin_Ing_Egr_Inven_PorReversar">
             <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven_PorReversar">
               <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven_PorReversar">
@@ -7827,6 +8045,32 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="signo" ColumnName="signo" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_Ing_Egr_Inven">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven">
+              <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven">
+                <ScalarProperty Name="IdUsuarioDespacho" ColumnName="IdUsuarioDespacho" />
+                <ScalarProperty Name="FechaAR" ColumnName="FechaAR" />
+                <ScalarProperty Name="IdUsuarioAR" ColumnName="IdUsuarioAR" />
+                <ScalarProperty Name="FechaDespacho" ColumnName="FechaDespacho" />
+                <ScalarProperty Name="IdEstadoAproba" ColumnName="IdEstadoAproba" />
+                <ScalarProperty Name="IdResponsable" ColumnName="IdResponsable" />
+                <ScalarProperty Name="Desc_mov_inv" ColumnName="Desc_mov_inv" />
+                <ScalarProperty Name="IdMotivo_Inv" ColumnName="IdMotivo_Inv" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="CodMoviInven" ColumnName="CodMoviInven" />
+                <ScalarProperty Name="signo" ColumnName="signo" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
                 <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />

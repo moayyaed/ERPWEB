@@ -25,11 +25,7 @@ namespace Core.Erp.Data.Inventario
                 using (Entities_inventario Context = new Entities_inventario())
                 {
                     if (mostrar_anulados)
-                        Lista = (from q in Context.in_Ing_Egr_Inven
-                                 join t in Context.in_movi_inven_tipo
-                                 on new { q.IdEmpresa, q.IdMovi_inven_tipo} equals new { t.IdEmpresa, t.IdMovi_inven_tipo}
-                                 //join m in Context.in_Motivo_Inven
-                                 //on new { q.IdEmpresa, q.IdMotivo_Inv } equals new { m.IdEmpresa, m.IdMotivo_Inv }
+                        Lista = (from q in Context.vwin_Ing_Egr_Inven
                                  where q.IdEmpresa == IdEmpresa
                                  && q.signo == signo 
                                  && IdSucursalIni <= q.IdSucursal
@@ -49,7 +45,7 @@ namespace Core.Erp.Data.Inventario
                                      cm_observacion = q.cm_observacion,
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
-                                     tm_descripcion = t.tm_descripcion,
+                                     tm_descripcion = q.tm_descripcion,
                                      IdEstadoAproba = q.IdEstadoAproba,
                                      IdUsuarioAR = q.IdUsuarioAR,
                                      FechaAR = q.FechaAR,
@@ -60,9 +56,7 @@ namespace Core.Erp.Data.Inventario
                                  }).ToList();
 
                     else
-                        Lista = (from q in Context.in_Ing_Egr_Inven
-                                 join t in Context.in_movi_inven_tipo
-                                 on new { q.IdEmpresa, q.IdMovi_inven_tipo } equals new { t.IdEmpresa, t.IdMovi_inven_tipo }
+                        Lista = (from q in Context.vwin_Ing_Egr_Inven
                                  where q.IdEmpresa == IdEmpresa
                                  && q.signo == signo
                                  && IdSucursalIni <= q.IdSucursal
@@ -83,7 +77,7 @@ namespace Core.Erp.Data.Inventario
                                      cm_observacion = q.cm_observacion,
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
-                                     tm_descripcion = t.tm_descripcion,
+                                     tm_descripcion = q.tm_descripcion,
                                      IdEstadoAproba = q.IdEstadoAproba,
                                      IdUsuarioAR = q.IdUsuarioAR,
                                      FechaAR = q.FechaAR,
@@ -1191,7 +1185,9 @@ namespace Core.Erp.Data.Inventario
 
                     Entity.IdUsuarioAR = info.IdUsuarioAR;
                     Entity.IdEstadoAproba = info.IdEstadoAproba = "XAPRO";
-                    Entity.FechaAR = DateTime.Now;                    
+                    Entity.FechaAR = DateTime.Now;
+
+                    ReversarAprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi);
 
                     Context.SaveChanges();
                 }
