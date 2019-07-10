@@ -92,7 +92,7 @@
             c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
 
-        settings.Columns.Add("IdBodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
@@ -103,7 +103,7 @@
         });
         settings.Columns.Add("tm_descripcion", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
         settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        settings.Columns.Add("IdMotivo_Inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
@@ -114,7 +114,7 @@
 
             });
         });
-        settings.Columns.Add("IdEstadoAproba", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        settings.Columns.Add("EstadoAprobacion", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
         settings.Columns.Add(column =>
         {
             column.SetDataItemTemplateContent(c =>

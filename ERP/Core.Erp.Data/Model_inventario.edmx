@@ -867,6 +867,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven' no tiene defin
             <PropertyRef Name="cm_fecha" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Desc_mov_inv" />
+            <PropertyRef Name="EstadoAprobacion" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -888,6 +889,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven' no tiene defin
           <Property Name="IdUsuarioAR" Type="varchar" MaxLength="20" />
           <Property Name="FechaAR" Type="datetime" />
           <Property Name="IdUsuarioDespacho" Type="varchar" MaxLength="20" />
+          <Property Name="EstadoAprobacion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_det_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2835,7 +2837,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Ing_Egr_Inven].[FechaDespacho] AS [FechaDespacho], 
     [vwin_Ing_Egr_Inven].[IdUsuarioAR] AS [IdUsuarioAR], 
     [vwin_Ing_Egr_Inven].[FechaAR] AS [FechaAR], 
-    [vwin_Ing_Egr_Inven].[IdUsuarioDespacho] AS [IdUsuarioDespacho]
+    [vwin_Ing_Egr_Inven].[IdUsuarioDespacho] AS [IdUsuarioDespacho], 
+    [vwin_Ing_Egr_Inven].[EstadoAprobacion] AS [EstadoAprobacion]
     FROM [dbo].[vwin_Ing_Egr_Inven] AS [vwin_Ing_Egr_Inven]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_Ing_Egr_Inven_det_conversion" EntityType="Self.vwin_Ing_Egr_Inven_det_conversion" store:Type="Views" store:Schema="dbo">
@@ -6730,6 +6733,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <PropertyRef Name="cm_fecha" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Desc_mov_inv" />
+            <PropertyRef Name="EstadoAprobacion" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
@@ -6751,6 +6755,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="IdUsuarioAR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FechaAR" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioDespacho" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoAprobacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -8054,6 +8059,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySetMapping Name="vwin_Ing_Egr_Inven">
             <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven">
               <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven">
+                <ScalarProperty Name="EstadoAprobacion" ColumnName="EstadoAprobacion" />
                 <ScalarProperty Name="IdUsuarioDespacho" ColumnName="IdUsuarioDespacho" />
                 <ScalarProperty Name="FechaAR" ColumnName="FechaAR" />
                 <ScalarProperty Name="IdUsuarioAR" ColumnName="IdUsuarioAR" />

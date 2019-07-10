@@ -34,5 +34,6 @@ namespace Core.Erp.Data
         public string IdUsuarioAR { get; set; }
         public Nullable<System.DateTime> FechaAR { get; set; }
         public string IdUsuarioDespacho { get; set; }
+        public string EstadoAprobacion { get; set; }
     }
 }
