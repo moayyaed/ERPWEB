@@ -66,6 +66,18 @@
                     @Html.ValidationMessageFor(q => q.PermitirSobreGiro, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="es_AcreditaHorasExtras"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.ValidarSoloCuentasArchivo, settings =>
+                           {
+                               settings.Name = "ValidarSoloCuentasArchivo";
+                               settings.Text = "Validar solo cuentas archivo";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.ValidarSoloCuentasArchivo, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="box-footer">

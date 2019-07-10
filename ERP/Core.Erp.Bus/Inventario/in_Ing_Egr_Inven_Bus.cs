@@ -185,5 +185,32 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public List<in_Ing_Egr_Inven_Info> GetListPorDespachar(int IdEmpresa, int IdSucursal, int IdBodega)
+        {
+            try
+            {
+                return odata.GetListPorDespachar(IdEmpresa, IdSucursal, IdBodega);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool DespacharDB(in_Ing_Egr_Inven_Info info)
+
+        {
+            try
+            {
+                return odata.DespacharDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

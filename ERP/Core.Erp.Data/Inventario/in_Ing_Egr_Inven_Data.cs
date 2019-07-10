@@ -1209,5 +1209,84 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+
+        public List<in_Ing_Egr_Inven_Info> GetListPorDespachar(int IdEmpresa, int IdSucursal, int IdBodega)
+        {
+            try
+            {
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdBodegaIni = IdBodega;
+                int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
+                List<in_Ing_Egr_Inven_Info> Lista;
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    Lista = (from q in Context.vwin_Ing_Egr_Inven_PorDespachar
+                             where q.IdEmpresa == IdEmpresa
+                             && IdSucursalIni <= q.IdSucursal
+                             && q.IdSucursal <= IdSucursalFin
+                             && IdBodegaIni <= q.IdBodega
+                             && q.IdBodega <= IdBodegaFin
+                             orderby new { q.IdNumMovi } descending
+                             select new in_Ing_Egr_Inven_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdBodega = q.IdBodega,
+                                 IdSucursal = q.IdSucursal,
+                                 IdNumMovi = q.IdNumMovi,
+                                 IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                 signo = q.signo,
+                                 CodMoviInven = q.CodMoviInven,
+                                 cm_observacion = q.cm_observacion,
+                                 cm_fecha = q.cm_fecha,
+                                 IdMotivo_Inv = q.IdMotivo_Inv,
+                                 IdEstadoAproba = q.IdEstadoAproba,
+                                 IdUsuarioAR = q.IdUsuarioAR,
+                                 FechaAR = q.FechaAR,
+                                 IdUsuarioDespacho = q.IdUsuarioDespacho,
+                                 FechaDespacho = q.FechaDespacho,
+                                 nom_bodega = q.bo_Descripcion,
+                                 Desc_mov_inv = q.Desc_mov_inv,
+                                 tm_descripcion = q.tm_descripcion,
+                                 Estado = q.Estado,
+                                 EstadoAprobacion = q.EstadoAprobacion,
+                                 EstadoBool = q.Estado == "A" ? true : false
+
+                             }).ToList();
+                    Lista.ForEach(q => q.SecuencialID = q.IdEmpresa.ToString("00") + q.IdSucursal.ToString("00") + q.IdMovi_inven_tipo.ToString("00") + q.IdNumMovi.ToString("00000000"));
+
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool DespacharDB(in_Ing_Egr_Inven_Info info)
+        {
+            try
+            {
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    in_Ing_Egr_Inven Entity = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo && q.IdNumMovi == info.IdNumMovi);
+                    if (Entity == null) return false;
+
+                    Entity.IdUsuarioDespacho = info.IdUsuarioDespacho;
+                    Entity.IdEstadoAproba = "APRO";
+                    Entity.FechaDespacho = DateTime.Now;
+                    
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
