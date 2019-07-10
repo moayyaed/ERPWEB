@@ -50,12 +50,12 @@ namespace Core.Erp.Data
         public DbSet<vwba_TipoFlujo_Movimiento> vwba_TipoFlujo_Movimiento { get; set; }
         public DbSet<vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar> vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar { get; set; }
         public DbSet<ba_Banco_Cuenta> ba_Banco_Cuenta { get; set; }
-        public DbSet<ba_parametros> ba_parametros { get; set; }
         public DbSet<ba_Conciliacion_det> ba_Conciliacion_det { get; set; }
         public DbSet<ba_archivo_transferencia_x_ba_tipo_flujo> ba_archivo_transferencia_x_ba_tipo_flujo { get; set; }
         public DbSet<ba_tipo_nota> ba_tipo_nota { get; set; }
         public DbSet<ba_Archivo_Transferencia_Det> ba_Archivo_Transferencia_Det { get; set; }
         public DbSet<vwba_Archivo_Transferencia_Det> vwba_Archivo_Transferencia_Det { get; set; }
         public DbSet<ba_Archivo_Transferencia> ba_Archivo_Transferencia { get; set; }
+        public DbSet<ba_parametros> ba_parametros { get; set; }
     }
 }

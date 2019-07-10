@@ -40,7 +40,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_PlantillaTipoFlujoArchivo", "TipoFlujoPlantilla",new { Area = "Banco"})',
+            url: '@Url.Action("cargar_PlantillaTipoFlujoArchivo", "ArchivoBancario",new { Area = "Banco"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -279,7 +279,7 @@
                 <div class="form-group">
                     <label for="ICatalogo">Valor*</label>
                     @Html.TextBoxFor(q => q.cb_Valor, new { @class = "form-control", @id = "cb_Valor", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(q => q.cb_Valor, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

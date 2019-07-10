@@ -18,7 +18,8 @@ namespace Core.Erp.Data
         public string CiudadDefaultParaCrearCheques { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
         public Nullable<int> CantidadChequesAlerta { get; set; }
-        public Nullable<bool> PermitirSobreGiro { get; set; }
+        public bool PermitirSobreGiro { get; set; }
+        public bool ValidarSoloCuentasArchivo { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> FechaTransac { get; set; }
         public string IdUsuarioUltMod { get; set; }
