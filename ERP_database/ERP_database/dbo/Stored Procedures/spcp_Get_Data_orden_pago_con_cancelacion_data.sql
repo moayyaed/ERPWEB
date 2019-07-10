@@ -1,4 +1,5 @@
-﻿--exec [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data] 1,1,999999,'PROVEE',1,999999,'APRO','admin',1,0
+﻿
+--exec [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data] 1,1,999999,'PROVEE',1,999999,'APRO','admin',1,0
 CREATE PROCEDURE [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data]
 (
 @IdEmpresa int,
@@ -10,7 +11,8 @@ CREATE PROCEDURE [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data]
 @IdEstado_Aprobacion varchar(10),
 @IdUsuario varchar(20),
 @IdSucursal int,
-@mostrar_saldo_0 bit
+@mostrar_saldo_0 bit,
+@ValidarCuentaBancaria bit
 )
 AS
 BEGIN
@@ -41,7 +43,7 @@ select f.IdEmpresa from ba_Archivo_Transferencia_Det as f
 where f.IdEmpresa_OP = cp_orden_pago_det.IdEmpresa
 and f.IdOrdenPago = cp_orden_pago_det.IdOrdenPago
 and f.Secuencia_OP = cp_orden_pago_det.Secuencia
-)
+) 
 GROUP BY cp_orden_pago.IdEmpresa, cp_orden_pago.IdTipo_op,cp_orden_pago_det.Referencia, cp_orden_pago.IdOrdenPago, cp_orden_pago_det.Secuencia, cp_orden_pago.IdTipo_Persona, cp_orden_pago.IdPersona, cp_orden_pago.IdEntidad, cp_orden_pago.Fecha, 
                   cp_orden_pago.Observacion, cp_orden_pago_det.Valor_a_pagar, cp_orden_pago.IdEstadoAprobacion, cp_orden_pago.IdFormaPago, cp_orden_pago.Fecha, cp_orden_pago_det.IdCbteCble_cxp, cp_orden_pago.Estado, 
                   cp_orden_pago_det.IdEmpresa_cxp, cp_orden_pago_det.IdTipoCbte_cxp
@@ -115,6 +117,18 @@ AND R.IdCbteCble_cxp = F.IdCbteCble
 WHERE  cp_orden_pago_con_cancelacion_data.IdEmpresa_cxp = A.IdEmpresa
 AND cp_orden_pago_con_cancelacion_data.IdTipoCbte_cxp = A.IdTipoCbte
 AND cp_orden_pago_con_cancelacion_data.IdCbteCble_cxp = A.IdCbteCble
+
+if(@ValidarCuentaBancaria = 1)
+BEGIN
+DELETE cp_orden_pago_con_cancelacion_data 
+FROM vwtb_persona_beneficiario AS B
+WHERE IdUsuario = @IdUsuario	
+AND cp_orden_pago_con_cancelacion_data.IdEmpresa = B.IdEmpresa
+AND cp_orden_pago_con_cancelacion_data.IdTipoPersona = B.IdTipo_Persona
+AND cp_orden_pago_con_cancelacion_data.IdPersona = B.IdPersona
+AND cp_orden_pago_con_cancelacion_data.IdEntidad = B.IdEntidad
+AND (B.IdTipoCta_acreditacion_cat IS NULL OR B.num_cta_acreditacion IS NULL OR B.IdBanco_acreditacion IS NULL)
+END
 
 SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY IdUsuario),0) AS IdRow, IdUsuario, IdEmpresa, IdTipo_op, Referencia, Referencia2, IdOrdenPago, Secuencia_OP, IdTipoPersona, IdPersona, IdEntidad, Fecha_OP, Fecha_Fa_Prov, Fecha_Venc_Fac_Prov, Observacion, Nom_Beneficiario, Girar_Cheque_a, 
                   Valor_a_pagar, Valor_estimado_a_pagar_OP, Total_cancelado_OP, Saldo_x_Pagar_OP, IdEstadoAprobacion, IdFormaPago, Fecha_Pago, IdCtaCble, IdCentroCosto, IdSubCentro_Costo, Cbte_cxp, Estado, Nom_Beneficiario_2, 
