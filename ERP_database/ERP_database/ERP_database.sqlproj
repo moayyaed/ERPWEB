@@ -1163,6 +1163,10 @@
     <Build Include="web\Stored Procedures\SPCXC_010.sql" />
     <Build Include="dbo\Stored Procedures\spINV_aprobacion_ing_egr.sql" />
     <Build Include="dbo\Views\vwct_cbtecble_Plantilla_det.sql" />
+    <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorReversar.sql" />
+    <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorDespachar.sql" />
+    <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorAprobar.sql" />
+    <Build Include="dbo\Views\vwin_Ing_Egr_Inven_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

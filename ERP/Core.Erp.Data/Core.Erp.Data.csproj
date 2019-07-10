@@ -1869,9 +1869,6 @@
     <Compile Include="spro_nomina_x_pago_utilidad_Result.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
-    <Compile Include="spSys_inv_Reversar_aprobacion_Result.cs">
-      <DependentUpon>Model_inventario.tt</DependentUpon>
-    </Compile>
     <Compile Include="tbl_TransaccionesAutorizadas.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -2499,6 +2496,9 @@
     <Compile Include="vwin_devolucion_inven_det.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwin_Ing_Egr_InvenPorOrdenCompra.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
@@ -2520,7 +2520,16 @@
     <Compile Include="vwin_Ing_Egr_Inven_distribucion_x_distribuir.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorAprobar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_PorContabilizar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorDespachar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorReversar.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_por_devolver.cs">

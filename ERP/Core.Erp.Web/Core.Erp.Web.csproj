@@ -387,6 +387,8 @@
     <Compile Include="Areas\Importacion\Controllers\RecepcionOrdenCompraController.cs" />
     <Compile Include="Areas\Importacion\ImportacionAreaRegistration.cs" />
     <Compile Include="Areas\Inventario\Controllers\AjusteFisicoInventarioController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\AprobacionDespachoController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\AprobacionMovimientoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\AuditoriaInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\CatalogoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\CatalogoTipoInventarioController.cs" />
@@ -404,6 +406,7 @@
     <Compile Include="Areas\Inventario\Controllers\PresentacionController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ProductoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ProductoTipoController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\ReversoMovimientoInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\RevisionController.cs" />
     <Compile Include="Areas\Inventario\Controllers\SubgrupoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\TipoMovimientoController.cs" />
@@ -10152,6 +10155,12 @@
     <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Anular.cshtml" />
+    <Content Include="Areas\Inventario\Views\AprobacionMovimientoInventario\_GridViewPartial_movimiento_inventario_x_aprobar.cshtml" />
+    <Content Include="Areas\Inventario\Views\AprobacionMovimientoInventario\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\ReversoMovimientoInventario\_GridViewPartial_movimiento_inventario_x_reversar.cshtml" />
+    <Content Include="Areas\Inventario\Views\ReversoMovimientoInventario\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\AprobacionDespacho\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\AprobacionDespacho\_GridViewPartial_aprobacion_despacho.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
