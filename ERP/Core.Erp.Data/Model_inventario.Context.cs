@@ -12,17 +12,20 @@ namespace Core.Erp.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
-    using System.Data.Objects.DataClasses;
+    using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+
     public partial class Entities_inventario : DbContext
     {
         public Entities_inventario()
             : base("name=Entities_inventario")
         {
         }
-    
+
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
