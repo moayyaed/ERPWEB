@@ -134,11 +134,11 @@ namespace Core.Erp.Bus.Inventario
             }
         }
 
-        public List<in_Ing_Egr_Inven_Info> get_list_x_aprobar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        public List<in_Ing_Egr_Inven_Info> get_list_x_aprobar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
             {
-                return odata.get_list_x_aprobar(IdEmpresa, IdSucursal, mostrar_anulados, fecha_ini, fecha_fin);
+                return odata.get_list_x_aprobar(IdEmpresa, IdSucursal, IdBodega);
             }
             catch (Exception)
             {
@@ -160,11 +160,11 @@ namespace Core.Erp.Bus.Inventario
             }
         }
 
-        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
             {
-                return odata.get_list_x_reversar(IdEmpresa, IdSucursal, mostrar_anulados, fecha_ini, fecha_fin);
+                return odata.get_list_x_reversar(IdEmpresa, IdSucursal, IdBodega);
             }
             catch (Exception)
             {

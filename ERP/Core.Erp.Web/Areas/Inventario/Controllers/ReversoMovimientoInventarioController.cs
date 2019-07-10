@@ -23,9 +23,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdBodega = 0
             };
-            CargarCombosConsulta(model.IdEmpresa);
+            CargarCombosConsulta(model);
 
             return View(model);
         }
@@ -33,32 +34,43 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            CargarCombosConsulta(model.IdEmpresa);
+            CargarCombosConsulta(model);
             return View(model);
         }
 
-        private void CargarCombosConsulta(int IdEmpresa)
+        private void CargarCombosConsulta(cl_filtros_Info model)
         {
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
+
+            tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+            var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
+            ViewBag.lst_bodega = lst_bodega;
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_movimiento_inventario_x_reversar(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_movimiento_inventario_x_reversar(int IdSucursal = 0, int IdBodega = 0)
         {
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
-            List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_x_reversar(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            ViewBag.IdBodega = IdBodega;
+
+            List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_x_reversar(IdEmpresa, IdSucursal, IdBodega);
 
             return PartialView("_GridViewPartial_movimiento_inventario_x_reversar", model);
         }
         #endregion
 
         #region Json
+        public JsonResult CargarBodega(int IdEmpresa = 0, int IdSucursal = 0)
+        {
+            tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+            var resultado = bus_bodega.get_list(IdEmpresa, IdSucursal, false);
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult ReversarMovimiento(string SecuencialID = "")
         {
             string resultado = string.Empty;

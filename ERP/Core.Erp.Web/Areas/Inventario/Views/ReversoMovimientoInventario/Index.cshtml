@@ -43,7 +43,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdSucursal">Bodega*</label>
-                            @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_sucursal, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                            @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
                             @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_movimiento_inventario_x_reversar", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_movimiento_inventario_x_reversar", new { IdSucursal = Model.IdSucursal, IdBodega = Model.IdBodega })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
@@ -77,6 +77,12 @@
 }
 
 <script type="text/javascript">
+    $(function () {
+        $("#IdSucursal").change(function () {
+            CargarBodega();
+        });
+    });
+
     function AprobarMovimiento(SecuencialID)
     {
         var datos = {
@@ -103,4 +109,30 @@
             }
         });
     }
+
+    function CargarBodega() {
+        $("#IdBodega").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "IngresoInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>

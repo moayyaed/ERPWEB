@@ -55,7 +55,7 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };
-        settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(15);
         settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add(column =>
         {
@@ -73,7 +73,7 @@
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_002", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(c.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(c.DataItem, "IdNumMovi") }, Request.Url.Scheme) + "');\"></span>");
             });
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(5);
         });
         settings.Columns.Add(column =>
         {

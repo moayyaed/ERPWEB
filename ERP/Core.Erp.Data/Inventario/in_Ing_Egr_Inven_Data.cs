@@ -1042,14 +1042,14 @@ namespace Core.Erp.Data.Inventario
             }
         }
 
-        public List<in_Ing_Egr_Inven_Info> get_list_x_aprobar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        public List<in_Ing_Egr_Inven_Info> get_list_x_aprobar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
             {
-                fecha_ini = fecha_ini.Date;
-                fecha_fin = fecha_fin.Date;
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdBodegaIni = IdBodega;
+                int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
 
                 List<in_Ing_Egr_Inven_Info> Lista;
                 using (Entities_inventario Context = new Entities_inventario())
@@ -1058,8 +1058,9 @@ namespace Core.Erp.Data.Inventario
                                 where q.IdEmpresa == IdEmpresa
                                 && IdSucursalIni <= q.IdSucursal
                                 && q.IdSucursal <= IdSucursalFin
-                                && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
-                                orderby new { q.IdNumMovi } descending
+                                && IdBodegaIni <= q.IdBodega
+                                && q.IdBodega <= IdBodegaFin
+                             orderby new { q.IdNumMovi } descending
                                 select new in_Ing_Egr_Inven_Info
                                 {
                                     IdEmpresa = q.IdEmpresa,
@@ -1125,14 +1126,14 @@ namespace Core.Erp.Data.Inventario
             }
         }
 
-        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
             {
-                fecha_ini = fecha_ini.Date;
-                fecha_fin = fecha_fin.Date;
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdBodegaIni = IdBodega;
+                int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
 
                 List<in_Ing_Egr_Inven_Info> Lista;
                 using (Entities_inventario Context = new Entities_inventario())
@@ -1141,7 +1142,8 @@ namespace Core.Erp.Data.Inventario
                              where q.IdEmpresa == IdEmpresa
                              && IdSucursalIni <= q.IdSucursal
                              && q.IdSucursal <= IdSucursalFin
-                             && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
+                             && IdBodegaIni <= q.IdBodega
+                             && q.IdBodega <= IdBodegaFin
                              orderby new { q.IdNumMovi } descending
                              select new in_Ing_Egr_Inven_Info
                              {
