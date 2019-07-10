@@ -71,10 +71,11 @@ namespace Core.Erp.Data.Banco
                 decimal IdEntidad_fin = IdEntidad == 0 ? 99999 : IdEntidad;
 
                 List<ba_Archivo_Transferencia_Det_Info> Lista;
-
+                Entities_banco db = new Entities_banco();
+                var banco = db.ba_parametros.Where(q => q.IdEmpresa == IdEmpresa).FirstOrDefault();
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario, IdSucursal, mostrar_saldo_0)
+                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario, IdSucursal, mostrar_saldo_0,banco.ValidarSoloCuentasArchivo)
                              select new ba_Archivo_Transferencia_Det_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

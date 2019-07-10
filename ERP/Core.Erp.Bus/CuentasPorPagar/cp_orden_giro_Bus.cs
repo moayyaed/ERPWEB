@@ -198,6 +198,8 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 {
                     if (info.info_retencion.detalle.Count() > 0)
                     {
+                        tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
+                        var sucursal = data_sucursal.get_info(info.IdEmpresa, info.IdSucursal);
                         info.info_retencion.IdEmpresa = info.IdEmpresa;
                         info.info_retencion.IdProveedor = info.IdProveedor;
                         info.info_retencion.IdEmpresa_Ogiro = info.IdEmpresa;
@@ -208,9 +210,19 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.Descripcion = info.Descripcion;
                         info.info_retencion.Estado = "A";
                         info.info_retencion.fecha = info.co_fechaOg;
-                        info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
-                        info.info_retencion.serie1 = info.info_retencion.serie1;
-                        info.info_retencion.serie2 = info.info_retencion.serie2;
+                        if (info.info_retencion.serie1 == null)
+                        {
+                            info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
+                            info.info_retencion.serie1 = sucursal.Su_CodigoEstablecimiento;
+                            info.info_retencion.serie2 = "001";
+                        }
+                        else
+                        {
+                            info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
+                            info.info_retencion.serie1 = info.info_retencion.serie1;
+                            info.info_retencion.serie2 = info.info_retencion.serie2;
+                        }
+                        
                         info.info_retencion.re_EstaImpresa = "N";
                         info.info_retencion.re_Tiene_RFuente = "S";
                         info.info_retencion.re_Tiene_RTiva = "S";
@@ -236,7 +248,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 #endregion
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

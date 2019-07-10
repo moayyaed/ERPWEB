@@ -1,9 +1,6 @@
 ﻿using Core.Erp.Info.Banco;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Erp.Data.Banco
 {
@@ -23,7 +20,9 @@ namespace Core.Erp.Data.Banco
                         IdEmpresa = Entity.IdEmpresa,
                         CiudadDefaultParaCrearCheques = Entity.CiudadDefaultParaCrearCheques,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
-                        CantidadChequesAlerta = Entity.CantidadChequesAlerta
+                        CantidadChequesAlerta = Entity.CantidadChequesAlerta,
+                        ValidarSoloCuentasArchivo = Entity.ValidarSoloCuentasArchivo,
+                        PermitirSobreGiro = Entity.PermitirSobreGiro
                     };
                 }
                 return info;
@@ -52,7 +51,8 @@ namespace Core.Erp.Data.Banco
                             IdUsuario = info.IdUsuario,
                             FechaTransac = DateTime.Now,
                             PermitirSobreGiro = info.PermitirSobreGiro,
-                            CantidadChequesAlerta = info.CantidadChequesAlerta
+                            CantidadChequesAlerta = info.CantidadChequesAlerta,
+                            ValidarSoloCuentasArchivo = info.ValidarSoloCuentasArchivo
 
                         };
                         Context.ba_parametros.Add(Entity);
@@ -65,6 +65,7 @@ namespace Core.Erp.Data.Banco
                         Entity.PermitirSobreGiro = info.PermitirSobreGiro;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.FechaUltMod = DateTime.Now;
+                        Entity.ValidarSoloCuentasArchivo = info.ValidarSoloCuentasArchivo;
                     }
                     Context.SaveChanges();
                 }

@@ -129,7 +129,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
 
             var param = bus_param.get_info(i_validar.IdEmpresa);
-            if (!(param.PermitirSobreGiro ?? false))
+            if (!(param.PermitirSobreGiro))
             {
                 var Valor = Math.Round(i_validar.Lst_det.Where(q => q.IdBanco_acreditacion.ToString() == cta.IdCtaCble).Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero);
                 if (!bus_banco_cuenta.ValidarSaldoCuenta(i_validar.IdEmpresa, cta.IdCtaCble, Valor))
@@ -268,6 +268,16 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Archivo_Transferencia_Info model = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
             if (model == null)
                 return RedirectToAction("Index");
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
+            List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+
+            model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
+            List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
+            cargar_combos();
+            model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
+
             #region Validacion Periodo CXC
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
@@ -536,6 +546,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         Valor = q.Sum(g=> g.Valor)
                     }).ToList();
                     */
+                    var banco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
                     foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
                     {
                         string linea = "";
@@ -544,7 +555,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
 
                         linea += "PA\t";
-                        linea += string.IsNullOrEmpty(item.num_cta_acreditacion) ? "" : item.num_cta_acreditacion.PadLeft(10, '0') + "\t";
+                        linea += string.IsNullOrEmpty(banco.ba_Num_Cuenta) ? "" : banco.ba_Num_Cuenta.PadLeft(10, '0') + "\t";
                         linea += item.Secuencial_reg_x_proceso.ToString().PadLeft(7, ' ') + "\t";
                         linea += "\t";//COMPROBANTE DE PAGO
                         linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? item.pe_cedulaRuc.Trim() : item.num_cta_acreditacion.Trim()) + "\t";

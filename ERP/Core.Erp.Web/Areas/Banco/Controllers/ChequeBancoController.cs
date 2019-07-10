@@ -231,7 +231,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             i_validar.ValorEnLetras = funciones.NumeroALetras(i_validar.cb_Valor.ToString());
 
             var param = bus_param.get_info(i_validar.IdEmpresa);
-            if (!(param.PermitirSobreGiro ?? false))
+            if (!(param.PermitirSobreGiro))
             {
                 var Valor = Math.Round(i_validar.lst_det_ct.Where(q => q.IdCtaCble == cta.IdCtaCble).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero);
                 if (!bus_banco_cuenta.ValidarSaldoCuenta(i_validar.IdEmpresa,cta.IdCtaCble,Valor))

@@ -160,7 +160,7 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario,IdSucursal, mostrar_saldo_0)
+                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario,IdSucursal, mostrar_saldo_0,false)
                              select new cp_orden_pago_cancelaciones_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

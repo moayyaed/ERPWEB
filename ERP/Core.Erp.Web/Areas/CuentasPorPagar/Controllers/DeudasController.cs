@@ -548,6 +548,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
+            model.IdUsuario = SessionFixed.IdUsuario;
             if (!validar(model, ref mensaje))
             {
                 cargar_combos(model);

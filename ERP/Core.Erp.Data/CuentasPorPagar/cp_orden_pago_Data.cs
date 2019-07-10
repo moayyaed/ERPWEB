@@ -443,7 +443,7 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                     try
                     {
-                        Lista = (from q in Contex.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, 1, 99999999, "PROVEE", IdProveedor, IdProveedor, IdEstado_Aprobacion, IdUsuario,IdSucursal, false)
+                        Lista = (from q in Contex.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, 1, 99999999, "PROVEE", IdProveedor, IdProveedor, IdEstado_Aprobacion, IdUsuario,IdSucursal, false, false)
                                  where q.IdTipo_op == IdTipo_op
                                  select new
                                  cp_orden_pago_det_Info

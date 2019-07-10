@@ -291,6 +291,10 @@ namespace Core.Erp.Data.Banco
                 {
                     var Lst_det = Context.ba_Archivo_Transferencia_Det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).ToList();
                     Context.ba_Archivo_Transferencia_Det.RemoveRange(Lst_det);
+
+                    var Lst_flujo = Context.ba_archivo_transferencia_x_ba_tipo_flujo.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).ToList();
+                    Context.ba_archivo_transferencia_x_ba_tipo_flujo.RemoveRange(Lst_flujo);
+
                     Context.ba_Archivo_Transferencia.Remove(Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault());
                     Context.SaveChanges();
                 }
