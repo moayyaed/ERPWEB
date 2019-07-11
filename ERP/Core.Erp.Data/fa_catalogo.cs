@@ -16,7 +16,6 @@ namespace Core.Erp.Data
     {
         public fa_catalogo()
         {
-            this.fa_guia_remision = new HashSet<fa_guia_remision>();
             this.fa_factura = new HashSet<fa_factura>();
         }
     
@@ -37,7 +36,6 @@ namespace Core.Erp.Data
         public string MotiAnula { get; set; }
     
         public virtual fa_catalogo_tipo fa_catalogo_tipo { get; set; }
-        public virtual ICollection<fa_guia_remision> fa_guia_remision { get; set; }
         public virtual ICollection<fa_factura> fa_factura { get; set; }
     }
 }

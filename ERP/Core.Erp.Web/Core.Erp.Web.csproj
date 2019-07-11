@@ -731,17 +731,9 @@
     <Compile Include="Reportes\Contabilidad\CONTA_005_Rpt.Designer.cs">
       <DependentUpon>CONTA_005_Rpt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\Contabilidad\CONTA_006_BG_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\Contabilidad\CONTA_006_BG_Rpt.Designer.cs">
-      <DependentUpon>CONTA_006_BG_Rpt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\Contabilidad\CONTA_006_ER_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\Contabilidad\CONTA_006_ER_Rpt.Designer.cs">
-      <DependentUpon>CONTA_006_ER_Rpt.cs</DependentUpon>
+    <Compile Include="Reportes\Contabilidad\CONTA_006_Rpt.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_006_Rpt.Designer.cs">
+      <DependentUpon>CONTA_006_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.cs">
       <SubType>Component</SubType>
@@ -10173,7 +10165,6 @@
     <Content Include="Areas\Inventario\Views\ReversoMovimientoInventario\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\AprobacionDespacho\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\AprobacionDespacho\_GridViewPartial_aprobacion_despacho.cshtml" />
-    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <Content Include="Areas\Facturacion\Views\GuiaRemision\_CmbProducto_Guia.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10404,12 +10395,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_005_Rpt.resx">
       <DependentUpon>CONTA_005_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_006_BG_Rpt.resx">
-      <DependentUpon>CONTA_006_BG_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_006_ER_Rpt.resx">
-      <DependentUpon>CONTA_006_ER_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.resx">
       <DependentUpon>CXC_001_diario_Rpt.cs</DependentUpon>

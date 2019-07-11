@@ -39,18 +39,16 @@ namespace Core.Erp.Data.Facturacion
                                 gi_plazo=q.gi_plazo,
                                 gi_fech_venc=q.gi_fech_venc,
                                 gi_Observacion=q.gi_Observacion,
-                                Impreso=q.Impreso,
                                 gi_FechaInicioTraslado=q.gi_FechaInicioTraslado,
                                 gi_FechaFinTraslado=q.gi_FechaFinTraslado,
                                 placa=q.placa,
-                                ruta=q.ruta,
                                 Direccion_Destino=q.Direccion_Destino,
                                 Direccion_Origen=q.Direccion_Origen,
                                 Estado=q.Estado,
                                 pe_nombreCompleto=q.pe_nombreCompleto,
                                 pe_cedulaRuc=q.pe_cedulaRuc,
 
-                                 EstadoBool = q.Estado == "A" ? true : false
+                                EstadoBool = q.Estado
 
                              }).ToList();
                 }
@@ -91,15 +89,13 @@ namespace Core.Erp.Data.Facturacion
                         gi_plazo = Entity.gi_plazo,
                         gi_fech_venc = Entity.gi_fech_venc,
                         gi_Observacion = Entity.gi_Observacion,
-                        Impreso = Entity.Impreso,
                         gi_FechaInicioTraslado = Entity.gi_FechaInicioTraslado,
                         gi_FechaFinTraslado = Entity.gi_FechaFinTraslado,
                         placa = Entity.placa,
-                        ruta = Entity.ruta,
                         Direccion_Destino = Entity.Direccion_Destino,
                         Direccion_Origen = Entity.Direccion_Origen,
                         Estado = Entity.Estado,
-                        IdCatalogo_traslado=Entity.IdCatalogo_traslado
+                        IdMotivoTraslado=Entity.IdMotivoTraslado
                     };
                 }
                 return info;
@@ -155,23 +151,20 @@ namespace Core.Erp.Data.Facturacion
                         NUAutorizacion = info.NUAutorizacion,
                         Fecha_Autorizacion = info.Fecha_Autorizacion,
                         IdCliente = info.IdCliente,
-                        IdContacto=info.IdContacto,
                         IdTransportista = info.IdTransportista,
                         gi_fecha = info.gi_fecha.Date,
                         gi_plazo = info.gi_plazo,
                         gi_fech_venc = info.gi_fech_venc,
                         gi_Observacion = info.gi_Observacion,
-                        Impreso = info.Impreso,
                         gi_FechaInicioTraslado = info.gi_FechaInicioTraslado.Date,
                         gi_FechaFinTraslado = info.gi_FechaFinTraslado.Date,
                         placa = info.placa,
-                        ruta = info.ruta,
                         Direccion_Destino = info.Direccion_Destino,
                         Direccion_Origen = info.Direccion_Origen,
-                        IdCatalogo_traslado=info.IdCatalogo_traslado,
-                        Estado = info.Estado="A",
-                        IdUsuario=info.IdUsuario,
-                        Fecha_Transac=info.Fecha_Transac=DateTime.Now
+                        IdMotivoTraslado=info.IdMotivoTraslado,
+                        Estado = info.Estado= true,
+                        IdUsuarioCreacion=info.IdUsuarioCreacion,
+                        FechaCreacion=info.FechaCreacion = DateTime.Now
 
                     };
                     Context.fa_guia_remision.Add(Entity);
@@ -263,16 +256,14 @@ namespace Core.Erp.Data.Facturacion
                         Entity.gi_fecha = info.gi_fecha.Date;
                         Entity.gi_plazo = info.gi_plazo;
                         Entity.gi_fech_venc = info.gi_fech_venc;
-                        Entity.Impreso = info.Impreso;
                         Entity.gi_FechaInicioTraslado = info.gi_FechaInicioTraslado.Date;
                         Entity.gi_FechaFinTraslado = info.gi_FechaFinTraslado.Date;
                         Entity.placa = info.placa;
-                        Entity.ruta = info.ruta;
                         Entity.Direccion_Destino = info.Direccion_Destino;
                         Entity.Direccion_Origen = info.Direccion_Origen;
-                        Entity.IdCatalogo_traslado = info.IdCatalogo_traslado;
-                        Entity.Fecha_UltMod = info.Fecha_UltMod=DateTime.Now;
-                        Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                        Entity.IdMotivoTraslado = info.IdMotivoTraslado;
+                        Entity.FechaModificacion = info.FechaModificacion = DateTime.Now;
+                        Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
                         Entity.gi_Observacion = info.gi_Observacion;
 
                     foreach (var item in info.lst_detalle)
@@ -348,10 +339,10 @@ namespace Core.Erp.Data.Facturacion
                 {
                     fa_guia_remision Entity = Context.fa_guia_remision.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdGuiaRemision == info.IdGuiaRemision);
                     if (Entity == null) return false;
-                    Entity.Estado = info.Estado = "I";
-                    Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
-                    Entity.Fecha_UltAnu = DateTime.Now;
-                    Entity.MotiAnula = info.MotiAnula;
+                    Entity.Estado = info.Estado = false;
+                    Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
+                    Entity.FechaAnulacion = DateTime.Now;
+                    Entity.MotivoAnulacion = info.MotiAnula;
 
                     var lst_det = Context.fa_guia_remision_det_x_factura.Where(q => q.IdEmpresa_guia == info.IdEmpresa && q.IdGuiaRemision_guia == info.IdGuiaRemision).ToList();
                     Context.fa_guia_remision_det_x_factura.RemoveRange(lst_det);

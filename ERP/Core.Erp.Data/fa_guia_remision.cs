@@ -24,6 +24,7 @@ namespace Core.Erp.Data
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public decimal IdGuiaRemision { get; set; }
+        public int IdPuntoVta { get; set; }
         public string CodGuiaRemision { get; set; }
         public string CodDocumentoTipo { get; set; }
         public string Serie1 { get; set; }
@@ -32,38 +33,32 @@ namespace Core.Erp.Data
         public string NUAutorizacion { get; set; }
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public decimal IdCliente { get; set; }
-        public int IdContacto { get; set; }
         public decimal IdTransportista { get; set; }
         public System.DateTime gi_fecha { get; set; }
         public Nullable<decimal> gi_plazo { get; set; }
         public Nullable<System.DateTime> gi_fech_venc { get; set; }
         public string gi_Observacion { get; set; }
-        public string Impreso { get; set; }
         public System.DateTime gi_FechaFinTraslado { get; set; }
         public System.DateTime gi_FechaInicioTraslado { get; set; }
         public string placa { get; set; }
-        public string ruta { get; set; }
         public string Direccion_Origen { get; set; }
-        public string IdUsuario { get; set; }
-        public System.DateTime Fecha_Transac { get; set; }
-        public string IdUsuarioUltMod { get; set; }
-        public Nullable<System.DateTime> Fecha_UltMod { get; set; }
-        public string IdUsuarioUltAnu { get; set; }
-        public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
-        public string Estado { get; set; }
-        public string MotiAnula { get; set; }
         public string Direccion_Destino { get; set; }
-        public string Num_declaracion_aduanera { get; set; }
-        public string IdCatalogo_traslado { get; set; }
+        public bool Estado { get; set; }
         public bool aprobada_enviar_sri { get; set; }
         public Nullable<bool> Generado { get; set; }
+        public int IdMotivoTraslado { get; set; }
+        public string IdUsuarioCreacion { get; set; }
+        public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string IdUsuarioModificacion { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public string IdUsuarioAnulacion { get; set; }
+        public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        public string MotivoAnulacion { get; set; }
     
-        public virtual fa_catalogo fa_catalogo { get; set; }
-        public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
-        public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }
+        public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         public virtual ICollection<fa_guia_remision_det> fa_guia_remision_det { get; set; }
+        public virtual fa_PuntoVta fa_PuntoVta { get; set; }
+        public virtual fa_MotivoTraslado fa_MotivoTraslado { get; set; }
     }
 }

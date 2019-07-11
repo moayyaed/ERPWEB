@@ -31,16 +31,13 @@ namespace Core.Erp.Data
         public Nullable<decimal> gi_plazo { get; set; }
         public Nullable<System.DateTime> gi_fech_venc { get; set; }
         public string gi_Observacion { get; set; }
-        public string Impreso { get; set; }
         public System.DateTime gi_FechaFinTraslado { get; set; }
         public System.DateTime gi_FechaInicioTraslado { get; set; }
         public string placa { get; set; }
-        public string ruta { get; set; }
         public string Direccion_Origen { get; set; }
         public string Direccion_Destino { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string pe_nombreCompleto { get; set; }
-        public string Estado { get; set; }
-        public string Nombres { get; set; }
+        public bool Estado { get; set; }
     }
 }

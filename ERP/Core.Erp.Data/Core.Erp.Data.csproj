@@ -645,6 +645,9 @@
     <Compile Include="fa_guia_remision_det_x_factura.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="fa_MotivoTraslado.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="fa_NivelDescuento.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>

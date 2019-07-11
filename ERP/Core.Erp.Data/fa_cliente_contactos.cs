@@ -16,7 +16,6 @@ namespace Core.Erp.Data
     {
         public fa_cliente_contactos()
         {
-            this.fa_guia_remision = new HashSet<fa_guia_remision>();
             this.fa_notaCreDeb = new HashSet<fa_notaCreDeb>();
             this.fa_factura = new HashSet<fa_factura>();
         }
@@ -32,7 +31,6 @@ namespace Core.Erp.Data
         public string IdCiudad { get; set; }
         public string IdParroquia { get; set; }
     
-        public virtual ICollection<fa_guia_remision> fa_guia_remision { get; set; }
         public virtual ICollection<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }
         public virtual ICollection<fa_factura> fa_factura { get; set; }

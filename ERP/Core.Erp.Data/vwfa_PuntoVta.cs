@@ -26,6 +26,8 @@ namespace Core.Erp.Data
         public int IdCaja { get; set; }
         public string IPImpresora { get; set; }
         public Nullable<int> NumCopias { get; set; }
-        public Nullable<bool> CobroAutomatico { get; set; }
+        public bool CobroAutomatico { get; set; }
+        public bool EsElectronico { get; set; }
+        public string codDocumentoTipo { get; set; }
     }
 }

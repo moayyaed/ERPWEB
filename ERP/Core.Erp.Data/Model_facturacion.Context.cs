@@ -71,8 +71,6 @@ namespace Core.Erp.Data
         public DbSet<vwfa_factura_sin_automatico> vwfa_factura_sin_automatico { get; set; }
         public DbSet<vwfa_cliente_consulta> vwfa_cliente_consulta { get; set; }
         public DbSet<vwfa_factura> vwfa_factura { get; set; }
-        public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
-        public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
         public DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public DbSet<fa_proforma> fa_proforma { get; set; }
         public DbSet<fa_PuntoVta> fa_PuntoVta { get; set; }
@@ -84,6 +82,9 @@ namespace Core.Erp.Data
         public DbSet<fa_notaCreDeb_x_fa_factura_NotaDeb> fa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
         public DbSet<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
+        public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
+        public DbSet<fa_MotivoTraslado> fa_MotivoTraslado { get; set; }
+        public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

@@ -37,7 +37,7 @@ namespace Core.Erp.Data
         public double gi_Iva { get; set; }
         public double gi_Total { get; set; }
     
-        public virtual fa_guia_remision fa_guia_remision { get; set; }
         public virtual ICollection<fa_guia_remision_det_x_factura> fa_guia_remision_det_x_factura { get; set; }
+        public virtual fa_guia_remision fa_guia_remision { get; set; }
     }
 }
