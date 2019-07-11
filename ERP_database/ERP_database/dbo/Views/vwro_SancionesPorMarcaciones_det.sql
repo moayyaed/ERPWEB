@@ -1,25 +1,20 @@
 ﻿CREATE VIEW dbo.vwro_SancionesPorMarcaciones_det
 AS
 SELECT        dbo.ro_SancionesPorMarcaciones_det.IdEmpresa, dbo.ro_SancionesPorMarcaciones_det.IdAjuste, dbo.ro_SancionesPorMarcaciones_det.Secuencia, dbo.ro_SancionesPorMarcaciones_det.IdCalendario, 
-                         dbo.ro_SancionesPorMarcaciones_det.IdEmpleado, dbo.ro_SancionesPorMarcaciones_det.IdSucursal, dbo.ro_SancionesPorMarcaciones_det.IdTipoMarcaciones, dbo.ro_SancionesPorMarcaciones_det.EsHoraHorario, 
-                         dbo.ro_SancionesPorMarcaciones_det.EsHoraMarcacion, dbo.ro_SancionesPorMarcaciones_det.Minutos, dbo.ro_SancionesPorMarcaciones_det.IdRegistro, dbo.ro_SancionesPorMarcaciones_det.Observacion, 
-                         dbo.ro_marcaciones_x_empleado.es_fechaRegistro, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_codigo
-FROM            dbo.ro_SancionesPorMarcaciones_det INNER JOIN
-                         dbo.ro_marcaciones_x_empleado ON dbo.ro_SancionesPorMarcaciones_det.IdEmpresa = dbo.ro_marcaciones_x_empleado.IdEmpresa AND 
-                         dbo.ro_SancionesPorMarcaciones_det.IdRegistro = dbo.ro_marcaciones_x_empleado.IdRegistro INNER JOIN
-                         dbo.ro_empleado ON dbo.ro_marcaciones_x_empleado.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_marcaciones_x_empleado.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
-                         dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona
+                         dbo.ro_SancionesPorMarcaciones_det.IdEmpleado, dbo.ro_SancionesPorMarcaciones_det.IdSucursal, dbo.ro_SancionesPorMarcaciones_det.Minutos, dbo.ro_SancionesPorMarcaciones_det.Observacion, 
+                         dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_codigo, dbo.ro_SancionesPorMarcaciones_det.EsHoraIngreso, 
+                         dbo.ro_SancionesPorMarcaciones_det.HoraIngreso, dbo.ro_SancionesPorMarcaciones_det.EsHoraSalida, dbo.ro_SancionesPorMarcaciones_det.FechaRegistro, dbo.ro_SancionesPorMarcaciones_det.HoraSalio
+FROM            dbo.tb_persona INNER JOIN
+                         dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
+                         dbo.ro_SancionesPorMarcaciones_det ON dbo.ro_empleado.IdEmpresa = dbo.ro_SancionesPorMarcaciones_det.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_SancionesPorMarcaciones_det.IdEmpleado
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_SancionesPorMarcaciones_det';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_SancionesPorMarcaciones_det';
+
+
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Or = 1350
-         Or = 1350
-      End
-   End
-End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_SancionesPorMarcaciones_det';
+
 
 
 GO
@@ -28,7 +23,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[78] 4[5] 2[5] 3) )"
+         Configuration = "(H (1[36] 4[5] 2[50] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -94,42 +89,32 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "ro_SancionesPorMarcaciones_det"
+         Begin Table = "tb_persona"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 327
-               Right = 235
+               Top = 21
+               Left = 727
+               Bottom = 303
+               Right = 959
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ro_empleado"
             Begin Extent = 
-               Top = 30
-               Left = 381
-               Bottom = 310
-               Right = 670
+               Top = 18
+               Left = 362
+               Bottom = 392
+               Right = 651
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "ro_marcaciones_x_empleado"
+         Begin Table = "ro_SancionesPorMarcaciones_det"
             Begin Extent = 
-               Top = 47
-               Left = 211
-               Bottom = 369
-               Right = 517
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_persona"
-            Begin Extent = 
-               Top = 53
-               Left = 685
-               Bottom = 335
-               Right = 917
+               Top = 6
+               Left = 38
+               Bottom = 327
+               Right = 338
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -166,5 +151,12 @@ Begin DesignProperties =
          GroupBy = 1350
          Filter = 1350
          Or = 1350
-       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_SancionesPorMarcaciones_det';
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_SancionesPorMarcaciones_det';
+
+
 
