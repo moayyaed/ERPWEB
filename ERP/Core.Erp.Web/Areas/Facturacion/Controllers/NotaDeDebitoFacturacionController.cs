@@ -697,7 +697,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 NumAutorizacion = null,
                                 Fecha_Autorizacion = null,
                                 IdCliente = InfoCliente.IdCliente,
-                                IdContacto = InfoContactosCliente.IdContacto,
                                 no_fecha = Convert.ToDateTime(reader.GetValue(5)),
                                 no_fecha_venc = Convert.ToDateTime(reader.GetValue(6)),
                                 IdTipoNota = infoTipoNota.IdTipoNota,
@@ -705,7 +704,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 IdUsuario = SessionFixed.IdUsuario,
                                 NaturalezaNota = null,
                                 IdCtaCble_TipoNota = infoTipoNota.IdCtaCble,
-                                IdPuntoVta = null,
+                                //IdPuntoVta = null,
                                 aprobada_enviar_sri = false
                             };
 

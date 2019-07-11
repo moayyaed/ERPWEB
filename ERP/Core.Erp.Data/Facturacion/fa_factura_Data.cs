@@ -153,7 +153,6 @@ namespace Core.Erp.Data.Facturacion
                         vt_fecha = Entity.vt_fecha,
                         vt_fech_venc = Entity.vt_fech_venc,
                         IdCliente = Entity.IdCliente,
-                        IdContacto = Entity.IdContacto,
                         IdVendedor = Entity.IdVendedor,
                         vt_plazo = Entity.vt_plazo,
                         vt_Observacion = Entity.vt_Observacion,
@@ -254,7 +253,6 @@ namespace Core.Erp.Data.Facturacion
                     vt_fecha = info.vt_fecha.Date,
                     vt_fech_venc = info.vt_fech_venc.Date,
                     IdCliente = info.IdCliente,
-                    IdContacto = info.IdContacto,
                     IdVendedor = info.IdVendedor,
                     vt_plazo = info.vt_plazo,
                     vt_Observacion = string.IsNullOrEmpty(info.vt_Observacion) ? "" : info.vt_Observacion,
@@ -770,7 +768,6 @@ namespace Core.Erp.Data.Facturacion
                 Entity.vt_fecha = info.vt_fecha.Date;
                 Entity.vt_fech_venc = info.vt_fech_venc.Date;
                 Entity.IdCliente = info.IdCliente;
-                Entity.IdContacto = info.IdContacto;
                 Entity.IdVendedor = info.IdVendedor;
                 Entity.vt_plazo = info.vt_plazo;
                 Entity.vt_Observacion = string.IsNullOrEmpty(info.vt_Observacion) ? "" : info.vt_Observacion;

@@ -38,6 +38,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
+        fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
+        fa_MotivoTraslado_Bus bus_traslado = new fa_MotivoTraslado_Bus();
 
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -127,10 +129,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         private bool validar(fa_guia_remision_Info i_validar, ref string msg)
         {
+            #region Talonario
+            var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
+            i_validar.IdBodega = pto_vta.IdBodega;
+            i_validar.Serie1 = pto_vta.Su_CodigoEstablecimiento;
+            i_validar.Serie2 = pto_vta.cod_PuntoVta;
+            #endregion
+
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.gi_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
+
             return true;
         }
         #endregion
@@ -141,7 +151,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
-            var lst_punto_venta = bus_punto_venta.get_list(model.IdEmpresa, model.IdSucursal, false);
+            var lst_punto_venta = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, "GUIA");
             ViewBag.lst_punto_venta = lst_punto_venta;
 
             var lst_transportista = bus_transportista.get_list(model.IdEmpresa, false);
@@ -150,7 +160,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_contacto = bus_contacto.get_list(model.IdEmpresa, model.IdCliente);
             ViewBag.lst_contacto = lst_contacto;
 
-            var lst_tipo_traslado = bus_catalogo.get_list(14, false);
+            var lst_tipo_traslado = bus_traslado.get_list(model.IdEmpresa, false);
             ViewBag.lst_tipo_traslado = lst_tipo_traslado;
 
         }
@@ -359,10 +369,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            var resultado = bus_punto_venta.get_list(IdEmpresa, IdSucursal, false);
+            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, "GUIA");
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-         public JsonResult GetUltimoDocumento(int IdSucursal = 0, int IdPuntoVta = 0)
+        public JsonResult GetUltimoDocumento(int IdSucursal = 0, int IdPuntoVta = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             tb_sis_Documento_Tipo_Talonario_Info resultado = new tb_sis_Documento_Tipo_Talonario_Info();
@@ -375,7 +385,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             if (resultado == null)
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+
+            return Json(new { data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Cargar_facturas(decimal IdCliente = 0)
         {
@@ -435,16 +446,26 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        public JsonResult get_direcciones(decimal IdCliente = 0, int IdContacto=0)
+        public JsonResult get_direcciones(decimal IdCliente = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);          
-            var resultado = bus_contacto.get_info(IdEmpresa, IdCliente, IdContacto);
+            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            fa_cliente_contactos_Info resultado = new fa_cliente_contactos_Info();
+
+            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+
+            if (info_cliente != null)
+            {
+                resultado = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
+            }            
+
             if (resultado != null)
                 resultado.Direccion_emp = SessionFixed.em_direccion.ToString();
             else
                 resultado = new fa_cliente_contactos_Info();
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult Get_placa(int Idtransportista = 0)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);

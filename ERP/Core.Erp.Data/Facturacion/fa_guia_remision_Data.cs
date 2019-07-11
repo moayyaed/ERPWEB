@@ -141,6 +141,7 @@ namespace Core.Erp.Data.Facturacion
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdSucursal = info.IdSucursal,
+                        IdPuntoVta = info.IdPuntoVta,                        
                         IdBodega = info.IdBodega,
                         IdGuiaRemision =info.IdGuiaRemision= get_id(info.IdEmpresa),
                         CodGuiaRemision = info.CodGuiaRemision,
@@ -229,7 +230,7 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
                 throw;
             }

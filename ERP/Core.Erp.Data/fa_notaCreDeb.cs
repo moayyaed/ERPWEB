@@ -36,7 +36,6 @@ namespace Core.Erp.Data
         public string NumAutorizacion { get; set; }
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public decimal IdCliente { get; set; }
-        public int IdContacto { get; set; }
         public System.DateTime no_fecha { get; set; }
         public System.DateTime no_fecha_venc { get; set; }
         public int IdTipoNota { get; set; }
@@ -50,16 +49,15 @@ namespace Core.Erp.Data
         public string Estado { get; set; }
         public string NaturalezaNota { get; set; }
         public string IdCtaCble_TipoNota { get; set; }
-        public Nullable<int> IdPuntoVta { get; set; }
+        public int IdPuntoVta { get; set; }
         public bool aprobada_enviar_sri { get; set; }
         public Nullable<bool> Generado { get; set; }
     
-        public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
+        public virtual fa_cliente fa_cliente { get; set; }
         public virtual ICollection<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
+        public virtual fa_PuntoVta fa_PuntoVta { get; set; }
         public virtual fa_TipoNota fa_TipoNota { get; set; }
         public virtual ICollection<fa_notaCreDeb_x_ct_cbtecble> fa_notaCreDeb_x_ct_cbtecble { get; set; }
         public virtual ICollection<fa_notaCreDeb_x_cxc_cobro> fa_notaCreDeb_x_cxc_cobro { get; set; }
-        public virtual fa_PuntoVta fa_PuntoVta { get; set; }
-        public virtual fa_cliente fa_cliente { get; set; }
     }
 }

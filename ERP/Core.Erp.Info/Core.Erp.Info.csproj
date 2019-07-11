@@ -215,6 +215,7 @@
     <Compile Include="Facturacion\fa_guia_remision_det_Info.cs" />
     <Compile Include="Facturacion\fa_guia_remision_det_x_factura_Info.cs" />
     <Compile Include="Facturacion\fa_guia_remision_Info.cs" />
+    <Compile Include="Facturacion\fa_MotivoTraslado_Info.cs" />
     <Compile Include="Facturacion\fa_NivelDescuento_Info.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_det_Info.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_Info.cs" />

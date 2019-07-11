@@ -26,7 +26,7 @@ namespace Core.Erp.Data.Facturacion
                                  nom_PuntoVta = q.nom_PuntoVta,
                                  estado = q.estado,
                                  Su_Descripcion = q.Su_Descripcion,
-                                 CobroAutomatico = q.CobroAutomatico
+                                 CobroAutomatico = q.CobroAutomatico                                
                              }).ToList();
                 }
                 return Lista;
@@ -107,8 +107,9 @@ namespace Core.Erp.Data.Facturacion
                         IdCaja = Entity.IdCaja,
                         IPImpresora = Entity.IPImpresora,
                         NumCopias = Entity.NumCopias,
+                        EsElectronico = Entity.EsElectronico,
                         CobroAutomatico = Entity.CobroAutomatico
-                        
+
                     };
                 }
                 return info;

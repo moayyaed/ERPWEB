@@ -12,6 +12,7 @@ namespace Core.Erp.Info.Facturacion
         public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
+        public int IdPuntoVta { get; set; }
         public int IdBodega { get; set; }
         public decimal IdGuiaRemision { get; set; }
         public string CodGuiaRemision { get; set; }

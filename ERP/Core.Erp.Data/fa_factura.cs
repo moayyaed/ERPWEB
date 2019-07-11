@@ -35,7 +35,6 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public string vt_autorizacion { get; set; }
         public decimal IdCliente { get; set; }
-        public Nullable<int> IdContacto { get; set; }
         public int IdVendedor { get; set; }
         public int IdNivel { get; set; }
         public string IdCatalogo_FormaPago { get; set; }
@@ -62,7 +61,6 @@ namespace Core.Erp.Data
     
         public virtual fa_catalogo fa_catalogo { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }
-        public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
         public virtual ICollection<fa_cuotas_x_doc> fa_cuotas_x_doc { get; set; }
         public virtual ICollection<fa_factura_det> fa_factura_det { get; set; }
         public virtual fa_NivelDescuento fa_NivelDescuento { get; set; }

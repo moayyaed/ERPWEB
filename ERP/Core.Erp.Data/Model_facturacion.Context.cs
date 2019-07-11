@@ -55,13 +55,9 @@ namespace Core.Erp.Data
         public DbSet<fa_Vendedor> fa_Vendedor { get; set; }
         public DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
         public DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
-        public DbSet<fa_CambioProducto> fa_CambioProducto { get; set; }
-        public DbSet<vwfa_CambioProducto> vwfa_CambioProducto { get; set; }
         public DbSet<vwfa_CambioProductoDet_facturas> vwfa_CambioProductoDet_facturas { get; set; }
         public DbSet<fa_factura_det_x_in_Ing_Egr_Inven_det> fa_factura_det_x_in_Ing_Egr_Inven_det { get; set; }
-        public DbSet<fa_CambioProductoDet> fa_CambioProductoDet { get; set; }
         public DbSet<fa_CambioProductoDet_x_in_devolucion_inven> fa_CambioProductoDet_x_in_devolucion_inven { get; set; }
-        public DbSet<vwfa_CambioProductoDet> vwfa_CambioProductoDet { get; set; }
         public DbSet<vwfa_CambioProductoDet_FacturasConMovimiento> vwfa_CambioProductoDet_FacturasConMovimiento { get; set; }
         public DbSet<fa_formaPago> fa_formaPago { get; set; }
         public DbSet<fa_NivelDescuento> fa_NivelDescuento { get; set; }
@@ -71,20 +67,25 @@ namespace Core.Erp.Data
         public DbSet<vwfa_factura_sin_automatico> vwfa_factura_sin_automatico { get; set; }
         public DbSet<vwfa_cliente_consulta> vwfa_cliente_consulta { get; set; }
         public DbSet<vwfa_factura> vwfa_factura { get; set; }
-        public DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public DbSet<fa_proforma> fa_proforma { get; set; }
-        public DbSet<fa_PuntoVta> fa_PuntoVta { get; set; }
         public DbSet<vwfa_PuntoVta> vwfa_PuntoVta { get; set; }
         public DbSet<fa_cliente> fa_cliente { get; set; }
         public DbSet<fa_cliente_tipo> fa_cliente_tipo { get; set; }
-        public DbSet<fa_factura> fa_factura { get; set; }
         public DbSet<fa_parametro> fa_parametro { get; set; }
         public DbSet<fa_notaCreDeb_x_fa_factura_NotaDeb> fa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
         public DbSet<fa_guia_remision_det> fa_guia_remision_det { get; set; }
-        public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
         public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
         public DbSet<fa_MotivoTraslado> fa_MotivoTraslado { get; set; }
         public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
+        public DbSet<fa_CambioProducto> fa_CambioProducto { get; set; }
+        public DbSet<fa_CambioProductoDet> fa_CambioProductoDet { get; set; }
+        public DbSet<fa_factura> fa_factura { get; set; }
+        public DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
+        public DbSet<fa_PuntoVta> fa_PuntoVta { get; set; }
+        public DbSet<vwfa_CambioProducto> vwfa_CambioProducto { get; set; }
+        public DbSet<vwfa_CambioProductoDet> vwfa_CambioProductoDet { get; set; }
+        public DbSet<vwfa_notaCreDeb1> vwfa_notaCreDeb1Set { get; set; }
+        public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

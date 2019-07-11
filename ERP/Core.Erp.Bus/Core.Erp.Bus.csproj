@@ -169,6 +169,7 @@
     <Compile Include="Facturacion\fa_guia_remision_Bus.cs" />
     <Compile Include="Facturacion\fa_guia_remision_det_Bus.cs" />
     <Compile Include="Facturacion\fa_guia_remision_det_x_factura_Bus.cs" />
+    <Compile Include="Facturacion\fa_MotivoTraslado_Bus.cs" />
     <Compile Include="Facturacion\fa_NivelDescuento_Bus.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_Bus.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_det_Bus.cs" />

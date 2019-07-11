@@ -91,13 +91,12 @@
                         @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                         @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                     </div>
-
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="IdPuntoVta">Punto de venta*</label>
-                        @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
-                        @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
+                        @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-10">
@@ -113,13 +112,6 @@
                         <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
                     </div>
                 </div>
-                @*<div class="col-md-12">
-                    <div class="form-group">
-                        <label for="IdClienteContacto">Contacto</label>
-                        @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_contacto, "IdContacto", "Nombres"), new { @class = "form-control", @id = "IdContacto" })
-                        @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="vt_serie1">Establecimiento*</label>
@@ -237,9 +229,9 @@
 
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="IdClienteContacto">Tipo de traslado</label>
-                        @Html.DropDownListFor(q => q.IdCatalogo_traslado, new SelectList(ViewBag.lst_tipo_traslado, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdContacto" })
-                        @Html.ValidationMessageFor(q => q.IdCatalogo_traslado, "", new { @class = "text-danger" })
+                        <label for="IdClienteContacto">Motivo de traslado</label>
+                        @Html.DropDownListFor(q => q.IdMotivoTraslado, new SelectList(ViewBag.lst_tipo_traslado, "IdMotivoTraslado", "tr_Descripcion"), new { @class = "form-control", @id = "IdMotivoTraslado" })
+                        @Html.ValidationMessageFor(q => q.IdMotivoTraslado, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -358,9 +350,7 @@
         $("#IdPuntoVta").change(function () {
             GetUltimoDocumento();
         });
-        $("#IdContacto").change(function () {
-            get_direccion();
-        });
+
         $("#IdTransportista").change(function () {
             get_placa();
         });
@@ -427,9 +417,12 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#Serie1").val(data.Establecimiento);
-                $("#Serie2").val(data.PuntoEmision);
-                $("#NumGuia_Preimpresa").val(data.NumDocumento);
+                if (data.data_talonario != null)
+                {
+                    $("#Serie1").val(data.data_talonario.Establecimiento);
+                    $("#Serie2").val(data.data_talonario.PuntoEmision);
+                    $("#NumGuia_Preimpresa").val(data.data_talonario.NumDocumento);
+                }                
             },
             error: function (error) {
             }
@@ -480,8 +473,7 @@
     function get_direccion() {
 
         var datos = {
-            IdCliente: IdCliente.GetValue(),
-            IdContacto: $("#IdContacto").val()
+            IdCliente: IdCliente.GetValue()
         }
         $.ajax({
             type: 'POST',

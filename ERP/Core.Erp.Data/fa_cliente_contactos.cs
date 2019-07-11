@@ -14,12 +14,6 @@ namespace Core.Erp.Data
     
     public partial class fa_cliente_contactos
     {
-        public fa_cliente_contactos()
-        {
-            this.fa_notaCreDeb = new HashSet<fa_notaCreDeb>();
-            this.fa_factura = new HashSet<fa_factura>();
-        }
-    
         public int IdEmpresa { get; set; }
         public decimal IdCliente { get; set; }
         public int IdContacto { get; set; }
@@ -31,8 +25,6 @@ namespace Core.Erp.Data
         public string IdCiudad { get; set; }
         public string IdParroquia { get; set; }
     
-        public virtual ICollection<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }
-        public virtual ICollection<fa_factura> fa_factura { get; set; }
     }
 }

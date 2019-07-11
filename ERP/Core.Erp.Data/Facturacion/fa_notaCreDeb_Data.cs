@@ -81,7 +81,6 @@ namespace Core.Erp.Data.Facturacion
                         NumAutorizacion = Entity.NumAutorizacion,
                         Fecha_Autorizacion = Entity.Fecha_Autorizacion,
                         IdCliente = Entity.IdCliente,
-                        IdContacto = Entity.IdContacto,
                         no_fecha = Entity.no_fecha,
                         no_fecha_venc = Entity.no_fecha_venc,
                         IdTipoNota = Entity.IdTipoNota,
@@ -180,7 +179,6 @@ namespace Core.Erp.Data.Facturacion
                         NumAutorizacion = info.NumAutorizacion,
                         Fecha_Autorizacion = info.Fecha_Autorizacion,
                         IdCliente = info.IdCliente,
-                        IdContacto = info.IdContacto,
                         no_fecha = info.no_fecha.Date,
                         no_fecha_venc = info.no_fecha_venc.Date,
                         IdTipoNota = info.IdTipoNota,
@@ -345,7 +343,6 @@ namespace Core.Erp.Data.Facturacion
                     entity.NumAutorizacion = info.NumAutorizacion;
                     entity.Fecha_Autorizacion = info.Fecha_Autorizacion;
                     entity.IdCliente = info.IdCliente;
-                    entity.IdContacto = info.IdContacto;
                     entity.no_fecha = info.no_fecha.Date;
                     entity.no_fecha_venc = info.no_fecha_venc.Date;
                     entity.IdTipoNota = info.IdTipoNota;

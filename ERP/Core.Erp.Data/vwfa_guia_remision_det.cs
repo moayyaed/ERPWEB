@@ -29,10 +29,10 @@ namespace Core.Erp.Data
         public double gi_por_desc { get; set; }
         public double gi_descuentoUni { get; set; }
         public double gi_PrecioFinal { get; set; }
-        public string IdCod_Impuesto { get; set; }
         public double gi_Subtotal { get; set; }
-        public double gi_por_iva { get; set; }
-        public double gi_Iva { get; set; }
+        public string IdCod_Impuesto { get; set; }
         public double gi_Total { get; set; }
+        public double gi_Iva { get; set; }
+        public double gi_por_iva { get; set; }
     }
 }

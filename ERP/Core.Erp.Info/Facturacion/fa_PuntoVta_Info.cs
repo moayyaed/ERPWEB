@@ -19,13 +19,22 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo bodega es obligatorio")]
         public int IdBodega { get; set; }
         public int IdCaja { get; set; }
+        public string IPImpresora { get; set; }
         public Nullable<int> NumCopias { get; set; }
+        public bool CobroAutomatico { get; set; }
+        public string codDocumentoTipo { get; set; }
+        public bool EsElectronico { get; set; }
+        public string IdUsuarioCreacion { get; set; }
+        public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string IdUsuarioModificacion { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public string IdUsuarioAnulacion { get; set; }
+        public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        public string MotivoAnulacion { get; set; }
 
         #region Campos que no existen en la tabla
         public string Su_Descripcion { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
-        public string IPImpresora { get; set; }
-        public bool CobroAutomatico { get; set; }
         #endregion
     }
 }
