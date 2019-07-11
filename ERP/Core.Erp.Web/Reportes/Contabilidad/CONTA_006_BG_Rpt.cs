@@ -14,6 +14,10 @@ namespace Core.Erp.Web.Reportes.Contabilidad
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public int[] IntArray { get; set; }
+
+        List<CONTA_006_Info> lst_rpt = new List<CONTA_006_Info>();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         public CONTA_006_BG_Rpt()
         {
             InitializeComponent();
@@ -30,10 +34,14 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             int IdNivel = string.IsNullOrEmpty(p_IdNivel.Value.ToString()) ? 0 : Convert.ToInt32(p_IdNivel.Value);
             bool mostrarAcumulado = string.IsNullOrEmpty(p_mostrarAcumulado.Value.ToString()) ? false : Convert.ToBoolean(p_mostrarAcumulado.Value);
             string balance = string.IsNullOrEmpty(p_balance.Value.ToString()) ? "" : Convert.ToString(p_balance.Value);
-
             CONTA_006_Bus bus_rpt = new CONTA_006_Bus();
-            List<CONTA_006_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdAnio, mostrarSaldo0,IdUsuario, IdNivel, mostrarAcumulado, balance);
+            string Sucursal = "";
 
+            tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
+            Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
+
+            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdAnio, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance));
+            lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

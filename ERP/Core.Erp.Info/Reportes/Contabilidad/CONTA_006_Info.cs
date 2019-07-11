@@ -34,5 +34,7 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public decimal Noviembre { get; set; }
         public decimal Diciembre { get; set; }
         public decimal Total { get; set; }
+
+        public string Su_Descripcion { get; set; }
     }
 }
