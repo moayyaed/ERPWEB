@@ -111,6 +111,30 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             lst_balance.Add("", "Balance de comprobación");
             ViewBag.lst_balance = lst_balance;
         }
+
+
+        private void cargar_nivel_CONTA006()
+        {
+            Dictionary<int, string> lst_nivel = new Dictionary<int, string>();
+            lst_nivel.Add(6, "Nivel 6");
+            lst_nivel.Add(5, "Nivel 5");
+            lst_nivel.Add(4, "Nivel 4");
+            lst_nivel.Add(3, "Nivel 3");
+            lst_nivel.Add(2, "Nivel 2");
+            lst_nivel.Add(1, "Nivel 1");
+            ViewBag.lst_nivel = lst_nivel;
+
+            Dictionary<string, string> lst_balance = new Dictionary<string, string>();
+            lst_balance.Add("BG", "Balance general");
+            lst_balance.Add("ER", "Estado de resultado");
+            ViewBag.lst_balance = lst_balance;
+
+            ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
+            var lst_anio = bus_anio.get_list(false);
+            ViewBag.lst_anio = lst_anio;
+
+        }
+
         public ActionResult CONTA_002()
         {
             cl_filtros_Info model = new cl_filtros_Info
@@ -326,6 +350,72 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model.IdEmpresa);
             ViewBag.Report = report;
+            return View(model);
+        }
+        public ActionResult CONTA_006()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdNivel = 6,
+                balance = "ER",
+            };
+            
+            model.IdAnio = model.fecha_fin.Year;
+            model.MostrarSaldoAcumulado = false;
+            CONTA_006_ER_Rpt report = new CONTA_006_ER_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdAnio.Value = model.IdAnio;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_IdNivel.Value = model.IdNivel;
+            report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+            report.p_balance.Value = model.balance;
+            report.p_mostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_nivel_CONTA006();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_006(cl_filtros_contabilidad_Info model)
+        {
+            model.IdAnio = model.fecha_fin.Year;
+
+            if (model.balance == "BG")
+            {
+                CONTA_006_BG_Rpt report = new CONTA_006_BG_Rpt();
+                report.p_IdEmpresa.Value = model.IdEmpresa;
+                report.p_IdAnio.Value = model.IdAnio;
+                report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+                report.p_IdNivel.Value = model.IdNivel;
+                report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+                report.p_balance.Value = model.balance;
+                report.p_mostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+                report.usuario = SessionFixed.IdUsuario;
+                report.empresa = SessionFixed.NomEmpresa;
+                report.RequestParameters = false;
+                ViewBag.Report = report;
+            }
+            if (model.balance == "ER")
+            {
+                CONTA_006_ER_Rpt report = new CONTA_006_ER_Rpt();
+                report.p_IdEmpresa.Value = model.IdEmpresa;
+                report.p_IdAnio.Value = model.IdAnio;
+                report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+                report.p_IdNivel.Value = model.IdNivel;
+                report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+                report.p_balance.Value = model.balance;
+                report.p_mostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+                report.usuario = SessionFixed.IdUsuario;
+                report.empresa = SessionFixed.NomEmpresa;
+                report.RequestParameters = false;
+                ViewBag.Report = report;
+            }
+            cargar_nivel_CONTA006();
             return View(model);
         }
     }
