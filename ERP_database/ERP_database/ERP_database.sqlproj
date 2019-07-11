@@ -825,7 +825,6 @@
     <Build Include="web\Stored Procedures\SPCONTA_002.sql" />
     <Build Include="web\Stored Procedures\SPCXP_007.sql" />
     <Build Include="web\Stored Procedures\SPCXP_008.sql" />
-    <Build Include="web\Stored Procedures\SPFAC_002.sql" />
     <Build Include="web\Stored Procedures\SPROL_012.sql" />
     <Build Include="web\Stored Procedures\SPROL_013.sql" />
     <Build Include="dbo\Stored Procedures\spRo_Cierre_Rol.sql" />
@@ -868,7 +867,6 @@
     <Build Include="web\Views\vwin_Producto_Composicion.sql" />
     <Build Include="web\Views\VWBAN_007.sql" />
     <Build Include="web\Stored Procedures\SPINV_009.sql" />
-    <Build Include="web\Stored Procedures\SPCXC_004.sql" />
     <Build Include="web\Tables\in_SPINV_010.sql" />
     <Build Include="web\Views\VWIMP_003.sql" />
     <Build Include="web\Stored Procedures\SPINV_010.sql" />
@@ -893,10 +891,6 @@
     <Build Include="dbo\Tables\tbl_usuario_ftp.sql" />
     <Build Include="dbo\Tables\cp_orden_giro_x_in_Ing_Egr_Inven.sql" />
     <Build Include="web\Views\vwcp_orden_giro_det.sql" />
-    <Build Include="dbo\Tables\cxc_liquidacion_comisiones_det.sql" />
-    <Build Include="dbo\Tables\cxc_liquidacion_comisiones.sql" />
-    <Build Include="dbo\Views\vwcxc_liquidacion_comisiones_det_x_comisionar.sql" />
-    <Build Include="dbo\Views\vwcxc_liquidacion_comisiones_det.sql" />
     <Build Include="web\Views\VWINV_011.sql" />
     <Build Include="dbo\Functions\calcular_dias_trabajados.sql" />
     <Build Include="dbo\Tables\tbl_TransaccionesAutorizadas.sql" />
@@ -910,8 +904,6 @@
     <Build Include="web\Stored Procedures\SPINV_012.sql" />
     <Build Include="web\Stored Procedures\SPINV_004.sql" />
     <Build Include="web\Views\vwcom_ordencompra_local_det.sql" />
-    <Build Include="web\Views\VWCXC_006_sin_comision.sql" />
-    <Build Include="web\Views\VWCXC_006.sql" />
     <Build Include="web\Views\vwcp_retencion_det.sql" />
     <Build Include="web\Stored Procedures\SPFAC_011.sql" />
     <Build Include="web\Stored Procedures\SPCXP_010.sql" />
@@ -1042,9 +1034,7 @@
     <Build Include="web\Views\VWROL_021.sql" />
     <Build Include="dbo\Views\vwro_empleado_x_division_x_area.sql" />
     <Build Include="dbo\Views\vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal.sql" />
-    <Build Include="dbo\Views\vwcxc_LiquidacionTarjeta_x_cxc_cobro.sql" />
     <Build Include="web\Stored Procedures\SPROL_022.sql" />
-    <Build Include="dbo\Views\vwcxc_LiquidacionTarjeta.sql" />
     <Build Include="dbo\Views\vwro_empleado_x_jornada.sql" />
     <Build Include="web\Views\VWCXC_007_Diario.sql" />
     <Build Include="web\Views\VWCXC_007_Cobros.sql" />
@@ -1167,6 +1157,8 @@
     <Build Include="dbo\Tables\cp_ConciliacionAnticipo.sql" />
     <Build Include="dbo\Tables\fa_MotivoTraslado.sql" />
     <Build Include="dbo\Views\vwcp_ConciliacionAnticipo.sql" />
+    <Build Include="dbo\Views\vwcxc_LiquidacionTarjeta.sql" />
+    <Build Include="dbo\Views\vwcxc_LiquidacionTarjeta_x_cxc_cobro.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

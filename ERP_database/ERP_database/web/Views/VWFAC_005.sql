@@ -1,6 +1,6 @@
 ﻿CREATE VIEW WEB.VWFAC_005
 AS
-SELECT dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.IdCliente, dbo.fa_factura.IdContacto, 
+SELECT dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.IdCliente,  
                   LTRIM(RTRIM(dbo.tb_persona.pe_nombreCompleto)) AS NomCliente, dbo.fa_factura.vt_fecha, ISNULL(RTIVA.VRetenIVA, 0) AS VRetenIVA, ISNULL(RTFTE.VRetenFTE, 0) AS VRetenFTE, 
                   dbo.fa_factura_resumen.Total - ISNULL(RTIVA.VRetenIVA, 0) - ISNULL(RTFTE.VRetenFTE, 0) AS ValorACobrar, ISNULL(COBR.VCobrado, 0) AS VCobrado, dbo.fa_factura_resumen.Total - ISNULL(COBR.VCobrado, 0) AS Saldo, 
                   'FACTURA' AS TipoDocumento, CASE WHEN tb_persona.IdTipoDocumento = 'PAS' AND fa_factura_resumen.SubtotalSinIVASinDscto > 0 AND fa_factura_resumen.SubtotalIVASinDscto = 0 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) 

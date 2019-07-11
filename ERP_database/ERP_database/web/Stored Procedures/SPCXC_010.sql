@@ -26,7 +26,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 			IIF( DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte )>60 and  DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte )<=90 ,  Facturas_y_notas_deb.Valor_Original -( isnull( Cobros_x_fac.dc_ValorPago,0)) ,0) Vencer_90_Dias,
 			IIF( DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte )>90,  Facturas_y_notas_deb.Valor_Original - isnull( Cobros_x_fac.dc_ValorPago,0),0) Mayor_a_90Dias
 			,Facturas_y_notas_deb.vt_fech_venc,Facturas_y_notas_deb.vt_fecha,Facturas_y_notas_deb.Idtipo_cliente,DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte ) Dias_Vencidos,
-			ISNULL(cast( Facturas_y_notas_deb.Valor_Original-isnull( Cobros_x_fac.dc_ValorPago,0) as numeric(10,2)),0) Saldo,Facturas_y_notas_deb.pe_telefonoOfic, vt_Observacion, vt_plazo, IdContacto, NomContacto, TelefonoContacto,
+			ISNULL(cast( Facturas_y_notas_deb.Valor_Original-isnull( Cobros_x_fac.dc_ValorPago,0) as numeric(10,2)),0) Saldo,Facturas_y_notas_deb.pe_telefonoOfic, vt_Observacion, vt_plazo, NomContacto, TelefonoContacto,
 			Descripcion_tip_cliente--, Idtipo_cliente
 			
  from 
@@ -37,7 +37,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								dbo.tb_sucursal.Su_Descripcion, LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) as pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
 								FD.Total Valor_Original,F.vt_fech_venc,
 								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, '' +'/'+ dbo.tb_persona.pe_telfono_Contacto as pe_telefonoOfic,
-								F.vt_Observacion,F.vt_plazo, f.IdContacto, p.pe_nombreCompleto as NomContacto, con.Telefono + '/' + con.Celular TelefonoContacto, t.Descripcion_tip_cliente
+								F.vt_Observacion,F.vt_plazo, p.pe_nombreCompleto as NomContacto, con.Telefono + '/' + con.Celular TelefonoContacto, t.Descripcion_tip_cliente
 			FROM            fa_factura AS F INNER JOIN
                          fa_factura_resumen AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
                          fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente INNER JOIN
@@ -68,7 +68,7 @@ SELECT			dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaC
 				LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) , dbo.tb_persona.pe_cedulaRuc, 
 				dbo.fa_notaCreDeb_det.sc_total, dbo.fa_notaCreDeb.no_fecha_venc,dbo.fa_notaCreDeb.no_fecha, dbo.fa_cliente.Idtipo_cliente,
 				dbo.tb_persona.pe_telfono_Contacto as pe_telefonoOfic, fa_notaCreDeb.sc_observacion,
-				DATEDIFF(DAY,dbo.fa_notaCreDeb.no_fecha,dbo.fa_notaCreDeb.no_fecha_venc),1, tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_telfono_Contacto,
+				DATEDIFF(DAY,dbo.fa_notaCreDeb.no_fecha,dbo.fa_notaCreDeb.no_fecha_venc), tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_telfono_Contacto,
 				t.Descripcion_tip_cliente
 FROM            fa_notaCreDeb INNER JOIN
                 fa_notaCreDeb_det ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_det.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_det.IdSucursal AND 

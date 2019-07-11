@@ -9,6 +9,6 @@ FROM     fa_factura AS fc INNER JOIN
                   fc.IdSucursal = fd.IdSucursal AND fc.IdBodega = fd.IdBodega AND fc.IdCbteVta = fd.IdCbteVta LEFT OUTER JOIN
                   tb_sucursal AS su INNER JOIN
                   tb_bodega AS bo ON su.IdEmpresa = bo.IdEmpresa AND su.IdSucursal = bo.IdSucursal ON d.IdEmpresa = bo.IdEmpresa AND d.IdSucursal = bo.IdSucursal AND d.IdBodega = bo.IdBodega LEFT OUTER JOIN
-                  fa_cliente_contactos AS fcc ON fc.IdEmpresa = fcc.IdEmpresa AND fc.IdCliente = fcc.IdCliente AND fc.IdContacto = fcc.IdContacto LEFT OUTER JOIN
+                  fa_cliente_contactos AS fcc ON fc.IdEmpresa = fcc.IdEmpresa AND fc.IdCliente = fcc.IdCliente LEFT OUTER JOIN
                   in_Producto AS pc ON d.IdEmpresa = pc.IdEmpresa AND d.IdProductoCambio = pc.IdProducto LEFT OUTER JOIN
                   in_Producto AS pf ON d.IdEmpresa = pf.IdEmpresa AND d.IdProductoFact = pf.IdProducto

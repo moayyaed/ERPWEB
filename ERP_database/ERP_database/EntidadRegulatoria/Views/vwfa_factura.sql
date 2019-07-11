@@ -9,7 +9,7 @@ FROM            (SELECT        fac.IdEmpresa, fac.IdSucursal, fac.IdBodega, fac.
                                                     'SI' AS ObligadoAllevarConta, emp.em_ruc, emp.em_direccion, dbo.fa_formaPago.nom_FormaPago, dbo.fa_formaPago.IdFormaPago, dbo.fa_TerminoPago.Dias_Vct, emp.em_telefonos, 
                                                     dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico
                           FROM            dbo.fa_cliente_contactos AS cl_cont INNER JOIN
-                                                    dbo.fa_factura AS fac ON cl_cont.IdEmpresa = fac.IdEmpresa AND cl_cont.IdCliente = fac.IdCliente AND cl_cont.IdContacto = fac.IdContacto INNER JOIN
+                                                    dbo.fa_factura AS fac ON cl_cont.IdEmpresa = fac.IdEmpresa AND cl_cont.IdCliente = fac.IdCliente INNER JOIN
                                                     dbo.tb_persona AS per INNER JOIN
                                                     dbo.fa_cliente AS cli ON per.IdPersona = cli.IdPersona ON cl_cont.IdEmpresa = cli.IdEmpresa AND cl_cont.IdCliente = cli.IdCliente INNER JOIN
                                                     dbo.tb_empresa AS emp ON cli.IdEmpresa = emp.IdEmpresa INNER JOIN

@@ -12,7 +12,7 @@ FROM     dbo.fa_cliente INNER JOIN
                   dbo.fa_factura INNER JOIN
                   dbo.cxc_cobro_det ON dbo.fa_factura.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.fa_factura.IdBodega = dbo.cxc_cobro_det.IdBodega_Cbte AND 
                   dbo.fa_factura.IdCbteVta = dbo.cxc_cobro_det.IdCbte_vta_nota AND dbo.fa_factura.vt_tipoDoc = dbo.cxc_cobro_det.dc_TipoDocumento INNER JOIN
-                  dbo.fa_cliente_contactos ON dbo.fa_factura.IdContacto = dbo.fa_cliente_contactos.IdContacto AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente AND dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa ON 
+                  dbo.fa_cliente_contactos ON dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente AND dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa ON 
                   dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_det.IdCobro LEFT OUTER JOIN
                   dbo.cxc_cobro_tipo ON dbo.cxc_cobro_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo
 GO

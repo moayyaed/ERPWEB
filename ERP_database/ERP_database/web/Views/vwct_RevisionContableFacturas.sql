@@ -6,8 +6,7 @@ SELECT        dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factur
                          ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS TotalContabilidad, fa_factura_resumen.Total - ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS Diferencia
 FROM            dbo.fa_factura INNER JOIN
                          dbo.fa_cliente ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
-                         dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente AND 
-                         dbo.fa_factura.IdContacto = dbo.fa_cliente_contactos.IdContacto INNER JOIN
+                         dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente INNER JOIN
                          dbo.fa_factura_resumen ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_resumen.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_resumen.IdSucursal AND 
                          dbo.fa_factura.IdBodega = dbo.fa_factura_resumen.IdBodega AND dbo.fa_factura.IdCbteVta = dbo.fa_factura_resumen.IdCbteVta LEFT OUTER JOIN
                          dbo.fa_factura_x_ct_cbtecble ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_x_ct_cbtecble.vt_IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_x_ct_cbtecble.vt_IdSucursal AND 

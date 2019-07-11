@@ -11,5 +11,5 @@ FROM     in_presentacion INNER JOIN
                   fa_notaCreDeb INNER JOIN
                   fa_notaCreDeb_det ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_det.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_det.IdSucursal AND fa_notaCreDeb.IdBodega = fa_notaCreDeb_det.IdBodega AND 
                   fa_notaCreDeb.IdNota = fa_notaCreDeb_det.IdNota ON in_Producto.IdEmpresa = fa_notaCreDeb_det.IdEmpresa AND in_Producto.IdProducto = fa_notaCreDeb_det.IdProducto INNER JOIN
-                  fa_cliente_contactos ON fa_notaCreDeb.IdEmpresa = fa_cliente_contactos.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente_contactos.IdCliente AND fa_notaCreDeb.IdContacto = fa_cliente_contactos.IdContacto INNER JOIN
+                  fa_cliente_contactos ON fa_notaCreDeb.IdEmpresa = fa_cliente_contactos.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente_contactos.IdCliente  INNER JOIN
                   tb_sucursal ON fa_notaCreDeb.IdEmpresa = tb_sucursal.IdEmpresa AND fa_notaCreDeb.IdSucursal = tb_sucursal.IdSucursal inner join fa_TipoNota as tipo on fa_notaCreDeb.IdTipoNota = tipo.IdTipoNota

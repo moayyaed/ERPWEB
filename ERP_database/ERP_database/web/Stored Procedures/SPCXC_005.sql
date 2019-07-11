@@ -1,5 +1,5 @@
 ﻿
---exec [web].[SPCXC_005] 1,1,9999,1,9999,'2018/12/31',0
+--exec [web].[SPCXC_005] 2,1,9999,1,9999,'2019/12/31',0
 CREATE PROCEDURE [web].[SPCXC_005]
 (
 @IdEmpresa int,
@@ -11,18 +11,14 @@ CREATE PROCEDURE [web].[SPCXC_005]
 @MostrarSaldo0 bit
 )
 AS
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_tipoDoc, c.vt_NumFactura, c.IdCliente, c.IdContacto, RTRIM(LTRIM(tb_persona.pe_nombreCompleto)) AS NomCliente, tb_ciudad.Descripcion_Ciudad +' ' +fa_cliente_contactos.Direccion AS NomContacto,
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_tipoDoc, c.vt_NumFactura, c.IdCliente, RTRIM(LTRIM(tb_persona.pe_nombreCompleto)) AS NomCliente, 
  c.vt_fecha, c.vt_fech_venc, SubtotalConDscto AS Subtotal, ValorIVA AS IVA, Total AS Total, isnull(cobro.ValorPago,0) as Cobrado, ISNULL(NC.ValorPago,0) as NotaCredito, ROUND(D.Total - ISNULL(NC.ValorPago,0) - ISNULL(cobro.ValorPago,0),2) AS Saldo,
  S.Su_Descripcion
-FROM            tb_ciudad RIGHT OUTER JOIN
-                         fa_cliente_contactos ON tb_ciudad.IdCiudad = fa_cliente_contactos.IdCiudad RIGHT OUTER JOIN
-                         fa_factura AS c INNER JOIN
+FROM                     fa_factura AS c INNER JOIN
                          fa_cliente ON c.IdEmpresa = fa_cliente.IdEmpresa AND c.IdCliente = fa_cliente.IdCliente INNER JOIN
-                         tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona ON fa_cliente_contactos.IdEmpresa = c.IdEmpresa AND fa_cliente_contactos.IdCliente = c.IdCliente AND 
-                         fa_cliente_contactos.IdContacto = c.IdContacto 
-						 inner JOIN fa_factura_resumen d
-						 ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdCbteVta = d.IdCbteVta
-						 INNER JOIN tb_sucursal AS S ON C.IdEmpresa = S.IdEmpresa AND C.IdSucursal = S.IdSucursal
+                         tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona inner JOIN 
+						 fa_factura_resumen d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdCbteVta = d.IdCbteVta INNER JOIN 
+						 tb_sucursal AS S ON C.IdEmpresa = S.IdEmpresa AND C.IdSucursal = S.IdSucursal
 LEFT OUTER JOIN(
 SELECT        cxc_cobro_det.IdEmpresa, cxc_cobro_det.IdSucursal, cxc_cobro_det.IdBodega_Cbte, cxc_cobro_det.IdCbte_vta_nota, cxc_cobro_det.dc_TipoDocumento, SUM(cxc_cobro_det.dc_ValorPago) AS ValorPago
 FROM            cxc_cobro_det INNER JOIN
@@ -49,14 +45,12 @@ and ROUND(D.Total - ISNULL(cobro.ValorPago,0),2) != IIF(@MostrarSaldo0 = 1, -999
 
 UNION ALL
 
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdNota, c.CodDocumentoTipo, ISNULL(c.NumNota_Impresa,'INT-'+CAST(C.IdNota AS VARCHAR(10))), c.IdCliente, c.IdContacto, tb_persona.pe_nombreCompleto AS NomCliente, tb_ciudad.Descripcion_Ciudad +' ' +fa_cliente_contactos.Direccion AS NomContacto,
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdNota, c.CodDocumentoTipo, ISNULL(c.NumNota_Impresa,'INT-'+CAST(C.IdNota AS VARCHAR(10))), c.IdCliente, tb_persona.pe_nombreCompleto AS NomCliente, 
  c.no_fecha, c.no_fecha_venc, d.Subtotal, d.IVA, D.Total, isnull(cobro.ValorPago,0) as Cobrado, ISNULL(NC.ValorPago,0) as NotaCredito, ROUND(D.Total - ISNULL(NC.ValorPago,0) -  ISNULL(cobro.ValorPago,0),2) AS Saldo, S.Su_Descripcion
-FROM            tb_ciudad RIGHT OUTER JOIN
-                         fa_cliente_contactos ON tb_ciudad.IdCiudad = fa_cliente_contactos.IdCiudad RIGHT OUTER JOIN
-                         fa_notaCreDeb AS c INNER JOIN
+FROM           
+          fa_notaCreDeb AS c INNER JOIN
                          fa_cliente ON c.IdEmpresa = fa_cliente.IdEmpresa AND c.IdCliente = fa_cliente.IdCliente INNER JOIN
-                         tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona ON fa_cliente_contactos.IdEmpresa = c.IdEmpresa AND fa_cliente_contactos.IdCliente = c.IdCliente AND 
-                         fa_cliente_contactos.IdContacto = c.IdContacto LEFT OUTER JOIN
+                         tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona LEFT OUTER JOIN
                              (SELECT        IdEmpresa, IdSucursal, IdBodega, IdNota, SUM(sc_subtotal) AS Subtotal, SUM(sc_iva) AS IVA, SUM(sc_total) AS Total
                                FROM            fa_notaCreDeb_det
                                GROUP BY IdEmpresa, IdSucursal, IdBodega, IdNota) AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdNota = d.IdNota

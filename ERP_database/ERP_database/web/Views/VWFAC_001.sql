@@ -1,7 +1,7 @@
 ﻿CREATE VIEW web.VWFAC_001
 AS
 SELECT dbo.fa_factura_det.IdEmpresa, dbo.fa_factura_det.IdSucursal, dbo.fa_factura_det.IdBodega, dbo.fa_factura_det.IdCbteVta, dbo.fa_factura_det.Secuencia, dbo.fa_factura_det.IdProducto, ISNULL(dbo.in_Producto.IdProducto_padre, 0) 
-                  AS IdProducto_padre, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.IdCliente, dbo.fa_factura.IdContacto, dbo.fa_cliente_contactos.Nombres AS NombreContacto, dbo.fa_factura.IdVendedor, dbo.fa_Vendedor.Ve_Vendedor, 
+                  AS IdProducto_padre, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.IdCliente, dbo.fa_factura.IdVendedor, dbo.fa_Vendedor.Ve_Vendedor, 
                   LTRIM(RTRIM(dbo.tb_persona.pe_nombreCompleto)) AS NombreCliente, dbo.in_Producto.pr_descripcion + ' ' + dbo.in_presentacion.nom_presentacion AS pr_descripcion, dbo.in_Producto.lote_fecha_vcto, dbo.in_Producto.lote_num_lote, 
                   dbo.fa_factura_det.vt_cantidad, dbo.fa_factura_det.vt_Precio, dbo.fa_factura_det.vt_PorDescUnitario, dbo.fa_factura_det.vt_cantidad * dbo.fa_factura_det.vt_DescUnitario AS vt_DesctTotal, dbo.fa_factura_det.vt_PrecioFinal, 
                   dbo.fa_factura_det.vt_Subtotal, dbo.fa_factura_det.vt_iva, dbo.fa_factura_det.vt_total, dbo.fa_factura.Estado, dbo.tb_sucursal.Su_Descripcion, dbo.fa_factura.vt_fecha
@@ -9,8 +9,6 @@ FROM     dbo.fa_factura INNER JOIN
                   dbo.fa_factura_det ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_det.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_det.IdSucursal AND dbo.fa_factura.IdBodega = dbo.fa_factura_det.IdBodega AND 
                   dbo.fa_factura.IdCbteVta = dbo.fa_factura_det.IdCbteVta INNER JOIN
                   dbo.in_Producto ON dbo.fa_factura_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.fa_factura_det.IdProducto = dbo.in_Producto.IdProducto INNER JOIN
-                  dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente AND 
-                  dbo.fa_factura.IdContacto = dbo.fa_cliente_contactos.IdContacto INNER JOIN
                   dbo.fa_Vendedor ON dbo.fa_factura.IdEmpresa = dbo.fa_Vendedor.IdEmpresa AND dbo.fa_factura.IdVendedor = dbo.fa_Vendedor.IdVendedor INNER JOIN
                   dbo.fa_cliente ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
                   dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
