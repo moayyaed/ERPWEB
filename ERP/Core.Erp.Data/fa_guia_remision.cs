@@ -63,7 +63,7 @@ namespace Core.Erp.Data
         public virtual fa_catalogo fa_catalogo { get; set; }
         public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
         public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
-        public virtual ICollection<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }
+        public virtual ICollection<fa_guia_remision_det> fa_guia_remision_det { get; set; }
     }
 }

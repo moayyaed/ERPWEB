@@ -467,7 +467,16 @@
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="gi_cantidad" Type="float" Nullable="false" />
-          <Property Name="gi_detallexItems" Type="nchar" MaxLength="250" />
+          <Property Name="gi_detallexItems" Type="varchar(max)" />
+          <Property Name="gi_precio" Type="float" Nullable="false" />
+          <Property Name="gi_por_desc" Type="float" Nullable="false" />
+          <Property Name="gi_descuentoUni" Type="float" Nullable="false" />
+          <Property Name="gi_PrecioFinal" Type="float" Nullable="false" />
+          <Property Name="gi_Subtotal" Type="float" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="gi_por_iva" Type="float" Nullable="false" />
+          <Property Name="gi_Iva" Type="float" Nullable="false" />
+          <Property Name="gi_Total" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="fa_guia_remision_det_x_factura">
           <Key>
@@ -961,6 +970,50 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_factura_sin_automatico' no ti
           <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_guia_remision_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_guia_remision_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="gi_cantidad" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="gi_precio" />
+            <PropertyRef Name="gi_por_desc" />
+            <PropertyRef Name="gi_descuentoUni" />
+            <PropertyRef Name="gi_PrecioFinal" />
+            <PropertyRef Name="IdCod_Impuesto" />
+            <PropertyRef Name="gi_Subtotal" />
+            <PropertyRef Name="gi_por_iva" />
+            <PropertyRef Name="gi_Iva" />
+            <PropertyRef Name="gi_Total" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="gi_cantidad" Type="float" Nullable="false" />
+          <Property Name="gi_detallexItems" Type="varchar(max)" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="pr_descripcion_2" Type="nvarchar" MaxLength="500" />
+          <Property Name="gi_precio" Type="float" Nullable="false" />
+          <Property Name="gi_por_desc" Type="float" Nullable="false" />
+          <Property Name="gi_descuentoUni" Type="float" Nullable="false" />
+          <Property Name="gi_PrecioFinal" Type="float" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="gi_Subtotal" Type="float" Nullable="false" />
+          <Property Name="gi_por_iva" Type="float" Nullable="false" />
+          <Property Name="gi_Iva" Type="float" Nullable="false" />
+          <Property Name="gi_Total" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_proforma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwfa_proforma">
           <Key>
@@ -1334,44 +1387,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_guia_remision' no tiene defin
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="1000" Nullable="false" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwfa_guia_remision_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vwfa_guia_remision_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="gi_cantidad" />
-            <PropertyRef Name="pr_descripcion" />
-            <PropertyRef Name="pr_codigo" />
-            <PropertyRef Name="ca_Categoria" />
-            <PropertyRef Name="nom_presentacion" />
-            <PropertyRef Name="IdGuiaRemision" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdSucursal" Type="int" Nullable="false" />
-          <Property Name="IdBodega" Type="int" Nullable="false" />
-          <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="gi_cantidad" Type="float" Nullable="false" />
-          <Property Name="gi_detallexItems" Type="nchar" MaxLength="250" />
-          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="pr_descripcion_2" Type="nvarchar" MaxLength="500" />
-          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="lote_fecha_fab" Type="datetime" />
-          <Property Name="lote_fecha_vcto" Type="datetime" />
-          <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
-          <Property Name="ca_Categoria" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="nom_presentacion" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="IdGuiaRemision" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdEmpresa_fact" Type="int" />
-          <Property Name="IdSucursal_fact" Type="int" />
-          <Property Name="IdBodega_fact" Type="int" />
-          <Property Name="IdCbteVta_fact" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Secuencia_fact" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2339,6 +2354,30 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
     [vwfa_factura_sin_automatico].[IdCobro] AS [IdCobro]
     FROM [dbo].[vwfa_factura_sin_automatico] AS [vwfa_factura_sin_automatico]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwfa_guia_remision_det" EntityType="Self.vwfa_guia_remision_det" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwfa_guia_remision_det].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_guia_remision_det].[IdSucursal] AS [IdSucursal], 
+    [vwfa_guia_remision_det].[IdBodega] AS [IdBodega], 
+    [vwfa_guia_remision_det].[IdGuiaRemision] AS [IdGuiaRemision], 
+    [vwfa_guia_remision_det].[Secuencia] AS [Secuencia], 
+    [vwfa_guia_remision_det].[IdProducto] AS [IdProducto], 
+    [vwfa_guia_remision_det].[gi_cantidad] AS [gi_cantidad], 
+    [vwfa_guia_remision_det].[gi_detallexItems] AS [gi_detallexItems], 
+    [vwfa_guia_remision_det].[pr_codigo] AS [pr_codigo], 
+    [vwfa_guia_remision_det].[pr_descripcion] AS [pr_descripcion], 
+    [vwfa_guia_remision_det].[pr_descripcion_2] AS [pr_descripcion_2], 
+    [vwfa_guia_remision_det].[gi_precio] AS [gi_precio], 
+    [vwfa_guia_remision_det].[gi_por_desc] AS [gi_por_desc], 
+    [vwfa_guia_remision_det].[gi_descuentoUni] AS [gi_descuentoUni], 
+    [vwfa_guia_remision_det].[gi_PrecioFinal] AS [gi_PrecioFinal], 
+    [vwfa_guia_remision_det].[IdCod_Impuesto] AS [IdCod_Impuesto], 
+    [vwfa_guia_remision_det].[gi_Subtotal] AS [gi_Subtotal], 
+    [vwfa_guia_remision_det].[gi_por_iva] AS [gi_por_iva], 
+    [vwfa_guia_remision_det].[gi_Iva] AS [gi_Iva], 
+    [vwfa_guia_remision_det].[gi_Total] AS [gi_Total]
+    FROM [dbo].[vwfa_guia_remision_det] AS [vwfa_guia_remision_det]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwfa_proforma" EntityType="Self.vwfa_proforma" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwfa_proforma].[IdEmpresa] AS [IdEmpresa], 
@@ -2573,31 +2612,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
     [vwfa_guia_remision].[Estado] AS [Estado], 
     [vwfa_guia_remision].[Nombres] AS [Nombres]
     FROM [web].[vwfa_guia_remision] AS [vwfa_guia_remision]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vwfa_guia_remision_det" EntityType="Self.vwfa_guia_remision_det" store:Type="Views" store:Schema="web">
-            <DefiningQuery>SELECT 
-    [vwfa_guia_remision_det].[IdEmpresa] AS [IdEmpresa], 
-    [vwfa_guia_remision_det].[IdSucursal] AS [IdSucursal], 
-    [vwfa_guia_remision_det].[IdBodega] AS [IdBodega], 
-    [vwfa_guia_remision_det].[Secuencia] AS [Secuencia], 
-    [vwfa_guia_remision_det].[IdProducto] AS [IdProducto], 
-    [vwfa_guia_remision_det].[gi_cantidad] AS [gi_cantidad], 
-    [vwfa_guia_remision_det].[gi_detallexItems] AS [gi_detallexItems], 
-    [vwfa_guia_remision_det].[pr_descripcion] AS [pr_descripcion], 
-    [vwfa_guia_remision_det].[pr_descripcion_2] AS [pr_descripcion_2], 
-    [vwfa_guia_remision_det].[pr_codigo] AS [pr_codigo], 
-    [vwfa_guia_remision_det].[lote_fecha_fab] AS [lote_fecha_fab], 
-    [vwfa_guia_remision_det].[lote_fecha_vcto] AS [lote_fecha_vcto], 
-    [vwfa_guia_remision_det].[lote_num_lote] AS [lote_num_lote], 
-    [vwfa_guia_remision_det].[ca_Categoria] AS [ca_Categoria], 
-    [vwfa_guia_remision_det].[nom_presentacion] AS [nom_presentacion], 
-    [vwfa_guia_remision_det].[IdGuiaRemision] AS [IdGuiaRemision], 
-    [vwfa_guia_remision_det].[IdEmpresa_fact] AS [IdEmpresa_fact], 
-    [vwfa_guia_remision_det].[IdSucursal_fact] AS [IdSucursal_fact], 
-    [vwfa_guia_remision_det].[IdBodega_fact] AS [IdBodega_fact], 
-    [vwfa_guia_remision_det].[IdCbteVta_fact] AS [IdCbteVta_fact], 
-    [vwfa_guia_remision_det].[Secuencia_fact] AS [Secuencia_fact]
-    FROM [web].[vwfa_guia_remision_det] AS [vwfa_guia_remision_det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwfa_notaCreDeb" EntityType="Self.vwfa_notaCreDeb" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -3053,25 +3067,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="fa_factura" Relationship="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" FromRole="fa_factura_x_in_Ing_Egr_Inven" ToRole="fa_factura" />
         </EntityType>
-        <EntityType Name="fa_guia_remision_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdGuiaRemision" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="gi_cantidad" Type="Double" Nullable="false" />
-          <Property Name="gi_detallexItems" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="fa_guia_remision_det_x_factura" Relationship="Self.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" FromRole="fa_guia_remision_det" ToRole="fa_guia_remision_det_x_factura" />
-          <NavigationProperty Name="fa_guia_remision" Relationship="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" FromRole="fa_guia_remision_det" ToRole="fa_guia_remision" />
-        </EntityType>
         <EntityType Name="fa_guia_remision_det_x_factura">
           <Key>
             <PropertyRef Name="IdEmpresa_guia" />
@@ -3097,7 +3092,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Secuencia_fact" Type="Int32" Nullable="false" />
           <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="fa_factura_det" Relationship="Self.FK_fa_guia_remision_det_x_fa_factura_det_fa_factura_det" FromRole="fa_guia_remision_det_x_factura" ToRole="fa_factura_det" />
-          <NavigationProperty Name="fa_guia_remision_det" Relationship="Self.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" FromRole="fa_guia_remision_det_x_factura" ToRole="fa_guia_remision_det" />
+          <NavigationProperty Name="fa_guia_remision_det" Relationship="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" FromRole="fa_guia_remision_det_x_factura" ToRole="fa_guia_remision_det" />
         </EntityType>
         <EntityType Name="fa_notaCreDeb_x_ct_cbtecble">
           <Key>
@@ -3333,42 +3328,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="gi_IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <EntityType Name="vwfa_guia_remision_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="gi_cantidad" />
-            <PropertyRef Name="pr_descripcion" />
-            <PropertyRef Name="pr_codigo" />
-            <PropertyRef Name="ca_Categoria" />
-            <PropertyRef Name="nom_presentacion" />
-            <PropertyRef Name="IdGuiaRemision" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="gi_cantidad" Type="Double" Nullable="false" />
-          <Property Name="gi_detallexItems" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
-          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="pr_descripcion_2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="pr_codigo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lote_fecha_fab" Type="DateTime" Precision="3" />
-          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
-          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ca_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nom_presentacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdEmpresa_fact" Type="Int32" />
-          <Property Name="IdSucursal_fact" Type="Int32" />
-          <Property Name="IdBodega_fact" Type="Int32" />
-          <Property Name="IdCbteVta_fact" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Secuencia_fact" Type="Int32" />
-        </EntityType>
         <EntityType Name="vwfa_notaCreDeb">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3484,26 +3443,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det">
-          <End Role="fa_guia_remision_det" Type="Self.fa_guia_remision_det" Multiplicity="1" />
-          <End Role="fa_guia_remision_det_x_factura" Type="Self.fa_guia_remision_det_x_factura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_guia_remision_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdGuiaRemision" />
-              <PropertyRef Name="Secuencia" />
-            </Principal>
-            <Dependent Role="fa_guia_remision_det_x_factura">
-              <PropertyRef Name="IdEmpresa_guia" />
-              <PropertyRef Name="IdSucursal_guia" />
-              <PropertyRef Name="IdBodega_guia" />
-              <PropertyRef Name="IdGuiaRemision_guia" />
-              <PropertyRef Name="Secuencia_guia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_fa_TerminoPago_Distribucion_fa_TerminoPago">
           <End Role="fa_TerminoPago" Type="Self.fa_TerminoPago" Multiplicity="1" />
           <End Role="fa_TerminoPago_Distribucion" Type="Self.fa_TerminoPago_Distribucion" Multiplicity="*" />
@@ -3526,7 +3465,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="fa_factura_x_ct_cbtecble" EntityType="Self.fa_factura_x_ct_cbtecble" />
           <EntitySet Name="fa_factura_x_fa_guia_remision" EntityType="Self.fa_factura_x_fa_guia_remision" />
           <EntitySet Name="fa_factura_x_in_Ing_Egr_Inven" EntityType="Self.fa_factura_x_in_Ing_Egr_Inven" />
-          <EntitySet Name="fa_guia_remision_det" EntityType="Self.fa_guia_remision_det" />
           <EntitySet Name="fa_guia_remision_det_x_factura" EntityType="Self.fa_guia_remision_det_x_factura" />
           <EntitySet Name="fa_notaCreDeb_x_ct_cbtecble" EntityType="Self.fa_notaCreDeb_x_ct_cbtecble" />
           <EntitySet Name="fa_notaCreDeb_x_cxc_cobro" EntityType="Self.fa_notaCreDeb_x_cxc_cobro" />
@@ -3538,7 +3476,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="vwfa_proforma_det" EntityType="Self.vwfa_proforma_det" />
           <EntitySet Name="vwfa_factura_sin_guia" EntityType="Self.vwfa_factura_sin_guia" />
           <EntitySet Name="vwfa_factura_x_fa_guia_remision" EntityType="Self.vwfa_factura_x_fa_guia_remision" />
-          <EntitySet Name="vwfa_guia_remision_det" EntityType="Self.vwfa_guia_remision_det" />
           <EntitySet Name="vwfa_notaCreDeb" EntityType="Self.vwfa_notaCreDeb" />
           <EntitySet Name="vwfa_notaCreDeb_x_fa_factura_NotaDeb" EntityType="Self.vwfa_notaCreDeb_x_fa_factura_NotaDeb" />
           <AssociationSet Name="FK_fa_catalogo_fa_catalogo_tipo" Association="Self.FK_fa_catalogo_fa_catalogo_tipo">
@@ -3551,10 +3488,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           </AssociationSet>
           <AssociationSet Name="FK_fa_guia_remision_det_x_fa_factura_det_fa_factura_det" Association="Self.FK_fa_guia_remision_det_x_fa_factura_det_fa_factura_det">
             <End Role="fa_factura_det" EntitySet="fa_factura_det" />
-            <End Role="fa_guia_remision_det_x_factura" EntitySet="fa_guia_remision_det_x_factura" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" Association="Self.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det">
-            <End Role="fa_guia_remision_det" EntitySet="fa_guia_remision_det" />
             <End Role="fa_guia_remision_det_x_factura" EntitySet="fa_guia_remision_det_x_factura" />
           </AssociationSet>
           <AssociationSet Name="FK_fa_TerminoPago_Distribucion_fa_TerminoPago" Association="Self.FK_fa_TerminoPago_Distribucion_fa_TerminoPago">
@@ -3623,10 +3556,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <AssociationSet Name="FK_fa_factura_x_fa_guia_remision_fa_guia_remision" Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_guia_remision">
             <End Role="fa_guia_remision" EntitySet="fa_guia_remision" />
             <End Role="fa_factura_x_fa_guia_remision" EntitySet="fa_factura_x_fa_guia_remision" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_guia_remision_det_fa_guia_remision" Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision">
-            <End Role="fa_guia_remision" EntitySet="fa_guia_remision" />
-            <End Role="fa_guia_remision_det" EntitySet="fa_guia_remision_det" />
           </AssociationSet>
           <AssociationSet Name="FK_fa_notaCreDeb_det_fa_notaCreDeb" Association="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb">
             <End Role="fa_notaCreDeb" EntitySet="fa_notaCreDeb" />
@@ -3760,6 +3689,16 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             <End Role="fa_factura_x_in_Ing_Egr_Inven" EntitySet="fa_factura_x_in_Ing_Egr_Inven" />
           </AssociationSet>
           <EntitySet Name="fa_notaCreDeb_x_fa_factura_NotaDeb" EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" />
+          <EntitySet Name="fa_guia_remision_det" EntityType="Model_facturacion.fa_guia_remision_det" />
+          <AssociationSet Name="FK_fa_guia_remision_det_fa_guia_remision" Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision">
+            <End Role="fa_guia_remision" EntitySet="fa_guia_remision" />
+            <End Role="fa_guia_remision_det" EntitySet="fa_guia_remision_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" Association="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det">
+            <End Role="fa_guia_remision_det" EntitySet="fa_guia_remision_det" />
+            <End Role="fa_guia_remision_det_x_factura" EntitySet="fa_guia_remision_det_x_factura" />
+          </AssociationSet>
+          <EntitySet Name="vwfa_guia_remision_det" EntityType="Model_facturacion.vwfa_guia_remision_det" />
           </EntityContainer>
         <EntityType Name="vwfa_factura_det">
           <Key>
@@ -4510,8 +4449,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <NavigationProperty Name="fa_catalogo" Relationship="Model_facturacion.FK_fa_guia_remision_fa_catalogo" FromRole="fa_guia_remision" ToRole="fa_catalogo" />
           <NavigationProperty Name="fa_cliente_contactos" Relationship="Model_facturacion.FK_fa_guia_remision_fa_cliente_contactos" FromRole="fa_guia_remision" ToRole="fa_cliente_contactos" />
           <NavigationProperty Name="fa_factura_x_fa_guia_remision" Relationship="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_guia_remision" FromRole="fa_guia_remision" ToRole="fa_factura_x_fa_guia_remision" />
-          <NavigationProperty Name="fa_guia_remision_det" Relationship="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" FromRole="fa_guia_remision" ToRole="fa_guia_remision_det" />
           <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_guia_remision_fa_cliente" FromRole="fa_guia_remision" ToRole="fa_cliente" />
+          <NavigationProperty Name="fa_guia_remision_det" Relationship="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" FromRole="fa_guia_remision" ToRole="fa_guia_remision_det" />
         </EntityType>
         <EntityType Name="fa_notaCreDeb">
           <Key>
@@ -4619,24 +4558,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
               <PropertyRef Name="gi_IdSucursal" />
               <PropertyRef Name="gi_IdBodega" />
               <PropertyRef Name="gi_IdGuiaRemision" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_guia_remision_det_fa_guia_remision">
-          <End Type="Model_facturacion.fa_guia_remision" Role="fa_guia_remision" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_guia_remision_det" Role="fa_guia_remision_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_guia_remision">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdGuiaRemision" />
-            </Principal>
-            <Dependent Role="fa_guia_remision_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-              <PropertyRef Name="IdBodega" />
-              <PropertyRef Name="IdGuiaRemision" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5350,6 +5271,114 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Valor_Aplicado" Type="Double" Nullable="false" />
           <Property Name="fecha_cruce" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
+        <EntityType Name="fa_guia_remision_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="gi_cantidad" Type="Double" Nullable="false" />
+          <Property Name="gi_detallexItems" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="gi_precio" Type="Double" Nullable="false" />
+          <Property Name="gi_por_desc" Type="Double" Nullable="false" />
+          <Property Name="gi_descuentoUni" Type="Double" Nullable="false" />
+          <Property Name="gi_PrecioFinal" Type="Double" Nullable="false" />
+          <Property Name="gi_Subtotal" Type="Double" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="gi_por_iva" Type="Double" Nullable="false" />
+          <Property Name="gi_Iva" Type="Double" Nullable="false" />
+          <Property Name="gi_Total" Type="Double" Nullable="false" />
+          <NavigationProperty Name="fa_guia_remision" Relationship="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" FromRole="fa_guia_remision_det" ToRole="fa_guia_remision" />
+          <NavigationProperty Name="fa_guia_remision_det_x_factura" Relationship="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" FromRole="fa_guia_remision_det" ToRole="fa_guia_remision_det_x_factura" />
+        </EntityType>
+        <Association Name="FK_fa_guia_remision_det_fa_guia_remision">
+          <End Type="Model_facturacion.fa_guia_remision" Role="fa_guia_remision" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_guia_remision_det" Role="fa_guia_remision_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_guia_remision">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdGuiaRemision" />
+            </Principal>
+            <Dependent Role="fa_guia_remision_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdGuiaRemision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det">
+          <End Type="Model_facturacion.fa_guia_remision_det" Role="fa_guia_remision_det" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_guia_remision_det_x_factura" Role="fa_guia_remision_det_x_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_guia_remision_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdBodega" />
+              <PropertyRef Name="IdGuiaRemision" />
+              <PropertyRef Name="Secuencia" />
+            </Principal>
+            <Dependent Role="fa_guia_remision_det_x_factura">
+              <PropertyRef Name="IdEmpresa_guia" />
+              <PropertyRef Name="IdSucursal_guia" />
+              <PropertyRef Name="IdBodega_guia" />
+              <PropertyRef Name="IdGuiaRemision_guia" />
+              <PropertyRef Name="Secuencia_guia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwfa_guia_remision_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdGuiaRemision" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="gi_cantidad" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="gi_precio" />
+            <PropertyRef Name="gi_por_desc" />
+            <PropertyRef Name="gi_descuentoUni" />
+            <PropertyRef Name="gi_PrecioFinal" />
+            <PropertyRef Name="IdCod_Impuesto" />
+            <PropertyRef Name="gi_Subtotal" />
+            <PropertyRef Name="gi_por_iva" />
+            <PropertyRef Name="gi_Iva" />
+            <PropertyRef Name="gi_Total" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdGuiaRemision" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="gi_cantidad" Type="Double" Nullable="false" />
+          <Property Name="gi_detallexItems" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion_2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="gi_precio" Type="Double" Nullable="false" />
+          <Property Name="gi_por_desc" Type="Double" Nullable="false" />
+          <Property Name="gi_descuentoUni" Type="Double" Nullable="false" />
+          <Property Name="gi_PrecioFinal" Type="Double" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="gi_Subtotal" Type="Double" Nullable="false" />
+          <Property Name="gi_por_iva" Type="Double" Nullable="false" />
+          <Property Name="gi_Iva" Type="Double" Nullable="false" />
+          <Property Name="gi_Total" Type="Double" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5502,20 +5531,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="IdMovi_inven_tipo_in_eg_x_inv" ColumnName="IdMovi_inven_tipo_in_eg_x_inv" />
                 <ScalarProperty Name="IdNumMovi_in_eg_x_inv" ColumnName="IdNumMovi_in_eg_x_inv" />
                 <ScalarProperty Name="observacion" ColumnName="observacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="fa_guia_remision_det">
-            <EntityTypeMapping TypeName="Model_facturacion.fa_guia_remision_det">
-              <MappingFragment StoreEntitySet="fa_guia_remision_det">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="gi_cantidad" ColumnName="gi_cantidad" />
-                <ScalarProperty Name="gi_detallexItems" ColumnName="gi_detallexItems" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5707,33 +5722,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
                 <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
                 <ScalarProperty Name="gi_IdGuiaRemision" ColumnName="gi_IdGuiaRemision" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwfa_guia_remision_det">
-            <EntityTypeMapping TypeName="Model_facturacion.vwfa_guia_remision_det">
-              <MappingFragment StoreEntitySet="vwfa_guia_remision_det">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="gi_cantidad" ColumnName="gi_cantidad" />
-                <ScalarProperty Name="gi_detallexItems" ColumnName="gi_detallexItems" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="pr_descripcion_2" ColumnName="pr_descripcion_2" />
-                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
-                <ScalarProperty Name="lote_fecha_fab" ColumnName="lote_fecha_fab" />
-                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
-                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
-                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
-                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
-                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
-                <ScalarProperty Name="IdEmpresa_fact" ColumnName="IdEmpresa_fact" />
-                <ScalarProperty Name="IdSucursal_fact" ColumnName="IdSucursal_fact" />
-                <ScalarProperty Name="IdBodega_fact" ColumnName="IdBodega_fact" />
-                <ScalarProperty Name="IdCbteVta_fact" ColumnName="IdCbteVta_fact" />
-                <ScalarProperty Name="Secuencia_fact" ColumnName="Secuencia_fact" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6549,6 +6537,55 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="IdBodega_nt" ColumnName="IdBodega_nt" />
                 <ScalarProperty Name="IdSucursal_nt" ColumnName="IdSucursal_nt" />
                 <ScalarProperty Name="IdEmpresa_nt" ColumnName="IdEmpresa_nt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fa_guia_remision_det">
+            <EntityTypeMapping TypeName="Model_facturacion.fa_guia_remision_det">
+              <MappingFragment StoreEntitySet="fa_guia_remision_det">
+                <ScalarProperty Name="gi_Total" ColumnName="gi_Total" />
+                <ScalarProperty Name="gi_Iva" ColumnName="gi_Iva" />
+                <ScalarProperty Name="gi_por_iva" ColumnName="gi_por_iva" />
+                <ScalarProperty Name="IdCod_Impuesto" ColumnName="IdCod_Impuesto" />
+                <ScalarProperty Name="gi_Subtotal" ColumnName="gi_Subtotal" />
+                <ScalarProperty Name="gi_PrecioFinal" ColumnName="gi_PrecioFinal" />
+                <ScalarProperty Name="gi_descuentoUni" ColumnName="gi_descuentoUni" />
+                <ScalarProperty Name="gi_por_desc" ColumnName="gi_por_desc" />
+                <ScalarProperty Name="gi_precio" ColumnName="gi_precio" />
+                <ScalarProperty Name="gi_detallexItems" ColumnName="gi_detallexItems" />
+                <ScalarProperty Name="gi_cantidad" ColumnName="gi_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_guia_remision_det">
+            <EntityTypeMapping TypeName="Model_facturacion.vwfa_guia_remision_det">
+              <MappingFragment StoreEntitySet="vwfa_guia_remision_det">
+                <ScalarProperty Name="gi_Total" ColumnName="gi_Total" />
+                <ScalarProperty Name="gi_Iva" ColumnName="gi_Iva" />
+                <ScalarProperty Name="gi_por_iva" ColumnName="gi_por_iva" />
+                <ScalarProperty Name="gi_Subtotal" ColumnName="gi_Subtotal" />
+                <ScalarProperty Name="IdCod_Impuesto" ColumnName="IdCod_Impuesto" />
+                <ScalarProperty Name="gi_PrecioFinal" ColumnName="gi_PrecioFinal" />
+                <ScalarProperty Name="gi_descuentoUni" ColumnName="gi_descuentoUni" />
+                <ScalarProperty Name="gi_por_desc" ColumnName="gi_por_desc" />
+                <ScalarProperty Name="gi_precio" ColumnName="gi_precio" />
+                <ScalarProperty Name="pr_descripcion_2" ColumnName="pr_descripcion_2" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="gi_detallexItems" ColumnName="gi_detallexItems" />
+                <ScalarProperty Name="gi_cantidad" ColumnName="gi_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
