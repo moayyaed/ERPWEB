@@ -113,13 +113,13 @@
                         <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
                     </div>
                 </div>
-                <div class="col-md-12">
+                @*<div class="col-md-12">
                     <div class="form-group">
                         <label for="IdClienteContacto">Contacto</label>
                         @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_contacto, "IdContacto", "Nombres"), new { @class = "form-control", @id = "IdContacto" })
                         @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="vt_serie1">Establecimiento*</label>

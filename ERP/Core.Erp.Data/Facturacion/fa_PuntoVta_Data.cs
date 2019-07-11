@@ -228,5 +228,37 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public List<fa_PuntoVta_Info> get_list_x_tipo_doc(int IdEmpresa, int IdSucursal, string codDocumentoTipo)
+        {
+            try
+            {
+                List<fa_PuntoVta_Info> Lista;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    Lista = (from q in Context.fa_PuntoVta
+                                where q.IdEmpresa == IdEmpresa
+                                && q.IdSucursal == IdSucursal
+                                && q.codDocumentoTipo == codDocumentoTipo
+                                && q.estado == true
+                                select new fa_PuntoVta_Info
+                                {
+                                    IdEmpresa = q.IdEmpresa,
+                                    IdSucursal = q.IdSucursal,
+                                    IdBodega = q.IdBodega,
+                                    IdPuntoVta = q.IdPuntoVta,
+                                    cod_PuntoVta = q.cod_PuntoVta,
+                                    nom_PuntoVta = q.nom_PuntoVta,
+                                    estado = q.estado,
+                                    CobroAutomatico = q.CobroAutomatico
+
+                                }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

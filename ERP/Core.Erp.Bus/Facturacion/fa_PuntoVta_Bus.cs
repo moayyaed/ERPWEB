@@ -81,5 +81,17 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public List<fa_PuntoVta_Info> get_list_x_tipo_doc(int IdEmpresa, int IdSucursal, string codDocumentoTipo)
+        {
+            try
+            {
+                return odata.get_list_x_tipo_doc(IdEmpresa, IdSucursal, codDocumentoTipo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
