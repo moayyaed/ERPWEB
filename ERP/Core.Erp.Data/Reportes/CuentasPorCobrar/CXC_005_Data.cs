@@ -24,7 +24,6 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                              select new CXC_005_Info
                              {
                                 IdEmpresa = q.IdEmpresa,
-                                IdContacto = q.IdContacto,
                                 IdSucursal = q.IdSucursal,
                                 IdBodega = q.IdBodega,
                                 IdCbteVta = q.IdCbteVta,
@@ -33,7 +32,6 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                 NotaCredito = q.NotaCredito,
                                 IVA = q.IVA,
                                 NomCliente = q.NomCliente,
-                                NomContacto = q.NomContacto,
                                 Saldo = q.Saldo,
                                 Subtotal = q.Subtotal,
                                 Total = q.Total,

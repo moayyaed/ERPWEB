@@ -235,61 +235,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
-        public ActionResult CXC_004()
-        {
-            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
-            {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdCliente = 0
-
-            };
-            cargar_cliente_contacto(model);
-            CXC_004_Rpt report = new CXC_004_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_004");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_IdCliente.Value = model.IdCliente;
-            report.p_IdContacto.Value = model.IdClienteContacto;
-            report.p_fecha_corte.Value = model.fecha_corte;
-            report.p_MostrarSaldo0.Value = model.Check1;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa;
-            ViewBag.Report = report;
-
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult CXC_004(cl_filtros_facturacion_Info model)
-        {
-            CXC_004_Rpt report = new CXC_004_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_004");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_IdCliente.Value = model.IdCliente;
-            report.p_IdContacto.Value = model.IdClienteContacto;
-            report.p_fecha_corte.Value = model.fecha_corte;
-            report.p_MostrarSaldo0.Value = model.Check1;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa;
-            cargar_cliente_contacto(model);
-            ViewBag.Report = report;
-
-            return View(model);
-        }
+       
         public ActionResult CXC_005()
         {
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
@@ -348,26 +294,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             return View(model);
         }
-        public ActionResult CXC_006( decimal IdLiquidacion= 0)
-        {
-            CXC_006_Rpt report = new CXC_006_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_006");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
-            report.p_IdLiquidacion.Value = IdLiquidacion;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa;
-            ViewBag.Report = report;
-            return View(report);
-        }
-
+     
         public ActionResult CXC_007(int IdSucursal = 0, decimal IdLiquidacion = 0)
         {
             CXC_007_Rpt report = new CXC_007_Rpt();

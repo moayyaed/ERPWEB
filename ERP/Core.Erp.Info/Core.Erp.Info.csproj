@@ -149,8 +149,6 @@
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjetaDet_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_x_cxc_cobro_Info.cs" />
-    <Compile Include="CuentasPorCobrar\cxc_liquidacion_comisiones_det_Info.cs" />
-    <Compile Include="CuentasPorCobrar\cxc_liquidacion_comisiones_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Parametro_Info.cs" />
@@ -353,10 +351,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_diario_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_003_Info.cs" />
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_004_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Info.cs" />
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Info.cs" />
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_sin_comision_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Info.cs" />

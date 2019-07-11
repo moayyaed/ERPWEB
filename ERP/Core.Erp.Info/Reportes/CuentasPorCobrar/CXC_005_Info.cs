@@ -15,9 +15,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
         public string vt_tipoDoc { get; set; }
         public string vt_NumFactura { get; set; }
         public decimal IdCliente { get; set; }
-        public Nullable<int> IdContacto { get; set; }
         public string NomCliente { get; set; }
-        public string NomContacto { get; set; }
         public System.DateTime vt_fecha { get; set; }
         public System.DateTime vt_fech_venc { get; set; }
         public Nullable<double> Subtotal { get; set; }

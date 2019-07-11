@@ -17,7 +17,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public string vt_autorizacion { get; set; }
         public System.DateTime gi_FechaInicioTraslado { get; set; }
         public System.DateTime gi_FechaFinTraslado { get; set; }
-        public string Num_declaracion_aduanera { get; set; }
         public string MotivoTraslado { get; set; }
         public string Direccion_Origen { get; set; }
         public string Direccion_Destino { get; set; }

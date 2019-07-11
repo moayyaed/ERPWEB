@@ -467,8 +467,6 @@
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjetaDet_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_x_cxc_cobro_Data.cs" />
-    <Compile Include="CuentasPorCobrar\cxc_liquidacion_comisiones_Data.cs" />
-    <Compile Include="CuentasPorCobrar\cxc_liquidacion_comisiones_det_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Parametro_Data.cs" />
@@ -529,12 +527,6 @@
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="cxc_LiquidacionTarjeta_x_cxc_cobro.cs">
-      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
-    </Compile>
-    <Compile Include="cxc_liquidacion_comisiones.cs">
-      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
-    </Compile>
-    <Compile Include="cxc_liquidacion_comisiones_det.cs">
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="cxc_MotivoLiquidacionTarjeta.cs">
@@ -1290,10 +1282,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_003_Data.cs" />
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_004_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Data.cs" />
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Data.cs" />
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_sin_comision_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Data.cs" />
@@ -1771,9 +1760,6 @@
     <Compile Include="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
-    <Compile Include="SPCXC_004_Result.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
     <Compile Include="SPCXC_005_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -2179,12 +2165,6 @@
     <Compile Include="VWCXC_003.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="VWCXC_006.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VWCXC_006_sin_comision.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
     <Compile Include="VWCXC_007.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -2216,12 +2196,6 @@
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcxc_LiquidacionTarjeta_x_cxc_cobro.cs">
-      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwcxc_liquidacion_comisiones_det.cs">
-      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwcxc_liquidacion_comisiones_det_x_comisionar.cs">
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal.cs">

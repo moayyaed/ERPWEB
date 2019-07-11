@@ -17,13 +17,13 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
         public string dc_TipoDocumento { get; set; }
         public double dc_ValorPago { get; set; }
         public string tc_descripcion { get; set; }
-        public decimal IdPersona { get; set; }
+        public decimal? IdPersona { get; set; }
         public string pe_nombreCompleto { get; set; }
         public string vt_NumFactura { get; set; }
         public System.DateTime vt_fecha { get; set; }
         public string ObservacionFact { get; set; }
         public string ObservacionCobro { get; set; }
-        public System.DateTime cr_fecha { get; set; }
+        public System.DateTime? cr_fecha { get; set; }
         public string NombreContacto { get; set; }
         public string Direccion { get; set; }
         public string Correo { get; set; }
@@ -32,6 +32,6 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
         public string Su_Descripcion { get; set; }
         public string ba_descripcion { get; set; }
         public string cr_NumDocumento { get; set; }
-        public double cr_TotalCobro { get; set; }
+        public double? cr_TotalCobro { get; set; }
     }
 }

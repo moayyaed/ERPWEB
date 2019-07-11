@@ -33,7 +33,6 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  gi_cantidad = q.gi_cantidad,
                                  gi_FechaFinTraslado = q.gi_FechaFinTraslado,
                                  gi_FechaInicioTraslado = q.gi_FechaInicioTraslado,
-                                 Num_declaracion_aduanera = q.Num_declaracion_aduanera,
                                  MotivoTraslado = q.MotivoTraslado,
                                  Direccion_Destino = q.Direccion_Destino,
                                  Direccion_Origen = q.Direccion_Origen,

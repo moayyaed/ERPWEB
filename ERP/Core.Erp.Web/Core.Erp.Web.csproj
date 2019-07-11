@@ -311,7 +311,6 @@
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CatalogoTipoCXCController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CobranzaController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CobranzaRetencionesController.cs" />
-    <Compile Include="Areas\CuentasPorCobrar\Controllers\LiquidacionComisionesController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\LiquidacionTarjetaCreditoController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\MotivoLiquidacionController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\ParametroCXCController.cs" />
@@ -773,29 +772,11 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_003_Rpt.Designer.cs">
       <DependentUpon>CXC_003_Rpt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_004_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_004_Rpt.Designer.cs">
-      <DependentUpon>CXC_004_Rpt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Rpt.Designer.cs">
       <DependentUpon>CXC_005_Rpt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Rpt.Designer.cs">
-      <DependentUpon>CXC_006_Rpt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_sin_comision_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_sin_comision_Rpt.Designer.cs">
-      <DependentUpon>CXC_006_sin_comision_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Rpt.cs">
       <SubType>Component</SubType>
@@ -9530,7 +9511,6 @@
     <Content Include="Areas\Reportes\Views\ImportacionReportes\IMP_002.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\_CmbCliente_CXC.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_003.cshtml" />
-    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_004.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_007.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\_CmbPersona_Banco.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_009.cshtml" />
@@ -9588,11 +9568,6 @@
     <Content Include="Areas\Compras\Views\TerminoPagoCompras\Nuevo.cshtml" />
     <Content Include="Areas\Compras\Views\TerminoPagoCompras\Modificar.cshtml" />
     <Content Include="Areas\Compras\Views\TerminoPagoCompras\Anular.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionComisiones\Index.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionComisiones\_GridViewPartial_liquidacion_com.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionComisiones\Nuevo.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionComisiones\Modificar.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionComisiones\Anular.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\Index.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_GridViewPartial_ordencompralocal.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\Nuevo.cshtml" />
@@ -9629,9 +9604,7 @@
     <Content Include="Areas\RRHH\Views\Vacaciones\_CmbEmpleado_autoriza_vacaciones.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_CmbProducto_Compras.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_GridViewPartial_ordencompralocal_det.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionComisiones\_GridViewPartial_liquidacion_det.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\_CmbCuenta_contable_Conta.cshtml" />
-    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_006.cshtml" />
     <Content Include="Areas\RRHH\Views\ActaFiniquito\_CmbEmpleado_acta.cshtml" />
     <Content Include="Areas\RRHH\Views\Contrato\_CmbEmpleado_contrato.cshtml" />
     <Content Include="Areas\RRHH\Views\LiquidacionVacaciones\_CmbEmpleado_vaca.cshtml" />
@@ -10425,17 +10398,8 @@
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_003_Rpt.resx">
       <DependentUpon>CXC_003_Rpt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_004_Rpt.resx">
-      <DependentUpon>CXC_004_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_005_Rpt.resx">
       <DependentUpon>CXC_005_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_006_Rpt.resx">
-      <DependentUpon>CXC_006_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_006_sin_comision_Rpt.resx">
-      <DependentUpon>CXC_006_sin_comision_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Rpt.resx">
       <DependentUpon>CXC_007_Cobros_Rpt.cs</DependentUpon>
