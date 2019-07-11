@@ -731,6 +731,12 @@
     <Compile Include="Reportes\Contabilidad\CONTA_005_Rpt.Designer.cs">
       <DependentUpon>CONTA_005_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_006_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_006_Rpt.Designer.cs">
+      <DependentUpon>CONTA_006_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>

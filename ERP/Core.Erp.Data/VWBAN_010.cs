@@ -24,7 +24,7 @@ namespace Core.Erp.Data
         public double Valor { get; set; }
         public decimal Secuencial_reg_x_proceso { get; set; }
         public bool Contabilizado { get; set; }
-        public Nullable<System.DateTime> Fecha_proceso { get; set; }
+        public System.DateTime Fecha_proceso { get; set; }
         public string IdTipoCta_acreditacion_cat { get; set; }
         public string num_cta_acreditacion { get; set; }
         public Nullable<int> IdBanco_acreditacion { get; set; }
