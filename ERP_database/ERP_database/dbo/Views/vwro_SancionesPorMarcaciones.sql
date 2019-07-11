@@ -1,8 +1,8 @@
 ﻿CREATE VIEW dbo.vwro_SancionesPorMarcaciones
 AS
 SELECT        dbo.ro_SancionesPorMarcaciones.IdEmpresa, dbo.ro_SancionesPorMarcaciones.IdAjuste, dbo.ro_SancionesPorMarcaciones.IdNomina_Tipo, dbo.ro_SancionesPorMarcaciones.IdNomina_TipoLiqui, 
-                         dbo.ro_SancionesPorMarcaciones.FechaInicio, dbo.ro_SancionesPorMarcaciones.FecaFin, dbo.ro_SancionesPorMarcaciones.Observacion, dbo.ro_SancionesPorMarcaciones.Estado, 
-                         dbo.ro_Nomina_Tipoliqui.DescripcionProcesoNomina, dbo.ro_Nomina_Tipo.Descripcion
+                         dbo.ro_SancionesPorMarcaciones.FechaInicio, dbo.ro_SancionesPorMarcaciones.Observacion, dbo.ro_SancionesPorMarcaciones.Estado, dbo.ro_Nomina_Tipoliqui.DescripcionProcesoNomina, 
+                         dbo.ro_Nomina_Tipo.Descripcion, dbo.ro_SancionesPorMarcaciones.FechaFin, dbo.ro_SancionesPorMarcaciones.FechaNovedades
 FROM            dbo.ro_SancionesPorMarcaciones INNER JOIN
                          dbo.ro_Nomina_Tipoliqui ON dbo.ro_SancionesPorMarcaciones.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_SancionesPorMarcaciones.IdNomina_Tipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo AND 
                          dbo.ro_SancionesPorMarcaciones.IdNomina_TipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui INNER JOIN
@@ -17,7 +17,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[68] 4[5] 2[9] 3) )"
+         Configuration = "(H (1[26] 4[5] 2[19] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -93,22 +93,22 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 2
          End
-         Begin Table = "ro_Nomina_Tipo"
+         Begin Table = "ro_Nomina_Tipoliqui"
             Begin Extent = 
-               Top = 2
-               Left = 539
-               Bottom = 132
-               Right = 721
+               Top = 0
+               Left = 416
+               Bottom = 281
+               Right = 652
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "ro_Nomina_Tipoliqui"
+         Begin Table = "ro_Nomina_Tipo"
             Begin Extent = 
-               Top = 1
-               Left = 261
-               Bottom = 282
-               Right = 497
+               Top = 6
+               Left = 697
+               Bottom = 136
+               Right = 879
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -119,6 +119,17 @@ Begin DesignProperties =
    End
    Begin DataPane = 
       Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
       End
    End
    Begin CriteriaPane = 
@@ -140,4 +151,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_SancionesPorMarcaciones';
+
+
 

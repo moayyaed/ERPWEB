@@ -146,7 +146,6 @@
     <Build Include="dbo\Tables\cp_codigo_SRI_x_CtaCble.sql" />
     <Build Include="dbo\Tables\ro_Config_Param_contable.sql" />
     <Build Include="dbo\Tables\ba_Cbte_Ban.sql" />
-    <Build Include="dbo\Tables\cp_conciliacion.sql" />
     <Build Include="dbo\Tables\tb_sis_Impuesto_x_ctacble.sql" />
     <Build Include="dbo\Tables\in_movi_inve_detalle_x_ct_cbtecble_det.sql" />
     <Build Include="dbo\Tables\cp_conciliacion_Caja.sql" />
@@ -171,7 +170,6 @@
     <Build Include="dbo\Tables\fa_notaCreDeb.sql" />
     <Build Include="dbo\Tables\fa_notaCreDeb_x_cxc_cobro.sql" />
     <Build Include="dbo\Tables\ro_tabla_Impu_Renta.sql" />
-    <Build Include="dbo\Tables\cp_conciliacion_det.sql" />
     <Build Include="dbo\Tables\ro_horario_planificacion_det.sql" />
     <Build Include="dbo\Tables\fa_proforma.sql" />
     <Build Include="dbo\Tables\fa_notaCreDeb_x_fa_factura_NotaDeb.sql" />
@@ -661,10 +659,8 @@
     <Build Include="dbo\Views\vwRo_HorasExtrasXEmpleado.sql" />
     <Build Include="dbo\Views\vwcxc_Cobro_x_anticipo_x_cobros.sql" />
     <Build Include="dbo\Views\vwba_ordenGiroPendientes.sql" />
-    <Build Include="dbo\Views\vwcp_cbtes_cxp_para_conciliar.sql" />
     <Build Include="dbo\Views\vwcxc_cobro_x_Anticipo_x_Persona.sql" />
     <Build Include="dbo\Views\vwba_PeriocidadPago.sql" />
-    <Build Include="dbo\Views\vwcp_cbtes_cxp_para_conciliar_consulta.sql" />
     <Build Include="dbo\Views\vwin_ajusteFisico.sql" />
     <Build Include="dbo\Views\vwcxc_cobro_x_caj_Caja_Movimiento.sql" />
     <Build Include="dbo\Views\vwba_prestamo.sql" />
@@ -998,20 +994,18 @@
     <Build Include="dbo\Tables\ro_NominasPagosCheques.sql" />
     <Build Include="dbo\Views\vwpro_Fabricacion.sql" />
     <Build Include="dbo\Views\vwcom_ordencompra_local_x_ingresar.sql" />
+    <Build Include="dbo\Tables\cp_SolicitudPago.sql" />
     <Build Include="dbo\Views\vwro_NominasPagosCheques_det.sql" />
     <Build Include="dbo\Views\vwro_NominasPagosCheques.sql" />
-    <Build Include="dbo\Tables\cp_SolicitudPago.sql" />
-    <Build Include="dbo\Views\vwro_NominasPagosCheques_det_1.sql" />
-    <Build Include="dbo\Views\vwro_NominasPagosCheques_1.sql" />
     <Build Include="dbo\Views\vwcaj_Caja_Movimiento_por_conciliar.sql" />
     <Build Include="dbo\Views\vwct_cbtecble.sql" />
     <Build Include="dbo\Views\vwro_marcaciones_x_planificacion_horario.sql" />
-    <Build Include="dbo\Tables\ro_SancionesPorMarcaciones_x_novedad_1.sql" />
-    <Build Include="dbo\Tables\ro_SancionesPorMarcaciones_det_1.sql" />
-    <Build Include="dbo\Tables\ro_SancionesPorMarcaciones_1.sql" />
-    <Build Include="dbo\Views\vwro_SancionesPorMarcaciones_x_novedad_1.sql" />
-    <Build Include="dbo\Views\vwro_SancionesPorMarcaciones_det_1.sql" />
-    <Build Include="dbo\Views\vwro_SancionesPorMarcaciones_1.sql" />
+    <Build Include="dbo\Tables\ro_SancionesPorMarcaciones_x_novedad.sql" />
+    <Build Include="dbo\Tables\ro_SancionesPorMarcaciones_det.sql" />
+    <Build Include="dbo\Tables\ro_SancionesPorMarcaciones.sql" />
+    <Build Include="dbo\Views\vwro_SancionesPorMarcaciones_x_novedad.sql" />
+    <Build Include="dbo\Views\vwro_SancionesPorMarcaciones_det.sql" />
+    <Build Include="dbo\Views\vwro_SancionesPorMarcaciones.sql" />
     <Build Include="web\Stored Procedures\SPFAC_010.sql" />
     <Build Include="web\Views\VWCXP_011.sql" />
     <Build Include="dbo\Views\vwin_Producto_PorSucursal.sql" />
@@ -1166,9 +1160,13 @@
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorReversar.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorDespachar.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorAprobar.sql" />
-    <Build Include="dbo\Views\vwin_Ing_Egr_Inven_1.sql" />
     <Build Include="web\Tables\ct_CONTA_006.sql" />
     <Build Include="web\Stored Procedures\SPCONTA_006.sql" />
+    <Build Include="dbo\Tables\cp_ConciliacionAnticipoDetCXP.sql" />
+    <Build Include="dbo\Tables\cp_ConciliacionAnticipoDetAnt.sql" />
+    <Build Include="dbo\Tables\cp_ConciliacionAnticipo.sql" />
+    <Build Include="dbo\Tables\fa_MotivoTraslado.sql" />
+    <Build Include="dbo\Views\vwcp_ConciliacionAnticipo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

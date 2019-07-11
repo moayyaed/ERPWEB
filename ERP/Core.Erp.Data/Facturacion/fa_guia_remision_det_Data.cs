@@ -30,17 +30,21 @@ namespace Core.Erp.Data.Facturacion
                                  gi_cantidad = q.gi_cantidad,
                                  gi_detallexItems = q.gi_detallexItems,
                                  pr_descripcion=q.pr_descripcion,
-                                 nom_presentacion=q.nom_presentacion,
-                                 ca_Categoria=q.ca_Categoria,
-                                 Secuencia_fact=q.Secuencia_fact,
-                                 IdCbteVta=q.IdCbteVta_fact
-
+                                 gi_precio = q.gi_precio,
+                                 gi_por_desc = q.gi_por_desc,
+                                 gi_descuentoUni = q.gi_descuentoUni,
+                                 gi_PrecioFinal = q.gi_PrecioFinal,
+                                 gi_Subtotal = q.gi_Subtotal,
+                                 IdCod_Impuesto = q.IdCod_Impuesto,
+                                 gi_por_iva = q.gi_por_iva,
+                                 gi_Iva = q.gi_Iva,
+                                 gi_Total = q.gi_Total
                              }).ToList();
                 }
-                Lista.ForEach(V =>
-                {
-                    V.pr_descripcion = V.pr_descripcion + " " + V.pr_descripcion +"-"+V.nom_presentacion+"-"+V.ca_Categoria+ " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
-                });
+                //Lista.ForEach(V =>
+                //{
+                //    V.pr_descripcion = V.pr_descripcion + " " + V.pr_descripcion +"-"+V.nom_presentacion+"-"+V.ca_Categoria+ " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
+                //});
                 return Lista;
             }
             catch (Exception)

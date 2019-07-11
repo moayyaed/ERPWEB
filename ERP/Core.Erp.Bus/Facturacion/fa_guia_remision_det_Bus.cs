@@ -44,7 +44,17 @@ namespace Core.Erp.Bus.Facturacion
                         gi_cantidad = item.vt_cantidad,
                         Secuencia = item.Secuencia,
                         Secuencia_fact=item.Secuencia,
-                        pr_descripcion = item.pr_descripcion
+                        pr_descripcion = item.pr_descripcion,
+                        gi_detallexItems = item.vt_detallexItems,
+                        gi_precio = item.vt_Precio,
+                        gi_por_desc = item.vt_PorDescUnitario,
+                        gi_descuentoUni = item.vt_DescUnitario,
+                        gi_PrecioFinal = item.vt_PrecioFinal,
+                        gi_Subtotal = item.vt_Subtotal,
+                        IdCod_Impuesto = item.IdCod_Impuesto_Iva,
+                        gi_por_iva = item.vt_por_iva,
+                        gi_Iva = item.vt_iva,
+                        gi_Total = item.vt_total
                     });
                 }
                 return lst_detalle;

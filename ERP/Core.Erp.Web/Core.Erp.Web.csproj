@@ -10174,6 +10174,7 @@
     <Content Include="Areas\Inventario\Views\AprobacionDespacho\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\AprobacionDespacho\_GridViewPartial_aprobacion_despacho.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaRemision\_CmbProducto_Guia.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

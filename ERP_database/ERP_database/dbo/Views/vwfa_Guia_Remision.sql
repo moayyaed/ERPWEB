@@ -3,8 +3,8 @@ AS
 SELECT        dbo.tb_bodega.bo_Descripcion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_nombre, dbo.fa_guia_remision.IdCliente, dbo.fa_guia_remision.IdTransportista, 
                          dbo.fa_guia_remision.gi_fecha, dbo.fa_guia_remision.gi_plazo, dbo.fa_guia_remision.gi_fech_venc, dbo.fa_guia_remision.gi_Observacion, dbo.fa_guia_remision.IdGuiaRemision, dbo.fa_guia_remision.IdBodega, 
                          dbo.fa_guia_remision.IdSucursal, dbo.fa_guia_remision.IdEmpresa, dbo.tb_persona.pe_apellido, dbo.fa_cliente.IdCliente AS Expr1, dbo.fa_guia_remision.Estado, dbo.fa_guia_remision.Serie1, dbo.fa_guia_remision.Serie2, 
-                         dbo.fa_guia_remision.NumGuia_Preimpresa, dbo.fa_guia_remision.CodGuiaRemision, dbo.fa_guia_remision.Impreso, dbo.fa_guia_remision.gi_FechaFinTraslado, dbo.fa_guia_remision.CodDocumentoTipo, 
-                         dbo.fa_guia_remision.ruta, dbo.fa_guia_remision.Direccion_Origen, dbo.fa_guia_remision.placa, dbo.fa_guia_remision.Direccion_Destino, dbo.fa_guia_remision.gi_FechaInicioTraslado
+                         dbo.fa_guia_remision.NumGuia_Preimpresa, dbo.fa_guia_remision.CodGuiaRemision, dbo.fa_guia_remision.gi_FechaFinTraslado, dbo.fa_guia_remision.CodDocumentoTipo, 
+                         dbo.fa_guia_remision.Direccion_Origen, dbo.fa_guia_remision.placa, dbo.fa_guia_remision.Direccion_Destino, dbo.fa_guia_remision.gi_FechaInicioTraslado
 FROM            dbo.fa_guia_remision INNER JOIN
                          dbo.tb_bodega ON dbo.fa_guia_remision.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.fa_guia_remision.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.fa_guia_remision.IdBodega = dbo.tb_bodega.IdBodega INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_bodega.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.tb_bodega.IdSucursal = dbo.tb_sucursal.IdSucursal INNER JOIN

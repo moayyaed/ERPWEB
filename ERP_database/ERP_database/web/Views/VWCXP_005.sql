@@ -1,16 +1,14 @@
 ﻿CREATE VIEW web.VWCXP_005
 AS
-SELECT cp_conciliacion.IdEmpresa, cp_conciliacion.IdConciliacion, ct_cbtecble_det.IdTipoCbte, ct_cbtecble_det.IdCbteCble, ct_cbtecble_det.secuencia, ct_cbtecble_det.IdCtaCble, ct_plancta.pc_Cuenta, ct_cbtecble_det.dc_Valor, 
-                  CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ct_cbtecble_det.dc_Valor ELSE 0 END AS dc_Valor_Debe, CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, 
-                  cp_conciliacion.Fecha, cp_conciliacion.Observacion, tb_persona.pe_nombreCompleto
-FROM     cp_conciliacion INNER JOIN
-                  cp_orden_pago_cancelaciones ON cp_conciliacion.IdCancelacion = cp_orden_pago_cancelaciones.Idcancelacion AND cp_conciliacion.IdEmpresa = cp_orden_pago_cancelaciones.IdEmpresa INNER JOIN
-                  cp_orden_pago_det ON cp_orden_pago_cancelaciones.IdOrdenPago_op = cp_orden_pago_det.IdOrdenPago AND cp_orden_pago_cancelaciones.Secuencia_op = cp_orden_pago_det.Secuencia AND 
-                  cp_orden_pago_cancelaciones.IdEmpresa_op = cp_orden_pago_det.IdEmpresa INNER JOIN
-                  cp_orden_pago ON cp_orden_pago_det.IdEmpresa = cp_orden_pago.IdEmpresa AND cp_orden_pago_det.IdOrdenPago = cp_orden_pago.IdOrdenPago INNER JOIN
-                  tb_persona ON cp_orden_pago.IdPersona = tb_persona.IdPersona INNER JOIN
-                  ct_plancta INNER JOIN
-                  ct_cbtecble_det ON ct_plancta.IdEmpresa = ct_cbtecble_det.IdEmpresa AND ct_plancta.IdCtaCble = ct_cbtecble_det.IdCtaCble ON cp_orden_pago_cancelaciones.IdEmpresa_pago = ct_cbtecble_det.IdEmpresa AND 
-                  cp_orden_pago_cancelaciones.IdTipoCbte_pago = ct_cbtecble_det.IdTipoCbte AND cp_orden_pago_cancelaciones.IdCbteCble_pago = ct_cbtecble_det.IdCbteCble
-GROUP BY cp_conciliacion.IdEmpresa, cp_conciliacion.IdConciliacion, ct_cbtecble_det.IdTipoCbte, ct_cbtecble_det.IdCbteCble, ct_cbtecble_det.secuencia, ct_cbtecble_det.IdCtaCble, ct_plancta.pc_Cuenta, ct_cbtecble_det.dc_Valor, 
-                  cp_conciliacion.Fecha, cp_conciliacion.Observacion, tb_persona.pe_nombreCompleto
+SELECT dbo.cp_ConciliacionAnticipo.IdEmpresa, dbo.cp_ConciliacionAnticipo.IdConciliacion, dbo.cp_ConciliacionAnticipo.IdTipoCbte, dbo.cp_ConciliacionAnticipo.IdCbteCble, dbo.ct_cbtecble_det.secuencia, dbo.ct_cbtecble_det.IdCtaCble, 
+                  dbo.ct_plancta.pc_Cuenta, dbo.ct_cbtecble_det.dc_Valor, CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ct_cbtecble_det.dc_Valor ELSE 0 END AS dc_Valor_Debe, 
+                  CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, dbo.cp_ConciliacionAnticipo.Fecha, dbo.cp_ConciliacionAnticipo.Observacion, dbo.cp_ConciliacionAnticipo.Estado, 
+                  dbo.seg_usuario.Nombre AS NomUsuario, dbo.cp_ConciliacionAnticipo.IdSucursal, dbo.cp_ConciliacionAnticipo.IdProveedor, dbo.tb_persona.pe_nombreCompleto, dbo.tb_sucursal.Su_Descripcion
+FROM     dbo.cp_ConciliacionAnticipo INNER JOIN
+                  dbo.ct_plancta INNER JOIN
+                  dbo.ct_cbtecble_det ON dbo.ct_plancta.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ct_plancta.IdCtaCble = dbo.ct_cbtecble_det.IdCtaCble ON dbo.cp_ConciliacionAnticipo.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND 
+                  dbo.cp_ConciliacionAnticipo.IdTipoCbte = dbo.ct_cbtecble_det.IdTipoCbte AND dbo.cp_ConciliacionAnticipo.IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble INNER JOIN
+                  dbo.tb_sucursal ON dbo.cp_ConciliacionAnticipo.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cp_ConciliacionAnticipo.IdSucursal = dbo.tb_sucursal.IdSucursal INNER JOIN
+                  dbo.cp_proveedor ON dbo.cp_ConciliacionAnticipo.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_ConciliacionAnticipo.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                  dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.seg_usuario ON dbo.cp_ConciliacionAnticipo.IdUsuarioCreacion = dbo.seg_usuario.IdUsuario

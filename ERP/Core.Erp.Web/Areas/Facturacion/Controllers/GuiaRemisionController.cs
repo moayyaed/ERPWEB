@@ -12,7 +12,8 @@ using System.Web;
 using System.Web.Mvc;
 using DevExpress.Web.Mvc;
 using Core.Erp.Bus.Contabilidad;
-
+using Core.Erp.Info.Inventario;
+using Core.Erp.Bus.Inventario;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -35,10 +36,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         fa_factura_x_fa_guia_remision_Info_List List_rel = new fa_factura_x_fa_guia_remision_Info_List();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
+        in_Producto_Bus bus_producto = new in_Producto_Bus();
 
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
+
         #region Metodos ComboBox bajo demanda cliente
         public ActionResult CmbCliente_Guia()
         {
@@ -54,6 +58,25 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
         #endregion
+
+        #region Metodos ComboBox bajo demanda producto
+
+        public ActionResult CmbProducto_Guia()
+        {
+            decimal model = new decimal();
+            return PartialView("_CmbProducto_Guia", model);
+        }
+        public List<in_Producto_Info> get_list_bajo_demandaProducto(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<in_Producto_Info> Lista = bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL, cl_enumeradores.eModulo.FAC, 0, Convert.ToInt32(SessionFixed.IdSucursal));
+            return Lista;
+        }
+        public in_Producto_Info get_info_bajo_demandaProducto(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
         #region vistas
 
         public ActionResult Index()
@@ -85,6 +108,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = detalle_info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_guias_remision_det", model);
         }
 
@@ -110,6 +134,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return true;
         }
         #endregion
+
         #region Metodos
         private void cargar_combos(fa_guia_remision_Info model)
         {
@@ -130,7 +155,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         }
 
+        private void cargar_combos_detalle()
+        {
+            var lst_impuesto = bus_impuesto.get_list("IVA", false);
+            ViewBag.lst_impuesto = lst_impuesto;
+        }
+
         #endregion
+
         #region acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
@@ -321,6 +353,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
         }
         #endregion
+
         #region Json
       
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
@@ -360,12 +393,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 
                 string[] array = Ids.Split(',');
                 var output = array.GroupBy(q => q).ToList();
-
                 var lst_det = detalle_info.get_list(IdTransaccionSession);
-
                 var lst_rel = List_rel.get_list(IdTransaccionSession);
-
-
 
                 foreach (var item in output)
                 {
@@ -393,8 +422,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                     vt_serie1=factura.vt_serie1,
                                     vt_serie2=factura.vt_serie2,
                                     vt_NumFactura=factura.vt_NumFactura,
-                                    vt_tipoDoc="FAC",
-
+                                    vt_tipoDoc="FAC"
                                 });
                                 
                             }
@@ -436,25 +464,44 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region funciones del detalle
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] fa_guia_remision_det_Info info_det)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
+            if (producto != null)
+                info_det.pr_descripcion = producto.pr_descripcion_combo;
+
+            if (ModelState.IsValid)
+                detalle_info.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            var model = detalle_info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            return PartialView("_GridViewPartial_guias_remision_det", model);
+        }
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] fa_guia_remision_det_Info info_det)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             if (info_det != null)
                 if (info_det.Secuencia != 0 && info_det.gi_cantidad!=0)
                 {
-                    detalle_info.UpdateRow(info_det,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                    var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
+                    if (producto != null)
+                        info_det.pr_descripcion = producto.pr_descripcion_combo;
+
+                    if (ModelState.IsValid)
+                        detalle_info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 }
+
             var model = detalle_info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_guias_remision_det", model);
         }
-
         public ActionResult EditingDelete(int Secuencia)
         {
-
-            decimal IdComprobante =Convert.ToDecimal( detalle_info.get_list( Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(v => v.Secuencia == Secuencia).FirstOrDefault().IdCbteVta);
+            decimal IdComprobante = Convert.ToDecimal( detalle_info.get_list( Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(v => v.Secuencia == Secuencia).FirstOrDefault().IdCbteVta);
             if(detalle_info.get_list( Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(v => v.IdCbteVta == IdComprobante).Count()==1)
             {
                 var list_facturas_seleccionadas = List_rel.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -471,6 +518,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     public class fa_guia_remision_det_Info_lst
     {
         string Variable = "fa_guia_remision_det_Info";
+        tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
 
         public List<fa_guia_remision_det_Info> get_list(decimal IdTransaccionSession)
         {
@@ -487,19 +535,53 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
+        public void AddRow(fa_guia_remision_det_Info info_det, decimal IdTransaccionSession)
+        {
+            List<fa_guia_remision_det_Info> list = get_list(IdTransaccionSession);
+            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
 
-     
+            info_det.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
+            info_det.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
+            info_det.gi_Subtotal = Math.Round(info_det.gi_cantidad * info_det.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+            var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
+            if (impuesto != null)
+                info_det.gi_por_iva = impuesto.porcentaje;
+            else
+                info_det.gi_por_iva = 0;
+            info_det.gi_Iva = Math.Round(info_det.gi_Subtotal * (info_det.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
+            info_det.gi_Total = Math.Round(info_det.gi_Subtotal + info_det.gi_Iva, 2, MidpointRounding.AwayFromZero);
+
+            list.Add(info_det);
+        }
+
         public void UpdateRow(fa_guia_remision_det_Info info_det, decimal IdTransaccionSession)
         {
             fa_guia_remision_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+
+            edited_info.IdProducto = info_det.IdProducto;
+            edited_info.pr_descripcion = info_det.pr_descripcion;
             edited_info.gi_cantidad = info_det.gi_cantidad;
+            edited_info.gi_precio = info_det.gi_precio;
+            edited_info.gi_por_desc = info_det.gi_por_desc;
+            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
+            edited_info.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+            var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto);
+            if (impuesto != null)
+                edited_info.gi_por_iva = impuesto.porcentaje;
+            else
+                edited_info.gi_por_iva = 0;
+            
+            edited_info.gi_Iva = Math.Round(edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Total = Math.Round(edited_info.gi_Subtotal + edited_info.gi_Iva, 2, MidpointRounding.AwayFromZero);
 
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<fa_guia_remision_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
     public class fa_factura_x_fa_guia_remision_Info_List
