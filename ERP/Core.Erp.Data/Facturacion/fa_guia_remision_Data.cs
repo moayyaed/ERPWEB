@@ -186,45 +186,58 @@ namespace Core.Erp.Data.Facturacion
                             Secuencia=secuencia,
                             IdProducto=item.IdProducto,
                             gi_cantidad=item.gi_cantidad,
-                            gi_detallexItems =item.gi_detallexItems
+                            gi_detallexItems =item.gi_detallexItems,
+                            gi_precio = item.gi_precio,
+                            gi_por_desc = item.gi_por_desc,
+                            gi_descuentoUni = item.gi_descuentoUni,
+                            gi_PrecioFinal = item.gi_PrecioFinal,
+                            gi_Subtotal = item.gi_Subtotal,
+                            IdCod_Impuesto = item.IdCod_Impuesto,
+                            gi_por_iva = item.gi_por_iva,
+                            gi_Iva = item.gi_Iva,
+                            gi_Total = item.gi_Total
                         });
-                        Context.fa_guia_remision_det_x_factura.Add(new fa_guia_remision_det_x_factura
-                        {
-                            IdEmpresa_fact = info.IdEmpresa,
-                            IdSucursal_fact = info.IdSucursal,
-                            IdBodega_fact = info.IdBodega,
-                            IdCbteVta_fact = Convert.ToDecimal(item.IdCbteVta),
-                            IdGuiaRemision_guia = info.IdGuiaRemision,
-                            Secuencia_fact = Convert.ToInt32(item.Secuencia_fact),
-                            Secuencia_guia = secuencia,
-                            IdBodega_guia = info.IdBodega,
-                            IdSucursal_guia = info.IdSucursal,
-                            IdEmpresa_guia = info.IdEmpresa
-                        });
+
+                        if(item.IdCbteVta != null && item.IdCbteVta !=0)
+                            Context.fa_guia_remision_det_x_factura.Add(new fa_guia_remision_det_x_factura
+                            {
+                                IdEmpresa_fact = info.IdEmpresa,
+                                IdSucursal_fact = info.IdSucursal,
+                                IdBodega_fact = info.IdBodega,
+                                IdCbteVta_fact = Convert.ToDecimal(item.IdCbteVta),
+                                IdGuiaRemision_guia = info.IdGuiaRemision,
+                                Secuencia_fact = Convert.ToInt32(item.Secuencia_fact),
+                                Secuencia_guia = secuencia,
+                                IdBodega_guia = info.IdBodega,
+                                IdSucursal_guia = info.IdSucursal,
+                                IdEmpresa_guia = info.IdEmpresa
+                            });
+
                         secuencia++;
                     }
+                    
                     foreach (var item in info.lst_detalle_x_factura)
                     {
-                        Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
-                        {
-                            fa_IdEmpresa = info.IdEmpresa,
-                            fa_IdSucursal = info.IdSucursal,
-                            fa_IdBodega = info.IdBodega,
-                            fa_IdCbteVta = item.IdCbteVta,
-                            gi_IdEmpresa = info.IdEmpresa,
-                            gi_IdSucursal = info.IdSucursal,
-                            gi_IdBodega = info.IdBodega,
-                            gi_IdGuiaRemision = info.IdGuiaRemision
-                        });
+                        if (item.IdCbteVta != 0)
+                            Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
+                            {
+                                fa_IdEmpresa = info.IdEmpresa,
+                                fa_IdSucursal = info.IdSucursal,
+                                fa_IdBodega = info.IdBodega,
+                                fa_IdCbteVta = item.IdCbteVta,
+                                gi_IdEmpresa = info.IdEmpresa,
+                                gi_IdSucursal = info.IdSucursal,
+                                gi_IdBodega = info.IdBodega,
+                                gi_IdGuiaRemision = info.IdGuiaRemision
+                            });
                     }
                     Context.SaveChanges();
 
                 }
                 return true;
             }
-            catch (Exception )
+            catch (Exception)
             {
-
                 throw;
             }
         }
@@ -257,10 +270,11 @@ namespace Core.Erp.Data.Facturacion
                         Entity.ruta = info.ruta;
                         Entity.Direccion_Destino = info.Direccion_Destino;
                         Entity.Direccion_Origen = info.Direccion_Origen;
-                    Entity.IdCatalogo_traslado = info.IdCatalogo_traslado;
+                        Entity.IdCatalogo_traslado = info.IdCatalogo_traslado;
                         Entity.Fecha_UltMod = info.Fecha_UltMod=DateTime.Now;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
-                    Entity.gi_Observacion = info.gi_Observacion;
+                        Entity.gi_Observacion = info.gi_Observacion;
+
                     foreach (var item in info.lst_detalle)
                     {
                         Context.fa_guia_remision_det.Add(new fa_guia_remision_det
@@ -272,37 +286,49 @@ namespace Core.Erp.Data.Facturacion
                             Secuencia = secuencia,
                             IdProducto = item.IdProducto,
                             gi_cantidad = item.gi_cantidad,
-                            gi_detallexItems = item.gi_detallexItems
+                            gi_detallexItems = item.gi_detallexItems,
+                            gi_precio = item.gi_precio,
+                            gi_por_desc = item.gi_por_desc,
+                            gi_descuentoUni = item.gi_descuentoUni,
+                            gi_PrecioFinal = item.gi_PrecioFinal,
+                            gi_Subtotal = item.gi_Subtotal,
+                            IdCod_Impuesto = item.IdCod_Impuesto,
+                            gi_por_iva = item.gi_por_iva,
+                            gi_Iva = item.gi_Iva,
+                            gi_Total = item.gi_Total
                         });
-                        Context.fa_guia_remision_det_x_factura.Add(new fa_guia_remision_det_x_factura
-                        {
-                            IdEmpresa_fact = info.IdEmpresa,
-                            IdSucursal_fact = info.IdSucursal,
-                            IdBodega_fact = info.IdBodega,
-                            IdCbteVta_fact = Convert.ToDecimal(item.IdCbteVta),
-                            IdGuiaRemision_guia = info.IdGuiaRemision,
-                            Secuencia_fact = Convert.ToInt32(item.Secuencia_fact),
-                            Secuencia_guia = secuencia,
-                            IdBodega_guia = info.IdBodega,
-                            IdSucursal_guia=info.IdSucursal,
-                            IdEmpresa_guia=info.IdEmpresa
+
+                        if (item.IdCbteVta != null && item.IdCbteVta != 0)
+                            Context.fa_guia_remision_det_x_factura.Add(new fa_guia_remision_det_x_factura
+                            {
+                                IdEmpresa_fact = info.IdEmpresa,
+                                IdSucursal_fact = info.IdSucursal,
+                                IdBodega_fact = info.IdBodega,
+                                IdCbteVta_fact = Convert.ToDecimal(item.IdCbteVta),
+                                IdGuiaRemision_guia = info.IdGuiaRemision,
+                                Secuencia_fact = Convert.ToInt32(item.Secuencia_fact),
+                                Secuencia_guia = secuencia,
+                                IdBodega_guia = info.IdBodega,
+                                IdSucursal_guia=info.IdSucursal,
+                                IdEmpresa_guia=info.IdEmpresa
                         
-                        });
+                            });
                         secuencia++;
                     }
                     foreach (var item in info.lst_detalle_x_factura)
                     {
-                        Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
-                        {
-                            fa_IdEmpresa = info.IdEmpresa,
-                            fa_IdSucursal = info.IdSucursal,
-                            fa_IdBodega = info.IdBodega,
-                            fa_IdCbteVta = item.IdCbteVta,
-                            gi_IdEmpresa = info.IdEmpresa,
-                            gi_IdSucursal = info.IdSucursal,
-                            gi_IdBodega = info.IdBodega,
-                            gi_IdGuiaRemision = info.IdGuiaRemision
-                        });
+                        if (item.IdCbteVta != 0)
+                            Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
+                            {
+                                fa_IdEmpresa = info.IdEmpresa,
+                                fa_IdSucursal = info.IdSucursal,
+                                fa_IdBodega = info.IdBodega,
+                                fa_IdCbteVta = item.IdCbteVta,
+                                gi_IdEmpresa = info.IdEmpresa,
+                                gi_IdSucursal = info.IdSucursal,
+                                gi_IdBodega = info.IdBodega,
+                                gi_IdGuiaRemision = info.IdGuiaRemision
+                            });
                     }
                     Context.SaveChanges();
                 }
