@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.Reportes.Contabilidad;
+﻿using Core.Erp.Data.General;
+using Core.Erp.Info.Reportes.Contabilidad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace Core.Erp.Data.Reportes.Contabilidad
 {
    public class CONTA_006_Data
     {
+
+        tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
+        string Su_Descripcion = "";
         public List<CONTA_006_Info> GetList(int IdEmpresa, int IdAnio, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance)
         {
             try
@@ -43,7 +47,8 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                         Octubre = q.Octubre,
                         pc_Cuenta = q.pc_Cuenta,
                         Septiembre = q.Septiembre,
-                        Total = q.Total
+                        Total = q.Total,
+                        Su_Descripcion = Su_Descripcion
                     }).ToList();
                 }
                 return Lista;
