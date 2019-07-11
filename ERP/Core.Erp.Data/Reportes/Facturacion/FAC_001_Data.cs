@@ -53,8 +53,6 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  IdProducto_padre = q.IdProducto_padre,
                                  vt_NumFactura = q.vt_NumFactura,
                                  IdCliente = q.IdCliente,
-                                 IdContacto = q.IdContacto,
-                                 NombreContacto = q.NombreContacto,
                                  IdVendedor = q.IdVendedor,
                                  Ve_Vendedor = q.Ve_Vendedor,
                                  NombreCliente = q.NombreCliente,

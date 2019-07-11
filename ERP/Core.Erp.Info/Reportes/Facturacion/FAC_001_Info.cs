@@ -17,8 +17,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public decimal IdProducto_padre { get; set; }
         public string vt_NumFactura { get; set; }
         public decimal IdCliente { get; set; }
-        public Nullable<int> IdContacto { get; set; }
-        public string NombreContacto { get; set; }
         public int IdVendedor { get; set; }
         public string Ve_Vendedor { get; set; }
         public string NombreCliente { get; set; }
