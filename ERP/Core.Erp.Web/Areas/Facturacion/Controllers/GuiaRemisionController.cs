@@ -195,7 +195,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             try
             {
-                model.IdUsuario = SessionFixed.IdUsuario;
+                model.IdUsuarioCreacion = SessionFixed.IdUsuario;
                 model.CodGuiaRemision = (model.CodGuiaRemision == null) ? "" : model.CodGuiaRemision;
                 model.lst_detalle_x_factura = List_rel.get_list(model.IdTransaccionSession);
                 model.lst_detalle = detalle_info.get_list(model.IdTransaccionSession);
@@ -266,7 +266,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             try
             {
-                model.IdUsuario = SessionFixed.IdUsuario.ToString();
+                model.IdUsuarioModificacion = SessionFixed.IdUsuario.ToString();
                 model.CodGuiaRemision = (model.CodGuiaRemision == null) ? "" : model.CodGuiaRemision;
                 model.CodDocumentoTipo = "GUIA";
                 model.lst_detalle_x_factura = List_rel.get_list(model.IdTransaccionSession);
