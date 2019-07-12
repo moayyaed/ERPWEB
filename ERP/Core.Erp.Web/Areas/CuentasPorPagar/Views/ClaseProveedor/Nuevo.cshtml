@@ -12,7 +12,7 @@
 
 @using (Html.BeginForm("Nuevo", "ClaseProveedor", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -37,63 +37,45 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="IdCtaCble_gasto">Cta. Cble. Gasto</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble_gasto, settings =>
-               {
-                   settings.Name = "IdCtaCble_gasto";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("pc_Cuenta", "Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                   settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(40);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdCtaCble";
-                   settings.Properties.ValueType = typeof(string);
-                   settings.Properties.TextField = "pc_Cuenta";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-               }).BindList(ViewBag.lst_cuentas).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdCtaCble_gasto, "", new { @class = "text-danger" })
+                    <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
+                    @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
                 </div>
             </div>
+
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble_CXP, settings =>
-               {
-                   settings.Name = "IdCtaCble_CXP";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("pc_Cuenta", "Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                   settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(40);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdCtaCble";
-                   settings.Properties.ValueType = typeof(string);
-                   settings.Properties.TextField = "pc_Cuenta";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-               }).BindList(ViewBag.lst_cuentas).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
+                    <label for="IdCtaCble_Gasto">Cta. Cble. Gasto</label>
+                    @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_gasto)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_gasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_Anticipo">Cta. Cble. Anticipo</label>
+                    @Html.Partial("_CmbCtaCbleAnticipo_Proveedor", Model.IdCtaCble_Anticipo)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
+
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","ClaseProveedor",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
 }

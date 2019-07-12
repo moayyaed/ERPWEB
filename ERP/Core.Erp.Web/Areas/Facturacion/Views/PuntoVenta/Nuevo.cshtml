@@ -75,7 +75,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-3">
                 <div class="form-group">
                     @Html.DevExpress().CheckBoxFor(q => q.CobroAutomatico,
                          settings =>
@@ -86,6 +86,25 @@
                          }
                      ).GetHtml()
                 </div>    
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.EsElectronico,
+                         settings =>
+                         {
+                             settings.Name = "EsElectronico";
+                             settings.Checked = false;
+                             settings.Text = "Es electrónico";
+                         }
+                     ).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCaja">Tipo documento*</label>
+                    @Html.DropDownListFor(q => q.codDocumentoTipo, new SelectList(ViewBag.lst_doc, "CodDocumentoTipo", "descripcion"), new { @class = "form-control", @id = "NivelPrecio" })
+                    @Html.ValidationMessageFor(q => q.codDocumentoTipo, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>

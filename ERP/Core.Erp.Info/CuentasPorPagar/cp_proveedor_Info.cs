@@ -40,6 +40,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string pr_direccion { get; set; }
         [StringLength(200, MinimumLength = 1, ErrorMessage = "el campo correo debe tener mínimo 1 caracter y máximo 200")]
         public string pr_correo { get; set; }
+        public string IdCtaCble_Anticipo { get; set; }
 
         #region Campos auditoria
         public string IdUsuario { get; set; }

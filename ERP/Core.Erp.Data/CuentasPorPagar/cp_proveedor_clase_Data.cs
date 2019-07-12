@@ -71,7 +71,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         descripcion_clas_prove = Entity.descripcion_clas_prove,
                         IdCtaCble_CXP = Entity.IdCtaCble_CXP,
                         IdCtaCble_gasto = Entity.IdCtaCble_gasto,
-                        Estado = Entity.Estado
+                        Estado = Entity.Estado,
+                        IdCtaCble_Anticipo = Entity.IdCtaCble_Anticipo
                     };
                 }
                 return info;
@@ -119,7 +120,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         descripcion_clas_prove = info.descripcion_clas_prove,
                         IdCtaCble_CXP = info.IdCtaCble_CXP,
                         IdCtaCble_gasto = info.IdCtaCble_gasto,
-                        Estado = info.Estado = "A"
+                        Estado = info.Estado = "A",
+                        IdCtaCble_Anticipo = info.IdCtaCble_Anticipo
+
                     };
                     Context.cp_proveedor_clase.Add(Entity);
                     Context.SaveChanges();
@@ -145,6 +148,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Entity.descripcion_clas_prove = info.descripcion_clas_prove;
                     Entity.IdCtaCble_CXP = info.IdCtaCble_CXP;
                     Entity.IdCtaCble_gasto = info.IdCtaCble_gasto;
+                    Entity.IdCtaCble_Anticipo = info.IdCtaCble_Anticipo;
 
                     Context.SaveChanges();
                 }

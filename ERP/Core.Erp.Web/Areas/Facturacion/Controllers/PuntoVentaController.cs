@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Core.Erp.Bus.General;
 using Core.Erp.Web.Helps;
 using Core.Erp.Bus.Caja;
+using Core.Erp.Info.General;
+using Core.Erp.Info.Helps;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -20,14 +22,40 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_PuntoVta_Bus bus_punto = new fa_PuntoVta_Bus();
         public ActionResult Index()
         {
-            return View();
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                CodDocumentoTipo = ""
+            };
+            cargar_combos_consulta();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Index(cl_filtros_Info model)
+        {
+            ViewBag.CodDocumentoTipo = model.CodDocumentoTipo;
+            cargar_combos_consulta();
+            return View(model);
+        }
+        private void cargar_combos_consulta()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            tb_sis_Documento_Tipo_Bus bus_tipo = new tb_sis_Documento_Tipo_Bus();
+            var lst_doc = bus_tipo.get_list(false);
+            lst_doc.Add(new tb_sis_Documento_Tipo_Info
+            {
+                codDocumentoTipo = "",
+                descripcion = "Todos"
+            });
+            ViewBag.lst_doc = lst_doc;
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_puntoventa()
+        public ActionResult GridViewPartial_puntoventa(string CodDocumentoTipo = "")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<fa_PuntoVta_Info> model = bus_punto.get_list(IdEmpresa);
+            ViewBag.CodDocumentoTipo = CodDocumentoTipo;
+            List<fa_PuntoVta_Info> model = bus_punto.get_list(IdEmpresa, CodDocumentoTipo, true);
             return PartialView("_GridViewPartial_puntoventa", model);
         }
         private void cargar_combos( fa_PuntoVta_Info model)
@@ -48,6 +76,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             caj_Caja_Bus bus_caja = new caj_Caja_Bus();
             var lst_caja = bus_caja.get_list(model.IdEmpresa, false);
             ViewBag.lst_caja = lst_caja;
+
+            tb_sis_Documento_Tipo_Bus bus_doc = new tb_sis_Documento_Tipo_Bus();
+            var lst_doc = bus_doc.get_list(false);
+            ViewBag.lst_doc = lst_doc;
+
         }
         #endregion
         #region Acciones
@@ -64,6 +97,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Nuevo(fa_PuntoVta_Info model)
         {
+            model.IdUsuarioCreacion = SessionFixed.IdUsuario;
             if (!bus_punto.guardarDB(model))
             {
                 cargar_combos(model);
@@ -83,6 +117,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Modificar(fa_PuntoVta_Info model)
         {
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             if (!bus_punto.modificarDB(model))
             {
                 cargar_combos(model);
@@ -104,6 +139,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Anular(fa_PuntoVta_Info model)
         {
+            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
             if (!bus_punto.anularDB(model))
             {
                 cargar_combos(model);
