@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_puntoventa";
-        settings.CallbackRouteValues = new { Controller = "PuntoVenta", Action = "GridViewPartial_puntoventa" };
+        settings.CallbackRouteValues = new { Controller = "PuntoVenta", Action = "GridViewPartial_puntoventa", CodDocumentoTipo = ViewBag.CodDocumentoTipo };
         settings.KeyFieldName = "IdPuntoVta";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo

@@ -18,7 +18,7 @@ namespace Core.Erp.Info.Helps
         public bool mostrarAnulados { get; set; }
         public bool mostrar_observacion_completa { get; set; }
         public int IdBodega { get; set; }
-
+        public string CodDocumentoTipo { get; set; }
 
         public int IdTipoCbte { get; set; }
         public decimal IdCbteCble { get; set; }

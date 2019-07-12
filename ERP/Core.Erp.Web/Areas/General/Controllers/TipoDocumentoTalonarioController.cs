@@ -19,7 +19,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         #region Index / Metodos
         public ActionResult Index()
         {
-            tb_sis_Documento_Tipo_Talonario_Info model = new tb_sis_Documento_Tipo_Talonario_Info
+            cl_filtros_Info model = new cl_filtros_Info
             {
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 CodDocumentoTipo = ""
@@ -28,7 +28,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult Index(tb_sis_Documento_Tipo_Talonario_Info model)
+        public ActionResult Index(cl_filtros_Info model)
         {
             ViewBag.IdSucursal = model.IdSucursal;
             ViewBag.CodDocumentoTipo = model.CodDocumentoTipo;

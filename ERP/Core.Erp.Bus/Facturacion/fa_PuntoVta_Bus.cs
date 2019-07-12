@@ -9,11 +9,11 @@ namespace Core.Erp.Bus.Facturacion
     {
         fa_PuntoVta_Data odata = new fa_PuntoVta_Data();
 
-        public List<fa_PuntoVta_Info> get_list(int IdEmpresa)
+        public List<fa_PuntoVta_Info> get_list(int IdEmpresa, string CodDocumentoTipo, bool mostrar_anulados)
         {
             try
             {
-                return odata.get_list(IdEmpresa);
+                return odata.get_list(IdEmpresa, CodDocumentoTipo, mostrar_anulados);
             }
             catch (Exception)
             {
