@@ -129,13 +129,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         private bool validar(fa_guia_remision_Info i_validar, ref string msg)
         {
-            #region Talonario
-            var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
-            i_validar.IdBodega = pto_vta.IdBodega;
-            i_validar.Serie1 = pto_vta.Su_CodigoEstablecimiento;
-            i_validar.Serie2 = pto_vta.cod_PuntoVta;
-            #endregion
-
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.gi_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
             {
                 return false;
@@ -205,11 +198,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             try
             {
+                fa_PuntoVta_Info info_puntovta = new fa_PuntoVta_Info();
+                info_puntovta = bus_punto_venta.get_info(model.IdEmpresa, model.IdSucursal, model.IdPuntoVta);
+
+                model.IdBodega = info_puntovta.IdBodega;
                 model.IdUsuarioCreacion = SessionFixed.IdUsuario;
                 model.CodGuiaRemision = (model.CodGuiaRemision == null) ? "" : model.CodGuiaRemision;
                 model.lst_detalle_x_factura = List_rel.get_list(model.IdTransaccionSession);
                 model.lst_detalle = detalle_info.get_list(model.IdTransaccionSession);
-                model.CodDocumentoTipo = "GUIA";
+                model.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.GUIA.ToString();
+
                 string mensaje = bus_guia.validar(model);
                 if (mensaje != "")
                 {
@@ -386,7 +384,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (resultado == null)
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
 
-            return Json(new { data_talonario = resultado }, JsonRequestBehavior.AllowGet);
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Cargar_facturas(decimal IdCliente = 0)
         {

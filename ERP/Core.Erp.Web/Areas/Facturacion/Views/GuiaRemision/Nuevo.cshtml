@@ -112,21 +112,21 @@
                         <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="datos_punto_venta1">
                     <div class="form-group">
                         <label for="vt_serie1">Establecimiento*</label>
                         @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "Serie1" })
                         @Html.ValidationMessageFor(q => q.Serie1, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="datos_punto_venta2">
                     <div class="form-group">
                         <label for="vt_serie2">Pto. Emisión*</label>
                         @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "Serie2" })
                         @Html.ValidationMessageFor(q => q.Serie2, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="datos_punto_venta3">
                     <div class="form-group">
                         <label for="vt_NumFactura"># Documento*</label>
                         @Html.TextBoxFor(q => q.NumGuia_Preimpresa, new { @class = "form-control", @id = "NumGuia_Preimpresa" })
@@ -417,12 +417,27 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                if (data.data_talonario != null)
-                {
-                    $("#Serie1").val(data.data_talonario.Establecimiento);
-                    $("#Serie2").val(data.data_talonario.PuntoEmision);
-                    $("#NumGuia_Preimpresa").val(data.data_talonario.NumDocumento);
-                }                
+                if (data.data_puntovta != null) {
+                    if (data.data_puntovta.EsElectronico == true)
+                    {
+                        $("#datos_punto_venta1").hide();
+                        $("#datos_punto_venta2").hide();
+                        $("#datos_punto_venta3").hide();
+                    }
+                    else
+                    {
+                        $("#datos_punto_venta1").show();
+                        $("#datos_punto_venta2").show();
+                        $("#datos_punto_venta3").show();
+
+                        if (data.data_talonario != null)
+                        {
+                            $("#Serie1").val(data.data_talonario.Establecimiento);
+                            $("#Serie2").val(data.data_talonario.PuntoEmision);
+                            $("#NumGuia_Preimpresa").val(data.data_talonario.NumDocumento);
+                        }
+                    }
+                }                               
             },
             error: function (error) {
             }

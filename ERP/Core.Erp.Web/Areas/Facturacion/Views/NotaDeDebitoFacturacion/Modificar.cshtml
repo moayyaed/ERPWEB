@@ -12,6 +12,7 @@
     $(function () {
         CargarPuntosDeVenta();
         SetNaturalezaNota();
+        cargar_contactos();
 
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
@@ -102,28 +103,30 @@
     }
 
     function cargar_contactos() {
-
-        $("#IdContacto").empty();
         var codigo = IdCliente.GetValue();
 
-        var datos = {
-            IdCliente: codigo
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_contactos", "NotaDeDebitoFacturacion", new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
-                });
-            },
-            error: function (error) {
+        if (codigo > 0)
+        {
+            var datos = {
+                IdCliente: codigo
             }
-        });
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#DatosCliente").val(data);
+                },
+                error: function (error) {
+                }
+            });
+        }
+        else{
+            $("#DatosCliente").val("");
+        }
     }
 
     function CargarPuntosDeVenta() {
@@ -409,12 +412,10 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdClienteContacto">Contacto</label>
-                    @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_contacto, "IdContacto", "Nombres"), new { @class = "form-control", @id = "IdContacto" })
-                    @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
+                    <label for="DatosCliente">Información adicional</label>
+                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
                 </div>
             </div>
-
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="sc_observacion">Observación</label>

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Core.Erp.Data.General;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Bus.General;
+
 namespace Core.Erp.Bus.Facturacion
 {
    public class fa_guia_remision_Bus
@@ -44,41 +46,14 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
         public bool guardarDB(fa_guia_remision_Info info)
         {
-            fa_PuntoVta_Bus bus_puntovta = new fa_PuntoVta_Bus();
             try
             {
-                //fa_PuntoVta_Info info_punto_venta = new fa_PuntoVta_Info();
-                //info_punto_venta = bus_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta);
-                ////bus_talonario.get_info_ultimo_no_usado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, "GUIA");
-                //if (info_punto_venta!= null)
-                //{
-                //    if (info_punto_venta.EsElectronico == true)
-                //    {
-                //        info.IdBodega = info_punto_venta.IdBodega;
-                //        info.Serie1 = info_punto_venta.Su_CodigoEstablecimiento;
-                //        info.Serie2 = info_punto_venta.cod_PuntoVta;
-                //        info.NumGuia_Preimpresa = info_punto_venta.NumCopias
-                //    }
-                //}
-                info_talonario.IdEmpresa = info.IdEmpresa;
-                info_talonario.IdSucursal = info.IdSucursal;
-                info_talonario.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.GUIA.ToString();
-                info_talonario.Establecimiento = info.Serie1;
-                info_talonario.PuntoEmision = info.Serie2;
-                info_talonario.NumDocumento = info.NumGuia_Preimpresa;
-                info_talonario.Usado = true;
-
-                if (odata.guardarDB(info))
-                {
-                    data_talonario.modificar_estado_usadoDB(info_talonario);
-                    return true;
-                }
-                else
-                    return false;
+                return odata.guardarDB(info);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

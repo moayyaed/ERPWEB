@@ -5,6 +5,7 @@ using Core.Erp.Data.Inventario;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.Facturacion;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
@@ -355,10 +356,42 @@ namespace Core.Erp.Data.Facturacion
 
                 var cliente = db_f.fa_cliente.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).FirstOrDefault();
                 var persona = db_g.tb_persona.Where(q => q.IdPersona == cliente.IdPersona).FirstOrDefault();
+
                 #region Talonario
-                var tal = odata_tal.GetUltimoNoUsadoFacElec(info.IdEmpresa, info.vt_tipoDoc, info.vt_serie1, info.vt_serie2);
-                if (tal != null)
-                    factura.vt_NumFactura = info.vt_NumFactura = tal.NumDocumento;
+                //var tal = odata_tal.GetUltimoNoUsadoFacElec(info.IdEmpresa, info.vt_tipoDoc, info.vt_serie1, info.vt_serie2);
+                //if (tal != null)
+                //    factura.vt_NumFactura = info.vt_NumFactura = tal.NumDocumento;
+
+                fa_PuntoVta_Data data_puntovta = new fa_PuntoVta_Data();
+                tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                fa_PuntoVta_Info info_puntovta = new fa_PuntoVta_Info();
+                tb_sis_Documento_Tipo_Talonario_Info ultimo_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+                tb_sis_Documento_Tipo_Talonario_Info info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+                info_puntovta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta??0);
+
+                if (info_puntovta != null)
+                {
+                    if (info_puntovta.EsElectronico == true)
+                    {
+                        ultimo_talonario = data_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta);
+
+                        if (ultimo_talonario != null)
+                            factura.vt_serie1 = info.vt_serie1 = ultimo_talonario.Establecimiento;
+                            factura.vt_serie2 = info.vt_serie2 = ultimo_talonario.PuntoEmision;
+                            factura.vt_NumFactura = info.vt_NumFactura = ultimo_talonario.NumDocumento;
+                    }
+                    else
+                    {
+                        info_talonario.IdEmpresa = info.IdEmpresa;
+                        info_talonario.CodDocumentoTipo = info.vt_tipoDoc;
+                        info_talonario.Establecimiento = info.vt_serie1;
+                        info_talonario.PuntoEmision = info.vt_serie2;
+                        info_talonario.NumDocumento = info.vt_NumFactura;
+                        info_talonario.IdSucursal = info.IdSucursal;
+
+                        data_talonario.modificar_estado_usadoDB(info_talonario);
+                    }
+                }
                 #endregion
 
                 db_f.fa_factura.Add(factura);

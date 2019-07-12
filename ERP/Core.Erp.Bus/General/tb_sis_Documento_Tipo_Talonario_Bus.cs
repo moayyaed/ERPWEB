@@ -110,5 +110,17 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+
+        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado_electronico(int IdEmpresa, string Establecimiento, string PuntoEmision, string CodDocumentoTipo)
+        {
+            try
+            {
+                return odata.get_info_ultimo_no_usado_electronico(IdEmpresa, Establecimiento, PuntoEmision, CodDocumentoTipo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

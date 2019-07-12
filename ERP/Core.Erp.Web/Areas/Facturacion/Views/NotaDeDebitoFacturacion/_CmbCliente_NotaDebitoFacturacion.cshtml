@@ -17,7 +17,7 @@
 
         settings.Properties.Columns.Add("IdEntidad", "ID", 10);
         settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 90);
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info_cliente();}";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info_cliente(); cargar_contactos();}";
     })
     .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.NotaDeDebitoFacturacionController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Facturacion.Controllers.NotaDeDebitoFacturacionController().get_info_bajo_demanda)
     .Bind(Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_notaCreDeb_Info) ? "" : (Model == 0 ? "" : Model));

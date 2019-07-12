@@ -95,8 +95,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdPuntoVta">Punto de venta*</label>
-                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
-                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-10">
@@ -112,24 +112,24 @@
                     <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="datos_punto_venta1">
                 <div class="form-group">
                     <label for="vt_serie1">Establecimiento*</label>
-                    @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "Serie1" })
+                    @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "Serie1", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.Serie1, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="datos_punto_venta2">
                 <div class="form-group">
                     <label for="vt_serie2">Pto. Emisión*</label>
-                    @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "Serie2" })
+                    @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "Serie2", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.Serie2, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="datos_punto_venta3">
                 <div class="form-group">
                     <label for="vt_NumFactura"># Documento*</label>
-                    @Html.TextBoxFor(q => q.NumGuia_Preimpresa, new { @class = "form-control", @id = "NumGuia_Preimpresa" })
+                    @Html.TextBoxFor(q => q.NumGuia_Preimpresa, new { @class = "form-control", @id = "NumGuia_Preimpresa", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.NumGuia_Preimpresa, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -226,12 +226,11 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdClienteContacto">Tipo de traslado</label>
-                    @Html.DropDownListFor(q => q.IdCatalogo_traslado, new SelectList(ViewBag.lst_tipo_traslado, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdContacto" })
-                    @Html.ValidationMessageFor(q => q.IdCatalogo_traslado, "", new { @class = "text-danger" })
+                    <label for="IdClienteContacto">Motivo de traslado</label>
+                    @Html.DropDownListFor(q => q.IdMotivoTraslado, new SelectList(ViewBag.lst_tipo_traslado, "IdMotivoTraslado", "tr_Descripcion"), new { @class = "form-control", @id = "IdMotivoTraslado" })
+                    @Html.ValidationMessageFor(q => q.IdMotivoTraslado, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -358,31 +357,6 @@
             }
         });
     }
-
-       function GetUltimoDocumento() {
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),
-            IdPuntoVta: $("#IdPuntoVta").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetUltimoDocumento", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#Serie1").val(data.Establecimiento);
-                $("#Serie2").val(data.PuntoEmision);
-                $("#NumGuia_Preimpresa").val(data.NumDocumento);
-            },
-            error: function (error) {
-            }
-        });
-        }
-
-
-
 </script>
 
 

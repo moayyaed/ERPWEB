@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Data.Contabilidad;
 using Core.Erp.Data.CuentasPorCobrar;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.Facturacion;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
@@ -163,7 +165,8 @@ namespace Core.Erp.Data.Facturacion
                     #region Nota de debito credito
 
                     #region Cabecera
-                    db_f.fa_notaCreDeb.Add(new fa_notaCreDeb
+                    fa_notaCreDeb Entity = new fa_notaCreDeb
+                    //db_f.fa_notaCreDeb.Add(new fa_notaCreDeb
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdSucursal = info.IdSucursal,
@@ -188,7 +191,7 @@ namespace Core.Erp.Data.Facturacion
                         IdCtaCble_TipoNota = info.IdCtaCble_TipoNota,
 
                         IdUsuario = info.IdUsuario
-                    });
+                    };
                     #endregion
 
                     #region Detalle
@@ -245,6 +248,40 @@ namespace Core.Erp.Data.Facturacion
                     }
                     #endregion
 
+                    #region Talonario
+                    fa_PuntoVta_Data data_puntovta = new fa_PuntoVta_Data();
+                    tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                    fa_PuntoVta_Info info_puntovta = new fa_PuntoVta_Info();
+                    tb_sis_Documento_Tipo_Talonario_Info ultimo_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+                    tb_sis_Documento_Tipo_Talonario_Info info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+                    info_puntovta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta);
+
+                    if (info_puntovta != null)
+                    {
+                        if (info_puntovta.EsElectronico == true)
+                        {
+                            ultimo_talonario = data_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta);
+
+                            if (ultimo_talonario != null)
+                                Entity.Serie1 = info.Serie1 = ultimo_talonario.Establecimiento;
+                                Entity.Serie2 = info.Serie2 = ultimo_talonario.PuntoEmision;
+                                Entity.NumNota_Impresa = info.NumNota_Impresa = ultimo_talonario.NumDocumento;
+                        }
+                        else
+                        {
+                            info_talonario.IdEmpresa = info.IdEmpresa;
+                            info_talonario.CodDocumentoTipo = info.CodDocumentoTipo;
+                            info_talonario.Establecimiento = info.Serie1;
+                            info_talonario.PuntoEmision = info.Serie2;
+                            info_talonario.NumDocumento = info.NumNota_Impresa;
+                            info_talonario.IdSucursal = info.IdSucursal;
+
+                            data_talonario.modificar_estado_usadoDB(info_talonario);
+                        }
+                    }
+                    #endregion
+
+                    db_f.fa_notaCreDeb.Add(Entity);
                     db_f.SaveChanges();
 
                     #endregion

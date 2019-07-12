@@ -138,8 +138,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_punto_venta = bus_punto_venta.get_list(model.IdEmpresa, model.IdSucursal, false);
             ViewBag.lst_punto_venta = lst_punto_venta;
 
-            var lst_contacto = bus_contacto.get_list(model.IdEmpresa, model.IdCliente);
-            ViewBag.lst_contacto = lst_contacto;
+            //var lst_contacto = bus_contacto.get_list(model.IdEmpresa, model.IdCliente);
+            //ViewBag.lst_contacto = lst_contacto;
 
             var lst_vendedor = bus_vendedor.get_list(model.IdEmpresa, false);
             ViewBag.lst_vendedor = lst_vendedor;
@@ -537,7 +537,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult cargar_contactos(decimal IdCliente = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var resultado = bus_contacto.get_list(IdEmpresa, IdCliente);
+            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            fa_cliente_contactos_Info info_contacto = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
+            var resultado = info_contacto.Direccion + " " + info_contacto.Correo + " " + info_contacto.Telefono + " " + info_contacto.Celular;
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)

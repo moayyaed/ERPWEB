@@ -1,4 +1,7 @@
-﻿using Core.Erp.Info.Facturacion;
+﻿using Core.Erp.Data.General;
+using Core.Erp.Info.Facturacion;
+using Core.Erp.Info.General;
+using Core.Erp.Info.Helps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +12,9 @@ namespace Core.Erp.Data.Facturacion
 {
    public class fa_guia_remision_Data
     {
+        tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+        fa_PuntoVta_Data data_puntovta = new fa_PuntoVta_Data();
+
         public List<fa_guia_remision_Info> get_list(int IdEmpresa, DateTime fecha_inicio, DateTime Fecha_fin)
         {
             try
@@ -131,10 +137,12 @@ namespace Core.Erp.Data.Facturacion
 
         public bool guardarDB(fa_guia_remision_Info info)
         {
+            fa_PuntoVta_Info punto_venta = new fa_PuntoVta_Info();
+            punto_venta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta);
+
             try
             {
                 int secuencia = 1;
-
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
                     fa_guia_remision Entity = new fa_guia_remision
@@ -167,8 +175,8 @@ namespace Core.Erp.Data.Facturacion
                         IdUsuarioCreacion=info.IdUsuarioCreacion,
                         FechaCreacion=info.FechaCreacion = DateTime.Now
 
-                    };
-                    Context.fa_guia_remision.Add(Entity);
+                    };                    
+
                     foreach (var item in info.lst_detalle)
                     {
                         Context.fa_guia_remision_det.Add(new fa_guia_remision_det
@@ -225,8 +233,41 @@ namespace Core.Erp.Data.Facturacion
                                 gi_IdGuiaRemision = info.IdGuiaRemision
                             });
                     }
-                    Context.SaveChanges();
 
+                    #region Talonario
+                    fa_PuntoVta_Info info_puntovta = new fa_PuntoVta_Info();
+                    tb_sis_Documento_Tipo_Talonario_Info info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+                    tb_sis_Documento_Tipo_Talonario_Info ultimo_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+                    tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                    info_puntovta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta);
+
+                    if (info_puntovta != null)
+                    {
+                        if (info_puntovta.EsElectronico == true)
+                        {
+                            ultimo_talonario = data_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta);
+
+                            if (ultimo_talonario != null)
+                                Entity.Serie1 = info.Serie1 = ultimo_talonario.Establecimiento;
+                                Entity.Serie2 = info.Serie2 = ultimo_talonario.PuntoEmision;
+                                Entity.NumGuia_Preimpresa = info.NumGuia_Preimpresa = ultimo_talonario.NumDocumento;
+                        }
+                        else
+                        {
+                            info_talonario.IdEmpresa = info.IdEmpresa;
+                            info_talonario.CodDocumentoTipo = info.CodDocumentoTipo;
+                            info_talonario.Establecimiento = info.Serie1;
+                            info_talonario.PuntoEmision = info.Serie2;
+                            info_talonario.NumDocumento = info.NumGuia_Preimpresa;
+                            info_talonario.IdSucursal = info.IdSucursal;
+
+                            data_talonario.modificar_estado_usadoDB(info_talonario);
+                        }
+                    }
+
+                    #endregion
+                    Context.fa_guia_remision.Add(Entity);
+                    Context.SaveChanges();                    
                 }
                 return true;
             }
@@ -247,9 +288,6 @@ namespace Core.Erp.Data.Facturacion
                     if (Entity == null) return false;
                        Entity.CodGuiaRemision = info.CodGuiaRemision;
                         Entity.CodDocumentoTipo = info.CodDocumentoTipo;
-                        Entity.Serie1 = info.Serie1;
-                        Entity.Serie2 = info.Serie2;
-                        Entity.NumGuia_Preimpresa = info.NumGuia_Preimpresa;
                         Entity.NUAutorizacion = info.NUAutorizacion;
                         Entity.Fecha_Autorizacion = info.Fecha_Autorizacion;
                         Entity.IdCliente = info.IdCliente;
@@ -322,6 +360,7 @@ namespace Core.Erp.Data.Facturacion
                                 gi_IdGuiaRemision = info.IdGuiaRemision
                             });
                     }
+
                     Context.SaveChanges();
                 }
                 return true;

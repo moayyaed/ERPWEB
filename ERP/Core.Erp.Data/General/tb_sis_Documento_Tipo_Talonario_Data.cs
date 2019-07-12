@@ -338,6 +338,43 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado_electronico(int IdEmpresa, string Establecimiento, string PuntoEmision, string CodDocumentoTipo)
+        {
+            try
+            {
+                tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info();
+                using (Entities_general Context = new Entities_general())
+                {
+                    var q = (from A in Context.tb_sis_Documento_Tipo_Talonario
+                             where A.IdEmpresa == IdEmpresa
+                             && A.CodDocumentoTipo == CodDocumentoTipo
+                             && A.Establecimiento == Establecimiento
+                             && A.PuntoEmision == PuntoEmision
+                             && A.Usado == false
+                             && A.Estado == "A"
+                             && A.es_Documento_Electronico == true
+                             select A.NumDocumento).Min();
+                    if (q != null)
+                    {
+                        string UltRegistro = q.ToString();
+                        var Entity = Context.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false && v.es_Documento_Electronico == true).FirstOrDefault();
+                        if (Entity != null)
+                            info = new tb_sis_Documento_Tipo_Talonario_Info
+                            {
+                                IdEmpresa = Entity.IdEmpresa,
+                                Establecimiento = Entity.Establecimiento,
+                                PuntoEmision = Entity.PuntoEmision,
+                                NumDocumento = Entity.NumDocumento
+                            };
+                    }
+                }
+                return info;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool modificar_estado_usadoDB(tb_sis_Documento_Tipo_Talonario_Info info)
         {
             try
