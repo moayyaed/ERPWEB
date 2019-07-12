@@ -1,7 +1,9 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorPagar;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -16,6 +18,59 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_proveedor_clase_Bus bus_clase_proveedor = new cp_proveedor_clase_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
 
+        #endregion
+        #region Metodos ComboBox bajo demanda CtaCbleCXP
+        public ActionResult CmbCtaCbleCXP_Proveedor()
+        {
+            int model = new int();
+            return PartialView("_CmbCtaCbleCXP_Proveedor", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_cxp(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return bus_plancta.get_list_bajo_demanda(args, IdEmpresa, true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_ctacble_cxp(ListEditItemRequestedByValueEventArgs args)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return bus_plancta.get_info_bajo_demanda(args, IdEmpresa);
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda CtaCbleGasto
+        public ActionResult CmbCtaCbleGasto_Proveedor()
+        {
+            int model = new int();
+            return PartialView("_CmbCtaCbleGasto_Proveedor", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_gasto(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return bus_plancta.get_list_bajo_demanda(args, IdEmpresa, true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_ctacble_gasto(ListEditItemRequestedByValueEventArgs args)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return bus_plancta.get_info_bajo_demanda(args, IdEmpresa);
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda CtaCbleGasto
+        public ActionResult CmbCtaCbleAnticipo_Proveedor()
+        {
+            int model = new int();
+            return PartialView("_CmbCtaCbleAnticipo_Proveedor", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_Anticipo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return bus_plancta.get_list_bajo_demanda(args, IdEmpresa, true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_ctacble_Anticipo(ListEditItemRequestedByValueEventArgs args)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return bus_plancta.get_info_bajo_demanda(args, IdEmpresa);
+        }
         #endregion
 
         #region Index
