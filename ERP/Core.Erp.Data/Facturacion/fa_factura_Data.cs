@@ -373,7 +373,7 @@ namespace Core.Erp.Data.Facturacion
                 {
                     if (info_puntovta.EsElectronico == true)
                     {
-                        ultimo_talonario = data_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta);
+                        ultimo_talonario = data_talonario.get_info_ultimo_no_usado_electronico(info.IdEmpresa, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.codDocumentoTipo);
 
                         if (ultimo_talonario != null)
                             factura.vt_serie1 = info.vt_serie1 = ultimo_talonario.Establecimiento;
@@ -388,6 +388,7 @@ namespace Core.Erp.Data.Facturacion
                         info_talonario.PuntoEmision = info.vt_serie2;
                         info_talonario.NumDocumento = info.vt_NumFactura;
                         info_talonario.IdSucursal = info.IdSucursal;
+                        info_talonario.Usado = true;
 
                         data_talonario.modificar_estado_usadoDB(info_talonario);
                     }

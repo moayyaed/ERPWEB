@@ -340,7 +340,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Anular(fa_guia_remision_Info model)
         {
-           
+            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
             try
             {
                 if (!bus_guia.anularDB(model))
@@ -367,7 +367,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, "GUIA");
+            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.GUIA.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetUltimoDocumento(int IdSucursal = 0, int IdPuntoVta = 0)
@@ -378,7 +378,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (punto_venta != null)
             {
                 var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-                resultado = bus_talonario.get_info_ultimo_no_usado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, "GUIA");
+                resultado = bus_talonario.get_info_ultimo_no_usado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, cl_enumeradores.eTipoDocumento.GUIA.ToString());
             }
 
             if (resultado == null)

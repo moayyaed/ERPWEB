@@ -260,7 +260,7 @@ namespace Core.Erp.Data.Facturacion
                     {
                         if (info_puntovta.EsElectronico == true)
                         {
-                            ultimo_talonario = data_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta);
+                            ultimo_talonario = data_talonario.get_info_ultimo_no_usado_electronico(info.IdEmpresa, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.codDocumentoTipo);
 
                             if (ultimo_talonario != null)
                                 Entity.Serie1 = info.Serie1 = ultimo_talonario.Establecimiento;
@@ -275,6 +275,7 @@ namespace Core.Erp.Data.Facturacion
                             info_talonario.PuntoEmision = info.Serie2;
                             info_talonario.NumDocumento = info.NumNota_Impresa;
                             info_talonario.IdSucursal = info.IdSucursal;
+                            info_talonario.Usado = true;
 
                             data_talonario.modificar_estado_usadoDB(info_talonario);
                         }
@@ -370,7 +371,7 @@ namespace Core.Erp.Data.Facturacion
                     var entity = db_f.fa_notaCreDeb.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdNota == info.IdNota).FirstOrDefault();
                     if (entity == null) return false;
 
-                    entity.IdPuntoVta = info.IdPuntoVta;
+                    //entity.IdPuntoVta = info.IdPuntoVta;
                     //entity.CodNota = info.CodNota;
                     entity.CreDeb = info.CreDeb.Trim();
                     entity.CodDocumentoTipo = info.CodDocumentoTipo;
@@ -532,7 +533,7 @@ namespace Core.Erp.Data.Facturacion
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

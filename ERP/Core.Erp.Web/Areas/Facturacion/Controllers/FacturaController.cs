@@ -196,9 +196,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region Talonario
             var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
+            var resultado = bus_talonario.get_info_ultimo_no_usado(i_validar.IdEmpresa, pto_vta.Su_CodigoEstablecimiento, pto_vta.cod_PuntoVta, cl_enumeradores.eTipoDocumento.FACT.ToString());
             i_validar.IdBodega = pto_vta.IdBodega;
             i_validar.vt_serie1 = pto_vta.Su_CodigoEstablecimiento;
             i_validar.vt_serie2 = pto_vta.cod_PuntoVta;
+            i_validar.vt_NumFactura = resultado.NumDocumento;
             i_validar.IdCaja = pto_vta.IdCaja;
             #endregion
 
@@ -546,7 +548,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var resultado = bus_punto_venta.get_list(IdEmpresa, IdSucursal, false);
+            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.FACT.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult BuscarProducto(int IdSucursal = 0, int IdPuntoVta = 0, int Secuencia = 0,decimal IdTransaccionSession = 0)

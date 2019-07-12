@@ -417,7 +417,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                if (data.data_puntovta != null) {
+                if (data.data_puntovta != null)
+                {
                     if (data.data_puntovta.EsElectronico == true)
                     {
                         $("#datos_punto_venta1").hide();

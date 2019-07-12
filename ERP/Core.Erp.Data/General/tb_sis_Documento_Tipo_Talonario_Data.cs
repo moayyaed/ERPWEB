@@ -321,6 +321,9 @@ namespace Core.Erp.Data.General
                         string UltRegistro = q.ToString();
                         var Entity = Context.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false && v.es_Documento_Electronico == true).FirstOrDefault();
                         if (Entity != null)
+                        {
+                            Entity.Usado = true;
+                            Context.SaveChanges();
                             info = new tb_sis_Documento_Tipo_Talonario_Info
                             {
                                 IdEmpresa = Entity.IdEmpresa,
@@ -328,6 +331,8 @@ namespace Core.Erp.Data.General
                                 PuntoEmision = Entity.PuntoEmision,
                                 NumDocumento = Entity.NumDocumento
                             };
+                        }
+                           
                     }
                 }
                 return info;

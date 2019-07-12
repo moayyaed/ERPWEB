@@ -134,7 +134,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var resultado = bus_punto_venta.get_list(IdEmpresa, IdSucursal, false);
+            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.NTDB.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetLotesPorProducto(int IdSucursal = 0, int IdPuntoVta = 0, decimal IdProducto = 0)
@@ -191,7 +191,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
             if (resultado == null)
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetDocumentosPorCobrar(int IdSucursal = 0, decimal IdCliente = 0, decimal IdTransaccionSession = 0)
         {
