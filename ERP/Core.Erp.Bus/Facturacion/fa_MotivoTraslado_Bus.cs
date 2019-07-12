@@ -23,5 +23,61 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public fa_MotivoTraslado_Info GetInfo(int IdEmpresa, int IdMotivoTraslado)
+        {
+            try
+            {
+                return odata.GetInfo(IdEmpresa, IdMotivoTraslado);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool GuardarDB(fa_MotivoTraslado_Info info)
+
+        {
+            try
+            {
+                return odata.GuardarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarDB(fa_MotivoTraslado_Info info)
+
+        {
+            try
+            {
+                return odata.ModificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool AnularDB(fa_MotivoTraslado_Info info)
+
+        {
+            try
+            {
+                return odata.AnularDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

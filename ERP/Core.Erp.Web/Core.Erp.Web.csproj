@@ -338,6 +338,7 @@
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FormaPagoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaRemisionController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\MotivoTrasladoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NivelDescuentoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NotaDeCreditoFacturacionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NotaDeDebitoFacturacionController.cs" />
@@ -10150,6 +10151,11 @@
     <Content Include="Areas\CuentasPorPagar\Views\ClaseProveedor\_CmbCtaCbleCXP_Proveedor.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ClaseProveedor\_CmbCtaCbleGasto_Proveedor.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ClaseProveedor\_CmbCtaCbleAnticipo_Proveedor.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\_GridViewPartial_Motivo_traslado.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\Nuevo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

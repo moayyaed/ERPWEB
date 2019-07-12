@@ -45,5 +45,131 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
+
+        public fa_MotivoTraslado_Info GetInfo(int IdEmpresa, int IdMotivoTraslado)
+        {
+            try
+            {
+                fa_MotivoTraslado_Info info = new fa_MotivoTraslado_Info();
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_MotivoTraslado Entity = Context.fa_MotivoTraslado.Where(q => q.IdEmpresa == IdEmpresa && q.IdMotivoTraslado == IdMotivoTraslado).FirstOrDefault();
+                    if (Entity == null) return null;
+                    info = new fa_MotivoTraslado_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdMotivoTraslado = Entity.IdMotivoTraslado,
+                        tr_Descripcion = Entity.tr_Descripcion,
+                        Estado = Entity.Estado
+                    };
+                }
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private int GetId(int IdEmpresa)
+        {
+            try
+            {
+                int Id = 1;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    var lst = from q in Context.fa_MotivoTraslado
+                              where q.IdEmpresa == IdEmpresa
+                              select q;
+                    if (lst.Count() > 0)
+                        Id = lst.Max(q => q.IdMotivoTraslado) + 1;
+                }
+                return Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool GuardarDB(fa_MotivoTraslado_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    Context.fa_MotivoTraslado.Add(new fa_MotivoTraslado
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdMotivoTraslado = info.IdMotivoTraslado=GetId(info.IdEmpresa),
+                        tr_Descripcion = info.tr_Descripcion,
+                        Estado = true,
+                        IdUsuarioCreacion = info.IdUsuarioCreacion,
+                        FechaCreacion = DateTime.Now
+                    });
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarDB(fa_MotivoTraslado_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_MotivoTraslado Entity = Context.fa_MotivoTraslado.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdMotivoTraslado == info.IdMotivoTraslado).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.tr_Descripcion = info.tr_Descripcion;
+                    Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
+                    Entity.FechaModificacion = DateTime.Now;
+                    Context.SaveChanges();
+
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool AnularDB(fa_MotivoTraslado_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_MotivoTraslado Entity = Context.fa_MotivoTraslado.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdMotivoTraslado == info.IdMotivoTraslado).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.Estado = false;
+                    Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
+                    Entity.FechaAnulacion = DateTime.Now;
+                    Entity.MotivoAnulacion = info.MotivoAnulacion;
+                    Context.SaveChanges();
+
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }
