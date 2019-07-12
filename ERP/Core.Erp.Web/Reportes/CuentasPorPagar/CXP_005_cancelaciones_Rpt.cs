@@ -18,8 +18,8 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
 
         private void CXP_005_cancelaciones_Rpt_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
-            int IdEmpresa_conciliacion = p_IdEmpresa_conciliacion.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa_conciliacion.Value);
-            decimal IdConciliacion = p_IdConciliacion.Value == null ? 0 : Convert.ToDecimal(p_IdConciliacion.Value);
+            int IdEmpresa_conciliacion = string.IsNullOrEmpty(p_IdEmpresa_conciliacion.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa_conciliacion.Value);
+            decimal IdConciliacion = string.IsNullOrEmpty(p_IdConciliacion.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdConciliacion.Value);
 
             CXP_005_cancelaciones_Bus bus_rpt = new CXP_005_cancelaciones_Bus();
             List<CXP_005_cancelaciones_Info> lst_rpt = bus_rpt.get_list(IdEmpresa_conciliacion, IdConciliacion);

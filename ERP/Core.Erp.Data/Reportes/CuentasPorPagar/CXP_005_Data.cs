@@ -33,7 +33,12 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  dc_Valor_Haber = q.dc_Valor_Haber,
                                  Fecha = q.Fecha,
                                  Observacion = q.Observacion,
-                                 pe_nombreCompleto = q.pe_nombreCompleto
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 Estado = q.Estado,
+                                 IdProveedor=q.IdProveedor,
+                                 IdSucursal = q.IdSucursal,
+                                 NomUsuario = q.NomUsuario,
+                                 Su_Descripcion =q.Su_Descripcion
                              }).ToList();
                 }
                 return Lista;
