@@ -385,26 +385,31 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             if (i_validar.IdNota == 0 && i_validar.NaturalezaNota == "SRI")
             {
-                var talonario = bus_talonario.get_info(i_validar.IdEmpresa, i_validar.CodDocumentoTipo, i_validar.Serie1, i_validar.Serie2, i_validar.NumNota_Impresa);
-                if (talonario == null)
+                var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
+                if (pto_vta.EsElectronico == false)
                 {
-                    msg = "No existe un talonario creado con la numeración: " + i_validar.Serie1 + "-" + i_validar.Serie2 + "-" + i_validar.NumNota_Impresa;
-                    return false;
+                    var talonario = bus_talonario.get_info(i_validar.IdEmpresa, i_validar.CodDocumentoTipo, i_validar.Serie1, i_validar.Serie2, i_validar.NumNota_Impresa);
+                    if (talonario == null)
+                    {
+                        msg = "No existe un talonario creado con la numeración: " + i_validar.Serie1 + "-" + i_validar.Serie2 + "-" + i_validar.NumNota_Impresa;
+                        return false;
+                    }
+                    if (talonario.Usado == true)
+                    {
+                        msg = "El talonario: " + i_validar.Serie1 + "-" + i_validar.Serie2 + "-" + i_validar.NumNota_Impresa + " se encuentra utilizado.";
+                        return false;
+                    }
+                    if (bus_nota.DocumentoExiste(i_validar.IdEmpresa, i_validar.CodDocumentoTipo, i_validar.Serie1, i_validar.Serie2, i_validar.NumNota_Impresa))
+                    {
+                        msg = "Existe una nota de crédito con el talonario: " + i_validar.Serie1 + "-" + i_validar.Serie2 + "-" + i_validar.NumNota_Impresa + " utilizado.";
+                        return false;
+                    }
+                    if (talonario.es_Documento_Electronico == false)
+                    {
+                        i_validar.NumAutorizacion = talonario.NumAutorizacion;
+                    }
                 }
-                if (talonario.Usado == true)
-                {
-                    msg = "El talonario: " + i_validar.Serie1 + "-" + i_validar.Serie2 + "-" + i_validar.NumNota_Impresa + " se encuentra utilizado.";
-                    return false;
-                }
-                if (bus_nota.DocumentoExiste(i_validar.IdEmpresa, i_validar.CodDocumentoTipo,i_validar.Serie1, i_validar.Serie2, i_validar.NumNota_Impresa))
-                {
-                    msg = "Existe una nota de crédito con el talonario: " + i_validar.Serie1 + "-" + i_validar.Serie2 + "-" + i_validar.NumNota_Impresa + " utilizado.";
-                    return false;
-                }
-                if (talonario.es_Documento_Electronico == false)
-                {
-                    i_validar.NumAutorizacion = talonario.NumAutorizacion;
-                }
+
             }            
 
             if (i_validar.NaturalezaNota != "SRI")
