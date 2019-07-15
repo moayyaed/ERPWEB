@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Erp.Data.Compras.Base;
 
 namespace Core.Erp.Data.Compras
 {

@@ -243,6 +243,60 @@
     <Compile Include="caj_parametro.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
+    <Compile Include="Compras\Base\com_catalogo.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_catalogo_tipo.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_comprador.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_departamento.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_estado_cierre.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_ordencompra_local.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_ordencompra_local_det.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_parametro.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_solicitante.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_TerminoPago.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\Model_compras.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_compras.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\Model_compras.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\Model_compras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\vwcom_ordencompra_local.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\vwcom_ordencompra_local_det.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\vwcom_ordencompra_local_detPorIngresar.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
     <Compile Include="Compras\com_catalogo_Data.cs" />
     <Compile Include="Compras\com_catalogo_tipo_Data.cs" />
     <Compile Include="Compras\com_comprador_Data.cs" />
@@ -252,36 +306,6 @@
     <Compile Include="Compras\com_ordencompra_local_det_Data.cs" />
     <Compile Include="Compras\com_parametro_Data.cs" />
     <Compile Include="Compras\com_TerminoPago_Data.cs" />
-    <Compile Include="com_catalogo.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_catalogo_tipo.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_comprador.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_departamento.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_estado_cierre.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_ordencompra_local.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_ordencompra_local_det.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_parametro.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_solicitante.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="com_TerminoPago.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
     <Compile Include="Contabilidad\ats_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Data.cs" />
@@ -944,21 +968,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_caja.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model_compras.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_compras.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_compras.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_compras.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_compras.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model_contabilidad.Context.cs">
       <AutoGen>True</AutoGen>
@@ -2073,15 +2082,6 @@
     <Compile Include="VWCOMP_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwcom_ordencompra_local.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwcom_ordencompra_local_det.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwcom_ordencompra_local_detPorIngresar.cs">
-      <DependentUpon>Model_compras.tt</DependentUpon>
-    </Compile>
     <Compile Include="VWCONTA_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -2832,6 +2832,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_activo_fijo.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Compras\Base\Model_compras.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_compras.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Compras\Base\Model_compras.edmx.diagram">
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+    </None>
     <None Include="Model_activo_fijo.edmx.diagram">
       <DependentUpon>Model_activo_fijo.edmx</DependentUpon>
     </None>
@@ -2853,13 +2860,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_contabilidad.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Model_compras.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_compras.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_compras.edmx.diagram">
-      <DependentUpon>Model_compras.edmx</DependentUpon>
-    </None>
     <None Include="Model_contabilidad.edmx.diagram">
       <DependentUpon>Model_contabilidad.edmx</DependentUpon>
     </None>
@@ -2978,6 +2978,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Compras\Base\Model_compras.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+      <LastGenOutput>Model_compras.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Compras\Base\Model_compras.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+      <LastGenOutput>Model_compras.cs</LastGenOutput>
+    </Content>
     <Content Include="Model_activo_fijo.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_activo_fijo.edmx</DependentUpon>
@@ -3007,16 +3017,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_caja.edmx</DependentUpon>
       <LastGenOutput>Model_caja.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_compras.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_compras.edmx</DependentUpon>
-      <LastGenOutput>Model_compras.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_compras.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_compras.edmx</DependentUpon>
-      <LastGenOutput>Model_compras.cs</LastGenOutput>
     </Content>
     <Content Include="Model_contabilidad.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -3210,8 +3210,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Compras\Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

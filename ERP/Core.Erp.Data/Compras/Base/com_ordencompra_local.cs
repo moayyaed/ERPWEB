@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Core.Erp.Data
+namespace Core.Erp.Data.Compras.Base
 {
     using System;
     using System.Collections.Generic;

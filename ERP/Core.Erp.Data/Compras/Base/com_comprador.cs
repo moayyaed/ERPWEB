@@ -7,19 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Core.Erp.Data
+namespace Core.Erp.Data.Compras.Base
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class com_solicitante
+    public partial class com_comprador
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public com_comprador()
+        {
+            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
+        }
+    
         public int IdEmpresa { get; set; }
-        public decimal IdSolicitante { get; set; }
-        public string nom_solicitante { get; set; }
-        public string estado { get; set; }
-        public string cedula { get; set; }
-        public Nullable<decimal> IdPersona { get; set; }
+        public decimal IdComprador { get; set; }
+        public string IdUsuario_com { get; set; }
+        public string Descripcion { get; set; }
+        public string Estado { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }
@@ -27,5 +32,8 @@ namespace Core.Erp.Data
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
     }
 }

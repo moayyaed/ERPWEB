@@ -7,29 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Core.Erp.Data
+namespace Core.Erp.Data.Compras.Base
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class vwcom_ordencompra_local_detPorIngresar
+    public partial class com_ordencompra_local_det
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public decimal IdOrdenCompra { get; set; }
         public int Secuencia { get; set; }
-        public string Tipo { get; set; }
-        public int SecuenciaTipo { get; set; }
         public decimal IdProducto { get; set; }
-        public string pr_descripcion { get; set; }
         public double do_Cantidad { get; set; }
+        public double do_precioCompra { get; set; }
+        public double do_porc_des { get; set; }
+        public double do_descuento { get; set; }
         public double do_precioFinal { get; set; }
-        public double CantidadIngresada { get; set; }
-        public double Saldo { get; set; }
+        public double do_subtotal { get; set; }
+        public double do_iva { get; set; }
+        public double do_total { get; set; }
+        public string do_observacion { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
         public string IdUnidadMedida { get; set; }
-        public string pe_nombreCompleto { get; set; }
-        public string oc_observacion { get; set; }
-        public System.DateTime oc_fecha { get; set; }
-        public decimal IdProveedor { get; set; }
+        public double Por_Iva { get; set; }
+        public string IdCod_Impuesto { get; set; }
+    
+        public virtual com_ordencompra_local com_ordencompra_local { get; set; }
     }
 }
