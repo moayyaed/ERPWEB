@@ -67,7 +67,6 @@ namespace Core.Erp.Info.Compras
         public int CantidadIngresada { get; set; }
         public double Saldo { get; set; }
         public string IdUnidadMedida { get; set; }
-        public string pe_NombreCompleto { get; set; }
         #endregion
     }
     public class com_orden_aprobacion_Info

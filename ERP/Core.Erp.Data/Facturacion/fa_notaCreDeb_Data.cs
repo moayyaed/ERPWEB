@@ -256,11 +256,11 @@ namespace Core.Erp.Data.Facturacion
                     tb_sis_Documento_Tipo_Talonario_Info info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
                     info_puntovta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta);
 
-                    if (info_puntovta != null)
+                    if (info_puntovta != null && info.NaturalezaNota == "SRI")
                     {
                         if (info_puntovta.EsElectronico == true)
                         {
-                            ultimo_talonario = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.codDocumentoTipo,info_puntovta.EsElectronico,true);
+                            ultimo_talonario = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.EsElectronico,true);
 
                             if (ultimo_talonario != null)
                             {
@@ -281,6 +281,11 @@ namespace Core.Erp.Data.Facturacion
 
                             data_talonario.modificar_estado_usadoDB(info_talonario);
                         }
+                    }
+                    else{
+                        Entity.Serie1 = null;
+                        Entity.Serie2 = null;
+                        Entity.NumNota_Impresa = null;
                     }
                     #endregion
 

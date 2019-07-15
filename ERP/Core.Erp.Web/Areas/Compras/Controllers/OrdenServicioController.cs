@@ -154,7 +154,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEstadoAprobacion_cat = i_param.IdEstadoAprobacion_OC,
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                Tipo = "OC"
+                Tipo = "OS"
 
             };
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
