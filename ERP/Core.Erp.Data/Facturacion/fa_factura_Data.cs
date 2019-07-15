@@ -68,9 +68,11 @@ namespace Core.Erp.Data.Facturacion
                 
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list", IdUsuario = "consulta" });
+                return new List<fa_factura_consulta_Info>();
             }
         }
         public List<fa_factura_Info> get_list_fac_sin_guia(int IdEmpresa, decimal IdCliente)
@@ -99,9 +101,11 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_fac_sin_guia", IdUsuario = "consulta" });
+                return new List<fa_factura_Info>();
             }
         }
 
@@ -123,9 +127,11 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "factura_existe" });
+                return false;
             }
         }
 
@@ -192,10 +198,11 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return info;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_info" });
+                return new fa_factura_Info();
             }
         }
 
@@ -218,7 +225,6 @@ namespace Core.Erp.Data.Facturacion
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -229,7 +235,6 @@ namespace Core.Erp.Data.Facturacion
             Entities_general db_g = new Entities_general();
             try
             {
-                throw new Exception("iii", null);
                 #region Variables
                 int secuencia = 1;
                 in_Ing_Egr_Inven_Data data_inv = new in_Ing_Egr_Inven_Data();
@@ -1065,10 +1070,11 @@ namespace Core.Erp.Data.Facturacion
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
