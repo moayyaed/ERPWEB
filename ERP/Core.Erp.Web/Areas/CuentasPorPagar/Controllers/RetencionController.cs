@@ -12,6 +12,7 @@ using Core.Erp.Web.Helps;
 using Core.Erp.Info.Helps;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.General;
+using Core.Erp.Bus.Facturacion;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -32,6 +33,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_codigo_SRI_Bus bus_codigo_ret = new cp_codigo_SRI_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+        fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
+        tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
@@ -127,7 +130,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.fecha = model.fecha;
             if (model.co_valoriva > 0)
                 Session["co_valoriva"] = model.co_valoriva;
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
             cargar_combos_detalle();
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_cp_retencion_det.set_list(new List<cp_retencion_det_Info>(), model.IdTransaccionSession);
@@ -149,13 +152,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             string mensaje = bus_retencion.validar(model);
             if (!validar(model, ref mensaje))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
             if (mensaje != "")
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 cargar_combos_detalle();
                 return View(model);
@@ -189,7 +192,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 else
                 {
                     ViewBag.mensaje = mensaje;
-                    cargar_combos(model.IdEmpresa);
+                    cargar_combos(model);
                     cargar_combos_detalle();
                     return View(model);
                 }
@@ -203,15 +206,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
-            cargar_combos(IdEmpresa);
-            cargar_combos_detalle();
+            
             IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             Session["info_param_op"] = bus_parametros.get_info(IdEmpresa);
             cp_retencion_Info model = new cp_retencion_Info();
             model = bus_retencion.get_info(IdEmpresa, IdRetencion);
-            model.IdSucursal = model.info_comprobante.IdSucursal;
+            //model.IdSucursal = model.info_comprobante.IdSucursal;
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            cargar_combos(model);
+            cargar_combos_detalle();
             List_ct_cbtecble_det_List.set_list(model.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.detalle, model.IdTransaccionSession);
 
@@ -235,7 +238,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         [HttpPost]
         public ActionResult Modificar(cp_retencion_Info model)
         {
-
             bus_retencion = new cp_retencion_Bus();
             model.IdUsuarioUltMod = Session["IdUsuario"].ToString();
             model.detalle = List_cp_retencion_det.get_list(Convert.ToDecimal(model.IdTransaccionSession));
@@ -246,13 +248,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             string mensaje = bus_retencion.validar(model);
             if (!validar(model, ref mensaje))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
             if (mensaje != "")
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 cargar_combos_detalle();
                 return View(model);
@@ -285,7 +287,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 else
                 {
                     ViewBag.mensaje = mensaje;
-                    cargar_combos(model.IdEmpresa);
+                    cargar_combos(model);
                     cargar_combos_detalle();
                     return View(model);
                 }
@@ -299,15 +301,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
-            cargar_combos(IdEmpresa);
-            cargar_combos_detalle();
+            
             IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             Session["info_param_op"] = bus_parametros.get_info(IdEmpresa);
             cp_retencion_Info model = new cp_retencion_Info();
             model = bus_retencion.get_info(IdEmpresa, IdRetencion);
-            model.IdSucursal = model.info_comprobante.IdSucursal;
+            //model.IdSucursal = model.info_comprobante.IdSucursal;
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            cargar_combos(model);
+            cargar_combos_detalle();
             List_ct_cbtecble_det_List.set_list(model.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.detalle, model.IdTransaccionSession);
 
@@ -340,7 +342,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             string mensaje = bus_retencion.validar(model);
             if (mensaje != "")
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 cargar_combos_detalle();
                 return View(model);
@@ -371,7 +373,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 else
                 {
                     ViewBag.mensaje = mensaje;
-                    cargar_combos(model.IdEmpresa);
+                    cargar_combos(model);
                     cargar_combos_detalle();
                     return View(model);
                 }
@@ -509,7 +511,28 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         #endregion
         #region json
+        public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.RETEN.ToString());
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetUltimoDocumento(int IdSucursal = 0, int IdPuntoVta = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            tb_sis_Documento_Tipo_Talonario_Info resultado = new tb_sis_Documento_Tipo_Talonario_Info();
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+            if (punto_venta != null)
+            {
+                var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
+                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
+            }
 
+            if (resultado == null)
+                resultado = new tb_sis_Documento_Tipo_Talonario_Info();
+
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult armar_diario_retencion(int IdEmpresa = 0, decimal IdProveedor = 0, decimal IdTransaccionSession = 0, int IdSucursal_cxp = 0)
         {
             if (IdProveedor != 0)
@@ -536,11 +559,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
         #endregion
         #region Cargar combos
-        private void cargar_combos(int IdEmpresa)
+        private void cargar_combos(cp_retencion_Info model)
         {
-            var lst_proveedores = bus_proveedor.get_list(IdEmpresa, false);
+            var lst_proveedores = bus_proveedor.get_list(model.IdEmpresa, false);
             ViewBag.lst_proveedores = lst_proveedores;
-        
+
+            var lst_punto_venta = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, "RETEN");
+            ViewBag.lst_punto_venta = lst_punto_venta;
+
         }
         private void cargar_combos_detalle()
         {

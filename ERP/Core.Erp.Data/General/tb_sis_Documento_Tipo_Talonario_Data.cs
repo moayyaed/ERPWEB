@@ -258,7 +258,7 @@ namespace Core.Erp.Data.General
                     {
 
                         string UltRegistro = q.ToString();
-                        var Entity = db.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false).FirstOrDefault();
+                        var Entity = db.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false && v.es_Documento_Electronico == EsDocumentoElectronico).FirstOrDefault();
                         if (Entity != null)
                         {
                             if (Actualizar)

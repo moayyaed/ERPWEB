@@ -100,7 +100,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                         pe_razonSocial = Entity.pe_razonSocial,
                         IdTipoCbte_Ogiro = Entity.IdTipoCbte_Ogiro,
                         IdCbteCble_Ogiro = Entity.IdCbteCble_Ogiro,
-                        IdSucursal_cxp = Entity.IdSucursal_cxp
+                        IdSucursal_cxp = Entity.IdSucursal_cxp,
+                        IdSucursal = Entity.IdSucursal,
+                        IdPuntoVta = Entity.IdPuntoVta,
+
                     };
                 }
                 return info;
@@ -147,11 +150,29 @@ namespace Core.Erp.Data.CuentasPorPagar
         public Boolean guardarDB(cp_retencion_Info info)
         {
             Boolean res = true;
-            
+            tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
+            tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+
             var punto_venta = odata_pto.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta ?? 0);
             if (punto_venta != null)
             {
-                info_documento = odata_talonario.GetUltimoNoUsado(info.IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), info.serie1, info.serie2, punto_venta.EsElectronico, true);
+                if (punto_venta.EsElectronico == true)
+                {
+                    info_documento = odata_talonario.GetUltimoNoUsado(info.IdEmpresa, punto_venta.codDocumentoTipo, punto_venta.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, true);
+                }
+                else
+                {
+                    info_documento.IdEmpresa = info.IdEmpresa;
+                    info_documento.CodDocumentoTipo = info.CodDocumentoTipo;
+                    info_documento.Establecimiento = info.serie1;
+                    info_documento.PuntoEmision = info.serie2;
+                    info_documento.NumDocumento = info.NumRetencion;
+                    info_documento.IdSucursal = info.IdSucursal;
+                    info_documento.Usado = true;
+
+                    data_talonario.modificar_estado_usadoDB(info_documento);                    
+                }
+                
             }
             
             try
