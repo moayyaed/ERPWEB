@@ -31,8 +31,6 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  Fecha_Autorizacion = q.Fecha_Autorizacion,
                                  fecha = q.fecha,
                                  observacion = q.observacion,
-                                 re_Tiene_RTiva = q.re_Tiene_RTiva,
-                                 re_Tiene_RFuente = q.re_Tiene_RFuente,
                                  co_serie = q.co_factura,
                                  co_factura = q.co_factura,
                                  co_FechaFactura = q.co_FechaFactura,
