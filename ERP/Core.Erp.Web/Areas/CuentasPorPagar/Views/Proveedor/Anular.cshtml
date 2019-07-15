@@ -207,20 +207,35 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
-                                    @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
-                                    @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IdCtaCble_Gasto">Cta. Cble. Gasto</label>
-                                    @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_Gasto)
-                                    @Html.ValidationMessageFor(q => q.IdCtaCble_Gasto, "", new { @class = "text-danger" })
+                                @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Gasto">Cta. Cble. Gasto</label>
+                                @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_Gasto)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Gasto, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Anticipo">Cta. Cble. Anticipo</label>
+                                @Html.Partial("_CmbCtaCbleAnticipo_Proveedor", Model.IdCtaCble_Anticipo)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_cuentas">
                 <div class="row">
                     <div class="col-md-12">

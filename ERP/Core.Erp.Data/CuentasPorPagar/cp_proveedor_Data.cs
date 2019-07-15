@@ -101,7 +101,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         pr_correo = Entity.pr_correo,
                         pr_direccion = Entity.pr_direccion,
                         pr_telefonos = Entity.pr_telefonos,
-                        pr_celular = Entity.pr_celular
+                        pr_celular = Entity.pr_celular,
+                        IdCtaCble_Anticipo = Entity.IdCtaCble_Anticipo
                     };
                 tb_persona Entity_p = Context_g.tb_persona.Where(q => q.IdPersona == info.IdPersona).FirstOrDefault();
                 info.info_persona = new Info.General.tb_persona_Info
@@ -175,7 +176,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         pr_celular = info.pr_celular,
                         pr_telefonos = info.pr_telefonos,
                         pr_direccion = info.pr_direccion,
-                        pr_correo = info.pr_correo,                        
+                        pr_correo = info.pr_correo,
+                        IdCtaCble_Anticipo = info.IdCtaCble_Anticipo,
 
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
@@ -217,6 +219,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Entity.pr_direccion = info.pr_direccion;
                     Entity.pr_telefonos = info.pr_telefonos;
                     Entity.pr_celular = info.pr_celular;
+                    Entity.IdCtaCble_Anticipo = info.IdCtaCble_Anticipo;
 
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
