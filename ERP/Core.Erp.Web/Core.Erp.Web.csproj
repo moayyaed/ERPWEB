@@ -10156,6 +10156,7 @@
     <Content Include="Areas\Facturacion\Views\MotivoTraslado\Nuevo.cshtml" />
     <Content Include="Areas\Facturacion\Views\MotivoTraslado\Modificar.cshtml" />
     <Content Include="Areas\Facturacion\Views\MotivoTraslado\Anular.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Proveedor\_CmbCtaCbleAnticipo_Proveedor.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
