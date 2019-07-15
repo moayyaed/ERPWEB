@@ -154,8 +154,8 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 oc_fechaVencimiento = DateTime.Now.Date,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEstadoAprobacion_cat = i_param.IdEstadoAprobacion_OC,
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
-
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                Tipo = "OC"
             };
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
