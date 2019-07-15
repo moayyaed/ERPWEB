@@ -373,7 +373,7 @@ namespace Core.Erp.Data.Facturacion
                 {
                     if (info_puntovta.EsElectronico == true)
                     {
-                        ultimo_talonario = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.codDocumentoTipo, info_puntovta.EsElectronico,true);
+                        ultimo_talonario = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.EsElectronico,true);
 
                         if (ultimo_talonario != null)
                         {
