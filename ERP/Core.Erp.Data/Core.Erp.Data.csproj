@@ -722,6 +722,7 @@
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Data.cs" />
     <Compile Include="General\tb_empresa_Data.cs" />
     <Compile Include="General\tb_FiltroReportes_Data.cs" />
+    <Compile Include="General\tb_LogError_Data.cs" />
     <Compile Include="General\tb_mes_Data.cs" />
     <Compile Include="General\tb_modulo_Data.cs" />
     <Compile Include="General\tb_moneda_Data.cs" />
@@ -1909,6 +1910,9 @@
       <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_FiltroReportes.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_LogError.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_mes.cs">

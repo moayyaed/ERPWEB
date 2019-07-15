@@ -229,6 +229,7 @@ namespace Core.Erp.Data.Facturacion
             Entities_general db_g = new Entities_general();
             try
             {
+                throw new Exception("iii", null);
                 #region Variables
                 int secuencia = 1;
                 in_Ing_Egr_Inven_Data data_inv = new in_Ing_Egr_Inven_Data();
@@ -491,9 +492,11 @@ namespace Core.Erp.Data.Facturacion
                 db_f.Dispose();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

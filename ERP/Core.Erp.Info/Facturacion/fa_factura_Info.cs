@@ -47,6 +47,8 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo caja es obligatorio")]
         [Range(1, int.MaxValue, ErrorMessage = "El campo caja es obligatorio")]
         public int IdCaja { get; set; }
+        [Required(ErrorMessage = "El campo punto de venta es obligatorio")]
+
         public Nullable<int> IdPuntoVta { get; set; }
         public Nullable<bool> esta_impresa { get; set; }
         public Nullable<System.DateTime> fecha_primera_cuota { get; set; }
