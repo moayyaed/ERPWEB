@@ -53,10 +53,11 @@ namespace Core.Erp.Bus.Facturacion
             {
                 return odata.guardarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_guia_remision_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuarioCreacion });
+                return false;
             }
         }
         public bool modificarDB(fa_guia_remision_Info info)
@@ -68,10 +69,11 @@ namespace Core.Erp.Bus.Facturacion
                 odata_fac_x_guia.eliminar(info.IdEmpresa, info.IdGuiaRemision);
                 return odata.modificarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_guia_remision_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuarioCreacion });
+                return false;
             }
         }
         public bool anularDB(fa_guia_remision_Info info)

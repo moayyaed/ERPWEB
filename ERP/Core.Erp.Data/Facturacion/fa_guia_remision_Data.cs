@@ -273,9 +273,11 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return true;
             }
-            catch (Exception EX)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_guia_remision_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuarioCreacion });
+                return false;
             }
         }
 
@@ -367,10 +369,12 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_guia_remision_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuarioCreacion });
+                return false;
             }
         }
         public bool anularDB(fa_guia_remision_Info info)
