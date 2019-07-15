@@ -57,24 +57,6 @@
           <Property Name="nom_pc" Type="varchar" MaxLength="50" />
           <Property Name="ip" Type="varchar" MaxLength="25" />
         </EntityType>
-        <EntityType Name="cp_conciliacion_Caja_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdConciliacion_Caja" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdConciliacion_Caja" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="IdEmpresa_OGiro" Type="int" Nullable="false" />
-          <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdTipoCbte_Ogiro" Type="int" Nullable="false" />
-          <Property Name="IdTipoMovi" Type="int" />
-          <Property Name="Valor_a_aplicar" Type="money" Nullable="false" />
-          <Property Name="Tipo_documento" Type="varchar" MaxLength="10" />
-          <Property Name="IdEmpresa_OP" Type="int" />
-          <Property Name="IdOrdenPago_OP" Type="numeric" Precision="18" Scale="0" />
-        </EntityType>
         <EntityType Name="cp_cuotas_x_doc">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1728,7 +1710,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <EntitySet Name="cp_codigo_SRI" EntityType="Self.cp_codigo_SRI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_codigo_SRI_tipo" EntityType="Self.cp_codigo_SRI_tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_codigo_SRI_x_CtaCble" EntityType="Self.cp_codigo_SRI_x_CtaCble" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="cp_conciliacion_Caja_det" EntityType="Self.cp_conciliacion_Caja_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_cuotas_x_doc" EntityType="Self.cp_cuotas_x_doc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_cuotas_x_doc_det" EntityType="Self.cp_cuotas_x_doc_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_nota_DebCre" EntityType="Self.cp_nota_DebCre" Schema="dbo" store:Type="Tables" />
@@ -2746,7 +2727,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
             <End Role="cp_orden_giro_det_ing_x_oc" EntitySet="cp_orden_giro_det_ing_x_oc" />
           </AssociationSet>
-          <EntitySet Name="cp_conciliacion_Caja_det" EntityType="Model_cuentas_por_pagar.cp_conciliacion_Caja_det" />
           <EntitySet Name="cp_nota_DebCre" EntityType="Model_cuentas_por_pagar.cp_nota_DebCre" />
           <EntitySet Name="cp_orden_pago_tipo_x_empresa" EntityType="Model_cuentas_por_pagar.cp_orden_pago_tipo_x_empresa" />
           <AssociationSet Name="FK_cp_nota_DebCre_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI">
@@ -3753,24 +3733,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="cp_conciliacion_Caja_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdConciliacion_Caja" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdConciliacion_Caja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa_OGiro" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoMovi" Type="Int32" />
-          <Property Name="Valor_a_aplicar" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Tipo_documento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa_OP" Type="Int32" />
-          <Property Name="IdOrdenPago_OP" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
         <EntityType Name="cp_nota_DebCre">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5075,23 +5037,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cp_conciliacion_Caja_det">
-            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_conciliacion_Caja_det">
-              <MappingFragment StoreEntitySet="cp_conciliacion_Caja_det">
-                <ScalarProperty Name="IdOrdenPago_OP" ColumnName="IdOrdenPago_OP" />
-                <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
-                <ScalarProperty Name="Tipo_documento" ColumnName="Tipo_documento" />
-                <ScalarProperty Name="Valor_a_aplicar" ColumnName="Valor_a_aplicar" />
-                <ScalarProperty Name="IdTipoMovi" ColumnName="IdTipoMovi" />
-                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
-                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
-                <ScalarProperty Name="IdEmpresa_OGiro" ColumnName="IdEmpresa_OGiro" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -16,10 +16,10 @@ namespace Core.Erp.Data
     {
         public cp_conciliacion_Caja()
         {
-            this.cp_conciliacion_Caja_det = new HashSet<cp_conciliacion_Caja_det>();
             this.cp_conciliacion_Caja_det_Ing_Caja = new HashSet<cp_conciliacion_Caja_det_Ing_Caja>();
             this.cp_conciliacion_Caja_det_x_ValeCaja = new HashSet<cp_conciliacion_Caja_det_x_ValeCaja>();
             this.cp_conciliacion_Caja_ValesNoConciliados = new HashSet<cp_conciliacion_Caja_ValesNoConciliados>();
+            this.cp_conciliacion_Caja_det = new HashSet<cp_conciliacion_Caja_det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -52,9 +52,9 @@ namespace Core.Erp.Data
     
         public virtual caj_Caja caj_Caja { get; set; }
         public virtual caj_Caja_Movimiento caj_Caja_Movimiento { get; set; }
-        public virtual ICollection<cp_conciliacion_Caja_det> cp_conciliacion_Caja_det { get; set; }
         public virtual ICollection<cp_conciliacion_Caja_det_Ing_Caja> cp_conciliacion_Caja_det_Ing_Caja { get; set; }
         public virtual ICollection<cp_conciliacion_Caja_det_x_ValeCaja> cp_conciliacion_Caja_det_x_ValeCaja { get; set; }
         public virtual ICollection<cp_conciliacion_Caja_ValesNoConciliados> cp_conciliacion_Caja_ValesNoConciliados { get; set; }
+        public virtual ICollection<cp_conciliacion_Caja_det> cp_conciliacion_Caja_det { get; set; }
     }
 }
