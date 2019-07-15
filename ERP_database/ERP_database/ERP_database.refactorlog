@@ -7,4 +7,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ReferenciaGen" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="897d07ca-68ec-4835-bcf4-b8ed0d392afb" ChangeDateTime="07/15/2019 19:29:37">
+    <Property Name="ElementName" Value="[web].[tb_LogError].[Ubicacion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[web].[tb_LogError]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Clase" />
+  </Operation>
 </Operations>
