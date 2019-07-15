@@ -251,6 +251,8 @@ AND web.ba_SPBAN_012.IdBanco = A.IdBanco
 AND web.ba_SPBAN_012.IdTipoFlujo = A.IdTipoFlujo
 END
 
+update [web].[ba_SPBAN_012] set Egresos = abs(egresos) where IdUsuario = @IdUsuario
+
 IF(@MostrarSaldo0 = 0)
 BEGIN
 DELETE [web].[ba_SPBAN_012]
