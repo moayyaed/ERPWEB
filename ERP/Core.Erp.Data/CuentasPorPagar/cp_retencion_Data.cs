@@ -8,11 +8,15 @@ using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Data.Contabilidad;
+using Core.Erp.Data.Facturacion;
 
 namespace Core.Erp.Data.CuentasPorPagar
 {
    public class cp_retencion_Data
     {
+        tb_sis_Documento_Tipo_Talonario_Data odata_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+        tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
+        fa_PuntoVta_Data odata_pto = new fa_PuntoVta_Data();
         public List<cp_retencion_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
@@ -87,8 +91,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         NAutorizacion = Entity.NAutorizacion,
                         observacion = Entity.observacion,
                         fecha = Convert.ToDateTime(Entity.fecha.ToShortDateString()),
-                        re_Tiene_RTiva = Entity.re_Tiene_RTiva,
-                        re_Tiene_RFuente = Entity.re_Tiene_RFuente,
                         co_baseImponible = Entity.co_baseImponible,
                         co_serie = Entity.co_serie,
                         co_factura = Entity.co_factura,
@@ -130,9 +132,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         NumRetencion = Entity.NumRetencion,
                         NAutorizacion = Entity.NAutorizacion,
                         observacion = Entity.observacion,
-                        fecha = Convert.ToDateTime(Entity.fecha.ToShortDateString()),
-                        re_Tiene_RTiva = Entity.re_Tiene_RTiva,
-                        re_Tiene_RFuente = Entity.re_Tiene_RFuente,
+                        fecha = Convert.ToDateTime(Entity.fecha),
+                        IdSucursal = Entity.IdSucursal ?? 0,
+                        IdPuntoVta = Entity.IdPuntoVta
                     };
                 }
                 return info;
@@ -145,8 +147,13 @@ namespace Core.Erp.Data.CuentasPorPagar
         public Boolean guardarDB(cp_retencion_Info info)
         {
             Boolean res = true;
-            tb_sis_Documento_Tipo_Talonario_Data odata_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
-            var info_documento = odata_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), info.serie1, info.serie2);
+            
+            var punto_venta = odata_pto.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta ?? 0);
+            if (punto_venta != null)
+            {
+                info_documento = odata_talonario.GetUltimoNoUsado(info.IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), info.serie1, info.serie2, punto_venta.EsElectronico, true);
+            }
+            
             try
             {
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
@@ -163,16 +170,17 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
                         IdRetencion = info.IdRetencion = get_id(info.IdEmpresa),
                         CodDocumentoTipo = info.CodDocumentoTipo,
-                        serie1 = info.serie1 = info_documento.Establecimiento,
-                        serie2 = info.serie2 = info_documento.PuntoEmision,
-                        NumRetencion = info.NumRetencion = info_documento.NumDocumento,
+                        
+                        serie1 = info.serie1 = info_documento == null ? null : info_documento.Establecimiento,
+                        serie2 = info.serie2 = info_documento == null ? null : info_documento.PuntoEmision,
+                        NumRetencion = info.NumRetencion = info_documento == null ? null : info_documento.NumDocumento,
+
                         NAutorizacion = info.NAutorizacion,
                         observacion = info.observacion,
                         fecha = info.fecha.Date,
-                        re_Tiene_RTiva = info.re_Tiene_RTiva,
-                        re_Tiene_RFuente = info.re_Tiene_RFuente,
-                        re_EstaImpresa = info.re_EstaImpresa,
                         Estado = "A",
+                        IdPuntoVta = info.IdPuntoVta,
+                        IdSucursal = info.IdSucursal,
                         Fecha_Transac = DateTime.Now,
                         IdUsuario = info.IdUsuario,
                     });
@@ -240,18 +248,25 @@ namespace Core.Erp.Data.CuentasPorPagar
                     {
                         if (string.IsNullOrEmpty(contact.NumRetencion))
                         {
+                            
                             tb_sis_Documento_Tipo_Talonario_Data odata_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
-                            var info_documento = odata_talonario.GetUltimoNoUsadoFacElec(info.IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), info.serie1, info.serie2);
-                            contact.serie1 = info.serie1 = info_documento.Establecimiento;
-                            contact.serie2 = info.serie2 = info_documento.PuntoEmision;
-                            contact.NumRetencion = info.NumRetencion = info_documento.NumDocumento;
+                            var punto_venta = odata_pto.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta ?? 0);
+                            if (punto_venta != null)
+                                info_documento = odata_talonario.GetUltimoNoUsado(info.IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), info.serie1, info.serie2, punto_venta.EsElectronico, true);
+                            
+                            contact.serie1 = info.serie1 = info_documento == null ? null : info_documento.Establecimiento;
+                            contact.serie2 = info.serie2 = info_documento == null ? null : info_documento.PuntoEmision;
+                            contact.NumRetencion = info.NumRetencion = info_documento == null ? null : info_documento.NumDocumento;
+                            
                         }
-
+                        contact.IdPuntoVta = info.IdPuntoVta;
+                        contact.IdSucursal = info.IdSucursal;
                         contact.fecha = info.fecha;
                         contact.observacion = info.observacion;
                         contact.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         contact.Fecha_UltMod = DateTime.Now;
-                        contact.ip = info.ip;
+                        contact.IdUsuarioUltMod = info.IdUsuario;
+
                         if (info.detalle != null)
                         {
                             var lista = Context.cp_retencion_det.Where(minfo => minfo.IdEmpresa == info.IdEmpresa && minfo.IdRetencion == info.IdRetencion);

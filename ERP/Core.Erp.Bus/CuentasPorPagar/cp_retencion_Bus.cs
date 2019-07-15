@@ -132,11 +132,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 odata = new cp_retencion_Data();
                 info.IdEmpresa_Ogiro = info.IdEmpresa;
                 info.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
-                if (info.re_Tiene_RFuente == null)
-                    info.re_Tiene_RFuente = "N";
-                if (info.re_Tiene_RTiva == null)
-                    info.re_Tiene_RTiva = "N";
-                info.re_EstaImpresa = "N";
                 info.info_comprobante.IdEmpresa = info.IdEmpresa;
                 info.info_comprobante.cb_Fecha = (DateTime)info.fecha;
 
@@ -170,11 +165,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 cp_orden_giro_Data odata_og = new cp_orden_giro_Data();
                 info.IdEmpresa_Ogiro = info.IdEmpresa;
                 info.CodDocumentoTipo = "RETEN";
-                if (info.re_Tiene_RFuente == null)
-                    info.re_Tiene_RFuente = "N";
-                if (info.re_Tiene_RTiva == null)
-                    info.re_Tiene_RTiva = "N";
-                info.re_EstaImpresa = "N";
                 info.info_comprobante.IdEmpresa = info.IdEmpresa;
                 info.info_comprobante.cb_Fecha = (DateTime)info.fecha;
 
@@ -202,11 +192,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 odata = new cp_retencion_Data();
                 info.IdEmpresa_Ogiro = info.IdEmpresa;
                 info.CodDocumentoTipo = "RETEN";
-                if (info.re_Tiene_RFuente == null)
-                    info.re_Tiene_RFuente = "N";
-                if (info.re_Tiene_RTiva == null)
-                    info.re_Tiene_RTiva = "N";
-                info.re_EstaImpresa = "N";
                 info.info_comprobante.IdEmpresa = info.IdEmpresa;
                 info.info_comprobante.cb_Fecha = (DateTime)info.fecha;
 

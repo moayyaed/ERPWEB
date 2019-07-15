@@ -27,15 +27,9 @@ namespace Core.Erp.Info.CuentasPorPagar
         public System.DateTime fecha { get; set; }
         [StringLength(500, MinimumLength = 1, ErrorMessage = "el campo Observación debe tener mínimo 1 caracter y máximo 500")]
         public string observacion { get; set; }
-        public string re_Tiene_RTiva { get; set; }
-        public string re_Tiene_RFuente { get; set; }
         public Nullable<int> IdEmpresa_Ogiro { get; set; }
         public Nullable<decimal> IdCbteCble_Ogiro { get; set; }
         public Nullable<int> IdTipoCbte_Ogiro { get; set; }
-        public Nullable<int> ct_IdEmpresa_Anu { get; set; }
-        public Nullable<int> ct_IdTipoCbte_Anu { get; set; }
-        public Nullable<decimal> ct_IdCbteCble_Anu { get; set; }
-        public string re_EstaImpresa { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string IdUsuario { get; set; }
@@ -70,6 +64,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public ct_cbtecble_Info info_comprobante { get; set; }
         public string pe_nombreCompleto { get; set; }
         public int IdSucursal { get; set; }
+        public int? IdPuntoVta { get; set; }
 
         public cp_retencion_Info()
         {

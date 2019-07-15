@@ -106,8 +106,6 @@ namespace Core.Erp.Bus.Facturacion
         {
             try
             {
-               
-
                 string mensaje = "";
                 if (info.IdCliente == 0)
                     mensaje = "Seleccione cliente";
@@ -116,7 +114,10 @@ namespace Core.Erp.Bus.Facturacion
                 else
                     if(info.lst_detalle.Count()==0)
                     mensaje = "No existe detalle para la guia";
-               var resultado = data_talonario.get_info_ultimo_no_usado(info.IdEmpresa, info.Serie1, info.Serie2, "GUIA");
+
+                
+                /*
+               var resultado = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info.Serie1, info.Serie2, "GUIA");
                 if (resultado == null)
                     mensaje = "La numeración "+info.Serie1+"-"+info.Serie2 + "-" + info.NumGuia_Preimpresa+" no esta creado en talonario";
                 else
@@ -126,7 +127,7 @@ namespace Core.Erp.Bus.Facturacion
                 }
               if(  odata.si_existe(info.IdEmpresa, info.Serie1, info.Serie2, info.NumGuia_Preimpresa))
                     mensaje = "La numeración " + info.Serie1 + "-" + info.Serie2 + "-" + info.NumGuia_Preimpresa + " ya fue usada";
-
+*/
                 return mensaje;
 
             }

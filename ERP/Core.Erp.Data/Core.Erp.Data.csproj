@@ -338,7 +338,7 @@
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="cp_conciliacion_Caja_det.cs">
-      <DependentUpon>Model_caja.tt</DependentUpon>
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="cp_conciliacion_Caja_det_Ing_Caja.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
@@ -2089,7 +2089,7 @@
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_conciliacion_Caja_det.cs">
-      <DependentUpon>Model_caja.tt</DependentUpon>
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_Conciliacion_Caja_det1.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>

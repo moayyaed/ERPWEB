@@ -378,7 +378,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (punto_venta != null)
             {
                 var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-                resultado = bus_talonario.get_info_ultimo_no_usado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, cl_enumeradores.eTipoDocumento.GUIA.ToString());
+                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, cl_enumeradores.eTipoDocumento.GUIA.ToString(),punto_venta.EsElectronico,false);
             }
 
             if (resultado == null)

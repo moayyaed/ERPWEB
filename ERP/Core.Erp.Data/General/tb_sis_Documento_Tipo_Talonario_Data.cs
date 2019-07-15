@@ -215,133 +215,6 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado(int IdEmpresa, string CodDocumentoTipo, int IdSucursal, string Su_CodigoEstablecimiento)
-        {            
-            try
-            {
-                tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info();
-                using (Entities_general Context = new Entities_general())
-                {
-                    var q = (from A in Context.tb_sis_Documento_Tipo_Talonario
-                             where A.IdEmpresa == IdEmpresa
-                             && A.CodDocumentoTipo == CodDocumentoTipo
-                             && A.IdSucursal==IdSucursal
-                             && A.Establecimiento == Su_CodigoEstablecimiento
-                             && A.Usado == false
-                             && A.Estado == "A"
-                             select A.NumDocumento).Min();
-                    if (q != null)
-                    {
-                        string UltRegistro = q.ToString();
-                        var querry = from A in Context.tb_sis_Documento_Tipo_Talonario
-                                     where A.IdEmpresa == IdEmpresa
-                                     //&& A.PuntoEmision == puntoemision 
-                                     && A.Establecimiento == Su_CodigoEstablecimiento
-                                     && A.CodDocumentoTipo == CodDocumentoTipo
-                                     && A.Usado == false
-                                     && A.NumDocumento == UltRegistro
-                                     select A;
-
-                        foreach (var item in querry)
-                        {
-                            info.IdEmpresa = item.IdEmpresa;
-                            info.IdSucursal = item.IdSucursal;
-                            info.CodDocumentoTipo = item.CodDocumentoTipo;
-                            info.Establecimiento = item.Establecimiento;
-                            info.Estado = item.Estado;
-                            info.FechaCaducidad = item.FechaCaducidad;
-                            info.NumAutorizacion = item.NumAutorizacion;
-                            info.NumDocumento = item.NumDocumento;
-                            info.PuntoEmision = item.PuntoEmision;
-                            info.Usado =(bool) item.Usado;
-                        }
-                    }
-                }
-                return info;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado(int IdEmpresa, string Establecimiento, string PuntoEmision, string CodDocumentoTipo)
-        {
-            try
-            {
-                tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info();
-                using (Entities_general Context = new Entities_general())
-                {
-                    var q = (from A in Context.tb_sis_Documento_Tipo_Talonario
-                             where A.IdEmpresa == IdEmpresa
-                             && A.CodDocumentoTipo == CodDocumentoTipo
-                             && A.Establecimiento == Establecimiento
-                             && A.PuntoEmision == PuntoEmision
-                             && A.Usado == false
-                             && A.Estado == "A"
-                             select A.NumDocumento).Min();
-                    if (q != null)
-                    {
-                        string UltRegistro = q.ToString();
-                        var Entity = Context.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false).FirstOrDefault();
-                        if (Entity != null)
-                            info = new tb_sis_Documento_Tipo_Talonario_Info
-                            {
-                                IdEmpresa = Entity.IdEmpresa,
-                                Establecimiento = Entity.Establecimiento,
-                                PuntoEmision = Entity.PuntoEmision,
-                                NumDocumento = Entity.NumDocumento                                
-                            };
-                    }
-                }
-                return info;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado_electronico(int IdEmpresa, string Establecimiento, string PuntoEmision, string CodDocumentoTipo)
-        {
-            try
-            {
-                tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info();
-                using (Entities_general Context = new Entities_general())
-                {
-                    var q = (from A in Context.tb_sis_Documento_Tipo_Talonario
-                             where A.IdEmpresa == IdEmpresa
-                             && A.CodDocumentoTipo == CodDocumentoTipo
-                             && A.Establecimiento == Establecimiento
-                             && A.PuntoEmision == PuntoEmision
-                             && A.Usado == false
-                             && A.Estado == "A"
-                             && A.es_Documento_Electronico == true
-                             select A.NumDocumento).Min();
-                    if (q != null)
-                    {
-                        string UltRegistro = q.ToString();
-                        var Entity = Context.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false && v.es_Documento_Electronico == true).FirstOrDefault();
-                        if (Entity != null)
-                        {
-                            Entity.Usado = true;
-                            Context.SaveChanges();
-                            info = new tb_sis_Documento_Tipo_Talonario_Info
-                            {
-                                IdEmpresa = Entity.IdEmpresa,
-                                Establecimiento = Entity.Establecimiento,
-                                PuntoEmision = Entity.PuntoEmision,
-                                NumDocumento = Entity.NumDocumento
-                            };
-                        }
-                           
-                    }
-                }
-                return info;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
         public bool modificar_estado_usadoDB(tb_sis_Documento_Tipo_Talonario_Info info)
         {
             try
@@ -361,13 +234,14 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
-        
-        public tb_sis_Documento_Tipo_Talonario_Info GetUltimoNoUsadoFacElec(int IdEmpresa, string CodDocumentoTipo, string Establecimiento, string PuntoEmision)
+        public tb_sis_Documento_Tipo_Talonario_Info GetUltimoNoUsado(int IdEmpresa, string CodDocumentoTipo, string Establecimiento, string PuntoEmision, bool EsDocumentoElectronico, bool Actualizar)
         {
             try
             {
+                DateTime Fecha = DateTime.Now.Date;
                 tb_sis_Documento_Tipo_Talonario_Info info = new tb_sis_Documento_Tipo_Talonario_Info();
-
+                if (EsDocumentoElectronico)
+                    Fecha = new DateTime(2000, 1, 1);
                 using (Entities_general db = new Entities_general())
                 {
                     var q = (from A in db.tb_sis_Documento_Tipo_Talonario
@@ -377,23 +251,31 @@ namespace Core.Erp.Data.General
                              && A.PuntoEmision == PuntoEmision
                              && A.Usado == false
                              && A.Estado == "A"
-                             //&& A.es_Documento_Electronico == true
+                             && A.es_Documento_Electronico == EsDocumentoElectronico
+                             && Fecha <= A.FechaCaducidad
                              select A.NumDocumento).Min();
                     if (q != null)
                     {
+
                         string UltRegistro = q.ToString();
                         var Entity = db.tb_sis_Documento_Tipo_Talonario.Where(v => v.IdEmpresa == IdEmpresa && v.CodDocumentoTipo == CodDocumentoTipo && v.Establecimiento == Establecimiento && v.PuntoEmision == PuntoEmision && v.Estado == "A" && v.Usado == false).FirstOrDefault();
                         if (Entity != null)
                         {
-                            Entity.Usado = true;
-                            db.SaveChanges();
+                            if (Actualizar)
+                            {
+                                Entity.Usado = true;
+                                db.SaveChanges();
+                            }
                             info = new tb_sis_Documento_Tipo_Talonario_Info
                             {
                                 IdEmpresa = Entity.IdEmpresa,
                                 Establecimiento = Entity.Establecimiento,
                                 PuntoEmision = Entity.PuntoEmision,
                                 NumDocumento = Entity.NumDocumento,
-                                CodDocumentoTipo = Entity.CodDocumentoTipo,                                
+                                CodDocumentoTipo = Entity.CodDocumentoTipo,
+                                es_Documento_Electronico = Entity.es_Documento_Electronico ?? false,
+                                FechaCaducidad = Entity.FechaCaducidad,
+                                NumAutorizacion = Entity.NumAutorizacion                               
                             };
                         }
                     }

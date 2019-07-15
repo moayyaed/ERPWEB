@@ -429,12 +429,10 @@
     <Build Include="dbo\Views\vw_EstadoCivil.sql" />
     <Build Include="web\Views\VWBAN_001_cancelaciones.sql" />
     <Build Include="dbo\Views\vwFa_FacturasxDevolucionxItem.sql" />
-    <Build Include="dbo\Views\vwcp_Orden_Giro_Pendiente_Conciliar.sql" />
     <Build Include="dbo\Views\vw_NaturalezaPersona.sql" />
     <Build Include="web\Views\VWBAN_002.sql" />
     <Build Include="dbo\Views\vwimp_orden_compra_ext_ct_cbteble_det_gastos.sql" />
     <Build Include="dbo\Views\vwfa_Guia_Remision.sql" />
-    <Build Include="dbo\Views\vwcp_orden_giro_sin_retenciones.sql" />
     <Build Include="dbo\Views\vw_orden_pago_cancelaciones_TotalAplicado.sql" />
     <Build Include="web\Views\VWBAN_002_cancelaciones.sql" />
     <Build Include="dbo\Views\vwfa_guia_remision_det.sql" />
@@ -501,7 +499,6 @@
     <Build Include="Fj_servindustrias\Views\vwINV_FJ_Rpt007.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_distribucion_x_distribuir.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_x_fa_factura_NotaDeb_x_NC.sql" />
-    <Build Include="dbo\Views\vwcp_Orden_Giro_Conciliado_x_Factura.sql" />
     <Build Include="web\Views\VWCXP_003.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_x_Valores_Aplicados.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_SRI.sql" />
@@ -563,10 +560,8 @@
     <Build Include="dbo\Views\vwAf_Catalogo_IdAuto_numeric.sql" />
     <Build Include="web\Views\VWROL_005.sql" />
     <Build Include="dbo\Views\vwRo_CentroCostoXEmpresa.sql" />
-    <Build Include="dbo\Views\vwcp_OrdenGiroRetencionReport.sql" />
     <Build Include="dbo\Views\vwAf_Depre_x_Ciclo_Valor.sql" />
     <Build Include="web\Views\VWROL_008.sql" />
-    <Build Include="dbo\Views\vwcp_retencion.sql" />
     <Build Include="dbo\Views\vwAf_Depreciacion.sql" />
     <Build Include="web\Views\VWROL_009.sql" />
     <Build Include="dbo\Views\vwcp_Retencion_sri.sql" />
@@ -580,7 +575,6 @@
     <Build Include="dbo\Views\vwcp_retencion_x_RET_FT.sql" />
     <Build Include="dbo\Views\vwAf_Valores_Depre_Contabilizar.sql" />
     <Build Include="dbo\Views\vwcp_retencion_x_RET_IVA.sql" />
-    <Build Include="dbo\Views\vwcp_Retenciones_x_tipo_impresion.sql" />
     <Build Include="dbo\Views\vwAf_Venta_Activo.sql" />
     <Build Include="dbo\Views\vwRo_Contrato.sql" />
     <Build Include="dbo\Views\vwcp_Tipo_Impresion_Cheq.sql" />
@@ -1123,7 +1117,6 @@
     <Build Include="dbo\Views\vwct_CentroCosto.sql" />
     <Build Include="dbo\Views\vwcom_ordencompra_local_detPorIngresar.sql" />
     <Build Include="dbo\Tables\ba_archivo_transferencia_x_ba_tipo_flujo.sql" />
-    <Build Include="dbo\Views\vwcp_orden_giro_x_Pagos_saldo.sql" />
     <Build Include="web\Views\VWBAN_010.sql" />
     <Build Include="web\Views\VWINV_017.sql" />
     <Build Include="web\Tables\ba_SPBAN_011.sql" />

@@ -24,7 +24,6 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public System.DateTime fecha { get; set; }
         public string observacion { get; set; }
-        public string re_Tiene_RTiva { get; set; }
         public string co_serie { get; set; }
         public string co_factura { get; set; }
         public double co_subtotal_iva { get; set; }
@@ -34,7 +33,6 @@ namespace Core.Erp.Data
         public string pe_apellido { get; set; }
         public string pe_nombre { get; set; }
         public string pe_razonSocial { get; set; }
-        public string re_Tiene_RFuente { get; set; }
         public Nullable<int> ct_IdTipoCbte { get; set; }
         public Nullable<decimal> ct_IdCbteCble { get; set; }
         public decimal IdProveedor { get; set; }

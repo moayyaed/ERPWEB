@@ -81,41 +81,11 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
-
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado(int IdEmpresa, string CodDocumentoTipo, int IdSucursal)
+        public tb_sis_Documento_Tipo_Talonario_Info GetUltimoNoUsado(int IdEmpresa, string CodDocumentoTipo, string Establecimiento, string PuntoEmision, bool EsDocumentoElectronico, bool Actualizar)
         {
             try
             {
-                tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-                tb_sucursal_Info info_sucursal = new tb_sucursal_Info();
-                info_sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-
-                return odata.get_info_ultimo_no_usado(IdEmpresa, CodDocumentoTipo, IdSucursal, info_sucursal.Su_CodigoEstablecimiento);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado(int IdEmpresa, string Establecimiento, string PuntoEmision, string CodDocumentoTipo)
-        {
-            try
-            {
-                return odata.get_info_ultimo_no_usado(IdEmpresa, Establecimiento, PuntoEmision, CodDocumentoTipo);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public tb_sis_Documento_Tipo_Talonario_Info get_info_ultimo_no_usado_electronico(int IdEmpresa, string Establecimiento, string PuntoEmision, string CodDocumentoTipo)
-        {
-            try
-            {
-                return odata.get_info_ultimo_no_usado_electronico(IdEmpresa, Establecimiento, PuntoEmision, CodDocumentoTipo);
+                return odata.GetUltimoNoUsado(IdEmpresa, CodDocumentoTipo, Establecimiento, PuntoEmision, EsDocumentoElectronico, Actualizar);
             }
             catch (Exception)
             {

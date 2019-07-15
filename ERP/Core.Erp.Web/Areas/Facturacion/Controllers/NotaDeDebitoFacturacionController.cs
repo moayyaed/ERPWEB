@@ -184,8 +184,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
             if (punto_venta != null)
             {
-                var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-                resultado = bus_talonario.get_info_ultimo_no_usado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, "NTDB");
+                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.NTDB.ToString(), punto_venta.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
             }
             else
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();

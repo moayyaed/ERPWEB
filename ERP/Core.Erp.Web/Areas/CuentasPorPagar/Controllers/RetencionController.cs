@@ -173,12 +173,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
                         if (info_.IdTipoSRI == "COD_RET_IVA")
                         {
-                            model.re_Tiene_RFuente = "S";
                             item.re_tipoRet = "IVA";
                         }
                         if (info_.IdTipoSRI == "COD_RET_FUE")
                         {
-                            model.re_Tiene_RTiva = "S";
                             item.re_tipoRet = "RTF";
                         }
                     });
@@ -271,12 +269,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         item.re_Codigo_impuesto = info_.co_codigoBase;
                         if (info_.IdTipoSRI == "COD_RET_IVA")
                         {
-                            model.re_Tiene_RFuente = "S";
                             item.re_tipoRet = "IVA";
                         }
                         if (info_.IdTipoSRI == "COD_RET_FUE")
                         {
-                            model.re_Tiene_RTiva = "S";
                             item.re_tipoRet = "RTF";
                         }
                     });
@@ -361,12 +357,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         item.re_Codigo_impuesto = info_.co_codigoBase;
                         if (info_.IdTipoSRI == "COD_RET_IVA")
                         {
-                            model.re_Tiene_RFuente = "S";
                             item.re_tipoRet = "IVA";
                         }
                         if (info_.IdTipoSRI == "COD_RET_FUE")
                         {
-                            model.re_Tiene_RTiva = "S";
                             item.re_tipoRet = "RTF";
                         }
                     });

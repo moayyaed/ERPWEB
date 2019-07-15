@@ -126,9 +126,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                         info.info_retencion.serie1 = sucursal.Su_CodigoEstablecimiento;
                         info.info_retencion.serie2 ="001";
-                        info.info_retencion.re_EstaImpresa = "N";
-                        info.info_retencion.re_Tiene_RFuente = "S";
-                        info.info_retencion.re_Tiene_RTiva = "S";
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         info.info_retencion.observacion = "Retencion de factura #" + info.co_serie +'-'+ info.co_factura;
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
@@ -222,10 +219,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                             info.info_retencion.serie1 = info.info_retencion.serie1;
                             info.info_retencion.serie2 = info.info_retencion.serie2;
                         }
-                        
-                        info.info_retencion.re_EstaImpresa = "N";
-                        info.info_retencion.re_Tiene_RFuente = "S";
-                        info.info_retencion.re_Tiene_RTiva = "S";
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         info.info_retencion.observacion = "Retencion de factura #" + info.co_serie + '-' + info.co_factura;
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
@@ -295,9 +288,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                         info.info_retencion.serie1 = info.info_retencion.serie1;
                         info.info_retencion.serie2 = info.info_retencion.serie2;
-                        info.info_retencion.re_EstaImpresa = "N";
-                        info.info_retencion.re_Tiene_RFuente = "S";
-                        info.info_retencion.re_Tiene_RTiva = "S";
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         info.info_retencion.observacion = "Retencion de factuta #" + info.co_serie + '-' + info.co_factura;
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);

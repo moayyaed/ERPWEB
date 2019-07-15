@@ -196,11 +196,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region Talonario
             var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
-            var resultado = bus_talonario.get_info_ultimo_no_usado(i_validar.IdEmpresa, pto_vta.Su_CodigoEstablecimiento, pto_vta.cod_PuntoVta, cl_enumeradores.eTipoDocumento.FACT.ToString());
+            var info_documento = bus_talonario.GetUltimoNoUsado(i_validar.IdEmpresa, cl_enumeradores.eTipoDocumento.FACT.ToString(), pto_vta.Su_CodigoEstablecimiento, pto_vta.cod_PuntoVta, pto_vta.EsElectronico, false);
             i_validar.IdBodega = pto_vta.IdBodega;
             i_validar.vt_serie1 = pto_vta.Su_CodigoEstablecimiento;
             i_validar.vt_serie2 = pto_vta.cod_PuntoVta;
-            i_validar.vt_NumFactura = resultado.NumDocumento;
+            i_validar.vt_NumFactura = info_documento.NumDocumento;
             i_validar.IdCaja = pto_vta.IdCaja;
             #endregion
 
@@ -630,8 +630,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
             if (punto_venta != null)
             {
-                var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-                resultado = bus_talonario.get_info_ultimo_no_usado(IdEmpresa, sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, "FACT");
+                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa,cl_enumeradores.eTipoDocumento.FACT.ToString(), punto_venta.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta,punto_venta.EsElectronico,false);
             }
             else
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();

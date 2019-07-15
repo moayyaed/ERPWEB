@@ -320,32 +320,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
-
-        public cp_nota_DebCre_Info get_info_nuevo(int IdEmpresa, int IdSucursal)
-        {
-            try
-            {
-                cp_nota_DebCre_Info info = new cp_nota_DebCre_Info();
-                   tb_sis_Documento_Tipo_Talonario_Info info_ = new tb_sis_Documento_Tipo_Talonario_Info();
-                info_= bus_talonario.get_info_ultimo_no_usado(IdEmpresa, "NTCR", IdSucursal);
-                info.IdEmpresa = IdEmpresa;
-                info.cn_serie1 = info_.Establecimiento;
-                info.cn_serie2 = info_.PuntoEmision;
-                info.cn_Nota = info_.NumDocumento;
-                info.cn_Autorizacion = info_.NumAutorizacion;
-                info.Fecha_contable = DateTime.Now;
-                info.cn_fecha = DateTime.Now;
-                return info;
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        
-}
-
+       
         public bool guardar_importacionDB(cp_nota_DebCre_Info info)
         {
             try

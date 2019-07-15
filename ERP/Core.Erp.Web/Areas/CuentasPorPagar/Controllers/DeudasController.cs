@@ -18,6 +18,7 @@ using Core.Erp.Info.Inventario;
 using Core.Erp.Info.Banco;
 using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.Presupuesto;
+using Core.Erp.Bus.Facturacion;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -53,6 +54,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_giro_det_PorIngresar_List List_det_PorIngresar = new cp_orden_giro_det_PorIngresar_List();
         cp_codigo_SRI_Bus bus_sri = new cp_codigo_SRI_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
@@ -305,7 +307,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             #endregion
 
             tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
-            info_documento = bus_documento.get_info_ultimo_no_usado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), Convert.ToInt32(SessionFixed.IdSucursal));
+            var sucursal = bus_sucursal.get_info(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal));
+            info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento,"001",false,false);
 
             cp_orden_giro_Info model = new cp_orden_giro_Info
             {
@@ -383,12 +386,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     item.re_Codigo_impuesto = info_.codigoSRI;
                     if (info_.IdTipoSRI == "COD_RET_IVA")
                     {
-                        model.info_retencion.re_Tiene_RFuente = "S";
                         item.re_tipoRet = "IVA";
                     }
                     if (info_.IdTipoSRI == "COD_RET_FUE")
                     {
-                        model.info_retencion.re_Tiene_RTiva = "S";
                         item.re_tipoRet = "RTF";
                     }
                 });
@@ -460,11 +461,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_retencion.IdEmpresa == 0)
             {
                 tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
-                info_documento = bus_documento.get_info_ultimo_no_usado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), Convert.ToInt32(SessionFixed.IdSucursal));
-                model.info_retencion.serie1 = info_documento.Establecimiento;
-                model.info_retencion.serie2 = info_documento.PuntoEmision;
-                model.info_retencion.NumRetencion = info_documento.NumDocumento;
-
+                var sucursal = bus_sucursal.get_info(IdEmpresa, model.IdSucursal);
+                info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, "001", false, false);
+                if (info_documento != null)
+                {
+                    model.info_retencion.serie1 = info_documento.Establecimiento;
+                    model.info_retencion.serie2 = info_documento.PuntoEmision;
+                    model.info_retencion.NumRetencion = info_documento.NumDocumento;
+                }
             }
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
@@ -517,12 +521,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     item.re_Codigo_impuesto = info_.codigoSRI;
                     if (info_.IdTipoSRI == "COD_RET_IVA")
                     {
-                        model.info_retencion.re_Tiene_RFuente = "S";
                         item.re_tipoRet = "IVA";
                     }
                     if (info_.IdTipoSRI == "COD_RET_FUE")
                     {
-                        model.info_retencion.re_Tiene_RTiva = "S";
                         item.re_tipoRet = "RTF";
                     }
                 });

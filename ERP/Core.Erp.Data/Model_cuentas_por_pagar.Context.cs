@@ -50,13 +50,10 @@ namespace Core.Erp.Data
         public DbSet<vwcp_retencion_det> vwcp_retencion_det { get; set; }
         public DbSet<cp_orden_giro_det> cp_orden_giro_det { get; set; }
         public DbSet<vwcp_orden_giro_det> vwcp_orden_giro_det { get; set; }
-        public DbSet<cp_proveedor> cp_proveedor { get; set; }
         public DbSet<cp_SolicitudPago> cp_SolicitudPago { get; set; }
         public DbSet<cp_orden_pago_det> cp_orden_pago_det { get; set; }
         public DbSet<cp_SolicitudPagoDet> cp_SolicitudPagoDet { get; set; }
         public DbSet<vwcp_SolicitudPago> vwcp_SolicitudPago { get; set; }
-        public DbSet<vwcp_retencion> vwcp_retencion { get; set; }
-        public DbSet<cp_retencion> cp_retencion { get; set; }
         public DbSet<cp_orden_giro> cp_orden_giro { get; set; }
         public DbSet<cp_orden_pago> cp_orden_pago { get; set; }
         public DbSet<vwcp_orden_giro_x_pagar> vwcp_orden_giro_x_pagar { get; set; }
@@ -70,6 +67,9 @@ namespace Core.Erp.Data
         public DbSet<cp_orden_pago_tipo_x_empresa> cp_orden_pago_tipo_x_empresa { get; set; }
         public DbSet<vwcp_conciliacion_Caja_det> vwcp_conciliacion_Caja_det { get; set; }
         public DbSet<vwcp_nota_DebCre> vwcp_nota_DebCre { get; set; }
+        public DbSet<cp_proveedor> cp_proveedor { get; set; }
+        public DbSet<cp_retencion> cp_retencion { get; set; }
+        public DbSet<vwcp_retencion> vwcp_retencion { get; set; }
     
         public virtual ObjectResult<spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result> spcp_Get_Data_orden_pago_con_cancelacion_x_pago(Nullable<int> idEmpresa_pago, Nullable<int> idTipoCbte_pago, Nullable<decimal> idCbteCble_pago, string idUsuario)
         {

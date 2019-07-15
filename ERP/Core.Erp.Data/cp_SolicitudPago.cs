@@ -37,7 +37,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public string MotivoAnulacion { get; set; }
     
-        public virtual cp_proveedor cp_proveedor { get; set; }
         public virtual ICollection<cp_SolicitudPagoDet> cp_SolicitudPagoDet { get; set; }
+        public virtual cp_proveedor cp_proveedor { get; set; }
     }
 }

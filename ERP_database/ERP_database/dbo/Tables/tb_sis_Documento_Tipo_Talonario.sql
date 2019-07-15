@@ -4,7 +4,7 @@
     [Establecimiento]          VARCHAR (3)   NOT NULL,
     [PuntoEmision]             VARCHAR (3)   NOT NULL,
     [NumDocumento]             VARCHAR (20)  NOT NULL,
-    [FechaCaducidad]           DATETIME      NULL,
+    [FechaCaducidad]           DATE          NULL,
     [Usado]                    BIT           NULL,
     [Estado]                   CHAR (1)      NULL,
     [IdSucursal]               INT           NOT NULL,
@@ -14,4 +14,6 @@
     CONSTRAINT [FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo] FOREIGN KEY ([CodDocumentoTipo]) REFERENCES [dbo].[tb_sis_Documento_Tipo] ([codDocumentoTipo]),
     CONSTRAINT [FK_tb_sis_Documento_Tipo_Talonario_tb_sis_Documento_Tipo_x_Empresa] FOREIGN KEY ([IdEmpresa], [CodDocumentoTipo]) REFERENCES [dbo].[tb_sis_Documento_Tipo_x_Empresa] ([IdEmpresa], [codDocumentoTipo])
 );
+
+
 

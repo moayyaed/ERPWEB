@@ -1,7 +1,7 @@
 ﻿CREATE view [web].[VWCXP_012]
 as
 SELECT dbo.cp_retencion.IdEmpresa, dbo.cp_retencion.IdRetencion, dbo.cp_retencion.CodDocumentoTipo, dbo.cp_retencion.serie1, dbo.cp_retencion.serie2, dbo.cp_retencion.NumRetencion, dbo.cp_retencion.NAutorizacion, 
-                  dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.fecha, dbo.cp_retencion.observacion, dbo.cp_retencion.re_Tiene_RTiva, dbo.cp_retencion.re_Tiene_RFuente, 
+                  dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.fecha, dbo.cp_retencion.observacion,  
                   dbo.cp_orden_giro.co_serie + '-' + dbo.cp_orden_giro.co_factura AS co_factura, dbo.cp_orden_giro.co_FechaFactura, CASE WHEN dbo.cp_retencion_det.re_tipoRet = 'RTF' THEN 'RENTA' ELSE 'IVA' END AS re_tipoRet, 
                   dbo.cp_retencion_det.re_baseRetencion, dbo.cp_retencion_det.IdCodigo_SRI, dbo.cp_retencion_det.re_Codigo_impuesto, dbo.cp_retencion_det.re_Porcen_retencion, dbo.cp_retencion_det.re_valor_retencion, 
                   dbo.cp_codigo_SRI.co_descripcion, dbo.cp_proveedor.pr_direccion, dbo.cp_TipoDocumento.Descripcion, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto
