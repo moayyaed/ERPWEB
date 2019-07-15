@@ -12,16 +12,14 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tb_sis_Impuesto_Tipo
+    public partial class tb_LogError
     {
-        public tb_sis_Impuesto_Tipo()
-        {
-            this.tb_sis_Impuesto = new HashSet<tb_sis_Impuesto>();
-        }
-    
-        public string IdTipoImpuesto { get; set; }
-        public string nom_tipoImpuesto { get; set; }
-    
-        public virtual ICollection<tb_sis_Impuesto> tb_sis_Impuesto { get; set; }
+        public decimal IdError { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public string Descripcion { get; set; }
+        public string IdUsuario { get; set; }
+        public string Clase { get; set; }
+        public string Metodo { get; set; }
+        public string InnerException { get; set; }
     }
 }
