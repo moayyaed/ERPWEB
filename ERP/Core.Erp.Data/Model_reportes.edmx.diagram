@@ -47,7 +47,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWBAN_001" Width="1.5" PointX="5.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_002" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_003" Width="1.5" PointX="33.375" PointY="34.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCXP_012" Width="1.5" PointX="21.375" PointY="35.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_004" Width="1.5" PointX="3.375" PointY="35.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_013" Width="1.5" PointX="35.375" PointY="26.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_001" Width="1.5" PointX="3.375" PointY="26.75" />
@@ -102,6 +101,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWCXP_005" Width="1.5" PointX="9.75" PointY="15.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_005_cancelaciones" Width="1.5" PointX="11.75" PointY="16.75" />
         <EntityTypeShape EntityType="Model_reportes.VWFAC_009" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCXP_012" Width="1.5" PointX="19.375" PointY="35.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
