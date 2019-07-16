@@ -363,7 +363,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #endregion
 
         #region Json
-      
+        public JsonResult GetInfoProducto(int IdEmpresa = 0, int IdProducto = 0)
+        {
+            in_Producto_Bus bus_producto = new in_Producto_Bus();
+            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
@@ -396,6 +402,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult seleccionar_aprobacion(string Ids, int IdSucursal=0, int IdPuntoVta=0, decimal IdTransaccionSession = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            fa_PuntoVta_Info punto_venta = new fa_PuntoVta_Info();
+            punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+
             if (Ids != null)
             {
                 var facturas_x_seleccionar = Session["fa_factura_Info"] as List<fa_factura_Info>;                
@@ -411,7 +420,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     {
                         if (lst_det.Where(q => q.IdCbteVta == Convert.ToDecimal(item.Key)).Count() == 0)
                         {
-                            var lst_tmp = bus_detalle.get_list_x_factura(IdEmpresa, IdSucursal, IdPuntoVta, Convert.ToDecimal(item.Key));
+                            var lst_tmp = bus_detalle.get_list_x_factura(IdEmpresa, IdSucursal, punto_venta.IdBodega, Convert.ToDecimal(item.Key));
                             lst_det.AddRange(lst_tmp);
                         }
 
@@ -492,7 +501,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
+            {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
+                info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+            }                
 
             if (ModelState.IsValid)
                 detalle_info.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -509,7 +521,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
                     if (producto != null)
+                    {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
+                        info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                    }                        
 
                     if (ModelState.IsValid)
                         detalle_info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));

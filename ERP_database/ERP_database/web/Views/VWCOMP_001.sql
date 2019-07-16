@@ -14,14 +14,14 @@ FROM            dbo.com_ordencompra_local AS c INNER JOIN
                          dbo.cp_proveedor AS prov ON c.IdEmpresa = prov.IdEmpresa AND c.IdProveedor = prov.IdProveedor INNER JOIN
                          dbo.tb_persona AS per ON prov.IdPersona = per.IdPersona INNER JOIN
                          dbo.in_UnidadMedida AS uni ON d.IdUnidadMedida = uni.IdUnidadMedida INNER JOIN
-                         dbo.com_TerminoPago AS term ON c.IdTerminoPago = term.IdTerminoPago LEFT OUTER JOIN
+                         dbo.com_TerminoPago AS term ON term.IdEmpresa = c.IdEmpresa AND c.IdTerminoPago = term.IdTerminoPago LEFT OUTER JOIN
                          dbo.in_Producto AS pro ON d.IdEmpresa = pro.IdEmpresa AND d.IdProducto = pro.IdProducto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    End
          Begin Table = "term"
             Begin Extent = 
                Top = 666
@@ -34,10 +34,10 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
          End
          Begin Table = "pro"
             Begin Extent = 
-               Top = 798
-               Left = 38
-               Bottom = 928
-               Right = 272
+               Top = 685
+               Left = 544
+               Bottom = 815
+               Right = 778
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -107,13 +107,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[42] 4[13] 2[21] 3) )"
+         Configuration = "(H (1[65] 4[5] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -175,46 +177,46 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -672
          Left = 0
       End
       Begin Tables = 
          Begin Table = "c"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 255
+               Top = 7
+               Left = 24
+               Bottom = 137
+               Right = 241
             End
             DisplayFlags = 280
             TopColumn = 2
          End
          Begin Table = "d"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 301
+               Top = 133
+               Left = 420
+               Bottom = 306
+               Right = 683
             End
             DisplayFlags = 280
             TopColumn = 2
          End
          Begin Table = "com"
             Begin Extent = 
-               Top = 6
-               Left = 293
-               Bottom = 198
-               Right = 472
+               Top = 0
+               Left = 606
+               Bottom = 192
+               Right = 785
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "su"
             Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 268
+               Top = 12
+               Left = 705
+               Bottom = 142
+               Right = 935
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -248,7 +250,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
-       ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
+     ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
+
+
 
 
 

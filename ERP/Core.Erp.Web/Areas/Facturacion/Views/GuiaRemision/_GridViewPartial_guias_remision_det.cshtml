@@ -116,7 +116,7 @@
             column.FieldName = "IdCod_Impuesto";
             column.Caption = "Impuesto";
             column.Width = Unit.Percentage(8);
-            column.Visible = false;
+            column.Visible = true;
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("nom_impuesto", "Descripción").Width = Unit.Percentage(100);
@@ -125,7 +125,7 @@
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
             });
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {

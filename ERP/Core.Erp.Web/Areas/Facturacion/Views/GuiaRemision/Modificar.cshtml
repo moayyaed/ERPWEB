@@ -62,7 +62,7 @@
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.IdGuiaRemision)
     @Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
-    @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })    
+    @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
     if (ViewBag.mensaje != null)
@@ -169,7 +169,7 @@
 
         <div class="col-md-6">
 
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label for="IdVendedor">Transportista*</label>
                     @Html.DropDownListFor(q => q.IdTransportista, new SelectList(ViewBag.lst_transportista, "IdTransportista", "Nombre"), new { @class = "form-control", @id = "IdTransportista" })
@@ -183,7 +183,7 @@
                     @Html.ValidationMessageFor(q => q.placa, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="gi_fecha">Fecha</label>
                     <div class="input-group date">
@@ -203,14 +203,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="pf_observacion">Dirección origen</label>
                     @Html.TextBoxFor(q => q.Direccion_Origen, new { @class = "form-control", @id = "Direccion_Origen" })
                     @Html.ValidationMessageFor(q => q.Direccion_Origen, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Inicio traslado</label>
                     <div class="input-group date">
@@ -230,14 +230,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="pf_observacion">Dirección destino</label>
                     @Html.TextBoxFor(q => q.Direccion_Destino, new { @class = "form-control", @id = "Direccion_Destino" })
                     @Html.ValidationMessageFor(q => q.Direccion_Destino, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="gi_FechaFinTraslado">Fin traslado</label>
                     <div class="input-group date">
@@ -498,9 +498,33 @@
 
     function Imprimir() {
         var location = GetPathServer();
-        var win = window.open(location + "/Reportes/FacturacionReportes/FAC_009?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursal=" +@Model.IdSucursal +"&IdGuiaRemision=" +@Model.IdGuiaRemision, '_blank');
+        var win = window.open(location + "/Reportes/FacturacionReportes/FAC_009?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursal=" +@Model.IdSucursal +"&IdBodega=" +@Model.IdBodega +"&IdGuiaRemision=" +@Model.IdGuiaRemision, '_blank');
         win.focus();
     }
+
+    function GetInfoProducto(s, e) {
+        $("#Secuencia").text(0);
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProducto: s.GetValue()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfoProducto", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>
 
 
