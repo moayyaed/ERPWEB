@@ -267,6 +267,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             lst_pagos.Add("EXT", "EXTERIOR");
             ViewBag.lst_pagos = lst_pagos;
 
+            var lst_punto_venta = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, "RETEN");
+            ViewBag.lst_punto_venta = lst_punto_venta;
+
         }
 
         private void cargar_combos_consulta()
@@ -308,7 +311,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
             var sucursal = bus_sucursal.get_info(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal));
-            info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento,"001",false,false);
+            //info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento,"001",false,false);
 
             cp_orden_giro_Info model = new cp_orden_giro_Info
             {
@@ -320,12 +323,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 PaisPago = "593",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoServicio = cl_enumeradores.eTipoServicioCXP.SERVI.ToString(),
-                info_retencion = new cp_retencion_Info
-                {
-                    serie1 = info_documento.Establecimiento,
-                    serie2 = info_documento.PuntoEmision,
-                    NumRetencion = info_documento.NumDocumento
-                }
+                info_retencion = new cp_retencion_Info(),
+                //info_retencion = new cp_retencion_Info
+                //{
+                //    serie1 = info_documento.Establecimiento,
+                //    serie2 = info_documento.PuntoEmision,
+                //    NumRetencion = info_documento.NumDocumento
+                //}
 
             };
             List_cp_retencion_det.set_list(new List<cp_retencion_det_Info>(), model.IdTransaccionSession);
@@ -373,12 +377,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (model.info_retencion.detalle.Count() > 0)
             {
-                var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
-                if(sucu != null)
-                {
-                    model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
-                    model.info_retencion.serie2 = "001";
-                }
+                //var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
+                //if(sucu != null)
+                //{
+                //    model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
+                //    model.info_retencion.serie2 = "001";
+                //}
 
                 model.info_retencion.detalle.ForEach(item =>
                 {
@@ -1307,7 +1311,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public void DeleteRow(int secuencia, decimal IdTransaccionSession)
         {
             List<cp_orden_giro_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == secuencia).FirstOrDefault());
         }
     }
 

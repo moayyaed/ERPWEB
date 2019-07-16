@@ -41,7 +41,7 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["IdProducto"] = 0;
-            e.NewValues["IdCod_Impuesto"] = "";
+            e.NewValues["IdCod_Impuesto_Iva"] = "IVA0";
             e.NewValues["gi_por_desc"] = "0";
             e.NewValues["gi_cantidad"] = "1";
         };
@@ -125,7 +125,7 @@
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
             });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {

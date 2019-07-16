@@ -359,6 +359,40 @@
                         <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_retenciones">
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="IdPuntoVta">Punto de venta*</label>
+                                            @Html.DropDownListFor(q => q.info_retencion.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.IdPuntoVta, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" id="datos_punto_venta1">
+                                        <div class="form-group">
+                                            <label for="vt_serie1">Establecimiento*</label>
+                                            @Html.TextBoxFor(q => q.info_retencion.serie1, new { @class = "form-control", @id = "serie1" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.serie1, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="datos_punto_venta2">
+                                        <div class="form-group">
+                                            <label for="vt_serie2">Pto. Emisión*</label>
+                                            @Html.TextBoxFor(q => q.info_retencion.serie2, new { @class = "form-control", @id = "serie2" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.serie2, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="datos_punto_venta3">
+                                        <div class="form-group">
+                                            <label for="vt_NumFactura"># Documento*</label>
+                                            @Html.TextBoxFor(q => q.info_retencion.NumRetencion, new { @class = "form-control", @id = "NumRetencion" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.NumRetencion, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Detalle retención*</label>
@@ -536,8 +570,11 @@
 }
 <script>
     ValidarCompraSucursales();
+    CargarPuntosDeVenta();
+
     $("#IdSucursal").change(function () {
         cargar_bodega();
+        CargarPuntosDeVenta();
     });
 
 
@@ -872,5 +909,29 @@
         var location = GetPathServer();
         var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte_Ogiro="+@Model.IdTipoCbte_Ogiro+"&IdCbteCble_Ogiro="+@Model.IdCbteCble_Ogiro, '_blank');
         win.focus();
+    }
+
+    function CargarPuntosDeVenta() {
+        $("#IdPuntoVta").empty();
+        var datos = {
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntosDeVenta", "Retencion",new { Area = "CuentasPorPagar" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, row) {
+                    $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
+                });
+            },
+            error: function (error) {
+            }
+        });
     }
 </script>

@@ -280,7 +280,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             contact.NumRetencion = info.NumRetencion = info_documento == null ? null : info_documento.NumDocumento;
                             
                         }
-                        contact.IdPuntoVta = info.IdPuntoVta;
+                        //contact.IdPuntoVta = info.IdPuntoVta;
                         contact.IdSucursal = info.IdSucursal;
                         contact.fecha = info.fecha;
                         contact.observacion = info.observacion;
