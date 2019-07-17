@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Data.RRHH;
+using Core.Erp.Bus.General;
+using Core.Erp.Info.General;
+
 namespace Core.Erp.Bus.RRHH
 {
    public class ro_EmpleadoNovedadCargaMasiva_Bus
@@ -29,10 +32,11 @@ namespace Core.Erp.Bus.RRHH
             {
                 return odata.GuardarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_EmpleadoNovedadCargaMasiva_Bus", Metodo = "GuardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

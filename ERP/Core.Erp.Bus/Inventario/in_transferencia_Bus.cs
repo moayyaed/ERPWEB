@@ -3,6 +3,9 @@ using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
 using Core.Erp.Info.Helps;
+using Core.Erp.Bus.General;
+using Core.Erp.Info.General;
+
 namespace Core.Erp.Bus.Inventario
 {
     public class in_transferencia_Bus
@@ -66,10 +69,11 @@ namespace Core.Erp.Bus.Inventario
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_transferencia_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(in_transferencia_Info info)
@@ -87,10 +91,11 @@ namespace Core.Erp.Bus.Inventario
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_transferencia_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool anularDB(in_transferencia_Info info)

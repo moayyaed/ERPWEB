@@ -1,7 +1,9 @@
 ﻿using Core.Erp.Data.Caja;
 using Core.Erp.Data.Contabilidad;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorCobrar;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using System;
 using System.Collections.Generic;
@@ -420,13 +422,15 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 Context_ct.Dispose();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Context_cxc.Dispose();
                 Context_fac.Dispose();
                 Context_caj.Dispose();
                 Context_ct.Dispose();
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cxc_cobro_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario});
+                return false;
             }
         }
 
@@ -879,13 +883,15 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Context_cxc.Dispose();
                 Context_fac.Dispose();
                 Context_caj.Dispose();
                 Context_ct.Dispose();
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cxc_cobro_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

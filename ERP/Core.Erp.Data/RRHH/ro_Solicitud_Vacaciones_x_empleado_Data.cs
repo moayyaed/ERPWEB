@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.RRHH;
+using Core.Erp.Data.General;
+using Core.Erp.Info.General;
+
 namespace Core.Erp.Data.RRHH
 {
     public class ro_Solicitud_Vacaciones_x_empleado_Data
@@ -201,10 +204,11 @@ namespace Core.Erp.Data.RRHH
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "(ro_Solicitud_Vacaciones_x_empleado_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(ro_Solicitud_Vacaciones_x_empleado_Info info)
@@ -276,10 +280,11 @@ namespace Core.Erp.Data.RRHH
 
                 return true;
             }
-            catch (Exception )
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "(ro_Solicitud_Vacaciones_x_empleado_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool anularDB(ro_Solicitud_Vacaciones_x_empleado_Info info)

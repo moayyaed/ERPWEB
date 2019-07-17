@@ -1,4 +1,6 @@
-﻿using Core.Erp.Data.Inventario;
+﻿using Core.Erp.Bus.General;
+using Core.Erp.Data.Inventario;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
@@ -41,9 +43,11 @@ namespace Core.Erp.Bus.Inventario
             {
                 return odata.guardarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_devolucion_inven_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -53,9 +57,11 @@ namespace Core.Erp.Bus.Inventario
             {
                 return odata.modificarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_devolucion_inven_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
