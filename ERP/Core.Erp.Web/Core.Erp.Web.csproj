@@ -10157,6 +10157,8 @@
     <Content Include="Areas\Facturacion\Views\MotivoTraslado\Modificar.cshtml" />
     <Content Include="Areas\Facturacion\Views\MotivoTraslado\Anular.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\_CmbCtaCbleAnticipo_Proveedor.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_os_det.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_os_x_ingresar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

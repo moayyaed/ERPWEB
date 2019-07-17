@@ -75,6 +75,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info.info_comrobante.cb_Estado = "A";
                 info.info_comrobante.IdPeriodo =Convert.ToInt32( info.info_comrobante.cb_Fecha.Year.ToString() + info.info_comrobante.cb_Fecha.Month.ToString().PadLeft(2,'0'));
                 info.info_comrobante.IdEmpresa = info.IdEmpresa;
+
                 if (prov != null)
                 {
                     if (info.co_observacion == null)

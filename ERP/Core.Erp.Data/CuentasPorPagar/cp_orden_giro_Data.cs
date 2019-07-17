@@ -154,7 +154,37 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 do_precioCompra = item.do_precioCompra
                             });
                         }
-                    }                                      
+                    }
+
+                    if (info.lst_det_os.Count > 0)
+                    {
+                        int secuencia_det_os = 1;
+                        foreach (var item in info.lst_det_os)
+                        {
+                            Context.cp_orden_giro_det_ing_x_os.Add(new cp_orden_giro_det_ing_x_os
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                Secuencia = secuencia_det_os++,
+                                oc_IdSucursal = item.oc_IdSucursal,
+                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
+                                oc_Secuencia = item.oc_Secuencia,
+                                dm_cantidad = item.dm_cantidad,
+                                do_porc_des = item.do_porc_des,
+                                do_descuento = item.do_descuento,
+                                do_precioFinal = item.do_precioFinal,
+                                do_subtotal = item.do_subtotal,
+                                IdCod_Impuesto = item.IdCod_Impuesto,
+                                do_iva = item.do_iva,
+                                Por_Iva = item.Por_Iva,
+                                do_total = item.do_total,
+                                IdUnidadMedida = item.IdUnidadMedida,
+                                IdProducto = item.IdProducto,
+                                do_precioCompra = item.do_precioCompra
+                            });
+                        }
+                    }
 
                     Context.cp_orden_giro.Add(Entity);
 
@@ -162,7 +192,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -282,7 +312,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         }
                     }
 
-
                     if (info.lst_det_oc.Count > 0)
                     {
                         var lst_det_oc = Context.cp_orden_giro_det_ing_x_oc.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
@@ -320,7 +349,39 @@ namespace Core.Erp.Data.CuentasPorPagar
                             });
                         }
                     }
-                    
+
+                    if (info.lst_det_os.Count > 0)
+                    {
+                        var lst_det_os = Context.cp_orden_giro_det_ing_x_os.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
+                        Context.cp_orden_giro_det_ing_x_os.RemoveRange(lst_det_os);
+
+                        int secuencia_det_os = 1;
+                        foreach (var item in info.lst_det_os)
+                        {
+                            Context.cp_orden_giro_det_ing_x_os.Add(new cp_orden_giro_det_ing_x_os
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                Secuencia = secuencia_det_os++,
+                                oc_IdSucursal = item.oc_IdSucursal,
+                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
+                                oc_Secuencia = item.oc_Secuencia,
+                                dm_cantidad = item.dm_cantidad,
+                                do_porc_des = item.do_porc_des,
+                                do_descuento = item.do_descuento,
+                                do_precioFinal = item.do_precioFinal,
+                                do_subtotal = item.do_subtotal,
+                                IdCod_Impuesto = item.IdCod_Impuesto,
+                                do_iva = item.do_iva,
+                                Por_Iva = item.Por_Iva,
+                                do_total = item.do_total,
+                                IdUnidadMedida = item.IdUnidadMedida,
+                                IdProducto = item.IdProducto,
+                                do_precioCompra = item.do_precioCompra
+                            });
+                        }
+                    }
 
                     Context.SaveChanges();
                 }
@@ -410,13 +471,19 @@ namespace Core.Erp.Data.CuentasPorPagar
                     if (rel != null)
                         data_inv.anularDB(new in_Ing_Egr_Inven_Info { IdEmpresa = rel.inv_IdEmpresa, IdSucursal = rel.inv_IdSucursal, IdMovi_inven_tipo = rel.inv_IdMovi_inven_tipo, IdNumMovi = rel.inv_IdNumMovi, IdusuarioUltAnu = info.IdUsuarioUltAnu });
 
-
                     if (info.lst_det_oc.Count > 0)
                     {
                         var lst_det_oc = Context.cp_orden_giro_det_ing_x_oc.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
                         Context.cp_orden_giro_det_ing_x_oc.RemoveRange(lst_det_oc);
                     }
-                        Context.SaveChanges();
+
+                    if (info.lst_det_os.Count > 0)
+                    {
+                        var lst_det_os = Context.cp_orden_giro_det_ing_x_os.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
+                        Context.cp_orden_giro_det_ing_x_os.RemoveRange(lst_det_os);
+                    }
+
+                    Context.SaveChanges();
                 }
                 return true;
             }
