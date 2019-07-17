@@ -4,6 +4,8 @@ using Core.Erp.Info.Caja;
 using System;
 using System.Collections.Generic;
 using Core.Erp.Info.Helps;
+using Core.Erp.Bus.General;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Bus.Caja
 {
@@ -59,10 +61,11 @@ namespace Core.Erp.Bus.Caja
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "caj_Caja_Movimiento_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -83,10 +86,12 @@ namespace Core.Erp.Bus.Caja
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "caj_Caja_Movimiento_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
 
-                throw;
             }
         }
 

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Data.General;
+using Core.Erp.Info.General;
+
 namespace Core.Erp.Data.Inventario
 {
    public class in_transferencia_Data
@@ -112,10 +115,11 @@ namespace Core.Erp.Data.Inventario
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_transferencia_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(in_transferencia_Info info)
@@ -156,10 +160,11 @@ namespace Core.Erp.Data.Inventario
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_transferencia_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificar_id_ing_egrDB(in_transferencia_Info info)

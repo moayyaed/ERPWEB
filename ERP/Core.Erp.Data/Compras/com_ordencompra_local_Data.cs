@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Data.Compras.Base;
+using Core.Erp.Data.General;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Data.Compras
 {
@@ -235,8 +237,9 @@ namespace Core.Erp.Data.Compras
             }
             catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "com_ordencompra_local_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -298,10 +301,11 @@ namespace Core.Erp.Data.Compras
             }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "com_ordencompra_local_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

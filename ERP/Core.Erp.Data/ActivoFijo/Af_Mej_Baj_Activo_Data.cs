@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.Helps;
+using Core.Erp.Data.General;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Data.ActivoFijo
 {
@@ -161,10 +163,11 @@ namespace Core.Erp.Data.ActivoFijo
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "Af_Mej_Baj_Activo_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -195,10 +198,11 @@ namespace Core.Erp.Data.ActivoFijo
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "Af_Mej_Baj_Activo_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

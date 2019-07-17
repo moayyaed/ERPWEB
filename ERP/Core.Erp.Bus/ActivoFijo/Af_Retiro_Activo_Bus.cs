@@ -1,6 +1,8 @@
-﻿using Core.Erp.Data.ActivoFijo;
+﻿using Core.Erp.Bus.General;
+using Core.Erp.Data.ActivoFijo;
 using Core.Erp.Data.Contabilidad;
 using Core.Erp.Info.ActivoFijo;
+using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
 
@@ -65,10 +67,11 @@ namespace Core.Erp.Bus.ActivoFijo
 
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "Af_Retiro_Activo_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -90,10 +93,11 @@ namespace Core.Erp.Bus.ActivoFijo
 
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "Af_Retiro_Activo_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Data.Contabilidad;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
@@ -243,10 +245,11 @@ namespace Core.Erp.Data.Inventario
                 Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_Ing_Egr_Inven_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(in_Ing_Egr_Inven_Info info)
@@ -322,10 +325,11 @@ namespace Core.Erp.Data.Inventario
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "in_Ing_Egr_Inven_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool anularDB(in_Ing_Egr_Inven_Info info)

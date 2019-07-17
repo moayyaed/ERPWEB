@@ -1,5 +1,7 @@
-﻿using Core.Erp.Data.Banco;
+﻿using Core.Erp.Bus.General;
+using Core.Erp.Data.Banco;
 using Core.Erp.Info.Banco;
+using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,10 +45,11 @@ namespace Core.Erp.Bus.Banco
             {
                 return odata.GuardarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ba_Archivo_Transferencia_Bus", Metodo = "GuardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -56,10 +59,11 @@ namespace Core.Erp.Bus.Banco
             {
                 return odata.ModificarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ba_Archivo_Transferencia_Bus", Metodo = "ModificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

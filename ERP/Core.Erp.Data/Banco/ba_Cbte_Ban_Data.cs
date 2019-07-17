@@ -1,6 +1,8 @@
 ﻿using Core.Erp.Data.Contabilidad;
 using Core.Erp.Data.CuentasPorPagar;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Banco;
+using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using System;
 using System.Collections.Generic;
@@ -359,12 +361,14 @@ namespace Core.Erp.Data.Banco
                 Context_cxp.Dispose();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Context_ct.Dispose();
                 Context_b.Dispose();
                 Context_cxp.Dispose();
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ba_Cbte_Ban_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 
@@ -620,12 +624,14 @@ namespace Core.Erp.Data.Banco
                 Context_cxp.Dispose();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Context_ct.Dispose();
                 Context_b.Dispose();
                 Context_cxp.Dispose();
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ba_Cbte_Ban_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

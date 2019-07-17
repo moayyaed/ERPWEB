@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Data.CuentasPorPagar;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Caja;
+using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -225,9 +227,12 @@ namespace Core.Erp.Data.Caja
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "caj_Caja_Movimiento_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
+
             }
         }
 
@@ -304,9 +309,11 @@ namespace Core.Erp.Data.Caja
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "caj_Caja_Movimiento_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

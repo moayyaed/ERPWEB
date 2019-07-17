@@ -1,4 +1,6 @@
-﻿using Core.Erp.Info.CuentasPorCobrar;
+﻿using Core.Erp.Data.General;
+using Core.Erp.Info.CuentasPorCobrar;
+using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,10 +149,11 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cxc_MotivoLiquidacionTarjeta_Data", Metodo = "GuardarDB", IdUsuario = info.IdUsuarioCreacion });
+                return false;
             }
         } 
 
@@ -189,10 +192,11 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cxc_MotivoLiquidacionTarjeta_Data", Metodo = "ModificarDB", IdUsuario = info.IdUsuarioCreacion });
+                return false;
             }
         }
         public bool AnularDB(cxc_MotivoLiquidacionTarjeta_Info info)
