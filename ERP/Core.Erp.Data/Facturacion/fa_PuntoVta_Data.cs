@@ -8,14 +8,21 @@ namespace Core.Erp.Data.Facturacion
     public class fa_PuntoVta_Data
     {
 
-        public List<fa_PuntoVta_Info> get_list(int IdEmpresa,string CodDocumentoTipo, bool mostrar_anulados )
+        public List<fa_PuntoVta_Info> get_list(int IdEmpresa, int IdSucursal,string CodDocumentoTipo, bool mostrar_anulados )
         {
             try
             {
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
                 List<fa_PuntoVta_Info> Lista;
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    Lista = Context.vwfa_PuntoVta.Where(q=> q.IdEmpresa == IdEmpresa && q.codDocumentoTipo == (string.IsNullOrEmpty(CodDocumentoTipo) ? q.codDocumentoTipo : CodDocumentoTipo) && q.estado == (mostrar_anulados ? q.estado : true)).Select(q=> new fa_PuntoVta_Info
+                    Lista = Context.vwfa_PuntoVta.Where(q=> q.IdEmpresa == IdEmpresa
+                    && IdSucursalIni <= q.IdSucursal
+                    && q.IdSucursal <= IdSucursalFin
+                    && q.codDocumentoTipo == (string.IsNullOrEmpty(CodDocumentoTipo) ? q.codDocumentoTipo : CodDocumentoTipo)
+                    && q.estado == (mostrar_anulados ? q.estado : true)).Select(q=> new fa_PuntoVta_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,

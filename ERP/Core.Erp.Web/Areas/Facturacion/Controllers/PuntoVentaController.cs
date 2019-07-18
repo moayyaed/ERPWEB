@@ -24,7 +24,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal =  Convert.ToInt32(SessionFixed.IdSucursal),
                 CodDocumentoTipo = ""
             };
             cargar_combos_consulta();
@@ -48,15 +49,25 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 descripcion = "Todos"
             });
             ViewBag.lst_doc = lst_doc;
+
+            tb_sucursal_Bus bus_suc = new tb_sucursal_Bus();
+            var lst_sucursal = bus_suc.get_list(IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdSucursal = 0,
+                Su_Descripcion = "Todos"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_puntoventa(string CodDocumentoTipo = "")
+        public ActionResult GridViewPartial_puntoventa(int IdSucursal = 0, string CodDocumentoTipo = "")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.IdEmpresa = IdEmpresa;
+            ViewBag.IdSucursal = IdSucursal;
             ViewBag.CodDocumentoTipo = CodDocumentoTipo;
-            List<fa_PuntoVta_Info> model = bus_punto.get_list(IdEmpresa, CodDocumentoTipo, true);
+            List<fa_PuntoVta_Info> model = bus_punto.get_list(IdEmpresa, IdSucursal, CodDocumentoTipo, true);
             return PartialView("_GridViewPartial_puntoventa", model);
         }
         private void cargar_combos( fa_PuntoVta_Info model)
