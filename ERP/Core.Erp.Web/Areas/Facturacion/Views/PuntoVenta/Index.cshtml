@@ -32,7 +32,16 @@
                 <div class="col-md-12">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdSucursal">Tipo documento*</label>
+                            <label for="IdSucursal">Sucursal</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Tipo documento</label>
                             <div class="form-group">
                                 @Html.DropDownListFor(q => q.CodDocumentoTipo, new SelectList(ViewBag.lst_doc, "codDocumentoTipo", "descripcion"), new { @class = "form-control" })
                                 @Html.ValidationMessageFor(q => q.CodDocumentoTipo, "", new { @class = "text-danger" })
@@ -58,7 +67,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_puntoventa", new { CodDocumentoTipo = Model.CodDocumentoTipo })
+            @Html.Action("GridViewPartial_puntoventa", new { IdSucursal = Model.IdSucursal, CodDocumentoTipo = Model.CodDocumentoTipo })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
