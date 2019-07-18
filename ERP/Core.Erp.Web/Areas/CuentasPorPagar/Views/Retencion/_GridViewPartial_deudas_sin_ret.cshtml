@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_deudas_sin_ret";
-        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_deudas_sin_ret" };
+        settings.CallbackRouteValues = new { Controller = "Retencion", Action = "GridViewPartial_deudas_sin_ret" };
 
 
         settings.KeyFieldName = "IdCbteCble_Ogiro";
@@ -40,13 +40,6 @@
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
         //Evento para pintar de rojo las filas anuladas
-        settings.HtmlRowPrepared = (s, e) =>
-        {
-            if (Convert.ToString(e.GetValue("Estado")) == "I")
-            {
-                e.Row.ForeColor = System.Drawing.Color.Red;
-            }
-        };
 
         settings.Columns.Add("IdCbteCble_Ogiro", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("info_proveedor.info_persona.pe_cedulaRuc", "Cédula").Width = Unit.Percentage(10);
@@ -125,7 +118,7 @@
                 }).Render();
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
     });
 }

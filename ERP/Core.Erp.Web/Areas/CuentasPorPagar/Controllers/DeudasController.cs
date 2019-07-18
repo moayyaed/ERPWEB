@@ -177,21 +177,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         #endregion
 
-        #region Facturas sin retencion
-        public ActionResult Index2()
-        {
-            return View();
-        }
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_deudas_sin_ret()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_orden_giro.get_lst_sin_ret(IdEmpresa, DateTime.Now, DateTime.Now);
-            return PartialView("_GridViewPartial_deudas_sin_ret", model);
-        }
-
-        #endregion
-
         #region Aprobacion de facturas por proveedor
         public ActionResult Index3()
         {
@@ -1583,6 +1568,27 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         public void set_list(List<cp_orden_giro_det_ing_x_os_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
+    public class cp_orden_giro_List
+    {
+        string Variable = "cp_orden_giro_Info";
+        public List<cp_orden_giro_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_orden_giro_Info> list = new List<cp_orden_giro_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_orden_giro_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_orden_giro_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
