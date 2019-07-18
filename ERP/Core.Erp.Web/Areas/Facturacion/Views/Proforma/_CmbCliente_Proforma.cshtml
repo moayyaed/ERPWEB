@@ -18,7 +18,7 @@
         settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 20);
         settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 70);
         settings.Properties.FilterMinLength = 3;
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info_cliente();}";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info_cliente();cargar_info_adicional();}";
     })
     .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.ProformaController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Facturacion.Controllers.ProformaController().get_info_bajo_demanda)
     .Bind(Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_proforma_Info) ? "" : (Model == 0 ? "" : Model));

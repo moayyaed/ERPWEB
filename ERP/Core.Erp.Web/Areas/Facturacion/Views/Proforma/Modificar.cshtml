@@ -336,6 +336,46 @@
         var win = window.open(location +"/Reportes/FacturacionReportes/FAC_006?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdProforma="+@Model.IdProforma+"&mostrar_imagen="+false, '_blank');
         win.focus();
     }
+
+    function CrearModificarCliente() {
+        var location = GetPathServer();
+        if(IdCliente.GetValue() > 0)
+        {
+            var win = window.open(location + "/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+
+    function cargar_info_adicional() {
+        var codigo = IdCliente.GetValue();
+
+        if (codigo > 0) 
+        {
+            var datos = {
+                IdCliente: codigo
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_info_adicional", "Proforma",new { Area = "Facturacion"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#DatosCliente").val(data);
+                },
+                error: function (error) {
+                }
+            });
+        }
+        else{
+            $("#DatosCliente").val("");
+        }
+    }
 </script>
 
 @using (Html.BeginForm("Modificar", "Proforma", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -398,7 +438,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary" onclick="Desbloquear();">Desbloquear</button>
+                                    <button type="button" class="btn btn-primary" onclick="Desbloquear();"></button>
                                 </div>
                             </div>
                         </div>
@@ -489,14 +529,15 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
-                    <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="pf_atencion_a">Atención a</label>
-                    @Html.TextBoxFor(q => q.pf_atencion_a, new { @class = "form-control", @id = "pf_atencion_a" })
-                    @Html.ValidationMessageFor(q => q.pf_atencion_a, "", new { @class = "text-danger" })
+                    <label for="DatosCliente">Información adicional</label>
+                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
                 </div>
             </div>
         </div>
@@ -575,33 +616,33 @@
                 </div>
             </div>
         </div>
-    </div>  
-      <div class="col-md-12">
-        <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
-            <i class="fa fa-lock"></i> Desbloquear
-        </button>
-        <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
     </div>
-    <br />
-    <br />
-
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
-                @Html.Action("GridViewPartial_proforma_det")
-            </div>
+            <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
+                <i class="fa fa-lock"></i>
+            </button>
+            <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
         </div>
     </div>
 
-    <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    @Html.Action("GridViewPartial_proforma_det")
+                </div>
+            </div>
+        </div>
 
-        <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
-}
+        <div class="box-footer">
+            @if (ViewBag.MostrarBoton ?? false)
+            {
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            }
+
+            <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
+        </div>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+        }

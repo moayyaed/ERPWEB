@@ -47,17 +47,18 @@
                     @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
-                    <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="pf_atencion_a">Atención a</label>
-                    @Html.TextBoxFor(q => q.pf_atencion_a, new { @class = "form-control", @id = "pf_atencion_a" })
-                    @Html.ValidationMessageFor(q => q.pf_atencion_a, "", new { @class = "text-danger" })
+                    <label for="DatosCliente">Información adicional</label>
+                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
                 </div>
             </div>
         </div>
@@ -286,5 +287,45 @@
                     alert(error);
                 }
             });
+        }
+
+    function CrearModificarCliente() {
+        var location = GetPathServer();
+        if(IdCliente.GetValue() > 0)
+        {
+            var win = window.open(location + "/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+
+    function cargar_info_adicional() {
+        var codigo = IdCliente.GetValue();
+
+        if (codigo > 0) 
+        {
+            var datos = {
+                IdCliente: codigo
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_info_adicional", "Proforma",new { Area = "Facturacion"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#DatosCliente").val(data);
+                },
+                error: function (error) {
+                }
+            });
+        }
+        else{
+            $("#DatosCliente").val("");
+        }
     }
 </script>

@@ -71,7 +71,6 @@ namespace Core.Erp.Data.Facturacion
                         pf_observacion = Entity.pf_observacion,
                         pf_fecha = Entity.pf_fecha,
                         pf_fecha_vcto = Entity.pf_fecha_vcto,
-                        pf_atencion_a = Entity.pf_atencion_a,
                         estado = Entity.estado,
                         IdBodega = Entity.IdBodega,
                         IdVendedor = Entity.IdVendedor,
@@ -133,7 +132,6 @@ namespace Core.Erp.Data.Facturacion
                         pf_observacion = info.pf_observacion,
                         pf_fecha = info.pf_fecha,
                         pf_fecha_vcto = info.pf_fecha_vcto,
-                        pf_atencion_a = info.pf_atencion_a,
                         estado = info.estado = true,
                         IdBodega = info.IdBodega,
                         IdVendedor = info.IdVendedor,
@@ -196,7 +194,6 @@ namespace Core.Erp.Data.Facturacion
                     Entity.pf_observacion = info.pf_observacion;
                     Entity.pf_fecha = info.pf_fecha;
                     Entity.pf_fecha_vcto = info.pf_fecha_vcto;
-                    Entity.pf_atencion_a = info.pf_atencion_a;
                     Entity.IdBodega = info.IdBodega;
                     Entity.IdVendedor = info.IdVendedor;
                     Entity.pr_dias_entrega = info.pr_dias_entrega;

@@ -38,7 +38,6 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> fecha_anulacion { get; set; }
         public int IdBodega { get; set; }
         public int IdVendedor { get; set; }
-        public string pf_atencion_a { get; set; }
         public int pr_dias_entrega { get; set; }
         public string EstadoCierre { get; set; }
     }
