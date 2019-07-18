@@ -624,8 +624,8 @@
             // lbl_titulo
             // 
             this.lbl_titulo.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(Iif([Tipo]==\'OC\',\'ORDEN DE COMPRA\' ,\'ORDEN DE SERVICIO\' ), [SecuenciaTipo]" +
-                    ")")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(Iif([Tipo]==\'OC\',\'ORDEN DE COMPRA # \' ,\'ORDEN DE SERVICIO # \' ), [Secuenci" +
+                    "aTipo])")});
             this.lbl_titulo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
             this.lbl_titulo.Name = "lbl_titulo";
             this.lbl_titulo.StylePriority.UseFont = false;
