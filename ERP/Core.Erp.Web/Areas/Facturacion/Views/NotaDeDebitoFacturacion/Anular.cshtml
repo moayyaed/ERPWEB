@@ -354,26 +354,40 @@
 
     <div class="row">
         <div class="col-md-6">
-
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdPuntoVta">Punto de venta*</label>
                     @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Naturaleza</label>
+                    @Html.DropDownListFor(q => q.NaturalezaNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "NaturalezaNota", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.NaturalezaNota, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdCliente">Cliente*</label>
                     @Html.Partial("_CmbCliente_NotaDebitoFacturacion", Model.IdCliente)
                     @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdCliente"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
                 </div>
             </div>
             <div class="col-md-12">
@@ -390,8 +404,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div class="col-md-6">
             <div id="Tabs" role="tabpanel">
@@ -412,15 +424,15 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    @Html.DevExpress().DateEditFor(q=> q.no_fecha, settings =>
-                                {
-                                    settings.Name = "no_fecha";
-                                    settings.Properties.UseMaskBehavior = true;
-                                    settings.Properties.EditFormat = EditFormat.Date;
-                                    settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                }).GetHtml()
+                                    @Html.DevExpress().DateEditFor(q => q.no_fecha, settings =>
+                               {
+                                   settings.Name = "no_fecha";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.no_fecha, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -432,15 +444,15 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    @Html.DevExpress().DateEditFor(q=> q.no_fecha_venc, settings =>
-                                {
-                                    settings.Name = "no_fecha_venc";
-                                    settings.Properties.UseMaskBehavior = true;
-                                    settings.Properties.EditFormat = EditFormat.Date;
-                                    settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                }).GetHtml()
+                                    @Html.DevExpress().DateEditFor(q => q.no_fecha_venc, settings =>
+                               {
+                                   settings.Name = "no_fecha_venc";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.no_fecha_venc, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -452,32 +464,33 @@
                                 @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Naturaleza</label>
-                                @Html.DropDownListFor(q => q.NaturalezaNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "NaturalezaNota" })
-                                @Html.ValidationMessageFor(q => q.NaturalezaNota, "", new { @class = "text-danger" })
+                                <label for="CodNota">Código</label>
+                                @Html.TextBoxFor(q => q.CodNota, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.CodNota, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div id="divNaturaleza" hidden>
                             <div class="col-md-3" id="datos_punto_venta1">
                                 <div class="form-group">
                                     <label for="Serie1">Establecimiento*</label>
-                                    @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "vt_serie1" })
+                                    @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "vt_serie1", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(q => q.Serie1, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-md-3" id="datos_punto_venta2">
                                 <div class="form-group">
                                     <label for="Serie2">Pto. Emisión*</label>
-                                    @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "vt_serie2" })
+                                    @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "vt_serie2", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(q => q.Serie2, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-md-6" id="datos_punto_venta3">
                                 <div class="form-group">
                                     <label for="NumNota_Impresa"># Documento*</label>
-                                    @Html.TextBoxFor(q => q.NumNota_Impresa, new { @class = "form-control", @id = "vt_NumFactura" })
+                                    @Html.TextBoxFor(q => q.NumNota_Impresa, new { @class = "form-control", @id = "vt_NumFactura", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(q => q.NumNota_Impresa, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -500,6 +513,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
