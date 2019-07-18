@@ -27,7 +27,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public string pf_codigo { get; set; }
         public System.DateTime pf_fecha { get; set; }
         public bool estado { get; set; }
-        public string pf_atencion_a { get; set; }
         public string Codigo { get; set; }
         public string Ve_Vendedor { get; set; }
         public double pd_cantidad { get; set; }

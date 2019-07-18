@@ -41,6 +41,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
+        fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -449,6 +450,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var IdNivel = info_NivelDescuento_x_FormaPago == null ? 0 : info_NivelDescuento_x_FormaPago.IdNivel;
 
             return Json(IdNivel, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult cargar_info_adicional(decimal IdCliente = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            fa_cliente_contactos_Info info_contacto = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
+            var resultado = info_contacto.Direccion + " " + info_contacto.Correo + " " + info_contacto.Telefono + " " + info_contacto.Celular;
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region funciones del detalle

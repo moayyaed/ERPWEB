@@ -24,7 +24,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                CodDocumentoTipo = "FACT"
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                CodDocumentoTipo = ""
             };
             cargar_combos_consulta();
             return View(model);
@@ -32,7 +33,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            ViewBag.CodDocumentoTipo = model.CodDocumentoTipo;
             cargar_combos_consulta();
             return View(model);
         }
@@ -54,6 +54,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult GridViewPartial_puntoventa(string CodDocumentoTipo = "")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.CodDocumentoTipo = CodDocumentoTipo;
             List<fa_PuntoVta_Info> model = bus_punto.get_list(IdEmpresa, CodDocumentoTipo, true);
             return PartialView("_GridViewPartial_puntoventa", model);
@@ -88,7 +89,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             fa_PuntoVta_Info model = new fa_PuntoVta_Info
             {
-                IdEmpresa = IdEmpresa
+                IdEmpresa = IdEmpresa,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             cargar_combos(model);
             return View(model);

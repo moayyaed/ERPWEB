@@ -41,7 +41,6 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  pf_codigo = q.pf_codigo,
                                  pf_fecha = q.pf_fecha,
                                  estado = q.estado,
-                                 pf_atencion_a = q.pf_atencion_a,
                                  Codigo = q.Codigo,
                                  Ve_Vendedor = q.Ve_Vendedor,
                                  pd_cantidad = q.pd_cantidad,

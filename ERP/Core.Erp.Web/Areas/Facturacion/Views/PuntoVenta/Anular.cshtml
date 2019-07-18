@@ -15,6 +15,14 @@
     @Html.HiddenFor(q => q.IdPuntoVta)
     <div class="row">
         <div class="col-md-12">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCaja">Tipo documento*</label>
+                    @Html.DropDownListFor(q => q.codDocumentoTipo, new SelectList(ViewBag.lst_doc, "CodDocumentoTipo", "descripcion"), new { @class = "form-control", @id = "NivelPrecio" })
+                    @Html.ValidationMessageFor(q => q.codDocumentoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="cod_PuntoVta">Código*</label>
@@ -36,23 +44,23 @@
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="nom_PuntoVta">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_PuntoVta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_PuntoVta, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdCaja">Caja*</label>
                     @Html.DropDownListFor(q => q.IdCaja, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @class = "form-control", @id = "NivelPrecio" })
                     @Html.ValidationMessageFor(q => q.IdCaja, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nom_PuntoVta">Descripción*</label>
-                    @Html.TextBoxFor(q => q.nom_PuntoVta, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.nom_PuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
@@ -72,7 +80,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -97,13 +104,6 @@
                              settings.Text = "Es electrónico";
                          }
                      ).GetHtml()
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="IdCaja">Tipo documento*</label>
-                    @Html.DropDownListFor(q => q.codDocumentoTipo, new SelectList(ViewBag.lst_doc, "CodDocumentoTipo", "descripcion"), new { @class = "form-control", @id = "NivelPrecio" })
-                    @Html.ValidationMessageFor(q => q.codDocumentoTipo, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

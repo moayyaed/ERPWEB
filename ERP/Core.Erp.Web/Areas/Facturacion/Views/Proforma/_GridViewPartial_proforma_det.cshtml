@@ -18,9 +18,10 @@
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
 
         settings.SettingsContextMenu.Enabled = true;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
@@ -45,18 +46,7 @@
             e.NewValues["pd_precio"] = "";
             e.NewValues["pd_por_descuento_uni"] = "0";
         };
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "*";
-            column.FieldName = "Secuencia";
-            column.Width = Unit.Percentage(5);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
-            column.SetDataItemTemplateContent(c =>
-            {
-                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-search\" onclick=\"BuscarProducto('" + c.KeyValue + "');\"></span>");
-            });
-        });
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "pr_descripcion";
@@ -85,7 +75,7 @@
             column.FieldName = "pd_cantidad";
             column.Caption = "cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -97,7 +87,7 @@
             column.FieldName = "pd_precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -109,7 +99,7 @@
         {
             column.FieldName = "pd_por_descuento_uni";
             column.Caption = "% Desc. uni.";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -121,7 +111,7 @@
         {
             column.FieldName = "IdCod_Impuesto";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(20);
             column.Visible = false;
             column.EditorProperties().ComboBox(p =>
             {
@@ -138,7 +128,7 @@
             column.FieldName = "pd_precio_final";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -146,7 +136,7 @@
             column.FieldName = "pd_subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -154,7 +144,7 @@
             column.FieldName = "pd_iva";
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -162,7 +152,7 @@
             column.FieldName = "pd_total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>

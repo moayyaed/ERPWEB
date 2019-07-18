@@ -630,13 +630,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
             if (punto_venta != null)
             {
-                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa,cl_enumeradores.eTipoDocumento.FACT.ToString(), punto_venta.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta,punto_venta.EsElectronico,false);
+                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.FACT.ToString(), punto_venta.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
             }
             else
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
             if (resultado == null)
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProformasPorFacturar(int IdSucursal = 0, decimal IdCliente = 0)
         {
