@@ -605,8 +605,31 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             #endregion
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
 
-            List_og.set_list(bus_orden_giro.get_lst_sin_ret(model.IdEmpresa,model.IdSucursal, DateTime.Now, DateTime.Now),model.IdTransaccionSession);
+            #region Cargar sucursal
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
+            ViewBag.lst_sucursal = lst_sucursal;
+            #endregion
+
+            List_og.set_list(bus_orden_giro.get_lst_sin_ret(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin), model.IdTransaccionSession);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ComprasSinRetencion(cl_filtros_Info model)
+        {
+            #region Validar Session
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            #endregion
+
+            #region Cargar sucursal
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
+            ViewBag.lst_sucursal = lst_sucursal;
+            #endregion
+
+            List_og.set_list(bus_orden_giro.get_lst_sin_ret(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin), model.IdTransaccionSession);
 
             return View(model);
         }

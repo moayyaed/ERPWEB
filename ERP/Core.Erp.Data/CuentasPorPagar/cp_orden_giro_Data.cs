@@ -588,7 +588,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
                     Lista = Context.vwcp_orden_giro_SinRetencion.Where(q => q.IdEmpresa == IdEmpresa
-                     && IdSucursalIni <= q.IdSucursal && q.IdSucursal <= IdSucursalFin).Select(q => new cp_orden_giro_Info
+                     && IdSucursalIni <= q.IdSucursal && q.IdSucursal <= IdSucursalFin && FechaInicio <= q.co_fechaOg && q.co_fechaOg <= FechaFin).Select(q => new cp_orden_giro_Info
                      {
                          IdEmpresa = q.IdEmpresa,
                          IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
