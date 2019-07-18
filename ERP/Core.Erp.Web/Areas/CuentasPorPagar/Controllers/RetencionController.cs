@@ -35,6 +35,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
         tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
+        cp_orden_giro_Bus bus_orden_giro = new cp_orden_giro_Bus();
+        cp_orden_giro_List List_og = new cp_orden_giro_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
@@ -590,6 +592,32 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             return true;
         }
+        #endregion
+        #region Facturas sin retencion
+        public ActionResult ComprasSinRetencion()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+
+            List_og.set_list(bus_orden_giro.get_lst_sin_ret(model.IdEmpresa,model.IdSucursal, DateTime.Now, DateTime.Now),model.IdTransaccionSession);
+
+            return View(model);
+        }
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_deudas_sin_ret()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_og.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_deudas_sin_ret", model);
+        }
+
         #endregion
 
     }

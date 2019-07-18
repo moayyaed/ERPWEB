@@ -9216,8 +9216,7 @@
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\_GridViewPartial_tipo_orden_pago.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_deudas_sin_ret.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\Deudas\Index2.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Retencion\_GridViewPartial_deudas_sin_ret.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\_GridViewPartial_nota_credito.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\_GridViewPartial_nota_credito_dc.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\Anular.cshtml" />
@@ -10159,6 +10158,7 @@
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\_CmbCtaCbleAnticipo_Proveedor.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_os_det.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_os_x_ingresar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Retencion\ComprasSinRetencion.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

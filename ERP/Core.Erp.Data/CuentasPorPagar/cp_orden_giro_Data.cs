@@ -575,10 +575,15 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
-        public List<cp_orden_giro_Info> get_lst_sin_ret(int IdEmpresa, DateTime FechaInicio, DateTime FechaFin)
+        public List<cp_orden_giro_Info> get_lst_sin_ret(int IdEmpresa, int IdSucursal, DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 999999 : IdSucursal;
+                FechaInicio = FechaInicio.Date;
+                FechaFin = FechaFin.Date;
+
                 List<cp_orden_giro_Info> Lista;
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {

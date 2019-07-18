@@ -39,11 +39,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
-        public List<cp_orden_giro_Info> get_lst_sin_ret(int IdEmpresa, DateTime fi, DateTime ff)
+        public List<cp_orden_giro_Info> get_lst_sin_ret(int IdEmpresa, int IdSucursal, DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
-                return data.get_lst_sin_ret(IdEmpresa, fi, ff);
+                return data.get_lst_sin_ret(IdEmpresa, IdSucursal,FechaInicio,FechaFin);
             }
             catch (Exception)
             {

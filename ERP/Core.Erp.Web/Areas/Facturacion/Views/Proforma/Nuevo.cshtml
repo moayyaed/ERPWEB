@@ -218,24 +218,26 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
-                <i class="fa fa-lock"></i>
-            </button>
-            <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-12">
-                @Html.Action("GridViewPartial_proforma_det")
+                <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
+                    <i class="fa fa-lock"></i>
+                </button>
+                <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
             </div>
         </div>
     </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    @Html.Action("GridViewPartial_proforma_det")
+                </div>
+            </div>
+        </div>
 
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
-    </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
+        </div>
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
         }
@@ -272,6 +274,8 @@
                 $("#IdCatalogo_FormaPago").change(function () {
                     Set_NivelDescuento_x_FormaPago();
                 });
+
+                $('#ModalDesbloqueo').on('shown.bs.modal', function() { $("#ContraseniaAdministrador").focus(); }) 
             });
 
             function Set_NivelDescuento_x_FormaPago() {
@@ -451,7 +455,6 @@
             }
 
             function MostrarModalDesbloqueo() {
-                $("#ContraseniaAdministrador").focus();
                 $("#ContraseniaAdministrador").val("");
                 $("#ModalDesbloqueo").modal("show");
             }
@@ -584,7 +587,7 @@
             function cargar_info_adicional() {
                 var codigo = IdCliente.GetValue();
 
-                if (codigo > 0) 
+                if (codigo > 0)
                 {
                     var datos = {
                         IdCliente: codigo

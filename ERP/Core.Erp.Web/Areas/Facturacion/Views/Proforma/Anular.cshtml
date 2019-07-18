@@ -40,7 +40,7 @@
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdCliente">Cliente*</label>
                     @Html.Partial("_CmbCliente_Proforma", Model.IdCliente)
@@ -171,6 +171,7 @@
 }
 <script>
     $(function () {
+        cargar_info_adicional();
         //Date picker
         $('#pf_fecha').datepicker({
             autoclose: true
@@ -187,6 +188,8 @@
         $("#pf_fecha").change(function () {
             cargar_fecha_vencimiento();
         });
+
+        $('#ModalDesbloqueo').on('shown.bs.modal', function() { $("#ContraseniaAdministrador").focus(); }) 
     });
 
     function MostrarModal() {

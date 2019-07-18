@@ -10,7 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script>
     $(function () {
-
+        cargar_info_adicional();
         cargar_bodega();
         //Date picker
         $('#pf_fecha').datepicker({
@@ -36,6 +36,8 @@
         $("#IdCatalogo_FormaPago").change(function () {
             Set_NivelDescuento_x_FormaPago();
         });
+
+        $('#ModalDesbloqueo').on('shown.bs.modal', function() { $("#ContraseniaAdministrador").focus(); }) 
     });
 
     function Set_NivelDescuento_x_FormaPago() {
@@ -438,7 +440,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary" onclick="Desbloquear();"></button>
+                                    <button type="button" class="btn btn-primary" onclick="Desbloquear();">Desbloquear</button>
                                 </div>
                             </div>
                         </div>
@@ -619,10 +621,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
-                <i class="fa fa-lock"></i>
-            </button>
-            <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
+                    <i class="fa fa-lock"></i>
+                </button>
+                <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
+            </div>
         </div>
     </div>
 

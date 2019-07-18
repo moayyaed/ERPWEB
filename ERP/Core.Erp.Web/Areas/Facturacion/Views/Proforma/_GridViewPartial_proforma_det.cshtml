@@ -18,7 +18,7 @@
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowNewButtonInHeader = true;
@@ -46,23 +46,12 @@
             e.NewValues["pd_precio"] = "";
             e.NewValues["pd_por_descuento_uni"] = "0";
         };
-        //settings.Columns.Add(column =>
-        //{
-        //    column.Caption = "*";
-        //    column.FieldName = "Secuencia";
-        //    column.Width = Unit.Percentage(5);
-        //    column.EditFormSettings.Visible = DefaultBoolean.False;
-        //    column.UnboundType = DevExpress.Data.UnboundColumnType.String;
-        //    column.SetDataItemTemplateContent(c =>
-        //    {
-        //        ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-search\" onclick=\"BuscarProducto('" + c.KeyValue + "');\"></span>");
-        //    });
-        //});
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(25);
+            column.Width = Unit.Percentage(30);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -70,7 +59,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(25);
+            column.Width = Unit.Percentage(30);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
