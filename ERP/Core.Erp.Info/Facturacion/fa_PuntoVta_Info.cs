@@ -36,6 +36,7 @@ namespace Core.Erp.Info.Facturacion
         #region Campos que no existen en la tabla
         public string Su_Descripcion { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
+        public string Descripcion { get; set; }
         #endregion
     }
 }

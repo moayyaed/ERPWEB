@@ -40,5 +40,6 @@ namespace Core.Erp.Data
         public int IdVendedor { get; set; }
         public int pr_dias_entrega { get; set; }
         public string EstadoCierre { get; set; }
+        public string pf_atencion_a { get; set; }
     }
 }

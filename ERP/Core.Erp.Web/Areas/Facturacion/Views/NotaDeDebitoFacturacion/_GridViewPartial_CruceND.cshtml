@@ -42,7 +42,7 @@
 
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(20);
             column.FieldName = "vt_NumDocumento";
             column.Caption = "# Documento";
             column.EditFormSettings.Visible = DefaultBoolean.False;
@@ -53,11 +53,11 @@
             column.Width = Unit.Percentage(20);
             column.FieldName = "NumDocumento";
             column.Caption = "# Doc reemplazo";
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "vt_total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
@@ -65,8 +65,29 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "Saldo";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Valor_Aplicado";
+            column.Caption = "V. aplicado";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditorProperties().SpinEdit(p =>
+            {
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Saldo_final";
             column.Caption = "Saldo";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
             column.EditFormSettings.Visible = DefaultBoolean.False;

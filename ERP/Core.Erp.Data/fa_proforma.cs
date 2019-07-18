@@ -42,6 +42,7 @@ namespace Core.Erp.Data
         public int pr_dias_entrega { get; set; }
         public int IdNivel { get; set; }
         public string IdCatalogo_FormaPago { get; set; }
+        public string pf_atencion_a { get; set; }
     
         public virtual fa_cliente fa_cliente { get; set; }
         public virtual fa_NivelDescuento fa_NivelDescuento { get; set; }
