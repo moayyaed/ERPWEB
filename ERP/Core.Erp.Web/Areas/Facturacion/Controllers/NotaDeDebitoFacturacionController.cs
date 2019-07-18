@@ -217,7 +217,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             List_det.set_list(new List<fa_notaCreDeb_det_Info>(), IdTransaccionSession);
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult AutorizarSRI(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdNota)
+        {
+            string retorno = string.Empty;
 
+            if (bus_nota.modificarEstadoAutorizacion(IdEmpresa, IdSucursal, IdBodega, IdNota))
+                retorno = "Autorización exitosa";
+
+
+            return Json(retorno, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region Grillas de cruce
         public ActionResult GridViewPartial_CruceND_x_cruzar()

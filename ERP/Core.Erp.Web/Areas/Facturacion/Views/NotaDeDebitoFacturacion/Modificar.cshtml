@@ -8,19 +8,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-<script>
+<script type="text/javascript">
 
     function AutorizarSRI() {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdSucursal: $("#IdSucursal").val(),
             IdBodega: $("#IdBodega").val(),
-            IdCbteVta: $("#IdCbteVta").val()
+            IdNota: $("#IdNota").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("AutorizarSRI", "Factura",new { Area = "Facturacion"})',
+            url: '@Url.Action("AutorizarSRI", "NotaDeDebitoFacturacion",new { Area = "Facturacion"})',
             async: false,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -343,7 +343,7 @@
     @Html.HiddenFor(q => q.IdSucursal, new { @id = "IdSucursal" })
     @Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
-    @Html.HiddenFor(q => q.IdNota)
+    @Html.HiddenFor(q => q.IdNota, new { @id = "IdNota" } )
     @Html.HiddenFor(q => q.CodDocumentoTipo)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.CreDeb)
