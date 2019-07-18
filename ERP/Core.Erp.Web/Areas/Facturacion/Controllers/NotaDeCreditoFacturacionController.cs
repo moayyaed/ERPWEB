@@ -240,26 +240,21 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNewFacturas(string IDs = "", decimal IdTransaccionSession = 0, int IdTipoNota = 0)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (IDs != "")
             {
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
-                    List_cruce.DeleteRow(item,IdTransaccionSession);
+                    List_cruce.DeleteRow(item, IdTransaccionSession);
                 }
             }
-            var tipo = bus_tipo_nota.get_info(IdEmpresa, IdTipoNota);
             var list = List_cruce.get_list(IdTransaccionSession).Where(q => q.seleccionado == true).ToList();
-            if (tipo.GeneraMoviInven)
+            var lst_det = new List<fa_notaCreDeb_det_Info>();
+            foreach (var item in list)
             {
-                var lst_det = new List<fa_notaCreDeb_det_Info>();
-                foreach (var item in list)
-                {
-                    lst_det.AddRange(bus_det.get_list(item.IdEmpresa_fac_nd_doc_mod, item.IdSucursal_fac_nd_doc_mod, item.IdBodega_fac_nd_doc_mod, item.IdCbteVta_fac_nd_doc_mod, item.vt_tipoDoc));
-                }
-                List_det.set_list(lst_det, IdTransaccionSession);
+                lst_det.AddRange(bus_det.get_list(item.IdEmpresa_fac_nd_doc_mod, item.IdSucursal_fac_nd_doc_mod, item.IdBodega_fac_nd_doc_mod, item.IdCbteVta_fac_nd_doc_mod, item.vt_tipoDoc));
             }
+            List_det.set_list(lst_det, IdTransaccionSession);
             var model = list;
             return PartialView("_GridViewPartial_CruceNC", model);
         }

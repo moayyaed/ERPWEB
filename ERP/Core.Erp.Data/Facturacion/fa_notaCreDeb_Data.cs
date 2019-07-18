@@ -381,7 +381,7 @@ namespace Core.Erp.Data.Facturacion
                     if (entity == null) return false;
 
                     //entity.IdPuntoVta = info.IdPuntoVta;
-                    //entity.CodNota = info.CodNota;
+                    entity.CodNota = info.CodNota;
                     entity.CreDeb = info.CreDeb.Trim();
                     entity.CodDocumentoTipo = info.CodDocumentoTipo;
                     entity.Serie1 = info.Serie1;
