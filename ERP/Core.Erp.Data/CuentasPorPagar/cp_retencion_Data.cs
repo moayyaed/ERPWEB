@@ -190,7 +190,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
                         IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
                         IdRetencion = info.IdRetencion = get_id(info.IdEmpresa),
-                        CodDocumentoTipo = info.CodDocumentoTipo,
+                        CodDocumentoTipo = info.CodDocumentoTipo = "RETEN",
                         
                         serie1 = info.serie1 = info_documento == null ? null : info_documento.Establecimiento,
                         serie2 = info.serie2 = info_documento == null ? null : info_documento.PuntoEmision,
