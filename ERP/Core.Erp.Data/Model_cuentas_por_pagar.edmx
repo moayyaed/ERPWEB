@@ -904,6 +904,41 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_orden_giro_det_ing_x_os_x_cru
           <Property Name="IdCod_Impuesto" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_orden_giro_SinRetencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcp_orden_giro_SinRetencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="co_fechaOg" />
+            <PropertyRef Name="co_serie" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="co_subtotal_iva" />
+            <PropertyRef Name="co_subtotal_siniva" />
+            <PropertyRef Name="co_baseImponible" />
+            <PropertyRef Name="co_valoriva" />
+            <PropertyRef Name="co_total" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="int" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="co_fechaOg" Type="datetime" Nullable="false" />
+          <Property Name="co_serie" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="co_factura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="co_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="co_subtotal_iva" Type="float" Nullable="false" />
+          <Property Name="co_subtotal_siniva" Type="float" Nullable="false" />
+          <Property Name="co_baseImponible" Type="float" Nullable="false" />
+          <Property Name="co_valoriva" Type="float" Nullable="false" />
+          <Property Name="co_total" Type="float" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_orden_giro_x_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcp_orden_giro_x_pagar">
           <Key>
@@ -2013,6 +2048,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
     [vwcp_orden_giro_det_ing_x_os_x_cruzar].[IdCod_Impuesto] AS [IdCod_Impuesto]
     FROM [dbo].[vwcp_orden_giro_det_ing_x_os_x_cruzar] AS [vwcp_orden_giro_det_ing_x_os_x_cruzar]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwcp_orden_giro_SinRetencion" EntityType="Self.vwcp_orden_giro_SinRetencion" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcp_orden_giro_SinRetencion].[IdEmpresa] AS [IdEmpresa], 
+    [vwcp_orden_giro_SinRetencion].[IdTipoCbte_Ogiro] AS [IdTipoCbte_Ogiro], 
+    [vwcp_orden_giro_SinRetencion].[IdCbteCble_Ogiro] AS [IdCbteCble_Ogiro], 
+    [vwcp_orden_giro_SinRetencion].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcp_orden_giro_SinRetencion].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwcp_orden_giro_SinRetencion].[co_fechaOg] AS [co_fechaOg], 
+    [vwcp_orden_giro_SinRetencion].[co_serie] AS [co_serie], 
+    [vwcp_orden_giro_SinRetencion].[co_factura] AS [co_factura], 
+    [vwcp_orden_giro_SinRetencion].[co_observacion] AS [co_observacion], 
+    [vwcp_orden_giro_SinRetencion].[co_subtotal_iva] AS [co_subtotal_iva], 
+    [vwcp_orden_giro_SinRetencion].[co_subtotal_siniva] AS [co_subtotal_siniva], 
+    [vwcp_orden_giro_SinRetencion].[co_baseImponible] AS [co_baseImponible], 
+    [vwcp_orden_giro_SinRetencion].[co_valoriva] AS [co_valoriva], 
+    [vwcp_orden_giro_SinRetencion].[co_total] AS [co_total], 
+    [vwcp_orden_giro_SinRetencion].[IdSucursal] AS [IdSucursal]
+    FROM [dbo].[vwcp_orden_giro_SinRetencion] AS [vwcp_orden_giro_SinRetencion]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwcp_orden_giro_x_pagar" EntityType="Self.vwcp_orden_giro_x_pagar" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwcp_orden_giro_x_pagar].[IdEmpresa] AS [IdEmpresa], 
@@ -3004,6 +3058,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             <End Role="cp_orden_giro_det_ing_x_os" EntitySet="cp_orden_giro_det_ing_x_os" />
           </AssociationSet>
           <EntitySet Name="vwcp_orden_giro_det_ing_x_os" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_os" />
+          <EntitySet Name="vwcp_orden_giro_SinRetencion" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_SinRetencion" />
           </EntityContainer>
         <ComplexType Name="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -4581,6 +4636,39 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="do_precioCompra" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="vwcp_orden_giro_SinRetencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="co_fechaOg" />
+            <PropertyRef Name="co_serie" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="co_subtotal_iva" />
+            <PropertyRef Name="co_subtotal_siniva" />
+            <PropertyRef Name="co_baseImponible" />
+            <PropertyRef Name="co_valoriva" />
+            <PropertyRef Name="co_total" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_fechaOg" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="co_serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="co_subtotal_iva" Type="Double" Nullable="false" />
+          <Property Name="co_subtotal_siniva" Type="Double" Nullable="false" />
+          <Property Name="co_baseImponible" Type="Double" Nullable="false" />
+          <Property Name="co_valoriva" Type="Double" Nullable="false" />
+          <Property Name="co_total" Type="Double" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5773,6 +5861,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcp_orden_giro_SinRetencion">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_orden_giro_SinRetencion">
+              <MappingFragment StoreEntitySet="vwcp_orden_giro_SinRetencion">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="co_total" ColumnName="co_total" />
+                <ScalarProperty Name="co_valoriva" ColumnName="co_valoriva" />
+                <ScalarProperty Name="co_baseImponible" ColumnName="co_baseImponible" />
+                <ScalarProperty Name="co_subtotal_siniva" ColumnName="co_subtotal_siniva" />
+                <ScalarProperty Name="co_subtotal_iva" ColumnName="co_subtotal_iva" />
+                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="co_serie" ColumnName="co_serie" />
+                <ScalarProperty Name="co_fechaOg" ColumnName="co_fechaOg" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

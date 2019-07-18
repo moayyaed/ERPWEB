@@ -587,72 +587,33 @@ namespace Core.Erp.Data.CuentasPorPagar
                 List<cp_orden_giro_Info> Lista;
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in Context.vwcp_orden_giro
-                             where !(from o in Context.cp_retencion
-                                     where o.IdEmpresa == IdEmpresa
-                                     && o.Estado=="A"
-                                     select o.IdCbteCble_Ogiro)
-                                    .Contains(q.IdCbteCble_Ogiro)
-                                    && q.IdEmpresa == IdEmpresa
-                                    && q.Estado == "A"
-                             select new cp_orden_giro_Info
+                    Lista = Context.vwcp_orden_giro_SinRetencion.Where(q => q.IdEmpresa == IdEmpresa
+                     && IdSucursalIni <= q.IdSucursal && q.IdSucursal <= IdSucursalFin).Select(q => new cp_orden_giro_Info
+                     {
+                         IdEmpresa = q.IdEmpresa,
+                         IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
+                         IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
+                         co_fechaOg = q.co_fechaOg,
+                         co_serie = q.co_serie,
+                         co_factura = q.co_factura,
+                         co_observacion = q.co_observacion,
+                         co_subtotal_iva = q.co_subtotal_iva,
+                         co_subtotal_siniva = q.co_subtotal_siniva,
+                         co_baseImponible = q.co_baseImponible,
+                         co_valoriva = q.co_valoriva,
+                         co_total = q.co_total,
+                         IdSucursal = q.IdSucursal,
+
+                         info_proveedor = new cp_proveedor_Info
+                         {
+                             info_persona = new Info.General.tb_persona_Info
                              {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
-                                 IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
-                                 IdOrden_giro_Tipo = q.IdOrden_giro_Tipo,
-                                 IdProveedor = q.IdProveedor,
-                                 co_fechaOg = q.co_fechaOg,
-                                 co_serie = q.co_serie,
-                                 co_factura = q.co_factura,
-                                 co_FechaFactura = q.co_FechaFactura,
-                                 co_FechaContabilizacion = q.co_FechaContabilizacion,
-                                 co_FechaFactura_vct = q.co_FechaFactura_vct,
-                                 co_plazo = q.co_plazo,
-                                 co_observacion = q.co_observacion,
-                                 co_subtotal_iva = q.co_subtotal_iva,
-                                 co_subtotal_siniva = q.co_subtotal_siniva,
-                                 co_baseImponible = q.co_baseImponible,
-                                 co_Por_iva = q.co_Por_iva,
-                                 co_valoriva = q.co_valoriva,
-                                 IdCod_ICE = q.IdCod_ICE,
-                                 co_total = q.co_total,
-                                 co_valorpagar = q.co_valorpagar,
-                                 co_vaCoa = q.co_vaCoa,
-                                 IdIden_credito = q.IdIden_credito,
-                                 IdCod_101 = q.IdCod_101,
-                                 IdTipoServicio = q.IdTipoServicio,
-                                 IdSucursal = q.IdSucursal,
-                                 PagoLocExt = q.PagoLocExt,
-                                 PaisPago = q.PaisPago,
-                                 ConvenioTributacion = q.ConvenioTributacion,
-                                 PagoSujetoRetencion = q.PagoSujetoRetencion,
-                                 BseImpNoObjDeIva = q.BseImpNoObjDeIva,
-                                 fecha_autorizacion = q.fecha_autorizacion,
-                                 Num_Autorizacion = q.Num_Autorizacion,
-                                 Num_Autorizacion_Imprenta = q.Num_Autorizacion_Imprenta,
-                                 cp_es_comprobante_electronico = q.cp_es_comprobante_electronico,
-                                 Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
-                                 estable_a_Modificar = q.estable_a_Modificar,
-                                 ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
-                                 num_docu_Modificar = q.num_docu_Modificar,
-                                 aut_doc_Modificar = q.aut_doc_Modificar,
-                                 IdTipoMovi = q.IdTipoMovi,
-                                 Estado = q.Estado,
-                                 info_proveedor = new cp_proveedor_Info
-                                 {
-                                     info_persona = new Info.General.tb_persona_Info
-                                     {
-                                         pe_apellido = q.pe_apellido,
-                                         pe_nombre = q.pe_nombre,
-                                         pe_nombreCompleto = q.pe_nombreCompleto,
-                                         pe_cedulaRuc = q.pe_cedulaRuc
-                                     }
-                                 },
-
-                                 EstadoBool = q.Estado == "A" ? true : false
-                             }).ToList();
-
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 pe_cedulaRuc = q.pe_cedulaRuc
+                             }
+                         }
+                         
+                     }).ToList();
                 }
                 return Lista;
 
