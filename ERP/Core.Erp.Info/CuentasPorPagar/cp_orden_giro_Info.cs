@@ -81,6 +81,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public bool PagoSujetoRetencion_bool { get; set; }
         public List<cp_orden_giro_det_Info> lst_det { get; set; }
         public List<cp_orden_giro_det_ing_x_oc_Info> lst_det_oc { get; set; }
+        public List<cp_orden_giro_det_ing_x_os_Info> lst_det_os { get; set; }
         public string SecuencialID { get; set; }
         public string nom_tipo_Documento { get; set; }
         #endregion

@@ -1154,6 +1154,9 @@
     <Build Include="dbo\Views\vwcxc_LiquidacionTarjeta_x_cxc_cobro.sql" />
     <Build Include="web\Tables\tb_LogError.sql" />
     <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Tables\cp_orden_giro_det_ing_x_os.sql" />
+    <Build Include="dbo\Views\vwcp_orden_giro_det_ing_x_os_x_cruzar.sql" />
+    <Build Include="dbo\Views\vwcp_orden_giro_det_ing_x_os.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

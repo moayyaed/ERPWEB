@@ -286,6 +286,9 @@
                 <a href="#tab_orden_compra" aria-controls="contabilidad" role="tab" data-toggle="tab">Orden de compra</a>
             </li> 
             <li>
+                <a href="#tab_orden_servicio" aria-controls="compra" role="tab" data-toggle="tab">Orden de servicio</a>
+            </li>
+            <li>
                 <a href="#tab_informacion_pago" aria-controls="contabilidad" role="tab" data-toggle="tab">Información adicional</a>
             </li>
         </ul>
@@ -447,7 +450,19 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_servicio">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="orden_compra"></label>
+                                @Html.Action("GridViewPartial_ing_inv_os_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_informacion_pago">
                 <div class="row">
                     <div class="col-md-12">

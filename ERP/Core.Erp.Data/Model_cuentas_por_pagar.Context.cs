@@ -69,6 +69,9 @@ namespace Core.Erp.Data
         public DbSet<vwcp_retencion> vwcp_retencion { get; set; }
         public DbSet<cp_nota_DebCre> cp_nota_DebCre { get; set; }
         public DbSet<cp_orden_giro> cp_orden_giro { get; set; }
+        public DbSet<cp_orden_giro_det_ing_x_os> cp_orden_giro_det_ing_x_os { get; set; }
+        public DbSet<vwcp_orden_giro_det_ing_x_os_x_cruzar> vwcp_orden_giro_det_ing_x_os_x_cruzar { get; set; }
+        public DbSet<vwcp_orden_giro_det_ing_x_os> vwcp_orden_giro_det_ing_x_os { get; set; }
     
         public virtual ObjectResult<spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result> spcp_Get_Data_orden_pago_con_cancelacion_x_pago(Nullable<int> idEmpresa_pago, Nullable<int> idTipoCbte_pago, Nullable<decimal> idCbteCble_pago, string idUsuario)
         {
