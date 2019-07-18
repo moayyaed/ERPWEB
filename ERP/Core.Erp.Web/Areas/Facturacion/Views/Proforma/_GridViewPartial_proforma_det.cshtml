@@ -179,8 +179,9 @@
                 e.Editor.ReadOnly = true;
             }
         };
-        
+
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdCliente'] = IdCliente.GetValue(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); e.customArgs['NivelDescuento'] = $('#IdNivel').val();}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
     });
 }
 @grid.Bind(Model).GetHtml()
