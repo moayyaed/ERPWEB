@@ -330,25 +330,32 @@
                     <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="datos_punto_venta1">
                 <div class="form-group">
                     <label for="vt_serie1">Establecimiento*</label>
                     @Html.TextBoxFor(q => q.vt_serie1, new { @class = "form-control", @id = "vt_serie1", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.vt_serie1, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="datos_punto_venta2">
                 <div class="form-group">
                     <label for="vt_serie2">Pto. Emisión*</label>
                     @Html.TextBoxFor(q => q.vt_serie2, new { @class = "form-control", @id = "vt_serie2", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.vt_serie2, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="datos_punto_venta3">
                 <div class="form-group">
                     <label for="vt_NumFactura"># Documento*</label>
                     @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.vt_NumFactura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pf_observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.vt_Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.vt_Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
