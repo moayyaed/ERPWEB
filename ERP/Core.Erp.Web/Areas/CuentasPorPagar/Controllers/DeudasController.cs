@@ -63,6 +63,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
+        tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -548,13 +549,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
             model.lst_det_os = ListaDetalleOS.get_list(model.IdTransaccionSession);
 
-            var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
-            if (sucu != null)
-            {
-                model.info_retencion = model.info_retencion ?? new cp_retencion_Info();
-                model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
-                model.info_retencion.serie2 = "001";
-            }
+            //var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
+            //if (sucu != null)
+            //{
+            //    model.info_retencion = model.info_retencion ?? new cp_retencion_Info();
+            //    model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
+            //    model.info_retencion.serie2 = "001";
+            //}
             if (bus_orden_giro.ValidarExisteOrdenPAgo(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro) == true)
             {
                if(!bus_orden_giro.ModificarDBCabecera(model))
@@ -941,6 +942,28 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetUltimoDocumento(int IdEmpresa=0, int IdSucursal = 0, int IdPuntoVta = 0, decimal IdCbteCble_Ogiro = 0, int IdTipoCbte_Ogiro = 0)
+        {
+            tb_sis_Documento_Tipo_Talonario_Info resultado = new tb_sis_Documento_Tipo_Talonario_Info();
+            cp_retencion_Info info_retencion = new cp_retencion_Info();
+
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+            info_retencion = bus_retencion.get_info(IdEmpresa, IdCbteCble_Ogiro, IdTipoCbte_Ogiro);
+
+            if (punto_venta != null)
+            {
+                var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
+                if (info_retencion.IdRetencion == 0)
+                {
+                    resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
+                }                
+            }
+
+            if (resultado == null)
+                resultado = new tb_sis_Documento_Tipo_Talonario_Info();
+
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado, data_retencion = info_retencion }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Detalle de inventario

@@ -62,8 +62,8 @@
 
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.IdCbteCble_Ogiro)
-    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro)
+    @Html.HiddenFor(q => q.IdCbteCble_Ogiro, new { @id = "IdCbteCble_Ogiro" })
+    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
     @Html.HiddenFor(q => q.co_fechaOg)
 
     @Html.HiddenFor(q => q.info_retencion.IdRetencion);
@@ -586,12 +586,17 @@
 <script>
     ValidarCompraSucursales();
     CargarPuntosDeVenta();
+    GetUltimoDocumento();
 
     $("#IdSucursal").change(function () {
         cargar_bodega();
         CargarPuntosDeVenta();
+        GetUltimoDocumento();
     });
 
+    $("#IdPuntoVta").change(function () {
+        GetUltimoDocumento();
+    });
 
     $("#co_subtotal_iva").change(function () {
 
@@ -829,6 +834,7 @@
             }
         });
     };
+
     function GetInfo_Producto(s, e) {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -944,6 +950,64 @@
                     $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
                     $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
                 });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetUltimoDocumento() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val(),
+            IdCbteCble_Ogiro: $("#IdCbteCble_Ogiro").val(),
+            IdTipoCbte_Ogiro: $("#IdTipoCbte_Ogiro").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetUltimoDocumento", "Deudas",new { Area = "CuentasPorPagar" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data.data_puntovta != null) {
+                    if (data.data_puntovta.EsElectronico == true) {
+                        $("#datos_punto_venta1").hide();
+                        $("#datos_punto_venta2").hide();
+                        $("#datos_punto_venta3").hide();
+                    }
+                    else {
+                        $("#datos_punto_venta1").show();
+                        $("#datos_punto_venta2").show();
+                        $("#datos_punto_venta3").show();
+
+                        if(data.data_retencion.IdRetencion == 0)
+                        {
+                            $("#IdPuntoVta").attr('readonly', false);
+                            $("#serie1").attr('readonly', false);
+                            $("#serie2").attr('readonly', false);;
+                            $("#NumRetencion").attr('readonly', false);
+
+                            if (data.data_talonario != null)
+                            {
+                                $("#serie1").val(data.data_talonario.Establecimiento);
+                                $("#serie2").val(data.data_talonario.PuntoEmision);
+                                $("#NumRetencion").val(data.data_talonario.NumDocumento);
+                            }
+                        }
+                        else
+                        {
+                            $("#IdPuntoVta").attr('readonly', true);
+                            $("#serie1").attr('readonly', true);
+                            $("#serie2").attr('readonly', true);;
+                            $("#NumRetencion").attr('readonly', true);
+                        }
+
+                    }
+                }
             },
             error: function (error) {
             }

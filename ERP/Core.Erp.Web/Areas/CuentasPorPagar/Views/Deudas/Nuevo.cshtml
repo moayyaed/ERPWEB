@@ -209,8 +209,8 @@
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.IdCbteCble_Ogiro)
-    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro)
+    @Html.HiddenFor(q => q.IdCbteCble_Ogiro, new { @id = "IdCbteCble_Ogiro" })
+    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
     @Html.HiddenFor(q => q.co_fechaOg)
 
     <div class="modal fade" id="OcModal" role="dialog">
@@ -770,7 +770,6 @@
 
 
     $("#co_subtotal_iva").change(function () {
-
         actualizar_valores();
         armar_diario();
     });
@@ -1100,13 +1099,16 @@
 
     function GetUltimoDocumento() {
         var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
             IdSucursal: $("#IdSucursal").val(),
-            IdPuntoVta: $("#IdPuntoVta").val()
+            IdPuntoVta: $("#IdPuntoVta").val(),
+            IdCbteCble_Ogiro: $("#IdCbteCble_Ogiro").val(),
+            IdTipoCbte_Ogiro: $("#IdTipoCbte_Ogiro").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("GetUltimoDocumento", "Retencion",new { Area = "CuentasPorPagar" })',
+            url: '@Url.Action("GetUltimoDocumento", "Deudas",new { Area = "CuentasPorPagar" })',
             async: false,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -1122,11 +1124,26 @@
                         $("#datos_punto_venta2").show();
                         $("#datos_punto_venta3").show();
 
-                        if (data.data_talonario != null) {
-                            $("#serie1").val(data.data_talonario.Establecimiento);
-                            $("#serie2").val(data.data_talonario.PuntoEmision);
-                            $("#NumRetencion").val(data.data_talonario.NumDocumento);
+                        if(data.data_retencion.IdRetencion == 0)
+                        {
+                            $("#serie1").attr('readonly', false);
+                            $("#serie2").attr('readonly', false);;
+                            $("#NumRetencion").attr('readonly', false);
+
+                            if (data.data_talonario != null) 
+                            {
+                                $("#serie1").val(data.data_talonario.Establecimiento);
+                                $("#serie2").val(data.data_talonario.PuntoEmision);
+                                $("#NumRetencion").val(data.data_talonario.NumDocumento);
+                            }
                         }
+                        else
+                        {
+                            $("#serie1").attr('readonly', true);
+                            $("#serie2").attr('readonly', true);;
+                            $("#NumRetencion").attr('readonly', true);
+                        }
+                        
                     }
                 }
             },

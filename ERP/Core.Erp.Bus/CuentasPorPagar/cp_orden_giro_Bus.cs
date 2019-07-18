@@ -125,8 +125,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.Estado = "A";
                         info.info_retencion.fecha = info.co_fechaOg;
                         info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
-                        //info.info_retencion.serie1 = sucursal.Su_CodigoEstablecimiento;
-                        //info.info_retencion.serie2 ="001";
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         info.info_retencion.observacion = "Retencion de factura #" + info.co_serie +'-'+ info.co_factura;
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
@@ -198,6 +196,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     {
                         tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
                         var sucursal = data_sucursal.get_info(info.IdEmpresa, info.IdSucursal);
+
                         info.info_retencion.IdEmpresa = info.IdEmpresa;
                         info.info_retencion.IdProveedor = info.IdProveedor;
                         info.info_retencion.IdEmpresa_Ogiro = info.IdEmpresa;
@@ -208,22 +207,23 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.Descripcion = info.Descripcion;
                         info.info_retencion.Estado = "A";
                         info.info_retencion.fecha = info.co_fechaOg;
-                        if (info.info_retencion.serie1 == null)
-                        {
-                            info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
-                            info.info_retencion.serie1 = sucursal.Su_CodigoEstablecimiento;
-                            info.info_retencion.serie2 = "001";
-                        }
-                        else
-                        {
-                            info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
-                            info.info_retencion.serie1 = info.info_retencion.serie1;
-                            info.info_retencion.serie2 = info.info_retencion.serie2;
-                        }
+                        //if (info.info_retencion.serie1 == null)
+                        //{
+                        //    info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
+                        //    info.info_retencion.serie1 = sucursal.Su_CodigoEstablecimiento;
+                        //    info.info_retencion.serie2 = "001";
+                        //}
+                        //else
+                        //{
+                        //    info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
+                        //    info.info_retencion.serie1 = info.info_retencion.serie1;
+                        //    info.info_retencion.serie2 = info.info_retencion.serie2;
+                        //}
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         info.info_retencion.observacion = "Retencion de factura #" + info.co_serie + '-' + info.co_factura;
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
                         info.info_retencion.aprobada_enviar_sri = false;
+
                         if (info.info_retencion.IdRetencion != 0)
                         {
                             if (bus_retencion.modificarDB(info.info_retencion))
