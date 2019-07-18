@@ -15,11 +15,7 @@ namespace Core.Erp.Data.Facturacion
                 List<fa_PuntoVta_Info> Lista;
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.vwfa_PuntoVta
-                             where q.IdEmpresa == IdEmpresa
-                             && q.codDocumentoTipo == CodDocumentoTipo
-                             select new fa_PuntoVta_Info
+                    Lista = Context.vwfa_PuntoVta.Where(q=> q.IdEmpresa == IdEmpresa && q.codDocumentoTipo == (string.IsNullOrEmpty(CodDocumentoTipo) ? q.codDocumentoTipo : CodDocumentoTipo) && q.estado == (mostrar_anulados ? q.estado : true)).Select(q=> new fa_PuntoVta_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,
@@ -30,22 +26,7 @@ namespace Core.Erp.Data.Facturacion
                                  Su_Descripcion = q.Su_Descripcion,
                                  CobroAutomatico = q.CobroAutomatico                                
                              }).ToList();
-                    else
-                        Lista = (from q in Context.vwfa_PuntoVta
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.codDocumentoTipo == CodDocumentoTipo
-                                 && q.estado == true
-                                 select new fa_PuntoVta_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdSucursal = q.IdSucursal,
-                                     IdPuntoVta = q.IdPuntoVta,
-                                     cod_PuntoVta = q.cod_PuntoVta,
-                                     nom_PuntoVta = q.nom_PuntoVta,
-                                     estado = q.estado,
-                                     Su_Descripcion = q.Su_Descripcion,
-                                     CobroAutomatico = q.CobroAutomatico
-                                 }).ToList();
+                   
                 }
                 return Lista;
             }
