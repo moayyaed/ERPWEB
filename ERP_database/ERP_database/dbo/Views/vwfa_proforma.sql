@@ -4,7 +4,7 @@ SELECT        dbo.fa_proforma.IdEmpresa, dbo.fa_proforma.IdSucursal, dbo.fa_prof
                          dbo.fa_proforma.pf_observacion, dbo.fa_proforma.pf_fecha, dbo.fa_proforma.pf_fecha_vcto, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, ISNULL(pdet.pd_subtotal, 0) 
                          AS pd_subtotal, ISNULL(pdet.pd_iva, 0) AS pd_iva, ISNULL(pdet.pd_total, 0) AS pd_total, dbo.fa_proforma.estado, dbo.fa_proforma.IdUsuario_creacion, 
                          dbo.fa_proforma.fecha_creacion, dbo.fa_proforma.IdUsuario_modificacion, dbo.fa_proforma.fecha_modificacion, dbo.fa_proforma.IdUsuario_anulacion, dbo.fa_proforma.fecha_anulacion, dbo.fa_proforma.IdBodega, 
-                         dbo.fa_proforma.IdVendedor, dbo.fa_proforma.pf_atencion_a, dbo.fa_proforma.pr_dias_entrega,
+                         dbo.fa_proforma.IdVendedor, dbo.fa_proforma.pr_dias_entrega,
 						 CASE WHEN pdet.anulado = 1 THEN 'CERRADO' ELSE 						 
 						 IIF((pd_cantidad - ISNULL(vt_cantidad,0)) != pd_cantidad,'FACTURADO','ABIERTO')
 						 end as EstadoCierre

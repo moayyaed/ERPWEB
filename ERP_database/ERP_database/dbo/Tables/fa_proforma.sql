@@ -19,7 +19,6 @@
     [MotivoAnulacion]        VARCHAR (500) NULL,
     [IdBodega]               INT           NOT NULL,
     [IdVendedor]             INT           NOT NULL,
-    [pf_atencion_a]          VARCHAR (500) NULL,
     [pr_dias_entrega]        INT           NOT NULL,
     [IdNivel]                INT           NOT NULL,
     [IdCatalogo_FormaPago]   VARCHAR (15)  NULL,

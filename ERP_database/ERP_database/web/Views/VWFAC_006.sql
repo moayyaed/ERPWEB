@@ -3,7 +3,7 @@ as
 SELECT dbo.fa_proforma_det.IdEmpresa, dbo.tb_sucursal.Su_CodigoEstablecimiento, dbo.tb_sucursal.Su_Descripcion, dbo.tb_sucursal.Su_Direccion, dbo.tb_sucursal.Su_Telefonos, dbo.fa_proforma_det.IdSucursal, dbo.fa_proforma.IdCliente, 
                   dbo.tb_persona.pe_nombreCompleto AS nombre_cliente, dbo.tb_persona.pe_cedulaRuc AS ced_ruc_cliente, dbo.tb_persona.pe_direccion AS direccion_cliente, dbo.tb_persona.pe_celular AS celular_cliente, 
                   dbo.tb_persona.pe_telfono_Contacto AS telefono_cliente, dbo.fa_proforma_det.IdProforma, dbo.fa_proforma_det.Secuencia, dbo.fa_TerminoPago.nom_TerminoPago, dbo.fa_proforma.pf_plazo, dbo.fa_proforma.pf_codigo, 
-                  dbo.fa_proforma.pf_fecha, dbo.fa_proforma.estado, dbo.fa_proforma.pf_atencion_a, dbo.fa_Vendedor.Codigo, dbo.fa_Vendedor.Ve_Vendedor, dbo.fa_proforma_det.pd_cantidad, dbo.fa_proforma_det.pd_precio, 
+                  dbo.fa_proforma.pf_fecha, dbo.fa_proforma.estado, dbo.fa_Vendedor.Codigo, dbo.fa_Vendedor.Ve_Vendedor, dbo.fa_proforma_det.pd_cantidad, dbo.fa_proforma_det.pd_precio, 
                   dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, dbo.fa_proforma_det.pd_por_iva, dbo.fa_proforma_det.pd_iva, 
                   dbo.fa_proforma_det.pd_subtotal + dbo.fa_proforma_det.pd_iva AS pd_total, dbo.in_Producto.pr_observacion, dbo.fa_proforma_det.IdProducto, dbo.fa_proforma.pr_dias_entrega, dbo.fa_proforma.pf_observacion, 
                   dbo.in_Producto.pr_descripcion
