@@ -24,7 +24,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                CodDocumentoTipo = ""
+                CodDocumentoTipo = "FACT"
             };
             cargar_combos_consulta();
             return View(model);
