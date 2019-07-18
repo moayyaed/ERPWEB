@@ -83,9 +83,9 @@ namespace Core.Erp.Data
         public DbSet<vwfa_CambioProductoDet> vwfa_CambioProductoDet { get; set; }
         public DbSet<vwfa_notaCreDeb1> vwfa_notaCreDeb1Set { get; set; }
         public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
-        public DbSet<fa_proforma> fa_proforma { get; set; }
-        public DbSet<vwfa_proforma> vwfa_proforma { get; set; }
         public DbSet<vwfa_PuntoVta> vwfa_PuntoVta { get; set; }
+        public DbSet<vwfa_proforma> vwfa_proforma { get; set; }
+        public DbSet<fa_proforma> fa_proforma { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {
