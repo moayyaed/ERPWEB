@@ -24,8 +24,11 @@ namespace Core.Erp.Data.Facturacion
                                  nom_PuntoVta = q.nom_PuntoVta,
                                  estado = q.estado,
                                  Su_Descripcion = q.Su_Descripcion,
-                                 CobroAutomatico = q.CobroAutomatico                                
-                             }).ToList();
+                                 CobroAutomatico = q.CobroAutomatico    ,
+                                 EsElectronico  = q.EsElectronico,
+                                 Descripcion=q.Descripcion
+
+                    }).ToList();
                    
                 }
                 return Lista;

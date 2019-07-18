@@ -82,10 +82,21 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(30);
-        settings.Columns.Add("IdPuntoVta", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(25);
+        settings.Columns.Add("IdPuntoVta", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("cod_PuntoVta", "Punto emisión").Width = Unit.Percentage(10);
-        settings.Columns.Add("nom_PuntoVta", "Descripción").Width = Unit.Percentage(40);
+        settings.Columns.Add("nom_PuntoVta", "Descripción").Width = Unit.Percentage(20);
+        settings.Columns.Add("Descripcion", "Tipo documento").Width = Unit.Percentage(20);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EsElectronico";
+            column.Caption = "Es electronico";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.EditorProperties().CheckBox(sp =>
+            {
+
+            });
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "estado";

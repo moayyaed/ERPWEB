@@ -9,6 +9,30 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script>
+
+    function AutorizarSRI() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdBodega: $("#IdBodega").val(),
+            IdCbteVta: $("#IdCbteVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AutorizarSRI", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert("Solicitud de autorización enviada exitósamente, por favor espere a que sea procesada por el SRI para imprimir el RIDE");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
     $(function () {
         CargarPuntosDeVenta();
         SetNaturalezaNota();
@@ -381,7 +405,13 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-10 col-md-1">
+            <div class="col-md-offset-5 col-md-1">
+                <label for="Autorizar"></label>
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
+                    <i class="fa fa-send"></i>  SRI
+                </button>
+            </div>
+            <div class="col-md-offset-4 col-md-1">
                 <label for="IdImprimir"></label>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
@@ -401,18 +431,25 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdPuntoVta">Punto de venta*</label>
                     @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Naturaleza</label>
+                    @Html.DropDownListFor(q => q.NaturalezaNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "NaturalezaNota", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.NaturalezaNota, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-10">
@@ -504,32 +541,33 @@
                                 @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Naturaleza</label>
-                                @Html.DropDownListFor(q => q.NaturalezaNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "NaturalezaNota" })
-                                @Html.ValidationMessageFor(q => q.NaturalezaNota, "", new { @class = "text-danger" })
+                                <label for="CodNota">Código</label>
+                                @Html.TextBoxFor(q => q.CodNota, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.CodNota, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div id="divNaturaleza" hidden>
                             <div class="col-md-3" id="datos_punto_venta1">
                                 <div class="form-group">
                                     <label for="Serie1">Establecimiento*</label>
-                                    @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "vt_serie1" })
+                                    @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "vt_serie1",@disabled="disabled" })
                                     @Html.ValidationMessageFor(q => q.Serie1, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-md-3" id="datos_punto_venta2">
                                 <div class="form-group">
                                     <label for="Serie2">Pto. Emisión*</label>
-                                    @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "vt_serie2" })
+                                    @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "vt_serie2", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(q => q.Serie2, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-md-6" id="datos_punto_venta3">
                                 <div class="form-group">
                                     <label for="NumNota_Impresa"># Documento*</label>
-                                    @Html.TextBoxFor(q => q.NumNota_Impresa, new { @class = "form-control", @id = "vt_NumFactura" })
+                                    @Html.TextBoxFor(q => q.NumNota_Impresa, new { @class = "form-control", @id = "vt_NumFactura", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(q => q.NumNota_Impresa, "", new { @class = "text-danger" })
                                 </div>
                             </div>

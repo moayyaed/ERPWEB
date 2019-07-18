@@ -366,19 +366,25 @@
 
     <div class="row">
         <div class="col-md-6">
-
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdPuntoVta">Punto de venta*</label>
                     @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
                     @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Naturaleza</label>
+                    @Html.DropDownListFor(q => q.NaturalezaNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "NaturalezaNota" })
+                    @Html.ValidationMessageFor(q => q.NaturalezaNota, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-10">
@@ -424,6 +430,7 @@
                 </ul>
                 <div class="tab-content" style="padding-top: 5px">
                     <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_general">
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="pf_fecha">Fecha*</label>
@@ -471,11 +478,12 @@
                                 @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Naturaleza</label>
-                                @Html.DropDownListFor(q => q.NaturalezaNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "NaturalezaNota" })
-                                @Html.ValidationMessageFor(q => q.NaturalezaNota, "", new { @class = "text-danger" })
+                                <label for="CodNota">Código</label>
+                                @Html.TextBoxFor(q => q.CodNota, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.CodNota, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div id="divNaturaleza" hidden>

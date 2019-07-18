@@ -29,5 +29,6 @@ namespace Core.Erp.Data
         public bool CobroAutomatico { get; set; }
         public bool EsElectronico { get; set; }
         public string codDocumentoTipo { get; set; }
+        public string Descripcion { get; set; }
     }
 }

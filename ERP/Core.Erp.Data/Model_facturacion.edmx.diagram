@@ -49,7 +49,6 @@
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_sin_automatico" Width="1.5" PointX="13.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_cliente_consulta" Width="1.5" PointX="5.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura" Width="1.5" PointX="7.375" PointY="9.75" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_PuntoVta" Width="1.5" PointX="19.375" PointY="17.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_cliente" Width="1.5" PointX="21.625" PointY="28.25" />
         <EntityTypeShape EntityType="Model_facturacion.fa_cliente_tipo" Width="1.5" PointX="19.375" PointY="27.875" />
         <EntityTypeShape EntityType="Model_facturacion.fa_parametro" Width="1.5" PointX="23.875" PointY="36.5" />
@@ -107,6 +106,7 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_TerminoPago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_Vendedor" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_PuntoVta" Width="1.5" PointX="19.375" PointY="17.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

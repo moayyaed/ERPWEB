@@ -707,6 +707,7 @@
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="500" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="IdVendedor" Type="int" Nullable="false" />
+          <Property Name="pf_atencion_a" Type="varchar" MaxLength="500" />
           <Property Name="pr_dias_entrega" Type="int" Nullable="false" />
           <Property Name="IdNivel" Type="int" Nullable="false" />
           <Property Name="IdCatalogo_FormaPago" Type="varchar" MaxLength="15" />
@@ -1130,6 +1131,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_proforma' no tiene definida n
           <Property Name="fecha_anulacion" Type="datetime" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="IdVendedor" Type="int" Nullable="false" />
+          <Property Name="pf_atencion_a" Type="varchar" MaxLength="500" />
           <Property Name="pr_dias_entrega" Type="int" Nullable="false" />
           <Property Name="EstadoCierre" Type="varchar" MaxLength="9" Nullable="false" />
         </EntityType>
@@ -1234,7 +1236,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_PuntoVta' no tiene definida n
             <PropertyRef Name="estado" />
             <PropertyRef Name="IdBodega" />
             <PropertyRef Name="IdCaja" />
-            
+            <PropertyRef Name="CobroAutomatico" />
             <PropertyRef Name="EsElectronico" />
             <PropertyRef Name="codDocumentoTipo" />
           </Key>
@@ -1253,6 +1255,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_PuntoVta' no tiene definida n
           <Property Name="CobroAutomatico" Type="bit" Nullable="false" />
           <Property Name="EsElectronico" Type="bit" Nullable="false" />
           <Property Name="codDocumentoTipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwfa_cliente_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2477,6 +2480,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
     [vwfa_proforma].[fecha_anulacion] AS [fecha_anulacion], 
     [vwfa_proforma].[IdBodega] AS [IdBodega], 
     [vwfa_proforma].[IdVendedor] AS [IdVendedor], 
+    [vwfa_proforma].[pf_atencion_a] AS [pf_atencion_a], 
     [vwfa_proforma].[pr_dias_entrega] AS [pr_dias_entrega], 
     [vwfa_proforma].[EstadoCierre] AS [EstadoCierre]
     FROM [dbo].[vwfa_proforma] AS [vwfa_proforma]</DefiningQuery>
@@ -2548,7 +2552,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
     [vwfa_PuntoVta].[NumCopias] AS [NumCopias], 
     [vwfa_PuntoVta].[CobroAutomatico] AS [CobroAutomatico], 
     [vwfa_PuntoVta].[EsElectronico] AS [EsElectronico], 
-    [vwfa_PuntoVta].[codDocumentoTipo] AS [codDocumentoTipo]
+    [vwfa_PuntoVta].[codDocumentoTipo] AS [codDocumentoTipo], 
+    [vwfa_PuntoVta].[Descripcion] AS [Descripcion]
     FROM [dbo].[vwfa_PuntoVta] AS [vwfa_PuntoVta]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwfa_cliente_consulta" EntityType="Self.vwfa_cliente_consulta" store:Type="Views" store:Schema="web">
@@ -3531,7 +3536,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="vwfa_factura_sin_automatico" EntityType="Model_facturacion.vwfa_factura_sin_automatico" />
           <EntitySet Name="vwfa_cliente_consulta" EntityType="Model_facturacion.vwfa_cliente_consulta" />
           <EntitySet Name="vwfa_factura" EntityType="Model_facturacion.vwfa_factura" />
-          <EntitySet Name="vwfa_PuntoVta" EntityType="Model_facturacion.vwfa_PuntoVta" />
           <EntitySet Name="fa_cliente" EntityType="Model_facturacion.fa_cliente" />
           <EntitySet Name="fa_cliente_tipo" EntityType="Model_facturacion.fa_cliente_tipo" />
           <EntitySet Name="fa_parametro" EntityType="Model_facturacion.fa_parametro" />
@@ -3703,6 +3707,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             <End Role="fa_Vendedor" EntitySet="fa_Vendedor" />
             <End Role="fa_proforma" EntitySet="fa_proforma" />
           </AssociationSet>
+          <EntitySet Name="vwfa_PuntoVta" EntityType="Model_facturacion.vwfa_PuntoVta" />
           </EntityContainer>
         <EntityType Name="vwfa_factura_det">
           <Key>
@@ -4198,36 +4203,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="IdNumMovi_in_eg_x_inv" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
           <Property Name="vt_autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vwfa_PuntoVta">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="IdPuntoVta" />
-            <PropertyRef Name="cod_PuntoVta" />
-            <PropertyRef Name="nom_PuntoVta" />
-            <PropertyRef Name="estado" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdCaja" />
-            <PropertyRef Name="EsElectronico" />
-            <PropertyRef Name="codDocumentoTipo" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdPuntoVta" Type="Int32" Nullable="false" />
-          <Property Name="cod_PuntoVta" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="nom_PuntoVta" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="Su_CodigoEstablecimiento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="IdCaja" Type="Int32" Nullable="false" />
-          <Property Name="IPImpresora" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="NumCopias" Type="Int32" />
-          <Property Name="CobroAutomatico" Type="Boolean" Nullable="false" />
-          <Property Name="EsElectronico" Type="Boolean" Nullable="false" />
-          <Property Name="codDocumentoTipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="fa_cliente">
           <Key>
@@ -5349,6 +5324,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <NavigationProperty Name="fa_proforma_det" Relationship="Model_facturacion.FK_fa_proforma_det_fa_proforma" FromRole="fa_proforma" ToRole="fa_proforma_det" />
           <NavigationProperty Name="fa_TerminoPago" Relationship="Model_facturacion.FK_fa_proforma_fa_TerminoPago" FromRole="fa_proforma" ToRole="fa_TerminoPago" />
           <NavigationProperty Name="fa_Vendedor" Relationship="Model_facturacion.FK_fa_proforma_fa_Vendedor" FromRole="fa_proforma" ToRole="fa_Vendedor" />
+          <Property Name="pf_atencion_a" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vwfa_proforma">
           <Key>
@@ -5397,6 +5373,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="IdVendedor" Type="Int32" Nullable="false" />
           <Property Name="pr_dias_entrega" Type="Int32" Nullable="false" />
           <Property Name="EstadoCierre" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="pf_atencion_a" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_fa_proforma_fa_cliente">
           <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
@@ -5468,6 +5445,38 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwfa_PuntoVta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="IdPuntoVta" />
+            <PropertyRef Name="cod_PuntoVta" />
+            <PropertyRef Name="nom_PuntoVta" />
+            <PropertyRef Name="estado" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="CobroAutomatico" />
+            <PropertyRef Name="EsElectronico" />
+            <PropertyRef Name="codDocumentoTipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdPuntoVta" Type="Int32" Nullable="false" />
+          <Property Name="cod_PuntoVta" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nom_PuntoVta" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="Su_CodigoEstablecimiento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IdCaja" Type="Int32" Nullable="false" />
+          <Property Name="IPImpresora" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NumCopias" Type="Int32" />
+          <Property Name="CobroAutomatico" Type="Boolean" Nullable="false" />
+          <Property Name="EsElectronico" Type="Boolean" Nullable="false" />
+          <Property Name="codDocumentoTipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6207,27 +6216,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwfa_PuntoVta">
-            <EntityTypeMapping TypeName="Model_facturacion.vwfa_PuntoVta">
-              <MappingFragment StoreEntitySet="vwfa_PuntoVta">
-                <ScalarProperty Name="codDocumentoTipo" ColumnName="codDocumentoTipo" />
-                <ScalarProperty Name="EsElectronico" ColumnName="EsElectronico" />
-                <ScalarProperty Name="CobroAutomatico" ColumnName="CobroAutomatico" />
-                <ScalarProperty Name="NumCopias" ColumnName="NumCopias" />
-                <ScalarProperty Name="IPImpresora" ColumnName="IPImpresora" />
-                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
-                <ScalarProperty Name="Su_CodigoEstablecimiento" ColumnName="Su_CodigoEstablecimiento" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="nom_PuntoVta" ColumnName="nom_PuntoVta" />
-                <ScalarProperty Name="cod_PuntoVta" ColumnName="cod_PuntoVta" />
-                <ScalarProperty Name="IdPuntoVta" ColumnName="IdPuntoVta" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="fa_cliente">
             <EntityTypeMapping TypeName="Model_facturacion.fa_cliente">
               <MappingFragment StoreEntitySet="fa_cliente">
@@ -6670,6 +6658,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySetMapping Name="fa_proforma">
             <EntityTypeMapping TypeName="Model_facturacion.fa_proforma">
               <MappingFragment StoreEntitySet="fa_proforma">
+                <ScalarProperty Name="pf_atencion_a" ColumnName="pf_atencion_a" />
                 <ScalarProperty Name="IdCatalogo_FormaPago" ColumnName="IdCatalogo_FormaPago" />
                 <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
                 <ScalarProperty Name="pr_dias_entrega" ColumnName="pr_dias_entrega" />
@@ -6699,6 +6688,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySetMapping Name="vwfa_proforma">
             <EntityTypeMapping TypeName="Model_facturacion.vwfa_proforma">
               <MappingFragment StoreEntitySet="vwfa_proforma">
+                <ScalarProperty Name="pf_atencion_a" ColumnName="pf_atencion_a" />
                 <ScalarProperty Name="EstadoCierre" ColumnName="EstadoCierre" />
                 <ScalarProperty Name="pr_dias_entrega" ColumnName="pr_dias_entrega" />
                 <ScalarProperty Name="IdVendedor" ColumnName="IdVendedor" />
@@ -6723,6 +6713,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="IdTerminoPago" ColumnName="IdTerminoPago" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="IdProforma" ColumnName="IdProforma" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_PuntoVta">
+            <EntityTypeMapping TypeName="Model_facturacion.vwfa_PuntoVta">
+              <MappingFragment StoreEntitySet="vwfa_PuntoVta">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="codDocumentoTipo" ColumnName="codDocumentoTipo" />
+                <ScalarProperty Name="EsElectronico" ColumnName="EsElectronico" />
+                <ScalarProperty Name="CobroAutomatico" ColumnName="CobroAutomatico" />
+                <ScalarProperty Name="NumCopias" ColumnName="NumCopias" />
+                <ScalarProperty Name="IPImpresora" ColumnName="IPImpresora" />
+                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
+                <ScalarProperty Name="Su_CodigoEstablecimiento" ColumnName="Su_CodigoEstablecimiento" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nom_PuntoVta" ColumnName="nom_PuntoVta" />
+                <ScalarProperty Name="cod_PuntoVta" ColumnName="cod_PuntoVta" />
+                <ScalarProperty Name="IdPuntoVta" ColumnName="IdPuntoVta" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

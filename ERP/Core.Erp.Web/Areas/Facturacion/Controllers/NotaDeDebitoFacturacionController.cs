@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.CuentasPorPagar;
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
@@ -216,6 +217,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             List_det.set_list(new List<fa_notaCreDeb_det_Info>(), IdTransaccionSession);
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
         #endregion
         #region Grillas de cruce
         public ActionResult GridViewPartial_CruceND_x_cruzar()
@@ -335,8 +337,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.lst_contacto = lst_contacto;
 
             Dictionary<string, string> lst_naturaleza = new Dictionary<string, string>();
-            lst_naturaleza.Add("INT", "Interno");
-            lst_naturaleza.Add("SRI", "Autorizado por el SRI");
+            lst_naturaleza.Add("INT", "INTERNO");
+            lst_naturaleza.Add("SRI", "SRI");
             ViewBag.lst_naturaleza = lst_naturaleza;
 
             var lst_tipo_nota = bus_tipo_nota.get_list(model.IdEmpresa, "D", false);
