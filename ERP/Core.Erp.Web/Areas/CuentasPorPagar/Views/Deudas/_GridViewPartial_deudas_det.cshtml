@@ -15,7 +15,8 @@
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Deudas", Action = "EditingDeleteDetalle", Area = "CuentasPorPagar" };
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
@@ -47,7 +48,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(25);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -55,7 +56,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(25);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -67,7 +68,7 @@
         {
             column.FieldName = "IdUnidadMedida";
             column.Caption = "U. de medida";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
             {
@@ -82,7 +83,7 @@
         {
             column.FieldName = "Cantidad";
             column.Caption = "Cantidad";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(p =>
             {
@@ -94,7 +95,7 @@
         {
             column.FieldName = "CostoUni";
             column.Caption = "Costo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(p =>
             {
@@ -106,7 +107,7 @@
         {
             column.FieldName = "PorDescuento";
             column.Caption = "% Dscto.";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(p =>
             {
@@ -118,7 +119,7 @@
         {
             column.FieldName = "IdCod_Impuesto_Iva";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
@@ -135,7 +136,7 @@
             column.FieldName = "CostoUniFinal";
             column.Caption = "Costo final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -143,7 +144,7 @@
             column.FieldName = "Subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -151,7 +152,7 @@
             column.FieldName = "ValorIva";
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -159,7 +160,7 @@
             column.FieldName = "Total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.SettingsBehavior.AllowSort = false;

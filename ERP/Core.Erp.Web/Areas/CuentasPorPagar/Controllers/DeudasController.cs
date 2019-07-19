@@ -317,6 +317,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 info_retencion = new cp_retencion_Info()
             };
 
+            model.info_retencion = new cp_retencion_Info();
+            if (model.info_retencion.IdRetencion == 0)
+            {
+                model.TieneRetencion = 0;
+            }
+            else
+            {
+                model.TieneRetencion = 1;
+            }
+
             List_cp_retencion_det.set_list(new List<cp_retencion_det_Info>(), model.IdTransaccionSession);
             List_ct_cbtecble_det_List_retencion.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
 
@@ -445,18 +455,26 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.lst_det_oc = bus_orden_giro_det_ing_x_oc.get_list(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             model.lst_det_os = bus_orden_giro_det_ing_x_os.get_list(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
 
-            if (model.info_retencion.IdEmpresa == 0)
+            if (model.info_retencion.IdRetencion == 0)
             {
-                tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
-                var sucursal = bus_sucursal.get_info(IdEmpresa, model.IdSucursal);
-                info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, "001", false, false);
-                if (info_documento != null)
-                {
-                    model.info_retencion.serie1 = info_documento.Establecimiento;
-                    model.info_retencion.serie2 = info_documento.PuntoEmision;
-                    model.info_retencion.NumRetencion = info_documento.NumDocumento;
-                }
+                model.TieneRetencion = 0;
             }
+            else
+            {
+                model.TieneRetencion = 1;
+            }
+            //if (model.info_retencion.IdEmpresa == 0)
+            //{
+            //    tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
+            //    var sucursal = bus_sucursal.get_info(IdEmpresa, model.IdSucursal);
+            //    info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, "001", false, false);
+            //    if (info_documento != null)
+            //    {
+            //        model.info_retencion.serie1 = info_documento.Establecimiento;
+            //        model.info_retencion.serie2 = info_documento.PuntoEmision;
+            //        model.info_retencion.NumRetencion = info_documento.NumDocumento;
+            //    }
+            //}
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
@@ -549,13 +567,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
             model.lst_det_os = ListaDetalleOS.get_list(model.IdTransaccionSession);
 
-            //var sucu = bus_sucursal.get_info(model.IdEmpresa, model.IdSucursal);
-            //if (sucu != null)
-            //{
-            //    model.info_retencion = model.info_retencion ?? new cp_retencion_Info();
-            //    model.info_retencion.serie1 = sucu.Su_CodigoEstablecimiento;
-            //    model.info_retencion.serie2 = "001";
-            //}
             if (bus_orden_giro.ValidarExisteOrdenPAgo(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro) == true)
             {
                if(!bus_orden_giro.ModificarDBCabecera(model))
@@ -576,8 +587,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0)
         {
-
-
             cp_orden_giro_Info model = bus_orden_giro.get_info(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -596,6 +605,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             List_det.set_list(bus_det.get_list(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro), model.IdTransaccionSession);
             model.info_retencion = bus_retencion.get_info(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             model.info_retencion = bus_retencion.get_info(model.info_retencion.IdEmpresa, model.info_retencion.IdRetencion);
+
+            if (model.info_retencion.IdRetencion == 0)
+            {
+                model.TieneRetencion = 0;
+            }
+            else
+            {
+                model.TieneRetencion = 1;
+            }
 
             model.lst_det_oc = bus_orden_giro_det_ing_x_oc.get_list(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
             ListaDetalleOC.set_list(model.lst_det_oc, model.IdTransaccionSession);
@@ -626,7 +644,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             info_parametro = bus_param.get_info(model.IdEmpresa);
 
             if (info_parametro == null)
-
             {
                 ViewBag.mensaje = "Falta parametros del modulo cuenta por pagar";
                 cargar_combos(model);
@@ -942,27 +959,31 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetUltimoDocumento(int IdEmpresa=0, int IdSucursal = 0, int IdPuntoVta = 0, decimal IdCbteCble_Ogiro = 0, int IdTipoCbte_Ogiro = 0)
+        public JsonResult GetUltimoDocumento(int IdEmpresa=0, int IdSucursal = 0, int IdPuntoVta = 0, int TieneRetencion= 0)
         {
             tb_sis_Documento_Tipo_Talonario_Info resultado = new tb_sis_Documento_Tipo_Talonario_Info();
-            cp_retencion_Info info_retencion = new cp_retencion_Info();
+            //cp_retencion_Info info_retencion = new cp_retencion_Info();
 
             var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
-            info_retencion = bus_retencion.get_info(IdEmpresa, IdCbteCble_Ogiro, IdTipoCbte_Ogiro);
+            //info_retencion = bus_retencion.get_info(IdEmpresa, IdCbteCble_Ogiro, IdTipoCbte_Ogiro);
 
             if (punto_venta != null)
             {
                 var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
-                if (info_retencion.IdRetencion == 0)
+                if(TieneRetencion == 0)
                 {
                     resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
                 }                
+                //if (info_retencion.IdRetencion == 0)
+                //{
+                //    resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
+                //}                
             }
 
             if (resultado == null)
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
 
-            return Json(new { data_puntovta = punto_venta, data_talonario = resultado, data_retencion = info_retencion }, JsonRequestBehavior.AllowGet);
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

@@ -24,8 +24,9 @@
 
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.IdCbteCble_Ogiro)
-    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro)
+    @Html.HiddenFor(q => q.IdCbteCble_Ogiro, new { @id = "IdCbteCble_Ogiro" })
+    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
+    @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
     @Html.HiddenFor(q => q.co_fechaOg)
 
     @Html.HiddenFor(q => q.info_retencion.IdRetencion);
@@ -302,7 +303,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="IdPuntoVta">Punto de venta*</label>
-                                                @Html.DropDownListFor(q => q.info_retencion.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
+                                                @Html.DropDownListFor(q => q.info_retencion.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(q => q.info_retencion.IdPuntoVta, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -310,21 +311,21 @@
                                         <div class="col-md-2" id="datos_punto_venta1">
                                             <div class="form-group">
                                                 <label for="vt_serie1">Establecimiento*</label>
-                                                @Html.TextBoxFor(q => q.info_retencion.serie1, new { @class = "form-control", @id = "serie1" })
+                                                @Html.TextBoxFor(q => q.info_retencion.serie1, new { @class = "form-control", @id = "serie1", @readonly = "readonly"})
                                                 @Html.ValidationMessageFor(q => q.info_retencion.serie1, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="col-md-2" id="datos_punto_venta2">
                                             <div class="form-group">
                                                 <label for="vt_serie2">Pto. Emisión*</label>
-                                                @Html.TextBoxFor(q => q.info_retencion.serie2, new { @class = "form-control", @id = "serie2" })
+                                                @Html.TextBoxFor(q => q.info_retencion.serie2, new { @class = "form-control", @id = "serie2", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(q => q.info_retencion.serie2, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="col-md-2" id="datos_punto_venta3">
                                             <div class="form-group">
                                                 <label for="vt_NumFactura"># Documento*</label>
-                                                @Html.TextBoxFor(q => q.info_retencion.NumRetencion, new { @class = "form-control", @id = "NumRetencion" })
+                                                @Html.TextBoxFor(q => q.info_retencion.NumRetencion, new { @class = "form-control", @id = "NumRetencion", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(q => q.info_retencion.NumRetencion, "", new { @class = "text-danger" })
                                             </div>
                                         </div>

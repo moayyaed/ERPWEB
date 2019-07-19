@@ -207,6 +207,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.Descripcion = info.Descripcion;
                         info.info_retencion.Estado = "A";
                         info.info_retencion.fecha = info.co_fechaOg;
+                        info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                         //if (info.info_retencion.serie1 == null)
                         //{
                         //    info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
