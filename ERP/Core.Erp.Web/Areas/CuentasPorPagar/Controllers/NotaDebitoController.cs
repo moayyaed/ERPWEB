@@ -178,8 +178,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             }
             Dictionary<string, string> lst_tipo_nota = new Dictionary<string, string>();
-            lst_tipo_nota.Add("T_TIP_NOTA_INT", "Uso interno");
-            lst_tipo_nota.Add("T_TIP_NOTA_SRI", "Autorizado por SRI");
+            lst_tipo_nota.Add("T_TIP_NOTA_INT", "INTERNO");
+            lst_tipo_nota.Add("T_TIP_NOTA_SRI", "SRI");
             ViewBag.lst_tipo_nota = lst_tipo_nota;
             
             List<string> lst_tipo_servicio = new List<string>();

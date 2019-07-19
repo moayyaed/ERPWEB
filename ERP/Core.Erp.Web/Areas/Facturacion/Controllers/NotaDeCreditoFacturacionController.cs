@@ -339,8 +339,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.lst_contacto = lst_contacto;
 
             Dictionary<string, string> lst_naturaleza = new Dictionary<string, string>();
-            lst_naturaleza.Add("INT", "Interno");
-            lst_naturaleza.Add("SRI", "Autorizado por el SRI");            
+            lst_naturaleza.Add("INT", "INTERNO");
+            lst_naturaleza.Add("SRI", "SRI");            
             ViewBag.lst_naturaleza = lst_naturaleza;
 
             var lst_tipo_nota = bus_tipo_nota.get_list(model.IdEmpresa, "C",false);

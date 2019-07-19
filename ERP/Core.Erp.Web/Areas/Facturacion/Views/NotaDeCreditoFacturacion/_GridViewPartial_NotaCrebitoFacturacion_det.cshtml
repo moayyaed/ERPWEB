@@ -155,7 +155,6 @@
         });
 
         settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdCliente'] = IdCliente.GetValue(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.ClientSideEvents.EndCallback = "function(s,e){ if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Subtotal").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_iva").DisplayFormat = "{0:n2}";
