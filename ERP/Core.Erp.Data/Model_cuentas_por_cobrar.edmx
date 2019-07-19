@@ -278,7 +278,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_cartera_x_cobrar' no tiene d
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="vt_NunDocumento" Type="varchar" MaxLength="41" />
-          <Property Name="Referencia" Type="varchar" MaxLength="1000" />
+          <Property Name="Referencia" Type="varchar(max)" />
           <Property Name="IdComprobante" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CodComprobante" Type="varchar" MaxLength="50" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
@@ -499,6 +499,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="71" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TieneRetencion" Type="bit" />
         </EntityType>
         <Association Name="FK_cxc_Catalogo_cxc_CatalogoTipo">
           <End Role="cxc_CatalogoTipo" Type="Self.cxc_CatalogoTipo" Multiplicity="1" />
@@ -830,7 +831,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_cobro_para_retencion].[vt_Observacion] AS [vt_Observacion], 
     [vwcxc_cobro_para_retencion].[vt_NumFactura] AS [vt_NumFactura], 
     [vwcxc_cobro_para_retencion].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwcxc_cobro_para_retencion].[IdCliente] AS [IdCliente]
+    [vwcxc_cobro_para_retencion].[IdCliente] AS [IdCliente], 
+    [vwcxc_cobro_para_retencion].[TieneRetencion] AS [TieneRetencion]
     FROM [web].[vwcxc_cobro_para_retencion] AS [vwcxc_cobro_para_retencion]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_cxc_Catalogo_cxc_CatalogoTipo" Association="Self.FK_cxc_Catalogo_cxc_CatalogoTipo">
@@ -1215,7 +1217,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="IdBodega" Type="Int32" Nullable="false" />
           <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="vt_NunDocumento" Type="String" MaxLength="41" FixedLength="false" Unicode="false" />
-          <Property Name="Referencia" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdComprobante" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="CodComprobante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -1628,6 +1630,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="vt_NumFactura" Type="String" MaxLength="71" FixedLength="false" Unicode="false" />
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TieneRetencion" Type="Boolean" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2021,6 +2024,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="vwcxc_cobro_para_retencion">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion">
               <MappingFragment StoreEntitySet="vwcxc_cobro_para_retencion">
+                <ScalarProperty Name="TieneRetencion" ColumnName="TieneRetencion" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
                 <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />

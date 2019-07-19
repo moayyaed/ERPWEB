@@ -959,7 +959,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
             }
         }
 
-        public List<cxc_cobro_Info> get_list_para_retencion(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        public List<cxc_cobro_Info> get_list_para_retencion(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin, bool TieneRetencion)
         {
             try
             {
@@ -970,6 +970,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                              where q.IdEmpresa == IdEmpresa
                              && q.IdSucursal == IdSucursal
                              && fecha_ini <= q.vt_fecha && q.vt_fecha <= fecha_fin
+                             && q.TieneRetencion == TieneRetencion
                              select new cxc_cobro_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -999,7 +1000,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 throw;
             }
         }
-
+        
         public cxc_cobro_Info get_info_para_retencion(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdCbteVta, string vt_tipoDoc)
         {
             try

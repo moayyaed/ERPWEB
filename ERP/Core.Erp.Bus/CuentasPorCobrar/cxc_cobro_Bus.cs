@@ -75,11 +75,11 @@ namespace Core.Erp.Bus.CuentasPorCobrar
             }
         }
         
-        public List<cxc_cobro_Info> get_list_para_retencion(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        public List<cxc_cobro_Info> get_list_para_retencion(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin, bool TieneRetencion)
         {
             try
             {
-                return odata.get_list_para_retencion(IdEmpresa, IdSucursal, fecha_ini, fecha_fin);
+                return odata.get_list_para_retencion(IdEmpresa, IdSucursal, fecha_ini, fecha_fin, TieneRetencion);
             }
             catch (Exception)
             {
@@ -87,7 +87,7 @@ namespace Core.Erp.Bus.CuentasPorCobrar
                 throw;
             }
         }
-
+       
         public cxc_cobro_Info get_info_para_retencion(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdCbteVta, string vt_tipoDoc)
         {
             try
