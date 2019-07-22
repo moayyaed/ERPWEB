@@ -321,6 +321,12 @@ namespace Core.Erp.Data.Caja
         {
             try
             {
+                using (Entities_contabilidad db = new Entities_contabilidad())
+                {
+                    ct_cbtecble ct = new ct_cbtecble();
+
+                    db.SaveChanges();
+                }
                 using (Entities_caja Context = new Entities_caja())
                 {
                     caj_Caja_Movimiento Entity = Context.caj_Caja_Movimiento.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTipocbte == info.IdTipocbte && q.IdCbteCble == info.IdCbteCble);
@@ -331,7 +337,6 @@ namespace Core.Erp.Data.Caja
                     Entity.IdUsuario_Anu = info.IdUsuario_Anu;
                     Entity.FechaAnulacion = DateTime.Now;
                     Context.SaveChanges();
-
                     Context.Database.ExecuteSqlCommand("DELETE cp_conciliacion_Caja_det_x_ValeCaja WHERE IdEmpresa_movcaja = " + info.IdEmpresa+ " AND IdTipocbte_movcaja = " + info.IdTipocbte+ " AND IdCbteCble_movcaja = " + info.IdCbteCble);
                 }
                 using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
@@ -345,7 +350,6 @@ namespace Core.Erp.Data.Caja
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

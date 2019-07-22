@@ -54,7 +54,6 @@
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc" Width="1.5" PointX="21.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_pago_tipo_x_empresa" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_tipo_x_empresa_cp_orden_pago_tipo" />
-        <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_conciliacion_Caja_det" Width="1.5" PointX="5.375" PointY="21.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_nota_DebCre" Width="1.5" PointX="22.375" PointY="7.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_proveedor" Width="1.5" PointX="5.25" PointY="51.5" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_retencion" Width="1.5" PointX="12.75" PointY="39.375" />

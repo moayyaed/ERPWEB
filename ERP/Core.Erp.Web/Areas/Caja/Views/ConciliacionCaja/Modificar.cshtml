@@ -13,17 +13,6 @@
 <script type="text/javascript">
 
     $(function () {
-        //Date picker
-        $('#FechaOP').datepicker({
-            autoclose: true
-        })
-        $("#Fecha_ini").change(function () {
-            GetSaldoAnterior();
-        });
-        $("#Fecha_fin").change(function () {
-            GetSaldoAnterior();
-            GetIngresos();
-        });
         $("#IdPeriodo").change(function () {
             GetPeriodo();
             GetSaldoAnterior();
@@ -96,10 +85,34 @@
         console.log(selectedCajaIDs);
     }
     function MostrarCajaMovimientoConciliacionModal() {
-        selectedCajaIDs = "";
-        GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
-        GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
-        $("#CajaMovimientoModal").modal("show");
+        //selectedCajaIDs = "";
+        //GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+        //GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+        //$("#CajaMovimientoModal").modal("show");
+        selectedIDs = "";
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListVales_PorIngresar", "ConciliacionCaja", new { Area = "Caja" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+                GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+                $("#CajaMovimientoModal").modal("show");
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddCajaMovimiento()
@@ -165,9 +178,8 @@
     }
 
     function GetSaldoAnterior() {
-        var d = Fecha_ini.GetValue();
         var datos = {
-            FechaCorte: d,
+            FechaCorte: Fecha_ini.GetDate(),
             IdCtaCble: $("#IdCtaCble").val()
         }
         $.ajax({
@@ -236,7 +248,7 @@
 
     function GetIngresos() {
         var datos = {
-            FechaFin: Fecha_fin.GetValue(),
+            FechaFin: Fecha_fin.GetDate(),
             IdCaja: $("#IdCaja").val(),
             IdTransaccionFixed: $("#IdTransaccionSession").val()
         }
@@ -309,7 +321,7 @@
             }
 
         });
-        $('#FechaOP').datepicker("setDate", moment(new Date()).format("DD/MM/YYYY"));
+        FechaOP.SetDate(new Date());
         GridView_comprobante_detalle.PerformCallback();
     }
 </script>

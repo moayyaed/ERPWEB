@@ -62,7 +62,6 @@ namespace Core.Erp.Data
         public DbSet<cp_orden_giro_det_ing_x_oc> cp_orden_giro_det_ing_x_oc { get; set; }
         public DbSet<vwcp_orden_giro_det_ing_x_oc> vwcp_orden_giro_det_ing_x_oc { get; set; }
         public DbSet<cp_orden_pago_tipo_x_empresa> cp_orden_pago_tipo_x_empresa { get; set; }
-        public DbSet<vwcp_conciliacion_Caja_det> vwcp_conciliacion_Caja_det { get; set; }
         public DbSet<vwcp_nota_DebCre> vwcp_nota_DebCre { get; set; }
         public DbSet<cp_proveedor> cp_proveedor { get; set; }
         public DbSet<cp_retencion> cp_retencion { get; set; }

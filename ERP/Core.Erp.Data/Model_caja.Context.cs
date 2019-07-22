@@ -35,12 +35,11 @@ namespace Core.Erp.Data
         public DbSet<caj_Caja_Movimiento> caj_Caja_Movimiento { get; set; }
         public DbSet<vwcaj_Caja_Movimiento> vwcaj_Caja_Movimiento { get; set; }
         public DbSet<caj_Caja> caj_Caja { get; set; }
-        public DbSet<vwcp_conciliacion_Caja_det> vwcp_conciliacion_Caja_det { get; set; }
-        public DbSet<vwcp_Conciliacion_Caja_det1> vwcp_Conciliacion_Caja_det1Set { get; set; }
         public DbSet<cp_conciliacion_Caja> cp_conciliacion_Caja { get; set; }
         public DbSet<cp_conciliacion_Caja_det_Ing_Caja> cp_conciliacion_Caja_det_Ing_Caja { get; set; }
         public DbSet<cp_conciliacion_Caja_det_x_ValeCaja> cp_conciliacion_Caja_det_x_ValeCaja { get; set; }
         public DbSet<cp_conciliacion_Caja_ValesNoConciliados> cp_conciliacion_Caja_ValesNoConciliados { get; set; }
         public DbSet<cp_conciliacion_Caja_det> cp_conciliacion_Caja_det { get; set; }
+        public DbSet<vwcp_conciliacion_Caja_det> vwcp_conciliacion_Caja_det { get; set; }
     }
 }
