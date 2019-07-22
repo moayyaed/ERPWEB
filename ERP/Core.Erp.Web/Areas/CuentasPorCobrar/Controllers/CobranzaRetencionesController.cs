@@ -104,7 +104,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
 
             #region Cargar sucursal
             var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
@@ -117,6 +117,19 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult CobrosSinRetencion(cl_filtros_Info model)
+        {
+            #region Cargar sucursal
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
+            ViewBag.lst_sucursal = lst_sucursal;
+            #endregion
+
+            var lista = bus_cobro.get_list_para_retencion(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, false);
+            ListaSinRetencion.set_list(lista, model.IdTransaccionSession);
+
+            return View(model);
+        }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_cobranza_ret( DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
         {
@@ -137,7 +150,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             ViewBag.IdSucursal = IdSucursal;
 
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            List<cxc_cobro_Info> model = ListaSinRetencion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(q=>q.vt_fecha >= fecha_ini && q.vt_fecha <= fecha_fin).ToList();
+            List<cxc_cobro_Info> model = ListaSinRetencion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             
             return PartialView("_GridViewPartial_cobranza_sinret", model);
         }
