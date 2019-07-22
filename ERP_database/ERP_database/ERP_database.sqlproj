@@ -1158,6 +1158,7 @@
     <Build Include="dbo\Views\vwcp_orden_giro_det_ing_x_os_x_cruzar.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_det_ing_x_os.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_SinRetencion.sql" />
+    <Build Include="dbo\Views\vwcp_ConciliacionAnticipoDetAnt_x_cruzar.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
