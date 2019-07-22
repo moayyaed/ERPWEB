@@ -403,13 +403,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
-
+                ViewBag.MostrarBoton = true;
                 return View(model);
             }
 
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!validar(model, ref mensaje))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
@@ -421,6 +422,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (!bus_orden_giro.guardarDB(model))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model);
                 return View(model);
             }
@@ -463,18 +465,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 model.TieneRetencion = 1;
             }
-            //if (model.info_retencion.IdEmpresa == 0)
-            //{
-            //    tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
-            //    var sucursal = bus_sucursal.get_info(IdEmpresa, model.IdSucursal);
-            //    info_documento = bus_documento.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.RETEN.ToString(), sucursal.Su_CodigoEstablecimiento, "001", false, false);
-            //    if (info_documento != null)
-            //    {
-            //        model.info_retencion.serie1 = info_documento.Establecimiento;
-            //        model.info_retencion.serie2 = info_documento.PuntoEmision;
-            //        model.info_retencion.NumRetencion = info_documento.NumDocumento;
-            //    }
-            //}
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
@@ -509,6 +499,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta parametros del modulo cuenta por pagar";
                 cargar_combos(model);
+                ViewBag.MostrarBoton = true;
                 return View(model);
             }
 
@@ -539,6 +530,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.mensaje = "Falta diario contable";
                 cargar_combos(model);
+                ViewBag.MostrarBoton = true;
                 return View(model);
 
             }
@@ -550,6 +542,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = true;
                 return View(model);
             }
 
@@ -560,6 +553,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = true;
                 return View(model);
             }
 
@@ -572,12 +566,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                if(!bus_orden_giro.ModificarDBCabecera(model))
                 {
                     cargar_combos(model);
+                    ViewBag.MostrarBoton = true;
                     return View(model);
                 }               
             }
             else
             if (!bus_orden_giro.modificarDB(model))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model);
                 return View(model);
             }
@@ -646,6 +642,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (info_parametro == null)
             {
                 ViewBag.mensaje = "Falta parametros del modulo cuenta por pagar";
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model);
                 return View(model);
             }
@@ -660,12 +657,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = true;
                 return View(model);
             }
             if (!validar(model, ref mensaje))
             {
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = true;
                 return View(model);
             }
             model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
@@ -675,6 +674,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (!bus_orden_giro.anularDB(model))
             {
+                ViewBag.MostrarBoton = true;
                 cargar_combos(model);
                 return View(model);
             }
