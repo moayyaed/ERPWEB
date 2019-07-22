@@ -82,6 +82,15 @@
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_giro_det_ing_x_os_cp_orden_giro" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_os" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_SinRetencion" Width="1.5" PointX="9.375" PointY="23.75" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipo" Width="1.5" PointX="7.5" PointY="58.625" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetAnt" Width="1.5" PointX="15.75" PointY="27.25" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Width="1.5" PointX="15.75" PointY="37" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipo_cp_proveedor" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_ConciliacionAnticipo" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipo" Width="1.5" PointX="14.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

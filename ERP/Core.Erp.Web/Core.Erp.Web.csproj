@@ -319,6 +319,7 @@
     <Compile Include="Areas\CuentasPorPagar\Controllers\AprobacionOPController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\ClaseProveedorController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\CodigoSRIController.cs" />
+    <Compile Include="Areas\CuentasPorPagar\Controllers\ConciliacionAnticipoProveedorController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\DeudasController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\NotaCreditoController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\NotaDebitoController.cs" />
@@ -10164,6 +10165,9 @@
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\_GridViewPartial_cobranza_sinret.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\CobrosSinRetencion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Anular.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbCuenta.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipoProveedor.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Index.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

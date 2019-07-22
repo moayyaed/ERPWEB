@@ -334,6 +334,15 @@
     <Compile Include="cp_codigo_SRI_x_CtaCble.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
+    <Compile Include="cp_ConciliacionAnticipo.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_ConciliacionAnticipoDetAnt.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_ConciliacionAnticipoDetCXP.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="cp_conciliacion_Caja.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
@@ -500,6 +509,9 @@
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipoDetAnt_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipoDetCXP_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipo_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_nota_DebCre_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_orden_giro_det_Data.cs" />
@@ -2094,6 +2106,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_codigo_SRI.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_ConciliacionAnticipo.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_conciliacion_Caja_det.cs">
