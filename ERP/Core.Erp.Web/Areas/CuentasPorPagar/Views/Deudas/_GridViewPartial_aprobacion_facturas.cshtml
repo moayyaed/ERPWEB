@@ -33,7 +33,7 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
-        
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_factura";
@@ -130,14 +130,15 @@
             column.FieldName = "co_valorpagar";
             column.Caption = "Valor a pagar";
             column.Width = Unit.Percentage(5);
-            column.EditorProperties().SpinEdit(sp =>
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditorProperties().SpinEdit(p =>
             {
-                sp.MinValue = 0;
-                sp.DisplayFormatInEditMode = true;
-                sp.DisplayFormatString = "N2";
-
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
             });
         });
+        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario();if (s.IsEditing()) {var editor = s.GetEditor('co_valorpagar');editor.Focus();}}";
 
 
     });

@@ -54,7 +54,7 @@
                 p.Columns.Add("IdTipoSRI", "Tipo").Width = Unit.Percentage(20);
                 p.Columns.Add("co_codigoBase", "Código").Width = Unit.Percentage(10);
                 p.Columns.Add("co_porRetencion", "%").Width = Unit.Percentage(10);
-                
+
                 p.Columns.Add("co_descripcion", "Descripcion").Width = Unit.Percentage(60);
                 //p.ValueField = "codigoSRI";
                 p.ValueField = "IdCodigo_SRI";
@@ -93,7 +93,7 @@
 
         settings.ClientSideEvents.BatchEditChangesSaving= "function(s,e,){armar_diario_retencion()}";
         settings.ClientSideEvents.BatchEditRowDeleting = "function(s,e,){armar_diario_retencion()}";
-        settings.ClientSideEvents.EndCallback = "function (s,e){armar_diario_retencion();}";
+        settings.ClientSideEvents.EndCallback = "function (s,e){armar_diario_retencion();if (s.IsEditing()) {var editor = s.GetEditor('IdCodigo_SRI');editor.Focus();} }";
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });

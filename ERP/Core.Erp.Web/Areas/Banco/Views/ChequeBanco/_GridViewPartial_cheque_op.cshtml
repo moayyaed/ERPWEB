@@ -49,7 +49,7 @@
             column.FieldName = "Referencia";
             column.Caption = "# Documento";
         });
-        
+
         settings.Columns.Add(column => {
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.Width = Unit.Percentage(10);
@@ -71,9 +71,15 @@
             column.FieldName = "MontoAplicado";
             column.Caption = "Valor aprobado";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditorProperties().SpinEdit(p =>
+            {
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
+            });
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario();}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario();if (s.IsEditing()) {var editor = s.GetEditor('MontoAplicado');editor.Focus();}}";
     });
 }
 @grid.Bind(Model).GetHtml()

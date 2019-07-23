@@ -93,6 +93,7 @@
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ if (s.IsEditing()) {var editor = IdTipoFlujo;editor.Focus();}}";
     });
 }
 @grid.Bind(Model).GetHtml()

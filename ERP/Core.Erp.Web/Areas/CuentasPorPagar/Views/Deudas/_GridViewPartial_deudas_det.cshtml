@@ -165,7 +165,7 @@
         });
         settings.SettingsBehavior.AllowSort = false;
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario(); if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Subtotal").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorIva").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total").DisplayFormat = "{0:n2}";
