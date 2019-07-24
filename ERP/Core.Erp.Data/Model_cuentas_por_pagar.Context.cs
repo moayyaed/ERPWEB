@@ -77,6 +77,7 @@ namespace Core.Erp.Data
         public DbSet<cp_ConciliacionAnticipoDetCXP> cp_ConciliacionAnticipoDetCXP { get; set; }
         public DbSet<vwcp_ConciliacionAnticipo> vwcp_ConciliacionAnticipo { get; set; }
         public DbSet<vwcp_ConciliacionAnticipoDetAnt_x_cruzar> vwcp_ConciliacionAnticipoDetAnt_x_cruzar { get; set; }
+        public DbSet<vwcp_ConciliacionAnticipoDetCXP> vwcp_ConciliacionAnticipoDetCXP { get; set; }
     
         public virtual ObjectResult<spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result> spcp_Get_Data_orden_pago_con_cancelacion_x_pago(Nullable<int> idEmpresa_pago, Nullable<int> idTipoCbte_pago, Nullable<decimal> idCbteCble_pago, string idUsuario)
         {

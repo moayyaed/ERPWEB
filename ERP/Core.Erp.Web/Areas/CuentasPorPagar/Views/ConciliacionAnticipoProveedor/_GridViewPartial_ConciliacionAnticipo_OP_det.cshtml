@@ -12,9 +12,9 @@
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
 
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "EditingAddNew_Fact", Area = "CuentasPorPagar" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "EditingUpdate_Fact", Area = "CuentasPorPagar" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "EditingDelete_Fact", Area = "CuentasPorPagar" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "EditingAddNew_OP", Area = "CuentasPorPagar" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "EditingUpdate_OP", Area = "CuentasPorPagar" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "EditingDelete_OP", Area = "CuentasPorPagar" };
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -46,7 +46,7 @@
         {
             column.FieldName = "IdOrdenPago";
             column.Caption = "Id Orden Pago";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(70);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -54,7 +54,7 @@
             column.FieldName = "MontoAplicado";
             column.Caption = "Monto";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
@@ -65,8 +65,8 @@
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAplicado").DisplayFormat = "Monto {0:c2}";
 
-        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = MontoAplicado; editor.Focus();}}";
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); armar_diario(); }";
+        //settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = MontoAplicado; editor.Focus();}}";
 
     });
 

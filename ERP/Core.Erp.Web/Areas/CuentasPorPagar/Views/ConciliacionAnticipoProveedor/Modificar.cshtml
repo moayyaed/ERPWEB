@@ -2,7 +2,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Nueva conciliación de anticipo por proveedor";
+    ViewBag.Title = "Modificar conciliación de anticipo por proveedor";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -183,6 +183,7 @@
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdConciliacion, new { @id = "IdConciliacion" })
     @Html.HiddenFor(q => q.IdCbteCble, new { @id = "IdCbteCble" })
+    @Html.HiddenFor(q => q.IdTipoCbte, new { @id = "IdTipoCbte" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="modal fade" id="Modal_OrdenPago" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -237,7 +238,7 @@
                     <label for="IdTipoCbte">Tipo comprobante</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte, settings =>
                        {
-                           settings.Name = "IdTipoCbte";
+                           settings.Name = "IdTipoCbte1";
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                            settings.Properties.DisplayFormatString = "[{0}] - {1}";
                            settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
@@ -251,7 +252,7 @@
                            settings.Properties.NullText = "== Seleccione ==";
                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                        }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdTipoCbte, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte, "", new { @class = "text-danger"})
                 </div>
             </div>
             <div class="col-md-2">
@@ -378,26 +379,23 @@
     </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Deudas",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index","ConciliacionAnticipoProveedor",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
 <script>
+    $(function () {
+        IdTipoCbte1.SetEnabled(false);
+
+    });
     function armar_diario() {
         if (IdProveedor.GetValue() > 0) {
             var datos = {
                 IdTransaccionSession : $("#IdTransaccionSession").val(),
                 IdEmpresa: $("#IdEmpresa").val(),
-                IdProveedor :  IdProveedor.GetValue(),
-                //co_subtotal_iva : $("#co_subtotal_iva").val(),
-                //co_subtotal_siniva : $("#co_subtotal_siniva").val(),
-                //co_valoriva : $("#co_valoriva").val(),
-                //co_total : $("#co_total").val(),
-                //observacion: $("#observacion").val(),
-                //IdTransaccionSession: $("#IdTransaccionSession").val(),
-                //IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+                IdProveedor :  IdProveedor.GetValue()
             }
             $.ajax({
                 type: 'POST',
@@ -410,11 +408,6 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     console.log(data);
-                    //$("#co_subtotal_iva").val(data.SubtotalIVA);
-                    //$("#co_subtotal_siniva").val(data.Subtotal0);
-                    //$("#co_valoriva").val(data.IVA);
-                    //$("#co_Por_iva").val(12);
-                    //$("#co_total").val(data.Total);
                     GridViewPartial_DiarioCble_det.PerformCallback();
                 },
                 error: function (error) {

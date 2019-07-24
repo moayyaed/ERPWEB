@@ -2114,6 +2114,9 @@
     <Compile Include="vwcp_ConciliacionAnticipoDetAnt_x_cruzar.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwcp_ConciliacionAnticipoDetCXP.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwcp_conciliacion_Caja_det.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>

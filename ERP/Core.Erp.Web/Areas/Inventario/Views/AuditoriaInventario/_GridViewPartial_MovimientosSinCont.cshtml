@@ -54,7 +54,8 @@
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
-
+        
+        settings.Columns.Add("IdNumMovi", "Num Movi").Width = System.Web.UI.WebControls.Unit.Percentage(8);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(15);
         settings.Columns.Add("signo", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(8);
@@ -70,7 +71,7 @@
         {
             column.FieldName = "TotalModulo";
             column.Caption = "Total Modulo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -84,7 +85,7 @@
         {
             column.FieldName = "TotalContabilidad";
             column.Caption = "Total Contabilidad";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -98,7 +99,7 @@
         {
             column.FieldName = "Diferencia";
             column.Caption = "Diferencia";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;

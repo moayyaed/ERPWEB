@@ -20,7 +20,7 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                 using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in db.cp_ConciliacionAnticipoDetCXP
+                    Lista = (from q in db.vwcp_ConciliacionAnticipoDetCXP
                              where q.IdEmpresa == IdEmpresa
                              && q.IdConciliacion == IdConciliacion
                              select new cp_ConciliacionAnticipoDetCXP_Info
@@ -32,7 +32,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdEmpresa_cxp = q.IdEmpresa_cxp,
                                  IdTipoCbte_cxp = q.IdTipoCbte_cxp,
                                  IdCbteCble_cxp = q.IdCbteCble_cxp,
-                                 MontoAplicado = q.MontoAplicado
+                                 MontoAplicado = q.MontoAplicado,
+                                 tc_TipoCbte = q.tc_TipoCbte
                              }).ToList();
                 }
 

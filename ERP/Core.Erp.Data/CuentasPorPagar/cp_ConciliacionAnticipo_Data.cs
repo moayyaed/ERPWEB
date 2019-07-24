@@ -39,6 +39,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                     IdSucursal = q.IdSucursal,
                                     Su_Descripcion = q.Su_Descripcion,
                                     IdProveedor = q.IdProveedor,
+                                    pe_nombreCompleto = q.pe_nombreCompleto,
                                     Fecha = q.Fecha,
                                     Observacion = q.Observacion,
                                     Estado = q.Estado
@@ -231,48 +232,19 @@ namespace Core.Erp.Data.CuentasPorPagar
             {
                 using (Entities_contabilidad db_cont = new Entities_contabilidad())
                 {
-                    //ct_cbtecble_Info info_diario = armar_info(info.ListaDiario, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info.IdTipoCbte), 0, info.Observacion, info.Fecha);
+                    ct_cbtecble_Info info_diario = armar_info(info.Lista_det_Cbte, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info.IdTipoCbte), 0, info.Observacion, info.Fecha);
                     ct_cbtecble Entity_cbte = db_cont.ct_cbtecble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble).FirstOrDefault();
 
-                    //Entity_cbte.IdEmpresa = info.InfoCbte.IdEmpresa;
-                    //Entity_cbte.IdSucursal = info.InfoCbte.IdSucursal;
-                    //Entity_cbte.IdTipoCbte = info.InfoCbte.IdTipoCbte;
-                    //Entity_cbte.IdCbteCble = info.InfoCbte.IdCbteCble;
-                    Entity_cbte.CodCbteCble = info.InfoCbte.CodCbteCble;
-                    Entity_cbte.IdPeriodo = info.InfoCbte.IdPeriodo;
-                    Entity_cbte.cb_Fecha = info.InfoCbte.cb_Fecha;
-                    Entity_cbte.cb_Valor = info.InfoCbte.cb_Valor;
-                    Entity_cbte.cb_Observacion = info.InfoCbte.cb_Observacion;
-                    Entity_cbte.cb_Estado = info.InfoCbte.cb_Estado;
-                    Entity_cbte.IdUsuario = info.IdUsuarioCreacion;
-                    Entity_cbte.cb_FechaTransac = DateTime.Now;
-
-                    var lst_det_cbte = db_cont.ct_cbtecble_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.InfoCbte.IdTipoCbte && q.IdCbteCble == info.InfoCbte.IdCbteCble).ToList();
-                    db_cont.ct_cbtecble_det.RemoveRange(lst_det_cbte);
-
-                    if (info.Lista_det_Cbte != null)
+                    if (info_diario != null)
                     {
-                        int Secuencia = 1;
-                        foreach (var item in info.Lista_det_Cbte)
+                        info_diario.IdCbteCble = Convert.ToDecimal(info.IdCbteCble);
+                        info_diario.IdUsuarioUltModi = info.IdUsuarioModificacion;
+                        if (data_cbtecble.modificarDB(info_diario))
                         {
-                            db_cont.ct_cbtecble_det.Add(new ct_cbtecble_det
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdTipoCbte = item.IdTipoCbte,
-                                IdCbteCble = item.IdCbteCble,
-                                secuencia = Secuencia++,
-                                IdCtaCble = item.IdCtaCble,
-                                dc_Valor = item.dc_Valor,
-                                dc_Observacion = item.dc_Observacion,
-                                dc_para_conciliar = item.dc_para_conciliar,
-                                IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
-                                IdPunto_cargo = item.IdPunto_cargo,
-                                IdCentroCosto = item.IdCentroCosto
-                            });
-
+                            info.IdTipoCbte = info_diario.IdTipoCbte;
+                            info.IdCbteCble = info_diario.IdCbteCble;
                         }
                     }
-                    db_cont.SaveChanges();
                 }
 
                 using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
@@ -287,8 +259,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                     entity.IdProveedor = info.IdProveedor;
                     entity.Fecha = info.Fecha;
                     entity.Observacion = info.Observacion;
-                    entity.IdTipoCbte = info.IdTipoCbte;
-                    entity.IdCbteCble = info.IdCbteCble;
                     entity.IdSucursal = info.IdSucursal;
                     entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
                     entity.FechaModificacion = DateTime.Now;
@@ -299,8 +269,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                     var lst_det_Fact = db.cp_ConciliacionAnticipoDetCXP.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion == info.IdConciliacion).ToList();
                     db.cp_ConciliacionAnticipoDetCXP.RemoveRange(lst_det_Fact);
 
-                    var info_Cancelaciones = db.cp_orden_pago_cancelaciones.Where(q => q.IdEmpresa_op == info.IdEmpresa && q.IdTipoCbte_pago == info.IdTipoCbte && q.IdCbteCble_cxp == info.IdCbteCble).FirstOrDefault();
-                    db.cp_orden_pago_cancelaciones.Remove(info_Cancelaciones);
+                    var lst_Cancelaciones = db.cp_orden_pago_cancelaciones.Where(q => q.IdEmpresa_op == info.IdEmpresa && q.IdTipoCbte_pago == info.IdTipoCbte && q.IdCbteCble_pago == info.IdCbteCble).ToList();
+                    db.cp_orden_pago_cancelaciones.RemoveRange(lst_Cancelaciones);
 
                     if (info.Lista_det_OP != null)
                     {
@@ -364,7 +334,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -393,7 +363,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

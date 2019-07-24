@@ -40,37 +40,42 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["MontoAplicado"] = 0;
-
-
         };
 
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdOrdenPago";
             column.Caption = "Id Orden Pago";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdTipoCbte_cxp";
+            column.FieldName = "tc_TipoCbte";
             column.Caption = "Tipo de Comprobante";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("tc_TipoCbte", "Descripción").Width = Unit.Percentage(100);
-                p.TextField = "tc_TipoCbte";
-                p.ValueField = "IdTipoCbte";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.lst_tipo_comprobante;
-            });
         });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "IdTipoCbte_cxp";
+        //    column.Caption = "Tipo de Comprobante";
+        //    column.Width = Unit.Percentage(30);
+        //    column.EditFormSettings.Visible = DefaultBoolean.False;
+        //    column.EditorProperties().ComboBox(p =>
+        //    {
+        //        p.Columns.Add("tc_TipoCbte", "Descripción").Width = Unit.Percentage(100);
+        //        p.TextField = "tc_TipoCbte";
+        //        p.ValueField = "IdTipoCbte";
+        //        p.ValueType = typeof(int);
+        //        p.DataSource = ViewBag.lst_tipo_comprobante;
+        //    });
+        //});
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCbteCble_cxp";
             column.Caption = "Id Comprobante";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -78,7 +83,7 @@
             column.FieldName = "MontoAplicado";
             column.Caption = "Monto";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {

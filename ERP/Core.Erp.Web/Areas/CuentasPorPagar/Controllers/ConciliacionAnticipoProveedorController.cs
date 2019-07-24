@@ -35,6 +35,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_proveedor_Bus bus_prov = new cp_proveedor_Bus();
         cp_parametros_Info info_parametro = new cp_parametros_Info();
         cp_parametros_Bus bus_param = new cp_parametros_Bus();
+        ct_cbtecble_tipo_Bus bus_tipocbte = new ct_cbtecble_tipo_Bus();
         string mensaje = string.Empty;
         #endregion
 
@@ -178,7 +179,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.InfoCbte = bus_cbte.get_info(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToDecimal(model.IdCbteCble));
             model.Lista_det_Cbte = bus_cbte_det.get_list(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToDecimal(model.IdCbteCble));
 
+            Lista_det_OP.set_list(model.Lista_det_OP, model.IdTransaccionSession);
+            Lista_det_Fact.set_list(model.Lista_det_Fact, model.IdTransaccionSession);
             Lista_det_cbte.set_list(model.Lista_det_Cbte, model.IdTransaccionSession);
+
             cargar_combos(IdEmpresa);
 
             return View(model);
@@ -190,7 +194,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.Lista_det_OP = Lista_det_OP.get_list(model.IdTransaccionSession);
             model.Lista_det_Fact = Lista_det_Fact.get_list(model.IdTransaccionSession);
             model.Lista_det_Cbte = Lista_det_cbte.get_list(model.IdTransaccionSession);
-            model.IdUsuarioModificacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario.ToString();
 
             if (!Validar(model, ref mensaje))
             {
@@ -223,6 +227,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.InfoCbte = bus_cbte.get_info(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToDecimal(model.IdCbteCble));
             model.Lista_det_Cbte = bus_cbte_det.get_list(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToDecimal(model.IdCbteCble));
 
+            Lista_det_OP.set_list(model.Lista_det_OP, model.IdTransaccionSession);
+            Lista_det_Fact.set_list(model.Lista_det_Fact, model.IdTransaccionSession);
             Lista_det_cbte.set_list(model.Lista_det_Cbte, model.IdTransaccionSession);
 
             cargar_combos(IdEmpresa);
@@ -291,26 +297,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 mensaje = "Debe ingresar al menos una factura de proveedor";
                 return false;
             }
-            else
-            {
-                foreach (var item1 in i_validar.Lista_det_Fact)
-                {
-                    var contador = 0;
-                    foreach (var item2 in i_validar.Lista_det_Fact)
-                    {
-                        if (item1.IdCbteCble_cxp == item2.IdCbteCble_cxp)
-                        {
-                            contador++;
-                        }
 
-                        if (contador > 1)
-                        {
-                            mensaje = "Existen comprobantes contables repetidos en el detalle";
-                            return false;
-                        }
-                    }
-                }
+            if (i_validar.Lista_det_OP.Sum(q=>q.MontoAplicado) != i_validar.Lista_det_Fact.Sum(q => q.MontoAplicado))
+            {
+                var a = i_validar.Lista_det_OP.Sum(q => q.MontoAplicado);
+                var b = i_validar.Lista_det_Fact.Sum(q => q.MontoAplicado);
+                mensaje = "El monto aplicado entre la orden de pago y la factura por proveedor debe coincidir";
+                return false;
             }
+
 
             if (i_validar.Lista_det_Cbte.Count == 0)
             {
@@ -502,11 +497,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
                     if (info_det != null)
                     {
+                        var info_tipocbte = bus_tipocbte.get_info(info_det.IdTipoCbte_cxp);
                         info_det_fact.IdEmpresa = info_det.IdEmpresa;
                         info_det_fact.IdOrdenPago = info_det.IdOrdenPago;
                         info_det_fact.IdConciliacion = info_det.IdConciliacion;
                         info_det_fact.IdEmpresa_cxp = info_det.IdEmpresa_cxp;
                         info_det_fact.IdTipoCbte_cxp = info_det.IdTipoCbte_cxp;
+                        info_det_fact.tc_TipoCbte = info_tipocbte.tc_TipoCbte;
                         info_det_fact.IdCbteCble_cxp = info_det.IdCbteCble_cxp;
                         info_det_fact.MontoAplicado = info_det.MontoAplicado;
 
@@ -522,7 +519,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult EditingUpdate_Fact([ModelBinder(typeof(DevExpressEditorsBinder))] cp_ConciliacionAnticipoDetCXP_Info info_det_op)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            Lista_det_Fact.UpdateRow(info_det_op, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            if (info_det_op != null)
+            {
+                Lista_det_Fact.UpdateRow(info_det_op, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            }
+            
             var model = Lista_det_Fact.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_ConciliacionAnticipo_Fact_det", model);
@@ -696,7 +697,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         public void UpdateRow(cp_ConciliacionAnticipoDetCXP_Info info_det, decimal IdTransaccionSession)
         {
+            ct_cbtecble_tipo_Bus bus_tipocbte = new ct_cbtecble_tipo_Bus();
+
             cp_ConciliacionAnticipoDetCXP_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).FirstOrDefault();
+            var info_tipocbte = bus_tipocbte.get_info(edited_info.IdTipoCbte_cxp);
+
+            edited_info.tc_TipoCbte = info_tipocbte.tc_TipoCbte;
             edited_info.MontoAplicado = info_det.MontoAplicado;
         }
 

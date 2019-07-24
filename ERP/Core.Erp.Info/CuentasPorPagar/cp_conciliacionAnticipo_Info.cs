@@ -30,6 +30,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 
         #region Campos que no existen en la tabla
         public string Su_Descripcion { get; set; }
+        public string pe_nombreCompleto { get; set; }
         public List<cp_ConciliacionAnticipoDetAnt_Info> Lista_det_OP { get; set; }
         public List<cp_ConciliacionAnticipoDetCXP_Info> Lista_det_Fact { get; set; }
         public ct_cbtecble_Info InfoCbte { get; set; }
