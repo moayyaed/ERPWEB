@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.CuentasPorPagar;
+using Core.Erp.Data.General;
+using Core.Erp.Info.General;
+
 namespace Core.Erp.Data.CuentasPorPagar
 {
    public class cp_nota_DebCre_Data
@@ -186,10 +189,11 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception )
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_nota_DebCre_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(cp_nota_DebCre_Info info)
@@ -241,10 +245,11 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_nota_DebCre_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
 

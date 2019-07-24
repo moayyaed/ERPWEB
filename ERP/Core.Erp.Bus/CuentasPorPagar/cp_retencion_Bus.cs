@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.General;
 using Core.Erp.Data;
 using Core.Erp.Data.CuentasPorPagar;
 using Core.Erp.Data.Facturacion;
@@ -151,10 +152,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_retencion_Info_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(cp_retencion_Info info)
@@ -178,10 +180,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
 
                 return odata.modificarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_retencion_Info_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool anularDB(cp_retencion_Info info)
