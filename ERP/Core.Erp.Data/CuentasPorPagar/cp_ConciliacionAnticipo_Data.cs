@@ -14,6 +14,7 @@ namespace Core.Erp.Data.CuentasPorPagar
         cp_parametros_Data data_cp_parametro = new cp_parametros_Data();
         ct_cbtecble_Data data_cbtecble = new ct_cbtecble_Data();
         ct_cbtecble_det_Data data_cbtecble_det = new ct_cbtecble_det_Data();
+        cp_orden_pago_cancelaciones_Data data_op_cancelaciones = new cp_orden_pago_cancelaciones_Data();
 
         public List<cp_conciliacionAnticipo_Info> getlist(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin, bool MostrarAnulados)
         {
@@ -36,6 +37,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                     IdEmpresa = q.IdEmpresa,
                                     IdConciliacion = q.IdConciliacion,
                                     IdSucursal = q.IdSucursal,
+                                    Su_Descripcion = q.Su_Descripcion,
                                     IdProveedor = q.IdProveedor,
                                     Fecha = q.Fecha,
                                     Observacion = q.Observacion,
@@ -173,6 +175,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     if (info.Lista_det_Fact != null)
                     {
                         int SecuenciaFact = 1;
+                        int SecuenciaCanc = 1;
 
                         foreach (var item in info.Lista_det_Fact)
                         {
@@ -183,11 +186,28 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 IdConciliacion = info.IdConciliacion,
                                 Secuencia = SecuenciaFact++,
                                 IdOrdenPago = item.IdOrdenPago,
-                                IdEmpresa_cxp = item.IdEmpresa,
+                                IdEmpresa_cxp = item.IdEmpresa_cxp,
                                 IdTipoCbte_cxp = item.IdTipoCbte_cxp,
                                 IdCbteCble_cxp = item.IdCbteCble_cxp,
                                 MontoAplicado = item.MontoAplicado
                             });
+
+                            cp_orden_pago_cancelaciones_Info info_cancelacion = new cp_orden_pago_cancelaciones_Info();
+                            info_cancelacion.IdEmpresa = info.IdEmpresa;
+                            info_cancelacion.Secuencia = SecuenciaCanc++;
+                            info_cancelacion.IdEmpresa_op = item.IdEmpresa_cxp;
+                            info_cancelacion.IdOrdenPago_op = item.IdOrdenPago;
+                            info_cancelacion.Secuencia_op = 1;
+                            info_cancelacion.IdEmpresa_cxp = item.IdEmpresa_cxp;
+                            info_cancelacion.IdTipoCbte_cxp = item.IdTipoCbte_cxp;
+                            info_cancelacion.IdCbteCble_cxp = item.IdCbteCble_cxp;
+                            info_cancelacion.IdEmpresa_pago = info.IdEmpresa;
+                            info_cancelacion.IdTipoCbte_pago = Convert.ToInt32(info.IdTipoCbte);
+                            info_cancelacion.IdCbteCble_pago = Convert.ToInt32(info.IdCbteCble);
+                            info_cancelacion.MontoAplicado = item.MontoAplicado;
+                            info_cancelacion.Observacion = "CONCILIACION"+ info.IdConciliacion;
+
+                            data_op_cancelaciones.guardarDB(info_cancelacion);
 
                         }
                     }
@@ -197,7 +217,7 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 eliminar(info.IdEmpresa, Convert.ToInt32(info.IdTipoCbte), Convert.ToDecimal(info.IdCbteCble));
                 throw;                
@@ -214,10 +234,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                     //ct_cbtecble_Info info_diario = armar_info(info.ListaDiario, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info.IdTipoCbte), 0, info.Observacion, info.Fecha);
                     ct_cbtecble Entity_cbte = db_cont.ct_cbtecble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble).FirstOrDefault();
 
-                    Entity_cbte.IdEmpresa = info.InfoCbte.IdEmpresa;
-                    Entity_cbte.IdSucursal = info.InfoCbte.IdSucursal;
-                    Entity_cbte.IdTipoCbte = info.InfoCbte.IdTipoCbte;
-                    Entity_cbte.IdCbteCble = info.InfoCbte.IdCbteCble;
+                    //Entity_cbte.IdEmpresa = info.InfoCbte.IdEmpresa;
+                    //Entity_cbte.IdSucursal = info.InfoCbte.IdSucursal;
+                    //Entity_cbte.IdTipoCbte = info.InfoCbte.IdTipoCbte;
+                    //Entity_cbte.IdCbteCble = info.InfoCbte.IdCbteCble;
                     Entity_cbte.CodCbteCble = info.InfoCbte.CodCbteCble;
                     Entity_cbte.IdPeriodo = info.InfoCbte.IdPeriodo;
                     Entity_cbte.cb_Fecha = info.InfoCbte.cb_Fecha;
@@ -233,10 +253,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                     if (info.Lista_det_Cbte != null)
                     {
                         int Secuencia = 1;
-
                         foreach (var item in info.Lista_det_Cbte)
                         {
-
                             db_cont.ct_cbtecble_det.Add(new ct_cbtecble_det
                             {
                                 IdEmpresa = info.IdEmpresa,
@@ -281,6 +299,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                     var lst_det_Fact = db.cp_ConciliacionAnticipoDetCXP.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion == info.IdConciliacion).ToList();
                     db.cp_ConciliacionAnticipoDetCXP.RemoveRange(lst_det_Fact);
 
+                    var info_Cancelaciones = db.cp_orden_pago_cancelaciones.Where(q => q.IdEmpresa_op == info.IdEmpresa && q.IdTipoCbte_pago == info.IdTipoCbte && q.IdCbteCble_cxp == info.IdCbteCble).FirstOrDefault();
+                    db.cp_orden_pago_cancelaciones.Remove(info_Cancelaciones);
+
                     if (info.Lista_det_OP != null)
                     {
                         int SecuenciaOP = 1;
@@ -303,6 +324,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     if (info.Lista_det_Fact != null)
                     {
                         int SecuenciaFact = 1;
+                        int SecuenciaCanc = 1;
 
                         foreach (var item in info.Lista_det_Fact)
                         {
@@ -319,6 +341,22 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 MontoAplicado = item.MontoAplicado
                             });
 
+                            cp_orden_pago_cancelaciones_Info info_cancelacion = new cp_orden_pago_cancelaciones_Info();
+                            info_cancelacion.IdEmpresa = info.IdEmpresa;
+                            info_cancelacion.Secuencia = SecuenciaCanc++;
+                            info_cancelacion.IdEmpresa_op = item.IdEmpresa_cxp;
+                            info_cancelacion.IdOrdenPago_op = item.IdOrdenPago;
+                            info_cancelacion.Secuencia_op = 1;
+                            info_cancelacion.IdEmpresa_cxp = item.IdEmpresa_cxp;
+                            info_cancelacion.IdTipoCbte_cxp = item.IdTipoCbte_cxp;
+                            info_cancelacion.IdCbteCble_cxp = item.IdCbteCble_cxp;
+                            info_cancelacion.IdEmpresa_pago = info.IdEmpresa;
+                            info_cancelacion.IdTipoCbte_pago = Convert.ToInt32(info.IdTipoCbte);
+                            info_cancelacion.IdCbteCble_pago = Convert.ToInt32(info.IdCbteCble);
+                            info_cancelacion.MontoAplicado = item.MontoAplicado;
+                            info_cancelacion.Observacion = "CONCILIACION" + info.IdConciliacion;
+
+                            data_op_cancelaciones.guardarDB(info_cancelacion);
                         }
                     }
 
@@ -404,7 +442,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

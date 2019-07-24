@@ -16,5 +16,9 @@ namespace Core.Erp.Info.CuentasPorPagar
         public int IdTipoCbte_cxp { get; set; }
         public decimal IdCbteCble_cxp { get; set; }
         public double MontoAplicado { get; set; }
+
+        #region Campos que no existen en la tabla
+        public string tc_TipoCbte { get; set; }
+        #endregion
     }
 }

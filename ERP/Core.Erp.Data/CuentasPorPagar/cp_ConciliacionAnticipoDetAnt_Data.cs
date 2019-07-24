@@ -38,5 +38,30 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
+
+        public List<cp_ConciliacionAnticipoDetAnt_Info> get_list_op_x_cruzar(int IdEmpresa, int IdSucursal, decimal IdProveedor)
+        {
+            try
+            {
+                List<cp_ConciliacionAnticipoDetAnt_Info> Lista = new List<cp_ConciliacionAnticipoDetAnt_Info>();
+
+                using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
+                {
+                    Lista = db.vwcp_ConciliacionAnticipoDetAnt_x_cruzar.Where(q=> q.IdEmpresa == IdEmpresa 
+                    && q.IdSucursal == IdSucursal && q.IdProveedor == IdProveedor).Select(q=> new cp_ConciliacionAnticipoDetAnt_Info {
+                        IdEmpresa = q.IdEmpresa,
+                        IdOrdenPago = q.IdOrdenPago,
+                        MontoAplicado = q.ValorOP
+                    }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

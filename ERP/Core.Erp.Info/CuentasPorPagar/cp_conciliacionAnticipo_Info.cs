@@ -9,6 +9,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 {
     public class cp_conciliacionAnticipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdConciliacion { get; set; }
         public int IdSucursal { get; set; }
@@ -28,6 +29,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string MotivoAnulacion { get; set; }
 
         #region Campos que no existen en la tabla
+        public string Su_Descripcion { get; set; }
         public List<cp_ConciliacionAnticipoDetAnt_Info> Lista_det_OP { get; set; }
         public List<cp_ConciliacionAnticipoDetCXP_Info> Lista_det_Fact { get; set; }
         public ct_cbtecble_Info InfoCbte { get; set; }

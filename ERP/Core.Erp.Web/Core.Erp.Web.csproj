@@ -10168,6 +10168,14 @@
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbCuenta.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipoProveedor.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Index.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbProveedor.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_DiarioCble_det.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Nuevo.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_OP_det.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_Fact_det.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_OP_x_Cruzar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Modificar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
