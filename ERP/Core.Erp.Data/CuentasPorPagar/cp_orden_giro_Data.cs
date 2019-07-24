@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Core.Erp.Data.Inventario;
 using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Data.General;
+using Core.Erp.Info.General;
 
 namespace Core.Erp.Data.CuentasPorPagar
 {
@@ -194,8 +196,9 @@ namespace Core.Erp.Data.CuentasPorPagar
             }
             catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_orden_giro_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(cp_orden_giro_Info info)
@@ -387,10 +390,11 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_orden_giro_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         private in_Ing_Egr_Inven_Info armar_movi_inven(cp_orden_giro_Info info, cp_orden_giro_x_in_Ing_Egr_Inven rel)

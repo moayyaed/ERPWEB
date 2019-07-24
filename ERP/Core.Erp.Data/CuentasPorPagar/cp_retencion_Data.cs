@@ -253,8 +253,9 @@ namespace Core.Erp.Data.CuentasPorPagar
             }
             catch (Exception ex)
             {
-                throw;
-
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_retencion_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool modificarDB(cp_retencion_Info info)
@@ -351,9 +352,11 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception )
+            catch (Exception ex)
             {
-                throw;
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_retencion_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
 
             }
         }

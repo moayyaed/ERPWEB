@@ -10,6 +10,7 @@ using Core.Erp.Info.Helps;
 using Core.Erp.Data.General;
 using Core.Erp.Info.General;
 using Core.Erp.Data.Facturacion;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Bus.CuentasPorPagar
 {
@@ -144,11 +145,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
             }
             catch (Exception ex)
             {
-
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_orden_giro_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
-
         public bool modificarDB(cp_orden_giro_Info info)
         {
             try
@@ -245,7 +246,9 @@ namespace Core.Erp.Bus.CuentasPorPagar
             }
             catch (Exception ex)
             {
-                throw;
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_orden_giro_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
             }
         }
         public bool anularDB(cp_orden_giro_Info info)
@@ -518,7 +521,6 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
-
         public bool ValidarExisteOrdenPAgo(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble)
         {
             try
