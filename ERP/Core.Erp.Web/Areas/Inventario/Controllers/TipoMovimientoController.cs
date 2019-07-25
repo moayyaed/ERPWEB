@@ -46,6 +46,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.lst_tipo_comprobante = lst_tipo_comprobante;
 
             var lst_CatalogoAprobacion = bus_catalogo.get_list(Convert.ToInt32(cl_enumeradores.eTipoCatalogoInventario.EST_APROB),false);
+            ViewBag.lst_CatalogoAprobacion = lst_CatalogoAprobacion;
         }
         #endregion
         #region Acciones
