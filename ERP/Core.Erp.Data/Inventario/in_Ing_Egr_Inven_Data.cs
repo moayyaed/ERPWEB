@@ -510,10 +510,7 @@ namespace Core.Erp.Data.Inventario
                 var tipo_movi = db_i.in_movi_inven_tipo.Where(q => q.IdEmpresa == IdEmpresa && q.IdMovi_inven_tipo == IdMovi_inven_tipo).FirstOrDefault();
                 if (tipo_movi == null)
                     return false;
-
-                if (!(tipo_movi.Genera_Diario_Contable ?? false))
-                    return false;
-
+                
                 if (tipo_movi.IdTipoCbte == null)
                     return false;
 

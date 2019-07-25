@@ -30,6 +30,7 @@ namespace Core.Erp.Data.Inventario
                                      Tipo_Ing_Egr = q.Tipo_Ing_Egr,
                                      IdCtaCble = q.IdCtaCble,
                                      EstadoBool = q.estado == "A" ? true : false
+                                     
                                  }).ToList();
                     else
                         Lista = (from q in Context.in_Motivo_Inven

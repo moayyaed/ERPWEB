@@ -57,7 +57,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public in_movi_inven_tipo_Info get_info(int IdEmpresa, int IdMovi_inven_tipo)
         {
             try
@@ -75,12 +74,11 @@ namespace Core.Erp.Data.Inventario
                         Codigo = Entity.Codigo,
                         tm_descripcion = Entity.tm_descripcion,
                         cm_tipo_movi = Entity.cm_tipo_movi,
-                        cm_interno_bool = Entity.cm_interno == "S" ? true : false,
                         cm_descripcionCorta = Entity.cm_descripcionCorta,
                         Estado = Entity.Estado,
                         IdTipoCbte = Entity.IdTipoCbte,
-                        Genera_Movi_Inven = Entity.Genera_Movi_Inven == null ? false : Convert.ToBoolean(Entity.Genera_Movi_Inven),
-                        Genera_Diario_Contable = Entity.Genera_Diario_Contable == null ? false : Convert.ToBoolean(Entity.Genera_Diario_Contable),
+                        Genera_Diario_Contable = Entity.Genera_Diario_Contable,
+                        IdCatalogoAprobacion = Entity.IdCatalogoAprobacion
                     };
                 }
 
@@ -91,7 +89,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         private int get_id(int IdEmpresa)
         {
             try
@@ -116,7 +113,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool guardarDB(in_movi_inven_tipo_Info info)
         {
             try
@@ -130,12 +126,11 @@ namespace Core.Erp.Data.Inventario
                         Codigo = info.Codigo,
                         tm_descripcion = info.tm_descripcion,
                         cm_tipo_movi = info.cm_tipo_movi,
-                        cm_interno = info.cm_interno_bool == true ? "S" : "N",
                         cm_descripcionCorta = info.cm_descripcionCorta,
                         Estado = info.Estado = "A",
                         IdTipoCbte = info.IdTipoCbte,
-                        Genera_Movi_Inven = info.Genera_Movi_Inven,
                         Genera_Diario_Contable = info.Genera_Diario_Contable,
+                        IdCatalogoAprobacion = info.IdCatalogoAprobacion,
 
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
@@ -152,7 +147,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool modificarDB(in_movi_inven_tipo_Info info)
         {
             try
@@ -164,11 +158,10 @@ namespace Core.Erp.Data.Inventario
                     Entity.Codigo = info.Codigo;
                     Entity.tm_descripcion = info.tm_descripcion;
                     Entity.cm_tipo_movi = info.cm_tipo_movi;
-                    Entity.cm_interno = info.cm_interno_bool == true ? "S" : "N";
                     Entity.cm_descripcionCorta = info.cm_descripcionCorta;
                     Entity.IdTipoCbte = info.IdTipoCbte;
-                    Entity.Genera_Movi_Inven = info.Genera_Movi_Inven;
                     Entity.Genera_Diario_Contable = info.Genera_Diario_Contable;
+                    Entity.IdCatalogoAprobacion = info.IdCatalogoAprobacion;
                     Context.SaveChanges();
                 }
 
@@ -180,7 +173,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool anularDB(in_movi_inven_tipo_Info info)
         {
             try
