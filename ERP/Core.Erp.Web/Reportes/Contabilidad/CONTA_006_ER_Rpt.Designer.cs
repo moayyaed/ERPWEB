@@ -102,6 +102,7 @@
             this.p_mostrarSaldo0 = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_mostrarAcumulado = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdAnio = new DevExpress.XtraReports.Parameters.Parameter();
+            this.Cta_mov = new DevExpress.XtraReports.UI.FormattingRule();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).BeginInit();
@@ -161,7 +162,7 @@
             // 
             this.xrTableCell18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IdCtaCble]")});
-            this.xrTableCell18.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell18.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell18.Name = "xrTableCell18";
             this.xrTableCell18.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell18.StylePriority.UsePadding = false;
@@ -179,7 +180,7 @@
             // 
             this.xrTableCell19.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[pc_Cuenta]")});
-            this.xrTableCell19.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell19.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell19.StylePriority.UsePadding = false;
@@ -192,7 +193,7 @@
             // 
             this.xrTableCell20.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Enero]")});
-            this.xrTableCell20.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell20.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell20.Name = "xrTableCell20";
             this.xrTableCell20.Text = "Enero";
             this.xrTableCell20.TextFormatString = "{0:n2}";
@@ -202,7 +203,7 @@
             // 
             this.xrTableCell21.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Febrero]")});
-            this.xrTableCell21.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell21.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell21.Name = "xrTableCell21";
             this.xrTableCell21.Text = "Febrero";
             this.xrTableCell21.TextFormatString = "{0:n2}";
@@ -212,7 +213,7 @@
             // 
             this.xrTableCell22.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Marzo]")});
-            this.xrTableCell22.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell22.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell22.Name = "xrTableCell22";
             this.xrTableCell22.Text = "Marzo";
             this.xrTableCell22.TextFormatString = "{0:n2}";
@@ -222,7 +223,7 @@
             // 
             this.xrTableCell23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Abril]")});
-            this.xrTableCell23.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell23.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell23.Name = "xrTableCell23";
             this.xrTableCell23.Text = "Abril";
             this.xrTableCell23.TextFormatString = "{0:n2}";
@@ -232,7 +233,7 @@
             // 
             this.xrTableCell24.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Mayo]")});
-            this.xrTableCell24.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell24.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell24.Name = "xrTableCell24";
             this.xrTableCell24.Text = "Mayo";
             this.xrTableCell24.TextFormatString = "{0:n2}";
@@ -242,7 +243,7 @@
             // 
             this.xrTableCell26.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Junio]")});
-            this.xrTableCell26.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell26.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell26.Name = "xrTableCell26";
             this.xrTableCell26.Text = "Junio";
             this.xrTableCell26.TextFormatString = "{0:n2}";
@@ -252,7 +253,7 @@
             // 
             this.xrTableCell27.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Julio]")});
-            this.xrTableCell27.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell27.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell27.Name = "xrTableCell27";
             this.xrTableCell27.Text = "Julio";
             this.xrTableCell27.TextFormatString = "{0:n2}";
@@ -262,7 +263,7 @@
             // 
             this.xrTableCell28.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Agosto]")});
-            this.xrTableCell28.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell28.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell28.Name = "xrTableCell28";
             this.xrTableCell28.Text = "Agosto";
             this.xrTableCell28.TextFormatString = "{0:n2}";
@@ -272,7 +273,7 @@
             // 
             this.xrTableCell29.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Septiembre]")});
-            this.xrTableCell29.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell29.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell29.Name = "xrTableCell29";
             this.xrTableCell29.Text = "Septiembre";
             this.xrTableCell29.TextFormatString = "{0:n2}";
@@ -282,7 +283,7 @@
             // 
             this.xrTableCell30.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Octubre]")});
-            this.xrTableCell30.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell30.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell30.Name = "xrTableCell30";
             this.xrTableCell30.Text = "Octubre";
             this.xrTableCell30.TextFormatString = "{0:n2}";
@@ -292,7 +293,7 @@
             // 
             this.xrTableCell31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Noviembre]")});
-            this.xrTableCell31.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell31.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell31.Name = "xrTableCell31";
             this.xrTableCell31.Text = "Noviembre";
             this.xrTableCell31.TextFormatString = "{0:n2}";
@@ -302,7 +303,7 @@
             // 
             this.xrTableCell34.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Diciembre]")});
-            this.xrTableCell34.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell34.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell34.Name = "xrTableCell34";
             this.xrTableCell34.Text = "Diciembre";
             this.xrTableCell34.TextFormatString = "{0:n2}";
@@ -312,7 +313,7 @@
             // 
             this.xrTableCell35.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Total]")});
-            this.xrTableCell35.FormattingRules.Add(this.CtaMov);
+            this.xrTableCell35.FormattingRules.Add(this.Cta_mov);
             this.xrTableCell35.Name = "xrTableCell35";
             this.xrTableCell35.Text = "Total";
             this.xrTableCell35.TextFormatString = "{0:n2}";
@@ -795,6 +796,12 @@
             this.p_IdAnio.Name = "p_IdAnio";
             this.p_IdAnio.Visible = false;
             // 
+            // Cta_mov
+            // 
+            this.Cta_mov.Condition = "[EsCuentaMovimiento]=False";
+            this.Cta_mov.Formatting.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Cta_mov.Name = "Cta_mov";
+            // 
             // CONTA_006_ER_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -808,6 +815,8 @@
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
             this.Font = new System.Drawing.Font("Verdana", 8F);
+            this.FormattingRuleSheet.AddRange(new DevExpress.XtraReports.UI.FormattingRule[] {
+            this.Cta_mov});
             this.Landscape = true;
             this.Margins = new System.Drawing.Printing.Margins(25, 25, 25, 25);
             this.PageHeight = 827;
@@ -909,5 +918,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell31;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell34;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell35;
+        private DevExpress.XtraReports.UI.FormattingRule Cta_mov;
     }
 }
