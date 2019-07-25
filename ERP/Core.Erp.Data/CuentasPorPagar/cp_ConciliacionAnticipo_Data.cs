@@ -123,10 +123,11 @@ namespace Core.Erp.Data.CuentasPorPagar
                 {                 
                     if(info_parametros!= null && info_parametros.pa_TipoCbte_para_conci_x_antcipo!= null)
                     {
-                        ct_cbtecble_Info info_diario = armar_info(info.Lista_det_Cbte, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info_parametros.pa_TipoCbte_para_conci_x_antcipo), 0, info.Observacion, info.Fecha);
+                        ct_cbtecble_Info info_diario = armar_info(info.Lista_det_Cbte, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info_parametros.pa_TipoCbte_para_conci_x_antcipo), 0, info.Observacion, info.Fecha);                        
 
                         if (info_diario != null)
                         {
+                            info_diario.IdUsuario = info.IdUsuarioCreacion;
                             if (data_cbtecble.guardarDB(info_diario))
                             {
                                 info.IdTipoCbte = info_diario.IdTipoCbte;
@@ -369,11 +370,30 @@ namespace Core.Erp.Data.CuentasPorPagar
                     entity.FechaAnulacion = DateTime.Now;
                     entity.MotivoAnulacion = info.MotivoAnulacion;
 
+                    var lst_det_OP = db.cp_ConciliacionAnticipoDetAnt.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion == info.IdConciliacion).ToList();
+                    db.cp_ConciliacionAnticipoDetAnt.RemoveRange(lst_det_OP);
+
+                    var lst_det_Fact = db.cp_ConciliacionAnticipoDetCXP.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion == info.IdConciliacion).ToList();
+                    db.cp_ConciliacionAnticipoDetCXP.RemoveRange(lst_det_Fact);
+
+                    var lst_Cancelaciones = db.cp_orden_pago_cancelaciones.Where(q => q.IdEmpresa_op == info.IdEmpresa && q.IdTipoCbte_pago == info.IdTipoCbte && q.IdCbteCble_pago == info.IdCbteCble).ToList();
+                    db.cp_orden_pago_cancelaciones.RemoveRange(lst_Cancelaciones);
+
+                    if (data_cbtecble.anularDB(new ct_cbtecble_Info
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdTipoCbte = Convert.ToInt32(info.IdTipoCbte),
+                        IdCbteCble = Convert.ToInt32(info.IdCbteCble),
+                        IdUsuarioAnu = info.IdUsuarioAnulacion,
+                        cb_MotivoAnu = info.MotivoAnulacion
+                    }))
+
                     db.SaveChanges();
                 }
+
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
@@ -422,7 +442,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

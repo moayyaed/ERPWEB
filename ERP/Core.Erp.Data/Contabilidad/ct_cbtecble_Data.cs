@@ -318,9 +318,9 @@ namespace Core.Erp.Data.Contabilidad
                     Context.ct_cbtecble_Reversado.Add(Entity_int);
                     #endregion
 
-                    Entity.cb_MotivoAnu = Entity.cb_MotivoAnu;
-                    Entity.cb_Estado = Entity.cb_Estado = "I";
-                    Entity.IdUsuarioAnu = Entity.IdUsuarioAnu;
+                    Entity.cb_MotivoAnu = info.cb_MotivoAnu;
+                    Entity.cb_Estado = info.cb_Estado = "I";
+                    Entity.IdUsuarioAnu = info.IdUsuarioAnu;
                     Entity.cb_FechaAnu = DateTime.Now;
                     Entity.cb_Observacion = "REVERSADO CON EL DIARIO tipo: " + Entity_reverso.IdTipoCbte.ToString() + " #cbte: " + Entity_reverso.IdCbteCble.ToString() + "** " + Entity.cb_Observacion;
 

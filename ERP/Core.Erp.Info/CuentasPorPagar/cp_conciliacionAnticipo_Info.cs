@@ -31,6 +31,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string IdUsuarioAnulacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        [Required(ErrorMessage = "El motivo de anulación observación es obligatorio")]
         public string MotivoAnulacion { get; set; }
 
         #region Campos que no existen en la tabla

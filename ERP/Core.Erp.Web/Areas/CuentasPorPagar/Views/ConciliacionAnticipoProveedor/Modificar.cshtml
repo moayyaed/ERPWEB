@@ -2,7 +2,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Modificar conciliación de anticipo por proveedor";
+    ViewBag.Title = "Modificar conciliación de anticipo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -226,33 +226,26 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="IdTipoCbte">Tipo comprobante</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte, settings =>
-                       {
-                           settings.Name = "IdTipoCbte1";
-                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                           settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                           settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
-                           //Campo ID
-                           settings.Properties.ValueField = "IdTipoCbte";
-                           settings.Properties.ValueType = typeof(int);
-                           settings.Properties.TextField = "tc_TipoCbte";
-                           //Boton para seleccionar ningun registro
-                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                           settings.Properties.NullText = "== Seleccione ==";
-                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                       }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdTipoCbte, "", new { @class = "text-danger"})
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_readonly", Model.IdProveedor)
+                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdCliente"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
                 </div>
             </div>
             <div class="col-md-2">
@@ -279,25 +272,6 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProveedor", Model.IdProveedor)
-                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdCliente"></label>
-                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
-                        <i class="fa fa-external-link-square"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="co_observacion">Observación*</label>
@@ -310,7 +284,7 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_orden_pago" aria-controls="informacion_general" role="tab" data-toggle="tab">Ordenes de pago</a>
+                <a href="#tab_orden_pago" aria-controls="informacion_general" role="tab" data-toggle="tab">Anticipo</a>
             </li>
             <li>
                 <a href="#tab_factura_proveedor" aria-controls="retencion" role="tab" data-toggle="tab">Facturas de proveedor</a>
@@ -386,10 +360,6 @@
     }
 }
 <script>
-    $(function () {
-        IdTipoCbte1.SetEnabled(false);
-
-    });
     function armar_diario() {
         if (IdProveedor.GetValue() > 0) {
             var datos = {

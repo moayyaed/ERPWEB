@@ -41,7 +41,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProducto_IngresoOrdenCompra_ReadOnly", Model.IdResponsable)
+                    @Html.Partial("_CmbProveedor_IngresoOrdenCompra", Model.IdResponsable)
                     @Html.ValidationMessageFor(q => q.IdResponsable, "", new { @class = "text-danger" })
                 </div>
             </div>
