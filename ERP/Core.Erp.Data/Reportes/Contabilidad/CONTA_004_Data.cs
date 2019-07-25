@@ -71,12 +71,12 @@ namespace Core.Erp.Data.Reportes.Contabilidad
         //    }
         //}
 
-        public List<CONTA_004_Info> GetList(int IdEmpresa, int IdAnio, int IdPeriodo, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance)
+        public List<CONTA_004_Info> GetList(int IdEmpresa, int IdAnio, int IdPeriodoIni, int IdPeriodoFin, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance)
         {
             try
             {
-                int IdPeriodoIni = IdPeriodo;
-                int IdPeriodoFin = IdPeriodo == 0 ? 9999 : IdPeriodo;
+                //int IdPeriodoIni = IdPeriodo;
+                //int IdPeriodoFin = IdPeriodo == 0 ? 9999 : IdPeriodo;
                 List<CONTA_004_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {

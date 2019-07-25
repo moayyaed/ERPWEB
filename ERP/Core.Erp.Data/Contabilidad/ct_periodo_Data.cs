@@ -63,6 +63,7 @@ namespace Core.Erp.Data.Contabilidad
                                  pe_cerrado = q.pe_cerrado,
                                  pe_estado = q.pe_estado,
                                  smes = m.smes,
+                                 AnioMes = q.AnioMes,
 
                                  EstadoBool = q.pe_estado == "A" ? true : false
                              }).ToList();
@@ -83,6 +84,7 @@ namespace Core.Erp.Data.Contabilidad
                                  pe_cerrado = q.pe_cerrado,
                                  pe_estado = q.pe_estado,
                                  smes = m.smes,
+                                 AnioMes = q.AnioMes,
 
                                  EstadoBool = q.pe_estado == "A" ? true : false
                              }).ToList();
