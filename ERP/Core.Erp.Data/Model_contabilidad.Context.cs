@@ -12,9 +12,10 @@ namespace Core.Erp.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
     using System.Linq;
-
+    
     public partial class Entities_contabilidad : DbContext
     {
         public Entities_contabilidad()
@@ -62,6 +63,7 @@ namespace Core.Erp.Data
         public DbSet<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
         public DbSet<vwct_anio_fiscal_x_cuenta_utilidad> vwct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public DbSet<vwct_anio_fiscal_x_tb_sucursal_SinCierre> vwct_anio_fiscal_x_tb_sucursal_SinCierre { get; set; }
+        public DbSet<vwct_anio_fiscal_x_tb_sucursal> vwct_anio_fiscal_x_tb_sucursal { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

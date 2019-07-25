@@ -97,6 +97,7 @@
     <Compile Include="Contabilidad\ats_Bus.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_Bus.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Bus.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_x_tb_sucursal_Bus.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Bus.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_det_Bus.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Plantilla_Bus.cs" />
