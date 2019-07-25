@@ -178,6 +178,7 @@ namespace Core.Erp.Info.Helps
         public int IdSucursal { get; set; }
         public int IdPunto_cargo_grupo { get; set; }
         public string IdUsuario { get; set; }
+        public int IdPeriodo { get; set; }
         public cl_filtros_contabilidad_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
