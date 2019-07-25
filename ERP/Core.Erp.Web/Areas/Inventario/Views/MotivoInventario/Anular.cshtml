@@ -57,7 +57,15 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <div class="checkbox">
-                        <label for="Genera_Movi_Inven_bool">@Html.CheckBoxFor(q => q.Genera_Movi_Inven_bool) Genera movimiento en inventario</label>
+                        <label for="Genera_Movi_Inven_bool">
+                            @Html.DevExpress().CheckBoxFor(q => q.Genera_Movi_Inven_bool,
+                         settings =>
+                         {
+                             settings.Name = "Genera_Movi_Inven_bool";
+                             settings.Checked = true;
+                             settings.Text = "Genera movimiento de inventario";
+                         })
+                    </label>
                     </div>
                 </div>
             </div>

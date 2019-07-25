@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Web.Helps;
 using System;
@@ -16,10 +17,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Variables
 
         in_movi_inven_tipo_Bus bus_tipo_movimiento = new in_movi_inven_tipo_Bus();
-        in_movi_inven_tipo_x_tb_bodega_Bus bus_tipo_movimiento_x_bodega = new in_movi_inven_tipo_x_tb_bodega_Bus();
-            ct_cbtecble_tipo_Bus bus_tipo_comprobante = new ct_cbtecble_tipo_Bus();
-            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-            tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+        ct_cbtecble_tipo_Bus bus_tipo_comprobante = new ct_cbtecble_tipo_Bus();
+        in_Catalogo_Bus bus_catalogo = new in_Catalogo_Bus();
         #endregion
         #region Index/Metodos
 
@@ -46,29 +45,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var lst_tipo_comprobante = bus_tipo_comprobante.get_list(model.IdEmpresa, false);
             ViewBag.lst_tipo_comprobante = lst_tipo_comprobante;
 
-            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
-            var lst_bodega = bus_bodega.get_list(model.IdEmpresa, false);
-
-            model.lst_tipo_mov_x_bodega = bus_tipo_movimiento_x_bodega.get_list(model.IdEmpresa, model.IdMovi_inven_tipo);
-
-            model.lst_tipo_mov_x_bodega = (from b in lst_bodega
-                                           join s in lst_sucursal
-                                           on b.IdSucursal equals s.IdSucursal
-                                           join m in model.lst_tipo_mov_x_bodega                                           
-                                           on new { IdSucursal = b.IdSucursal, IdBodega = b.IdBodega } equals new { IdSucursal = m.IdSucucursal, IdBodega = m.IdBodega} into temp_m
-                                           from m in temp_m.DefaultIfEmpty()
-                                           select new in_movi_inven_tipo_x_tb_bodega_Info
-                                           {
-                                               IdEmpresa = b.IdEmpresa,
-                                               IdSucucursal = b.IdSucursal,
-                                               IdBodega = b.IdBodega,
-                                               IdMovi_inven_tipo = model.IdMovi_inven_tipo,
-                                               seleccionado = m == null ? false : true,
-                                               Su_Descripcion = s.Su_Descripcion,
-                                               bo_Descripcion = b.bo_Descripcion,
-                                               IdCtaCble = m == null ? null : m.IdCtaCble
-                                           }).ToList();
-
+            var lst_CatalogoAprobacion = bus_catalogo.get_list(Convert.ToInt32(cl_enumeradores.eTipoCatalogoInventario.EST_APROB),false);
         }
         #endregion
         #region Acciones

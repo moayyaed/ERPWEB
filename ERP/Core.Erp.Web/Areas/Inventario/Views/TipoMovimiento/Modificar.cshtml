@@ -24,21 +24,24 @@
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <div class="checkbox">
-                    <label for="cm_interno_bool">@Html.CheckBoxFor(q => q.cm_interno_bool) Es usado por el sistema</label>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCatalogoAprobacion">Estado aprobación*</label>
+                    @Html.DropDownListFor(q => q.IdCatalogoAprobacion, new SelectList(ViewBag.lst_CatalogoAprobacion, "IdCatalogo", "Nombre"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogoAprobacion, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="checkbox">
-                    <label for="Genera_Movi_Inven">@Html.CheckBoxFor(q => q.Genera_Movi_Inven) Genera movimiento de inventario</label>
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="checkbox">
-                    <label for="Genera_Diario_Contable">@Html.CheckBoxFor(q => q.Genera_Diario_Contable) Genera diario contable</label>
+                    <label for="Genera_Movi_Inven_bool">
+                        @Html.DevExpress().CheckBoxFor(q => q.Genera_Diario_Contable,
+                         settings =>
+                         {
+                             settings.Name = "Genera_Diario_Contable";
+                             settings.Checked = true;
+                             settings.Text = "Se contabiliza";
+                         })
+                    </label>
                 </div>
             </div>
 
