@@ -16,10 +16,10 @@ namespace Core.Erp.Data
     {
         public ct_cbtecble()
         {
-            this.ct_anio_fiscal_x_cuenta_utilidad = new HashSet<ct_anio_fiscal_x_cuenta_utilidad>();
             this.ct_cbtecble_Reversado = new HashSet<ct_cbtecble_Reversado>();
             this.ct_cbtecble_Reversado1 = new HashSet<ct_cbtecble_Reversado>();
             this.ct_cbtecble_det = new HashSet<ct_cbtecble_det>();
+            this.ct_anio_fiscal_x_tb_sucursal = new HashSet<ct_anio_fiscal_x_tb_sucursal>();
         }
     
         public int IdEmpresa { get; set; }
@@ -40,11 +40,11 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> cb_FechaTransac { get; set; }
         public Nullable<System.DateTime> cb_FechaUltModi { get; set; }
     
-        public virtual ICollection<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public virtual ct_cbtecble_tipo ct_cbtecble_tipo { get; set; }
         public virtual ct_periodo ct_periodo { get; set; }
         public virtual ICollection<ct_cbtecble_Reversado> ct_cbtecble_Reversado { get; set; }
         public virtual ICollection<ct_cbtecble_Reversado> ct_cbtecble_Reversado1 { get; set; }
         public virtual ICollection<ct_cbtecble_det> ct_cbtecble_det { get; set; }
+        public virtual ICollection<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
     }
 }

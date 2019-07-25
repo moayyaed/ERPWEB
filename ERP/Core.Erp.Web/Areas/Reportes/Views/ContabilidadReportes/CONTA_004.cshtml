@@ -115,6 +115,13 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
+                            <label for="IdPeriodo">Periodo</label>
+                            @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodo, "IdPeriodo", "IdPeriodo"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "form", @role = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <label for="IdNivel">Nivel</label>
                             @Html.DropDownListFor(q => q.IdNivel, new SelectList(ViewBag.lst_nivel, "Key", "Value"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.IdNivel, "", new { @class = "form", @role = "text-danger" })

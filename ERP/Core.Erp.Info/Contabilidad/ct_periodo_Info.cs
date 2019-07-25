@@ -27,5 +27,7 @@ namespace Core.Erp.Info.Contabilidad
         public bool pe_cerrado_bool { get; set; }
         public string nom_periodo_combo { get; set; }
         public string smes { get; set; }
+        public string AnioMes { get; set; }
+
     }
 }

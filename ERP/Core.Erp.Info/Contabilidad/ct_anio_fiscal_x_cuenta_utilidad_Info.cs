@@ -12,11 +12,6 @@ namespace Core.Erp.Info.Contabilidad
         public int IdEmpresa { get; set; }
         public int IdanioFiscal { get; set; }
         public string IdCtaCble { get; set; }
-        public string observacion { get; set; }
-        public Nullable<int> IdEmpresa_cbte_cierre { get; set; }
-        public Nullable<int> IdTipoCbte_cbte_cierre { get; set; }
-        public Nullable<decimal> IdCbteCble_cbte_cierre { get; set; }
-        
-       
+        public string IdCtaCbleCierre { get; set; }
     }
 }

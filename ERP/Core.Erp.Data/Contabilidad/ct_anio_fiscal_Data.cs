@@ -119,10 +119,7 @@ namespace Core.Erp.Data.Contabilidad
                             IdEmpresa = info.info_anio_ctautil.IdEmpresa,
                             IdanioFiscal = info.IdanioFiscal,
                             IdCtaCble = info.info_anio_ctautil.IdCtaCble,
-                            observacion = info.info_anio_ctautil.observacion,
-                            IdEmpresa_cbte_cierre = info.info_anio_ctautil.IdEmpresa_cbte_cierre,
-                            IdCbteCble_cbte_cierre = info.info_anio_ctautil.IdCbteCble_cbte_cierre,
-                            IdTipoCbte_cbte_cierre = info.info_anio_ctautil.IdTipoCbte_cbte_cierre
+                            IdCtaCbleCierre = info.info_anio_ctautil.IdCtaCbleCierre
                         };
                         Context.ct_anio_fiscal_x_cuenta_utilidad.Add(Entity_det);                    
                     Context.SaveChanges();
@@ -156,10 +153,7 @@ namespace Core.Erp.Data.Contabilidad
                         IdEmpresa = info.info_anio_ctautil.IdEmpresa,
                         IdanioFiscal = info.IdanioFiscal,
                         IdCtaCble = info.info_anio_ctautil.IdCtaCble,
-                        observacion = string.IsNullOrEmpty(info.info_anio_ctautil.observacion) ? "" : info.info_anio_ctautil.observacion,
-                        IdEmpresa_cbte_cierre = info.info_anio_ctautil.IdEmpresa_cbte_cierre,
-                        IdCbteCble_cbte_cierre = info.info_anio_ctautil.IdCbteCble_cbte_cierre,
-                        IdTipoCbte_cbte_cierre = info.info_anio_ctautil.IdTipoCbte_cbte_cierre
+                        IdCtaCbleCierre = info.info_anio_ctautil.IdCtaCbleCierre,
                     });
                     Context.SaveChanges();
                 }

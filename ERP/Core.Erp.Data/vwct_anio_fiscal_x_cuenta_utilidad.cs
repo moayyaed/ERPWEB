@@ -12,21 +12,15 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ct_anio_fiscal_x_cuenta_utilidad
+    public partial class vwct_anio_fiscal_x_cuenta_utilidad
     {
-        public ct_anio_fiscal_x_cuenta_utilidad()
-        {
-            this.ct_anio_fiscal_x_tb_sucursal = new HashSet<ct_anio_fiscal_x_tb_sucursal>();
-        }
-    
         public int IdEmpresa { get; set; }
         public int IdanioFiscal { get; set; }
         public string IdCtaCble { get; set; }
-        public string IdCtaCbleCierre { get; set; }
-    
-        public virtual ct_anio_fiscal ct_anio_fiscal { get; set; }
-        public virtual ct_plancta ct_plancta { get; set; }
-        public virtual ct_plancta ct_plancta1 { get; set; }
-        public virtual ICollection<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
+        public string pc_Cuenta { get; set; }
+        public int IdNivelCta { get; set; }
+        public string IdGrupoCble { get; set; }
+        public Nullable<int> IdTipoCtaCble { get; set; }
+        public string gc_GrupoCble { get; set; }
     }
 }

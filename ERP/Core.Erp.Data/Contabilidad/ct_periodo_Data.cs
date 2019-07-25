@@ -30,7 +30,7 @@ namespace Core.Erp.Data.Contabilidad
                                }).ToList();
                 Context_g.Dispose();
 
-                var lst_periodo = (from q in Context.ct_periodo
+                var lst_periodo = (from q in Context.vwct_periodo
                                    where q.IdEmpresa == IdEmpresa
                                    select new ct_periodo_Info
                                    {
@@ -42,7 +42,7 @@ namespace Core.Erp.Data.Contabilidad
                                        pe_mes = q.pe_mes,
                                        pe_cerrado = q.pe_cerrado,
                                        pe_estado = q.pe_estado,
-
+                                       AnioMes = q.AnioMes,
                                        EstadoBool = q.pe_estado == "A" ? true : false
                                    }).ToList();
 

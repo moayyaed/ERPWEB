@@ -28,7 +28,6 @@ namespace Core.Erp.Data
         }
     
         public DbSet<ct_anio_fiscal> ct_anio_fiscal { get; set; }
-        public DbSet<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public DbSet<ct_cbtecble_Reversado> ct_cbtecble_Reversado { get; set; }
         public DbSet<ct_cbtecble_tipo> ct_cbtecble_tipo { get; set; }
         public DbSet<ct_grupocble> ct_grupocble { get; set; }
@@ -58,6 +57,11 @@ namespace Core.Erp.Data
         public DbSet<ct_cbtecble_Plantilla> ct_cbtecble_Plantilla { get; set; }
         public DbSet<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
         public DbSet<vwct_cbtecble_Plantilla_det> vwct_cbtecble_Plantilla_det { get; set; }
+        public DbSet<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
+        public DbSet<vwct_periodo> vwct_periodo { get; set; }
+        public DbSet<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
+        public DbSet<vwct_anio_fiscal_x_cuenta_utilidad> vwct_anio_fiscal_x_cuenta_utilidad { get; set; }
+        public DbSet<vwct_anio_fiscal_x_tb_sucursal_SinCierre> vwct_anio_fiscal_x_tb_sucursal_SinCierre { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {
@@ -83,6 +87,23 @@ namespace Core.Erp.Data
         public virtual int SPATS_MigrarEventos()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPATS_MigrarEventos");
+        }
+    
+        public virtual ObjectResult<SPCONTA_CierreAnual_Result> SPCONTA_CierreAnual(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idAnio)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var idAnioParameter = idAnio.HasValue ?
+                new ObjectParameter("IdAnio", idAnio) :
+                new ObjectParameter("IdAnio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_CierreAnual_Result>("SPCONTA_CierreAnual", idEmpresaParameter, idSucursalParameter, idAnioParameter);
         }
     }
 }

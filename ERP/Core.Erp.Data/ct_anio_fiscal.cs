@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public ct_anio_fiscal()
         {
-            this.ct_anio_fiscal_x_cuenta_utilidad = new HashSet<ct_anio_fiscal_x_cuenta_utilidad>();
             this.ct_periodo = new HashSet<ct_periodo>();
+            this.ct_anio_fiscal_x_cuenta_utilidad = new HashSet<ct_anio_fiscal_x_cuenta_utilidad>();
         }
     
         public int IdanioFiscal { get; set; }
@@ -25,7 +25,7 @@ namespace Core.Erp.Data
         public System.DateTime af_fechaFin { get; set; }
         public string af_estado { get; set; }
     
-        public virtual ICollection<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public virtual ICollection<ct_periodo> ct_periodo { get; set; }
+        public virtual ICollection<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
     }
 }

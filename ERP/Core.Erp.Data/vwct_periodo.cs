@@ -12,21 +12,20 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ct_anio_fiscal_x_cuenta_utilidad
+    public partial class vwct_periodo
     {
-        public ct_anio_fiscal_x_cuenta_utilidad()
-        {
-            this.ct_anio_fiscal_x_tb_sucursal = new HashSet<ct_anio_fiscal_x_tb_sucursal>();
-        }
-    
         public int IdEmpresa { get; set; }
+        public int IdPeriodo { get; set; }
         public int IdanioFiscal { get; set; }
-        public string IdCtaCble { get; set; }
-        public string IdCtaCbleCierre { get; set; }
-    
-        public virtual ct_anio_fiscal ct_anio_fiscal { get; set; }
-        public virtual ct_plancta ct_plancta { get; set; }
-        public virtual ct_plancta ct_plancta1 { get; set; }
-        public virtual ICollection<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
+        public int pe_mes { get; set; }
+        public System.DateTime pe_FechaIni { get; set; }
+        public System.DateTime pe_FechaFin { get; set; }
+        public string pe_cerrado { get; set; }
+        public string pe_estado { get; set; }
+        public int idMes { get; set; }
+        public string smes { get; set; }
+        public string Nemonico { get; set; }
+        public string smesIngles { get; set; }
+        public string AnioMes { get; set; }
     }
 }

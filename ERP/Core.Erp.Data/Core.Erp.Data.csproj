@@ -445,6 +445,9 @@
     <Compile Include="ct_anio_fiscal_x_cuenta_utilidad.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="ct_anio_fiscal_x_tb_sucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="ct_cbtecble.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
@@ -1784,6 +1787,9 @@
     <Compile Include="SPCONTA_006_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="SPCONTA_CierreAnual_Result.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="spcp_Get_Data_orden_pago_con_cancelacion_data_Result.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
@@ -2171,6 +2177,12 @@
     <Compile Include="vwcp_SolicitudPago.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwct_anio_fiscal_x_cuenta_utilidad.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_anio_fiscal_x_tb_sucursal_SinCierre.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwct_cbtecble.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
@@ -2187,6 +2199,9 @@
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="vwct_CierrePorModuloPorSucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_periodo.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="vwct_RevisionContableFacturas.cs">

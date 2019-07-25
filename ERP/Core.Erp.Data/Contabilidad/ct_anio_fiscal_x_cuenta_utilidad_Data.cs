@@ -23,7 +23,7 @@ namespace Core.Erp.Data.Contabilidad
                         IdEmpresa = Entity.IdEmpresa,
                         IdanioFiscal = Entity.IdanioFiscal,
                         IdCtaCble = Entity.IdCtaCble,
-                        observacion = Entity.observacion
+                        IdCtaCbleCierre = Entity.IdCtaCbleCierre
                     };
                 }
                 return info;
@@ -44,7 +44,7 @@ namespace Core.Erp.Data.Contabilidad
                         IdEmpresa = info.IdEmpresa,
                         IdanioFiscal = info.IdanioFiscal,
                         IdCtaCble = info.IdCtaCble,
-                        observacion = info.observacion
+                        IdCtaCbleCierre = info.IdCtaCbleCierre
                     };
                     Context.ct_anio_fiscal_x_cuenta_utilidad.Add(Entity);
                     Context.SaveChanges();
