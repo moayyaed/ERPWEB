@@ -1,12 +1,11 @@
-﻿CREATE VIEW dbo.vwcp_ConciliacionAnticipoDetCXP
+﻿CREATE VIEW dbo.vwcp_ConciliacionAnticipoDetAnt
 AS
-SELECT        dbo.cp_ConciliacionAnticipoDetCXP.IdEmpresa, dbo.cp_ConciliacionAnticipoDetCXP.IdConciliacion, dbo.cp_ConciliacionAnticipoDetCXP.Secuencia, dbo.cp_ConciliacionAnticipoDetCXP.IdOrdenPago, 
-                         dbo.cp_ConciliacionAnticipoDetCXP.IdEmpresa_cxp, dbo.cp_ConciliacionAnticipoDetCXP.IdTipoCbte_cxp, dbo.cp_ConciliacionAnticipoDetCXP.IdCbteCble_cxp, dbo.cp_ConciliacionAnticipoDetCXP.MontoAplicado, 
-                         dbo.ct_cbtecble_tipo.tc_TipoCbte, dbo.cp_ConciliacionAnticipoDetCXP.Fecha_cxp, dbo.cp_ConciliacionAnticipoDetCXP.Observacion_cxp
-FROM            dbo.cp_ConciliacionAnticipoDetCXP INNER JOIN
-                         dbo.ct_cbtecble_tipo ON dbo.cp_ConciliacionAnticipoDetCXP.IdEmpresa = dbo.ct_cbtecble_tipo.IdEmpresa AND dbo.cp_ConciliacionAnticipoDetCXP.IdTipoCbte_cxp = dbo.ct_cbtecble_tipo.IdTipoCbte
+SELECT        dbo.cp_ConciliacionAnticipoDetAnt.IdEmpresa, dbo.cp_ConciliacionAnticipoDetAnt.IdConciliacion, dbo.cp_ConciliacionAnticipoDetAnt.Secuencia, dbo.cp_ConciliacionAnticipoDetAnt.IdOrdenPago, dbo.cp_orden_pago.Fecha, 
+                         dbo.cp_orden_pago.Observacion, dbo.cp_ConciliacionAnticipoDetAnt.MontoAplicado
+FROM            dbo.cp_ConciliacionAnticipoDetAnt INNER JOIN
+                         dbo.cp_orden_pago ON dbo.cp_ConciliacionAnticipoDetAnt.IdEmpresa = dbo.cp_orden_pago.IdEmpresa AND dbo.cp_ConciliacionAnticipoDetAnt.IdOrdenPago = dbo.cp_orden_pago.IdOrdenPago
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_ConciliacionAnticipoDetCXP';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_ConciliacionAnticipoDetAnt';
 
 
 GO
@@ -15,7 +14,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[41] 4[21] 2[11] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -81,7 +80,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "cp_ConciliacionAnticipoDetCXP"
+         Begin Table = "cp_ConciliacionAnticipoDetAnt"
             Begin Extent = 
                Top = 6
                Left = 38
@@ -89,17 +88,17 @@ Begin DesignProperties =
                Right = 210
             End
             DisplayFlags = 280
-            TopColumn = 2
+            TopColumn = 0
          End
-         Begin Table = "ct_cbtecble_tipo"
+         Begin Table = "cp_orden_pago"
             Begin Extent = 
-               Top = 12
-               Left = 378
-               Bottom = 142
-               Right = 557
+               Top = 6
+               Left = 248
+               Bottom = 136
+               Right = 449
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
       End
    End
@@ -108,11 +107,8 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 12
+      Begin ColumnWidths = 9
          Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -141,7 +137,5 @@ Begin DesignProperties =
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_ConciliacionAnticipoDetCXP';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_ConciliacionAnticipoDetAnt';
 
