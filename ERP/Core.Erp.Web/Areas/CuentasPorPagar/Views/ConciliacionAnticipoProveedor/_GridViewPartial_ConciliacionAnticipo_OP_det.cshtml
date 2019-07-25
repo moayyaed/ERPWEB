@@ -46,7 +46,15 @@
         {
             column.FieldName = "IdOrdenPago";
             column.Caption = "Id Orden Pago";
-            column.Width = Unit.Percentage(70);
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -54,7 +62,7 @@
             column.FieldName = "MontoAplicado";
             column.Caption = "Monto";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
@@ -62,11 +70,18 @@
                 sp.MaxValue = 999999999;
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Observacion";
+            column.Caption = "Observación";
+            column.Width = Unit.Percentage(60);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
 
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAplicado").DisplayFormat = "Monto {0:c2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAplicado").DisplayFormat = "Monto {0:c2}";        
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); armar_diario(); }";
-        //settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = MontoAplicado; editor.Focus();}}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ if (s.IsEditing()) {var editor = MontoAplicado; editor.Focus();} }";
 
     });
 

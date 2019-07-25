@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.Contabilidad;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,13 @@ namespace Core.Erp.Info.CuentasPorPagar
         public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdConciliacion { get; set; }
+        [Required(ErrorMessage = "El campo sucursal es obligatorio")]
         public int IdSucursal { get; set; }
+        [Required(ErrorMessage = "El campo proveedor es obligatorio")]
         public decimal IdProveedor { get; set; }
+        [Required(ErrorMessage = "El campo fecha es obligatorio")]
         public System.DateTime Fecha { get; set; }
+        [Required(ErrorMessage = "El campo observación es obligatorio")]
         public string Observacion { get; set; }
         public bool Estado { get; set; }
         public Nullable<decimal> Idcancelacion { get; set; }

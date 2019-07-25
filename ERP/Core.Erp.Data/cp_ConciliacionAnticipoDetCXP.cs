@@ -22,6 +22,8 @@ namespace Core.Erp.Data
         public int IdTipoCbte_cxp { get; set; }
         public decimal IdCbteCble_cxp { get; set; }
         public double MontoAplicado { get; set; }
+        public System.DateTime Fecha_cxp { get; set; }
+        public string Observacion_cxp { get; set; }
     
         public virtual cp_ConciliacionAnticipo cp_ConciliacionAnticipo { get; set; }
         public virtual cp_orden_pago cp_orden_pago { get; set; }

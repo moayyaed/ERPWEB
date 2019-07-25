@@ -33,14 +33,21 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
         settings.Columns.Add("IdOrdenPago", "# Orden").Width = Unit.Percentage(10);
-        
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(80);
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(20);
             column.FieldName = "MontoAplicado";
             column.Caption = "Monto";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
-        });       
+        });
+        settings.Columns.Add("Observacion", "Observacion").Width = Unit.Percentage(50);
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_OP";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback_OP";
     });

@@ -14,7 +14,6 @@ namespace Core.Erp.Data
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
     public partial class Entities_cuentas_por_pagar : DbContext
     {
         public Entities_cuentas_por_pagar()
@@ -74,9 +73,10 @@ namespace Core.Erp.Data
         public DbSet<vwcp_orden_giro_SinRetencion> vwcp_orden_giro_SinRetencion { get; set; }
         public DbSet<cp_ConciliacionAnticipo> cp_ConciliacionAnticipo { get; set; }
         public DbSet<cp_ConciliacionAnticipoDetAnt> cp_ConciliacionAnticipoDetAnt { get; set; }
-        public DbSet<cp_ConciliacionAnticipoDetCXP> cp_ConciliacionAnticipoDetCXP { get; set; }
         public DbSet<vwcp_ConciliacionAnticipo> vwcp_ConciliacionAnticipo { get; set; }
         public DbSet<vwcp_ConciliacionAnticipoDetAnt_x_cruzar> vwcp_ConciliacionAnticipoDetAnt_x_cruzar { get; set; }
+        public DbSet<cp_ConciliacionAnticipoDetCXP> cp_ConciliacionAnticipoDetCXP { get; set; }
+        public DbSet<vwcp_ConciliacionAnticipoDetAnt> vwcp_ConciliacionAnticipoDetAnt { get; set; }
         public DbSet<vwcp_ConciliacionAnticipoDetCXP> vwcp_ConciliacionAnticipoDetCXP { get; set; }
     
         public virtual ObjectResult<spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result> spcp_Get_Data_orden_pago_con_cancelacion_x_pago(Nullable<int> idEmpresa_pago, Nullable<int> idTipoCbte_pago, Nullable<decimal> idCbteCble_pago, string idUsuario)

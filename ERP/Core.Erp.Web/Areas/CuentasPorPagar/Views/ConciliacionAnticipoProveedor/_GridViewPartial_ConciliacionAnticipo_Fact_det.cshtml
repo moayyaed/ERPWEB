@@ -46,7 +46,7 @@
         {
             column.FieldName = "IdOrdenPago";
             column.Caption = "Id Orden Pago";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -56,26 +56,19 @@
             column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
-        //settings.Columns.Add(column =>
-        //{
-        //    column.FieldName = "IdTipoCbte_cxp";
-        //    column.Caption = "Tipo de Comprobante";
-        //    column.Width = Unit.Percentage(30);
-        //    column.EditFormSettings.Visible = DefaultBoolean.False;
-        //    column.EditorProperties().ComboBox(p =>
-        //    {
-        //        p.Columns.Add("tc_TipoCbte", "Descripción").Width = Unit.Percentage(100);
-        //        p.TextField = "tc_TipoCbte";
-        //        p.ValueField = "IdTipoCbte";
-        //        p.ValueType = typeof(int);
-        //        p.DataSource = ViewBag.lst_tipo_comprobante;
-        //    });
-        //});
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCbteCble_cxp";
             column.Caption = "Id Comprobante";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha_cxp";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -83,7 +76,7 @@
             column.FieldName = "MontoAplicado";
             column.Caption = "Monto";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
@@ -91,8 +84,16 @@
                 sp.MaxValue = 999999999;
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Observacion_cxp";
+            column.Caption = "Observación";
+            column.Width = Unit.Percentage(30);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAplicado").DisplayFormat = "Monto {0:c2}";
+
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ if (s.IsEditing()) {var editor = MontoAplicado; editor.Focus();} }";

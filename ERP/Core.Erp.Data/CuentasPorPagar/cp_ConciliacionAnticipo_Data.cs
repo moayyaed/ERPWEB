@@ -192,6 +192,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 IdEmpresa_cxp = item.IdEmpresa_cxp,
                                 IdTipoCbte_cxp = item.IdTipoCbte_cxp,
                                 IdCbteCble_cxp = item.IdCbteCble_cxp,
+                                Fecha_cxp = item.Fecha_cxp,
+                                Observacion_cxp = item.Observacion_cxp,
                                 MontoAplicado = item.MontoAplicado
                             });
 
@@ -313,6 +315,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 IdEmpresa_cxp = item.IdEmpresa,
                                 IdTipoCbte_cxp = item.IdTipoCbte_cxp,
                                 IdCbteCble_cxp = item.IdCbteCble_cxp,
+                                Fecha_cxp = item.Fecha_cxp,
+                                Observacion_cxp = item.Observacion_cxp,
                                 MontoAplicado = item.MontoAplicado
                             });
 

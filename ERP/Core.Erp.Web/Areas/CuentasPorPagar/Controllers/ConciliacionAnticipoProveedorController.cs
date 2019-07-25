@@ -445,7 +445,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         info_det_op.IdOrdenPago = info_det.IdOrdenPago;
                         info_det_op.IdConciliacion = info_det.IdConciliacion;
                         info_det_op.MontoAplicado = info_det.MontoAplicado;
-
+                        info_det_op.Fecha = info_det.Fecha;
+                        info_det_op.Observacion = info_det.Observacion;
                         Lista_det_OP.AddRow(info_det_op, IdTransaccionSession);
                     }
                 }
@@ -506,7 +507,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         info_det_fact.tc_TipoCbte = info_tipocbte.tc_TipoCbte;
                         info_det_fact.IdCbteCble_cxp = info_det.IdCbteCble_cxp;
                         info_det_fact.MontoAplicado = info_det.MontoAplicado;
-
+                        info_det_fact.Fecha_cxp = info_det.Fecha_cxp;
+                        info_det_fact.Observacion_cxp = info_det.Observacion_cxp;
                         Lista_det_Fact.AddRow(info_det_fact, IdTransaccionSession);
                     }
                 }

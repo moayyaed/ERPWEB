@@ -106,6 +106,8 @@
           <Property Name="IdTipoCbte_cxp" Type="int" Nullable="false" />
           <Property Name="IdCbteCble_cxp" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="MontoAplicado" Type="float" Nullable="false" />
+          <Property Name="Fecha_cxp" Type="datetime" Nullable="false" />
+          <Property Name="Observacion_cxp" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="cp_cuotas_x_doc">
           <Key>
@@ -767,6 +769,25 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_ConciliacionAnticipo' no tien
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_ConciliacionAnticipoDetAnt' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcp_ConciliacionAnticipoDetAnt">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdOrdenPago" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="MontoAplicado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdConciliacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="MontoAplicado" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_ConciliacionAnticipoDetAnt_x_cruzar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcp_ConciliacionAnticipoDetAnt_x_cruzar">
           <Key>
@@ -804,6 +825,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_ConciliacionAnticipoDetCXP' n
             <PropertyRef Name="IdCbteCble_cxp" />
             <PropertyRef Name="MontoAplicado" />
             <PropertyRef Name="tc_TipoCbte" />
+            <PropertyRef Name="Fecha_cxp" />
+            <PropertyRef Name="Observacion_cxp" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdConciliacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -814,6 +837,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_ConciliacionAnticipoDetCXP' n
           <Property Name="IdCbteCble_cxp" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="MontoAplicado" Type="float" Nullable="false" />
           <Property Name="tc_TipoCbte" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_cxp" Type="datetime" Nullable="false" />
+          <Property Name="Observacion_cxp" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcp_orden_giro_det_ing_x_oc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2095,6 +2120,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
     [vwcp_ConciliacionAnticipo].[Su_Descripcion] AS [Su_Descripcion]
     FROM [dbo].[vwcp_ConciliacionAnticipo] AS [vwcp_ConciliacionAnticipo]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwcp_ConciliacionAnticipoDetAnt" EntityType="Self.vwcp_ConciliacionAnticipoDetAnt" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcp_ConciliacionAnticipoDetAnt].[IdEmpresa] AS [IdEmpresa], 
+    [vwcp_ConciliacionAnticipoDetAnt].[IdConciliacion] AS [IdConciliacion], 
+    [vwcp_ConciliacionAnticipoDetAnt].[Secuencia] AS [Secuencia], 
+    [vwcp_ConciliacionAnticipoDetAnt].[IdOrdenPago] AS [IdOrdenPago], 
+    [vwcp_ConciliacionAnticipoDetAnt].[Fecha] AS [Fecha], 
+    [vwcp_ConciliacionAnticipoDetAnt].[Observacion] AS [Observacion], 
+    [vwcp_ConciliacionAnticipoDetAnt].[MontoAplicado] AS [MontoAplicado]
+    FROM [dbo].[vwcp_ConciliacionAnticipoDetAnt] AS [vwcp_ConciliacionAnticipoDetAnt]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwcp_ConciliacionAnticipoDetAnt_x_cruzar" EntityType="Self.vwcp_ConciliacionAnticipoDetAnt_x_cruzar" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwcp_ConciliacionAnticipoDetAnt_x_cruzar].[IdEmpresa] AS [IdEmpresa], 
@@ -2119,7 +2155,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
     [vwcp_ConciliacionAnticipoDetCXP].[IdTipoCbte_cxp] AS [IdTipoCbte_cxp], 
     [vwcp_ConciliacionAnticipoDetCXP].[IdCbteCble_cxp] AS [IdCbteCble_cxp], 
     [vwcp_ConciliacionAnticipoDetCXP].[MontoAplicado] AS [MontoAplicado], 
-    [vwcp_ConciliacionAnticipoDetCXP].[tc_TipoCbte] AS [tc_TipoCbte]
+    [vwcp_ConciliacionAnticipoDetCXP].[tc_TipoCbte] AS [tc_TipoCbte], 
+    [vwcp_ConciliacionAnticipoDetCXP].[Fecha_cxp] AS [Fecha_cxp], 
+    [vwcp_ConciliacionAnticipoDetCXP].[Observacion_cxp] AS [Observacion_cxp]
     FROM [dbo].[vwcp_ConciliacionAnticipoDetCXP] AS [vwcp_ConciliacionAnticipoDetCXP]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcp_orden_giro_det_ing_x_oc" EntityType="Self.vwcp_orden_giro_det_ing_x_oc" store:Type="Views" store:Schema="dbo">
@@ -3239,7 +3277,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <EntitySet Name="vwcp_orden_giro_SinRetencion" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_SinRetencion" />
           <EntitySet Name="cp_ConciliacionAnticipo" EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipo" />
           <EntitySet Name="cp_ConciliacionAnticipoDetAnt" EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetAnt" />
-          <EntitySet Name="cp_ConciliacionAnticipoDetCXP" EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" />
           <AssociationSet Name="FK_cp_ConciliacionAnticipo_cp_proveedor" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipo_cp_proveedor">
             <End Role="cp_proveedor" EntitySet="cp_proveedor" />
             <End Role="cp_ConciliacionAnticipo" EntitySet="cp_ConciliacionAnticipo" />
@@ -3248,21 +3285,23 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             <End Role="cp_ConciliacionAnticipo" EntitySet="cp_ConciliacionAnticipo" />
             <End Role="cp_ConciliacionAnticipoDetAnt" EntitySet="cp_ConciliacionAnticipoDetAnt" />
           </AssociationSet>
-          <AssociationSet Name="FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo">
-            <End Role="cp_ConciliacionAnticipo" EntitySet="cp_ConciliacionAnticipo" />
-            <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
-          </AssociationSet>
           <AssociationSet Name="FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago">
             <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
             <End Role="cp_ConciliacionAnticipoDetAnt" EntitySet="cp_ConciliacionAnticipoDetAnt" />
+          </AssociationSet>
+          <EntitySet Name="vwcp_ConciliacionAnticipo" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipo" />
+          <EntitySet Name="vwcp_ConciliacionAnticipoDetAnt_x_cruzar" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt_x_cruzar" />
+          <EntitySet Name="cp_ConciliacionAnticipoDetCXP" EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" />
+          <EntitySet Name="vwcp_ConciliacionAnticipoDetAnt" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt" />
+          <EntitySet Name="vwcp_ConciliacionAnticipoDetCXP" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetCXP" />
+          <AssociationSet Name="FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo">
+            <End Role="cp_ConciliacionAnticipo" EntitySet="cp_ConciliacionAnticipo" />
+            <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
           </AssociationSet>
           <AssociationSet Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
             <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
             <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
           </AssociationSet>
-          <EntitySet Name="vwcp_ConciliacionAnticipo" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipo" />
-          <EntitySet Name="vwcp_ConciliacionAnticipoDetAnt_x_cruzar" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt_x_cruzar" />
-          <EntitySet Name="vwcp_ConciliacionAnticipoDetCXP" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetCXP" />
           </EntityContainer>
         <ComplexType Name="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -4868,23 +4907,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <NavigationProperty Name="cp_ConciliacionAnticipo" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_ConciliacionAnticipo" FromRole="cp_ConciliacionAnticipoDetAnt" ToRole="cp_ConciliacionAnticipo" />
           <NavigationProperty Name="cp_orden_pago" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" FromRole="cp_ConciliacionAnticipoDetAnt" ToRole="cp_orden_pago" />
         </EntityType>
-        <EntityType Name="cp_ConciliacionAnticipoDetCXP">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdConciliacion" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdConciliacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdEmpresa_cxp" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte_cxp" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble_cxp" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="MontoAplicado" Type="Double" Nullable="false" />
-          <NavigationProperty Name="cp_ConciliacionAnticipo" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" FromRole="cp_ConciliacionAnticipoDetCXP" ToRole="cp_ConciliacionAnticipo" />
-          <NavigationProperty Name="cp_orden_pago" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" FromRole="cp_ConciliacionAnticipoDetCXP" ToRole="cp_orden_pago" />
-        </EntityType>
         <Association Name="FK_cp_ConciliacionAnticipo_cp_proveedor">
           <End Type="Model_cuentas_por_pagar.cp_proveedor" Role="cp_proveedor" Multiplicity="1" />
           <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipo" Role="cp_ConciliacionAnticipo" Multiplicity="*" />
@@ -4913,20 +4935,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo">
-          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipo" Role="cp_ConciliacionAnticipo" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Role="cp_ConciliacionAnticipoDetCXP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_ConciliacionAnticipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdConciliacion" />
-            </Principal>
-            <Dependent Role="cp_ConciliacionAnticipoDetCXP">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdConciliacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago">
           <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
           <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetAnt" Role="cp_ConciliacionAnticipoDetAnt" Multiplicity="*" />
@@ -4936,20 +4944,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
               <PropertyRef Name="IdOrdenPago" />
             </Principal>
             <Dependent Role="cp_ConciliacionAnticipoDetAnt">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Role="cp_ConciliacionAnticipoDetCXP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_orden_pago">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Principal>
-            <Dependent Role="cp_ConciliacionAnticipoDetCXP">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdOrdenPago" />
             </Dependent>
@@ -5000,6 +4994,42 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="MontoAplicado" Type="Double" Nullable="false" />
           <Property Name="Saldo" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="cp_ConciliacionAnticipoDetCXP">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdConciliacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEmpresa_cxp" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_cxp" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_cxp" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="MontoAplicado" Type="Double" Nullable="false" />
+          <Property Name="Fecha_cxp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion_cxp" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cp_ConciliacionAnticipo" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" FromRole="cp_ConciliacionAnticipoDetCXP" ToRole="cp_ConciliacionAnticipo" />
+          <NavigationProperty Name="cp_orden_pago" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" FromRole="cp_ConciliacionAnticipoDetCXP" ToRole="cp_orden_pago" />
+        </EntityType>
+        <EntityType Name="vwcp_ConciliacionAnticipoDetAnt">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdConciliacion" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdOrdenPago" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="MontoAplicado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdConciliacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MontoAplicado" Type="Double" Nullable="false" />
+        </EntityType>
         <EntityType Name="vwcp_ConciliacionAnticipoDetCXP">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5011,6 +5041,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             <PropertyRef Name="IdCbteCble_cxp" />
             <PropertyRef Name="MontoAplicado" />
             <PropertyRef Name="tc_TipoCbte" />
+            <PropertyRef Name="Fecha_cxp" />
+            <PropertyRef Name="Observacion_cxp" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdConciliacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
@@ -5021,7 +5053,37 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="IdCbteCble_cxp" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="MontoAplicado" Type="Double" Nullable="false" />
           <Property Name="tc_TipoCbte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_cxp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion_cxp" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo">
+          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipo" Role="cp_ConciliacionAnticipo" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Role="cp_ConciliacionAnticipoDetCXP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_ConciliacionAnticipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion" />
+            </Principal>
+            <Dependent Role="cp_ConciliacionAnticipoDetCXP">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdConciliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Role="cp_ConciliacionAnticipoDetCXP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_orden_pago">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Principal>
+            <Dependent Role="cp_ConciliacionAnticipoDetCXP">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6243,20 +6305,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="cp_ConciliacionAnticipoDetCXP">
-            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP">
-              <MappingFragment StoreEntitySet="cp_ConciliacionAnticipoDetCXP">
-                <ScalarProperty Name="MontoAplicado" ColumnName="MontoAplicado" />
-                <ScalarProperty Name="IdCbteCble_cxp" ColumnName="IdCbteCble_cxp" />
-                <ScalarProperty Name="IdTipoCbte_cxp" ColumnName="IdTipoCbte_cxp" />
-                <ScalarProperty Name="IdEmpresa_cxp" ColumnName="IdEmpresa_cxp" />
-                <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwcp_ConciliacionAnticipo">
             <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipo">
               <MappingFragment StoreEntitySet="vwcp_ConciliacionAnticipo">
@@ -6289,9 +6337,40 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="cp_ConciliacionAnticipoDetCXP">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP">
+              <MappingFragment StoreEntitySet="cp_ConciliacionAnticipoDetCXP">
+                <ScalarProperty Name="Observacion_cxp" ColumnName="Observacion_cxp" />
+                <ScalarProperty Name="Fecha_cxp" ColumnName="Fecha_cxp" />
+                <ScalarProperty Name="MontoAplicado" ColumnName="MontoAplicado" />
+                <ScalarProperty Name="IdCbteCble_cxp" ColumnName="IdCbteCble_cxp" />
+                <ScalarProperty Name="IdTipoCbte_cxp" ColumnName="IdTipoCbte_cxp" />
+                <ScalarProperty Name="IdEmpresa_cxp" ColumnName="IdEmpresa_cxp" />
+                <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcp_ConciliacionAnticipoDetAnt">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt">
+              <MappingFragment StoreEntitySet="vwcp_ConciliacionAnticipoDetAnt">
+                <ScalarProperty Name="MontoAplicado" ColumnName="MontoAplicado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vwcp_ConciliacionAnticipoDetCXP">
             <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetCXP">
               <MappingFragment StoreEntitySet="vwcp_ConciliacionAnticipoDetCXP">
+                <ScalarProperty Name="Observacion_cxp" ColumnName="Observacion_cxp" />
+                <ScalarProperty Name="Fecha_cxp" ColumnName="Fecha_cxp" />
                 <ScalarProperty Name="tc_TipoCbte" ColumnName="tc_TipoCbte" />
                 <ScalarProperty Name="MontoAplicado" ColumnName="MontoAplicado" />
                 <ScalarProperty Name="IdCbteCble_cxp" ColumnName="IdCbteCble_cxp" />

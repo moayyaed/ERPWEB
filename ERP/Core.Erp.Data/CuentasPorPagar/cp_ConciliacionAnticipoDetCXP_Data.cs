@@ -33,7 +33,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdTipoCbte_cxp = q.IdTipoCbte_cxp,
                                  IdCbteCble_cxp = q.IdCbteCble_cxp,
                                  MontoAplicado = q.MontoAplicado,
-                                 tc_TipoCbte = q.tc_TipoCbte
+                                 tc_TipoCbte = q.tc_TipoCbte,
+                                 Fecha_cxp = q.Fecha_cxp,
+                                 Observacion_cxp = q.Observacion_cxp                               
                              }).ToList();
                 }
 
@@ -62,8 +64,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                             IdEmpresa_cxp = q.IdEmpresa_cxp??0,
                             IdTipoCbte_cxp = q.IdTipoCbte_cxp??0,
                             IdCbteCble_cxp = q.IdCbteCble_cxp??0,
-                            MontoAplicado = q.Valor_estimado_a_pagar_OP
-                        }
+                            Fecha_cxp = q.Fecha_Fa_Prov,
+                            MontoAplicado = q.Valor_estimado_a_pagar_OP,
+                            Observacion_cxp = q.Observacion
+                    }
                         ).ToList();
                 }
 
