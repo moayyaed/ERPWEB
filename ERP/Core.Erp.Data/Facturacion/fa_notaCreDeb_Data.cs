@@ -214,12 +214,9 @@ namespace Core.Erp.Data.Facturacion
                             vt_por_iva = item.vt_por_iva,
                             sc_iva = item.sc_iva,
                             IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
-                            sc_estado = "A",
                             sc_subtotal = item.sc_subtotal,
                             sc_total = item.sc_total,
-
                             IdCentroCosto = item.IdCentroCosto,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
                             IdPunto_Cargo = item.IdPunto_Cargo,
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         });
@@ -424,12 +421,9 @@ namespace Core.Erp.Data.Facturacion
                             vt_por_iva = item.vt_por_iva,
                             sc_iva = item.sc_iva,
                             IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
-                            sc_estado = "A",
                             sc_subtotal = item.sc_subtotal,
                             sc_total = item.sc_total,
-
                             IdCentroCosto = item.IdCentroCosto,
-                            IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
                             IdPunto_Cargo = item.IdPunto_Cargo,
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         });

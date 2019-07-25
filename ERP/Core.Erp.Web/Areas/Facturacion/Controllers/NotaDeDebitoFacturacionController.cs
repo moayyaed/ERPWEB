@@ -745,14 +745,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 sc_total = Convert.ToDouble(reader.GetValue(4)),
                                 sc_costo = 0,
                                 sc_observacion = Convert.ToString(reader.GetValue(7)),
-                                sc_estado = "A",
                                 vt_por_iva = 0,
                                 IdPunto_Cargo = null,
                                 IdPunto_cargo_grupo = null,
                                 IdCod_Impuesto_Iva = "IVA0",
-                                IdCod_Impuesto_Ice = null,
                                 IdCentroCosto = null,
-                                IdCentroCosto_sub_centro_costo = null,
                                 sc_cantidad_factura = null
                             };
 

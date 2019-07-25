@@ -391,7 +391,6 @@
     <Build Include="web\Views\VWROL_011.sql" />
     <Build Include="Naturisa\Views\vwCXP_NATU_Rpt009.sql" />
     <Build Include="dbo\Views\vwin_Transferencia_Detalle.sql" />
-    <Build Include="dbo\Views\vwfa_ContabilizarNotaCredDeb_x_Item.sql" />
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven.sql" />
     <Build Include="Naturisa\Views\vwCXP_NATU_Rpt010.sql" />
     <Build Include="dbo\Views\vwfa_ContabilizarNotaCredDeb_x_sucursal.sql" />
@@ -408,7 +407,6 @@
     <Build Include="dbo\Views\vwFa_Documentos_x_Relacionar_NC_ND.sql" />
     <Build Include="dbo\Views\vwfa_fa_guia_remision_x_empresa.sql" />
     <Build Include="dbo\Views\vwfa_fa_notaCreDeb_x_empresa.sql" />
-    <Build Include="dbo\Views\vwfa_factura_det.sql" />
     <Build Include="dbo\Views\vwfa_factura_sri.sql" />
     <Build Include="Naturisa\Views\vwINV_NAT_Rpt004.sql" />
     <Build Include="dbo\Views\vwfa_factura_Subtotal_Iva.sql" />
@@ -454,7 +452,6 @@
     <Build Include="dbo\Views\vw_TipoDocumento.sql" />
     <Build Include="dbo\Views\vwSys_Cbte_Recursivo.sql" />
     <Build Include="web\Views\VWCAJ_002_ingresos.sql" />
-    <Build Include="dbo\Views\vwfa_notaCreDeb_det_sri.sql" />
     <Build Include="dbo\Views\vwcp_conciliacion_Caja_det_Ing_Caja.sql" />
     <Build Include="dbo\Views\vwcp_orden_pago_det_con_cta_acreedora.sql" />
     <Build Include="web\Views\VWCXC_002_diario.sql" />
@@ -808,7 +805,6 @@
     <Build Include="web\Views\VWFAC_001.sql" />
     <Build Include="Naturisa\Views\vwCOMP_NATU_Rpt007.sql" />
     <Build Include="dbo\Views\vwin_subgrupo_x_CentroCosto_x_SubCentroCosto_x_CtaCble.sql" />
-    <Build Include="dbo\Views\vwfa_ContabilizacionFactura_x_Item.sql" />
     <Build Include="web\Views\vwin_producto_hijo_combo.sql" />
     <Build Include="Naturisa\Views\vwINV_NAT_Rpt002.sql" />
     <Build Include="dbo\Views\vwfa_ContabilizacionFactura_x_Sucursal.sql" />

@@ -141,6 +141,9 @@ and f.IdEmpresa = @IdEmpresa
 and f.IdUsuario = @IdUsuario
 )
 
+update [web].[ct_CONTA_004] set Variacion = CASE WHEN Valor1 = 0 THEN 100 ELSE ((Valor2 - Valor1)/Valor1)*100 END WHERE IdUsuario = @IdUsuario
+update [web].[ct_CONTA_004] set Signo = CASE WHEN Variacion > 0 THEN '+' WHEN Variacion < 0 THEN '-' ELSE '=' END WHERE IdUsuario = @IdUsuario
+
 IF(@MostrarSaldo0 = 0)
 BEGIN
 	DELETE [web].[ct_CONTA_004]

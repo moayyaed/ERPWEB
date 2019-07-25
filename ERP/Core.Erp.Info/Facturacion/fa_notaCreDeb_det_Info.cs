@@ -28,14 +28,11 @@ namespace Core.Erp.Info.Facturacion
         public double sc_total { get; set; }
         public double sc_costo { get; set; }
         public string sc_observacion { get; set; }
-        public string sc_estado { get; set; }
         public double vt_por_iva { get; set; }
         public Nullable<int> IdPunto_Cargo { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public string IdCod_Impuesto_Iva { get; set; }
-        public string IdCod_Impuesto_Ice { get; set; }
         public string IdCentroCosto { get; set; }
-        public string IdCentroCosto_sub_centro_costo { get; set; }
         #region Campos que no existen en la tabla
         public string pr_descripcion { get; set; }
         public string lote_num_lote { get; set; }

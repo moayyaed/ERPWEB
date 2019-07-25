@@ -4339,6 +4339,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Parameter Name="Balance" Type="varchar" Mode="In" />
           <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
         </Function>
+        <Function Name="SPCONTA_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdAnio" Type="int" Mode="In" />
+          <Parameter Name="IdPeriodoIni" Type="int" Mode="In" />
+          <Parameter Name="IdPeriodoFin" Type="int" Mode="In" />
+          <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="IdNivel" Type="int" Mode="In" />
+          <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
+          <Parameter Name="Balance" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SPCONTA_005" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdPunto_cargo_grupo" Type="int" Mode="In" />
@@ -8750,6 +8761,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySet Name="VWFAC_009" EntityType="Model_reportes.VWFAC_009" />
           <EntitySet Name="VWCXP_012" EntityType="Model_reportes.VWCXP_012" />
           <EntitySet Name="VWFAC_006" EntityType="Model_reportes.VWFAC_006" />
+          <FunctionImport Name="SPCONTA_004" ReturnType="Collection(Model_reportes.SPCONTA_004_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdAnio" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodoIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodoFin" Mode="In" Type="Int32" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
+            <Parameter Name="Balance" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12696,6 +12718,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="pf_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="SPCONTA_004_Result">
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
+          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
+          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
+          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
+          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
+          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
+          <Property Type="Decimal" Name="Valor1" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Valor2" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Variacion" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Signo" Nullable="false" MaxLength="1" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16560,6 +16601,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_004" FunctionName="Model_reportes.Store.SPCONTA_004">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_004_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
+                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
+                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
+                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
+                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
+                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
+                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
+                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
+                <ScalarProperty Name="Valor1" ColumnName="Valor1" />
+                <ScalarProperty Name="Valor2" ColumnName="Valor2" />
+                <ScalarProperty Name="Variacion" ColumnName="Variacion" />
+                <ScalarProperty Name="Signo" ColumnName="Signo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
