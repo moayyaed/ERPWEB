@@ -309,6 +309,7 @@
     <Compile Include="Contabilidad\ats_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Data.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_x_tb_sucursal_Data.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Data.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_det_Data.cs" />
     <Compile Include="Contabilidad\ct_cbtecble_Plantilla_Data.cs" />
@@ -2180,6 +2181,9 @@
     <Compile Include="vwct_anio_fiscal_x_cuenta_utilidad.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwct_anio_fiscal_x_tb_sucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwct_anio_fiscal_x_tb_sucursal_SinCierre.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
@@ -2550,6 +2554,15 @@
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_det_x_devolver.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_distribucion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_distribucion_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_distribucion_x_distribuir.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_PorAprobar.cs">

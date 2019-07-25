@@ -69,6 +69,7 @@
         <EntityTypeShape EntityType="Model_contabilidad.vwct_anio_fiscal_x_tb_sucursal_SinCierre" Width="1.5" PointX="19.375" PointY="10.75" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_tb_sucursal_ct_anio_fiscal_x_cuenta_utilidad" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_tb_sucursal_ct_cbtecble" />
+        <EntityTypeShape EntityType="Model_contabilidad.vwct_anio_fiscal_x_tb_sucursal" Width="1.5" PointX="20.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
