@@ -313,13 +313,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             };
 
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
-            model.IdAnio = model.fecha_fin.Year;
+            model.IdAnio = Convert.ToInt32(model.IdPeriodoFin.ToString().Substring(0,4));
             model.MostrarSaldoAcumulado = false;
             CONTA_004_ER_Rpt report = new CONTA_004_ER_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdAnio.Value = model.IdAnio;
-            report.p_IdPeriodo.Value = model.IdPeriodo;
+            report.p_IdPeriodoIni.Value = model.IdPeriodoIni;
+            report.p_IdPeriodoFin.Value = model.IdPeriodoFin;
             report.p_IdUsuario.Value = model.IdUsuario;
             report.p_IdNivel.Value = model.IdNivel;
             report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
@@ -336,14 +337,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult CONTA_004(cl_filtros_contabilidad_Info model)
         {
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
-            model.IdAnio = model.fecha_fin.Year;
+            model.IdAnio = Convert.ToInt32(model.IdPeriodoFin.ToString().Substring(0, 4));
             if (model.balance == "BG")
             {
                 CONTA_004_BG_Rpt report = new CONTA_004_BG_Rpt();
                 report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
-                report.p_IdPeriodo.Value = model.IdPeriodo;
+                report.p_IdPeriodoIni.Value = model.IdPeriodoIni;
+                report.p_IdPeriodoFin.Value = model.IdPeriodoFin;
                 report.p_IdUsuario.Value = model.IdUsuario;
                 report.p_IdNivel.Value = model.IdNivel;
                 report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
@@ -359,7 +361,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
                 report.p_IdAnio.Value = model.IdAnio;
-                report.p_IdPeriodo.Value = model.IdPeriodo;
+                report.p_IdPeriodoIni.Value = model.IdPeriodoIni;
+                report.p_IdPeriodoFin.Value = model.IdPeriodoFin;
                 report.p_IdUsuario.Value = model.IdUsuario;
                 report.p_IdNivel.Value = model.IdNivel;
                 report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
