@@ -11,11 +11,11 @@ namespace Core.Erp.Bus.Reportes.Contabilidad
     public class CONTA_004_Bus
     {
         CONTA_004_Data odata = new CONTA_004_Data();
-        public List<CONTA_004_Info> GetList(int IdEmpresa, int IdAnio, int IdPeriodo, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance)
+        public List<CONTA_004_Info> GetList(int IdEmpresa, int IdAnio, int IdPeriodoIni, int IdPeriodoFin, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance)
         {
             try
             {
-                return odata.GetList(IdEmpresa, IdAnio, IdPeriodo, mostrarAcumulado, IdUsuario, IdNivel, mostrarAcumulado, balance);
+                return odata.GetList(IdEmpresa, IdAnio, IdPeriodoIni,  IdPeriodoFin, mostrarAcumulado, IdUsuario, IdNivel, mostrarAcumulado, balance);
             }
             catch (Exception)
             {

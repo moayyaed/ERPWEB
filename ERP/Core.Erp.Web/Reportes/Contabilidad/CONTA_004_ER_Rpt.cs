@@ -32,7 +32,8 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             int IdAnio = string.IsNullOrEmpty(p_IdAnio.Value.ToString()) ? 0 : Convert.ToInt32(p_IdAnio.Value);
             string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : Convert.ToString(p_IdUsuario.Value);
             int IdNivel = string.IsNullOrEmpty(p_IdNivel.Value.ToString()) ? 0 : Convert.ToInt32(p_IdNivel.Value);
-            int IdPeriodo = string.IsNullOrEmpty(p_IdPeriodo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdPeriodo.Value);
+            int IdPeriodoIni = string.IsNullOrEmpty(p_IdPeriodoIni.Value.ToString()) ? 0 : Convert.ToInt32(p_IdPeriodoIni.Value);
+            int IdPeriodoFin = string.IsNullOrEmpty(p_IdPeriodoFin.Value.ToString()) ? 0 : Convert.ToInt32(p_IdPeriodoFin.Value);
             bool mostrarSaldo0 = string.IsNullOrEmpty(p_mostrarSaldo0.Value.ToString()) ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             string balance = string.IsNullOrEmpty(p_balance.Value.ToString()) ? "" : Convert.ToString(p_balance.Value);
             bool mostrarAcumulado = string.IsNullOrEmpty(p_mostrarAcumulado.Value.ToString()) ? false : Convert.ToBoolean(p_mostrarAcumulado.Value);
@@ -43,7 +44,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
             Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
 
-            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdAnio, IdPeriodo, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance));
+            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdAnio, IdPeriodoIni,IdPeriodoFin, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance));
             lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
 
