@@ -726,6 +726,12 @@
     <Compile Include="Reportes\Contabilidad\CONTA_003_ER_Rpt.Designer.cs">
       <DependentUpon>CONTA_003_ER_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_004_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_004_Rpt.Designer.cs">
+      <DependentUpon>CONTA_004_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Contabilidad\CONTA_005_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10295,6 +10301,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10402,6 +10409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_003_ER_Rpt.resx">
       <DependentUpon>CONTA_003_ER_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_004_Rpt.resx">
+      <DependentUpon>CONTA_004_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_005_Rpt.resx">
       <DependentUpon>CONTA_005_Rpt.cs</DependentUpon>
