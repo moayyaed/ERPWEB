@@ -16,7 +16,7 @@ FROM            in_Ing_Egr_Inven_det INNER JOIN
                 in_Ing_Egr_Inven ON in_Ing_Egr_Inven_det.IdEmpresa = in_Ing_Egr_Inven.IdEmpresa AND in_Ing_Egr_Inven_det.IdSucursal = in_Ing_Egr_Inven.IdSucursal AND 
                 in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_Ing_Egr_Inven.IdMovi_inven_tipo AND in_Ing_Egr_Inven_det.IdNumMovi = in_Ing_Egr_Inven.IdNumMovi INNER JOIN
                 in_Motivo_Inven ON in_Ing_Egr_Inven.IdEmpresa = in_Motivo_Inven.IdEmpresa AND in_Ing_Egr_Inven.IdMotivo_Inv = in_Motivo_Inven.IdMotivo_Inv
-WHERE		in_Motivo_Inven.Genera_Movi_Inven = 'S' AND in_movi_inven_tipo.Genera_Movi_Inven = 1 and in_Ing_Egr_Inven_det.IdEmpresa_inv is null and in_Ing_Egr_Inven.Estado = 'A'
+WHERE		in_Motivo_Inven.Genera_Movi_Inven = 'S'  and in_Ing_Egr_Inven_det.IdEmpresa_inv is null and in_Ing_Egr_Inven.Estado = 'A'
 and in_Ing_Egr_Inven.IdEstadoAproba = 'APRO'
 
 IF(@Corregir = 1 )
@@ -31,7 +31,7 @@ FROM            in_Ing_Egr_Inven_det INNER JOIN
                 in_Ing_Egr_Inven ON in_Ing_Egr_Inven_det.IdEmpresa = in_Ing_Egr_Inven.IdEmpresa AND in_Ing_Egr_Inven_det.IdSucursal = in_Ing_Egr_Inven.IdSucursal AND 
                 in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_Ing_Egr_Inven.IdMovi_inven_tipo AND in_Ing_Egr_Inven_det.IdNumMovi = in_Ing_Egr_Inven.IdNumMovi INNER JOIN
                 in_Motivo_Inven ON in_Ing_Egr_Inven.IdEmpresa = in_Motivo_Inven.IdEmpresa AND in_Ing_Egr_Inven.IdMotivo_Inv = in_Motivo_Inven.IdMotivo_Inv
-WHERE		in_Motivo_Inven.Genera_Movi_Inven = 'S' AND in_movi_inven_tipo.Genera_Movi_Inven = 1 and in_Ing_Egr_Inven_det.IdEmpresa_inv is null and in_Ing_Egr_Inven.Estado = 'A'
+WHERE		in_Motivo_Inven.Genera_Movi_Inven = 'S'  and in_Ing_Egr_Inven_det.IdEmpresa_inv is null and in_Ing_Egr_Inven.Estado = 'A'
 and in_Ing_Egr_Inven.IdEstadoAproba = 'APRO'
 ) A
 WHERE in_Ing_Egr_Inven.IdEmpresa = A.IdEmpresa
