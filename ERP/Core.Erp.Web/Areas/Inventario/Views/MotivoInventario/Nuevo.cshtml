@@ -21,6 +21,19 @@
                     @Html.ValidationMessageFor(q => q.Cod_Motivo_Inv, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        @Html.DevExpress().CheckBoxFor(q => q.Genera_Movi_Inven_bool,
+                         settings =>
+                         {
+                             settings.Name = "Genera_Movi_Inven_bool";
+                             settings.Checked = true;
+                             settings.Text = "Genera movimiento de inventario";
+                         }).GetHtml()
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -52,25 +65,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label for="Genera_Movi_Inven_bool">
-                        @Html.DevExpress().CheckBoxFor(q => q.Genera_Movi_Inven_bool,
-                         settings =>
-                         {
-                             settings.Name = "Genera_Movi_Inven_bool";
-                             settings.Checked = true;
-                             settings.Text = "Genera movimiento de inventario";
-                         })
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
     <div class="box-footer">

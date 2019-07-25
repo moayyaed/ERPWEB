@@ -33,15 +33,13 @@
             </div>
             <div class="col-md-4">
                 <div class="checkbox">
-                    <label for="Genera_Movi_Inven_bool">
                         @Html.DevExpress().CheckBoxFor(q => q.Genera_Diario_Contable,
                          settings =>
                          {
                              settings.Name = "Genera_Diario_Contable";
                              settings.Checked = true;
                              settings.Text = "Se contabiliza";
-                         })
-                    </label>
+                         }).GetHtml()
                 </div>
             </div>
 

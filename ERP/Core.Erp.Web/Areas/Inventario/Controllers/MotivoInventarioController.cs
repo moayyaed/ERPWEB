@@ -62,7 +62,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             in_Motivo_Inven_Info model = new in_Motivo_Inven_Info
             {
-                IdEmpresa = IdEmpresa
+                IdEmpresa = IdEmpresa,
+                Genera_Movi_Inven_bool = true
             };
             cargar_combos();
             return View(model);
