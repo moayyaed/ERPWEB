@@ -55,7 +55,7 @@ namespace Core.Erp.Bus.Contabilidad
             {
                 return odata.GuardarBD(info);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

@@ -17,7 +17,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
             {
                 return odata.get_list_facturas_x_cruzar(IdEmpresa, IdSucursal, IdProveedor, Usuario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

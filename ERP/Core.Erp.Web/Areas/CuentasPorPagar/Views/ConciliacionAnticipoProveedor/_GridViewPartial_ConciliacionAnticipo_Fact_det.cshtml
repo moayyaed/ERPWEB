@@ -45,7 +45,7 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdOrdenPago";
-            column.Caption = "Id Orden Pago";
+            column.Caption = "OP";
             column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -59,7 +59,7 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCbteCble_cxp";
-            column.Caption = "Id Comprobante";
+            column.Caption = "CxP";
             column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -73,25 +73,25 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "MontoAplicado";
-            column.Caption = "Monto";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(10);
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-            });
-        });
-        settings.Columns.Add(column =>
-        {
             column.FieldName = "Observacion_cxp";
             column.Caption = "Observación";
             column.Width = Unit.Percentage(30);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
-
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MontoAplicado";
+            column.Caption = "Monto";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditorProperties().SpinEdit(p =>
+            {
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
+            });
+        });
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAplicado").DisplayFormat = "Monto {0:c2}";
 
 

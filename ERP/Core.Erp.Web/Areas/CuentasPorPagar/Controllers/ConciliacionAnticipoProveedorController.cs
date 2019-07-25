@@ -62,6 +62,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_conciliacionAnticipo_Info model = new cp_conciliacionAnticipo_Info();
             return PartialView("_CmbProveedor", model);
         }
+        public ActionResult CmbProveedor_readonly()
+        {
+            cp_conciliacionAnticipo_Info model = new cp_conciliacionAnticipo_Info();
+            return PartialView("_CmbProveedor_readonly", model);
+        }
         public List<tb_persona_Info> get_list_bajo_demanda_proveedor(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.PROVEE.ToString());
@@ -118,14 +123,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            info_parametro = bus_param.get_info(IdEmpresa);
             cp_conciliacionAnticipo_Info model = new cp_conciliacionAnticipo_Info
             {
                 IdEmpresa = IdEmpresa,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdUsuarioCreacion = SessionFixed.IdUsuario,
                 Fecha = DateTime.Now.Date,
-                IdTipoCbte = 1
+                IdTipoCbte = info_parametro.pa_TipoCbte_para_conci_x_antcipo
             };
 
             cargar_combos(IdEmpresa);

@@ -10189,6 +10189,7 @@
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Anular.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbProveedor_readonly.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_004.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />

@@ -46,6 +46,12 @@
             column.FieldName = "MontoAplicado";
             column.Caption = "Monto";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditorProperties().SpinEdit(p =>
+            {
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
+            });
         });
         settings.Columns.Add("Observacion", "Observacion").Width = Unit.Percentage(50);
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_OP";
