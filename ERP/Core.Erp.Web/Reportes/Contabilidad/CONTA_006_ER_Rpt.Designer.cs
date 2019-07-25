@@ -865,7 +865,7 @@
             this.xrTableCell39.StylePriority.UseTextAlignment = false;
             this.xrTableCell39.Text = "UTILIDAD O PERDIDA DEL EJERCICIO";
             this.xrTableCell39.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell39.Weight = 7.0241288965130462D;
+            this.xrTableCell39.Weight = 6.561661631166988D;
             // 
             // xrTableCell40
             // 
@@ -883,7 +883,7 @@
             this.xrTableCell40.Summary = xrSummary1;
             this.xrTableCell40.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell40.TextFormatString = "{0:n2}";
-            this.xrTableCell40.Weight = 0.47587044254457089D;
+            this.xrTableCell40.Weight = 0.93833770789062876D;
             // 
             // CONTA_006_ER_Rpt
             // 
