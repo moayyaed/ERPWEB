@@ -323,7 +323,6 @@ namespace Core.Erp.Data.Facturacion
                         IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
                         vt_iva = item.vt_iva,
                         vt_total = item.vt_total,
-                        vt_estado = item.vt_estado = "A",
 
                         IdEmpresa_pf = item.IdEmpresa_pf,
                         IdSucursal_pf = item.IdSucursal_pf,
@@ -331,7 +330,6 @@ namespace Core.Erp.Data.Facturacion
                         Secuencia_pf = item.Secuencia_pf,
 
                         IdCentroCosto = item.IdCentroCosto,
-                        IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
                         IdPunto_Cargo = item.IdPunto_Cargo,
                         IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                     });
@@ -879,7 +877,6 @@ namespace Core.Erp.Data.Facturacion
                         IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
                         vt_iva = item.vt_iva,
                         vt_total = item.vt_total,
-                        vt_estado = item.vt_estado = "A",
 
                         IdEmpresa_pf = item.IdEmpresa_pf,
                         IdSucursal_pf = item.IdSucursal_pf,
@@ -887,7 +884,6 @@ namespace Core.Erp.Data.Facturacion
                         Secuencia_pf = item.Secuencia_pf,
 
                         IdCentroCosto = item.IdCentroCosto,
-                        IdCentroCosto_sub_centro_costo = item.IdCentroCosto_sub_centro_costo,
                         IdPunto_Cargo = item.IdPunto_Cargo,
                         IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                     });

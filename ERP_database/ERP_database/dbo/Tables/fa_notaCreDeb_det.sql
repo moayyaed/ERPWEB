@@ -15,7 +15,6 @@
     [sc_total]            FLOAT (53)     NOT NULL,
     [sc_costo]            FLOAT (53)     NOT NULL,
     [sc_observacion]      VARCHAR (1000) NULL,
-    [sc_estado]           CHAR (1)       NOT NULL,
     [vt_por_iva]          FLOAT (53)     NOT NULL,
     [IdCentroCosto]       VARCHAR (200)  NULL,
     [IdPunto_Cargo]       INT            NULL,
