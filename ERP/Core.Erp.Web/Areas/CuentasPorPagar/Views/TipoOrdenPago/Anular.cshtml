@@ -76,34 +76,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdTipoCbte_OP_anulacion">Tipo comprobante anuación*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_OP_anulacion, settings =>
-                                           {
-                                               settings.Name = "IdTipoCbte_OP_anulacion";
-                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                               settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                                               settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                                               settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-
-                                               //Campo ID
-                                               settings.Properties.ValueField = "IdTipoCbte";
-                                               settings.Properties.ValueType = typeof(int);
-                                               settings.Properties.TextField = "tc_TipoCbte";
-                                               //Boton para seleccionar ningun registro
-                                               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                                               settings.Properties.NullText = "== Seleccione ==";
-                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                                           }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdTipoCbte_OP_anulacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

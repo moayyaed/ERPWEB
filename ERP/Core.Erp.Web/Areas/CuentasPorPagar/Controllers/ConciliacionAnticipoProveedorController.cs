@@ -145,6 +145,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (!bus_conc_anticipo.GuardarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos(model.IdEmpresa);
                 return View(model);
             }
 
