@@ -23,20 +23,17 @@ namespace Core.Erp.Data.Contabilidad
                 List<ct_anio_fiscal_x_tb_sucursal_Info> Lista;
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
-                    Lista = (from q in Context.vwct_anio_fiscal_x_tb_sucursal
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdSucursal >= IdSucursalInicio
-                             && q.IdSucursal <= IdSucursalFin
-                             select new ct_anio_fiscal_x_tb_sucursal_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdSucursal = q.IdSucursal,
-                                 Su_Descripcion = "",
-                                 IdanioFiscal = q.IdanioFiscal,
-                                 IdTipoCbte = q.IdTipoCbte,
-                                 IdCbteCble = q.IdCbteCble
-
-                             }).ToList();
+                    Lista = Context.vwct_anio_fiscal_x_tb_sucursal.Where(
+                            q => q.IdEmpresa == IdEmpresa && q.IdSucursal >= IdSucursalInicio && q.IdSucursal <= IdSucursalFin).Select(q => new ct_anio_fiscal_x_tb_sucursal_Info
+                            {
+                                IdEmpresa = q.IdEmpresa,
+                                IdSucursal = q.IdSucursal,
+                                Su_Descripcion = q.Su_Descripcion,
+                                IdanioFiscal = q.IdanioFiscal,
+                                IdTipoCbte = q.IdTipoCbte,
+                                IdCbteCble = q.IdCbteCble,
+                                Observacion = q.cb_Observacion
+                            }).ToList();
                 }
                 return Lista;
             }
@@ -52,16 +49,32 @@ namespace Core.Erp.Data.Contabilidad
                 ct_anio_fiscal_x_tb_sucursal_Info info = new ct_anio_fiscal_x_tb_sucursal_Info();
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
-                    ct_anio_fiscal_x_tb_sucursal Entity = Context.ct_anio_fiscal_x_tb_sucursal.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdanioFiscal == IdanioFiscal);
-                    if (Entity == null) return null;
-                    info = new ct_anio_fiscal_x_tb_sucursal_Info
-                    {
-                        IdanioFiscal = Entity.IdanioFiscal,
-                        IdEmpresa = Entity.IdEmpresa,
-                        IdSucursal = Entity.IdSucursal,
-                        IdTipoCbte = Entity.IdTipoCbte,
-                        IdCbteCble = Entity.IdCbteCble
-                    };
+                    info = (from q in Context.vwct_anio_fiscal_x_tb_sucursal
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdSucursal == IdSucursal
+                             && q.IdanioFiscal == IdanioFiscal
+                             select new ct_anio_fiscal_x_tb_sucursal_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 IdanioFiscal = q.IdanioFiscal,
+                                 IdTipoCbte = q.IdTipoCbte,
+                                 IdCbteCble = q.IdCbteCble,
+                                 Observacion = q.cb_Observacion
+
+                             }).FirstOrDefault();
+
+                    //ct_anio_fiscal_x_tb_sucursal Entity = Context.vwct_anio_fiscal_x_tb_sucursal.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdanioFiscal == IdanioFiscal);
+                    //if (Entity == null) return null;
+                    //info = new ct_anio_fiscal_x_tb_sucursal_Info
+                    //{
+                    //    IdanioFiscal = Entity.IdanioFiscal,
+                    //    IdEmpresa = Entity.IdEmpresa,
+                    //    IdSucursal = Entity.IdSucursal,
+                    //    IdTipoCbte = Entity.IdTipoCbte,
+                    //    IdCbteCble = Entity.IdCbteCble
+                    //};
                 }
                 return info;
             }

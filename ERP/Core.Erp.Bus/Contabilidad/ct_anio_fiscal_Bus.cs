@@ -19,6 +19,18 @@ namespace Core.Erp.Bus.Contabilidad
                 throw;
             }
         }
+        public List<ct_anio_fiscal_Info> get_list_anio_sincierre(int IdEmpresa, int IdSucursal)
+        {
+            try
+            {
+                return odata.get_list_anio_sincierre(IdEmpresa, IdSucursal);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        
         public ct_anio_fiscal_Info get_info(int IdanioFiscal)
         {
             try

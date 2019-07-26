@@ -21,5 +21,18 @@ namespace Core.Erp.Bus.Contabilidad
                 throw;
             }
         }
+
+        public List<ct_cbtecble_det_Info> get_list_para_cierre(int IdEmpresa, int IdSucursal, int IdanioFiscal)
+        {
+            try
+            {
+                return odata.get_list_para_cierre(IdEmpresa, IdSucursal, IdanioFiscal);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -294,6 +294,7 @@
     <Compile Include="Areas\Contabilidad\Controllers\ATSController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\CentroCostoController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\CentroCostoNivelController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\CierreAnualController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\CierrePorModuloPorSucursalController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
@@ -10192,6 +10193,9 @@
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbProveedor_readonly.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_004.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\_GridViewPartial_CierreAnual.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

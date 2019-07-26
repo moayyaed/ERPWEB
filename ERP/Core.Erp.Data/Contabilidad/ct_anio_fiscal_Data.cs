@@ -208,5 +208,25 @@ namespace Core.Erp.Data.Contabilidad
                 throw;
             }
         }
+
+        public List<ct_anio_fiscal_Info> get_list_anio_sincierre(int IdEmpresa, int IdSucursal)
+        {
+            try
+            {
+                List<ct_anio_fiscal_Info> Lista;
+                using (Entities_contabilidad Context = new Entities_contabilidad())
+                { 
+                    Lista = Context.vwct_anio_fiscal_x_tb_sucursal_SinCierre.Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal).Select(q => new ct_anio_fiscal_Info
+                    {
+                        IdanioFiscal = q.IdanioFiscal
+                    }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

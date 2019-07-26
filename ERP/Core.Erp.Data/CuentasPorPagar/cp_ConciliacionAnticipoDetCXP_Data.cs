@@ -58,7 +58,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
                     Lista = Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, info_proveedor.IdPersona, info_proveedor.IdPersona, "PROVEE", IdProveedor, IdProveedor, "APRO", Usuario, IdSucursal, false, false).Select(q=> new cp_ConciliacionAnticipoDetCXP_Info
-                        {
+                    {
                             IdEmpresa = q.IdEmpresa,
                             IdOrdenPago = q.IdOrdenPago,
                             IdEmpresa_cxp = q.IdEmpresa_cxp??0,
@@ -67,8 +67,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             Fecha_cxp = q.Fecha_Fa_Prov,
                             MontoAplicado = q.Valor_estimado_a_pagar_OP,
                             Observacion_cxp = q.Observacion
-                    }
-                        ).ToList();
+                    }).ToList();
                 }
 
                 return Lista;

@@ -45,6 +45,33 @@ namespace Core.Erp.Data.Contabilidad
                 throw;
             }
         }
+
+        public List<ct_cbtecble_det_Info> get_list_para_cierre(int IdEmpresa, int IdSucursal, int Idaniofiscal)
+        {
+            try
+            {
+                List<ct_cbtecble_det_Info> Lista;
+                using (Entities_contabilidad Context = new Entities_contabilidad())
+                {
+                    Lista = Context.SPCONTA_CierreAnual(IdEmpresa, IdSucursal, Idaniofiscal).Select(q => new ct_cbtecble_det_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        dc_Valor = Convert.ToDouble(q.dc_Valor),
+                        IdCtaCble = q.IdCtaCble,
+                        secuencia = Convert.ToInt32(q.Secuencia),
+                        pc_Cuenta = q.cc_Descripcion,
+                        IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,                        
+                        IdPunto_cargo = q.IdPunto_cargo,
+                        IdCentroCosto = q.IdCentroCosto
+                    }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
 

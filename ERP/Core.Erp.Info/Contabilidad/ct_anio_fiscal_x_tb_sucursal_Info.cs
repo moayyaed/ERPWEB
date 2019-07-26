@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Contabilidad
 {
     public class ct_anio_fiscal_x_tb_sucursal_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo año fiscal es obligatorio")]
         public int IdanioFiscal { get; set; }
