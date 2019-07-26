@@ -208,6 +208,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNivel = 6,
                 balance = "ER",
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
 
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
@@ -384,6 +385,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_combos(model.IdEmpresa);
             CONTA_005_Rpt report = new CONTA_005_Rpt();
@@ -442,6 +444,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa =  Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdNivel = 6,
                 balance = "ER",
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             model.IdAnio = model.fecha_fin.Year;
