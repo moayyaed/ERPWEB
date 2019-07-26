@@ -1,5 +1,4 @@
-﻿
---exec SPCONTA_CierreAnual 2,8,2019
+﻿--exec SPCONTA_CierreAnual 2,8,2019
 CREATE PROCEDURE [dbo].[SPCONTA_CierreAnual]
 (
 @IdEmpresa int,
@@ -23,14 +22,14 @@ group by d.IdEmpresa, d.IdCtaCble, pc.pc_Cuenta,d.IdCentroCosto, cc.cc_Descripci
 d.IdPunto_cargo, pp.nom_punto_cargo
 having round(sum(dc_Valor),2) <> 0
 UNION ALL
-select d.IdEmpresa, isnull(A.IdCtaCbleCierre,''), 9999999 as Secuencia, A.IdCtaCbleCierre+' - '+cta.pc_Cuenta, round(sum(d.dc_Valor),2) dc_Valor, case when round(sum(d.dc_Valor),2) > 0 then round(sum(d.dc_Valor),2) else 0 end as dc_Valor_Debe,
-case when round(sum(d.dc_Valor),2) < 0 then abs(round(sum(d.dc_Valor),2)) else 0 end as dc_Valor_Haber, NULL IdCentroCosto, NULL cc_Descripcion, NULL IdPunto_cargo_grupo, NULL nom_punto_cargo_grupo,
-NULL IdPunto_cargo, NULL nom_punto_cargo
-from ct_cbtecble as c inner join 
-ct_cbtecble_det as d on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble inner join 
-ct_plancta as pc on pc.IdEmpresa = d.IdEmpresa and pc.IdCtaCble = d.IdCtaCble inner join
-ct_grupocble as g on pc.IdGrupoCble = g.IdGrupoCble left JOIN 
-ct_anio_fiscal_x_cuenta_utilidad AS A ON A.IdanioFiscal = year(c.cb_Fecha) AND A.IdanioFiscal = C.IdEmpresa left join
-ct_plancta as cta on cta.IdEmpresa = a.IdEmpresa and a.IdCtaCbleCierre = cta.IdCtaCble
+SELECT d.IdEmpresa, ISNULL(A.IdCtaCbleCierre, '') AS Expr1, 9999999 AS Secuencia, A.IdCtaCbleCierre + ' - ' + cta.pc_Cuenta AS Expr2, ROUND(SUM(d.dc_Valor)*-1, 2) AS dc_Valor, CASE WHEN round(SUM(d .dc_Valor)*-1, 2) 
+                  > 0 THEN round(SUM(d .dc_Valor)*-1, 2) ELSE 0 END AS dc_Valor_Debe, CASE WHEN round(SUM(d .dc_Valor)*-1, 2) < 0 THEN abs(round(SUM(d .dc_Valor)*-1, 2)) ELSE 0 END AS dc_Valor_Haber, NULL AS IdCentroCosto, NULL 
+                  AS cc_Descripcion, NULL AS IdPunto_cargo_grupo, NULL AS nom_punto_cargo_grupo, NULL AS IdPunto_cargo, NULL AS nom_punto_cargo
+FROM     ct_cbtecble AS c INNER JOIN
+                  ct_cbtecble_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdTipoCbte = d.IdTipoCbte AND c.IdCbteCble = d.IdCbteCble INNER JOIN
+                  ct_plancta AS pc ON pc.IdEmpresa = d.IdEmpresa AND pc.IdCtaCble = d.IdCtaCble INNER JOIN
+                  ct_grupocble AS g ON pc.IdGrupoCble = g.IdGrupoCble LEFT OUTER JOIN
+                  ct_anio_fiscal_x_cuenta_utilidad AS A ON c.IdEmpresa = A.IdEmpresa AND A.IdanioFiscal = YEAR(c.cb_Fecha) LEFT OUTER JOIN
+                  ct_plancta AS cta ON cta.IdEmpresa = A.IdEmpresa AND A.IdCtaCbleCierre = cta.IdCtaCble
 where d.IdEmpresa = @IdEmpresa and year(c.cb_Fecha) = @IdAnio and g.gc_estado_financiero = 'ER' and c.IdSucursal = @IdSucursal
 group by d.IdEmpresa, A.IdCtaCbleCierre, cta.pc_Cuenta
