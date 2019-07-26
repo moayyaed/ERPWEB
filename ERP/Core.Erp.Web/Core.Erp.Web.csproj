@@ -10196,6 +10196,8 @@
     <Content Include="Areas\Contabilidad\Views\CierreAnual\_GridViewPartial_CierreAnual.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Anular.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\_CmbCuenta_Tipo.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\_CmbCuenta_credito_Tipo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

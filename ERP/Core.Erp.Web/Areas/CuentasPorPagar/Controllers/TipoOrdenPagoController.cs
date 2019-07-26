@@ -1,8 +1,11 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorPagar;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
@@ -17,6 +20,30 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_pago_estado_aprob_Bus bus_estado_op = new cp_orden_pago_estado_aprob_Bus();
 
         #endregion
+
+        #region Metodos ComboBox bajo demanda
+        ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        public ActionResult CmbCuenta_Tipo()
+        {
+            cp_orden_pago_tipo_x_empresa_Info model = new cp_orden_pago_tipo_x_empresa_Info();
+            return PartialView("_CmbCuenta_Tipo", model);
+        }
+        public ActionResult CmbCuenta_credito_Tipo()
+        {
+            cp_orden_pago_tipo_x_empresa_Info model = new cp_orden_pago_tipo_x_empresa_Info();
+            return PartialView("_CmbCuenta_credito_tipo", model);
+        }
+
+        public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
 
         #region Index
         public ActionResult Index()
