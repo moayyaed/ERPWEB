@@ -46,6 +46,20 @@
 
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <div class="form-group">
+                        @Html.DevExpress().CheckBoxFor(q => q.Dispara_Alerta,
+                         settings =>
+                         {
+                             settings.Name = "Dispara_Alerta";
+                             settings.Checked = false;
+                             settings.Text = "Es un anticipo";
+                         }
+                     ).GetHtml()
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -76,28 +90,13 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdCtaCble">Cuenta contable débito</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble, settings =>
-               {
-                   settings.Name = "IdCtaCble";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("pc_Cuenta", "Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                   settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(40);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdCtaCble";
-                   settings.Properties.ValueType = typeof(string);
-                   settings.Properties.TextField = "pc_Cuenta";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-               }).BindList(ViewBag.lst_cuenta_contable).GetHtml()
+                    @Html.Partial("_CmbCuenta_Tipo", Model)
                     @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -108,22 +107,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdCtaCble_Credito">Cuenta contable crédito</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble_Credito, settings =>
-               {
-                   settings.Name = "IdCtaCble_Credito";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("pc_Cuenta", "Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                   settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(40);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdCtaCble";
-                   settings.Properties.ValueType = typeof(string);
-                   settings.Properties.TextField = "pc_Cuenta";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-               }).BindList(ViewBag.lst_cuenta_contable).GetHtml()
+                    @Html.Partial("_CmbCuenta_credito_Tipo", Model)
                     @Html.ValidationMessageFor(q => q.IdCtaCble_Credito, "", new { @class = "text-danger" })
                 </div>
             </div>
