@@ -52,12 +52,11 @@ namespace Core.Erp.Data.CuentasPorPagar
         {
             try
             {
-                var info_proveedor = data_proveedor.get_info(IdEmpresa, IdProveedor);
                 List<cp_ConciliacionAnticipoDetCXP_Info> Lista = new List<cp_ConciliacionAnticipoDetCXP_Info>();
 
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    Lista = Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, info_proveedor.IdPersona, info_proveedor.IdPersona, "PROVEE", IdProveedor, IdProveedor, "APRO", Usuario, IdSucursal, false, false).Select(q=> new cp_ConciliacionAnticipoDetCXP_Info
+                    Lista = Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, 1, 999999999, "PROVEE", IdProveedor, IdProveedor, "APRO", Usuario, IdSucursal, false, false).Select(q=> new cp_ConciliacionAnticipoDetCXP_Info
                     {
                             IdEmpresa = q.IdEmpresa,
                             IdOrdenPago = q.IdOrdenPago,
@@ -65,7 +64,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             IdTipoCbte_cxp = q.IdTipoCbte_cxp??0,
                             IdCbteCble_cxp = q.IdCbteCble_cxp??0,
                             Fecha_cxp = q.Fecha_Fa_Prov,
-                            MontoAplicado = q.Valor_estimado_a_pagar_OP,
+                            MontoAplicado = q.Saldo_x_Pagar_OP,
                             Observacion_cxp = q.Observacion
                     }).ToList();
                 }

@@ -115,6 +115,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdUsuarioCreacion = SessionFixed.IdUsuario,
                 Fecha = DateTime.Now.Date,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoCbte = info_parametro.pa_TipoCbte_para_conci_x_antcipo
             };
 

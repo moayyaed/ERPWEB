@@ -54,7 +54,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdEmpresa = q.IdEmpresa,
                         IdOrdenPago = q.IdOrdenPago,
                         Fecha = q.Fecha,
-                        MontoAplicado = q.ValorOP,
+                        MontoAplicado = q.Saldo,
                         Observacion = q.Observacion
                     }).ToList();
                 }
