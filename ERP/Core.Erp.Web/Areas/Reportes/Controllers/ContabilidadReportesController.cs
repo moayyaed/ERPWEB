@@ -310,8 +310,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNivel = 6,
                 balance = "ER",
+                IdPeriodoFin = Convert.ToInt32(DateTime.Now.Year.ToString()+DateTime.Now.Month.ToString("00")),
+                IdPeriodoIni = Convert.ToInt32(DateTime.Now.AddMonths(-1).Year.ToString() + DateTime.Now.AddMonths(-1).Month.ToString("00")),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
-
+            
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             model.IdAnio = Convert.ToInt32(model.IdPeriodoFin.ToString().Substring(0,4));
             model.MostrarSaldoAcumulado = false;
