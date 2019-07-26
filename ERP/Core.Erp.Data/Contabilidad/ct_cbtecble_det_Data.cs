@@ -59,7 +59,9 @@ namespace Core.Erp.Data.Contabilidad
                         dc_Valor = Convert.ToDouble(q.dc_Valor),
                         IdCtaCble = q.IdCtaCble,
                         secuencia = Convert.ToInt32(q.Secuencia),
-                        pc_Cuenta = q.cc_Descripcion,
+                        pc_Cuenta = q.pc_Cuenta,
+                        dc_Valor_debe = Convert.ToDouble(q.dc_Valor_Debe),
+                        dc_Valor_haber = Convert.ToDouble(q.dc_Valor_Haber),
                         IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,                        
                         IdPunto_cargo = q.IdPunto_cargo,
                         IdCentroCosto = q.IdCentroCosto

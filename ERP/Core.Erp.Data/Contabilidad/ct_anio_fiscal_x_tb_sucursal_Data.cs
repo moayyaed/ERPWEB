@@ -138,7 +138,7 @@ namespace Core.Erp.Data.Contabilidad
                         return false;
 
                     ct_cbtecble_Info info_diario = armar_info(info.info_cbtecble_det, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info.IdTipoCbte), 0, info.Observacion, Convert.ToDateTime(Fecha));
-                    ct_cbtecble Entity_cbte = Context.ct_cbtecble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble).FirstOrDefault();
+                    //ct_cbtecble Entity_cbte = Context.ct_cbtecble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble).FirstOrDefault();
 
                     if (info_diario != null)
                     {

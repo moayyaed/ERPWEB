@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_Info
 @{
-    ViewBag.Title = "Comprobante contable";
+    ViewBag.Title = "Cierre anual";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,7 +8,7 @@
     Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Index", "ComprobanteContable", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Index", "CierreAnual", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa)
     <div class="box ">

@@ -10178,11 +10178,9 @@
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\_GridViewPartial_cobranza_sinret.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\CobrosSinRetencion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Anular.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbCuenta.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipoProveedor.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Index.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbProveedor.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_DiarioCble_det.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_OP_det.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_GridViewPartial_ConciliacionAnticipo_Fact_det.cshtml" />
@@ -10196,6 +10194,8 @@
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\_GridViewPartial_CierreAnual.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

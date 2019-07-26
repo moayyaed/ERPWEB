@@ -1737,12 +1737,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_cbtecble" EntitySet="ct_cbtecble" />
             <End Role="ct_anio_fiscal_x_tb_sucursal" EntitySet="ct_anio_fiscal_x_tb_sucursal" />
           </AssociationSet>
+          <EntitySet Name="vwct_anio_fiscal_x_tb_sucursal" EntityType="Model_contabilidad.vwct_anio_fiscal_x_tb_sucursal" />
           <FunctionImport Name="SPCONTA_CierreAnual" ReturnType="Collection(Model_contabilidad.SPCONTA_CierreAnual_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
             <Parameter Name="IdAnio" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="vwct_anio_fiscal_x_tb_sucursal" EntityType="Model_contabilidad.vwct_anio_fiscal_x_tb_sucursal" />
           </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -2781,21 +2781,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="SPCONTA_CierreAnual_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
-          <Property Type="Int64" Name="Secuencia" Nullable="false" />
-          <Property Type="String" Name="Column1" Nullable="true" MaxLength="523" />
-          <Property Type="Double" Name="dc_Valor" Nullable="true" />
-          <Property Type="Double" Name="dc_Valor_Debe" Nullable="true" />
-          <Property Type="Double" Name="dc_Valor_Haber" Nullable="true" />
-          <Property Type="String" Name="IdCentroCosto" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="cc_Descripcion" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="IdPunto_cargo_grupo" Nullable="true" />
-          <Property Type="String" Name="nom_punto_cargo_grupo" Nullable="true" />
-          <Property Type="Int32" Name="IdPunto_cargo" Nullable="true" />
-          <Property Type="String" Name="nom_punto_cargo" Nullable="true" />
-        </ComplexType>
         <EntityType Name="vwct_anio_fiscal_x_tb_sucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2813,6 +2798,21 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="cb_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SPCONTA_CierreAnual_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
+          <Property Type="Int64" Name="Secuencia" Nullable="false" />
+          <Property Type="String" Name="pc_Cuenta" Nullable="true" MaxLength="523" />
+          <Property Type="Double" Name="dc_Valor" Nullable="true" />
+          <Property Type="Double" Name="dc_Valor_Debe" Nullable="true" />
+          <Property Type="Double" Name="dc_Valor_Haber" Nullable="true" />
+          <Property Type="String" Name="IdCentroCosto" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="cc_Descripcion" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="IdPunto_cargo_grupo" Nullable="true" />
+          <Property Type="String" Name="nom_punto_cargo_grupo" Nullable="true" />
+          <Property Type="Int32" Name="IdPunto_cargo" Nullable="true" />
+          <Property Type="String" Name="nom_punto_cargo" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3453,25 +3453,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_CierreAnual" FunctionName="Model_contabilidad.Store.SPCONTA_CierreAnual">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_contabilidad.SPCONTA_CierreAnual_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="Column1" ColumnName="Column1" />
-                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
-                <ScalarProperty Name="dc_Valor_Debe" ColumnName="dc_Valor_Debe" />
-                <ScalarProperty Name="dc_Valor_Haber" ColumnName="dc_Valor_Haber" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
-                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
-                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
-                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="vwct_anio_fiscal_x_tb_sucursal">
             <EntityTypeMapping TypeName="Model_contabilidad.vwct_anio_fiscal_x_tb_sucursal">
               <MappingFragment StoreEntitySet="vwct_anio_fiscal_x_tb_sucursal">
@@ -3485,6 +3466,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_CierreAnual" FunctionName="Model_contabilidad.Store.SPCONTA_CierreAnual">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_contabilidad.SPCONTA_CierreAnual_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
+                <ScalarProperty Name="dc_Valor_Debe" ColumnName="dc_Valor_Debe" />
+                <ScalarProperty Name="dc_Valor_Haber" ColumnName="dc_Valor_Haber" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
+                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
+                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

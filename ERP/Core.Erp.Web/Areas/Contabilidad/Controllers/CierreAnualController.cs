@@ -26,7 +26,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ct_parametro_Bus bus_parametro = new ct_parametro_Bus();
         ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
-        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -255,54 +254,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             list_ct_cbtecble_det.set_list(lst, IdTransaccionSession);
 
             return Json("", JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
-        #region GRids
-
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_comprobante_detalle()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
-            return PartialView("_GridViewPartial_comprobante_detalle", model);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
-        {
-            if (ModelState.IsValid)
-                list_ct_cbtecble_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
-            return PartialView("_GridViewPartial_comprobante_detalle", model);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
-        {
-
-            if (ModelState.IsValid)
-                list_ct_cbtecble_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
-            return PartialView("_GridViewPartial_comprobante_detalle", model);
-        }
-
-        public ActionResult EditingDelete(int secuencia)
-        {
-            list_ct_cbtecble_det.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
-            return PartialView("_GridViewPartial_comprobante_detalle", model);
         }
         #endregion
     }

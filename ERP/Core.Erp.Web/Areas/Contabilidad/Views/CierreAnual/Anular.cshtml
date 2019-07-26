@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Contabilidad.ct_anio_fiscal_x_tb_sucursal_Info
 @{
-    ViewBag.Title = "Nuevo cierre anual";
+    ViewBag.Title = "Anular cierre anual";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -9,7 +9,7 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Nuevo", "CierreAnual", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Anular", "CierreAnual", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
     {
@@ -23,6 +23,7 @@
 
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTipoCbte, new { @id = "IdTipoCbte" })
+    @Html.HiddenFor(q => q.IdCbteCble, new { @id = "IdCbteCble" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="row">
         <div class="col-md-12">
@@ -30,7 +31,7 @@
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     <div class="form-group">
-                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal", @readonly = "readonly" })
                         @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -39,17 +40,9 @@
                 <div class="form-group">
                     <label for="IdSucursal">Año Fiscal*</label>
                     <div class="form-group">
-                        @Html.DropDownListFor(q => q.IdanioFiscal, new SelectList(ViewBag.lst_anios_sin_cierre, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "IdanioFiscal" })
+                        @Html.DropDownListFor(q => q.IdanioFiscal, new SelectList(ViewBag.lst_anios, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "IdanioFiscal", @readonly = "readonly" })
                         @Html.ValidationMessageFor(q => q.IdanioFiscal, "", new { @class = "text-danger" })
                     </div>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <label for="Buscar"></label>
-                    <button type="button" class="btn btn-primary form-control " onclick="CargarDetalleCbte();" title="Refrescar busqueda">
-                        <i class="fa fa-search"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -69,6 +62,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Motivo de anulación*</label>
+                    @Html.TextBoxFor(q => q.MotivoAnulacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
                 @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
             </div>
         </div>
@@ -81,36 +85,3 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
-<script type="text/javascript">
-    $(function () {
-        $("#IdanioFiscal").change(function () {
-            CargarDetalleCbte();
-        });
-    });
-
-    function CargarDetalleCbte() {
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val(),
-            IdanioFiscal: $("#IdanioFiscal").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val(),
-        }
-
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("CargarDetalleCbte", "CierreAnual", new { Area = "Contabilidad" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridView_comprobante_detalle.PerformCallback();
-            },
-            error: function (error) {
-            }
-        });
-    };
-</script>

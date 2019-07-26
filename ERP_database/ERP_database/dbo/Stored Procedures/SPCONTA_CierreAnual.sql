@@ -1,4 +1,5 @@
-﻿--exec SPCONTA_CierreAnual 2,8,2019
+﻿
+--exec SPCONTA_CierreAnual 2,8,2019
 CREATE PROCEDURE [dbo].[SPCONTA_CierreAnual]
 (
 @IdEmpresa int,
@@ -7,7 +8,7 @@ CREATE PROCEDURE [dbo].[SPCONTA_CierreAnual]
 )
 AS
 
-select d.IdEmpresa, d.IdCtaCble, ISNULL(ROW_NUMBER() over(order by d.IdEmpresa),0) as Secuencia, d.IdCtaCble + ' - '+ pc.pc_Cuenta, round(sum(d.dc_Valor),2) dc_Valor, case when round(sum(d.dc_Valor),2) > 0 then round(sum(d.dc_Valor),2) else 0 end as dc_Valor_Debe,
+select d.IdEmpresa, d.IdCtaCble, ISNULL(ROW_NUMBER() over(order by d.IdEmpresa),0) as Secuencia, d.IdCtaCble + ' - '+ pc.pc_Cuenta as pc_Cuenta, round(sum(d.dc_Valor),2) dc_Valor, case when round(sum(d.dc_Valor),2) > 0 then round(sum(d.dc_Valor),2) else 0 end as dc_Valor_Debe,
 case when round(sum(d.dc_Valor),2) < 0 then abs(round(sum(d.dc_Valor),2)) else 0 end as dc_Valor_Haber, d.IdCentroCosto, cc.cc_Descripcion, d.IdPunto_cargo_grupo, pg.nom_punto_cargo_grupo,
 d.IdPunto_cargo, pp.nom_punto_cargo
 from ct_cbtecble as c inner join 

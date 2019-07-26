@@ -16,7 +16,7 @@ namespace Core.Erp.Data
         public int IdEmpresa { get; set; }
         public string IdCtaCble { get; set; }
         public long Secuencia { get; set; }
-        public string Column1 { get; set; }
+        public string pc_Cuenta { get; set; }
         public Nullable<double> dc_Valor { get; set; }
         public Nullable<double> dc_Valor_Debe { get; set; }
         public Nullable<double> dc_Valor_Haber { get; set; }

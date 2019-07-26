@@ -53,8 +53,8 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoCbte = DataBinder.Eval(tc.DataItem, "IdTipoCbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble") }) + "&nbsp;" +
-                    Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa") , IdTipoCbte = DataBinder.Eval(tc.DataItem, "IdTipoCbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble")},
+                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdanioFiscal = DataBinder.Eval(tc.DataItem, "IdanioFiscal") }) + "&nbsp;" +
+                    Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa") , IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdanioFiscal = DataBinder.Eval(tc.DataItem, "IdanioFiscal") },
                         new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                 );
             });
@@ -68,9 +68,9 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(30); 
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(30);
         settings.Columns.Add("IdanioFiscal", "Anio").Width = Unit.Percentage(10);
-        settings.Columns.Add("Observacion", "Observacion").Width = Unit.Percentage(40);     
+        settings.Columns.Add("Observacion", "Observacion").Width = Unit.Percentage(45);
 
         settings.Columns.Add(column =>
         {
@@ -78,7 +78,7 @@
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CONTA_001", "ContabilidadReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdTipoCbte = DataBinder.Eval(c.DataItem, "IdTipoCbte").ToString(), IdCbteCble = DataBinder.Eval(c.DataItem, "IdCbteCble").ToString() }, Request.Url.Scheme) + "');\"></span>");
             });
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
         });
     });
 }
