@@ -427,19 +427,32 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
+                    var repetido = 0;
                     var info_det = lst_x_ingresar.Where(q => q.IdOrdenPago == Convert.ToInt32(item)).FirstOrDefault();
-
+                    var detalle_op = Lista_det_OP.get_list(IdTransaccionSession);
                     cp_ConciliacionAnticipoDetAnt_Info info_det_op = new cp_ConciliacionAnticipoDetAnt_Info();
 
                     if (info_det != null)
                     {
-                        info_det_op.IdEmpresa = info_det.IdEmpresa;
-                        info_det_op.IdOrdenPago = info_det.IdOrdenPago;
-                        info_det_op.IdConciliacion = info_det.IdConciliacion;
-                        info_det_op.MontoAplicado = info_det.MontoAplicado;
-                        info_det_op.Fecha = info_det.Fecha;
-                        info_det_op.Observacion = info_det.Observacion;
-                        Lista_det_OP.AddRow(info_det_op, IdTransaccionSession);
+                        foreach (var item2 in detalle_op)
+                        {
+                            if (info_det.IdOrdenPago == item2.IdOrdenPago)
+                            {
+                                repetido = 1;
+                                break;
+                            }
+                        }
+
+                        if (repetido == 0)
+                        {
+                            info_det_op.IdEmpresa = info_det.IdEmpresa;
+                            info_det_op.IdOrdenPago = info_det.IdOrdenPago;
+                            info_det_op.IdConciliacion = info_det.IdConciliacion;
+                            info_det_op.MontoAplicado = info_det.MontoAplicado;
+                            info_det_op.Fecha = info_det.Fecha;
+                            info_det_op.Observacion = info_det.Observacion;
+                            Lista_det_OP.AddRow(info_det_op, IdTransaccionSession);
+                        }                        
                     }
                 }
             }
@@ -481,27 +494,41 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 int IdEmpresaSesion = Convert.ToInt32(SessionFixed.IdEmpresa);
                 var lst_x_ingresar = Lista_Fact_x_Ing.get_list(IdTransaccionSession);
+                var detalle_fact = Lista_det_Fact.get_list(IdTransaccionSession);
                 string[] array = IDs.Split(',');
+
                 foreach (var item in array)
                 {
                     var info_det = lst_x_ingresar.Where(q => q.IdOrdenPago == Convert.ToInt32(item)).FirstOrDefault();
-
+                    var repetido = 0;
                     cp_ConciliacionAnticipoDetCXP_Info info_det_fact = new cp_ConciliacionAnticipoDetCXP_Info();
 
                     if (info_det != null)
                     {
-                        var info_tipocbte = bus_tipocbte.get_info(info_det.IdTipoCbte_cxp);
-                        info_det_fact.IdEmpresa = info_det.IdEmpresa;
-                        info_det_fact.IdOrdenPago = info_det.IdOrdenPago;
-                        info_det_fact.IdConciliacion = info_det.IdConciliacion;
-                        info_det_fact.IdEmpresa_cxp = info_det.IdEmpresa_cxp;
-                        info_det_fact.IdTipoCbte_cxp = info_det.IdTipoCbte_cxp;
-                        info_det_fact.tc_TipoCbte = info_tipocbte.tc_TipoCbte;
-                        info_det_fact.IdCbteCble_cxp = info_det.IdCbteCble_cxp;
-                        info_det_fact.MontoAplicado = info_det.MontoAplicado;
-                        info_det_fact.Fecha_cxp = info_det.Fecha_cxp;
-                        info_det_fact.Observacion_cxp = info_det.Observacion_cxp;
-                        Lista_det_Fact.AddRow(info_det_fact, IdTransaccionSession);
+                        foreach (var item2 in detalle_fact)
+                        {
+                            if (info_det.IdOrdenPago == item2.IdOrdenPago)
+                            {
+                                repetido = 1;
+                                break;
+                            }
+                        }
+
+                        if (repetido == 0)
+                        {
+                            var info_tipocbte = bus_tipocbte.get_info(info_det.IdTipoCbte_cxp);
+                            info_det_fact.IdEmpresa = info_det.IdEmpresa;
+                            info_det_fact.IdOrdenPago = info_det.IdOrdenPago;
+                            info_det_fact.IdConciliacion = info_det.IdConciliacion;
+                            info_det_fact.IdEmpresa_cxp = info_det.IdEmpresa_cxp;
+                            info_det_fact.IdTipoCbte_cxp = info_det.IdTipoCbte_cxp;
+                            info_det_fact.tc_TipoCbte = info_tipocbte.tc_TipoCbte;
+                            info_det_fact.IdCbteCble_cxp = info_det.IdCbteCble_cxp;
+                            info_det_fact.MontoAplicado = info_det.MontoAplicado;
+                            info_det_fact.Fecha_cxp = info_det.Fecha_cxp;
+                            info_det_fact.Observacion_cxp = info_det.Observacion_cxp;
+                            Lista_det_Fact.AddRow(info_det_fact, IdTransaccionSession);
+                        }                        
                     }
                 }
             }
