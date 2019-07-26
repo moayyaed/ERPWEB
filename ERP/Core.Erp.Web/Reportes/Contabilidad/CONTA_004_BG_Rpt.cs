@@ -47,8 +47,9 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdAnio,IdPeriodoIni , IdPeriodoFin, mostrarSaldo0, IdUsuario, IdNivel,  mostrarAcumulado, balance));
             lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
-            
 
+            lblPeriodoIni.Text = IdPeriodoIni.ToString().Length == 6 ? new DateTime(Convert.ToInt32(IdPeriodoIni.ToString().Substring(0, 4)), Convert.ToInt32(IdPeriodoIni.ToString().Substring(4, 2)), 1).ToString("MMMM yyyy") : "";
+            lblPeriodoFin.Text = IdPeriodoFin.ToString().Length == 6 ? new DateTime(Convert.ToInt32(IdPeriodoFin.ToString().Substring(0, 4)), Convert.ToInt32(IdPeriodoFin.ToString().Substring(4, 2)), 1).ToString("MMMM yyyy") : "";
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
