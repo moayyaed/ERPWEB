@@ -157,7 +157,6 @@
     <Compile Include="CuentasPorPagar\cp_SolicitudPagoDet_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_SolicitudPago_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_TipoDocumento_Bus.cs" />
-    <Compile Include="FacturacionElectronica\TipoComprobante_Bus.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Bus.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Bus.cs" />
     <Compile Include="Facturacion\fa_catalogo_Bus.cs" />
@@ -267,8 +266,6 @@
     <Compile Include="Inventario\in_UnidadMedida_Bus.cs" />
     <Compile Include="Inventario\in_UnidadMedida_Equiv_conversion_Bus.cs" />
     <Compile Include="in_AjusteDet_Bus.cs" />
-    <Compile Include="Migraciones\FacturasEventos_Bus.cs" />
-    <Compile Include="Migraciones\ImportacionDiarios_Bus.cs" />
     <Compile Include="Presupuesto\pre_Periodo_Bus.cs" />
     <Compile Include="Presupuesto\pre_PresupuestoDet_Bus.cs" />
     <Compile Include="Presupuesto\pre_Presupuesto_Bus.cs" />

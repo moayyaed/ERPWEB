@@ -582,10 +582,6 @@
     <Compile Include="cxc_Parametro.cs">
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
-    <Compile Include="Factura.cs">
-      <DependentUpon>Model_migraciones.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FacturacionElectronica\TipoComprobante_Data.cs" />
     <Compile Include="Facturacion\fa_CambioProductoDet_Data.cs" />
     <Compile Include="Facturacion\fa_CambioProducto_Data.cs" />
     <Compile Include="Facturacion\fa_catalogo_Data.cs" />
@@ -943,8 +939,6 @@
     <Compile Include="in_UnidadMedida_Equiv_conversion.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migraciones\FacturasEventos_Data.cs" />
-    <Compile Include="Migraciones\ImportacionDiarios_Data.cs" />
     <Compile Include="Model_activo_fijo.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1035,21 +1029,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_cuentas_por_pagar.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model_entidades_regulatorias.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_entidades_regulatorias.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_entidades_regulatorias.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_entidades_regulatorias.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_entidades_regulatorias.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Model_facturacion.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1064,21 +1043,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_facturacion.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model_facturacion_electronica.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_facturacion_electronica.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_facturacion_electronica.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_facturacion_electronica.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model_general.Context.cs">
       <DependentUpon>Model_general.Context.tt</DependentUpon>
@@ -1110,21 +1074,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_importacion.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model_ImportacionDiarios.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_ImportacionDiarios.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_ImportacionDiarios.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_ImportacionDiarios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_ImportacionDiarios.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Model_inventario.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1139,36 +1088,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_inventario.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model_migraciones.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_migraciones.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_migraciones.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_migraciones.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_migraciones.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_migraciones.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model_migracion_ats.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_migracion_ats.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_migracion_ats.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_migracion_ats.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_migracion_ats.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model_presupuesto.Context.cs">
       <AutoGen>True</AutoGen>
@@ -1922,9 +1841,6 @@
     <Compile Include="tb_empresa.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
-    <Compile Include="tb_facturas_eventos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
     <Compile Include="tb_FiltroReportes.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -2303,12 +2219,6 @@
     <Compile Include="VWCXP_014.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwFacturas_fac_electronica.cs">
-      <DependentUpon>Model_migraciones.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwFacturas_sin_aprobar.cs">
-      <DependentUpon>Model_migraciones.tt</DependentUpon>
-    </Compile>
     <Compile Include="VWFAC_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -2407,51 +2317,6 @@
     </Compile>
     <Compile Include="vwfa_PuntoVta.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_documentos_peniente_enviar_sri.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_factura.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_factura_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_factura_impuestos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_guia_remision.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_guia_remision_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_guia_remision_x_factura.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_nota_credito.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_nota_credito_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_nota_credito_impuestos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_nota_debito.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_nota_debito_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_nota_debito_impuestos.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_retencion.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vwfe_retencion_detalle.cs">
-      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
     </Compile>
     <Compile Include="VWIMP_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
@@ -2852,12 +2717,6 @@
     <Compile Include="vwtb_TarjetaCredito_x_cp_proveedor.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
-    <Compile Include="vw_diarios_contables_migracion.cs">
-      <DependentUpon>Model_ImportacionDiarios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vw_importacion_ats_fixed.cs">
-      <DependentUpon>Model_migracion_ats.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
@@ -2916,13 +2775,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_facturacion.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Model_entidades_regulatorias.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_entidades_regulatorias.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_entidades_regulatorias.edmx.diagram">
-      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
-    </None>
     <None Include="Model_facturacion.edmx.diagram">
       <DependentUpon>Model_facturacion.edmx</DependentUpon>
     </None>
@@ -2934,13 +2786,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_importacion.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Model_facturacion_electronica.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_facturacion_electronica.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_facturacion_electronica.edmx.diagram">
-      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
-    </None>
     <None Include="Model_general.edmx.diagram">
       <DependentUpon>Model_general.edmx</DependentUpon>
     </None>
@@ -2951,13 +2796,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_inventario.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Model_ImportacionDiarios.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_ImportacionDiarios.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_ImportacionDiarios.edmx.diagram">
-      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
-    </None>
     <None Include="Model_inventario.edmx.diagram">
       <DependentUpon>Model_inventario.edmx</DependentUpon>
     </None>
@@ -2977,20 +2815,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_presupuesto.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Model_migraciones.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_migraciones.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_migraciones.edmx.diagram">
-      <DependentUpon>Model_migraciones.edmx</DependentUpon>
-    </None>
-    <EntityDeploy Include="Model_migracion_ats.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_migracion_ats.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_migracion_ats.edmx.diagram">
-      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
-    </None>
     <None Include="Model_presupuesto.edmx.diagram">
       <DependentUpon>Model_presupuesto.edmx</DependentUpon>
     </None>
@@ -3083,16 +2907,6 @@
       <DependentUpon>Model_cuentas_por_pagar.edmx</DependentUpon>
       <LastGenOutput>Model_cuentas_por_pagar.cs</LastGenOutput>
     </Content>
-    <Content Include="Model_entidades_regulatorias.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
-      <LastGenOutput>Model_entidades_regulatorias.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_entidades_regulatorias.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
-      <LastGenOutput>Model_entidades_regulatorias.cs</LastGenOutput>
-    </Content>
     <Content Include="Model_facturacion.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_facturacion.edmx</DependentUpon>
@@ -3102,16 +2916,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_facturacion.edmx</DependentUpon>
       <LastGenOutput>Model_facturacion.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_facturacion_electronica.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
-      <LastGenOutput>Model_facturacion_electronica.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_facturacion_electronica.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
-      <LastGenOutput>Model_facturacion_electronica.cs</LastGenOutput>
     </Content>
     <Content Include="Model_general.Context.tt">
       <DependentUpon>Model_general.edmx</DependentUpon>
@@ -3133,16 +2937,6 @@
       <DependentUpon>Model_importacion.edmx</DependentUpon>
       <LastGenOutput>Model_importacion.cs</LastGenOutput>
     </Content>
-    <Content Include="Model_ImportacionDiarios.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
-      <LastGenOutput>Model_ImportacionDiarios.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_ImportacionDiarios.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
-      <LastGenOutput>Model_ImportacionDiarios.cs</LastGenOutput>
-    </Content>
     <Content Include="Model_inventario.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_inventario.edmx</DependentUpon>
@@ -3152,26 +2946,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_inventario.edmx</DependentUpon>
       <LastGenOutput>Model_inventario.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_migraciones.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_migraciones.edmx</DependentUpon>
-      <LastGenOutput>Model_migraciones.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_migraciones.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_migraciones.edmx</DependentUpon>
-      <LastGenOutput>Model_migraciones.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_migracion_ats.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
-      <LastGenOutput>Model_migracion_ats.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_migracion_ats.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
-      <LastGenOutput>Model_migracion_ats.cs</LastGenOutput>
     </Content>
     <Content Include="Model_presupuesto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

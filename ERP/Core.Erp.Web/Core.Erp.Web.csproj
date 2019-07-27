@@ -298,7 +298,6 @@
     <Compile Include="Areas\Contabilidad\Controllers\CierrePorModuloPorSucursalController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
-    <Compile Include="Areas\Contabilidad\Controllers\ImportacionDiariosController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ParametroContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PeriodoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasController.cs" />
@@ -414,8 +413,6 @@
     <Compile Include="Areas\Inventario\Controllers\TransferenciasInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\UnidadDeMedidaController.cs" />
     <Compile Include="Areas\Inventario\InventarioAreaRegistration.cs" />
-    <Compile Include="Areas\Migraciones\Controllers\FacturasEventosController.cs" />
-    <Compile Include="Areas\Migraciones\MigracionesAreaRegistration.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\AprobacionPresupuestoController.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\PeriodoPresupuestoController.cs" />
     <Compile Include="Areas\Presupuesto\Controllers\PresupuestoController.cs" />
@@ -9922,9 +9919,6 @@
     <Content Include="Areas\Reportes\Views\RRHHReportes\_CmbDivision_reportes.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\_CmbSucursal_reportes_RRHH.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\_CmbTipoNomina.cshtml" />
-    <Content Include="Areas\Migraciones\Views\web.config" />
-    <Content Include="Areas\Migraciones\Views\FacturasEventos\_GridViewPartial_facturas_eventos.cshtml" />
-    <Content Include="Areas\Migraciones\Views\FacturasEventos\Index.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Index.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_GridViewPartial_Motivo_Liquidacion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Nuevo.cshtml" />
@@ -9977,10 +9971,7 @@
     <Content Include="Areas\General\Views\Impuesto\_CmbCuenta_Cta_Impuesto.cshtml" />
     <Content Include="Areas\General\Views\Impuesto\_CmbCuenta_Vta_Impuesto.cshtml" />
     <Content Include="Areas\RRHH\Views\ParametrosContable\_CmbNomina.cshtml" />
-    <Content Include="Areas\Contabilidad\Views\ImportacionDiarios\Index.cshtml" />
-    <Content Include="Areas\Contabilidad\Views\ImportacionDiarios\_GridViewPartial_ImportacionDiarios.cshtml" />
     <Content Include="Areas\RRHH\Views\ParametrosContable\_CmbCuenta_sueldo_x_pagar.cshtml" />
-    <Content Include="Areas\Contabilidad\Views\ImportacionDiarios\_CmbCuenta.cshtml" />
     <Content Include="Areas\Reportes\Views\ActivoFijoReportes\ACTF_007.cshtml" />
     <Content Include="Areas\RRHH\Views\ProcesarRol\_CmbCuenta_sueldos.cshtml" />
     <Content Include="Areas\RRHH\Views\ProcesarRol\_CmbCuenta_prov.cshtml" />
@@ -10240,8 +10231,6 @@
     <Folder Include="Areas\General\Models\" />
     <Folder Include="Areas\Importacion\Models\" />
     <Folder Include="Areas\Inventario\Models\" />
-    <Folder Include="Areas\Migraciones\Models\" />
-    <Folder Include="Areas\Migraciones\Views\Shared\" />
     <Folder Include="Areas\Presupuesto\Models\" />
     <Folder Include="Areas\Produccion\Models\" />
     <Folder Include="Areas\Produccion\Views\Shared\" />
