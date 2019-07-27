@@ -677,56 +677,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.RequestParameters = false;
             return View(model);
         }
-
-        public ActionResult FAC_014()
-        {
-
-            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
-            {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
-            };
-            
-            FAC_014_Rpt report = new FAC_014_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_014");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_fecha_ini.Value = model.fecha_ini;
-            report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario;
-            report.empresa = SessionFixed.NomEmpresa;
-            ViewBag.Report = report;
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult FAC_014(cl_filtros_facturacion_Info model)
-        {
-            FAC_014_Rpt report = new FAC_014_Rpt();
-            #region Cargo diseño desde base
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_014");
-            if (reporte != null)
-            {
-                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                report.LoadLayout(RootReporte);
-            }
-            #endregion
-            report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_fecha_ini.Value = model.fecha_ini;
-            report.p_fecha_fin.Value = model.fecha_fin;
-            report.usuario = SessionFixed.IdUsuario;
-            report.empresa = SessionFixed.NomEmpresa;
-            ViewBag.Report = report;
-            return View(model);
-        }
-
+        
         public ActionResult FAC_015()
         {
 

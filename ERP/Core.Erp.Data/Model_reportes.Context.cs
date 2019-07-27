@@ -101,7 +101,6 @@ namespace Core.Erp.Data
         public DbSet<VWINV_002> VWINV_002 { get; set; }
         public DbSet<VWROL_010> VWROL_010 { get; set; }
         public DbSet<VWACTF_008> VWACTF_008 { get; set; }
-        public DbSet<VWFAC_014> VWFAC_014 { get; set; }
         public DbSet<VWCXP_014> VWCXP_014 { get; set; }
         public DbSet<VWACTF_007> VWACTF_007 { get; set; }
         public DbSet<VWINV_017> VWINV_017 { get; set; }

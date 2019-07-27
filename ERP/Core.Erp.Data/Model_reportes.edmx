@@ -2420,36 +2420,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_013' no tiene definida ningu
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_014' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="VWFAC_014">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdComprobante" />
-            <PropertyRef Name="IdTipoDocumento" />
-            <PropertyRef Name="IdEstado_cbte" />
-            <PropertyRef Name="Nom_Contribuyente" />
-            <PropertyRef Name="Evento" />
-            <PropertyRef Name="Factura" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdComprobante" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="IdTipoDocumento" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdEstado_cbte" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Cedula_Ruc" Type="varchar" MaxLength="20" />
-          <Property Name="Numero_Autorizacion" Type="varchar" MaxLength="200" />
-          <Property Name="FechaAutorizacion" Type="datetime" />
-          <Property Name="Nom_Contribuyente" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ValorUnitario" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Subtotal" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Iva" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Evento" Type="int" Nullable="false" />
-          <Property Name="Factura" Type="int" Nullable="false" />
-          <Property Name="Fecha_Emi_Fact" Type="datetime" />
-          <Property Name="Fecha_transaccion" Type="datetime" />
-          <Property Name="Nombre_Evento" Type="varchar(max)" />
-          <Property Name="Observacion" Type="varchar(max)" />
-        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_018' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWFAC_018">
@@ -6062,29 +6032,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWFAC_013].[Cambio] AS [Cambio]
     FROM [web].[VWFAC_013] AS [VWFAC_013]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="VWFAC_014" EntityType="Self.VWFAC_014" store:Type="Views" store:Schema="web">
-            <DefiningQuery>SELECT 
-    [VWFAC_014].[IdEmpresa] AS [IdEmpresa], 
-    [VWFAC_014].[IdComprobante] AS [IdComprobante], 
-    [VWFAC_014].[IdTipoDocumento] AS [IdTipoDocumento], 
-    [VWFAC_014].[IdEstado_cbte] AS [IdEstado_cbte], 
-    [VWFAC_014].[Cedula_Ruc] AS [Cedula_Ruc], 
-    [VWFAC_014].[Numero_Autorizacion] AS [Numero_Autorizacion], 
-    [VWFAC_014].[FechaAutorizacion] AS [FechaAutorizacion], 
-    [VWFAC_014].[Nom_Contribuyente] AS [Nom_Contribuyente], 
-    [VWFAC_014].[Cantidad] AS [Cantidad], 
-    [VWFAC_014].[ValorUnitario] AS [ValorUnitario], 
-    [VWFAC_014].[Subtotal] AS [Subtotal], 
-    [VWFAC_014].[Iva] AS [Iva], 
-    [VWFAC_014].[Total] AS [Total], 
-    [VWFAC_014].[Evento] AS [Evento], 
-    [VWFAC_014].[Factura] AS [Factura], 
-    [VWFAC_014].[Fecha_Emi_Fact] AS [Fecha_Emi_Fact], 
-    [VWFAC_014].[Fecha_transaccion] AS [Fecha_transaccion], 
-    [VWFAC_014].[Nombre_Evento] AS [Nombre_Evento], 
-    [VWFAC_014].[Observacion] AS [Observacion]
-    FROM [web].[VWFAC_014] AS [VWFAC_014]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="VWFAC_018" EntityType="Self.VWFAC_018" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [VWFAC_018].[IdEmpresa] AS [IdEmpresa], 
@@ -8525,7 +8472,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="IdBanco" Mode="In" Type="Int32" />
             <Parameter Name="IdConciliacion" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <EntitySet Name="VWFAC_014" EntityType="Model_reportes.VWFAC_014" />
           <EntitySet Name="VWCXP_014" EntityType="Model_reportes.VWCXP_014" />
           <EntitySet Name="VWACTF_007" EntityType="Model_reportes.VWACTF_007" />
           <EntitySet Name="VWINV_017" EntityType="Model_reportes.VWINV_017" />
@@ -11318,36 +11264,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Double" Name="TotalConciliadoNoContable" Nullable="false" />
           <Property Type="Double" Name="co_SaldoBanco_anterior" Nullable="false" />
         </ComplexType>
-        <EntityType Name="VWFAC_014">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdComprobante" />
-            <PropertyRef Name="IdTipoDocumento" />
-            <PropertyRef Name="IdEstado_cbte" />
-            <PropertyRef Name="Nom_Contribuyente" />
-            <PropertyRef Name="Evento" />
-            <PropertyRef Name="Factura" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdComprobante" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstado_cbte" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Cedula_Ruc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Numero_Autorizacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAutorizacion" Type="DateTime" Precision="3" />
-          <Property Name="Nom_Contribuyente" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ValorUnitario" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Subtotal" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Iva" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Evento" Type="Int32" Nullable="false" />
-          <Property Name="Factura" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Emi_Fact" Type="DateTime" Precision="3" />
-          <Property Name="Fecha_transaccion" Type="DateTime" Precision="3" />
-          <Property Name="Nombre_Evento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="VWCXP_014">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -15432,31 +15348,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="VWFAC_014">
-            <EntityTypeMapping TypeName="Model_reportes.VWFAC_014">
-              <MappingFragment StoreEntitySet="VWFAC_014">
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="Nombre_Evento" ColumnName="Nombre_Evento" />
-                <ScalarProperty Name="Fecha_transaccion" ColumnName="Fecha_transaccion" />
-                <ScalarProperty Name="Fecha_Emi_Fact" ColumnName="Fecha_Emi_Fact" />
-                <ScalarProperty Name="Factura" ColumnName="Factura" />
-                <ScalarProperty Name="Evento" ColumnName="Evento" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Iva" ColumnName="Iva" />
-                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
-                <ScalarProperty Name="ValorUnitario" ColumnName="ValorUnitario" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Nom_Contribuyente" ColumnName="Nom_Contribuyente" />
-                <ScalarProperty Name="FechaAutorizacion" ColumnName="FechaAutorizacion" />
-                <ScalarProperty Name="Numero_Autorizacion" ColumnName="Numero_Autorizacion" />
-                <ScalarProperty Name="Cedula_Ruc" ColumnName="Cedula_Ruc" />
-                <ScalarProperty Name="IdEstado_cbte" ColumnName="IdEstado_cbte" />
-                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
-                <ScalarProperty Name="IdComprobante" ColumnName="IdComprobante" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VWCXP_014">
             <EntityTypeMapping TypeName="Model_reportes.VWCXP_014">
               <MappingFragment StoreEntitySet="VWCXP_014">
