@@ -147,7 +147,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCtaCble = "",
                 IdCtaCbleFin = "",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdTipoCbte = 1
+                IdTipoCbte = 1,
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_combos(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);

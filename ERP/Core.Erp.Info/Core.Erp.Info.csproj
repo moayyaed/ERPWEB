@@ -415,10 +415,7 @@
     <Compile Include="Reportes\Inventario\INV_011_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_005_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_007_Info.cs" />
-    <Compile Include="Reportes\Inventario\INV_008_Info.cs" />
-    <Compile Include="Reportes\Inventario\INV_009_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_010_Info.cs" />
-    <Compile Include="Reportes\Inventario\INV_012_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_013_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_014_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_015_Info.cs" />

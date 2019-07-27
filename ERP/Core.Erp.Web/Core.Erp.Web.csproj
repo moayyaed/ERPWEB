@@ -409,7 +409,6 @@
     <Compile Include="Areas\Inventario\Controllers\ProductoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ProductoTipoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ReversoMovimientoInventarioController.cs" />
-    <Compile Include="Areas\Inventario\Controllers\RevisionController.cs" />
     <Compile Include="Areas\Inventario\Controllers\SubgrupoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\TipoMovimientoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\TransferenciasInventarioController.cs" />
@@ -1201,29 +1200,11 @@
     <Compile Include="Reportes\Inventario\INV_007_Rpt.Designer.cs">
       <DependentUpon>INV_007_Rpt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\Inventario\INV_008_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\Inventario\INV_008_Rpt.Designer.cs">
-      <DependentUpon>INV_008_Rpt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\Inventario\INV_009_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\Inventario\INV_009_Rpt.Designer.cs">
-      <DependentUpon>INV_009_Rpt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Reportes\Inventario\INV_010_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\Inventario\INV_010_Rpt.Designer.cs">
       <DependentUpon>INV_010_Rpt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\Inventario\INV_012_Rpt.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\Inventario\INV_012_Rpt.Designer.cs">
-      <DependentUpon>INV_012_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Inventario\INV_013_Rpt.cs">
       <SubType>Component</SubType>
@@ -10662,17 +10643,8 @@
     <EmbeddedResource Include="Reportes\Inventario\INV_007_Rpt.resx">
       <DependentUpon>INV_007_Rpt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Inventario\INV_008_Rpt.resx">
-      <DependentUpon>INV_008_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Inventario\INV_009_Rpt.resx">
-      <DependentUpon>INV_009_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_010_Rpt.resx">
       <DependentUpon>INV_010_Rpt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Inventario\INV_012_Rpt.resx">
-      <DependentUpon>INV_012_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_013_Rpt.resx">
       <DependentUpon>INV_013_Rpt.cs</DependentUpon>

@@ -164,7 +164,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_007_Rpt report = new CXP_007_Rpt();
@@ -298,7 +299,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_009_Rpt report = new CXP_009_Rpt();
@@ -473,7 +475,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdProveedor = 0
+                IdProveedor = 0,
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_014_Rpt report = new CXP_014_Rpt();
@@ -590,6 +593,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             model.IntArray = new int[] { model.IdSucursal};
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);

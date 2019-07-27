@@ -517,7 +517,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdUsuario = Convert.ToString(SessionFixed.IdUsuario)
+                IdUsuario = Convert.ToString(SessionFixed.IdUsuario),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_banco(model.IdEmpresa);
             BAN_012_Rpt report = new BAN_012_Rpt();

@@ -1371,10 +1371,7 @@
     <Compile Include="Reportes\Inventario\INV_003_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_005_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_007_Data.cs" />
-    <Compile Include="Reportes\Inventario\INV_008_Data.cs" />
-    <Compile Include="Reportes\Inventario\INV_009_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_010_Data.cs" />
-    <Compile Include="Reportes\Inventario\INV_012_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_013_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_014_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_015_Data.cs" />
@@ -1851,13 +1848,7 @@
     <Compile Include="SPINV_005_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="SPINV_009_Result.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
     <Compile Include="SPINV_010_Result.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SPINV_012_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPINV_016_Result.cs">
@@ -2509,9 +2500,6 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWINV_007.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VWINV_008.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWINV_011.cs">

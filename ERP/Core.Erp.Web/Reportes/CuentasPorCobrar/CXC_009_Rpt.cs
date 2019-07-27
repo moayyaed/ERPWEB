@@ -37,10 +37,12 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             var emp = bus_empresa.get_info(IdEmpresa);
             if (emp != null && emp.em_logo != null)
             {
+                lbl_telefonos.Text = string.IsNullOrEmpty(emp.em_telefonos) ? "" : "Tel. " + emp.em_telefonos;
+                lbl_direccion.Text = emp.em_direccion;
                 ImageConverter obj = new ImageConverter();
                 lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
             }
-            lbl_direccion.Text = emp.em_direccion;
+            
         }
     }
 }

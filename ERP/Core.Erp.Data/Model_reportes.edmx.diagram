@@ -27,7 +27,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWIMP_002_gastos" Width="1.5" PointX="2.75" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWIMP_003" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_007" Width="1.5" PointX="14.75" PointY="25.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_reportes.VWINV_008" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_004" Width="1.5" PointX="26.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_006" Width="1.5" PointX="20.75" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_007" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />

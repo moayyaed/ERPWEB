@@ -733,7 +733,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
 
@@ -789,7 +790,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             FAC_016_Rpt report = new FAC_016_Rpt();
@@ -843,7 +845,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_marca_check(model.IdEmpresa, model.IntArray);
             FAC_017_Rpt report = new FAC_017_Rpt();
@@ -899,7 +902,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdCliente = 0,
-                CreDeb = "C"
+                CreDeb = "C",
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_FAC018(model);
@@ -964,7 +968,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdCliente = 0
+                IdCliente = 0,
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
