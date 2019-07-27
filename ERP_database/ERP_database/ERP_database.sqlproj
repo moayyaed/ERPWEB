@@ -612,7 +612,6 @@
     <Build Include="dbo\Views\vwGe_tb_sis_Documento_Tipo_Talonario.sql" />
     <Build Include="dbo\Views\vwct_periodo.sql" />
     <Build Include="dbo\Views\vwro_empleado_x_rubro_acumulado.sql" />
-    <Build Include="web\Views\VWINV_008.sql" />
     <Build Include="dbo\Views\vwBa_ChequexCbteCtble.sql" />
     <Build Include="dbo\Views\vwro_empleado_por_novedades_cabecera.sql" />
     <Build Include="dbo\Views\vwct_plancta.sql" />
@@ -856,7 +855,6 @@
     <Build Include="web\Views\VWCXC_003.sql" />
     <Build Include="web\Views\vwin_Producto_Composicion.sql" />
     <Build Include="web\Views\VWBAN_007.sql" />
-    <Build Include="web\Stored Procedures\SPINV_009.sql" />
     <Build Include="web\Tables\in_SPINV_010.sql" />
     <Build Include="web\Views\VWIMP_003.sql" />
     <Build Include="web\Stored Procedures\SPINV_010.sql" />
@@ -891,7 +889,6 @@
     <Build Include="EntidadRegulatoria\Views\vwrdep_gastos_x_rubros_deducibles.sql" />
     <Build Include="web\Tables\fa_SPFAC_010.sql" />
     <Build Include="web\Stored Procedures\SPCXC_005.sql" />
-    <Build Include="web\Stored Procedures\SPINV_012.sql" />
     <Build Include="web\Stored Procedures\SPINV_004.sql" />
     <Build Include="web\Views\vwcom_ordencompra_local_det.sql" />
     <Build Include="web\Views\vwcp_retencion_det.sql" />

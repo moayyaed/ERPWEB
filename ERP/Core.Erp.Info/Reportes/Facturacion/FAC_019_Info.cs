@@ -25,5 +25,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public Nullable<int> DiasVencido { get; set; }
         public double TotalCobrado { get; set; }
         public Nullable<double> Saldo { get; set; }
+        public double ValorRetencion { get; set; }
     }
 }

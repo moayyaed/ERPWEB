@@ -39,7 +39,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                         TotalCobrado = q.TotalCobrado,
                         Ve_Vendedor = q.Ve_Vendedor,
                         vt_fecha = q.vt_fecha,
-                        vt_fech_venc = q.vt_fech_venc                        
+                        vt_fech_venc = q.vt_fech_venc,
+                        ValorRetencion = q.ValorRetencion                       
                     }).ToList();
                 }
                 return Lista;
