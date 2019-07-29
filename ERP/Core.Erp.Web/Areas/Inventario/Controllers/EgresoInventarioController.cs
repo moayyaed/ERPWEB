@@ -395,17 +395,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
-
-                if (info_det.IdMotivo_Inv != 0)
-                {
-                    in_Motivo_Inven_Info info_motivo = bus_motivo.get_info(IdEmpresa, Convert.ToInt32(info_det.IdMotivo_Inv));
-                    if (info_motivo != null)
-                    {
-                        info_det.Desc_mov_inv = info_motivo.Desc_mov_inv;
-                    }
-                }
-            }   
-                if (info_det.dm_cantidad_sinConversion>0 && info_det.IdProducto!=0)
+            }
+            if (info_det.dm_cantidad_sinConversion>0 && info_det.IdProducto!=0)
             List_in_Ing_Egr_Inven_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
@@ -429,14 +420,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
                     }
-                }
-                if (info_det.IdMotivo_Inv != 0)
-                {
-                    in_Motivo_Inven_Info info_motivo = bus_motivo.get_info(IdEmpresa, Convert.ToInt32(info_det.IdMotivo_Inv) );
-                    if (info_motivo != null)
-                    {
-                        info_det.Desc_mov_inv = info_motivo.Desc_mov_inv;
-                    }                        
                 }
             }
                             

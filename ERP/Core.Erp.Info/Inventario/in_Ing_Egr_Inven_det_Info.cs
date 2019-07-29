@@ -33,7 +33,7 @@ namespace Core.Erp.Info.Inventario
         public string IdUnidadMedida_sinConversion { get; set; }
         //[Required(ErrorMessage = ("El campo costo es obligatorio"))]
         public double mv_costo_sinConversion { get; set; }
-        public Nullable<int> IdMotivo_Inv { get; set; }
+        public int IdMotivo_Inv_det { get; set; }
         public string IdCentroCosto { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }

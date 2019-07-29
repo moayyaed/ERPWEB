@@ -34,6 +34,7 @@
         //Funcion para inicializar fila al presionar nuevo
         settings.InitNewRow = (s, e) =>
         {
+            e.NewValues["IdMotivo_Inv_det"] = 0; 
             e.NewValues["IdProducto"] = 0;
             e.NewValues["IdUnidadMedida_sinConversion"] = "UNID";
             e.NewValues["dm_cantidad_sinConversion"] = "1";
@@ -97,14 +98,14 @@
 
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdMotivo_Inv";
+            column.FieldName = "IdMotivo_Inv_det";
             column.Caption = "Motivo";
             column.Width = Unit.Percentage(30);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
             {
-                Html.RenderPartial("_CmbMotivoInven", DataBinder.Eval(c.DataItem, "IdMotivo_Inv"));
+                Html.RenderPartial("_CmbMotivoInven", DataBinder.Eval(c.DataItem, "IdMotivo_Inv_det"));
             });
         });
 

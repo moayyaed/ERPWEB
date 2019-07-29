@@ -14,11 +14,7 @@ namespace Core.Erp.Data.Inventario
                 List<in_Ing_Egr_Inven_det_Info> Lista;
                 using (Entities_inventario Context = new Entities_inventario())
                 {
-                    Lista = (from d in Context.in_Ing_Egr_Inven_det
-                             join p in Context.in_Producto
-                             on new { d.IdEmpresa, d.IdProducto } equals new { p.IdEmpresa, p.IdProducto }
-                             join c in Context.in_ProductoTipo
-                             on new { p.IdEmpresa, p.IdProductoTipo } equals new { c.IdEmpresa, c.IdProductoTipo }
+                    Lista = (from d in Context.vwin_Ing_Egr_Inven_det
                              where d.IdEmpresa == IdEmpresa && d.IdSucursal == IdSucursal
                              && d.IdMovi_inven_tipo == IdMovi_inven_tipo && d.IdNumMovi == IdNumMovi
                              select new in_Ing_Egr_Inven_det_Info
@@ -30,7 +26,7 @@ namespace Core.Erp.Data.Inventario
                                  IdBodega = d.IdBodega,
                                  dm_cantidad = d.dm_cantidad,
                                  dm_observacion = d.dm_observacion,
-                                 IdMotivo_Inv = d.IdMotivo_Inv,
+                                 IdMotivo_Inv_det = d.IdMotivo_Inv ?? 0,
                                  IdOrdenCompra = d.IdOrdenCompra,
                                  IdProducto = d.IdProducto,
                                  IdUnidadMedida = d.IdUnidadMedida,
@@ -49,14 +45,13 @@ namespace Core.Erp.Data.Inventario
                                  mv_costo_sinConversion = d.mv_costo_sinConversion ?? 0,
                                  secuencia_inv = d.secuencia_inv,
                                  Secuencia_oc = d.Secuencia_oc,
-                                 pr_descripcion = p.pr_descripcion,
+                                 pr_descripcion = d.pr_descripcion,
                                  CantidadAnterior = d.dm_cantidad_sinConversion,
-                                 lote_fecha_vcto = p.lote_fecha_vcto,
-                                 lote_num_lote = p.lote_num_lote,
-                                 se_distribuye = p.se_distribuye ?? false,
-                                 tp_ManejaInven = c.tp_ManejaInven,  
+                                 tp_ManejaInven = d.tp_ManejaInven,  
                                  
-                                 IdCentroCosto = d.IdCentroCosto      
+                                 IdCentroCosto = d.IdCentroCosto,
+                                 cc_Descripcion = d.cc_Descripcion,
+                                 Desc_mov_inv = d.Desc_mov_inv 
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -92,7 +87,7 @@ namespace Core.Erp.Data.Inventario
                         IdBodega = Entity.IdBodega,
                         dm_cantidad = Entity.dm_cantidad,
                         dm_observacion = Entity.dm_observacion,
-                        IdMotivo_Inv = Entity.IdMotivo_Inv,
+                        IdMotivo_Inv_det = Entity.IdMotivo_Inv ?? 0,
                         IdOrdenCompra = Entity.IdOrdenCompra,
                         IdProducto = Entity.IdProducto,
                         IdUnidadMedida = Entity.IdUnidadMedida,
@@ -142,7 +137,7 @@ namespace Core.Erp.Data.Inventario
                         IdProducto = info.IdProducto,                        
 
                         dm_observacion = info.dm_observacion,
-                        IdMotivo_Inv = info.IdMotivo_Inv,
+                        IdMotivo_Inv = info.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv_det,
 
                         IdEmpresa_oc = info.IdEmpresa_oc,
                         IdSucursal_oc = info.IdSucursal_oc,

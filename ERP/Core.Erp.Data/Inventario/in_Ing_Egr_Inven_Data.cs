@@ -211,7 +211,7 @@ namespace Core.Erp.Data.Inventario
                             IdProducto = item.IdProducto,
 
                             dm_observacion = item.dm_observacion,
-                            IdMotivo_Inv = info.IdMotivo_Inv,
+                            IdMotivo_Inv = item.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,
@@ -292,7 +292,7 @@ namespace Core.Erp.Data.Inventario
                             IdProducto = item.IdProducto,
 
                             dm_observacion = item.dm_observacion,
-                            IdMotivo_Inv = item.IdMotivo_Inv,
+                            IdMotivo_Inv = item.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,
