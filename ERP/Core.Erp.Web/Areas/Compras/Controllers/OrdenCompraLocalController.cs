@@ -15,6 +15,8 @@ using DevExpress.Web;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.CuentasPorPagar;
+using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Compras.Controllers
 {
@@ -35,6 +37,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         com_ordencompra_local_det_List List_det = new com_ordencompra_local_det_List();
         com_ordencompra_local_det_Bus bus_det = new com_ordencompra_local_det_Bus();
         com_parametro_Bus bus_param = new com_parametro_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -71,6 +74,24 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         public in_Producto_Info get_info_bajo_demandaProducto(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda centro de costo
+
+        public ActionResult CmbCentroCosto_Compras()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_Compras", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaCC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa),false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
 
@@ -408,6 +429,8 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+
         string variable = "com_ordencompra_local_det_Info";
         public List<com_ordencompra_local_det_Info> get_list(decimal IdTransaccionSession)
         {
@@ -438,6 +461,17 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 info_det.Por_Iva = 0;
             info_det.do_iva = Math.Round(info_det.do_subtotal * (info_det.Por_Iva / 100), 2, MidpointRounding.AwayFromZero);
             info_det.do_total = Math.Round(info_det.do_subtotal + info_det.do_iva, 2, MidpointRounding.AwayFromZero);
+
+            #region Centro de costo
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                info_det.cc_Descripcion = string.Empty;
+            else
+            { 
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                    info_det.cc_Descripcion = cc.cc_Descripcion;
+            }
+            #endregion
             list.Add(info_det);
         }
 
@@ -462,6 +496,19 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             edited_info.do_iva = Math.Round(edited_info.do_subtotal * (edited_info.Por_Iva / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.do_total = Math.Round(edited_info.do_subtotal + edited_info.do_iva, 2, MidpointRounding.AwayFromZero);
 
+            #region Centro de costo
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

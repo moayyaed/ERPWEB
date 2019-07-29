@@ -58,7 +58,7 @@ namespace Core.Erp.Data
         public virtual ICollection<in_devolucion_inven> in_devolucion_inven1 { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia { get; set; }
         public virtual ICollection<in_transferencia> in_transferencia1 { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public virtual in_Motivo_Inven in_Motivo_Inven { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
     }
 }

@@ -23,12 +23,18 @@ namespace Core.Erp.Info.Compras
         public double do_total { get; set; }
         public string do_observacion { get; set; }
         public string IdCentroCosto { get; set; }
-        public string IdCentroCosto_sub_centro_costo { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }
         public string IdUnidadMedida { get; set; }
         public double Por_Iva { get; set; }
         public string IdCod_Impuesto { get; set; }
+        
+
+        #region Campos que no existen en la tabla
+        public string cc_Descripcion { get; set; }
         public string pr_descripcion { get; set; }
+        public string nom_punto_cargo { get; set; }
+        public string nom_punto_cargo_grupo { get; set; }
+        #endregion
     }
 }

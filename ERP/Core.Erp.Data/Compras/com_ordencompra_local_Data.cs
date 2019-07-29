@@ -205,7 +205,7 @@ namespace Core.Erp.Data.Compras
                     };
 
                     Context.com_ordencompra_local.Add(Entity);
-
+                    int Secuencia = 1;
                     foreach (var item in info.lst_det)
                         {
                             com_ordencompra_local_det Entity_det = new com_ordencompra_local_det
@@ -226,7 +226,10 @@ namespace Core.Erp.Data.Compras
                                 do_subtotal = item.do_subtotal,
                                 do_total = item.do_total,
                                 Por_Iva = item.Por_Iva,
-                                Secuencia = item.Secuencia
+                                Secuencia = Secuencia++,
+                                IdCentroCosto = item.IdCentroCosto,
+                                IdPunto_cargo = item.IdPunto_cargo,
+                                IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                             };
                         Context.com_ordencompra_local_det.Add(Entity_det);
 
@@ -271,6 +274,7 @@ namespace Core.Erp.Data.Compras
 
                     var det = Context.com_ordencompra_local_det.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdSucursal == info.IdSucursal && v.IdOrdenCompra == info.IdOrdenCompra);
                     Context.com_ordencompra_local_det.RemoveRange(det);
+                    int Secuencia = 1;
                     foreach (var item in info.lst_det)
                     {
                         com_ordencompra_local_det Entity_det = new com_ordencompra_local_det
@@ -291,7 +295,10 @@ namespace Core.Erp.Data.Compras
                             do_subtotal = item.do_subtotal,
                             do_total = item.do_total,
                             Por_Iva = item.Por_Iva,
-                            Secuencia = item.Secuencia
+                            Secuencia = Secuencia++,
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo = item.IdPunto_cargo,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         };
                         Context.com_ordencompra_local_det.Add(Entity_det);
 
@@ -469,7 +476,13 @@ namespace Core.Erp.Data.Compras
                                      oc_fechaVencimiento = q.oc_fecha,
                                      oc_observacion = q.oc_observacion,
                                      IdProveedor = q.IdProveedor,
-                                     Saldo = q.Saldo
+                                     Saldo = q.Saldo,
+
+                                     IdCentroCosto = q.IdCentroCosto,
+                                     IdPunto_cargo = q.IdPunto_cargo,
+                                     IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+
+                                     cc_Descripcion = q.cc_Descripcion
                                  }).ToList();
 
                     Lista.ForEach(q=>q.IdInventarioOrdenCompra = (q.IdEmpresa.ToString("000") + q.IdSucursal.ToString("000")  + q.IdOrdenCompra.ToString("000000") + q.Secuencia.ToString("000000")) );                  

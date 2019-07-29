@@ -40,7 +40,13 @@ namespace Core.Erp.Data.Compras
                                  do_total = q.do_total,
                                  Por_Iva = q.Por_Iva,
                                  Secuencia = q.Secuencia,
-                                 pr_descripcion = q.pr_descripcion
+                                 pr_descripcion = q.pr_descripcion,
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 IdPunto_cargo = q.IdPunto_cargo,
+                                 IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                                 nom_punto_cargo = q.nom_punto_cargo,
+                                 nom_punto_cargo_grupo = q.nom_punto_cargo_grupo
                              }).ToList();
                 }
                 return Lista;

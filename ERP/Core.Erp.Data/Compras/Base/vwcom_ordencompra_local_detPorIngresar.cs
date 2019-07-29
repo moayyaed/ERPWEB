@@ -31,5 +31,9 @@ namespace Core.Erp.Data.Compras.Base
         public string oc_observacion { get; set; }
         public System.DateTime oc_fecha { get; set; }
         public decimal IdProveedor { get; set; }
+        public string IdCentroCosto { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string cc_Descripcion { get; set; }
     }
 }

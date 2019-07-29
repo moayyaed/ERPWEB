@@ -40,10 +40,10 @@ namespace Core.Erp.Data
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }
     
-        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
         public virtual in_movi_inve in_movi_inve { get; set; }
         public virtual in_Producto in_Producto { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida1 { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven_det> in_Ing_Egr_Inven_det { get; set; }
     }
 }

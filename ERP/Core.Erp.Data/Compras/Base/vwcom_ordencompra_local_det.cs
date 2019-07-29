@@ -32,5 +32,11 @@ namespace Core.Erp.Data.Compras.Base
         public double Por_Iva { get; set; }
         public string IdCod_Impuesto { get; set; }
         public string pr_descripcion { get; set; }
+        public string IdCentroCosto { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string cc_Descripcion { get; set; }
+        public string nom_punto_cargo { get; set; }
+        public string nom_punto_cargo_grupo { get; set; }
     }
 }

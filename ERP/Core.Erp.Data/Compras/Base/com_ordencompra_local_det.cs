@@ -28,6 +28,7 @@ namespace Core.Erp.Data.Compras.Base
         public double do_iva { get; set; }
         public double do_total { get; set; }
         public string do_observacion { get; set; }
+        public string IdCentroCosto { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }
         public string IdUnidadMedida { get; set; }

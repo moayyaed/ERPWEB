@@ -1,20 +1,62 @@
 ﻿CREATE VIEW web.vwcom_ordencompra_local_det
 AS
-SELECT        dbo.com_ordencompra_local_det.IdEmpresa, dbo.com_ordencompra_local_det.IdSucursal, dbo.com_ordencompra_local_det.IdOrdenCompra, dbo.com_ordencompra_local_det.Secuencia, 
-                         dbo.com_ordencompra_local_det.IdProducto, dbo.com_ordencompra_local_det.do_Cantidad, dbo.com_ordencompra_local_det.do_precioCompra, dbo.com_ordencompra_local_det.do_porc_des, 
-                         dbo.com_ordencompra_local_det.do_descuento, dbo.com_ordencompra_local_det.do_precioFinal, dbo.com_ordencompra_local_det.do_subtotal, dbo.com_ordencompra_local_det.do_iva, 
-                         dbo.com_ordencompra_local_det.do_total, dbo.com_ordencompra_local_det.do_observacion, dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local_det.Por_Iva, 
-                         dbo.com_ordencompra_local_det.IdCod_Impuesto, dbo.in_Producto.pr_descripcion + ' ' + dbo.in_presentacion.nom_presentacion AS pr_descripcion
-FROM            dbo.in_presentacion INNER JOIN
-                         dbo.in_Producto ON dbo.in_presentacion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_presentacion.IdPresentacion = dbo.in_Producto.IdPresentacion RIGHT OUTER JOIN
-                         dbo.com_ordencompra_local_det ON dbo.in_Producto.IdEmpresa = dbo.com_ordencompra_local_det.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.com_ordencompra_local_det.IdProducto
+SELECT dbo.com_ordencompra_local_det.IdEmpresa, dbo.com_ordencompra_local_det.IdSucursal, dbo.com_ordencompra_local_det.IdOrdenCompra, dbo.com_ordencompra_local_det.Secuencia, dbo.com_ordencompra_local_det.IdProducto, 
+                  dbo.com_ordencompra_local_det.do_Cantidad, dbo.com_ordencompra_local_det.do_precioCompra, dbo.com_ordencompra_local_det.do_porc_des, dbo.com_ordencompra_local_det.do_descuento, 
+                  dbo.com_ordencompra_local_det.do_precioFinal, dbo.com_ordencompra_local_det.do_subtotal, dbo.com_ordencompra_local_det.do_iva, dbo.com_ordencompra_local_det.do_total, dbo.com_ordencompra_local_det.do_observacion, 
+                  dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local_det.Por_Iva, dbo.com_ordencompra_local_det.IdCod_Impuesto, dbo.in_Producto.pr_descripcion AS pr_descripcion, 
+                  dbo.com_ordencompra_local_det.IdCentroCosto, dbo.com_ordencompra_local_det.IdPunto_cargo_grupo, dbo.com_ordencompra_local_det.IdPunto_cargo, dbo.ct_CentroCosto.cc_Descripcion, dbo.ct_punto_cargo.nom_punto_cargo, 
+                  dbo.ct_punto_cargo_grupo.nom_punto_cargo_grupo
+FROM     dbo.ct_punto_cargo RIGHT OUTER JOIN
+                  dbo.com_ordencompra_local_det ON dbo.ct_punto_cargo.IdEmpresa = dbo.com_ordencompra_local_det.IdEmpresa AND dbo.ct_punto_cargo.IdPunto_cargo = dbo.com_ordencompra_local_det.IdPunto_cargo LEFT OUTER JOIN
+                  dbo.ct_punto_cargo_grupo ON dbo.com_ordencompra_local_det.IdEmpresa = dbo.ct_punto_cargo_grupo.IdEmpresa AND 
+                  dbo.com_ordencompra_local_det.IdPunto_cargo_grupo = dbo.ct_punto_cargo_grupo.IdPunto_cargo_grupo LEFT OUTER JOIN
+                  dbo.ct_CentroCosto ON dbo.com_ordencompra_local_det.IdEmpresa = dbo.ct_CentroCosto.IdEmpresa AND dbo.com_ordencompra_local_det.IdCentroCosto = dbo.ct_CentroCosto.IdCentroCosto LEFT OUTER JOIN
+                  dbo.in_presentacion INNER JOIN
+                  dbo.in_Producto ON dbo.in_presentacion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_presentacion.IdPresentacion = dbo.in_Producto.IdPresentacion ON 
+                  dbo.com_ordencompra_local_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.com_ordencompra_local_det.IdProducto = dbo.in_Producto.IdProducto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_det';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    GroupBy = 1350
-         Filter = 1350
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'h = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1176
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1356
+         SortOrder = 1416
+         GroupBy = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -24,13 +66,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_det';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[57] 4[20] 2[6] 3) )"
+         Configuration = "(H (1[71] 4[3] 2[10] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -92,7 +136,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -192
+         Top = 0
          Left = 0
       End
       Begin Tables = 
@@ -108,23 +152,53 @@ Begin DesignProperties =
          End
          Begin Table = "in_Producto"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 272
+               Top = 0
+               Left = 462
+               Bottom = 130
+               Right = 696
             End
             DisplayFlags = 280
             TopColumn = 1
          End
          Begin Table = "com_ordencompra_local_det"
             Begin Extent = 
-               Top = 220
-               Left = 464
-               Bottom = 400
-               Right = 727
+               Top = 0
+               Left = 796
+               Bottom = 421
+               Right = 1059
+            End
+            DisplayFlags = 280
+            TopColumn = 5
+         End
+         Begin Table = "ct_CentroCosto"
+            Begin Extent = 
+               Top = 0
+               Left = 1303
+               Bottom = 163
+               Right = 1548
             End
             DisplayFlags = 280
             TopColumn = 2
+         End
+         Begin Table = "ct_punto_cargo"
+            Begin Extent = 
+               Top = 23
+               Left = 1582
+               Bottom = 186
+               Right = 1827
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ct_punto_cargo_grupo"
+            Begin Extent = 
+               Top = 268
+               Left = 1412
+               Bottom = 431
+               Right = 1672
+            End
+            DisplayFlags = 280
+            TopColumn = 0
          End
       End
    End
@@ -134,41 +208,7 @@ Begin DesignProperties =
       Begin ParameterDefaults = ""
       End
       Begin ColumnWidths = 24
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 1440
-         Alias = 900
-         Table = 1170
-         Output = 720
-         Append = 1400
-         NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
-     ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_det';
+         Widt', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_det';
+
+
 

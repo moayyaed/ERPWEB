@@ -157,7 +157,9 @@ namespace Core.Erp.Data.Inventario
                         IdUnidadMedida_sinConversion = info.IdUnidadMedida_sinConversion,
                         IdUnidadMedida = info.IdUnidadMedida = info.IdUnidadMedida_sinConversion,//
                         mv_costo_sinConversion = info.mv_costo_sinConversion,
-                        mv_costo = info.mv_costo =(double) info.mv_costo_sinConversion//,
+                        mv_costo = info.mv_costo =(double) info.mv_costo_sinConversion,//,
+
+                        
                     };
                     Context.in_Ing_Egr_Inven_det.Add(Entity);
                     Context.SaveChanges();

@@ -40,10 +40,13 @@ namespace Core.Erp.Data
         public Nullable<double> mv_costo_sinConversion { get; set; }
         public Nullable<int> IdMotivo_Inv { get; set; }
         public string pr_descripcion { get; set; }
-        public string nom_presentacion { get; set; }
-        public Nullable<System.DateTime> lote_fecha_vcto { get; set; }
-        public string lote_num_lote { get; set; }
         public string tp_ManejaInven { get; set; }
         public Nullable<bool> se_distribuye { get; set; }
+        public string IdCentroCosto { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public string cc_Descripcion { get; set; }
+        public string nom_punto_cargo { get; set; }
+        public string nom_punto_cargo_grupo { get; set; }
     }
 }

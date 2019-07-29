@@ -315,24 +315,31 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
                     var info_det = lst_x_ingresar.Where(q => q.IdEmpresa == IdEmpresaOC && q.IdSucursal == IdSucursalOC && q.IdOrdenCompra == IdOrdenCompra && q.Secuencia == Secuencia).FirstOrDefault();
 
-                    in_Ing_Egr_Inven_det_Info info_det_inv = new in_Ing_Egr_Inven_det_Info();
+                    in_Ing_Egr_Inven_det_Info info_det_inv;
                     com_parametro_Info info_param_oc = bus_com_param.get_info(IdEmpresaSesion);
                     if (info_det != null)
                     {
-                        info_det_inv.IdEmpresa = info_det.IdEmpresa;
-                        info_det_inv.IdSucursal = info_det.IdSucursal;
-                        info_det_inv.IdOrdenCompra = info_det.IdOrdenCompra;
-                        info_det_inv.IdProducto = info_det.IdProducto;
-                        info_det_inv.pr_descripcion = info_det.pr_descripcion;
+                        info_det_inv = new in_Ing_Egr_Inven_det_Info
+                        {
+                            IdEmpresa = info_det.IdEmpresa,
+                            IdSucursal = info_det.IdSucursal,
+                            IdOrdenCompra = info_det.IdOrdenCompra,
+                            IdProducto = info_det.IdProducto,
+                            pr_descripcion = info_det.pr_descripcion,
 
-                        info_det_inv.mv_costo_sinConversion = info_det.do_precioFinal;
-                        info_det_inv.dm_cantidad_sinConversion = info_det.do_Cantidad_vw;
-                        info_det_inv.IdUnidadMedida_sinConversion = info_det.IdUnidadMedida;
-                        info_det_inv.Saldo = info_det.Saldo;
+                            mv_costo_sinConversion = info_det.do_precioFinal,
+                            dm_cantidad_sinConversion = info_det.do_Cantidad_vw,
+                            IdUnidadMedida_sinConversion = info_det.IdUnidadMedida,
+                            Saldo = info_det.Saldo,
 
-                        info_det_inv.IdEmpresa_oc = IdEmpresaOC;
-                        info_det_inv.IdSucursal_oc = IdSucursalOC;
-
+                            IdEmpresa_oc = IdEmpresaOC,
+                            IdSucursal_oc = IdSucursalOC,
+                            Secuencia_oc = Secuencia,
+                            IdCentroCosto = info_det.IdCentroCosto,
+                            IdPunto_cargo = info_det.IdPunto_cargo,
+                            IdPunto_cargo_grupo = info_det.IdPunto_cargo_grupo,
+                            cc_Descripcion = info_det.cc_Descripcion
+                        };
                         List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);
                     }
                 }

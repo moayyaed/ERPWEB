@@ -67,6 +67,10 @@ namespace Core.Erp.Info.Compras
         public int CantidadIngresada { get; set; }
         public double Saldo { get; set; }
         public string IdUnidadMedida { get; set; }
+        public string IdCentroCosto { get; set; }
+        public int? IdPunto_cargo { get; set; }
+        public int? IdPunto_cargo_grupo { get; set; }
+        public string cc_Descripcion { get; set; }
         #endregion
     }
     public class com_orden_aprobacion_Info

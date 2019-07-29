@@ -21,6 +21,7 @@
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.VisibleIndex = 0;
 
         settings.SettingsContextMenu.Enabled = true;
         settings.CommandColumn.ShowNewButtonInHeader = true;
@@ -42,6 +43,7 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["IdProducto"] = "";
+            e.NewValues["IdCentroCosto"] = "";
             e.NewValues["IdUnidadMedida"] = "UNID";
             e.NewValues["IdCod_Impuesto"] = "";
             e.NewValues["do_Cantidad"] = "1";
@@ -49,17 +51,9 @@
         };
         settings.Columns.Add(column =>
         {
-            column.Caption = "*";
-            column.FieldName = "Secuencia";
-            column.Width = Unit.Percentage(5);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
-
-        });
-        settings.Columns.Add(column =>
-        {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
+            column.VisibleIndex = 1;
             column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -68,6 +62,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
+            column.VisibleIndex = 1;
             column.Width = Unit.Percentage(20);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -83,6 +78,7 @@
             column.FieldName = "IdUnidadMedida";
             column.Caption = "U. de medida";
             column.Width = Unit.Percentage(8);
+            column.VisibleIndex = 2;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
             {
@@ -96,7 +92,8 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "do_Cantidad";
-            column.Caption = "cantidad";
+            column.Caption = "Cantidad";
+            column.VisibleIndex = 3;
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(q =>
@@ -109,8 +106,9 @@
         {
             column.FieldName = "do_precioCompra";
             column.Caption = "Precio";
+            column.VisibleIndex = 4;
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -122,6 +120,7 @@
         {
             column.FieldName = "do_porc_des";
             column.Caption = "% Desc. uni.";
+            column.VisibleIndex = 5;
             column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(q =>
             {
@@ -151,15 +150,6 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "do_precioFinal";
-            column.Caption = "Precio final";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-
-        });
-        settings.Columns.Add(column =>
-        {
             column.FieldName = "do_subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
@@ -180,6 +170,27 @@
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(8);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_Compras", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.SettingsBehavior.AllowSort = false;
