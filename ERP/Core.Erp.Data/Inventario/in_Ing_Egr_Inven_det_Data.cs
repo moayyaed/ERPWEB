@@ -30,7 +30,7 @@ namespace Core.Erp.Data.Inventario
                                  IdBodega = d.IdBodega,
                                  dm_cantidad = d.dm_cantidad,
                                  dm_observacion = d.dm_observacion,
-                                 IdMotivo_Inv = d.IdMotivo_Inv,
+                                 IdMotivo_Inv_det = d.IdMotivo_Inv ?? 0,
                                  IdOrdenCompra = d.IdOrdenCompra,
                                  IdProducto = d.IdProducto,
                                  IdUnidadMedida = d.IdUnidadMedida,
@@ -92,7 +92,7 @@ namespace Core.Erp.Data.Inventario
                         IdBodega = Entity.IdBodega,
                         dm_cantidad = Entity.dm_cantidad,
                         dm_observacion = Entity.dm_observacion,
-                        IdMotivo_Inv = Entity.IdMotivo_Inv,
+                        IdMotivo_Inv_det = Entity.IdMotivo_Inv ?? 0,
                         IdOrdenCompra = Entity.IdOrdenCompra,
                         IdProducto = Entity.IdProducto,
                         IdUnidadMedida = Entity.IdUnidadMedida,
@@ -142,7 +142,7 @@ namespace Core.Erp.Data.Inventario
                         IdProducto = info.IdProducto,                        
 
                         dm_observacion = info.dm_observacion,
-                        IdMotivo_Inv = info.IdMotivo_Inv,
+                        IdMotivo_Inv = info.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv_det,
 
                         IdEmpresa_oc = info.IdEmpresa_oc,
                         IdSucursal_oc = info.IdSucursal_oc,

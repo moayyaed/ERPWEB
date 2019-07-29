@@ -2,7 +2,7 @@
 @{
     var comboBox = Html.DevExpress().ComboBox(settings =>
     {
-        settings.Name = "IdMotivo_Inv";
+        settings.Name = "IdMotivo_Inv_det";
         settings.Width = Unit.Percentage(100);
         settings.Properties.DropDownWidth = Unit.Percentage(100);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -19,7 +19,7 @@
     })
 
      .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_list_bajo_demanda_motivo,
-      new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_info_bajo_demanda_motivo).Bind((Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info>)) ? "" : (Model == 0 ? "" : Model));
+      new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_info_bajo_demanda_motivo).Bind((Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info>)) ? 0 : (Model == 0 ? 0 : Model));
 
 
 }
