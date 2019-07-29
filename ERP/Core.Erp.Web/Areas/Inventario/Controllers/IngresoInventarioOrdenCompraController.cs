@@ -3,6 +3,7 @@ using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.Compras;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
@@ -33,6 +34,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         com_parametro_Bus bus_com_param = new com_parametro_Bus();
         com_ordencompra_local_Bus bus_orden_compra = new com_ordencompra_local_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -67,6 +69,25 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.PROVEE.ToString());
         }
         #endregion
+
+        #region Metodos ComboBox bajo demanda centro de costo
+
+        public ActionResult CmbCentroCosto_Inv_Ing_OC()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_Inv_Ing_OC", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaIngOC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaIngOC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
 
         #region Vistas
         public ActionResult Index()

@@ -10160,6 +10160,9 @@
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\_CmbCuenta_credito_Tipo.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\_CmbCentroCosto_Compras.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenServicio\_CmbCentroCosto_OS.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventario\_CmbCentroCosto_Inv_Ing.cshtml" />
+    <Content Include="Areas\Inventario\Views\EgresoInventario\_CmbCentroCosto_Inv_Eg.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbCentroCosto_Inv_Ing_OC.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
