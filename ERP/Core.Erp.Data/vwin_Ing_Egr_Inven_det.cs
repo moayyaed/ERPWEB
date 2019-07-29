@@ -48,5 +48,6 @@ namespace Core.Erp.Data
         public string cc_Descripcion { get; set; }
         public string nom_punto_cargo { get; set; }
         public string nom_punto_cargo_grupo { get; set; }
+        public string Desc_mov_inv { get; set; }
     }
 }

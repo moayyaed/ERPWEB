@@ -49,10 +49,10 @@ namespace Core.Erp.Data
         public Nullable<int> IdPunto_cargo { get; set; }
     
         public virtual ICollection<in_devolucion_inven_det> in_devolucion_inven_det { get; set; }
-        public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven { get; set; }
         public virtual in_movi_inve_detalle in_movi_inve_detalle { get; set; }
         public virtual in_Producto in_Producto { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida1 { get; set; }
+        public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven { get; set; }
     }
 }

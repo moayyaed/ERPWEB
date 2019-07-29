@@ -43,11 +43,11 @@ BEGIN --GENERAR IN_MOVI_INVE
 PRINT 'GENERAR IN_MOVI_INVE'
 INSERT INTO [dbo].[in_movi_inve]           
 ([IdEmpresa]				,[IdSucursal]           ,[IdBodega]							,[IdMovi_inven_tipo]				,[IdNumMovi]
-,[CodMoviInven]				,[cm_tipo]              ,[cm_observacion]					,[cm_fecha]							,[Fecha_Transac]			
+,[CodMoviInven]				,[cm_tipo]              ,[cm_observacion]					,[cm_fecha]										
 ,[Estado]					,[IdMotivo_Inv])
 SELECT        
 det.IdEmpresa				,det.IdSucursal			,det.IdBodega			,det.IdMovi_inven_tipo				,@IdNumMovi_apro
-,cab.CodMoviInven			,cab.signo				,cab.cm_observacion		,cab.cm_fecha						,GETDATE()
+,cab.CodMoviInven			,cab.signo				,cab.cm_observacion		,cab.cm_fecha						
 ,'A'						,cab.IdMotivo_Inv
 FROM            in_Ing_Egr_Inven AS cab INNER JOIN in_Ing_Egr_Inven_det AS det 
 				ON cab.IdEmpresa = det.IdEmpresa AND cab.IdSucursal = det.IdSucursal 
