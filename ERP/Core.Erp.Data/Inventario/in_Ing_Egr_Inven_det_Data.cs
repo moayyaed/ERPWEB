@@ -54,7 +54,9 @@ namespace Core.Erp.Data.Inventario
                                  lote_fecha_vcto = p.lote_fecha_vcto,
                                  lote_num_lote = p.lote_num_lote,
                                  se_distribuye = p.se_distribuye ?? false,
-                                 tp_ManejaInven = c.tp_ManejaInven,                                 
+                                 tp_ManejaInven = c.tp_ManejaInven,  
+                                 
+                                 IdCentroCosto = d.IdCentroCosto      
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -108,7 +110,9 @@ namespace Core.Erp.Data.Inventario
                         IdUnidadMedida_sinConversion = Entity.IdUnidadMedida_sinConversion,
                         mv_costo_sinConversion = Entity.mv_costo_sinConversion ?? 0,
                         secuencia_inv = Entity.secuencia_inv,
-                        Secuencia_oc = Entity.Secuencia_oc
+                        Secuencia_oc = Entity.Secuencia_oc,
+
+                        IdCentroCosto = Entity.IdCentroCosto
                         
                     };
                 }

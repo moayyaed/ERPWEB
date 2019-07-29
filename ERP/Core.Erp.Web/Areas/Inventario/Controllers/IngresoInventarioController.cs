@@ -284,6 +284,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
+            {
                 if (info_det.IdProducto != 0)
                 {
                     in_Producto_Info info_producto = bus_producto.get_info(IdEmpresa, info_det.IdProducto);
@@ -294,8 +295,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
-                    }
+                    }                    
                 }
+            }
             if (info_det.dm_cantidad_sinConversion > 0)
                 List_in_Ing_Egr_Inven_det.AddRow(info_det,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -458,6 +460,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
     public class in_Ing_Egr_Inven_det_List
     {
         string Variable = "in_Ing_Egr_Inven_det_Info";
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         public List<in_Ing_Egr_Inven_det_Info> get_list(decimal IdTransaccionSession)
         {
             
@@ -483,6 +486,23 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             info_det.IdUnidadMedida = info_det.IdUnidadMedida;
             info_det.mv_costo_sinConversion = info_det.mv_costo_sinConversion;
             info_det.dm_cantidad_sinConversion = info_det.dm_cantidad_sinConversion;
+
+            #region Centro de costo
+
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                info_det.cc_Descripcion = string.Empty;
+            else
+                if (info_det.IdCentroCosto != info_det.IdCentroCosto)
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    info_det.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
+
+
             list.Add(info_det);
         }
 
@@ -497,6 +517,21 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             edited_info.IdProducto = info_det.IdProducto;
             edited_info.tp_ManejaInven = info_det.tp_ManejaInven;
             edited_info.se_distribuye = info_det.se_distribuye;
+
+            #region Centro de costo
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
+
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
