@@ -19,14 +19,21 @@
     [IdCentroCosto]       VARCHAR (200) NULL,
     [IdPunto_cargo_grupo] INT           NULL,
     [IdPunto_cargo]       INT           NULL,
+    [IdEmpresa_pf]        INT           NULL,
+    [IdSucursal_pf]       INT           NULL,
+    [IdProforma]          NUMERIC (18)  NULL,
+    [Secuencia_pf]        INT           NULL,
     CONSTRAINT [PK_fa_guia_remision_det] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdGuiaRemision] ASC, [Secuencia] ASC),
     CONSTRAINT [FK_fa_guia_remision_det_ct_CentroCosto] FOREIGN KEY ([IdEmpresa], [IdCentroCosto]) REFERENCES [dbo].[ct_CentroCosto] ([IdEmpresa], [IdCentroCosto]),
     CONSTRAINT [FK_fa_guia_remision_det_ct_punto_cargo] FOREIGN KEY ([IdEmpresa], [IdPunto_cargo]) REFERENCES [dbo].[ct_punto_cargo] ([IdEmpresa], [IdPunto_cargo]),
     CONSTRAINT [FK_fa_guia_remision_det_ct_punto_cargo_grupo] FOREIGN KEY ([IdEmpresa], [IdPunto_cargo_grupo]) REFERENCES [dbo].[ct_punto_cargo_grupo] ([IdEmpresa], [IdPunto_cargo_grupo]),
     CONSTRAINT [FK_fa_guia_remision_det_fa_guia_remision] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega], [IdGuiaRemision]) REFERENCES [dbo].[fa_guia_remision] ([IdEmpresa], [IdSucursal], [IdBodega], [IdGuiaRemision]),
+    CONSTRAINT [FK_fa_guia_remision_det_fa_proforma_det] FOREIGN KEY ([IdEmpresa_pf], [IdSucursal_pf], [IdProforma], [Secuencia_pf]) REFERENCES [dbo].[fa_proforma_det] ([IdEmpresa], [IdSucursal], [IdProforma], [Secuencia]),
     CONSTRAINT [FK_fa_guia_remision_det_in_Producto] FOREIGN KEY ([IdEmpresa], [IdProducto]) REFERENCES [dbo].[in_Producto] ([IdEmpresa], [IdProducto]),
     CONSTRAINT [FK_fa_guia_remision_det_tb_sis_Impuesto] FOREIGN KEY ([IdCod_Impuesto]) REFERENCES [dbo].[tb_sis_Impuesto] ([IdCod_Impuesto])
 );
+
+
 
 
 

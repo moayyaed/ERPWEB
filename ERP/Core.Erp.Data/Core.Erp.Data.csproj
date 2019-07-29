@@ -2294,9 +2294,6 @@
     <Compile Include="vwfa_guia_remision_det.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwfa_guia_remision_det1.cs">
-      <DependentUpon>Model_facturacion.tt</DependentUpon>
-    </Compile>
     <Compile Include="vwfa_notaCreDeb.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
@@ -2313,6 +2310,9 @@
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_proforma_det_por_facturar.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_proforma_det_por_guia.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="vwfa_PuntoVta.cs">

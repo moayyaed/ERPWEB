@@ -14,6 +14,7 @@ using DevExpress.Web.Mvc;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -40,6 +41,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
         fa_MotivoTraslado_Bus bus_traslado = new fa_MotivoTraslado_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
 
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -76,6 +78,24 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public in_Producto_Info get_info_bajo_demandaProducto(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda centro de costo
+
+        public ActionResult CmbCentroCosto_Guia()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_Guia", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaCC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
 
@@ -491,6 +511,33 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var resultado = bus_sucursal.get_info(IdEmpresa, IdSucursal);
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetProformasPorFacturar(int IdSucursal = 0, decimal IdCliente = 0)
+        {
+            bool resultado = true;
+
+            set_list_proformas(bus_detalle.get_list_proformas_x_guia(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal, IdCliente));
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetProformas(int IdSucursal = 0, decimal IdCliente = 0, decimal IdProforma = 0, decimal IdTransaccionSession = 0)
+        {
+            bool resultado = true;
+
+            var list = bus_detalle.get_list_proforma(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal, IdCliente, IdProforma);
+            if (list.Count() == 0)
+                resultado = false;
+            var detalle_guia = detalle_info.get_list(IdTransaccionSession);
+            if (detalle_guia.Where(v => v.IdProforma == IdProforma).Count() == 0)
+            {
+                int Secuencia = detalle_guia.Count == 0 ? 1 : detalle_guia.Max(q => q.Secuencia) + 1;
+                list.ForEach(q => q.Secuencia = Secuencia++);
+                detalle_guia.AddRange(list);
+            }
+            detalle_info.set_list(detalle_guia, IdTransaccionSession);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region funciones del detalle
@@ -547,7 +594,51 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var model = detalle_info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_guias_remision_det", model);
         }
-        #endregion             
+        #endregion
+
+        #region Detalle de proforma
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_PGuia_det()
+        {
+            var model = get_list_proformas();
+            return PartialView("_GridViewPartial_PGuia_det", model);
+        }
+        public void AddProformas(string IDs = "", decimal IdTransaccionSession = 0)
+        {
+            if (!string.IsNullOrEmpty(IDs))
+            {
+                string[] array = IDs.Split(',');
+                var lst = get_list_proformas();
+                var lst_det_guia = detalle_info.get_list(IdTransaccionSession);
+                foreach (var item in array)
+                {
+                    var pf = lst.Where(q => q.Secuencia_pf == Convert.ToInt32(item)).FirstOrDefault();
+                    if (pf != null)
+                        if (lst_det_guia.Where(q => q.IdEmpresa == pf.IdEmpresa_pf && q.IdSucursal_pf == pf.IdSucursal_pf && q.IdProforma == pf.IdProforma && q.Secuencia_pf == pf.Secuencia_pf).Count() == 0)
+                        {
+                            pf.Secuencia = lst_det_guia.Count == 0 ? 1 : lst_det_guia.Max(q => q.Secuencia) + 1;
+                            lst_det_guia.Add(pf);
+                        }
+                }
+                detalle_info.set_list(lst_det_guia, IdTransaccionSession);
+            }
+        }
+        public List<fa_guia_remision_det_Info> get_list_proformas()
+        {
+            if (Session["fa_guia_remision_det_Info"] == null)
+            {
+                List<fa_factura_det_Info> list = new List<fa_factura_det_Info>();
+
+                Session["fa_guia_remision_det_Info"] = list;
+            }
+            return (List<fa_guia_remision_det_Info>)Session["fa_guia_remision_det_Info"];
+        }
+
+        public void set_list_proformas(List<fa_guia_remision_det_Info> list)
+        {
+            Session["fa_guia_remision_det_Info"] = list;
+        }
+        #endregion
     }
     public class fa_guia_remision_det_Info_lst
     {

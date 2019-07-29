@@ -56,6 +56,108 @@
         $("#btn_guardar").disabled = false;
     }
 
+    /************ PROFORMA **********/
+    var selectedIDs_Pf;
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs_Pf"] = selectedIDs_Pf;
+    }
+    function OnSelectionChanged_Pf(s, e) {
+        s.GetSelectedFieldValues("secuencial", GetSelectedFieldValuesCallback_Pf);
+    }
+    function GetSelectedFieldValuesCallback_Pf(values) {
+        //Capture all selected keys
+        selectedIDs_Pf = values.join(',');
+    }
+
+    function MostrarModalProformas() {
+        var proforma = $("#IdProforma").val()
+
+        if (proforma != null && proforma != 0 && proforma != "") {
+
+            if (IdCliente.GetValue() > 0) {
+                var datos = {
+                    IdSucursal: $("#IdSucursal").val(),
+                    IdCliente: IdCliente.GetValue(),
+                    IdProforma: $("#IdProforma").val(),
+                    IdTransaccionSession: $("#IdTransaccionSession").val()
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("GetProformas", "GuiaRemision", new { Area = "Facturacion" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data == false) {
+                            alert('No existe datos para el número de proforma ' + proforma + ' ingresado');
+                        }
+                    },
+                    error: function (error) {
+                    }
+                });
+                GridViewPartial_guias_remision_det.PerformCallback()
+            }
+        }
+        else {
+
+            if (IdCliente.GetValue() > 0) {
+                var datos = {
+                    IdSucursal: $("#IdSucursal").val(),
+                    IdCliente: IdCliente.GetValue()
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("GetProformasPorFacturar", "GuiaRemision", new { Area = "Facturacion" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                    },
+                    error: function (error) {
+                    }
+                });
+                GridView_PGuia_det.PerformCallback();
+                $("#ProformasModal").modal("show");
+            }
+        }
+
+    }
+
+    function AddProformas() {
+
+        var datos = {
+            IDs: selectedIDs_Pf,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AddProformas", "GuiaRemision", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs_Pf = "";
+        GridView_PGuia_det.PerformCallback();
+        GridView_PGuia_det.UnselectRows();
+        GridViewPartial_guias_remision_det.PerformCallback();
+        $("#ProformasModal").modal("hide");
+    }
 </script>
 @using (Html.BeginForm("Nuevo", "GuiaRemision", FormMethod.Post, new { @class = "form", @role = "form" }))
 {

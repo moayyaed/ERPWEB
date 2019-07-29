@@ -51,7 +51,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -59,7 +59,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -153,6 +153,27 @@
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(8);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_Proforma", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>

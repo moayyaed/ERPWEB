@@ -25,6 +25,13 @@ namespace Core.Erp.Info.Facturacion
         public double gi_por_iva { get; set; }
         public double gi_Iva { get; set; }
         public double gi_Total { get; set; }
+        public string IdCentroCosto { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
+        public Nullable<int> IdEmpresa_pf { get; set; }
+        public Nullable<int> IdSucursal_pf { get; set; }
+        public Nullable<decimal> IdProforma { get; set; }
+        public Nullable<int> Secuencia_pf { get; set; }
 
         #region Campos que no existen en la tabla        
         public string pr_descripcion { get; set; }
@@ -35,6 +42,8 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<int> IdEmpresa_fact { get; set; }
         public Nullable<int> IdSucursal_fact { get; set; }
         public Nullable<int> IdBodega_fact { get; set; }
+        public string cc_Descripcion { get; set; }
+        public string SecuencialUnico { get; set; }
         //public string ca_Categoria { get; set; }
         //public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         //public string lote_num_lote { get; set; }

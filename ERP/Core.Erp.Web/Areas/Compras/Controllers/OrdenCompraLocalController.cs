@@ -514,7 +514,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<com_ordencompra_local_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
 }

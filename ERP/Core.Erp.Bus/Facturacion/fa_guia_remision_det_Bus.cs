@@ -66,5 +66,28 @@ namespace Core.Erp.Bus.Facturacion
             }
         }
 
+        public List<fa_guia_remision_det_Info> get_list_proformas_x_guia(int IdEmpresa, int IdSucursal, decimal IdCliente)
+        {
+            try
+            {
+                return odata.get_list_proformas_x_guia(IdEmpresa, IdSucursal, IdCliente);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<fa_guia_remision_det_Info> get_list_proforma(int IdEmpresa, int IdSucursal, decimal IdCliente, decimal IdProforma)
+        {
+            try
+            {
+                return odata.get_list_proforma(IdEmpresa, IdSucursal, IdCliente, IdProforma);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

@@ -26,12 +26,16 @@ namespace Core.Erp.Info.Facturacion
         public double pd_iva { get; set; }
         public double pd_total { get; set; }
         public bool anulado { get; set; }
+        public string IdCentroCosto { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo { get; set; }
 
         #region Campos que no existen en la tabla
         public string pr_descripcion { get; set; }
         public DateTime? lote_fecha_vcto { get; set; }
         public string lote_num_lote { get; set; }
         public string nom_presentacion { get; set; }
+        public string cc_Descripcion { get; set; }
         #endregion
     }
 }

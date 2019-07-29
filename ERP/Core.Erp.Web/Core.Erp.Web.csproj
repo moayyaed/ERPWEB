@@ -10164,6 +10164,9 @@
     <Content Include="Areas\Inventario\Views\EgresoInventario\_CmbCentroCosto_Inv_Eg.cshtml" />
     <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\_CmbCentroCosto_Inv_Ing_OC.cshtml" />
     <Content Include="Areas\Inventario\Views\EgresoInventario\_CmbMotivoInven.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaRemision\_GridViewPartial_PGuia_det.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaRemision\_CmbCentroCosto_Guia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Proforma\_CmbCentroCosto_Proforma.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

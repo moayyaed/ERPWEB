@@ -1,18 +1,22 @@
-CREATE VIEW dbo.vwfa_guia_remision_det
+﻿CREATE VIEW dbo.vwfa_guia_remision_det
 AS
 SELECT        dbo.fa_guia_remision_det.IdEmpresa, dbo.fa_guia_remision_det.IdSucursal, dbo.fa_guia_remision_det.IdBodega, dbo.fa_guia_remision_det.IdGuiaRemision, dbo.fa_guia_remision_det.Secuencia, 
                          dbo.fa_guia_remision_det.IdProducto, dbo.fa_guia_remision_det.gi_cantidad, dbo.fa_guia_remision_det.gi_detallexItems, dbo.in_Producto.pr_codigo, dbo.in_Producto.pr_descripcion, dbo.in_Producto.pr_descripcion_2, 
                          dbo.fa_guia_remision_det.gi_precio, dbo.fa_guia_remision_det.gi_por_desc, dbo.fa_guia_remision_det.gi_descuentoUni, dbo.fa_guia_remision_det.gi_PrecioFinal, dbo.fa_guia_remision_det.gi_Subtotal, 
-                         dbo.fa_guia_remision_det.IdCod_Impuesto, dbo.fa_guia_remision_det.gi_por_iva, dbo.fa_guia_remision_det.gi_Total, dbo.fa_guia_remision_det.gi_Iva
+                         dbo.fa_guia_remision_det.IdCod_Impuesto, dbo.fa_guia_remision_det.gi_por_iva, dbo.fa_guia_remision_det.gi_Total, dbo.fa_guia_remision_det.gi_Iva, dbo.fa_guia_remision_det.IdCentroCosto, 
+                         dbo.fa_guia_remision_det.IdEmpresa_pf, dbo.fa_guia_remision_det.IdSucursal_pf, dbo.fa_guia_remision_det.IdProforma, dbo.fa_guia_remision_det.Secuencia_pf, dbo.ct_CentroCosto.cc_Descripcion
 FROM            dbo.fa_guia_remision_det INNER JOIN
-                         dbo.in_Producto ON dbo.fa_guia_remision_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.fa_guia_remision_det.IdProducto = dbo.in_Producto.IdProducto
+                         dbo.in_Producto ON dbo.fa_guia_remision_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.fa_guia_remision_det.IdProducto = dbo.in_Producto.IdProducto LEFT OUTER JOIN
+                         dbo.ct_CentroCosto ON dbo.fa_guia_remision_det.IdEmpresa = dbo.ct_CentroCosto.IdEmpresa AND dbo.fa_guia_remision_det.IdCentroCosto = dbo.ct_CentroCosto.IdCentroCosto
 
 GO
 
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_guia_remision_det';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_guia_remision_det';
+
+
 
 
 GO
@@ -95,17 +99,27 @@ Begin DesignProperties =
                Right = 633
             End
             DisplayFlags = 280
-            TopColumn = 6
+            TopColumn = 13
          End
          Begin Table = "in_Producto"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 272
+               Top = 74
+               Left = 69
+               Bottom = 204
+               Right = 303
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "ct_CentroCosto"
+            Begin Extent = 
+               Top = 0
+               Left = 718
+               Bottom = 130
+               Right = 927
+            End
+            DisplayFlags = 280
+            TopColumn = 2
          End
       End
    End
@@ -114,8 +128,26 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 27
          Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -133,7 +165,13 @@ Begin DesignProperties =
          Table = 1170
          Output = 720
          Append = 1400
-         NewValue = 1170
+         NewValue = 1170', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_guia_remision_det';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
          SortType = 1350
          SortOrder = 1410
          GroupBy = 1350

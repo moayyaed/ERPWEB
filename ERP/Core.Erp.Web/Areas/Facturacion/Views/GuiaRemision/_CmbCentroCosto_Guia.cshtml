@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls;
+@{
+        var comboBox = Html.DevExpress().ComboBox(settings =>
+        {
+            settings.Name = "IdCentroCosto";
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.DropDownWidth = Unit.Percentage(100);
+            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+            settings.CallbackRouteValues = new { Controller = "GuiaRemision", Action = "CmbCentroCosto_Guia", Area = "Facturacion" };
+            settings.Properties.CallbackPageSize = 15;
+            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+            settings.Properties.TextField = "cc_Descripcion";
+            settings.Properties.TextFormatString = "[{0}] {1}";
+            settings.Properties.ValueField = "IdCentroCosto";
+            settings.Properties.ValueType = typeof(string);
+
+            settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            settings.Properties.AllowNull = true;
+
+            settings.Properties.Columns.Add("IdCentroCosto", "ID", 10);
+            settings.Properties.Columns.Add("cc_Descripcion", "Centro de costo", 40);
+            settings.Properties.Columns.Add("IdCentroCostoPadre", "ID Padre", 10);
+            settings.Properties.Columns.Add("cc_Descripcion_Padre", "CC padre", 40);
+            //settings.Properties.FilterMinLength =3;
+        })
+        .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.GuiaRemisionController().get_list_bajo_demandaCC,
+        new Core.Erp.Web.Areas.Facturacion.Controllers.GuiaRemisionController().get_info_bajo_demandaCC)
+        .Bind(Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_guia_remision_Info) || Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_guia_remision_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Facturacion.fa_guia_remision_det_Info>) ? "" : (Model));
+}
+@comboBox.GetHtml()

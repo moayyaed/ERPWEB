@@ -1,12 +1,14 @@
 ﻿CREATE VIEW dbo.vwfa_proforma_det
 AS
-SELECT        dbo.fa_proforma_det.IdEmpresa, dbo.fa_proforma_det.IdSucursal, dbo.fa_proforma_det.IdProforma, dbo.fa_proforma_det.Secuencia, dbo.fa_proforma_det.IdProducto, dbo.fa_proforma_det.pd_cantidad, 
-                         dbo.fa_proforma_det.pd_precio, dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, 
-                         dbo.fa_proforma_det.IdCod_Impuesto, dbo.fa_proforma_det.pd_por_iva, dbo.fa_proforma_det.pd_iva, dbo.fa_proforma_det.pd_total, dbo.fa_proforma_det.anulado, dbo.in_Producto.pr_descripcion, 
-                         dbo.in_presentacion.nom_presentacion, dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto
-FROM            dbo.in_presentacion INNER JOIN
-                         dbo.in_Producto ON dbo.in_presentacion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_presentacion.IdPresentacion = dbo.in_Producto.IdPresentacion RIGHT OUTER JOIN
-                         dbo.fa_proforma_det ON dbo.in_Producto.IdEmpresa = dbo.fa_proforma_det.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.fa_proforma_det.IdProducto
+SELECT        dbo.fa_proforma_det.IdSucursal, dbo.fa_proforma_det.IdProforma, dbo.fa_proforma_det.Secuencia, dbo.fa_proforma_det.IdProducto, dbo.fa_proforma_det.pd_cantidad, dbo.fa_proforma_det.pd_precio, 
+                         dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, dbo.fa_proforma_det.IdCod_Impuesto, 
+                         dbo.fa_proforma_det.pd_por_iva, dbo.fa_proforma_det.pd_iva, dbo.fa_proforma_det.pd_total, dbo.fa_proforma_det.anulado, dbo.in_Producto.pr_descripcion, dbo.in_presentacion.nom_presentacion, 
+                         dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto, dbo.fa_proforma_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion, dbo.fa_proforma_det.IdEmpresa
+FROM            dbo.ct_CentroCosto RIGHT OUTER JOIN
+                         dbo.fa_proforma_det ON dbo.ct_CentroCosto.IdEmpresa = dbo.fa_proforma_det.IdEmpresa AND dbo.ct_CentroCosto.IdCentroCosto = dbo.fa_proforma_det.IdCentroCosto LEFT OUTER JOIN
+                         dbo.in_presentacion INNER JOIN
+                         dbo.in_Producto ON dbo.in_presentacion.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_presentacion.IdPresentacion = dbo.in_Producto.IdPresentacion ON 
+                         dbo.fa_proforma_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.fa_proforma_det.IdProducto = dbo.in_Producto.IdProducto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
@@ -79,32 +81,42 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "ct_CentroCosto"
+            Begin Extent = 
+               Top = 13
+               Left = 28
+               Bottom = 166
+               Right = 237
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "fa_proforma_det"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 246
+               Top = 8
+               Left = 376
+               Bottom = 211
+               Right = 584
+            End
+            DisplayFlags = 280
+            TopColumn = 11
+         End
+         Begin Table = "in_presentacion"
+            Begin Extent = 
+               Top = 151
+               Left = 700
+               Bottom = 281
+               Right = 887
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "in_Producto"
             Begin Extent = 
-               Top = 28
-               Left = 346
-               Bottom = 158
-               Right = 580
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "in_presentacion"
-            Begin Extent = 
-               Top = 61
-               Left = 525
-               Bottom = 191
-               Right = 712
+               Top = 0
+               Left = 660
+               Bottom = 130
+               Right = 894
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -116,8 +128,45 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
+      Begin ColumnWidths = 23
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
    End
-   Begin CriteriaPane = 
+   Begin CriteriaPane =', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
@@ -136,8 +185,4 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det';
-
-
-GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det';
 

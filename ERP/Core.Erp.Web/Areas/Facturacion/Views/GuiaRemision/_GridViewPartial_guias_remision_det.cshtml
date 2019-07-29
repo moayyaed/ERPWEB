@@ -183,6 +183,27 @@
                 q.Width = Unit.Percentage(100);
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_Guia", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.Columns.Add("gi_detallexItems", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(10);
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "gi_Total").DisplayFormat = "{0:n2}";

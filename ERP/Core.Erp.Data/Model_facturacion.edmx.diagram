@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_TerminoPago" Width="1.5" PointX="0.75" PointY="33.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_TerminoPago_Distribucion" Width="1.5" PointX="3" PointY="41" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.fa_TipoNota_x_Empresa_x_Sucursal" Width="1.5" PointX="13.5" PointY="52.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma_det" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_sin_guia" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_x_fa_guia_remision" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
@@ -84,7 +83,6 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_fa_TipoNota1" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_x_ct_cbtecble_fa_notaCreDeb" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_x_cxc_cobro_fa_notaCreDeb" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision_det" Width="1.5" PointX="12.375" PointY="24.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_PuntoVta" Width="1.5" PointX="19.375" PointY="17.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_proforma" Width="1.5" PointX="23.875" PointY="28.5" />
@@ -93,20 +91,23 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_TerminoPago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_Vendedor" />
         <EntityTypeShape EntityType="Model_facturacion.fa_factura_det" Width="1.5" PointX="29.125" PointY="33.875" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision_det" Width="1.5" PointX="29.125" PointY="20.125" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_proforma_det" Width="1.5" PointX="26.125" PointY="39.125" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_det" Width="1.5" PointX="11.375" PointY="7.75" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision_det1" Width="1.5" PointX="10.375" PointY="15.75" />
         <AssociationConnector Association="Model_facturacion.FK_fa_CambioProductoDet_fa_factura_det" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_det_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_det_fa_proforma_det" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_factura_det" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_det" Width="1.5" PointX="26.125" PointY="11.375" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb_det" Width="1.5" PointX="14.375" PointY="20.75" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision_det" Width="1.5" PointX="32.125" PointY="28.25" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_proforma_det" Width="1.5" PointX="26.125" PointY="39.125" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision_det" Width="1.5" PointX="10.375" PointY="15.75" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_det_fa_proforma_det" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_proforma_det" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma_det_por_guia" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma_det" Width="1.5" PointX="16.375" PointY="20.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
