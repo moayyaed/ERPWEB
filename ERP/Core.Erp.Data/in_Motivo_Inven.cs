@@ -16,10 +16,10 @@ namespace Core.Erp.Data
     {
         public in_Motivo_Inven()
         {
-            this.in_Ing_Egr_Inven = new HashSet<in_Ing_Egr_Inven>();
-            this.in_movi_inve = new HashSet<in_movi_inve>();
             this.in_parametro = new HashSet<in_parametro>();
             this.in_parametro1 = new HashSet<in_parametro>();
+            this.in_Ing_Egr_Inven = new HashSet<in_Ing_Egr_Inven>();
+            this.in_movi_inve = new HashSet<in_movi_inve>();
         }
     
         public int IdEmpresa { get; set; }
@@ -38,9 +38,9 @@ namespace Core.Erp.Data
         public string IdCtaCble { get; set; }
     
         public virtual in_Catalogo in_Catalogo { get; set; }
-        public virtual ICollection<in_Ing_Egr_Inven> in_Ing_Egr_Inven { get; set; }
-        public virtual ICollection<in_movi_inve> in_movi_inve { get; set; }
         public virtual ICollection<in_parametro> in_parametro { get; set; }
         public virtual ICollection<in_parametro> in_parametro1 { get; set; }
+        public virtual ICollection<in_Ing_Egr_Inven> in_Ing_Egr_Inven { get; set; }
+        public virtual ICollection<in_movi_inve> in_movi_inve { get; set; }
     }
 }

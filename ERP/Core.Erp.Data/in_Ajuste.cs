@@ -41,9 +41,9 @@ namespace Core.Erp.Data
     
         public virtual in_Catalogo in_Catalogo { get; set; }
         public virtual ICollection<in_AjusteDet> in_AjusteDet { get; set; }
-        public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven { get; set; }
-        public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven1 { get; set; }
         public virtual in_movi_inven_tipo in_movi_inven_tipo { get; set; }
         public virtual in_movi_inven_tipo in_movi_inven_tipo1 { get; set; }
+        public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven { get; set; }
+        public virtual in_Ing_Egr_Inven in_Ing_Egr_Inven1 { get; set; }
     }
 }
