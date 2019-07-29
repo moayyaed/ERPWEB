@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Info.Inventario;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -265,6 +266,49 @@ namespace Core.Erp.Data.Inventario
 
                 throw;
             }
+        }
+
+        public List<in_Motivo_Inven_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, string Tipo)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<in_Motivo_Inven_Info> Lista = new List<in_Motivo_Inven_Info>();
+            Lista = get_list(IdEmpresa, Tipo, skip, take, args.Filter);
+            return Lista;
+        }
+
+        public List<in_Motivo_Inven_Info> get_list(int IdEmpresa, string Tipo, int skip, int take, string filter)
+        {
+            try
+            {
+                List<in_Motivo_Inven_Info> Lista = new List<in_Motivo_Inven_Info>();
+
+                Entities_inventario Context = new Entities_inventario();
+                {
+                    //List<in_Motivo_Inven_Info> lst;
+                    var lst = Context.in_Motivo_Inven.Where(q => q.IdEmpresa == IdEmpresa && q.estado == "A" && (q.Desc_mov_inv).Contains(filter)).OrderBy(q => q.IdMotivo_Inv).Skip(skip).Take(take).ToList();
+                    foreach (var q in lst)
+                    {
+                        Lista.Add(new in_Motivo_Inven_Info
+                        {
+                            IdMotivo_Inv = q.IdMotivo_Inv,
+                            Desc_mov_inv = q.Desc_mov_inv
+                        });
+                    }
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public in_Motivo_Inven_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            //La variable args del devexpress ya trae el ID seleccionado en la propiedad Value, se pasa el IdEmpresa porque es un filtro que no tiene
+            return get_info(IdEmpresa, args.Value == null ? 0 : Convert.ToInt32(args.Value.ToString()) );
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.Inventario;
 using Core.Erp.Info.Inventario;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 
@@ -96,6 +97,16 @@ namespace Core.Erp.Bus.Inventario
 
                 throw;
             }
+        }
+
+        public List<in_Motivo_Inven_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, string Tipo)
+        {
+            return odata.get_list_bajo_demanda(args, IdEmpresa, Tipo);
+        }
+
+        public in_Motivo_Inven_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            return odata.get_info_bajo_demanda(args, IdEmpresa);
         }
     }
 }

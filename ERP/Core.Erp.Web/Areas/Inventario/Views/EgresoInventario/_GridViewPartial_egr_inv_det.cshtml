@@ -79,7 +79,34 @@
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dm_cantidad_sinConversion";
+            column.Caption = "cantidad";
+            column.Width = Unit.Percentage(20);
 
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Desc_mov_inv";
+            column.Caption = "Motivo";
+            column.Width = Unit.Percentage(40);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdMotivo_Inv";
+            column.Caption = "Motivo";
+            column.Width = Unit.Percentage(30);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbMotivoInven", DataBinder.Eval(c.DataItem, "IdMotivo_Inv"));
+            });
+        });
 
         settings.Columns.Add(column =>
         {
@@ -103,13 +130,6 @@
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "dm_cantidad_sinConversion";
-            column.Caption = "cantidad";
-            column.Width = Unit.Percentage(20);
-
-        });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
     });

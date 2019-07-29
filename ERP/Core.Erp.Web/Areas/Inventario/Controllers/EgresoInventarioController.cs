@@ -26,6 +26,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_Ing_Egr_Inven_det_List List_in_Ing_Egr_Inven_det = new in_Ing_Egr_Inven_det_List();
         in_parametro_Bus bus_in_param = new in_parametro_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
+        in_Motivo_Inven_Bus bus_motivo = new in_Motivo_Inven_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
@@ -85,6 +86,21 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         #endregion
 
+        #region Metodos ComboBox bajo demanda motivo
+        public ActionResult CmbMotivoInven()
+        {
+            decimal model = new decimal();
+            return PartialView("_CmbMotivoInven", model);
+        }
+        public List<in_Motivo_Inven_Info> get_list_bajo_demanda_motivo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_motivo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoIngEgr.EGR.ToString());
+        }
+        public in_Motivo_Inven_Info get_info_bajo_demanda_motivo(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_motivo.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
 
         #region vistas
         [ValidateInput(false)]
@@ -300,6 +316,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region cargar combo y validaciones
         private void cargar_combos_detalle()
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             in_UnidadMedida_Bus bus_unidad = new in_UnidadMedida_Bus();
             var lst_unidad = bus_unidad.get_list(false);
             ViewBag.lst_unidad = lst_unidad;
@@ -365,6 +382,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
+            {
                 if (info_det.IdProducto != 0)
                 {
                     in_Producto_Info info_producto = bus_producto.get_info(IdEmpresa, info_det.IdProducto);
@@ -377,7 +395,17 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
-            if(info_det.dm_cantidad_sinConversion>0 && info_det.IdProducto!=0)
+
+                if (info_det.IdMotivo_Inv != 0)
+                {
+                    in_Motivo_Inven_Info info_motivo = bus_motivo.get_info(IdEmpresa, Convert.ToInt32(info_det.IdMotivo_Inv));
+                    if (info_motivo != null)
+                    {
+                        info_det.Desc_mov_inv = info_motivo.Desc_mov_inv;
+                    }
+                }
+            }   
+                if (info_det.dm_cantidad_sinConversion>0 && info_det.IdProducto!=0)
             List_in_Ing_Egr_Inven_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
@@ -389,6 +417,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {            
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (info_det != null)
+            {
                 if (info_det.IdProducto != 0)
                 {
                     in_Producto_Info info_producto = bus_producto.get_info(IdEmpresa, info_det.IdProducto);
@@ -401,6 +430,16 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         info_det.se_distribuye = info_producto.se_distribuye;
                     }
                 }
+                if (info_det.IdMotivo_Inv != 0)
+                {
+                    in_Motivo_Inven_Info info_motivo = bus_motivo.get_info(IdEmpresa, Convert.ToInt32(info_det.IdMotivo_Inv) );
+                    if (info_motivo != null)
+                    {
+                        info_det.Desc_mov_inv = info_motivo.Desc_mov_inv;
+                    }                        
+                }
+            }
+                            
             if (info_det.dm_cantidad_sinConversion > 0)
                 List_in_Ing_Egr_Inven_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_in_Ing_Egr_Inven_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));

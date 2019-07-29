@@ -48,6 +48,7 @@ namespace Core.Erp.Info.Inventario
         public string lote_num_lote { get; set; }
         public string nom_presentacion { get; set; }
         public double Saldo { get; set; }
+        public string Desc_mov_inv { get; set; }
         #endregion
 
         #region Campos de factura        
