@@ -198,7 +198,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
             fa_guia_remision_Info model = new fa_guia_remision_Info
             {
-                
+
                 gi_fecha = DateTime.Now,
                 gi_FechaFinTraslado = DateTime.Now,
                 gi_FechaInicioTraslado = DateTime.Now,
@@ -206,7 +206,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 IdSucursal = IdSucursal,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 lst_detalle = new List<fa_guia_remision_det_Info>(),
-                lst_detalle_x_factura = new List<fa_factura_x_fa_guia_remision_Info>()
+                lst_detalle_x_factura = new List<fa_factura_x_fa_guia_remision_Info>(),
+                GenerarFactura = false
             };
             detalle_info.set_list(model.lst_detalle, model.IdTransaccionSession);
             List_rel.set_list(model.lst_detalle_x_factura, model.IdTransaccionSession);
@@ -268,6 +269,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
             fa_guia_remision_Info model = bus_guia.get_info(IdEmpresa, IdGuiaRemision);
+            model.GenerarFactura = false;
+
             if (model == null)
                 return RedirectToAction("Index");
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);

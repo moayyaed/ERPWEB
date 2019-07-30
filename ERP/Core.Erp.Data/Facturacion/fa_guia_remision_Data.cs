@@ -14,6 +14,7 @@ namespace Core.Erp.Data.Facturacion
     {
         tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
         fa_PuntoVta_Data data_puntovta = new fa_PuntoVta_Data();
+        fa_factura_Data data_fact = new fa_factura_Data();
 
         public List<fa_guia_remision_Info> get_list(int IdEmpresa, DateTime fecha_inicio, DateTime Fecha_fin)
         {
@@ -101,7 +102,9 @@ namespace Core.Erp.Data.Facturacion
                         Direccion_Destino = Entity.Direccion_Destino,
                         Direccion_Origen = Entity.Direccion_Origen,
                         Estado = Entity.Estado,
-                        IdMotivoTraslado=Entity.IdMotivoTraslado
+                        IdMotivoTraslado = Entity.IdMotivoTraslado,
+                        IdCbteVta = Entity.IdCbteVta,
+                        //GenerarFactura = (Entity.IdCbteVta != null || Entity.IdCbteVta != 0) ? true : false
                     };
                 }
                 return info;
@@ -173,8 +176,8 @@ namespace Core.Erp.Data.Facturacion
                         IdMotivoTraslado=info.IdMotivoTraslado,
                         Estado = info.Estado= true,
                         IdUsuarioCreacion=info.IdUsuarioCreacion,
-                        FechaCreacion=info.FechaCreacion = DateTime.Now
-
+                        FechaCreacion=info.FechaCreacion = DateTime.Now,
+                        IdCbteVta = info.IdCbteVta
                     };                    
 
                     foreach (var item in info.lst_detalle)
@@ -273,6 +276,79 @@ namespace Core.Erp.Data.Facturacion
                     }
 
                     #endregion
+
+                    #region Factura
+                    if (info.GenerarFactura == true && (info.IdCbteVta==null || info.IdCbteVta ==0))
+                    {
+                        fa_factura_Info info_fact = new fa_factura_Info();
+                        info_fact.lst_det = new List<fa_factura_det_Info>();
+                        info_fact.lst_cuota = new List<fa_cuotas_x_doc_Info>();
+                        int secuencia_fact = 1;
+
+                        info_fact.IdEmpresa = info.IdEmpresa;
+                        info_fact.IdSucursal = info.IdSucursal;
+                        info_fact.IdBodega = info.IdBodega;
+                        info_fact.vt_tipoDoc = cl_enumeradores.eTipoDocumento.FACT.ToString();
+                        info_fact.vt_serie1 = null;
+                        info_fact.vt_serie2 = null;
+                        info_fact.vt_NumFactura = null;
+                        info_fact.Fecha_Autorizacion = null;
+                        info_fact.vt_autorizacion = null;
+                        info_fact.vt_fecha = info.gi_fecha.Date;
+                        info_fact.vt_fech_venc = info.gi_fecha.Date;
+                        info_fact.IdCliente = info.IdCliente;
+                        //info_fact.IdVendedor = info.IdVendedor;
+                        info_fact.vt_plazo = Convert.ToDecimal(info.gi_plazo);
+                        info_fact.vt_Observacion = string.IsNullOrEmpty(info.gi_Observacion) ? "" : info.gi_Observacion;
+                        info_fact.IdCatalogo_FormaPago = null;
+                        //info_fact.vt_tipo_venta = info.vt_tipo_venta;
+                        //info_fact.IdCaja = info.IdCaja;
+                        //info_fact.IdPuntoVta = info.IdPuntoVta;
+                        info_fact.fecha_primera_cuota = null;
+                        info_fact.Fecha_Transaccion = DateTime.Now;
+                        info_fact.Estado = info.Estado == true ? "A" : "I";
+                        info_fact.esta_impresa = null;
+                        info_fact.valor_abono = null;
+                        info_fact.IdUsuario = info.IdUsuarioCreacion;
+                        //info_fact.IdNivel = info.IdNivel
+
+                        foreach (var item in info.lst_detalle)
+                        {
+                            fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info();
+
+                            info_fact_detalle.IdEmpresa = info.IdEmpresa;
+                            info_fact_detalle.IdSucursal = info.IdSucursal;
+                            info_fact_detalle.IdBodega = info.IdBodega;
+                            info_fact_detalle.Secuencia = secuencia_fact++;
+
+                            info_fact_detalle.IdProducto = item.IdProducto;
+                            info_fact_detalle.vt_cantidad = item.gi_cantidad;
+                            info_fact_detalle.vt_Precio = item.gi_precio;
+                            info_fact_detalle.vt_PorDescUnitario = item.gi_por_desc;
+                            info_fact_detalle.vt_DescUnitario = item.gi_descuentoUni;
+                            info_fact_detalle.vt_PrecioFinal = item.gi_PrecioFinal;
+                            info_fact_detalle.vt_Subtotal = item.gi_Subtotal;
+                            info_fact_detalle.vt_por_iva = item.gi_por_iva;
+                            info_fact_detalle.IdCod_Impuesto_Iva = item.IdCod_Impuesto;
+                            info_fact_detalle.vt_iva = item.gi_Iva;
+                            info_fact_detalle.vt_total = item.gi_Total;
+
+                            info_fact_detalle.IdEmpresa_pf = item.IdEmpresa_pf;
+                            info_fact_detalle.IdSucursal_pf = item.IdSucursal_pf;
+                            info_fact_detalle.IdProforma = item.IdProforma;
+                            info_fact_detalle.Secuencia_pf = item.Secuencia_pf;
+
+                            info_fact_detalle.IdCentroCosto = item.IdCentroCosto;
+                            info_fact_detalle.IdPunto_Cargo = item.IdPunto_cargo;
+                            info_fact_detalle.IdPunto_cargo_grupo = item.IdPunto_cargo_grupo;
+
+                            info_fact.lst_det.Add(info_fact_detalle);
+                        }
+                        //data_fact.guardarDB(info_fact);
+                        //Entity.IdCbteVta = info_fact.IdCbteVta;
+                    }
+                    #endregion
+
                     Context.fa_guia_remision.Add(Entity);
                     Context.SaveChanges();                    
                 }
@@ -313,6 +389,7 @@ namespace Core.Erp.Data.Facturacion
                         Entity.FechaModificacion = info.FechaModificacion = DateTime.Now;
                         Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
                         Entity.gi_Observacion = info.gi_Observacion;
+                        Entity.IdCbteVta = info.IdCbteVta;
 
                     foreach (var item in info.lst_detalle)
                     {

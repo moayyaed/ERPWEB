@@ -39,5 +39,6 @@ namespace Core.Erp.Data
         public string pe_cedulaRuc { get; set; }
         public string pe_nombreCompleto { get; set; }
         public bool Estado { get; set; }
+        public Nullable<decimal> IdCbteVta { get; set; }
     }
 }

@@ -63,6 +63,7 @@
     @Html.HiddenFor(q => q.IdGuiaRemision)
     @Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
+    @Html.HiddenFor(q => q.IdCbteVta, new { @id = "IdCbteVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
     if (ViewBag.mensaje != null)
@@ -258,11 +259,23 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="IdClienteContacto">Motivo de traslado</label>
                     @Html.DropDownListFor(q => q.IdMotivoTraslado, new SelectList(ViewBag.lst_tipo_traslado, "IdMotivoTraslado", "tr_Descripcion"), new { @class = "form-control", @id = "IdMotivoTraslado" })
                     @Html.ValidationMessageFor(q => q.IdMotivoTraslado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4" id="DivGenerarFactura">
+                <div class="form-group">
+                    <label for="Marca_Biometrico"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.GenerarFactura, settings =>
+                            {
+                                settings.Name = "ExisteFactura";
+                                settings.Text = "Generar Factura";
+
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.GenerarFactura, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -367,6 +380,7 @@
 
 <script>
     $(function () {
+        MostrarGenerarFactura();
         CargarPuntosDeVenta();
         get_direccion();
         get_placa();
@@ -381,6 +395,16 @@
         $("#OpModal").modal("show");
     }
 
+    function MostrarGenerarFactura() {
+        var IdCbteVta = $("#IdCbteVta").val();
+        if (IdCbteVta > 0)
+        {
+            $("#DivGenerarFactura").hide();
+        }
+        else {
+            $("#DivGenerarFactura").show();
+        }
+    }
 
     function CargarFacturas() {
         var datos = {

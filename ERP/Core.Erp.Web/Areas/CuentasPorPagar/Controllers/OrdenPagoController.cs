@@ -16,6 +16,7 @@ using Core.Erp.Info.Banco;
 using DevExpress.Web;
 using Core.Erp.Info.General;
 using Core.Erp.Bus.Presupuesto;
+using Core.Erp.Web.Areas.Contabilidad.Controllers;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -38,6 +39,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         List<cp_orden_pago_tipo_x_empresa_Info> lst_tipo_orden_pago = new List<cp_orden_pago_tipo_x_empresa_Info>();
         cp_orden_pago_det_Info_list lis_cp_orden_pago_det_Info = new cp_orden_pago_det_Info_list();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        ct_cbtecble_det_List list_ct_cbtecble_det = new ct_cbtecble_det_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
@@ -90,15 +92,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 throw;
             }
         }
-        public ActionResult GridViewPartial_orden_pago_dc()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+        //public ActionResult GridViewPartial_orden_pago_dc()
+        //{
+        //    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+        //    SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+        //    ct_cbtecble_Info model = new ct_cbtecble_Info();
+        //    model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
-            return PartialView("_GridViewPartial_orden_pago_dc", model);
-        }
+        //    return PartialView("_GridViewPartial_orden_pago_dc", model);
+        //}
         #endregion
         #region Metodos
         private void cargar_combos(int IdEmpresa )
@@ -198,7 +200,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             };
             SessionFixed.TipoPersona = "PROVEE";
             lis_cp_orden_pago_det_Info.set_list(new List<cp_orden_pago_det_Info>(), model.IdTransaccionSession);
-            comprobante_contable_fp.set_list(new List<ct_cbtecble_det_Info>(),model.IdTransaccionSession);
+            list_ct_cbtecble_det.set_list(new List<ct_cbtecble_det_Info>(),model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
             return View(model);
         }
@@ -209,7 +211,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             bus_orden_pago_tipo = new cp_orden_pago_tipo_x_empresa_Bus();
             bus_orden_pago = new cp_orden_pago_Bus();
             model.detalle =lis_cp_orden_pago_det_Info.get_list(model.IdTransaccionSession);
-            model.info_comprobante.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(model.IdTransaccionSession);
+            model.info_comprobante.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(model.IdTransaccionSession);
             info_param_op = bus_orden_pago_tipo.get_info(model.IdEmpresa, model.IdTipo_op);
             model.IdEmpresa =Convert.ToInt32( SessionFixed.IdEmpresa);
             model.info_comprobante.IdTipoCbte =(int) info_param_op.IdTipoCbte_OP;
@@ -266,7 +268,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.TipoPersona = model.IdTipo_Persona;
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
 
-            comprobante_contable_fp.set_list(model.info_comprobante.lst_ct_cbtecble_det,model.IdTransaccionSession);
+            list_ct_cbtecble_det.set_list(model.info_comprobante.lst_ct_cbtecble_det,model.IdTransaccionSession);
             lis_cp_orden_pago_det_Info.set_list(model.detalle, model.IdTransaccionSession);
 
             if (Exito)
@@ -317,7 +319,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
             model.detalle = lis_cp_orden_pago_det_Info.get_list(model.IdTransaccionSession);
-            model.info_comprobante.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(model.IdTransaccionSession);
+            model.info_comprobante.lst_ct_cbtecble_det = list_ct_cbtecble_det.get_list(model.IdTransaccionSession);
             
             info_param_op = bus_orden_pago_tipo.get_info(model.IdEmpresa,model.IdTipo_op);
             model.info_comprobante.IdTipoCbte = (int)info_param_op.IdTipoCbte_OP;
@@ -360,7 +362,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.TipoPersona = model.IdTipo_Persona;
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             Session["lst_detalle"] = model.detalle;
-            comprobante_contable_fp.set_list( model.info_comprobante.lst_ct_cbtecble_det,model.IdTransaccionSession);
+            list_ct_cbtecble_det.set_list( model.info_comprobante.lst_ct_cbtecble_det,model.IdTransaccionSession);
 
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
@@ -415,7 +417,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             lis_cp_orden_pago_det_Info.set_list(lst_detalle_op, IdTransaccionSession);
 
-            comprobante_contable_fp.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
+            list_ct_cbtecble_det.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
 
             string CtaCbleDebe = string.Empty;
             string CtaCbleHaber = string.Empty;
@@ -432,14 +434,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             foreach (var item in list)
             {
                 //Debe
-                comprobante_contable_fp.AddRow(new ct_cbtecble_det_Info
+                list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
                 {
                     IdCtaCble = tipo == null ? "" : tipo.IdCtaCble,
                     dc_Valor = Math.Round(item.Valor_a_pagar, 2, MidpointRounding.AwayFromZero),
                     dc_Valor_debe = Math.Round(item.Valor_a_pagar, 2, MidpointRounding.AwayFromZero)
                 }, IdTransaccionSession);
             }
-            comprobante_contable_fp.AddRow(new ct_cbtecble_det_Info
+            list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
             {
                 IdCtaCble = string.IsNullOrEmpty(CtaCbleHaber) ? (tipo == null ? ""  : tipo.IdCtaCble_Credito) : CtaCbleHaber,
                 dc_Valor = Math.Round(list.Sum(q => q.Valor_a_pagar), 2, MidpointRounding.AwayFromZero) * -1,
@@ -472,40 +474,40 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return PartialView("_GridViewPartial_deudas", model);
         }
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
-        {
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+        //[HttpPost, ValidateInput(false)]
+        //public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
+        //{
+        //    decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
 
-            if (ModelState.IsValid)
-                comprobante_contable_fp.AddRow(info_det,IdTransaccionSession);
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
+        //    if (ModelState.IsValid)
+        //        comprobante_contable_fp.AddRow(info_det,IdTransaccionSession);
+        //    ct_cbtecble_Info model = new ct_cbtecble_Info();
+        //    model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
             
-            return PartialView("_GridViewPartial_orden_pago_dc", model);
-        }
+        //    return PartialView("_GridViewPartial_orden_pago_dc", model);
+        //}
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
-        {
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-            if (ModelState.IsValid)
-                comprobante_contable_fp.UpdateRow(info_det,IdTransaccionSession);
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
+        //[HttpPost, ValidateInput(false)]
+        //public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ct_cbtecble_det_Info info_det)
+        //{
+        //    decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+        //    if (ModelState.IsValid)
+        //        comprobante_contable_fp.UpdateRow(info_det,IdTransaccionSession);
+        //    ct_cbtecble_Info model = new ct_cbtecble_Info();
+        //    model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
 
-            return PartialView("_GridViewPartial_orden_pago_dc", model);
-        }
+        //    return PartialView("_GridViewPartial_orden_pago_dc", model);
+        //}
 
-        public ActionResult EditingDelete(int secuencia)
-        {
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-            comprobante_contable_fp.DeleteRow(secuencia,IdTransaccionSession);
-            ct_cbtecble_Info model = new ct_cbtecble_Info();
-            model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
+        //public ActionResult EditingDelete(int secuencia)
+        //{
+        //    decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+        //    comprobante_contable_fp.DeleteRow(secuencia,IdTransaccionSession);
+        //    ct_cbtecble_Info model = new ct_cbtecble_Info();
+        //    model.lst_ct_cbtecble_det = comprobante_contable_fp.get_list(IdTransaccionSession);
 
-            return PartialView("_GridViewPartial_orden_pago_dc", model);
-        }
+        //    return PartialView("_GridViewPartial_orden_pago_dc", model);
+        //}
         #endregion
         #region Metodos ComboBox bajo demanda flujo
         ba_TipoFlujo_Bus bus_tipo = new ba_TipoFlujo_Bus();
@@ -554,69 +556,70 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
     public class ct_cbtecble_det_List_op
     {
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
-        string variable = "ct_cbtecble_det_List_op";
-        public List<ct_cbtecble_det_Info> get_list(decimal IdTransaccionSession)
-        {
-            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
-            {
-                List<ct_cbtecble_det_Info> list = new List<ct_cbtecble_det_Info>();
+        ct_cbtecble_det_List list_ct_cbtecble_det = new ct_cbtecble_det_List();
+        //string variable = "ct_cbtecble_det_List_op";
+        //public List<ct_cbtecble_det_Info> get_list(decimal IdTransaccionSession)
+        //{
+        //    if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+        //    {
+        //        List<ct_cbtecble_det_Info> list = new List<ct_cbtecble_det_Info>();
 
-                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
-            }
-            return (List<ct_cbtecble_det_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
-        }
+        //        HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        //    }
+        //    return (List<ct_cbtecble_det_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        //}
 
-        public void set_list(List<ct_cbtecble_det_Info> list, decimal IdTransaccionSession)
-        {
-            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
-        }
+        //public void set_list(List<ct_cbtecble_det_Info> list, decimal IdTransaccionSession)
+        //{
+        //    HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        //}
 
-        public void AddRow(ct_cbtecble_det_Info info_det, decimal IdTransaccionSession)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<ct_cbtecble_det_Info> list = get_list(IdTransaccionSession);
-            info_det.secuencia = list.Count == 0 ? 1 : list.Max(q => q.secuencia) + 1;
-            info_det.dc_Valor = Math.Round((info_det.dc_Valor_debe), 2) > 0 ? Math.Round((info_det.dc_Valor_debe), 2) : Math.Round((info_det.dc_Valor_haber * -1), 2);
+        //public void AddRow(ct_cbtecble_det_Info info_det, decimal IdTransaccionSession)
+        //{
+        //    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+        //    List<ct_cbtecble_det_Info> list = get_list(IdTransaccionSession);
+        //    info_det.secuencia = list.Count == 0 ? 1 : list.Max(q => q.secuencia) + 1;
+        //    info_det.dc_Valor = Math.Round((info_det.dc_Valor_debe), 2) > 0 ? Math.Round((info_det.dc_Valor_debe), 2) : Math.Round((info_det.dc_Valor_haber * -1), 2);
 
-            if (!string.IsNullOrEmpty(info_det.IdCtaCble))
-            {
-                var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
-                if (cta != null)
-                    info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
-            }
-            list.Add(info_det);
-        }
+        //    if (!string.IsNullOrEmpty(info_det.IdCtaCble))
+        //    {
+        //        var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
+        //        if (cta != null)
+        //            info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+        //    }
+        //    list.Add(info_det);
+        //}
 
-        public void UpdateRow(ct_cbtecble_det_Info info_det, decimal IdTransaccionSession)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+        //public void UpdateRow(ct_cbtecble_det_Info info_det, decimal IdTransaccionSession)
+        //{
+        //    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
-            ct_cbtecble_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.secuencia == info_det.secuencia).First();
-            edited_info.IdCtaCble = info_det.IdCtaCble;
-            edited_info.dc_para_conciliar = info_det.dc_para_conciliar;
-            edited_info.dc_Valor = Math.Round((info_det.dc_Valor_debe), 2)> 0 ? Math.Round((info_det.dc_Valor_debe), 2) : Math.Round((info_det.dc_Valor_haber * -1), 2);
-            edited_info.dc_Valor_debe = Math.Round((info_det.dc_Valor_debe), 2);
-            edited_info.dc_Valor_haber = Math.Round((info_det.dc_Valor_haber), 2);
-            if (!string.IsNullOrEmpty(info_det.IdCtaCble))
-            {
-                var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
-                if (cta != null)
-                    edited_info.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
-            }else
-                edited_info.pc_Cuenta = null;
-        }
+        //    ct_cbtecble_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.secuencia == info_det.secuencia).First();
+        //    edited_info.IdCtaCble = info_det.IdCtaCble;
+        //    edited_info.dc_para_conciliar = info_det.dc_para_conciliar;
+        //    edited_info.dc_Valor = Math.Round((info_det.dc_Valor_debe), 2)> 0 ? Math.Round((info_det.dc_Valor_debe), 2) : Math.Round((info_det.dc_Valor_haber * -1), 2);
+        //    edited_info.dc_Valor_debe = Math.Round((info_det.dc_Valor_debe), 2);
+        //    edited_info.dc_Valor_haber = Math.Round((info_det.dc_Valor_haber), 2);
+        //    if (!string.IsNullOrEmpty(info_det.IdCtaCble))
+        //    {
+        //        var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
+        //        if (cta != null)
+        //            edited_info.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+        //    }else
+        //        edited_info.pc_Cuenta = null;
+        //}
 
-        public void DeleteRow(int secuencia, decimal IdTransaccionSession)
-        {
-            List<ct_cbtecble_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.secuencia == secuencia).First());
-        }
+        //public void DeleteRow(int secuencia, decimal IdTransaccionSession)
+        //{
+        //    List<ct_cbtecble_det_Info> list = get_list(IdTransaccionSession);
+        //    list.Remove(list.Where(m => m.secuencia == secuencia).First());
+        //}
 
-        public void delete_detail_New_details(cp_orden_pago_tipo_x_empresa_Info info_param_op , decimal IdEntidad=0, double Valor_a_pagar=0, string observacion="", decimal IdTransaccionSession = 0)
+        public void delete_detail_New_details(cp_orden_pago_tipo_x_empresa_Info info_param_op, decimal IdEntidad = 0, double Valor_a_pagar = 0, string observacion = "", decimal IdTransaccionSession = 0)
         {
             try
             {
-                set_list(new List<ct_cbtecble_det_Info>(),IdTransaccionSession);
+                list_ct_cbtecble_det.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
 
                 if (info_param_op.IdTipoCbte_OP == null)
                     return;
@@ -625,12 +628,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ct_cbtecble_det_Info cbtecble_debe_Info = new ct_cbtecble_det_Info();
                 cbtecble_debe_Info.secuencia = 1;
                 cbtecble_debe_Info.IdEmpresa = info_param_op.IdEmpresa;
-                cbtecble_debe_Info.IdTipoCbte =(int) info_param_op.IdTipoCbte_OP;
+                cbtecble_debe_Info.IdTipoCbte = (int)info_param_op.IdTipoCbte_OP;
                 cbtecble_debe_Info.IdCtaCble = info_param_op.IdCtaCble;
                 cbtecble_debe_Info.dc_Valor_debe = Valor_a_pagar;
                 cbtecble_debe_Info.dc_Valor = Valor_a_pagar;
-                cbtecble_debe_Info.dc_Observacion= observacion;
-                AddRow(cbtecble_debe_Info,IdTransaccionSession);
+                cbtecble_debe_Info.dc_Observacion = observacion;
+                list_ct_cbtecble_det.AddRow(cbtecble_debe_Info, IdTransaccionSession);
 
 
                 // cuenta iva
@@ -639,10 +642,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cbtecble_haber_Info.IdEmpresa = info_param_op.IdEmpresa;
                 cbtecble_debe_Info.IdTipoCbte = (int)info_param_op.IdTipoCbte_OP;
                 cbtecble_haber_Info.IdCtaCble = info_param_op.IdCtaCble_Credito;
-                cbtecble_haber_Info.dc_Valor_haber = Valor_a_pagar ;
+                cbtecble_haber_Info.dc_Valor_haber = Valor_a_pagar;
                 cbtecble_haber_Info.dc_Valor = Valor_a_pagar * -1;
                 cbtecble_haber_Info.dc_Observacion = observacion;
-                AddRow(cbtecble_haber_Info, IdTransaccionSession);                
+                list_ct_cbtecble_det.AddRow(cbtecble_haber_Info, IdTransaccionSession);
             }
             catch (Exception)
             {

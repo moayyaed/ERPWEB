@@ -162,7 +162,7 @@
 {
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
+    @Html.HiddenFor(q => q.IdCbteVta, new { @id = "IdCbteVta" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -341,11 +341,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="form-group">
                         <label for="IdClienteContacto">Motivo de traslado</label>
                         @Html.DropDownListFor(q => q.IdMotivoTraslado, new SelectList(ViewBag.lst_tipo_traslado, "IdMotivoTraslado", "tr_Descripcion"), new { @class = "form-control", @id = "IdMotivoTraslado" })
                         @Html.ValidationMessageFor(q => q.IdMotivoTraslado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4" id="DivGenerarFactura">
+                    <div class="form-group">
+                        <label for="Marca_Biometrico"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.GenerarFactura, settings =>
+                            {
+                                settings.Name = "GenerarFactura";
+                                settings.Text = "Generar Factura";
+                            }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.GenerarFactura, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -468,6 +479,7 @@
 
 
     $(function () {
+        MostrarGenerarFactura();
         CargarPuntosDeVenta();
         GetUltimoDocumento();
         get_direccion();
@@ -492,6 +504,17 @@
         GridViewPartial_FacturasSinGuia.PerformCallback();
         $("#OpModal").modal("show");
     }
+
+    function MostrarGenerarFactura() {
+        var IdCbteVta = $("#IdCbteVta").val();
+        if (IdCbteVta > 0) {
+            $("#DivGenerarFactura").hide();
+        }
+        else {
+            $("#DivGenerarFactura").show();
+        }
+    }
+
 
 
     function CargarFacturas() {

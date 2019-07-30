@@ -24,7 +24,7 @@ namespace Core.Erp.Data
         public decimal gi_IdGuiaRemision { get; set; }
         public string Observacion { get; set; }
     
-        public virtual fa_guia_remision fa_guia_remision { get; set; }
         public virtual fa_factura fa_factura { get; set; }
+        public virtual fa_guia_remision fa_guia_remision { get; set; }
     }
 }

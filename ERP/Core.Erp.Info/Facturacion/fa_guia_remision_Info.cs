@@ -65,6 +65,7 @@ namespace Core.Erp.Info.Facturacion
         public bool EstadoBool { get; set; }
         [Required(ErrorMessage = "El campo motivo de anulación es obligatorio")]
         public string MotiAnula { get; set; }
+        public Nullable<decimal> IdCbteVta { get; set; }
 
         #region Campos que no estan en la tabla
         public string IdCatalogo_traslado { get; set; }
@@ -74,6 +75,7 @@ namespace Core.Erp.Info.Facturacion
         public List<fa_guia_remision_det_Info> lst_detalle { get; set; }
         public List<fa_factura_x_fa_guia_remision_Info> lst_detalle_x_factura { get; set; }
         public decimal IdProforma { get; set; }
+        public bool GenerarFactura { get; set; }
         #endregion
 
 

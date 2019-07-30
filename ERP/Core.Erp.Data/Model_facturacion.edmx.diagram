@@ -52,12 +52,7 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" />
         <AssociationConnector Association="Model_facturacion.FK_fa_parametro_fa_cliente" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision" Width="1.5" PointX="26.875" PointY="18.5" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_cliente" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_guia_remision" />
         <EntityTypeShape EntityType="Model_facturacion.fa_MotivoTraslado" Width="1.5" PointX="21.375" PointY="8" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_MotivoTraslado" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_CambioProducto" Width="1.5" PointX="18.75" PointY="47.125" />
         <EntityTypeShape EntityType="Model_facturacion.fa_CambioProductoDet" Width="1.5" PointX="21" PointY="43.375" />
         <EntityTypeShape EntityType="Model_facturacion.fa_factura" Width="1.5" PointX="26.875" PointY="27.875" />
@@ -78,7 +73,6 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_cxc_cobro_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_PuntoVta" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_fa_PuntoVta" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_fa_TipoNota1" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_x_ct_cbtecble_fa_notaCreDeb" />
@@ -98,7 +92,6 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_proforma_det" Width="1.5" PointX="26.125" PointY="39.125" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision_det" Width="1.5" PointX="10.375" PointY="15.75" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_det_fa_proforma_det" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_proforma_det" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_x_fa_factura_det_fa_guia_remision_det" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
@@ -108,6 +101,13 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_det" Width="1.5" PointX="26.125" PointY="11.375" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb_det" Width="1.5" PointX="12.375" PointY="20.75" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision" Width="1.5" PointX="26.875" PointY="17.5" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision" Width="1.5" PointX="23.375" PointY="0.75" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_cliente" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_guia_remision" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_MotivoTraslado" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_PuntoVta" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
