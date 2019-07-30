@@ -493,7 +493,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="co_observacion">Diario contable*</label>
-                                @Html.Action("GridViewPartial_deudas_dc")
+                                @*@Html.Action("GridViewPartial_deudas_dc")*@
+                                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
                             </div>
                         </div>
                     </div>
@@ -567,7 +568,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Diario contable*</label>
-                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })
+                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })                                            
                                         </div>
                                     </div>
                                 </div>
@@ -932,7 +933,8 @@
                     $("#co_valoriva").val(data.IVA);
                     $("#co_Por_iva").val(12);
                     $("#co_total").val(data.Total);
-                    GridViewPartial_deudas_dc.PerformCallback();
+                    //GridViewPartial_deudas_dc.PerformCallback();
+                    GridView_comprobante_detalle.PerformCallback();
                 },
                 error: function (error) {
                 }

@@ -279,7 +279,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="co_observacion">Diario contable*</label>
-                                    @Html.Action("GridViewPartial_deudas_dc")
+                                    @*@Html.Action("GridViewPartial_deudas_dc")*@
+                                    @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
                                 </div>
                             </div>
                         </div>
@@ -670,7 +671,8 @@ function actualizar_valores() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridViewPartial_deudas_dc.PerformCallback();
+                //GridViewPartial_deudas_dc.PerformCallback();
+                GridView_comprobante_detalle.PerformCallback();
             },
             error: function (error) {
             }

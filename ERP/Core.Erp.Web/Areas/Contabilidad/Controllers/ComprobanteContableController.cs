@@ -385,6 +385,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             {
                 p.TextField = "nom_punto_cargo";
                 p.ValueField = "IdPunto_cargo";
+                p.Columns.Add("IdPunto_cargo", "ID", 10);
+                p.Columns.Add("nom_punto_cargo", "Punto de cargo", 90);
+                p.ClientSideEvents.BeginCallback = "PuntoCargoComboBox_BeginCallback";
                 p.ValueType = typeof(int);
                 p.BindList(bus_pc.GetList(IdEmpresa, IdPunto_cargo_grupo, false));
             });
@@ -579,10 +582,10 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             edited_info.pc_Cuenta = info_det.pc_Cuenta;
 
             #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 edited_info.cc_Descripcion = string.Empty;
             else
-                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
             {
                 var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
                 if (cc != null)
@@ -593,11 +596,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             #endregion
 
             #region Punto Cargo
+            edited_info.IdPunto_cargo = info_det.IdPunto_cargo;
+            edited_info.IdPunto_cargo_grupo = info_det.IdPunto_cargo_grupo;
             if (info_det.IdPunto_cargo == null || info_det.IdPunto_cargo == 0)
                 edited_info.nom_punto_cargo = string.Empty;
-            else
-                if (info_det.IdPunto_cargo != edited_info.IdPunto_cargo)
-            {
+            else { 
                 var pc = bus_pc.GetInfo(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.IdPunto_cargo));
                 if (pc != null)
                 {
