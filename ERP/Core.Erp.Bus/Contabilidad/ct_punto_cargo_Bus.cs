@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.Contabilidad;
 using Core.Erp.Info.Contabilidad;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 namespace Core.Erp.Bus.Contabilidad
@@ -20,11 +21,11 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public ct_punto_cargo_Info GetInfo(int IdEmpresa, int IdPunto_cargo_grupo, int IdPunto_cargo)
+        public ct_punto_cargo_Info GetInfo(int IdEmpresa, int IdPunto_cargo)
         {
             try
             {
-                return odata.GetInfo(IdEmpresa, IdPunto_cargo_grupo, IdPunto_cargo);
+                return odata.GetInfo(IdEmpresa, IdPunto_cargo);
             }
             catch (Exception)
             {
@@ -63,6 +64,31 @@ namespace Core.Erp.Bus.Contabilidad
             try
             {
                 return odata.AnularDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<ct_punto_cargo_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, int IdPuntoCargoGrupo)
+        {
+            try
+            {
+                return odata.get_list_bajo_demanda(args, IdEmpresa, IdPuntoCargoGrupo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ct_punto_cargo_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_info_bajo_demanda(args, IdEmpresa);
             }
             catch (Exception)
             {
