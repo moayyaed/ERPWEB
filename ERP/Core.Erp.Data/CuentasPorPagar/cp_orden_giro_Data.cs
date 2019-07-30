@@ -98,7 +98,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 IdEmpresa_oc = item.IdEmpresa_oc,
                                 IdSucursal_oc = item.IdSucursal_oc,
                                 IdOrdenCompra = item.IdOrdenCompra,
-                                Secuencia_oc = item.Secuencia_oc
+                                Secuencia_oc = item.Secuencia_oc,
                             });
                         }
 
