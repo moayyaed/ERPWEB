@@ -9162,7 +9162,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\Anular.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_deudas.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_deudas_dc.cshtml" />
     <Content Include="Areas\General\Views\Ciudad\Anular.cshtml" />
     <Content Include="Areas\General\Views\Ciudad\Index.cshtml" />
     <Content Include="Areas\General\Views\Ciudad\Modificar.cshtml" />
