@@ -33,6 +33,7 @@ namespace Core.Erp.Info.Contabilidad
         public int? IdSucursal { get; set; }
         public string Su_Descripcion { get; set; }
         public string cc_Descripcion { get; set; }
+        public string nom_punto_cargo { get; set; }
 
     }
 }

@@ -64,7 +64,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         public ActionResult Modificar(int IdEmpresa = 0, int IdPunto_cargo_grupo = 0, int IdPunto_cargo= 0)
         {
-            ct_punto_cargo_Info model = bus_punto_cargo.GetInfo(IdEmpresa, IdPunto_cargo_grupo, IdPunto_cargo);
+            ct_punto_cargo_Info model = bus_punto_cargo.GetInfo(IdEmpresa, IdPunto_cargo);
             if (model == null)
                 return RedirectToAction("Index", new { IdPunto_cargo_grupo = IdPunto_cargo_grupo });
             ViewBag.IdPunto_cargo_grupo = IdPunto_cargo_grupo;
@@ -85,7 +85,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdPunto_cargo_grupo = 0, int IdPunto_cargo=0)
         {
-            ct_punto_cargo_Info model = bus_punto_cargo.GetInfo(IdEmpresa, IdPunto_cargo_grupo, IdPunto_cargo);
+            ct_punto_cargo_Info model = bus_punto_cargo.GetInfo(IdEmpresa, IdPunto_cargo);
             if (model == null)
                 return RedirectToAction("Index", new { IdPunto_cargo_grupo = IdPunto_cargo_grupo });
             ViewBag.IdPunto_cargo_grupo = IdPunto_cargo_grupo;

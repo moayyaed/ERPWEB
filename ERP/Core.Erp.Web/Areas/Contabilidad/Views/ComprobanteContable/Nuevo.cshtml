@@ -65,6 +65,31 @@
         $("#PlantillaModal").modal("hide");
 
     }
+
+    function SetPuntoCargo() {
+        var datos = {
+            IdPuntoCargoGrupo: IdPlantilla,
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetPuntoCargo", "ComprobanteContable", new { Area = "Contabilidad"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridView_comprobante_detalle.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+
+        $("#PlantillaModal").modal("hide");
+
+    }
 </script>
 @using (Html.BeginForm("Nuevo", "ComprobanteContable", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -214,3 +239,5 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+
+

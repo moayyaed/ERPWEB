@@ -50,14 +50,14 @@
         {
             column.FieldName = "pc_Cuenta";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(50);
+            column.Width = Unit.Percentage(25);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCtaCble";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(50);
+            column.Width = Unit.Percentage(25);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -112,20 +112,44 @@
             column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
-        /*
         settings.Columns.Add(column =>
         {
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.FieldName = "dc_para_conciliar";
-            column.Caption = "Se concilia";
-            column.Width = Unit.Percentage(10);
-            column.Visible = false;
-            column.EditorProperties().CheckBox(sp =>
+            column.FieldName = "IdPunto_cargo_grupo";
+            column.Caption = "Grupo punto de cargo";
+            column.Width = Unit.Percentage(15);
+            column.EditorProperties().ComboBox(p =>
             {
 
+                p.Columns.Add("IdPunto_cargo_grupo", "ID").Width = Unit.Percentage(10);
+                p.Columns.Add("nom_punto_cargo_grupo", "Descripción").Width = Unit.Percentage(50);
+                p.ValueField = "IdPunto_cargo_grupo";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_punto_cargo_grupo;
+                p.Width = Unit.Percentage(100);
+                p.ClientSideEvents.SelectedIndexChanged = "OnSelectedGrupoPuntoCargoChanged";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
-        */
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPunto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(15);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbPuntoCargo", DataBinder.Eval(c.DataItem, "IdPunto_cargo"));
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "nom_punto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe").DisplayFormat = "Debe {0:c2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber").DisplayFormat = "Haber {0:c2}";
 
@@ -136,3 +160,12 @@
 
 }
 @grid.Bind(Model.lst_ct_cbtecble_det).GetHtml()
+
+<script>
+    function OnSelectedGrupoPuntoCargoChanged() {
+        IdPunto_cargo.PerformCallback();
+    }
+    function PuntoCargoComboBox_BeginCallback(s, e) {
+        e.customArgs["fx_IdPunto_cargo_grupo"] = GridView_comprobante_detalle.GetEditor("IdPunto_cargo_grupo").GetValue();
+    }
+</script>

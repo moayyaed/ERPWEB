@@ -123,27 +123,6 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdCentroCosto";
-            column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
-            column.Visible = false;
-            column.VisibleIndex = 7;
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.SetEditItemTemplateContent(c =>
-            {
-                Html.RenderPartial("_CmbCentroCosto_NC", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
-            });
-        });
-
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "cc_Descripcion";
-            column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
             column.FieldName = "sc_precioFinal";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
@@ -174,7 +153,27 @@
             column.Width = Unit.Percentage(8);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_NC", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
 
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdCliente'] = IdCliente.GetValue(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Subtotal").DisplayFormat = "{0:n2}";
