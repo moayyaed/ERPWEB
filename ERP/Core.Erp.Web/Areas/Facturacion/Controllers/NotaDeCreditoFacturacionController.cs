@@ -694,7 +694,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;
-            edited_info.cc_Descripcion = info_det.cc_Descripcion;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 edited_info.cc_Descripcion = string.Empty;
             else

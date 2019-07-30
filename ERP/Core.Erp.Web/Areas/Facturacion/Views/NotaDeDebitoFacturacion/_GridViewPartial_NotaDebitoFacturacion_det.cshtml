@@ -123,27 +123,6 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdCentroCosto";
-            column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
-            column.Visible = false;
-            column.VisibleIndex = 7;
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.SetEditItemTemplateContent(c =>
-            {
-                Html.RenderPartial("_CmbCentroCosto_ND", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
-            });
-        });
-
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "cc_Descripcion";
-            column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
             column.FieldName = "sc_precioFinal";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
@@ -172,6 +151,27 @@
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(8);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_ND", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
