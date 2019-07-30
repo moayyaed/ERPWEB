@@ -588,6 +588,73 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
 
+
+        public ActionResult INV_008()
+        {
+
+            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = new DateTime(DateTime.Now.Year, 1, 1),
+                fecha_fin = new DateTime(DateTime.Now.Year, 12, 31)
+            };
+
+            cargar_combos(model);
+            INV_008_Rpt report = new INV_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_IdProducto.Value = model.IdProducto;
+            report.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
+            report.p_IdNumMovi.Value = model.IdNumMovi;
+            report.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult INV_008(cl_filtros_inventario_Info model)
+        {
+            cargar_combos(model);
+            INV_008_Rpt report = new INV_008_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_008");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_IdProducto.Value = model.IdProducto;
+            report.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
+            report.p_IdNumMovi.Value = model.IdNumMovi;
+            report.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.Report = report;
+            return View(model);
+        }
+
         public ActionResult INV_010()
         {
 
