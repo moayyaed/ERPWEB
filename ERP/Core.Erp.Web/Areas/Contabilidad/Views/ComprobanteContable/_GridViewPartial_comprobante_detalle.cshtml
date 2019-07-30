@@ -50,14 +50,14 @@
         {
             column.FieldName = "pc_Cuenta";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(50);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCtaCble";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(50);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -70,7 +70,7 @@
             column.FieldName = "dc_Valor_debe";
             column.Caption = "Debe";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
@@ -83,13 +83,34 @@
             column.FieldName = "dc_Valor_haber";
             column.Caption = "Haber";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_Conta", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         /*
         settings.Columns.Add(column =>

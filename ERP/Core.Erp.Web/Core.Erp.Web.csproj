@@ -10170,6 +10170,7 @@
     <Content Include="Areas\Facturacion\Views\Factura\_CmbCentroCosto_Factura.cshtml" />
     <Content Include="Areas\Facturacion\Views\NotaDeCreditoFacturacion\_CmbCentroCosto_NC.cshtml" />
     <Content Include="Areas\Facturacion\Views\NotaDeDebitoFacturacion\_CmbCentroCosto_ND.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ComprobanteContable\_CmbCentroCosto_Conta.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

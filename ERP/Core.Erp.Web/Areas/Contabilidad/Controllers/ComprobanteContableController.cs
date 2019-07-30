@@ -48,6 +48,24 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
+        #region Metodos ComboBox bajo demanda centro de costo
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+
+        public ActionResult CmbCentroCosto_Conta()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_Conta", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaCC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
 
         #region Index
         public ActionResult Index()
@@ -448,6 +466,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
     {
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string variable = "ct_cbtecble_det_Info";
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         public List<ct_cbtecble_det_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
@@ -477,7 +496,17 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 if (cta != null)
                     info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
             }
-            
+            #region Centro de costo
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                info_det.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                    info_det.cc_Descripcion = cc.cc_Descripcion;
+            }
+            #endregion
+
 
             list.Add(info_det);
         }
@@ -497,6 +526,20 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             if (cta != null)
                 info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
             edited_info.pc_Cuenta = info_det.pc_Cuenta;
+            #region Centro de costo
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
+
         }
 
         public void DeleteRow(int secuencia, decimal IdTransaccionSession)
