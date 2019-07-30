@@ -666,7 +666,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
     }
     public class ct_cbtecble_det_List_re
     {
-        string variable = "ct_cbtecble_det_Info";
+        string variable = "ct_cbtecble_det_RET_Info";
         public List<ct_cbtecble_det_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
