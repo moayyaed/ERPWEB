@@ -133,6 +133,9 @@ namespace Core.Erp.Info.Helps
         public bool mostrar_agrupado { get; set; }
         public string IdUsuario { get; set; }
         public int dIAS { get; set; }
+        public int IdMovi_inven_tipo { get; set; }
+        public decimal IdNumMovi { get; set; }
+        public string IdCentroCosto { get; set; }
         public cl_filtros_inventario_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
