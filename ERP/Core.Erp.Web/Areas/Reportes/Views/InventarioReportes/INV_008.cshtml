@@ -1,4 +1,5 @@
-﻿@model Core.Erp.Info.Helps.cl_filtros_inventario_Info
+﻿@using System.Web.UI.WebControls
+@model Core.Erp.Info.Helps.cl_filtros_inventario_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
     ViewBag.Title = "INV_008";
@@ -7,6 +8,37 @@
         Response.Redirect("~/Account/Login");
     }
 }
+<script type="text/javascript">
+    var textSeparator = ";";
+    function updateText() {
+        var selectedItems = IntArray.GetSelectedItems();
+        checkComboBox.SetText(getSelectedItemsText(selectedItems));
+    }
+    function synchronizeListBoxValues(dropDown, args) {
+        IntArray.UnselectAll();
+        var texts = dropDown.GetText().split(textSeparator);
+        var values = getValuesByTexts(texts);
+        IntArray.SelectValues(values);
+        updateText(); // for remove non-existing texts
+    }
+    function getSelectedItemsText(items) {
+        var texts = [];
+        for (var i = 0; i < items.length; i++)
+            texts.push(items[i].text);
+        return texts.join(textSeparator);
+    }
+    function getValuesByTexts(texts) {
+        var actualValues = [];
+        var item;
+        for (var i = 0; i < texts.length; i++) {
+            item = IntArray.FindItemByText(texts[i]);
+            if (item != null)
+                actualValues.push(item.value);
+        }
+        return actualValues;
+    }
+</script>
+
 @using (Html.BeginForm("INV_008", "InventarioReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
@@ -31,7 +63,7 @@
                 <div class="col-md-12">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdSucursal">Sucursal</label>
+                            <label for="IdSucursal">Sucursal*</label>
                             @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
@@ -45,18 +77,79 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="mostrar_saldos_en_0">@Html.CheckBoxFor(q => q.mostrar_saldos_en_0) Mostrar saldos en 0</label>
+                            <label for="">Fecha inicio*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                                 {
+                                     settings.Name = "fecha_ini";
+                                     settings.Properties.UseMaskBehavior = true;
+                                     settings.Properties.EditFormat = EditFormat.Date;
+                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                                 {
+                                     settings.Name = "fecha_fin";
+                                     settings.Properties.UseMaskBehavior = true;
+                                     settings.Properties.EditFormat = EditFormat.Date;
+                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            @Html.Action("GridViewPartial_producto_lst")
+                            @Html.Partial("_CmbProducto_Inventario", Model)
                             @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdCentroCosto">centro costo</label>
+                            @Html.DropDownListFor(q => q.IdCentroCosto, new SelectList(ViewBag.lst_centro, "IdCentroCosto", "cc_Descripcion"), new { @class = "form-control"})
+                            @Html.ValidationMessageFor(q => q.IdCentroCosto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdMovi_inven_tipo">Tipo movimiento</label>
+                            @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_movi, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdNumMovi">#Movi</label>
+                            @Html.TextBoxFor(q => q.IdNumMovi, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdNumMovi, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
