@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Erp.Data.Facturacion
-{
+{ 
     public class fa_notaCreDeb_Data
     {
         public List<fa_notaCreDeb_consulta_Info> get_list(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin, string CreDeb)

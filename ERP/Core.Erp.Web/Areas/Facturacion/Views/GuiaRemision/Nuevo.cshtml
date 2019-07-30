@@ -58,12 +58,12 @@
 
     /************ PROFORMA **********/
     var selectedIDs_Pf;
-    function OnBeginCallback(s, e) {
+    function OnBeginCallback_Pf(s, e) {
         //Pass all selected keys to GridView callback action
         e.customArgs["selectedIDs_Pf"] = selectedIDs_Pf;
     }
     function OnSelectionChanged_Pf(s, e) {
-        s.GetSelectedFieldValues("secuencial", GetSelectedFieldValuesCallback_Pf);
+        s.GetSelectedFieldValues("SecuencialUnico", GetSelectedFieldValuesCallback_Pf);
     }
     function GetSelectedFieldValuesCallback_Pf(values) {
         //Capture all selected keys
@@ -74,7 +74,6 @@
         var proforma = $("#IdProforma").val()
 
         if (proforma != null && proforma != 0 && proforma != "") {
-
             if (IdCliente.GetValue() > 0) {
                 var datos = {
                     IdSucursal: $("#IdSucursal").val(),
@@ -124,7 +123,7 @@
                     error: function (error) {
                     }
                 });
-                GridView_PGuia_det.PerformCallback();
+                GridViewPartial_PGuia_det.PerformCallback();
                 $("#ProformasModal").modal("show");
             }
         }
@@ -153,8 +152,8 @@
             }
         });
         selectedIDs_Pf = "";
-        GridView_PGuia_det.PerformCallback();
-        GridView_PGuia_det.UnselectRows();
+        GridViewPartial_PGuia_det.PerformCallback();
+        GridViewPartial_PGuia_det.UnselectRows();
         GridViewPartial_guias_remision_det.PerformCallback();
         $("#ProformasModal").modal("hide");
     }
@@ -233,6 +232,21 @@
                         <label for="vt_NumFactura"># Documento*</label>
                         @Html.TextBoxFor(q => q.NumGuia_Preimpresa, new { @class = "form-control", @id = "NumGuia_Preimpresa" })
                         @Html.ValidationMessageFor(q => q.NumGuia_Preimpresa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="IdProforma">       </label>
+                        @Html.TextBoxFor(q => q.IdProforma, new { @class = "form-control", @id = "IdProforma", @placeholder = "# Proforma" })
+                        @Html.ValidationMessageFor(q => q.IdProforma, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="btn_buscar">                    </label>
+                        <button type="button" class="btn btn-primary form-control" id="btn_buscar" onclick="MostrarModalProformas();" title="Buscar proformas">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -327,8 +341,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="IdClienteContacto">Motivo de traslado</label>
                         @Html.DropDownListFor(q => q.IdMotivoTraslado, new SelectList(ViewBag.lst_tipo_traslado, "IdMotivoTraslado", "tr_Descripcion"), new { @class = "form-control", @id = "IdMotivoTraslado" })
@@ -420,6 +433,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="ProformasModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Proformas pendientes</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_PGuia_det")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddProformas();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>

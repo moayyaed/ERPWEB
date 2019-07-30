@@ -632,6 +632,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             info_det.pd_total = info_det.pd_subtotal + info_det.pd_iva;
 
             #region Centro de costo
+            info_det.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 info_det.cc_Descripcion = string.Empty;
             else
@@ -666,6 +667,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.pd_total = edited_info.pd_subtotal + edited_info.pd_iva;
 
             #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 edited_info.cc_Descripcion = string.Empty;
             else

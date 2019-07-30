@@ -612,7 +612,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 var lst_det_guia = detalle_info.get_list(IdTransaccionSession);
                 foreach (var item in array)
                 {
-                    var pf = lst.Where(q => q.Secuencia_pf == Convert.ToInt32(item)).FirstOrDefault();
+                    var pf = lst.Where(q => q.SecuencialUnico == item).FirstOrDefault();
                     if (pf != null)
                         if (lst_det_guia.Where(q => q.IdEmpresa == pf.IdEmpresa_pf && q.IdSucursal_pf == pf.IdSucursal_pf && q.IdProforma == pf.IdProforma && q.Secuencia_pf == pf.Secuencia_pf).Count() == 0)
                         {
@@ -627,7 +627,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             if (Session["fa_guia_remision_det_Info"] == null)
             {
-                List<fa_factura_det_Info> list = new List<fa_factura_det_Info>();
+                List<fa_guia_remision_det_Info> list = new List<fa_guia_remision_det_Info>();
 
                 Session["fa_guia_remision_det_Info"] = list;
             }
@@ -642,6 +642,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     }
     public class fa_guia_remision_det_Info_lst
     {
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         string Variable = "fa_guia_remision_det_Info";
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
 
@@ -676,6 +677,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             info_det.gi_Iva = Math.Round(info_det.gi_Subtotal * (info_det.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
             info_det.gi_Total = Math.Round(info_det.gi_Subtotal + info_det.gi_Iva, 2, MidpointRounding.AwayFromZero);
 
+            #region Centro de costo
+            info_det.IdCentroCosto = info_det.IdCentroCosto;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                info_det.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                    info_det.cc_Descripcion = cc.cc_Descripcion;
+            }
+            #endregion
+
             list.Add(info_det);
         }
 
@@ -701,6 +714,21 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_Iva = Math.Round(edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Total = Math.Round(edited_info.gi_Subtotal + edited_info.gi_Iva, 2, MidpointRounding.AwayFromZero);
 
+            #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
+            edited_info.cc_Descripcion = info_det.cc_Descripcion;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

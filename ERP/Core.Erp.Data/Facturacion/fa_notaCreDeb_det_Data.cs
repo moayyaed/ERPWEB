@@ -49,7 +49,8 @@ namespace Core.Erp.Data.Facturacion
                                  nom_presentacion = q.nom_presentacion,
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  lote_num_lote = q.lote_num_lote,
-                                 sc_cantidad_factura=q.sc_cantidad_factura
+                                 sc_cantidad_factura=q.sc_cantidad_factura,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -101,7 +102,8 @@ namespace Core.Erp.Data.Facturacion
                                      nom_presentacion = q.nom_presentacion,
                                      lote_num_lote = q.lote_num_lote,
                                      lote_fecha_vcto = q.lote_fecha_vcto,
-                                     sc_cantidad_factura=q.vt_cantidad
+                                     sc_cantidad_factura=q.vt_cantidad,
+                                     cc_Descripcion = q.cc_Descripcion
                                  }).ToList();
                     }else
                         Lista = (from q in Context.vwfa_notaCreDeb_det
@@ -131,7 +133,8 @@ namespace Core.Erp.Data.Facturacion
                                      nom_presentacion = q.nom_presentacion,
                                      lote_num_lote = q.lote_num_lote,
                                      lote_fecha_vcto = q.lote_fecha_vcto,
-                                     sc_cantidad_factura=q.sc_cantidad_factura
+                                     sc_cantidad_factura=q.sc_cantidad_factura,
+                                     cc_Descripcion = q.cc_Descripcion
                                  }).ToList();
 
                 }

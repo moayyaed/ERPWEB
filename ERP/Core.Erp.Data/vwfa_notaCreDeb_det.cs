@@ -40,5 +40,6 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> lote_fecha_vcto { get; set; }
         public string lote_num_lote { get; set; }
         public Nullable<double> sc_cantidad_factura { get; set; }
+        public string cc_Descripcion { get; set; }
     }
 }

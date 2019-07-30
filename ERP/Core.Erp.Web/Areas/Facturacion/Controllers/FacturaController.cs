@@ -4,6 +4,7 @@ using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
@@ -59,6 +60,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_NivelDescuento_Bus bus_nivelDescuento = new fa_NivelDescuento_Bus();
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -127,6 +129,23 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public in_Producto_Info get_info_bajo_demandaProducto(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+        #region Metodos ComboBox bajo demanda centro de costo
+
+        public ActionResult CmbCentroCosto_Factura()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_Factura", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaCC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
         #region Metodos
@@ -1078,6 +1097,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         string variable = "fa_factura_det_Info";
         public List<fa_factura_det_Info> get_list(decimal IdTransaccionSession)
         {
@@ -1108,7 +1128,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 info_det.vt_por_iva = impuesto.porcentaje;
             info_det.vt_iva = info_det.vt_Subtotal * (info_det.vt_por_iva / 100);
             info_det.vt_total = info_det.vt_Subtotal + info_det.vt_iva;
-            
+
+            #region Centro de costo
+            info_det.IdCentroCosto = info_det.IdCentroCosto;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                info_det.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                    info_det.cc_Descripcion = cc.cc_Descripcion;
+            }
+            #endregion
             list.Add(info_det);
         }
 
@@ -1133,6 +1164,22 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             edited_info.vt_iva = edited_info.vt_Subtotal * (edited_info.vt_por_iva / 100);
             edited_info.vt_total = edited_info.vt_Subtotal + edited_info.vt_iva;
+
+            #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
+            edited_info.cc_Descripcion = info_det.cc_Descripcion;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

@@ -2,8 +2,8 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridView_PGuia_det";
-        settings.CallbackRouteValues = new { Controller = "GuiaRemision", Action = "GridView_PGuia_det", Area = "Facturacion"};
+        settings.Name = "GridViewPartial_PGuia_det";
+        settings.CallbackRouteValues = new { Controller = "GuiaRemision", Action = "GridViewPartial_PGuia_det", Area = "Facturacion"};
         settings.KeyFieldName = "SecuencialUnico";
 
         settings.Width = Unit.Percentage(100);
@@ -96,7 +96,7 @@
             column.Width = Unit.Percentage(8);
         });
 
-        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_Pf";
     });
 }
 @grid.Bind(Model).GetHtml()

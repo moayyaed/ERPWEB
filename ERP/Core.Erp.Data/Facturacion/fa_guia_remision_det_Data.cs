@@ -38,7 +38,8 @@ namespace Core.Erp.Data.Facturacion
                                  IdCod_Impuesto = q.IdCod_Impuesto,
                                  gi_por_iva = q.gi_por_iva,
                                  gi_Iva = q.gi_Iva,
-                                 gi_Total = q.gi_Total
+                                 gi_Total = q.gi_Total,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 //Lista.ForEach(V =>
@@ -86,22 +87,24 @@ namespace Core.Erp.Data.Facturacion
                              && q.IdCliente == IdCliente
                              select new fa_guia_remision_det_Info
                              {
-                                 IdProducto = q.IdProducto,
-                                 gi_cantidad = q.gi_cantidad,
-                                 gi_descuentoUni = q.gi_descuentoUni,
-                                 gi_PrecioFinal = q.gi_PrecioFinal,
-                                 gi_precio = q.gi_precio,
-                                 gi_Subtotal = q.gi_Subtotal,
-                                 gi_Iva = q.gi_Iva,
-                                 gi_por_desc = q.gi_por_desc,
-                                 gi_por_iva = q.gi_por_iva,
-                                 gi_Total = q.gi_Total,
-                                 IdCod_Impuesto = q.IdCod_Impuesto,
-                                 IdEmpresa_pf = q.IdEmpresa,
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
                                  IdProforma = q.IdProforma,
-                                 IdSucursal_pf = q.IdSucursal,
                                  Secuencia_pf = q.Secuencia,
-                                 pr_descripcion = q.pr_descripcion
+                                 IdProducto = q.IdProducto,
+                                 gi_cantidad = q.pd_cantidad,
+                                 pr_descripcion = q.pr_descripcion,
+                                 gi_precio = q.pd_precio,
+                                 gi_por_desc = q.pd_por_descuento_uni,
+                                 gi_descuentoUni = q.pd_descuento_uni,
+                                 gi_PrecioFinal = q.pd_precio_final,
+                                 gi_Subtotal = q.pd_subtotal,
+                                 IdCod_Impuesto = q.IdCod_Impuesto,
+                                 gi_por_iva = q.pd_por_iva,
+                                 gi_Iva = q.pd_iva,
+                                 gi_Total = q.pd_total,
+                                 IdEmpresa_pf = q.IdEmpresa,
+                                 IdSucursal_pf = q.IdSucursal
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -110,7 +113,7 @@ namespace Core.Erp.Data.Facturacion
                 });
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -131,22 +134,25 @@ namespace Core.Erp.Data.Facturacion
                              && q.IdProforma == IdProforma
                              select new fa_guia_remision_det_Info
                              {
-                                 IdProducto = q.IdProducto,
-                                 gi_cantidad = q.gi_cantidad,
-                                 gi_descuentoUni = q.gi_descuentoUni,
-                                 gi_PrecioFinal = q.gi_PrecioFinal,
-                                 gi_precio = q.gi_precio,
-                                 gi_Subtotal = q.gi_Subtotal,
-                                 gi_Iva = q.gi_Iva,
-                                 gi_por_desc = q.gi_por_desc,
-                                 gi_por_iva = q.gi_por_iva,
-                                 gi_Total = q.gi_Total,
-                                 IdCod_Impuesto = q.IdCod_Impuesto,
-                                 IdEmpresa_pf = q.IdEmpresa,
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
                                  IdProforma = q.IdProforma,
-                                 IdSucursal_pf = q.IdSucursal,
                                  Secuencia_pf = q.Secuencia,
-                                 pr_descripcion = q.pr_descripcion
+                                 IdProducto = q.IdProducto,
+                                 gi_cantidad = q.pd_cantidad,
+                                 pr_descripcion = q.pr_descripcion,
+                                 gi_precio = q.pd_precio,
+                                 gi_por_desc = q.pd_por_descuento_uni,
+                                 gi_descuentoUni = q.pd_descuento_uni,
+                                 gi_PrecioFinal = q.pd_precio_final,
+                                 gi_Subtotal = q.pd_subtotal,
+                                 IdCod_Impuesto = q.IdCod_Impuesto,
+                                 gi_por_iva = q.pd_por_iva,
+                                 gi_Iva = q.pd_iva,
+                                 gi_Total = q.pd_total,
+                                 IdEmpresa_pf = q.IdEmpresa,
+                                 IdSucursal_pf = q.IdSucursal
+
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -155,7 +161,7 @@ namespace Core.Erp.Data.Facturacion
                 });
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

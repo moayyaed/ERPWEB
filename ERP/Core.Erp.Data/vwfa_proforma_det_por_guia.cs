@@ -16,19 +16,20 @@ namespace Core.Erp.Data
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
-        public Nullable<decimal> IdProforma { get; set; }
+        public decimal IdProforma { get; set; }
         public int Secuencia { get; set; }
         public decimal IdProducto { get; set; }
-        public double gi_cantidad { get; set; }
-        public double gi_precio { get; set; }
-        public double gi_por_desc { get; set; }
-        public double gi_descuentoUni { get; set; }
-        public double gi_PrecioFinal { get; set; }
+        public double pd_cantidad { get; set; }
+        public double pd_precio { get; set; }
+        public double pd_por_descuento_uni { get; set; }
+        public double pd_descuento_uni { get; set; }
+        public double pd_precio_final { get; set; }
+        public double pd_subtotal { get; set; }
         public string IdCod_Impuesto { get; set; }
-        public double gi_por_iva { get; set; }
-        public double gi_Iva { get; set; }
-        public double gi_Total { get; set; }
-        public double gi_Subtotal { get; set; }
+        public double pd_por_iva { get; set; }
+        public double pd_iva { get; set; }
+        public double pd_total { get; set; }
+        public bool anulado { get; set; }
         public string pr_descripcion { get; set; }
         public string nom_presentacion { get; set; }
         public string lote_num_lote { get; set; }

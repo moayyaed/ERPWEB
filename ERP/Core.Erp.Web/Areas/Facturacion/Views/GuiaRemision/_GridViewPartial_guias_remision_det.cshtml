@@ -74,7 +74,7 @@
             column.FieldName = "gi_cantidad";
             column.Caption = "Cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(q =>
@@ -88,7 +88,7 @@
             column.FieldName = "gi_precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(q =>
@@ -102,7 +102,7 @@
             column.FieldName = "gi_por_desc";
             column.Caption = " % Descuento";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(q =>
@@ -115,7 +115,7 @@
         {
             column.FieldName = "IdCod_Impuesto";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditorProperties().ComboBox(p =>
             {
@@ -132,7 +132,7 @@
             column.FieldName = "gi_PrecioFinal";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().SpinEdit(q =>
@@ -146,7 +146,7 @@
             column.FieldName = "gi_Subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().SpinEdit(q =>
@@ -160,7 +160,7 @@
             column.FieldName = "gi_Iva";
             column.Caption = "IVA";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().SpinEdit(q =>
@@ -174,7 +174,7 @@
             column.FieldName = "gi_Total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().SpinEdit(q =>
@@ -201,7 +201,7 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add("gi_detallexItems", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(10);

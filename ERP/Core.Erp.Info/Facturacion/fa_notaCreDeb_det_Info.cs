@@ -40,7 +40,7 @@ namespace Core.Erp.Info.Facturacion
         public string nom_presentacion { get; set; }
 
         public Nullable<double> sc_cantidad_factura { get; set; }
-
+        public string cc_Descripcion { get; set; }
         #endregion
 
     }
