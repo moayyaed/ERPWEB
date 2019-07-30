@@ -358,6 +358,7 @@
     <Compile Include="Reportes\Importacion\IMP_002_Bus.cs" />
     <Compile Include="Reportes\Importacion\IMP_003_Bus.cs" />
     <Compile Include="Reportes\Inventario\INV_004_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_008_Bus.cs" />
     <Compile Include="Reportes\Inventario\INV_011_Bus.cs" />
     <Compile Include="Reportes\Inventario\INV_005_Bus.cs" />
     <Compile Include="Reportes\Inventario\INV_007_Bus.cs" />

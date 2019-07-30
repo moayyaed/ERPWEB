@@ -1284,6 +1284,7 @@
     <Compile Include="Reportes\Importacion\IMP_003_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_001_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_004_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_008_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_011_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_002_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_003_Data.cs" />
@@ -2361,6 +2362,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWINV_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_008.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWINV_011.cs">
