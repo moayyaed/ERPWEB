@@ -78,14 +78,14 @@ namespace Core.Erp.Data
         public DbSet<vwfa_proforma> vwfa_proforma { get; set; }
         public DbSet<fa_proforma> fa_proforma { get; set; }
         public DbSet<fa_factura_det> fa_factura_det { get; set; }
-        public DbSet<vwfa_factura_det> vwfa_factura_det { get; set; }
-        public DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
-        public DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
         public DbSet<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public DbSet<fa_proforma_det> fa_proforma_det { get; set; }
         public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
-        public DbSet<vwfa_proforma_det_por_guia> vwfa_proforma_det_por_guia { get; set; }
         public DbSet<vwfa_proforma_det> vwfa_proforma_det { get; set; }
+        public DbSet<vwfa_proforma_det_por_guia> vwfa_proforma_det_por_guia { get; set; }
+        public DbSet<vwfa_factura_det> vwfa_factura_det { get; set; }
+        public DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
+        public DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

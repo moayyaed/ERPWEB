@@ -51,8 +51,8 @@ namespace Core.Erp.Data.Facturacion
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  CantidadAnterior = q.vt_cantidad,
                                  tp_manejaInven = q.tp_ManejaInven,
-                                 se_distribuye = q.se_distribuye
-                                
+                                 se_distribuye = q.se_distribuye,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 Lista.ForEach(V =>

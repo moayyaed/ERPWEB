@@ -43,6 +43,7 @@ namespace Core.Erp.Info.Facturacion
         public string tp_manejaInven { get; set; }
         public double CantidadAnterior { get; set; }
         public bool? se_distribuye { get; set; }
+        public string cc_Descripcion { get; set; }
         #endregion
 
     }

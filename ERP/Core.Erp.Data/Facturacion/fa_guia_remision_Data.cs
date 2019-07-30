@@ -197,7 +197,12 @@ namespace Core.Erp.Data.Facturacion
                             IdCod_Impuesto = item.IdCod_Impuesto,
                             gi_por_iva = item.gi_por_iva,
                             gi_Iva = item.gi_Iva,
-                            gi_Total = item.gi_Total
+                            gi_Total = item.gi_Total,
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdEmpresa_pf = item.IdEmpresa_pf,
+                            IdSucursal_pf = item.IdSucursal_pf,
+                            IdProforma = item.IdProforma,
+                            Secuencia_pf = item.Secuencia_pf
                         });
 
                         if(item.IdCbteVta != null && item.IdCbteVta !=0)
@@ -329,7 +334,12 @@ namespace Core.Erp.Data.Facturacion
                             IdCod_Impuesto = item.IdCod_Impuesto,
                             gi_por_iva = item.gi_por_iva,
                             gi_Iva = item.gi_Iva,
-                            gi_Total = item.gi_Total
+                            gi_Total = item.gi_Total,
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdEmpresa_pf = item.IdEmpresa_pf,
+                            IdSucursal_pf = item.IdSucursal_pf,
+                            IdProforma = item.IdProforma,
+                            Secuencia_pf = item.Secuencia_pf
                         });
 
                         if (item.IdCbteVta != null && item.IdCbteVta != 0)

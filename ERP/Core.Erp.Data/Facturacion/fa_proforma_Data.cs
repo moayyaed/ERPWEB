@@ -163,6 +163,7 @@ namespace Core.Erp.Data.Facturacion
                             pd_iva = item.pd_iva,
                             anulado = item.anulado,
                             pd_total = item.pd_total,
+                            IdCentroCosto = item.IdCentroCosto
                         });
                     }
 
@@ -225,6 +226,7 @@ namespace Core.Erp.Data.Facturacion
                             pd_iva = item.pd_iva,
                             anulado = item.anulado,
                             pd_total = item.pd_total,
+                            IdCentroCosto = item.IdCentroCosto
                         });
                     }
 

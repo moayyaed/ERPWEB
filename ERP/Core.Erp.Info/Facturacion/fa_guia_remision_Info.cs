@@ -73,6 +73,7 @@ namespace Core.Erp.Info.Facturacion
         public string pe_nombreCompleto { get; set; }
         public List<fa_guia_remision_det_Info> lst_detalle { get; set; }
         public List<fa_factura_x_fa_guia_remision_Info> lst_detalle_x_factura { get; set; }
+        public decimal IdProforma { get; set; }
         #endregion
 
 
