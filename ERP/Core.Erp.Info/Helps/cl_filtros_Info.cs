@@ -128,6 +128,8 @@ namespace Core.Erp.Info.Helps
         public bool mostrar_detallado { get; set; }
         public decimal? IdProductoPadre { get; set; }
         public bool mostrarSinMovimiento { get; set; }
+        public bool considerarSinAprobar { get; set; }
+        
         public bool no_mostrar_valores_en_0 { get; set; }
         public bool mostrar_saldos_en_0 { get; set; }
         public bool mostrar_agrupado { get; set; }

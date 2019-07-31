@@ -10616,6 +10616,9 @@
     <EmbeddedResource Include="Reportes\Inventario\INV_008_Rpt.resx">
       <DependentUpon>INV_008_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_009_Rpt.resx">
+      <DependentUpon>INV_009_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_011_Rpt.resx">
       <DependentUpon>INV_011_Rpt.cs</DependentUpon>
     </EmbeddedResource>

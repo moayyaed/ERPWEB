@@ -680,6 +680,81 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
 
+        public ActionResult INV_009()
+        {
+
+            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdProducto = 0,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCategoria = "",
+                IdLinea = 0,
+                IdGrupo = 0,
+                IdSubGrupo = 0
+            };
+
+            cargar_combos(model);
+            INV_009_Rpt report = new INV_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubgrupo.Value = model.IdSubGrupo;
+            report.p_mostrarSinMovimiento.Value = model.mostrarSinMovimiento;
+            report.p_considerarSinAprobar.Value = model.considerarSinAprobar;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult INV_009(cl_filtros_inventario_Info model)
+        {
+            INV_009_Rpt report = new INV_009_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_009");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdUsuario.Value = model.IdUsuario;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubgrupo.Value = model.IdSubGrupo;
+            report.p_mostrarSinMovimiento.Value = model.mostrarSinMovimiento;
+            report.p_considerarSinAprobar.Value = model.considerarSinAprobar;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model);
+
+            ViewBag.Report = report;
+            return View(model);
+        }
         public ActionResult INV_010()
         {
 
