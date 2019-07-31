@@ -136,6 +136,8 @@ namespace Core.Erp.Info.Helps
         public int IdMovi_inven_tipo { get; set; }
         public decimal IdNumMovi { get; set; }
         public string IdCentroCosto { get; set; }
+        public int[] IntArray { get; set; }
+
         public cl_filtros_inventario_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);

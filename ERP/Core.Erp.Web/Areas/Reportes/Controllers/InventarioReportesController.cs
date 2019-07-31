@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Bus.General;
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
@@ -11,6 +12,7 @@ using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
 {
@@ -125,6 +127,22 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
 
         #endregion
+        private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
+        {
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
+            if (intArray == null || intArray.Count() == 0)
+            {
+                lst_sucursal.Where(q => q.IdSucursal == Convert.ToInt32(SessionFixed.IdSucursal)).FirstOrDefault().Seleccionado = true;
+            }
+            else
+                foreach (var item in lst_sucursal)
+                {
+                    item.Seleccionado = (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
+                }
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
+
         public ActionResult INV_001(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
         {
             INV_001_Rpt model = new INV_001_Rpt();
@@ -324,6 +342,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
             var lst_bodega = bus_bodega.get_list(IdEmpresa, IdSucursal, false);
             ViewBag.lst_bodega = lst_bodega;
+
+            ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+            var lst_centro = bus_cc.get_list(IdEmpresa, false, true);
+            ViewBag.lst_centro = lst_centro;
+
+            in_movi_inven_tipo_Bus bus_movi = new in_movi_inven_tipo_Bus();
+            var lst_movi = bus_movi.get_list(IdEmpresa, "", false);
+            ViewBag.lst_movi = lst_movi;
+
+            in_Motivo_Inven_Bus bus_motivo = new in_Motivo_Inven_Bus();
+            var lst_motivo = bus_motivo.get_list(IdEmpresa, false);
+            ViewBag.lst_motivo = lst_motivo;
 
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             var lst_producto = bus_producto.get_list(IdEmpresa, false);
@@ -600,6 +630,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 fecha_fin = new DateTime(DateTime.Now.Year, 12, 31)
             };
 
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
             INV_008_Rpt report = new INV_008_Rpt();
             #region Cargo diseño desde base
@@ -629,6 +660,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         [HttpPost]
         public ActionResult INV_008(cl_filtros_inventario_Info model)
         {
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
             INV_008_Rpt report = new INV_008_Rpt();
             #region Cargo diseño desde base
