@@ -9,29 +9,38 @@ namespace Core.Erp.Data.Reportes.Inventario
 {
     public class INV_008_Data
     {
-        public List<INV_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, int IdMovi_inven_tipo, decimal IdNumMovi)
+        public List<INV_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, int IdMovi_inven_tipo)
         {
             try
             {
+                int IdProductoIni = IdProducto;
+                int IdProductoFin = IdProducto == 0 ? 999999999 : IdProducto;
+
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
-                int IdProductoIni = IdProducto;
-                int IdProductoFin = IdProducto == 0 ? 999999999 : IdProducto;
+                int IdBodegaIni = IdBodega;
+                int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
+
+                int IdMovi_inven_tipoIni = IdMovi_inven_tipo;
+                int IdMovi_inven_tipoFin = IdMovi_inven_tipo == 0 ? 9999 : IdMovi_inven_tipo;
+
                 List<INV_008_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
+
                     Lista = Context.VWINV_008.Where(q=>q.IdEmpresa == IdEmpresa
                     && IdSucursalIni <= q.IdSucursal
                     && q.IdSucursal <= IdSucursalFin
-                    && q.IdBodega == IdBodega
+                    && IdBodegaIni <= q.IdBodega
+                    && q.IdBodega <= IdBodegaFin
                     && IdProductoIni <= q.IdProducto
                     && q.IdProducto <= IdProductoFin
                     && fecha_ini <= q.cm_fecha
                     && q.cm_fecha <= fecha_fin
-                    && q.IdCentroCosto == (string.IsNullOrEmpty(IdCentroCosto) ? q.IdCentroCosto : IdCentroCosto)
-                    && q.IdMovi_inven_tipo == IdMovi_inven_tipo
-                    && q.IdNumMovi == IdNumMovi
+                    && q.IdCentroCosto.Contains(IdCentroCosto)
+                    && IdMovi_inven_tipoIni <= q.IdMovi_inven_tipo
+                    && q.IdMovi_inven_tipo <= IdMovi_inven_tipoFin
                     ).Select(q => new INV_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,

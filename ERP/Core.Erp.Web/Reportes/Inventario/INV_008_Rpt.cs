@@ -14,10 +14,7 @@ namespace Core.Erp.Web.Reportes.Inventario
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
-        public int[] IntArray { get; set; }
 
-        List<INV_008_Info> lst_rpt = new List<INV_008_Info>();
-        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         public INV_008_Rpt()
         {
             InitializeComponent();
@@ -36,15 +33,9 @@ namespace Core.Erp.Web.Reportes.Inventario
             DateTime fecha_fin = string.IsNullOrEmpty(p_fecha_fin.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             string IdCentroCosto = string.IsNullOrEmpty(p_IdCentroCosto.Value.ToString()) ? "" : Convert.ToString(p_IdCentroCosto.Value);
             int IdMovi_inven_tipo = string.IsNullOrEmpty(p_IdMovi_Inven_Tipo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdMovi_Inven_Tipo.Value);
-            decimal IdNumMovi = string.IsNullOrEmpty(p_IdNumMovi.Value.ToString()) ? 0 : Convert.ToInt32(p_IdNumMovi.Value);
             INV_008_Bus bus_rpt = new INV_008_Bus();
-            string Sucursal = "";
 
-            tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
-            Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, "");
-
-            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, IdProducto, fecha_ini, fecha_fin, IdCentroCosto, IdMovi_inven_tipo, IdNumMovi));
-            lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
+            List<INV_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, IdProducto, fecha_ini, fecha_fin, IdCentroCosto, IdMovi_inven_tipo);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

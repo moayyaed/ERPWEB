@@ -350,10 +350,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             in_movi_inven_tipo_Bus bus_movi = new in_movi_inven_tipo_Bus();
             var lst_movi = bus_movi.get_list(IdEmpresa, "", false);
             ViewBag.lst_movi = lst_movi;
-
-            in_Motivo_Inven_Bus bus_motivo = new in_Motivo_Inven_Bus();
-            var lst_motivo = bus_motivo.get_list(IdEmpresa, false);
-            ViewBag.lst_motivo = lst_motivo;
+            
 
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             var lst_producto = bus_producto.get_list(IdEmpresa, false);
@@ -630,7 +627,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 fecha_fin = new DateTime(DateTime.Now.Year, 12, 31)
             };
 
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
             INV_008_Rpt report = new INV_008_Rpt();
             #region Cargo diseño desde base
@@ -647,7 +643,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdBodega.Value = model.IdBodega;
             report.p_IdProducto.Value = model.IdProducto;
             report.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
-            report.p_IdNumMovi.Value = model.IdNumMovi;
             report.p_IdCentroCosto.Value = model.IdCentroCosto;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
@@ -660,7 +655,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         [HttpPost]
         public ActionResult INV_008(cl_filtros_inventario_Info model)
         {
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
             INV_008_Rpt report = new INV_008_Rpt();
             #region Cargo diseño desde base
@@ -677,7 +671,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdBodega.Value = model.IdBodega;
             report.p_IdProducto.Value = model.IdProducto;
             report.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
-            report.p_IdNumMovi.Value = model.IdNumMovi;
             report.p_IdCentroCosto.Value = model.IdCentroCosto;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;

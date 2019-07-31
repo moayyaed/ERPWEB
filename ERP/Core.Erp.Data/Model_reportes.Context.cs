@@ -123,6 +123,7 @@ namespace Core.Erp.Data
         public DbSet<VWCXP_012> VWCXP_012 { get; set; }
         public DbSet<VWFAC_006> VWFAC_006 { get; set; }
         public DbSet<VWINV_008> VWINV_008 { get; set; }
+        public DbSet<VWINV_012> VWINV_012 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
@@ -1520,6 +1521,83 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPFAC_019_Result>("SPFAC_019", idEmpresaParameter, idClienteIniParameter, idClienteFinParameter, idVendedorIniParameter, idVendedorFinParameter, fechaCorteParameter, mostrarSoloVencidoParameter, mostrarSaldo0Parameter, idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<SPINV_009_Result> SPINV_009(Nullable<int> idEmpresa, string idUsuario, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<int> idBodegaIni, Nullable<int> idBodegaFin, Nullable<int> idCategoriaIni, Nullable<int> idCategoriaFin, Nullable<int> idLineaIni, Nullable<int> idLineaFin, Nullable<int> idGrupoIni, Nullable<int> idGrupoFin, Nullable<int> idSubGrupoIni, Nullable<int> idSubGrupoFin, Nullable<bool> considerarSinAprobar, Nullable<bool> mostrarSinMovimiento, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            var idBodegaIniParameter = idBodegaIni.HasValue ?
+                new ObjectParameter("IdBodegaIni", idBodegaIni) :
+                new ObjectParameter("IdBodegaIni", typeof(int));
+    
+            var idBodegaFinParameter = idBodegaFin.HasValue ?
+                new ObjectParameter("IdBodegaFin", idBodegaFin) :
+                new ObjectParameter("IdBodegaFin", typeof(int));
+    
+            var idCategoriaIniParameter = idCategoriaIni.HasValue ?
+                new ObjectParameter("IdCategoriaIni", idCategoriaIni) :
+                new ObjectParameter("IdCategoriaIni", typeof(int));
+    
+            var idCategoriaFinParameter = idCategoriaFin.HasValue ?
+                new ObjectParameter("IdCategoriaFin", idCategoriaFin) :
+                new ObjectParameter("IdCategoriaFin", typeof(int));
+    
+            var idLineaIniParameter = idLineaIni.HasValue ?
+                new ObjectParameter("IdLineaIni", idLineaIni) :
+                new ObjectParameter("IdLineaIni", typeof(int));
+    
+            var idLineaFinParameter = idLineaFin.HasValue ?
+                new ObjectParameter("IdLineaFin", idLineaFin) :
+                new ObjectParameter("IdLineaFin", typeof(int));
+    
+            var idGrupoIniParameter = idGrupoIni.HasValue ?
+                new ObjectParameter("IdGrupoIni", idGrupoIni) :
+                new ObjectParameter("IdGrupoIni", typeof(int));
+    
+            var idGrupoFinParameter = idGrupoFin.HasValue ?
+                new ObjectParameter("IdGrupoFin", idGrupoFin) :
+                new ObjectParameter("IdGrupoFin", typeof(int));
+    
+            var idSubGrupoIniParameter = idSubGrupoIni.HasValue ?
+                new ObjectParameter("IdSubGrupoIni", idSubGrupoIni) :
+                new ObjectParameter("IdSubGrupoIni", typeof(int));
+    
+            var idSubGrupoFinParameter = idSubGrupoFin.HasValue ?
+                new ObjectParameter("IdSubGrupoFin", idSubGrupoFin) :
+                new ObjectParameter("IdSubGrupoFin", typeof(int));
+    
+            var considerarSinAprobarParameter = considerarSinAprobar.HasValue ?
+                new ObjectParameter("ConsiderarSinAprobar", considerarSinAprobar) :
+                new ObjectParameter("ConsiderarSinAprobar", typeof(bool));
+    
+            var mostrarSinMovimientoParameter = mostrarSinMovimiento.HasValue ?
+                new ObjectParameter("MostrarSinMovimiento", mostrarSinMovimiento) :
+                new ObjectParameter("MostrarSinMovimiento", typeof(bool));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_009_Result>("SPINV_009", idEmpresaParameter, idUsuarioParameter, idSucursalIniParameter, idSucursalFinParameter, idBodegaIniParameter, idBodegaFinParameter, idCategoriaIniParameter, idCategoriaFinParameter, idLineaIniParameter, idLineaFinParameter, idGrupoIniParameter, idGrupoFinParameter, idSubGrupoIniParameter, idSubGrupoFinParameter, considerarSinAprobarParameter, mostrarSinMovimientoParameter, fechaIniParameter, fechaFinParameter);
         }
     }
 }
