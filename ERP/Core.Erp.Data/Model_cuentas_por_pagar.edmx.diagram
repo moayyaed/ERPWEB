@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_pais_sri" Width="1.5" PointX="8.25" PointY="31" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_retencion_det" Width="1.5" PointX="15" PointY="31.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_retencion_x_ct_cbtecble" Width="1.5" PointX="15" PointY="47.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_TipoDocumento" Width="1.5" PointX="9.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_codigo_SRI" Width="1.5" PointX="11.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_proveedor_consulta" Width="1.5" PointX="17.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_codigo_SRI_cp_codigo_SRI_tipo" ManuallyRouted="false" />
@@ -94,6 +93,7 @@
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetCXP" Width="1.5" PointX="24.375" PointY="6.75" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_TipoDocumento" Width="1.5" PointX="10.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -25,9 +25,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Address.CodSRI = Info.CodSRI;
                     Address.Estado = "A";
                     Address.IdUsuario = Info.IdUsuario;
-                    Address.Fecha_Transac = Info.Fecha_Transac;
-                    Address.nom_pc = Info.nom_pc;
-                    Address.ip = Info.ip;
+                    Address.Fecha_Transac = DateTime.Now;
                     Address.Codigo_Secuenciales_Transaccion = Info.Codigo_Secuenciales_Transaccion;
                     Address.Sustento_Tributario = Info.Sustento_Tributario;
                     Context.cp_TipoDocumento.Add(Address);
@@ -150,8 +148,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         contact.CodSRI = info.CodSRI;
                         contact.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         contact.Fecha_UltMod = info.Fecha_UltMod;
-                        contact.nom_pc = info.nom_pc;
-                        contact.ip = info.ip;
                         contact.GeneraRetencion = info.GeneraRetencion;
                         contact.Codigo_Secuenciales_Transaccion = info.Codigo_Secuenciales_Transaccion;
                         contact.Sustento_Tributario = info.Sustento_Tributario;
@@ -181,9 +177,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     {
                         contact.Estado = "I";
                         contact.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
-                        contact.Fecha_UltAnu = info.Fecha_UltAnu;
-                        contact.nom_pc = info.nom_pc;
-                        contact.ip = info.ip;
+                        contact.Fecha_UltAnu = DateTime.Now;
                         context.SaveChanges();
                         res = true;
                     }

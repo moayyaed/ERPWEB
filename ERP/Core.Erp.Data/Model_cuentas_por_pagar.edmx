@@ -706,14 +706,12 @@
           <Property Name="DeclaraSRI" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="CodSRI" Type="varchar" MaxLength="5" />
           <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="IdUsuario" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Fecha_Transac" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltMod" Type="datetime" />
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
-          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
-          <Property Name="ip" Type="varchar" MaxLength="50" />
           <Property Name="GeneraRetencion" Type="varchar" MaxLength="1" />
           <Property Name="Codigo_Secuenciales_Transaccion" Type="varchar" MaxLength="250" />
           <Property Name="Sustento_Tributario" Type="varchar" MaxLength="250" />
@@ -2955,29 +2953,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="cp_retencion" Relationship="Model_cuentas_por_pagar.FK_cp_retencion_x_ct_cbtecble_cp_retencion" FromRole="cp_retencion_x_ct_cbtecble" ToRole="cp_retencion" />
         </EntityType>
-        <EntityType Name="cp_TipoDocumento">
-          <Key>
-            <PropertyRef Name="CodTipoDocumento" />
-          </Key>
-          <Property Name="CodTipoDocumento" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="DeclaraSRI" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CodSRI" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="GeneraRetencion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo_Secuenciales_Transaccion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Sustento_Tributario" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="vwcp_codigo_SRI">
           <Key>
             <PropertyRef Name="IdCodigo_SRI" />
@@ -3097,7 +3072,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <EntitySet Name="cp_pais_sri" EntityType="Self.cp_pais_sri" />
           <EntitySet Name="cp_retencion_det" EntityType="Self.cp_retencion_det" />
           <EntitySet Name="cp_retencion_x_ct_cbtecble" EntityType="Self.cp_retencion_x_ct_cbtecble" />
-          <EntitySet Name="cp_TipoDocumento" EntityType="Self.cp_TipoDocumento" />
           <EntitySet Name="vwcp_codigo_SRI" EntityType="Self.vwcp_codigo_SRI" />
           <EntitySet Name="vwcp_proveedor_consulta" EntityType="Self.vwcp_proveedor_consulta" />
           <AssociationSet Name="FK_cp_codigo_SRI_cp_codigo_SRI_tipo" Association="Self.FK_cp_codigo_SRI_cp_codigo_SRI_tipo">
@@ -3302,6 +3276,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
             <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
           </AssociationSet>
+          <EntitySet Name="cp_TipoDocumento" EntityType="Model_cuentas_por_pagar.cp_TipoDocumento" />
           </EntityContainer>
         <ComplexType Name="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -5084,6 +5059,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="cp_TipoDocumento">
+          <Key>
+            <PropertyRef Name="CodTipoDocumento" />
+          </Key>
+          <Property Name="CodTipoDocumento" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="DeclaraSRI" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CodSRI" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="GeneraRetencion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Secuenciales_Transaccion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Sustento_Tributario" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5293,30 +5289,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
                 <ScalarProperty Name="ct_IdTipoCbte" ColumnName="ct_IdTipoCbte" />
                 <ScalarProperty Name="ct_IdCbteCble" ColumnName="ct_IdCbteCble" />
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cp_TipoDocumento">
-            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_TipoDocumento">
-              <MappingFragment StoreEntitySet="cp_TipoDocumento">
-                <ScalarProperty Name="CodTipoDocumento" ColumnName="CodTipoDocumento" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="DeclaraSRI" ColumnName="DeclaraSRI" />
-                <ScalarProperty Name="CodSRI" ColumnName="CodSRI" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="GeneraRetencion" ColumnName="GeneraRetencion" />
-                <ScalarProperty Name="Codigo_Secuenciales_Transaccion" ColumnName="Codigo_Secuenciales_Transaccion" />
-                <ScalarProperty Name="Sustento_Tributario" ColumnName="Sustento_Tributario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6380,6 +6352,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cp_TipoDocumento">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_TipoDocumento">
+              <MappingFragment StoreEntitySet="cp_TipoDocumento">
+                <ScalarProperty Name="Sustento_Tributario" ColumnName="Sustento_Tributario" />
+                <ScalarProperty Name="Codigo_Secuenciales_Transaccion" ColumnName="Codigo_Secuenciales_Transaccion" />
+                <ScalarProperty Name="GeneraRetencion" ColumnName="GeneraRetencion" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="CodSRI" ColumnName="CodSRI" />
+                <ScalarProperty Name="DeclaraSRI" ColumnName="DeclaraSRI" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CodTipoDocumento" ColumnName="CodTipoDocumento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
