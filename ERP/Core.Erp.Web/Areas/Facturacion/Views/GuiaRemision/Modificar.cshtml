@@ -63,7 +63,6 @@
     @Html.HiddenFor(q => q.IdGuiaRemision)
     @Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
-    @Html.HiddenFor(q => q.IdPuntoVta_Fact, new { @id = "IdPuntoVta_Fact" })
     @Html.HiddenFor(q => q.IdCbteVta, new { @id = "IdCbteVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
@@ -441,7 +440,6 @@
 
 <script>
     $(function () {
-        MostrarGenerarFactura();
         MostrarDatosFactura();
         CargarPuntosDeVenta();
         CargarPuntosDeVenta_Factura();
@@ -462,16 +460,6 @@
     function MostrarModal() {
         GridViewPartial_FacturasSinGuia.PerformCallback();
         $("#OpModal").modal("show");
-    }
-
-    function MostrarGenerarFactura() {
-        var IdCbteVta = $("#IdCbteVta").val();
-        //if (IdCbteVta > 0) {
-        //    $("#DivGenerarFactura").hide();
-        //}
-        //else {
-        //    $("#DivGenerarFactura").show();
-        //}
     }
 
     function MostrarDatosFactura() {
