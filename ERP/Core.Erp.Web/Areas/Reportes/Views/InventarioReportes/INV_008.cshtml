@@ -123,7 +123,8 @@
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.Partial("_CmbProducto_Inventario", Model)
+                            <label for="IdCentroCosto">Producto</label>
+   @Html.Partial("_CmbProducto_Inventario", Model)
                             @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -142,14 +143,6 @@
                             <label for="IdMovi_inven_tipo">Tipo movimiento</label>
                             @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_movi, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="IdNumMovi">#Movi</label>
-                            @Html.TextBoxFor(q => q.IdNumMovi, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(q => q.IdNumMovi, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

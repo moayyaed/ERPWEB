@@ -391,6 +391,7 @@
     <Compile Include="Reportes\Importacion\IMP_003_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_004_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_008_Info.cs" />
+    <Compile Include="Reportes\Inventario\INV_009_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_011_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_005_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_007_Info.cs" />

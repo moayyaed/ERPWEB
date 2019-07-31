@@ -2910,6 +2910,51 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWINV_011' no tiene definida ningu
           <Property Name="NomUsuario" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.VWINV_012' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWINV_012">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="tm_descripcion" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="NomUnidad" />
+            <PropertyRef Name="dm_cantidad_sinConversion" />
+            <PropertyRef Name="cm_tipo_movi" />
+            <PropertyRef Name="MotivoCabecera" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="int" Nullable="false" />
+          <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cm_fecha" Type="date" Nullable="false" />
+          <Property Name="cm_observacion" Type="varchar(max)" />
+          <Property Name="NomUnidad" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="dm_cantidad_sinConversion" Type="float" Nullable="false" />
+          <Property Name="mv_costo_sinConversion" Type="float" />
+          <Property Name="CostoTotal" Type="float" />
+          <Property Name="cm_tipo_movi" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdEstadoAproba" Type="varchar" MaxLength="15" />
+          <Property Name="CodMoviInven" Type="varchar" MaxLength="50" />
+          <Property Name="MotivoCabecera" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MotivoDetalle" Type="varchar" MaxLength="250" />
+          <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWINV_014' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWINV_014">
           <Key>
@@ -4506,6 +4551,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Parameter Name="Mostrar_detallado" Type="bit" Mode="In" />
           <Parameter Name="IdProductoPadre_ini" Type="numeric" Mode="In" />
           <Parameter Name="IdProductoPadre_fin" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="SPINV_009" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="IdSucursalIni" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
+          <Parameter Name="IdBodegaIni" Type="int" Mode="In" />
+          <Parameter Name="IdBodegaFin" Type="int" Mode="In" />
+          <Parameter Name="IdCategoriaIni" Type="int" Mode="In" />
+          <Parameter Name="IdCategoriaFin" Type="int" Mode="In" />
+          <Parameter Name="IdLineaIni" Type="int" Mode="In" />
+          <Parameter Name="IdLineaFin" Type="int" Mode="In" />
+          <Parameter Name="IdGrupoIni" Type="int" Mode="In" />
+          <Parameter Name="IdGrupoFin" Type="int" Mode="In" />
+          <Parameter Name="IdSubGrupoIni" Type="int" Mode="In" />
+          <Parameter Name="IdSubGrupoFin" Type="int" Mode="In" />
+          <Parameter Name="ConsiderarSinAprobar" Type="bit" Mode="In" />
+          <Parameter Name="MostrarSinMovimiento" Type="bit" Mode="In" />
+          <Parameter Name="FechaIni" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
         </Function>
         <Function Name="SPINV_010" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -6363,6 +6428,34 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWINV_011].[tm_descripcion] AS [tm_descripcion], 
     [VWINV_011].[NomUsuario] AS [NomUsuario]
     FROM [web].[VWINV_011] AS [VWINV_011]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VWINV_012" EntityType="Self.VWINV_012" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWINV_012].[IdEmpresa] AS [IdEmpresa], 
+    [VWINV_012].[IdSucursal] AS [IdSucursal], 
+    [VWINV_012].[IdMovi_inven_tipo] AS [IdMovi_inven_tipo], 
+    [VWINV_012].[IdNumMovi] AS [IdNumMovi], 
+    [VWINV_012].[Secuencia] AS [Secuencia], 
+    [VWINV_012].[IdBodega] AS [IdBodega], 
+    [VWINV_012].[IdProducto] AS [IdProducto], 
+    [VWINV_012].[Su_Descripcion] AS [Su_Descripcion], 
+    [VWINV_012].[bo_Descripcion] AS [bo_Descripcion], 
+    [VWINV_012].[pr_codigo] AS [pr_codigo], 
+    [VWINV_012].[pr_descripcion] AS [pr_descripcion], 
+    [VWINV_012].[tm_descripcion] AS [tm_descripcion], 
+    [VWINV_012].[cm_fecha] AS [cm_fecha], 
+    [VWINV_012].[cm_observacion] AS [cm_observacion], 
+    [VWINV_012].[NomUnidad] AS [NomUnidad], 
+    [VWINV_012].[dm_cantidad_sinConversion] AS [dm_cantidad_sinConversion], 
+    [VWINV_012].[mv_costo_sinConversion] AS [mv_costo_sinConversion], 
+    [VWINV_012].[CostoTotal] AS [CostoTotal], 
+    [VWINV_012].[cm_tipo_movi] AS [cm_tipo_movi], 
+    [VWINV_012].[IdEstadoAproba] AS [IdEstadoAproba], 
+    [VWINV_012].[CodMoviInven] AS [CodMoviInven], 
+    [VWINV_012].[MotivoCabecera] AS [MotivoCabecera], 
+    [VWINV_012].[MotivoDetalle] AS [MotivoDetalle], 
+    [VWINV_012].[cc_Descripcion] AS [cc_Descripcion]
+    FROM [web].[VWINV_012] AS [VWINV_012]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWINV_014" EntityType="Self.VWINV_014" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -8644,6 +8737,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="VWINV_008" EntityType="Model_reportes.VWINV_008" />
+          <EntitySet Name="VWINV_012" EntityType="Model_reportes.VWINV_012" />
+          <FunctionImport Name="SPINV_009" ReturnType="Collection(Model_reportes.SPINV_009_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodegaIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodegaFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdCategoriaIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdCategoriaFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdLineaIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdLineaFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdGrupoIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdGrupoFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdSubGrupoIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdSubGrupoFin" Mode="In" Type="Int32" />
+            <Parameter Name="ConsiderarSinAprobar" Mode="In" Type="Boolean" />
+            <Parameter Name="MostrarSinMovimiento" Mode="In" Type="Boolean" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12586,6 +12700,76 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdBodega" Type="Int32" Nullable="false" />
           <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="VWINV_012">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdMovi_inven_tipo" />
+            <PropertyRef Name="IdNumMovi" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="tm_descripcion" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="NomUnidad" />
+            <PropertyRef Name="dm_cantidad_sinConversion" />
+            <PropertyRef Name="cm_tipo_movi" />
+            <PropertyRef Name="MotivoCabecera" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNumMovi" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="bo_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NomUnidad" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dm_cantidad_sinConversion" Type="Double" Nullable="false" />
+          <Property Name="mv_costo_sinConversion" Type="Double" />
+          <Property Name="CostoTotal" Type="Double" />
+          <Property Name="cm_tipo_movi" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdEstadoAproba" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CodMoviInven" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoCabecera" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoDetalle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="cc_Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="SPINV_009_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+          <Property Type="Int32" Name="IdLinea" Nullable="false" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="false" />
+          <Property Type="Int32" Name="IdSubGrupo" Nullable="false" />
+          <Property Type="String" Name="pr_codigo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="pr_descripcion" Nullable="false" />
+          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NomUnidadMedida" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="NomCategoria" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="NomLinea" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="NomGrupo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="NomSubGrupo" Nullable="false" MaxLength="500" />
+          <Property Type="Double" Name="CantidadInicial" Nullable="false" />
+          <Property Type="Double" Name="CostoInicial" Nullable="false" />
+          <Property Type="Double" Name="CantidadIngreso" Nullable="false" />
+          <Property Type="Double" Name="CostoIngreso" Nullable="false" />
+          <Property Type="Double" Name="CantidadEgreso" Nullable="false" />
+          <Property Type="Double" Name="CostoEgreso" Nullable="false" />
+          <Property Type="Double" Name="CantidadFinal" Nullable="false" />
+          <Property Type="Double" Name="CostoFinal" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16406,6 +16590,67 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VWINV_012">
+            <EntityTypeMapping TypeName="Model_reportes.VWINV_012">
+              <MappingFragment StoreEntitySet="VWINV_012">
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="MotivoDetalle" ColumnName="MotivoDetalle" />
+                <ScalarProperty Name="MotivoCabecera" ColumnName="MotivoCabecera" />
+                <ScalarProperty Name="CodMoviInven" ColumnName="CodMoviInven" />
+                <ScalarProperty Name="IdEstadoAproba" ColumnName="IdEstadoAproba" />
+                <ScalarProperty Name="cm_tipo_movi" ColumnName="cm_tipo_movi" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="mv_costo_sinConversion" ColumnName="mv_costo_sinConversion" />
+                <ScalarProperty Name="dm_cantidad_sinConversion" ColumnName="dm_cantidad_sinConversion" />
+                <ScalarProperty Name="NomUnidad" ColumnName="NomUnidad" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdNumMovi" ColumnName="IdNumMovi" />
+                <ScalarProperty Name="IdMovi_inven_tipo" ColumnName="IdMovi_inven_tipo" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPINV_009" FunctionName="Model_reportes.Store.SPINV_009">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPINV_009_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdSubGrupo" ColumnName="IdSubGrupo" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
+                <ScalarProperty Name="NomCategoria" ColumnName="NomCategoria" />
+                <ScalarProperty Name="NomLinea" ColumnName="NomLinea" />
+                <ScalarProperty Name="NomGrupo" ColumnName="NomGrupo" />
+                <ScalarProperty Name="NomSubGrupo" ColumnName="NomSubGrupo" />
+                <ScalarProperty Name="CantidadInicial" ColumnName="CantidadInicial" />
+                <ScalarProperty Name="CostoInicial" ColumnName="CostoInicial" />
+                <ScalarProperty Name="CantidadIngreso" ColumnName="CantidadIngreso" />
+                <ScalarProperty Name="CostoIngreso" ColumnName="CostoIngreso" />
+                <ScalarProperty Name="CantidadEgreso" ColumnName="CantidadEgreso" />
+                <ScalarProperty Name="CostoEgreso" ColumnName="CostoEgreso" />
+                <ScalarProperty Name="CantidadFinal" ColumnName="CantidadFinal" />
+                <ScalarProperty Name="CostoFinal" ColumnName="CostoFinal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
