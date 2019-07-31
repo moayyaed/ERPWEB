@@ -73,7 +73,8 @@
     {
         selectedIDs = "";
         var datos = {
-            IdEmpresa: $("#IdEmpresa").val()
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
         }
         $.ajax({
             type: 'POST',
@@ -109,11 +110,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index3", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa, new { @id = "IdEmpresa"})
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="col-md-1">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" onclick="fac_con_saldo()" title="Buscar deudas">
@@ -131,11 +139,11 @@
             </div>
         </div>
     </div>
-        
+
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" onclick="guardar()" id="btn_guardar">Guardar</button>
         </div>
-        }
+}
 
 
         <div class="modal fade" id="fac_con_saldo" role="dialog">

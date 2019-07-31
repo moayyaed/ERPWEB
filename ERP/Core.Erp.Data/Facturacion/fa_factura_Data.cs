@@ -384,6 +384,8 @@ namespace Core.Erp.Data.Facturacion
                             factura.vt_serie1 = info.vt_serie1 = ultimo_talonario.Establecimiento;
                             factura.vt_serie2 = info.vt_serie2 = ultimo_talonario.PuntoEmision;
                             factura.vt_NumFactura = info.vt_NumFactura = ultimo_talonario.NumDocumento;
+                            factura.vt_autorizacion = null;
+                            factura.Fecha_Autorizacion = null;
                         }
                     }
                     else
@@ -395,6 +397,9 @@ namespace Core.Erp.Data.Facturacion
                         info_talonario.NumDocumento = info.vt_NumFactura;
                         info_talonario.IdSucursal = info.IdSucursal;
                         info_talonario.Usado = true;
+
+                        factura.vt_autorizacion = info_talonario.NumAutorizacion;
+                        factura.Fecha_Autorizacion = DateTime.Now.Date;
 
                         data_talonario.modificar_estado_usadoDB(info_talonario);
                     }

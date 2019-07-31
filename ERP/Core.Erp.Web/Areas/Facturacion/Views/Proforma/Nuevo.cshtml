@@ -218,26 +218,27 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            @*<div class="col-md-1">
                 <div class="form-group">
                     <label for="IdProforma">       </label>
                     @Html.TextBoxFor(q => q.IdProforma, new { @class = "form-control", @id = "IdProforma", @placeholder = "# Proforma" })
                     @Html.ValidationMessageFor(q => q.IdProforma, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="btn_buscar">                    </label>
                     <button type="button" class="btn btn-primary form-control" id="btn_buscar" onclick="MostrarModalProformas();" title="Buscar proformas">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
-            </div>
+            </div>*@
             <div class="col-md-2">
+                <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
                 <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
                     <i class="fa fa-lock"></i>
                 </button>
-                <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
+                
             </div>
         </div>
     </div>

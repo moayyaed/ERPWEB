@@ -184,11 +184,21 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             cp_orden_giro_Info model = new cp_orden_giro_Info
             {
-                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa)
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
             };
             Session["list_facturas_seleccionadas"] = null;
+            cargar_combos_consulta_fact_con_saldo();
+
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Index3(cl_filtros_Info model)
+        {
+            cargar_combos_consulta_fact_con_saldo();
+            return View(model);
+        }
+
         [ValidateInput(false)]
         public ActionResult GridViewPartial_aprobacion_facturas()
         {
@@ -261,6 +271,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 IdSucursal = 0,
                 Su_Descripcion = "TODAS"
             });
+            ViewBag.lst_sucursal = lst_sucursal;
+        }
+
+        private void cargar_combos_consulta_fact_con_saldo()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
@@ -694,11 +711,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0)
+        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0)
         {
 
             string retorno = string.Empty;
-            var lst  = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa);
+            var lst  = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa, IdSucursal);
 
                 Session["list_ordenes_giro"] = lst;
                 retorno = "S";

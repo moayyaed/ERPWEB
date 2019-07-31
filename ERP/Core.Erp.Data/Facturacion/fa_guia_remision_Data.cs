@@ -15,6 +15,7 @@ namespace Core.Erp.Data.Facturacion
         tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
         fa_PuntoVta_Data data_puntovta = new fa_PuntoVta_Data();
         fa_factura_Data data_fact = new fa_factura_Data();
+        fa_TerminoPago_Data data_tpago = new fa_TerminoPago_Data();
 
         public List<fa_guia_remision_Info> get_list(int IdEmpresa, DateTime fecha_inicio, DateTime Fecha_fin)
         {
@@ -54,7 +55,7 @@ namespace Core.Erp.Data.Facturacion
                                 Estado=q.Estado,
                                 pe_nombreCompleto=q.pe_nombreCompleto,
                                 pe_cedulaRuc=q.pe_cedulaRuc,
-
+                                IdCbteVta = q.IdCbteVta,
                                 EstadoBool = q.Estado
 
                              }).ToList();
@@ -140,8 +141,10 @@ namespace Core.Erp.Data.Facturacion
 
         public bool guardarDB(fa_guia_remision_Info info)
         {
+            fa_TerminoPago_Info termino_pago = new fa_TerminoPago_Info();
             fa_PuntoVta_Info punto_venta = new fa_PuntoVta_Info();
-            punto_venta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta);
+            termino_pago = data_tpago.get_info(info.vt_tipo_venta);
+            punto_venta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta_Fact);
 
             try
             {
@@ -260,6 +263,8 @@ namespace Core.Erp.Data.Facturacion
                                 Entity.Serie1 = info.Serie1 = ultimo_talonario.Establecimiento;
                                 Entity.Serie2 = info.Serie2 = ultimo_talonario.PuntoEmision;
                                 Entity.NumGuia_Preimpresa = info.NumGuia_Preimpresa = ultimo_talonario.NumDocumento;
+                                Entity.NUAutorizacion = null;
+                                Entity.Fecha_Autorizacion = null;
                             }
                         }
                         else
@@ -271,6 +276,10 @@ namespace Core.Erp.Data.Facturacion
                             info_talonario.NumDocumento = info.NumGuia_Preimpresa;
                             info_talonario.IdSucursal = info.IdSucursal;
                             info_talonario.Usado = true;
+
+                            Entity.NUAutorizacion = info_talonario.NumAutorizacion;
+                            Entity.Fecha_Autorizacion = DateTime.Now.Date;
+
                             data_talonario.modificar_estado_usadoDB(info_talonario);
                         }
                     }
@@ -285,40 +294,50 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.lst_cuota = new List<fa_cuotas_x_doc_Info>();
                         int secuencia_fact = 1;
 
-                        info_fact.IdEmpresa = info.IdEmpresa;
-                        info_fact.IdSucursal = info.IdSucursal;
-                        info_fact.IdBodega = info.IdBodega;
+                        if (termino_pago != null && termino_pago.IdTerminoPago!= "")
+                        {
+                            info.vt_fech_venc = info.gi_fecha.AddDays(termino_pago.Dias_Vct);
+                        }
+
+                        if (punto_venta != null && punto_venta.IdPuntoVta != 0)
+                        {
+                            info.IdCaja = punto_venta.IdCaja;
+                        }
+
+                        info_fact.IdEmpresa = info_fact.IdEmpresa = info.IdEmpresa;
+                        info_fact.IdSucursal = info_fact.IdSucursal = info.IdSucursal;
+                        info_fact.IdBodega = info_fact.IdBodega = info.IdBodega;
                         info_fact.vt_tipoDoc = cl_enumeradores.eTipoDocumento.FACT.ToString();
-                        info_fact.vt_serie1 = null;
-                        info_fact.vt_serie2 = null;
-                        info_fact.vt_NumFactura = null;
-                        info_fact.Fecha_Autorizacion = null;
+                        info_fact.vt_serie1 = info.vt_serie1;
+                        info_fact.vt_serie2 = info.vt_serie2;
+                        info_fact.vt_NumFactura = info.vt_NumFactura;
+                        info_fact.Fecha_Autorizacion = DateTime.Now;
                         info_fact.vt_autorizacion = null;
                         info_fact.vt_fecha = info.gi_fecha.Date;
-                        info_fact.vt_fech_venc = info.gi_fecha.Date;
+                        info_fact.vt_fech_venc = info.vt_fech_venc; /*depende de la termino de pago*/
                         info_fact.IdCliente = info.IdCliente;
-                        //info_fact.IdVendedor = info.IdVendedor;
-                        info_fact.vt_plazo = Convert.ToDecimal(info.gi_plazo);
+                        info_fact.IdVendedor = info.IdVendedor;
+                        info_fact.vt_plazo = termino_pago.Dias_Vct; /**depende de la termino de pago*/
                         info_fact.vt_Observacion = string.IsNullOrEmpty(info.gi_Observacion) ? "" : info.gi_Observacion;
-                        info_fact.IdCatalogo_FormaPago = null;
-                        //info_fact.vt_tipo_venta = info.vt_tipo_venta;
-                        //info_fact.IdCaja = info.IdCaja;
-                        //info_fact.IdPuntoVta = info.IdPuntoVta;
+                        info_fact.IdCatalogo_FormaPago = info.IdCatalogo_FormaPago;
+                        info_fact.vt_tipo_venta = info.vt_tipo_venta;
+                        info_fact.IdCaja = info.IdCaja; /*depende del punto de venta*/
+                        info_fact.IdPuntoVta = info.IdPuntoVta_Fact;
                         info_fact.fecha_primera_cuota = null;
                         info_fact.Fecha_Transaccion = DateTime.Now;
                         info_fact.Estado = info.Estado == true ? "A" : "I";
                         info_fact.esta_impresa = null;
                         info_fact.valor_abono = null;
                         info_fact.IdUsuario = info.IdUsuarioCreacion;
-                        //info_fact.IdNivel = info.IdNivel
+                        info_fact.IdNivel = 1;
 
                         foreach (var item in info.lst_detalle)
                         {
                             fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info();
 
-                            info_fact_detalle.IdEmpresa = info.IdEmpresa;
-                            info_fact_detalle.IdSucursal = info.IdSucursal;
-                            info_fact_detalle.IdBodega = info.IdBodega;
+                            info_fact_detalle.IdEmpresa = info_fact.IdEmpresa;
+                            info_fact_detalle.IdSucursal = info_fact.IdSucursal;
+                            info_fact_detalle.IdBodega = info_fact.IdBodega;
                             info_fact_detalle.Secuencia = secuencia_fact++;
 
                             info_fact_detalle.IdProducto = item.IdProducto;
@@ -344,8 +363,38 @@ namespace Core.Erp.Data.Facturacion
 
                             info_fact.lst_det.Add(info_fact_detalle);
                         }
-                        //data_fact.guardarDB(info_fact);
-                        //Entity.IdCbteVta = info_fact.IdCbteVta;
+                        
+                        var SubtotalConDscto = (decimal)Math.Round(info.lst_detalle.Sum(q => q.gi_Subtotal), 2, MidpointRounding.AwayFromZero);
+                        var SubtotalIVASinDscto = (decimal)Math.Round(info_fact.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero);
+                        var SubtotalSinIVASinDscto = (decimal)Math.Round(info_fact.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero);
+                        var Descuento = (decimal)Math.Round(info_fact.lst_det.Sum(q => q.vt_DescUnitario * q.vt_cantidad), 2, MidpointRounding.AwayFromZero);
+                        var SubtotalIVAConDscto = (decimal)Math.Round(info_fact.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero);
+                        var SubtotalSinIVAConDscto = (decimal)Math.Round(info_fact.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero);
+                        var ValorIVA = (decimal)Math.Round(info_fact.lst_det.Sum(q => q.vt_iva), 2, MidpointRounding.AwayFromZero);
+                        var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
+                        var Total = SubtotalConDscto + ValorIVA;
+
+                        info_fact.info_resumen = new fa_factura_resumen_Info();
+                        info_fact.info_resumen.IdEmpresa = info_fact.IdEmpresa;
+                        info_fact.info_resumen.IdSucursal = info_fact.IdSucursal;
+                        info_fact.info_resumen.IdBodega = info_fact.IdBodega;
+                        //info_fact.info_resumen.IdCbteVta = info_fact.IdCbteVta;
+
+                        info_fact.info_resumen.SubtotalConDscto = SubtotalConDscto;
+                        info_fact.info_resumen.SubtotalIVAConDscto = SubtotalIVAConDscto;
+                        info_fact.info_resumen.SubtotalIVASinDscto = SubtotalIVASinDscto;
+                        info_fact.info_resumen.SubtotalSinDscto = SubtotalSinDscto;
+                        info_fact.info_resumen.SubtotalSinIVAConDscto = SubtotalSinIVAConDscto;
+                        info_fact.info_resumen.SubtotalSinIVASinDscto = SubtotalSinIVASinDscto;
+
+                        info_fact.info_resumen.Total = Total;
+                        info_fact.info_resumen.Descuento = Descuento;
+                        info_fact.info_resumen.ValorEfectivo = 0;
+                        info_fact.info_resumen.ValorIVA = ValorIVA;
+                        info_fact.info_resumen.Cambio = Total;
+
+                        data_fact.guardarDB(info_fact);
+                        Entity.IdCbteVta = info_fact.IdCbteVta;
                     }
                     #endregion
 

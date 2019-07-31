@@ -628,16 +628,20 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
-        public List<cp_orden_giro_Info> get_lst_orden_giro_x_pagar(int IdEmpresa)
+        public List<cp_orden_giro_Info> get_lst_orden_giro_x_pagar(int IdEmpresa, int IdSucursal)
         {
             try
             {
+                int IdSucursal_ini = IdSucursal;
+                int IdSucursal_fin = IdSucursal == 0 ? 999999 : IdSucursal;
                 List<cp_orden_giro_Info> Lista = null;
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
                     Lista = (from q in Context.vwcp_orden_giro_x_pagar
                              where q.IdEmpresa == IdEmpresa
-                             & q.Saldo_OG > 0
+                             && q.IdSucursal >= IdSucursal_ini
+                             && q.IdSucursal <= IdSucursal_fin
+                             && q.Saldo_OG > 0
                              orderby q.co_fechaOg descending
                              select new cp_orden_giro_Info
                              {

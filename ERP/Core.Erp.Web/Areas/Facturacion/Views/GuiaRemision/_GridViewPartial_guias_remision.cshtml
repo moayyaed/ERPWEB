@@ -62,10 +62,14 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
+                if ( Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "IdCbteVta")) ==0 || DataBinder.Eval(tc.DataItem, "IdCbteVta") == null)
+                {
+                    ViewContext.Writer.Write(
+                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") }) + "&nbsp;");
+                }
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
                 {
                     ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
@@ -83,9 +87,10 @@
         });
 
         settings.Columns.Add("IdGuiaRemision", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("IdCbteVta", "Factura").Width = Unit.Percentage(10);
         settings.Columns.Add("NumGuia_Preimpresa", "#Guia").Width = Unit.Percentage(15);
-        settings.Columns.Add("pe_nombreCompleto", "Cliente").Width = Unit.Percentage(35);
-        settings.Columns.Add("gi_Observacion", "Observación").Width = Unit.Percentage(30);
+        settings.Columns.Add("pe_nombreCompleto", "Cliente").Width = Unit.Percentage(25);
+        settings.Columns.Add("gi_Observacion", "Observación").Width = Unit.Percentage(25);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";

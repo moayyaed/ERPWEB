@@ -57,6 +57,7 @@ namespace Core.Erp.Data
         public Nullable<decimal> IdCbteVta { get; set; }
     
         public virtual fa_cliente fa_cliente { get; set; }
+        public virtual fa_factura fa_factura { get; set; }
         public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         public virtual ICollection<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public virtual fa_MotivoTraslado fa_MotivoTraslado { get; set; }

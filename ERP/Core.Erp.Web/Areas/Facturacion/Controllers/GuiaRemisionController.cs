@@ -42,6 +42,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
         fa_MotivoTraslado_Bus bus_traslado = new fa_MotivoTraslado_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
+        fa_TerminoPago_Bus bus_termino_pago = new fa_TerminoPago_Bus();
 
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -164,7 +166,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
-            var lst_punto_venta = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, "GUIA");
+            var lst_punto_venta = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, cl_enumeradores.eTipoDocumento.GUIA.ToString());
             ViewBag.lst_punto_venta = lst_punto_venta;
 
             var lst_transportista = bus_transportista.get_list(model.IdEmpresa, false);
@@ -176,6 +178,17 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_tipo_traslado = bus_traslado.get_list(model.IdEmpresa, false);
             ViewBag.lst_tipo_traslado = lst_tipo_traslado;
 
+            var lst_punto_venta_factura = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, cl_enumeradores.eTipoDocumento.FACT.ToString());
+            ViewBag.lst_punto_venta_factura = lst_punto_venta_factura;
+
+            var lst_vendedor = bus_vendedor.get_list(model.IdEmpresa, false);
+            ViewBag.lst_vendedor = lst_vendedor;
+
+            var lst_pago = bus_termino_pago.get_list(false);
+            ViewBag.lst_pago = lst_pago;
+
+            var lst_formapago = bus_catalogo.get_list((int)cl_enumeradores.eTipoCatalogoFact.FormaDePago, false);
+            ViewBag.lst_formapago = lst_formapago;
         }
 
         private void cargar_combos_detalle()
@@ -343,6 +356,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
             fa_guia_remision_Info model = bus_guia.get_info(IdEmpresa, IdGuiaRemision);
+            model.GenerarFactura = false;
             if (model == null)
                 return RedirectToAction("Index");
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
@@ -540,6 +554,29 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             detalle_info.set_list(detalle_guia, IdTransaccionSession);
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CargarPuntosDeVenta_Factura(int IdSucursal = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.FACT.ToString());
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetUltimoDocumento_Factura(int IdSucursal = 0, int IdPuntoVta = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            tb_sis_Documento_Tipo_Talonario_Info resultado = new tb_sis_Documento_Tipo_Talonario_Info();
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+            if (punto_venta != null)
+            {
+                var sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
+                resultado = bus_talonario.GetUltimoNoUsado(IdEmpresa, cl_enumeradores.eTipoDocumento.FACT.ToString(), sucursal.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, false);
+            }
+
+            if (resultado == null)
+                resultado = new tb_sis_Documento_Tipo_Talonario_Info();
+
+            return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

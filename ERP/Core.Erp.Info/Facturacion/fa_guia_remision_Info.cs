@@ -69,13 +69,28 @@ namespace Core.Erp.Info.Facturacion
 
         #region Campos que no estan en la tabla
         public string IdCatalogo_traslado { get; set; }
-
         public string pe_cedulaRuc { get; set; }
         public string pe_nombreCompleto { get; set; }
         public List<fa_guia_remision_det_Info> lst_detalle { get; set; }
         public List<fa_factura_x_fa_guia_remision_Info> lst_detalle_x_factura { get; set; }
         public decimal IdProforma { get; set; }
+
+
         public bool GenerarFactura { get; set; }
+        public int IdPuntoVta_Fact { get; set; }
+        public string CodCbteVta { get; set; }
+        public string vt_serie1 { get; set; }
+        [RegularExpression(@"\d{3}", ErrorMessage = "El formato debe ser 000")]
+        [Required(ErrorMessage = "El campo punto de emisión es obligatorio")]
+        public string vt_serie2 { get; set; }
+        [RegularExpression(@"\d{9}", ErrorMessage = "El formato debe ser 000000000")]
+        [Required(ErrorMessage = "El campo # documento es obligatorio")]
+        public string vt_NumFactura { get; set; }
+        public int IdVendedor { get; set; }
+        public string vt_tipo_venta { get; set; }
+        public int IdCaja { get; set; }
+        public DateTime vt_fech_venc { get; set; }
+        public string IdCatalogo_FormaPago { get; set; }
         #endregion
 
 

@@ -355,6 +355,7 @@
                             {
                                 settings.Name = "GenerarFactura";
                                 settings.Text = "Generar Factura";
+                                settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){MostrarDatosFactura();}";
                             }).GetHtml()
                         @Html.ValidationMessageFor(q => q.GenerarFactura, "", new { @class = "text-danger" })
                     </div>
@@ -380,18 +381,20 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#detalle_guia" aria-controls="informacion_general" role="tab" data-toggle="tab">Detalle guía</a>
+                <a href="#detalle_guia" aria-controls="informacion_general" role="tab" data-toggle="tab" id="link_detalle_guia">Detalle guía</a>
             </li>
             <li>
                 <a href="#tab_documentos_relacionados" aria-controls="contactos_telefonos" role="tab" data-toggle="tab">Documentos relacionados</a>
             </li>
-
+            <li>
+                <a href="#tab_datos_factura" aria-controls="datos_factura" role="tab" data-toggle="tab" id="link_datos_factura">Datos factura</a>
+            </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="detalle_guia">
                 <div class="col-md-12">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" onclick="MostrarModal()">
+                        <button type="button" class="btn btn-primary" onclick="MostrarModal()" title="Mostrar facturas sin guia">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -418,7 +421,65 @@
                     </div>
                 </div>
             </div>
-
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_datos_factura">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdVendedor">Vendedor*</label>
+                                @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdVendedor" })
+                                @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago">Forma de pago*</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_FormaPago, new SelectList(ViewBag.lst_formapago, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdCatalogo_FormaPago" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdTerminoPago">Termino pago*</label>
+                                @Html.DropDownListFor(q => q.vt_tipo_venta, new SelectList(ViewBag.lst_pago, "IdTerminoPago", "nom_TerminoPago"), new { @class = "form-control", @id = "vt_tipo_venta" })
+                                @Html.ValidationMessageFor(q => q.vt_tipo_venta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdPuntoVta">Punto de venta*</label>
+                                @Html.DropDownListFor(q => q.IdPuntoVta_Fact, new SelectList(ViewBag.lst_punto_venta_factura, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta_Fact" })
+                                @Html.ValidationMessageFor(q => q.IdPuntoVta_Fact, "", new { @class = "text-danger" })
+                            </div>
+                        </div> 
+                        <div class="col-md-2" id="datos_punto_venta1_fact">
+                            <div class="form-group">
+                                <label for="Serie1">Establecimiento*</label>
+                                @Html.TextBoxFor(q => q.vt_serie1, new { @class = "form-control", @id = "vt_serie1" })
+                                @Html.ValidationMessageFor(q => q.vt_serie1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="datos_punto_venta2_fact">
+                            <div class="form-group">
+                                <label for="Serie2">Pto. Emisión*</label>
+                                @Html.TextBoxFor(q => q.vt_serie2, new { @class = "form-control", @id = "vt_serie2" })
+                                @Html.ValidationMessageFor(q => q.vt_serie2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="datos_punto_venta3_fact">
+                            <div class="form-group">
+                                <label for="NumNota_Impresa"># Documento*</label>
+                                @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura" })
+                                @Html.ValidationMessageFor(q => q.vt_NumFactura, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -475,246 +536,323 @@
 
 
 <script>
+$(function () {
+    MostrarGenerarFactura();
+    MostrarDatosFactura();
+    CargarPuntosDeVenta();    
+    GetUltimoDocumento();
+    CargarPuntosDeVenta_Factura();
+    GetUltimoDocumento_Factura();
+    get_direccion();
+    get_placa();
+    GetDireccionOrigen();
 
-
-
-    $(function () {
-        MostrarGenerarFactura();
+    $("#IdSucursal").change(function () {
         CargarPuntosDeVenta();
+        CargarPuntosDeVenta_Factura();
         GetUltimoDocumento();
-        get_direccion();
-        get_placa();
         GetDireccionOrigen();
-
-        $("#IdSucursal").change(function () {
-            CargarPuntosDeVenta();
-            GetUltimoDocumento();
-            GetDireccionOrigen();
-        });
-        $("#IdPuntoVta").change(function () {
-            GetUltimoDocumento();
-        });
-
-        $("#IdTransportista").change(function () {
-            get_placa();
-        });
     });
 
-    function MostrarModal() {
-        GridViewPartial_FacturasSinGuia.PerformCallback();
-        $("#OpModal").modal("show");
+    $("#IdPuntoVta").change(function () {
+        GetUltimoDocumento();
+    });
+
+    $("#IdPuntoVta_Fact").change(function () {
+        GetUltimoDocumento_Factura();
+    });
+
+    $("#IdTransportista").change(function () {
+        get_placa();
+    });
+});
+
+function MostrarModal() {
+    GridViewPartial_FacturasSinGuia.PerformCallback();
+    $("#OpModal").modal("show");
+}
+
+function MostrarGenerarFactura() {
+    var IdCbteVta = $("#IdCbteVta").val();
+    if (IdCbteVta > 0) {
+        $("#DivGenerarFactura").hide();
     }
-
-    function MostrarGenerarFactura() {
-        var IdCbteVta = $("#IdCbteVta").val();
-        if (IdCbteVta > 0) {
-            $("#DivGenerarFactura").hide();
-        }
-        else {
-            $("#DivGenerarFactura").show();
-        }
+    else {
+        $("#DivGenerarFactura").show();
     }
+}
 
-
-
-    function CargarFacturas() {
-        var datos = {
-            IdCliente: IdCliente.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Cargar_facturas", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-
-            },
-            error: function (error) {
-            }
-        });
+function MostrarDatosFactura() {
+    if (GenerarFactura.GetChecked() == true) {
+        $("#link_datos_factura").show();
+        $("#link_datos_factura").click();
     }
-
-    function CargarPuntosDeVenta() {
-        $("#IdPuntoVta").empty();
-        var datos = {
-            IdSucursal: $("#IdSucursal").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("CargarPuntosDeVenta", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
-                    $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
-                });
-            },
-            error: function (error) {
-            }
-        });
+    else {
+        $("#link_datos_factura").hide();
+        $("#link_detalle_guia").click();
     }
+}
 
-    function GetUltimoDocumento() {
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),
-            IdPuntoVta: $("#IdPuntoVta").val()
+
+
+function CargarFacturas() {
+    var datos = {
+        IdCliente: IdCliente.GetValue()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("Cargar_facturas", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+
+        },
+        error: function (error) {
         }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetUltimoDocumento", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.data_puntovta != null)
+    });
+}
+
+function CargarPuntosDeVenta() {
+    $("#IdPuntoVta").empty();
+    var datos = {
+        IdSucursal: $("#IdSucursal").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CargarPuntosDeVenta", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
+            });
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function GetUltimoDocumento() {
+    var datos = {
+        IdSucursal: $("#IdSucursal").val(),
+        IdPuntoVta: $("#IdPuntoVta").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("GetUltimoDocumento", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data.data_puntovta != null)
+            {
+                if (data.data_puntovta.EsElectronico == true)
                 {
-                    if (data.data_puntovta.EsElectronico == true)
-                    {
-                        $("#datos_punto_venta1").hide();
-                        $("#datos_punto_venta2").hide();
-                        $("#datos_punto_venta3").hide();
-                    }
-                    else
-                    {
-                        $("#datos_punto_venta1").show();
-                        $("#datos_punto_venta2").show();
-                        $("#datos_punto_venta3").show();
+                    $("#datos_punto_venta1").hide();
+                    $("#datos_punto_venta2").hide();
+                    $("#datos_punto_venta3").hide();
+                }
+                else
+                {
+                    $("#datos_punto_venta1").show();
+                    $("#datos_punto_venta2").show();
+                    $("#datos_punto_venta3").show();
 
-                        if (data.data_talonario != null)
-                        {
-                            $("#Serie1").val(data.data_talonario.Establecimiento);
-                            $("#Serie2").val(data.data_talonario.PuntoEmision);
-                            $("#NumGuia_Preimpresa").val(data.data_talonario.NumDocumento);
-                        }
+                    if (data.data_talonario != null)
+                    {
+                        $("#Serie1").val(data.data_talonario.Establecimiento);
+                        $("#Serie2").val(data.data_talonario.PuntoEmision);
+                        $("#NumGuia_Preimpresa").val(data.data_talonario.NumDocumento);
                     }
                 }
-            },
-            error: function (error) {
             }
-        });
-    }
-
-        function GetDireccionOrigen() {
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),
-            IdPuntoVta: $("#IdPuntoVta").val()
+        },
+        error: function (error) {
         }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("get_direccion_origen", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#Direccion_Origen").val(data.Su_Direccion);
+    });
+}
 
-            },
-            error: function (error) {
-            }
-        });
+function CargarPuntosDeVenta_Factura() {
+    $("#IdPuntoVta_Fact").empty();
+    var datos = {
+        IdSucursal: $("#IdSucursal").val()
     }
-
-    function get_placa() {
-        var datos = {
-            IdTransportista: $("#IdTransportista").val()
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CargarPuntosDeVenta_Factura", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdPuntoVta_Fact").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                $("#IdPuntoVta_Fact").val($("#IdPuntoVta_Fact option:first").val());
+            });
+        },
+        error: function (error) {
         }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Get_placa", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#placa").val(data.Placa);
+    });
+}
 
-            },
-            error: function (error) {
-            }
-        });
+function GetUltimoDocumento_Factura() {
+    var datos = {
+        IdSucursal: $("#IdSucursal").val(),
+        IdPuntoVta: $("#IdPuntoVta_Fact").val()
     }
-
-    function get_direccion() {
-
-        var datos = {
-            IdCliente: IdCliente.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("get_direcciones", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data != null) {
-                    //$("#Direccion_Origen").val(data.Direccion_emp);
-                    $("#Direccion_Destino").val(data.Direccion);
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("GetUltimoDocumento_Factura", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data.data_puntovta != null) {
+                if (data.data_puntovta.EsElectronico == true) {
+                    $("#datos_punto_venta1_fact").hide();
+                    $("#datos_punto_venta2_fact").hide();
+                    $("#datos_punto_venta3_fact").hide();
                 }
-            },
-            error: function (error) {
-                alert(error);
+                else {
+                    $("#datos_punto_venta1_fact").show();
+                    $("#datos_punto_venta2_fact").show();
+                    $("#datos_punto_venta3_fact").show();
+
+                    if (data.data_talonario != null) {
+                        $("#vt_serie1").val(data.data_talonario.Establecimiento);
+                        $("#vt_serie2").val(data.data_talonario.PuntoEmision);
+                        $("#vt_NumFactura").val(data.data_talonario.NumDocumento);
+                    }
+                }
             }
-
-        });
-    }
-
-
-    function cargar_contactos() {
-
-        $("#IdContacto").empty();
-        var codigo = IdCliente.GetValue();
-
-        var datos = {
-            IdCliente: codigo
+        },
+        error: function (error) {
         }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
-                });
-            },
-            error: function (error) {
-            }
-        });
+    });
+}
+
+function GetDireccionOrigen() {
+    var datos = {
+        IdSucursal: $("#IdSucursal").val(),
+        IdPuntoVta: $("#IdPuntoVta").val()
     }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("get_direccion_origen", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#Direccion_Origen").val(data.Su_Direccion);
 
-    function GetInfoProducto(s, e) {
-        $("#Secuencia").text(0);
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdProducto: s.GetValue()
-
+        },
+        error: function (error) {
         }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetInfoProducto", "GuiaRemision",new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
-            },
-            error: function (error) {
+    });
+}
+
+function get_placa() {
+    var datos = {
+        IdTransportista: $("#IdTransportista").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("Get_placa", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#placa").val(data.Placa);
+
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function get_direccion() {
+
+    var datos = {
+        IdCliente: IdCliente.GetValue()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("get_direcciones", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data != null) {
+                //$("#Direccion_Origen").val(data.Direccion_emp);
+                $("#Direccion_Destino").val(data.Direccion);
             }
-        });
-    };
+        },
+        error: function (error) {
+            alert(error);
+        }
+
+    });
+}
+
+
+function cargar_contactos() {
+
+    $("#IdContacto").empty();
+    var codigo = IdCliente.GetValue();
+
+    var datos = {
+        IdCliente: codigo
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
+            });
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function GetInfoProducto(s, e) {
+    $("#Secuencia").text(0);
+    var datos = {
+        IdEmpresa: $("#IdEmpresa").val(),
+        IdProducto: s.GetValue()
+
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("GetInfoProducto", "GuiaRemision",new { Area = "Facturacion"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+        },
+        error: function (error) {
+        }
+    });
+};
 </script>
 
 

@@ -21,6 +21,7 @@ namespace Core.Erp.Data
             this.fa_factura_x_fa_guia_remision = new HashSet<fa_factura_x_fa_guia_remision>();
             this.fa_factura_x_in_Ing_Egr_Inven = new HashSet<fa_factura_x_in_Ing_Egr_Inven>();
             this.fa_factura_det = new HashSet<fa_factura_det>();
+            this.fa_guia_remision = new HashSet<fa_guia_remision>();
         }
     
         public int IdEmpresa { get; set; }
@@ -70,5 +71,6 @@ namespace Core.Erp.Data
         public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         public virtual ICollection<fa_factura_x_in_Ing_Egr_Inven> fa_factura_x_in_Ing_Egr_Inven { get; set; }
         public virtual ICollection<fa_factura_det> fa_factura_det { get; set; }
+        public virtual ICollection<fa_guia_remision> fa_guia_remision { get; set; }
     }
 }
