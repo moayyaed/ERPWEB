@@ -537,7 +537,6 @@
 
 <script>
 $(function () {
-    MostrarGenerarFactura();
     MostrarDatosFactura();
     CargarPuntosDeVenta();    
     GetUltimoDocumento();
@@ -570,16 +569,6 @@ $(function () {
 function MostrarModal() {
     GridViewPartial_FacturasSinGuia.PerformCallback();
     $("#OpModal").modal("show");
-}
-
-function MostrarGenerarFactura() {
-    var IdCbteVta = $("#IdCbteVta").val();
-    if (IdCbteVta > 0) {
-        $("#DivGenerarFactura").hide();
-    }
-    else {
-        $("#DivGenerarFactura").show();
-    }
 }
 
 function MostrarDatosFactura() {
