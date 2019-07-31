@@ -1,4 +1,4 @@
-﻿@model Core.Erp.Info.Helps.cl_filtros_inventario_Info
+﻿model Core.Erp.Info.Helps.cl_filtros_inventario_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
     ViewBag.Title = "INV_009";
@@ -43,44 +43,118 @@
                             @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
-                            <label for="IdMarca">Marca</label>
-                            @Html.DropDownListFor(q => q.IdMarca, new SelectList(ViewBag.lst_marca, "IdMarca", "Descripcion"), new { @class = "form-control", @id = "IdMarca" })
-                            @Html.ValidationMessageFor(q => q.IdMarca, "", new { @class = "text-danger" })
+                            <label for=""></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarSinMovimiento, settings =>
+                           {
+                               settings.Name = "mostrarSinMovimiento";
+                               settings.Text = "Mostrar sin movimiento";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.mostrarSinMovimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for=""></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.considerarSinAprobar, settings =>
+                           {
+                               settings.Name = "considerarSinAprobar";
+                               settings.Text = "Considerar sin aprobar";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.considerarSinAprobar, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdCategoria">Categoría</label>
+                            @Html.DropDownListFor(q => q.IdCategoria, new SelectList(ViewBag.lst_categoria, "IdCategoria", "ca_Categoria"), new { @class = "form-control", @id = "IdCategoria" })
+                            @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdLinea">Línea</label>
+                            @Html.DropDownListFor(q => q.IdLinea, new SelectList(ViewBag.lst_linea, "IdLinea", "nom_linea"), new { @class = "form-control", @id = "IdLinea" })
+                            @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="dGrupo">Grupo</label>
+                            @Html.DropDownListFor(q => q.IdGrupo, new SelectList(ViewBag.lst_grupo, "IdGrupo", "nom_grupo"), new { @class = "form-control", @id = "IdGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdSubGrupo">Subgrupo</label>
+                            @Html.DropDownListFor(q => q.IdSubGrupo, new SelectList(ViewBag.lst_subgrupo, "IdSubgrupo", "nom_subgrupo"), new { @class = "form-control", @id = "IdSubGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdSubGrupo, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Fecha corte</label>
+                            <label for="">Fecha inicio*</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_fin, settings =>
-                            {
-                                settings.Name = "fecha_fin";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                                 {
+                                     settings.Name = "fecha_ini";
+                                     settings.Properties.UseMaskBehavior = true;
+                                     settings.Properties.EditFormat = EditFormat.Date;
+                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                                 {
+                                     settings.Name = "fecha_fin";
+                                     settings.Properties.UseMaskBehavior = true;
+                                     settings.Properties.EditFormat = EditFormat.Date;
+                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="IdProductoPadre">Producto</label>
                             @Html.Partial("_CmbProducto_Inventario", Model)
-                            @Html.ValidationMessageFor(q => q.IdProductoPadre, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
