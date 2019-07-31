@@ -33,6 +33,7 @@
     [IdUsuarioAnulacion]     VARCHAR (50)  NULL,
     [FechaAnulacion]         DATETIME      NULL,
     [MotivoAnulacion]        VARCHAR (MAX) NULL,
+    [IdCbteVta]              NUMERIC (18)  NULL,
     CONSTRAINT [PK_fa_guia_remision] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdGuiaRemision] ASC),
     CONSTRAINT [FK_fa_guia_remision_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
     CONSTRAINT [FK_fa_guia_remision_fa_MotivoTraslado] FOREIGN KEY ([IdEmpresa], [IdMotivoTraslado]) REFERENCES [dbo].[fa_MotivoTraslado] ([IdEmpresa], [IdMotivoTraslado]),
@@ -41,6 +42,8 @@
     CONSTRAINT [FK_fa_guia_remision_tb_sis_Documento_Tipo_Talonario] FOREIGN KEY ([IdEmpresa], [CodDocumentoTipo], [Serie2], [Serie1], [NumGuia_Preimpresa]) REFERENCES [dbo].[tb_sis_Documento_Tipo_Talonario] ([IdEmpresa], [CodDocumentoTipo], [PuntoEmision], [Establecimiento], [NumDocumento]),
     CONSTRAINT [FK_fa_guia_remision_tb_transportista] FOREIGN KEY ([IdEmpresa], [IdTransportista]) REFERENCES [dbo].[tb_transportista] ([IdEmpresa], [IdTransportista])
 );
+
+
 
 
 
