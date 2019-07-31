@@ -159,6 +159,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                 if (punto_venta.EsElectronico == true)
                 {
                     info_documento = odata_talonario.GetUltimoNoUsado(info.IdEmpresa, punto_venta.codDocumentoTipo, punto_venta.Su_CodigoEstablecimiento, punto_venta.cod_PuntoVta, punto_venta.EsElectronico, true);
+                    info.NAutorizacion = null;
+                    info.Fecha_Autorizacion = null;
                 }
                 else
                 {
