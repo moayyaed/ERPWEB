@@ -1177,4 +1177,7 @@
   <ItemGroup>
     <PreDeploy Include="Scripts implementacion\1.- DatosGenerales.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts implementacion\2.- InsertEmpresaPermisoAdmin.sql" />
+  </ItemGroup>
 </Project>
