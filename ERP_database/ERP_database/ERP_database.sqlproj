@@ -87,6 +87,7 @@
     <Folder Include="Snapshots" />
     <Folder Include="Migraciones\" />
     <Folder Include="Migraciones\Tables\" />
+    <Folder Include="Scripts implementacion" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\in_Ing_Egr_Inven.sql" />
@@ -1172,5 +1173,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ERP_database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts implementacion\1.- DatosGenerales.sql" />
   </ItemGroup>
 </Project>
