@@ -491,24 +491,25 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (producto != null)
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
-                    info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-                    var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    if (cliente != null)
-                    {
-                        info_det.pd_precio = producto.precio_1;
-                        int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
 
-                        var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
+                    //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                    //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                    //if (cliente != null)
+                    //{
+                    //    info_det.pd_precio = producto.precio_1;
+                    //    int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
 
-                        if (SessionFixed.EsSuperAdmin == "False")
-                        {
-                            info_det.pd_por_descuento_uni = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
-                        }
-                        else
-                        {
-                            info_det.pd_por_descuento_uni = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.pd_por_descuento_uni;
-                        }
-                    }
+                    //    var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
+
+                    //    if (SessionFixed.EsSuperAdmin == "False")
+                    //    {
+                    //        info_det.pd_por_descuento_uni = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
+                    //    }
+                    //    else
+                    //    {
+                    //        info_det.pd_por_descuento_uni = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.pd_por_descuento_uni;
+                    //    }
+                    //}
                 }
             }
 
@@ -530,24 +531,25 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (producto != null)
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
-                    info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-                    var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    if (cliente != null)
-                    {
-                        info_det.pd_precio = producto.precio_1;
-                        int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
 
-                        var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
+                    //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                    //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                    //if (cliente != null)
+                    //{
+                    //    info_det.pd_precio = producto.precio_1;
+                    //    int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
 
-                        if (SessionFixed.EsSuperAdmin == "False")
-                        {
-                            info_det.pd_por_descuento_uni = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
-                        }
-                        else
-                        {
-                            info_det.pd_por_descuento_uni = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.pd_por_descuento_uni;
-                        }
-                    }
+                    //    var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
+
+                    //    if (SessionFixed.EsSuperAdmin == "False")
+                    //    {
+                    //        info_det.pd_por_descuento_uni = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
+                    //    }
+                    //    else
+                    //    {
+                    //        info_det.pd_por_descuento_uni = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.pd_por_descuento_uni;
+                    //    }
+                    //}
                 }
             }
             List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -630,7 +632,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.pd_precio_final = info_det.pd_precio - edited_info.pd_descuento_uni;
             edited_info.pd_subtotal = info_det.pd_cantidad * edited_info.pd_precio_final;
             edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
-            if(!string.IsNullOrEmpty(info_det.IdCod_Impuesto) && info_det.IdCod_Impuesto != edited_info.IdCod_Impuesto)
+            if(!string.IsNullOrEmpty(info_det.IdCod_Impuesto))
             {
                 var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
                 if (impuesto != null)
@@ -644,7 +646,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 edited_info.cc_Descripcion = string.Empty;
             else
-                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
             {
                 var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
                 if (cc != null)

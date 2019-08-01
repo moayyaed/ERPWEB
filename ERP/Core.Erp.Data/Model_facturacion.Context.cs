@@ -46,7 +46,6 @@ namespace Core.Erp.Data
         public DbSet<vwfa_notaCreDeb> vwfa_notaCreDeb { get; set; }
         public DbSet<vwfa_notaCreDeb_x_fa_factura_NotaDeb> vwfa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
         public DbSet<vwfa_cliente_contactos> vwfa_cliente_contactos { get; set; }
-        public DbSet<vwfa_proforma_det_por_facturar> vwfa_proforma_det_por_facturar { get; set; }
         public DbSet<fa_Vendedor> fa_Vendedor { get; set; }
         public DbSet<vwfa_CambioProductoDet_facturas> vwfa_CambioProductoDet_facturas { get; set; }
         public DbSet<fa_factura_det_x_in_Ing_Egr_Inven_det> fa_factura_det_x_in_Ing_Egr_Inven_det { get; set; }
@@ -80,12 +79,13 @@ namespace Core.Erp.Data
         public DbSet<fa_proforma_det> fa_proforma_det { get; set; }
         public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
         public DbSet<vwfa_proforma_det> vwfa_proforma_det { get; set; }
-        public DbSet<vwfa_proforma_det_por_guia> vwfa_proforma_det_por_guia { get; set; }
         public DbSet<vwfa_factura_det> vwfa_factura_det { get; set; }
         public DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
         public DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
         public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
         public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
+        public DbSet<vwfa_proforma_det_por_guia> vwfa_proforma_det_por_guia { get; set; }
+        public DbSet<vwfa_proforma_det_por_facturar> vwfa_proforma_det_por_facturar { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

@@ -235,8 +235,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridViewPartial_guias_remision_det.GetEditor('gi_precio').SetValue(data.precio_1);
-                GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+                GridViewPartial_guias_remision_det.GetEditor('gi_precio').SetValue(data.precio);
+                GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCodImpuesto);
             },
             error: function (error) {
             }

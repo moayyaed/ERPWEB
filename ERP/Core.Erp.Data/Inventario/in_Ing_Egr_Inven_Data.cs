@@ -238,6 +238,8 @@ namespace Core.Erp.Data.Inventario
                             dm_cantidad = Math.Abs(item.dm_cantidad_sinConversion) * (info.signo == "-" ? -1 : 1),
                             mv_costo = item.mv_costo_sinConversion,
 
+                            IdCentroCosto = item.IdCentroCosto
+
                         };
                         Context.in_Ing_Egr_Inven_det.Add(entity_det);
                         sec++;
@@ -330,6 +332,8 @@ namespace Core.Erp.Data.Inventario
 
                             mv_costo_sinConversion = item.mv_costo_sinConversion,
                             mv_costo =  item.mv_costo_sinConversion,
+
+                            IdCentroCosto = item.IdCentroCosto
                         });                        
                         sec++;
                     }

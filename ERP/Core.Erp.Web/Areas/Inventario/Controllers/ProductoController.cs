@@ -39,7 +39,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         seg_usuario_Bus bus_usuarios = new seg_usuario_Bus();
         tbl_TransaccionesAutorizadas_Bus bus_transacciones_aut = new tbl_TransaccionesAutorizadas_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
-
+        fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
+        in_Producto_x_fa_NivelDescuento_Bus bus_nivelproducto = new in_Producto_x_fa_NivelDescuento_Bus();
 
         private string mensaje;
 
@@ -475,15 +476,34 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return Json(EstadoDesbloqueo, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SetPrecioProducto(decimal IdProducto = 0)
+        public JsonResult SetPrecioProducto(decimal IdProducto = 0, int IdNivel = 0)
         {
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
-            if (resultado == null)
-                resultado = new in_Producto_Info();
+            var producto = bus_producto.get_info(IdEmpresa, IdProducto);
+            double PorDescUnitario = 0;
+            var nivel = new fa_NivelDescuento_Info();
+
+            if (producto == null)
+                producto = new in_Producto_Info();
+
+            var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, IdNivel);
+
+            if (nivelproducto == null)
+            {
+                 nivel = bus_nivel_descuento.GetInfo(IdEmpresa, IdNivel);
+            }
+
+            if (SessionFixed.EsSuperAdmin == "False")
+            {
+                PorDescUnitario = nivelproducto == null ? (nivel == null ? 0 :nivel.Porcentaje) : nivelproducto.Porcentaje;
+            }
+            else
+            {
+                PorDescUnitario = IdNivel > 1 ? (nivelproducto == null ? nivel.Porcentaje : nivelproducto.Porcentaje) : 0;
+            }            
             
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            return Json(new {precio= producto.precio_1, IdCodImpuesto = producto.IdCod_Impuesto_Iva, PorcentajeDesc = PorDescUnitario }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

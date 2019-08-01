@@ -39,13 +39,11 @@ namespace Core.Erp.Data.Facturacion
                                  gi_por_iva = q.gi_por_iva,
                                  gi_Iva = q.gi_Iva,
                                  gi_Total = q.gi_Total,
+                                 IdCentroCosto = q.IdCentroCosto,
                                  cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
-                //Lista.ForEach(V =>
-                //{
-                //    V.pr_descripcion = V.pr_descripcion + " " + V.pr_descripcion +"-"+V.nom_presentacion+"-"+V.ca_Categoria+ " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
-                //});
+
                 return Lista;
             }
             catch (Exception)
@@ -104,7 +102,9 @@ namespace Core.Erp.Data.Facturacion
                                  gi_Iva = q.pd_iva,
                                  gi_Total = q.pd_total,
                                  IdEmpresa_pf = q.IdEmpresa,
-                                 IdSucursal_pf = q.IdSucursal
+                                 IdSucursal_pf = q.IdSucursal,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -151,8 +151,9 @@ namespace Core.Erp.Data.Facturacion
                                  gi_Iva = q.pd_iva,
                                  gi_Total = q.pd_total,
                                  IdEmpresa_pf = q.IdEmpresa,
-                                 IdSucursal_pf = q.IdSucursal
-
+                                 IdSucursal_pf = q.IdSucursal,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 Lista.ForEach(V =>

@@ -201,8 +201,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridView_notaDebito_det.GetEditor('sc_Precio').SetValue(data.precio_1);
-                GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCod_Impuesto_Iva);
+                GridView_notaDebito_det.GetEditor('sc_Precio').SetValue(data.precio);
+                GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCodImpuesto);
             },
             error: function (error) {
             }
