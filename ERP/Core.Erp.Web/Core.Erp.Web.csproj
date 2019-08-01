@@ -1203,6 +1203,12 @@
     <Compile Include="Reportes\Inventario\INV_010_Rpt.Designer.cs">
       <DependentUpon>INV_010_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Inventario\INV_012_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_012_Rpt.Designer.cs">
+      <DependentUpon>INV_012_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Inventario\INV_013_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -9181,7 +9187,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\Index.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\_GridViewPartial_detalle_op.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\_GridViewPartial_orden_pago_dc.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\Index.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\_GridViewPartial_ordenes_pagos.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_001.cshtml" />
@@ -9209,7 +9214,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\_GridViewPartial_tipo_orden_pago.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Retencion\_GridViewPartial_deudas_sin_ret.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\_GridViewPartial_nota_credito.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\_GridViewPartial_nota_credito_dc.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\Anular.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\Index.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\Modificar.cshtml" />
@@ -9679,7 +9683,6 @@
     <Content Include="Areas\RRHH\Views\Contrato\_GridViewPartial_contratos_por_vencer.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\Index.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\_GridViewPartial_nota_debito.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\_GridViewPartial_nota_debito_dc.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\_CmbProveedor_CXP.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\Modificar.cshtml" />
@@ -10614,6 +10617,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_008_Rpt.resx">
       <DependentUpon>INV_008_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_009_Rpt.resx">
+      <DependentUpon>INV_009_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_011_Rpt.resx">
       <DependentUpon>INV_011_Rpt.cs</DependentUpon>

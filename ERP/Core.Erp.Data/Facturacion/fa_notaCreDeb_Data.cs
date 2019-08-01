@@ -264,6 +264,8 @@ namespace Core.Erp.Data.Facturacion
                                 Entity.Serie1 = info.Serie1 = ultimo_talonario.Establecimiento;
                                 Entity.Serie2 = info.Serie2 = ultimo_talonario.PuntoEmision;
                                 Entity.NumNota_Impresa = info.NumNota_Impresa = ultimo_talonario.NumDocumento;
+                                Entity.NumAutorizacion = null;
+                                Entity.Fecha_Autorizacion = null;
                             }
                         }
                         else
@@ -275,6 +277,9 @@ namespace Core.Erp.Data.Facturacion
                             info_talonario.NumDocumento = info.NumNota_Impresa;
                             info_talonario.IdSucursal = info.IdSucursal;
                             info_talonario.Usado = true;
+
+                            Entity.NumAutorizacion = info_talonario.NumAutorizacion;
+                            Entity.Fecha_Autorizacion = DateTime.Now.Date;
 
                             data_talonario.modificar_estado_usadoDB(info_talonario);
                         }
