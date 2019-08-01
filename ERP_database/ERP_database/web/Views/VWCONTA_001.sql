@@ -3,19 +3,57 @@ AS
 SELECT dbo.ct_cbtecble_det.IdEmpresa, dbo.ct_cbtecble_det.IdTipoCbte, dbo.ct_cbtecble_det.IdCbteCble, dbo.ct_cbtecble_det.secuencia, dbo.ct_cbtecble.cb_Fecha, dbo.ct_cbtecble.cb_Observacion, dbo.ct_cbtecble.cb_Estado, 
                   dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_plancta.pc_Cuenta, dbo.ct_cbtecble_det.dc_Valor, CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Debe, 
                   CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, dbo.ct_cbtecble_tipo.tc_TipoCbte, dbo.ct_cbtecble_det.dc_Observacion, dbo.tb_sucursal.Su_Descripcion, 
-                  dbo.seg_usuario.Nombre AS NombreUsuario
-FROM     dbo.ct_cbtecble INNER JOIN
+                  dbo.seg_usuario.Nombre AS NombreUsuario, dbo.ct_cbtecble_det.IdPunto_cargo_grupo, dbo.ct_cbtecble_det.IdPunto_cargo, dbo.ct_cbtecble_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion, 
+                  dbo.ct_punto_cargo.nom_punto_cargo, dbo.ct_punto_cargo_grupo.nom_punto_cargo_grupo
+FROM     dbo.ct_punto_cargo_grupo INNER JOIN
+                  dbo.ct_punto_cargo ON dbo.ct_punto_cargo_grupo.IdEmpresa = dbo.ct_punto_cargo.IdEmpresa AND dbo.ct_punto_cargo_grupo.IdPunto_cargo_grupo = dbo.ct_punto_cargo.IdPunto_cargo_grupo RIGHT OUTER JOIN
+                  dbo.ct_cbtecble INNER JOIN
                   dbo.ct_cbtecble_det ON dbo.ct_cbtecble.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ct_cbtecble.IdTipoCbte = dbo.ct_cbtecble_det.IdTipoCbte AND dbo.ct_cbtecble.IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble INNER JOIN
                   dbo.ct_plancta ON dbo.ct_cbtecble_det.IdEmpresa = dbo.ct_plancta.IdEmpresa AND dbo.ct_cbtecble_det.IdCtaCble = dbo.ct_plancta.IdCtaCble INNER JOIN
                   dbo.ct_cbtecble_tipo ON dbo.ct_cbtecble.IdEmpresa = dbo.ct_cbtecble_tipo.IdEmpresa AND dbo.ct_cbtecble.IdTipoCbte = dbo.ct_cbtecble_tipo.IdTipoCbte INNER JOIN
-                  dbo.tb_sucursal ON dbo.ct_cbtecble.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.ct_cbtecble.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
+                  dbo.tb_sucursal ON dbo.ct_cbtecble.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.ct_cbtecble.IdSucursal = dbo.tb_sucursal.IdSucursal ON dbo.ct_punto_cargo.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND 
+                  dbo.ct_punto_cargo.IdPunto_cargo = dbo.ct_cbtecble_det.IdPunto_cargo LEFT OUTER JOIN
+                  dbo.ct_CentroCosto ON dbo.ct_cbtecble_det.IdEmpresa = dbo.ct_CentroCosto.IdEmpresa AND dbo.ct_cbtecble_det.IdCentroCosto = dbo.ct_CentroCosto.IdCentroCosto LEFT OUTER JOIN
                   dbo.seg_usuario ON dbo.ct_cbtecble.IdUsuario = dbo.seg_usuario.IdUsuario
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCONTA_001';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         Width = 1500
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ct_punto_cargo"
+            Begin Extent = 
+               Top = 273
+               Left = 1055
+               Bottom = 436
+               Right = 1300
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ct_punto_cargo_grupo"
+            Begin Extent = 
+               Top = 7
+               Left = 1364
+               Bottom = 170
+               Right = 1624
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -47,13 +85,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[25] 4[16] 2[3] 3) )"
+         Configuration = "(H (1[89] 4[3] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -121,20 +161,20 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "ct_cbtecble"
             Begin Extent = 
-               Top = 47
-               Left = 450
-               Bottom = 582
-               Right = 632
+               Top = 0
+               Left = 0
+               Bottom = 535
+               Right = 182
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ct_cbtecble_det"
             Begin Extent = 
-               Top = 194
-               Left = 0
-               Bottom = 324
-               Right = 197
+               Top = 28
+               Left = 485
+               Bottom = 376
+               Right = 730
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -171,25 +211,24 @@ Begin DesignProperties =
          End
          Begin Table = "seg_usuario"
             Begin Extent = 
-               Top = 7
-               Left = 680
-               Bottom = 401
-               Right = 974
+               Top = 20
+               Left = 0
+               Bottom = 414
+               Right = 294
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 9
-         Width = 284
-         Width = 1500
+         Begin Table = "ct_CentroCosto"
+            Begin Extent = 
+               Top = 6
+               Left = 986
+               Bottom = 257
+               Right = 1231
+            End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCONTA_001';
+
+
 
 
 
