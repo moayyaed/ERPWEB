@@ -593,7 +593,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (producto != null)
             {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
-                info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
             }                
 
             if (ModelState.IsValid)
@@ -613,7 +613,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     if (producto != null)
                     {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
-                        info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                        //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
                     }                        
 
                     if (ModelState.IsValid)

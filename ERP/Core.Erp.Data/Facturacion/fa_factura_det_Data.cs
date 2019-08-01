@@ -55,10 +55,7 @@ namespace Core.Erp.Data.Facturacion
                                  cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
-                Lista.ForEach(V =>
-                {
-                    V.pr_descripcion = V.pr_descripcion + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
-                });
+
                 return Lista;
             }
             catch (Exception)
@@ -101,7 +98,9 @@ namespace Core.Erp.Data.Facturacion
                                  lote_num_lote = q.lote_num_lote,
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  tp_manejaInven = q.tp_ManejaInven,
-                                 se_distribuye = q.se_distribuye
+                                 se_distribuye = q.se_distribuye,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -153,7 +152,9 @@ namespace Core.Erp.Data.Facturacion
                                  lote_num_lote = q.lote_num_lote,
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  tp_manejaInven = q.tp_ManejaInven,
-                                 se_distribuye = q.se_distribuye
+                                 se_distribuye = q.se_distribuye,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
                 Lista.ForEach(V =>

@@ -121,7 +121,7 @@
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
             });
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
@@ -216,7 +216,8 @@
 <script type="text/javascript">
     function SetPrecioProducto(s, e) {
         var datos = {
-            IdProducto: s.GetValue()
+            IdProducto: s.GetValue(),
+            IdNivel: $('#IdNivel').val()
         }
         $.ajax({
             type: 'POST',
@@ -228,7 +229,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridView_proforma_det.GetEditor('pd_precio').SetValue(data.precio_1);
+                GridView_proforma_det.GetEditor('pd_precio').SetValue(data.precio);
+                GridView_proforma_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCodImpuesto);
+                GridView_proforma_det.GetEditor('pd_por_descuento_uni').SetValue(data.PorcentajeDesc);
             },
             error: function (error) {
             }

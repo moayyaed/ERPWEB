@@ -221,7 +221,8 @@
 <script type="text/javascript">
     function SetPrecioProducto(s, e) {
         var datos = {
-            IdProducto: s.GetValue()
+            IdProducto: s.GetValue(),
+            IdNivel: $('#IdNivel').val()
         }
         $.ajax({
             type: 'POST',
@@ -233,8 +234,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridView_factura_det.GetEditor('vt_Precio').SetValue(data.precio_1);
-                GridView_factura_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCod_Impuesto_Iva);
+                GridView_factura_det.GetEditor('vt_Precio').SetValue(data.precio);
+                GridView_factura_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCodImpuesto);
+                GridView_factura_det.GetEditor('vt_PorDescUnitario').SetValue(data.PorcentajeDesc);
             },
             error: function (error) {
             }

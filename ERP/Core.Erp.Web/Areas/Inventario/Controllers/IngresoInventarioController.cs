@@ -495,7 +495,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 info_det.cc_Descripcion = string.Empty;
             else
-                if (info_det.IdCentroCosto != info_det.IdCentroCosto)
             {
                 var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
                 if (cc != null)
@@ -533,10 +532,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             edited_info.se_distribuye = info_det.se_distribuye;
 
             #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
                 edited_info.cc_Descripcion = string.Empty;
             else
-                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
             {
                 var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
                 if (cc != null)
