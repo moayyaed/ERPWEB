@@ -441,26 +441,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetLotesPorProducto(int IdSucursal = 0, int IdBodega = 0, decimal IdProducto = 0, decimal IdCliente = 0)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var resultado = bus_producto.get_info(IdEmpresa,IdProducto);
-            if (resultado == null)
-                resultado = new in_Producto_Info();
-
-            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            if (cliente != null && cliente.EsClienteExportador)
-            {
-                resultado.IdCod_Impuesto_Iva = "IVA0";
-            }
-
-            if (resultado.IdProducto_padre > 0)
-                    List_producto.set_list(bus_producto.get_list_stock_lotes(IdEmpresa, IdSucursal, IdBodega, Convert.ToDecimal(resultado.IdProducto_padre)));
-                else
-                List_producto.set_list(new List<in_Producto_Info>());
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult Get_NivelDescuento_x_FormaPago(int IdEmpresa = 0, int IdSucursal = 0, string IdCatalogo_FormaPago = "")
         {
             tb_sucursal_FormaPago_x_fa_NivelDescuento_Info info_NivelDescuento_x_FormaPago = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Info();
@@ -482,13 +462,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
         #region funciones del detalle
-
-        public ActionResult GridViewPartial_LoteProforma()
-        {
-            var model = List_producto.get_list();            
-            return PartialView("_GridViewPartial_LoteProforma", model);
-        }
-
         private void cargar_combos_detalle()
         {
             var lst_impuesto = bus_impuesto.get_list("IVA", false);

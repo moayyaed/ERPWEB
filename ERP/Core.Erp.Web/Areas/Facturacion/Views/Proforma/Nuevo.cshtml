@@ -83,24 +83,6 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="OpModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Lotes disponibles</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Action("GridViewPartial_LoteProforma")
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-6">
@@ -218,30 +200,15 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            @*<div class="col-md-1">
-                <div class="form-group">
-                    <label for="IdProforma">       </label>
-                    @Html.TextBoxFor(q => q.IdProforma, new { @class = "form-control", @id = "IdProforma", @placeholder = "# Proforma" })
-                    @Html.ValidationMessageFor(q => q.IdProforma, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <label for="btn_buscar">                    </label>
-                    <button type="button" class="btn btn-primary form-control" id="btn_buscar" onclick="MostrarModalProformas();" title="Buscar proformas">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>*@
             <div class="col-md-2">
-                <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
                 <button type="button" class="btn btn-primary" id="btn_desbloquear" onclick="MostrarModalDesbloqueo();">
                     <i class="fa fa-lock"></i>
                 </button>
-                
+                <label id="EstadoDesbloqueo" class="text-danger" style="margin-left:10px;" hidden></label>
             </div>
         </div>
     </div>
+    <br />
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-12">
@@ -346,78 +313,7 @@
             error: function (error) {
             }
         });
-    };
-    function MostrarModal() {
-        GridView_LoteProforma.PerformCallback();
-        $("#OpModal").modal("show");
-    }
-
-    function SetLoteDetalle(ID) {
-        if (Number($("#Secuencia").text()) > 0) {
-            var datos = {
-                Secuencia: $("#Secuencia").text(),
-                IdTransaccionSession: $("#IdTransaccionSession").val(),
-                IdProducto: ID
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("ModificarLineaProducto", "Proforma",new { Area = "Facturacion"})',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    GridView_proforma_det.PerformCallback();
-                },
-                error: function (error) {
-                }
-            });
-        } else {
-            $.ajax({
-                url: '@Url.Action("ChangeValuePartial", "Proforma",new { Area = "Facturacion"})',
-                type: "GET",
-                data: { value: ID },
-                success: function (data) {
-                    $('#ajaxDiv').html(data);
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
-                }
-            });
-        }
-        $("#Secuencia").text(0);
-        $("#OpModal").modal("hide");
-    }
-
-    function SeleccionarLote(s, e) {
-        $("#Secuencia").text(0);
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),
-            IdBodega: $("#IdBodega").val(),
-            IdProducto: s.GetValue(),
-            IdCliente: IdCliente.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetLotesPorProducto", "Proforma",new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridView_proforma_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
-                if (data.IdProducto_padre > 0) {
-                    MostrarModal();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
+    };   
 
     function cargar_fecha_vencimiento() {
         var vida = Number($("#pf_plazo").val());

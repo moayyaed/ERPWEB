@@ -54,55 +54,6 @@
         });
     });
 
-    function MostrarModal() {
-        GridView_LoteDebitoFacturacion.PerformCallback();
-        $("#OpModal").modal("show");
-    }
-
-    function SetLoteDetalle(ID) {
-
-        $.ajax({
-            url: '@Url.Action("ChangeValuePartial", "NotaDeDebitoFacturacion",new { Area = "Facturacion"})',
-            type: "GET",
-            data: { value: ID },
-            success: function (data) {
-                $('#ajaxDiv').html(data);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
-            }
-        });
-
-        $("#OpModal").modal("hide");
-
-    }
-
-    function SeleccionarLote(s,e) {
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),
-            IdPuntoVta: $("#IdPuntoVta").val(),
-            IdProducto: s.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetLotesPorProducto", "NotaDeDebitoFacturacion", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCod_Impuesto_Iva);
-                if (data.IdProducto_padre > 0) {
-                    MostrarModal();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
-
     function get_info_cliente() {
         var tipo = IdCliente.GetValue();
 
@@ -365,23 +316,6 @@
             </h4>
         </div>
     }
-    <div class="modal fade" id="OpModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Lotes disponibles</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Action("GridViewPartial_LoteDebitoFacturacion")
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="modal fade" id="FacturasModal" role="dialog">
         <div class="modal-dialog modal-lg">

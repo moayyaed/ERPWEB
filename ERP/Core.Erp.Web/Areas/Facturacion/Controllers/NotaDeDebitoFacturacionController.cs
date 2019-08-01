@@ -156,23 +156,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.NTDB.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetLotesPorProducto(int IdSucursal = 0, int IdPuntoVta = 0, decimal IdProducto = 0)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
-            if (resultado == null)
-                resultado = new in_Producto_Info();
-
-            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
-            if (punto_venta != null)
-            {
-                if (resultado.IdProducto_padre > 0)
-                    List_producto.set_list(bus_producto.get_list_stock_lotes(IdEmpresa, IdSucursal, Convert.ToInt32(punto_venta.IdBodega), Convert.ToDecimal(resultado.IdProducto_padre)));
-            }
-            else
-                List_producto.set_list(new List<in_Producto_Info>());
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
         public JsonResult get_info_cliente(decimal IdCliente = 0, int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -298,13 +281,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         #endregion
         #region funciones del detalle
-
-        public ActionResult GridViewPartial_LoteDebitoFacturacion()
-        {
-            var model = List_producto.get_list();
-            return PartialView("_GridViewPartial_LoteNotaDebitoFacturacion", model);
-        }
-
         private void cargar_combos_detalle()
         {
             var lst_impuesto = bus_impuesto.get_list("IVA", false);

@@ -192,55 +192,6 @@
         $('#ModalDesbloqueo').on('shown.bs.modal', function() { $("#ContraseniaAdministrador").focus(); }) 
     });
 
-    function MostrarModal() {
-        GridView_LoteProforma.PerformCallback();
-        $("#OpModal").modal("show");
-    }
-
-    function SetLoteDetalle(ID) {
-
-        $.ajax({
-            url: '@Url.Action("ChangeValuePartial", "Proforma",new { Area = "Facturacion"})',
-            type: "GET",
-            data: { value: ID },
-            success: function (data) {
-                $('#ajaxDiv').html(data);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
-            }
-        });
-
-        $("#OpModal").modal("hide");
-
-    }
-
-    function SeleccionarLote(s,e) {
-        var datos = {
-            IdSucursal: $("#IdSucursal").val(),
-            IdBodega: $("#IdBodega").val(),
-            IdProducto: s.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetLotesPorProducto", "Proforma",new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridView_proforma_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
-                if (data.IdProducto_padre > 0) {
-                    MostrarModal();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
-
     function cargar_fecha_vencimiento() {
         var vida = Number($("#pf_plazo").val());
         var from = $("#pf_fecha").val().split("/")

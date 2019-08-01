@@ -20,9 +20,10 @@
         settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
         settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
 
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "SeleccionarLote";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "SetPrecioProducto";
     })
     .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.ProformaController().get_list_bajo_demandaProducto,
     new Core.Erp.Web.Areas.Facturacion.Controllers.ProformaController().get_info_bajo_demandaProducto).Bind((Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_proforma_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Facturacion.fa_proforma_det_Info>)) ? "" : (Model == 0 ? "" : Model));
 }
 @comboBox.GetHtml()
+
