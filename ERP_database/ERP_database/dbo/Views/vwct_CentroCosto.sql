@@ -1,11 +1,10 @@
 ﻿CREATE VIEW dbo.vwct_CentroCosto
 AS
-SELECT        dbo.ct_CentroCosto.IdEmpresa, dbo.ct_CentroCosto.IdCentroCosto, dbo.ct_CentroCosto.IdCentroCostoPadre, dbo.ct_CentroCosto.IdNivel, dbo.ct_CentroCosto.cc_Descripcion, dbo.ct_CentroCosto.EsMovimiento, 
-                         dbo.ct_CentroCosto.Estado, dbo.ct_CentroCostoNivel.nv_Descripcion, ct_CentroCosto_1.cc_Descripcion AS cc_Descripcion_Padre
-FROM            dbo.ct_CentroCosto INNER JOIN
-                         dbo.ct_CentroCostoNivel ON dbo.ct_CentroCosto.IdEmpresa = dbo.ct_CentroCostoNivel.IdEmpresa AND dbo.ct_CentroCosto.IdNivel = dbo.ct_CentroCostoNivel.IdNivel LEFT OUTER JOIN
-                         dbo.ct_CentroCosto AS ct_CentroCosto_1 ON dbo.ct_CentroCosto.IdEmpresa = ct_CentroCosto_1.IdEmpresa AND dbo.ct_CentroCosto.IdCentroCostoPadre = ct_CentroCosto_1.IdCentroCosto AND 
-                         dbo.ct_CentroCostoNivel.IdEmpresa = ct_CentroCosto_1.IdEmpresa AND dbo.ct_CentroCostoNivel.IdNivel = ct_CentroCosto_1.IdNivel
+SELECT dbo.ct_CentroCosto.IdEmpresa, dbo.ct_CentroCosto.IdCentroCosto, dbo.ct_CentroCosto.IdCentroCostoPadre, dbo.ct_CentroCosto.IdNivel, dbo.ct_CentroCosto.cc_Descripcion, dbo.ct_CentroCosto.EsMovimiento, 
+                  dbo.ct_CentroCosto.Estado, dbo.ct_CentroCostoNivel.nv_Descripcion, ct_CentroCosto_1.cc_Descripcion AS cc_Descripcion_Padre
+FROM     dbo.ct_CentroCosto INNER JOIN
+                  dbo.ct_CentroCostoNivel ON dbo.ct_CentroCosto.IdEmpresa = dbo.ct_CentroCostoNivel.IdEmpresa AND dbo.ct_CentroCosto.IdNivel = dbo.ct_CentroCostoNivel.IdNivel LEFT OUTER JOIN
+                  dbo.ct_CentroCosto AS ct_CentroCosto_1 ON dbo.ct_CentroCosto.IdEmpresa = ct_CentroCosto_1.IdEmpresa AND dbo.ct_CentroCosto.IdCentroCostoPadre = ct_CentroCosto_1.IdCentroCosto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwct_CentroCosto';
 
@@ -104,10 +103,10 @@ Begin DesignProperties =
          End
          Begin Table = "ct_CentroCosto_1"
             Begin Extent = 
-               Top = 47
-               Left = 639
-               Bottom = 177
-               Right = 848
+               Top = 120
+               Left = 706
+               Bottom = 250
+               Right = 915
             End
             DisplayFlags = 280
             TopColumn = 2
@@ -136,14 +135,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -151,4 +150,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwct_CentroCosto';
+
+
 

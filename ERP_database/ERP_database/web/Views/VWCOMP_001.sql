@@ -1,27 +1,27 @@
 ﻿CREATE VIEW web.VWCOMP_001
 AS
-SELECT        d.IdEmpresa, d.IdSucursal, d.IdOrdenCompra, d.Secuencia, c.Tipo, c.SecuenciaTipo, d.IdProducto, su.Su_Descripcion, c.oc_fecha, c.oc_observacion, c.Estado, term.Descripcion AS NombreTerminoPago, 
-                         CAST(c.oc_plazo AS varchar(20)) + ' días' AS oc_plazo, c.IdProveedor, per.pe_nombreCompleto AS NombreProveedor, CASE WHEN prov.pr_telefonos IS NULL 
-                         THEN '' ELSE prov.pr_telefonos END + CASE WHEN prov.pr_telefonos IS NOT NULL AND prov.pr_celular IS NOT NULL THEN '-' ELSE '' END + CASE WHEN prov.pr_celular IS NULL 
-                         THEN '' ELSE prov.pr_celular END AS TelefonosProveedor, prov.pr_direccion AS DireccionProveedor, per.pe_cedulaRuc AS RucProveedor, com.Descripcion AS NombreComprador, pro.pr_descripcion AS NombreProducto, 
-                         uni.Descripcion AS NomUnidadMedida, d.do_Cantidad, d.do_precioCompra, d.do_porc_des, d.do_descuento, d.do_precioFinal, d.do_subtotal, d.do_iva, d.do_subtotal + d.do_iva AS do_total, d.Por_Iva, 
-                         CASE WHEN d .Por_Iva > 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS SubtotalIVA, CASE WHEN d .Por_Iva = 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS Subtotal0, 
-                         d.do_Cantidad * d.do_descuento AS DescuentoTotal
-FROM            dbo.com_ordencompra_local AS c INNER JOIN
-                         dbo.com_ordencompra_local_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdOrdenCompra = d.IdOrdenCompra INNER JOIN
-                         dbo.com_comprador AS com ON c.IdEmpresa = com.IdEmpresa AND c.IdComprador = com.IdComprador INNER JOIN
-                         dbo.tb_sucursal AS su ON c.IdEmpresa = su.IdEmpresa AND c.IdSucursal = su.IdSucursal INNER JOIN
-                         dbo.cp_proveedor AS prov ON c.IdEmpresa = prov.IdEmpresa AND c.IdProveedor = prov.IdProveedor INNER JOIN
-                         dbo.tb_persona AS per ON prov.IdPersona = per.IdPersona INNER JOIN
-                         dbo.in_UnidadMedida AS uni ON d.IdUnidadMedida = uni.IdUnidadMedida INNER JOIN
-                         dbo.com_TerminoPago AS term ON term.IdEmpresa = c.IdEmpresa AND c.IdTerminoPago = term.IdTerminoPago LEFT OUTER JOIN
-                         dbo.in_Producto AS pro ON d.IdEmpresa = pro.IdEmpresa AND d.IdProducto = pro.IdProducto
+SELECT d.IdEmpresa, d.IdSucursal, d.IdOrdenCompra, d.Secuencia, c.Tipo, c.SecuenciaTipo, d.IdProducto, su.Su_Descripcion, c.oc_fecha, c.oc_observacion, c.Estado, term.Descripcion AS NombreTerminoPago, CAST(c.oc_plazo AS varchar(20)) 
+                  + ' días' AS oc_plazo, c.IdProveedor, per.pe_nombreCompleto AS NombreProveedor, CASE WHEN prov.pr_telefonos IS NULL THEN '' ELSE prov.pr_telefonos END + CASE WHEN prov.pr_telefonos IS NOT NULL AND 
+                  prov.pr_celular IS NOT NULL THEN '-' ELSE '' END + CASE WHEN prov.pr_celular IS NULL THEN '' ELSE prov.pr_celular END AS TelefonosProveedor, prov.pr_direccion AS DireccionProveedor, per.pe_cedulaRuc AS RucProveedor, 
+                  com.Descripcion AS NombreComprador, pro.pr_descripcion AS NombreProducto, uni.Descripcion AS NomUnidadMedida, d.do_Cantidad, d.do_precioCompra, d.do_porc_des, d.do_descuento, d.do_precioFinal, d.do_subtotal, d.do_iva, 
+                  d.do_subtotal + d.do_iva AS do_total, d.Por_Iva, CASE WHEN d .Por_Iva > 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS SubtotalIVA, 
+                  CASE WHEN d .Por_Iva = 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS Subtotal0, d.do_Cantidad * d.do_descuento AS DescuentoTotal, dbo.seg_usuario.Nombre AS NombreUsuario
+FROM     dbo.com_ordencompra_local AS c INNER JOIN
+                  dbo.com_ordencompra_local_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdOrdenCompra = d.IdOrdenCompra INNER JOIN
+                  dbo.com_comprador AS com ON c.IdEmpresa = com.IdEmpresa AND c.IdComprador = com.IdComprador INNER JOIN
+                  dbo.tb_sucursal AS su ON c.IdEmpresa = su.IdEmpresa AND c.IdSucursal = su.IdSucursal INNER JOIN
+                  dbo.cp_proveedor AS prov ON c.IdEmpresa = prov.IdEmpresa AND c.IdProveedor = prov.IdProveedor INNER JOIN
+                  dbo.tb_persona AS per ON prov.IdPersona = per.IdPersona INNER JOIN
+                  dbo.in_UnidadMedida AS uni ON d.IdUnidadMedida = uni.IdUnidadMedida INNER JOIN
+                  dbo.com_TerminoPago AS term ON term.IdEmpresa = c.IdEmpresa AND c.IdTerminoPago = term.IdTerminoPago LEFT OUTER JOIN
+                  dbo.seg_usuario ON c.IdUsuario = dbo.seg_usuario.IdUsuario LEFT OUTER JOIN
+                  dbo.in_Producto AS pro ON d.IdEmpresa = pro.IdEmpresa AND d.IdProducto = pro.IdProducto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' End
          Begin Table = "term"
             Begin Extent = 
                Top = 666
@@ -41,6 +41,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    End
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "seg_usuario"
+            Begin Extent = 
+               Top = 214
+               Left = 982
+               Bottom = 377
+               Right = 1276
+            End
+            DisplayFlags = 280
+            TopColumn = 8
          End
       End
    End
@@ -90,14 +100,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    End
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -109,13 +119,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[65] 4[5] 2[8] 3) )"
+         Configuration = "(H (1[13] 4[58] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -177,7 +189,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -672
+         Top = 0
          Left = 0
       End
       Begin Tables = 
@@ -185,18 +197,18 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 7
                Left = 24
-               Bottom = 137
+               Bottom = 492
                Right = 241
             End
             DisplayFlags = 280
-            TopColumn = 2
+            TopColumn = 8
          End
          Begin Table = "d"
             Begin Extent = 
-               Top = 133
-               Left = 420
-               Bottom = 306
-               Right = 683
+               Top = 70
+               Left = 361
+               Bottom = 243
+               Right = 624
             End
             DisplayFlags = 280
             TopColumn = 2
@@ -250,7 +262,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
-     ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
+        ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
+
+
 
 
 
