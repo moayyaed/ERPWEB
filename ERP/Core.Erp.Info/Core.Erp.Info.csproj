@@ -403,6 +403,7 @@
     <Compile Include="Reportes\Inventario\INV_016_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_017_Info.cs" />
     <Compile Include="Reportes\Inventario\INV_018_Info.cs" />
+    <Compile Include="Reportes\Inventario\INV_019_Info.cs" />
     <Compile Include="Reportes\Presupuesto\PRE_001_Info.cs" />
     <Compile Include="Reportes\Produccion\PRO_001_Info.cs" />
     <Compile Include="Reportes\RRHH\ROL_001_Info.cs" />
