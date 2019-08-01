@@ -9,7 +9,6 @@
 
 namespace Core.Erp.Data
 {
-
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -52,18 +51,18 @@ namespace Core.Erp.Data
         public DbSet<ct_CentroCosto> ct_CentroCosto { get; set; }
         public DbSet<vwct_CentroCosto> vwct_CentroCosto { get; set; }
         public DbSet<ct_cbtecble_det> ct_cbtecble_det { get; set; }
-        public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
-        public DbSet<ct_punto_cargo_grupo> ct_punto_cargo_grupo { get; set; }
         public DbSet<ct_cbtecble_Plantilla> ct_cbtecble_Plantilla { get; set; }
         public DbSet<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
         public DbSet<vwct_cbtecble_Plantilla_det> vwct_cbtecble_Plantilla_det { get; set; }
-        public DbSet<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public DbSet<vwct_periodo> vwct_periodo { get; set; }
         public DbSet<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
         public DbSet<vwct_anio_fiscal_x_cuenta_utilidad> vwct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public DbSet<vwct_anio_fiscal_x_tb_sucursal_SinCierre> vwct_anio_fiscal_x_tb_sucursal_SinCierre { get; set; }
         public DbSet<vwct_anio_fiscal_x_tb_sucursal> vwct_anio_fiscal_x_tb_sucursal { get; set; }
         public DbSet<vwct_cbtecble_det> vwct_cbtecble_det { get; set; }
+        public DbSet<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
+        public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
+        public DbSet<ct_punto_cargo_grupo> ct_punto_cargo_grupo { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

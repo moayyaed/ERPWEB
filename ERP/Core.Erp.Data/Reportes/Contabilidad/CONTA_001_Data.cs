@@ -38,7 +38,13 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                                  dc_Observacion = q.dc_Observacion,
                                  tc_TipoCbte = q.tc_TipoCbte,
                                  Su_Descripcion = q.Su_Descripcion,
-                                 NombreUsuario = q.NombreUsuario
+                                 NombreUsuario = q.NombreUsuario,
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 IdPunto_cargo = q.IdPunto_cargo,
+                                 IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                                 nom_punto_cargo = q.nom_punto_cargo,
+                                 nom_punto_cargo_grupo = q.nom_punto_cargo_grupo
                              }).ToList();
                 }
 

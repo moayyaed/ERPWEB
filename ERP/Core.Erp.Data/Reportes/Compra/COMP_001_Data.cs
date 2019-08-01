@@ -53,7 +53,8 @@ namespace Core.Erp.Data.Reportes
                         Subtotal0 = q.Subtotal0,
                         SubtotalIVA = q.SubtotalIVA,
                         Su_Descripcion = q.Su_Descripcion,
-                        TelefonosProveedor = q.TelefonosProveedor
+                        TelefonosProveedor = q.TelefonosProveedor,
+                        NombreUsuario = q.NombreUsuario
                         
                     }).ToList();
                 }

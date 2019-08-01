@@ -53,7 +53,13 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  dc_Valor_Debe = q.dc_Valor_Debe,
                                  dc_Valor_Haber = q.dc_Valor_Haber,
                                  dc_Observacion = q.dc_Observacion,
-                                 NombreUsuario = q.NombreUsuario
+                                 NombreUsuario = q.NombreUsuario,
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 IdCentroCosto = q.IdCentroCosto,
+                                 IdPunto_cargo = q.IdPunto_cargo,
+                                 IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                                 nom_punto_cargo = q.nom_punto_cargo,
+                                 nom_punto_cargo_grupo = q.nom_punto_cargo_grupo
                              }).ToList();
                 }
                 return Lista;
