@@ -157,6 +157,19 @@
         GridViewPartial_guias_remision_det.PerformCallback();
         $("#ProformasModal").modal("hide");
     }
+
+    function CrearModificarCliente() {
+        var location = GetPathServer();
+        if(IdCliente.GetValue() > 0)
+        {
+            var win = window.open(location + "/Facturacion/Cliente/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
 </script>
 @using (Html.BeginForm("Nuevo", "GuiaRemision", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -210,9 +223,17 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="IdCliente"></label>
-                        <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
+                        <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">
+                            <i class="fa fa-external-link-square"></i>
+                        </button>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="DatosCliente">Información adicional</label>
+                        <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
+                    </div>
+                </div>  
                 <div class="col-md-3" id="datos_punto_venta1">
                     <div class="form-group">
                         <label for="vt_serie1">Establecimiento*</label>
@@ -367,7 +388,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="pf_observacion">Observación</label>
-                    @Html.TextAreaFor(q => q.gi_Observacion, new { @class = "form-control" })
+                    @Html.TextBoxFor(q => q.gi_Observacion, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.gi_Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -392,13 +413,16 @@
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="detalle_guia">
-                <div class="col-md-12">
+                <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" onclick="MostrarModal()" title="Mostrar facturas sin guia">
-                            <i class="fa fa-search"></i>
-                        </button>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary" onclick="MostrarModal()" title="Buscar facturas sin guia">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+                <br />
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -409,7 +433,7 @@
                     </div>
                 </div>
 
-            </div>
+                </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_documentos_relacionados">
                 <div class="row">
                     <div class="col-md-12">
@@ -538,13 +562,14 @@
 <script>
 $(function () {
     MostrarDatosFactura();
-    CargarPuntosDeVenta();    
+    CargarPuntosDeVenta();
     GetUltimoDocumento();
     CargarPuntosDeVenta_Factura();
     GetUltimoDocumento_Factura();
     get_direccion();
     get_placa();
     GetDireccionOrigen();
+    cargar_contactos()
 
     $("#IdSucursal").change(function () {
         CargarPuntosDeVenta();
@@ -793,55 +818,32 @@ function get_direccion() {
     });
 }
 
-
 function cargar_contactos() {
-
-    $("#IdContacto").empty();
     var codigo = IdCliente.GetValue();
 
-    var datos = {
-        IdCliente: codigo
-    }
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(datos),
-        url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
-        async: false,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            $.each(data, function (i, row) {
-                $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
-            });
-        },
-        error: function (error) {
+    if (codigo > 0)
+    {
+        var datos = {
+            IdCliente: codigo
         }
-    });
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_contactos", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#DatosCliente").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
+    else{
+        $("#DatosCliente").val("");
+    }
 }
-
-function GetInfoProducto(s, e) {
-    $("#Secuencia").text(0);
-    var datos = {
-        IdEmpresa: $("#IdEmpresa").val(),
-        IdProducto: s.GetValue()
-
-    }
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(datos),
-        url: '@Url.Action("GetInfoProducto", "GuiaRemision",new { Area = "Facturacion"})',
-        async: false,
-        bDeferRender: true,
-        bProcessing: true,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
-        },
-        error: function (error) {
-        }
-    });
-};
 </script>
 
 

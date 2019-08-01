@@ -474,6 +474,17 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             return Json(EstadoDesbloqueo, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult SetPrecioProducto(decimal IdProducto = 0)
+        {
+            in_Producto_Bus bus_producto = new in_Producto_Bus();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
+            if (resultado == null)
+                resultado = new in_Producto_Info();
+            
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region cargar combo
@@ -809,6 +820,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return PartialView("_Producto_imagen", model);
         }
         #endregion
+
         #region Cargar Unidad de medida
         public ActionResult CargarUnidadMedida()
         {

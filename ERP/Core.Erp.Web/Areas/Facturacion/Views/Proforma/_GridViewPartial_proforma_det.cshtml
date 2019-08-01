@@ -75,7 +75,7 @@
             column.FieldName = "pd_cantidad";
             column.Caption = "cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -87,19 +87,19 @@
             column.FieldName = "pd_precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
             });
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "pd_por_descuento_uni";
             column.Caption = "% Desc. uni.";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -111,7 +111,7 @@
         {
             column.FieldName = "IdCod_Impuesto";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.Visible = false;
             column.EditorProperties().ComboBox(p =>
             {
@@ -128,7 +128,7 @@
             column.FieldName = "pd_precio_final";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -144,7 +144,7 @@
             column.FieldName = "pd_iva";
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -152,14 +152,14 @@
             column.FieldName = "pd_total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCentroCosto";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(15);
             column.Visible = false;
             column.VisibleIndex = 7;
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -173,7 +173,7 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -188,6 +188,7 @@
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-lock\" onclick=\"MostrarModalPrecios('" + c.KeyValue + "');\"></span>");
             });
         });
+
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "pd_subtotal").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "pd_iva").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "pd_total").DisplayFormat = "{0:n2}";
@@ -199,6 +200,11 @@
                 MVCxGridView g = sender as MVCxGridView;
                 e.Editor.ReadOnly = true;
             }
+            if (e.Column.FieldName == "pd_precio" && SessionFixed.EsSuperAdmin != "True")
+            {
+                MVCxGridView g = sender as MVCxGridView;
+                e.Editor.ReadOnly = true;
+            }
         };
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdCliente'] = IdCliente.GetValue(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); e.customArgs['NivelDescuento'] = $('#IdNivel').val();}";
@@ -206,3 +212,26 @@
     });
 }
 @grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function SetPrecioProducto(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetPrecioProducto", "Producto",new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_proforma_det.GetEditor('pd_precio').SetValue(data.precio_1);
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

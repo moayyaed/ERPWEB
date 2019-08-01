@@ -49,7 +49,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(25);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -57,7 +57,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(25);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -73,7 +73,7 @@
             column.FieldName = "sc_cantidad";
             column.Caption = "cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -85,7 +85,7 @@
             column.FieldName = "sc_Precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -97,7 +97,7 @@
         {
             column.FieldName = "sc_PordescUni";
             column.Caption = "% Desc. uni.";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -109,7 +109,7 @@
         {
             column.FieldName = "IdCod_Impuesto_Iva";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.Visible = false;
             column.EditorProperties().ComboBox(p =>
             {
@@ -126,7 +126,7 @@
             column.FieldName = "sc_precioFinal";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -134,7 +134,7 @@
             column.FieldName = "sc_subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -142,7 +142,7 @@
             column.FieldName = "sc_iva";
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -150,7 +150,7 @@
             column.FieldName = "sc_total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -185,3 +185,27 @@
     });
 }
 @grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function SetPrecioProducto(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetPrecioProducto", "Producto",new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_notaDebito_det.GetEditor('sc_Precio').SetValue(data.precio_1);
+                GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCod_Impuesto_Iva);
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

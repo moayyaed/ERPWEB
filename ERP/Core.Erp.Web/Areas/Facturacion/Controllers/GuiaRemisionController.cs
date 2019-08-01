@@ -400,13 +400,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #endregion
 
         #region Json
-        public JsonResult GetInfoProducto(int IdEmpresa = 0, int IdProducto = 0)
-        {
-            in_Producto_Bus bus_producto = new in_Producto_Bus();
-            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
+        //public JsonResult GetInfoProducto(int IdEmpresa = 0, int IdProducto = 0)
+        //{
+        //    in_Producto_Bus bus_producto = new in_Producto_Bus();
+        //    var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
 
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(resultado, JsonRequestBehavior.AllowGet);
+        //}
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
@@ -518,8 +518,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         public JsonResult cargar_contactos(decimal IdCliente = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            var resultado = bus_contacto.get_list(IdEmpresa, IdCliente);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            fa_cliente_contactos_Info info_contacto = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
+            var resultado = info_contacto.Direccion + " " + info_contacto.Correo + " " + info_contacto.Telefono + " " + info_contacto.Celular;
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult get_direccion_origen(int  IdSucursal = 0)

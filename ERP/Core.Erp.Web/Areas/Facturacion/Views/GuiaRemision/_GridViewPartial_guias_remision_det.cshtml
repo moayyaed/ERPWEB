@@ -1,4 +1,5 @@
 @using System.Web.UI.WebControls;
+@using Core.Erp.Web.Helps;
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
@@ -41,7 +42,6 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["IdProducto"] = 0;
-            e.NewValues["IdCod_Impuesto_Iva"] = "IVA0";
             e.NewValues["gi_por_desc"] = "0";
             e.NewValues["gi_cantidad"] = "1";
         };
@@ -204,7 +204,14 @@
             column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
-
+        settings.CellEditorInitialize = (sender, e) =>
+        {
+            if (e.Column.FieldName == "gi_precio" && SessionFixed.EsSuperAdmin != "True")
+            {
+                MVCxGridView g = sender as MVCxGridView;
+                e.Editor.ReadOnly = true;
+            }
+        };
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "gi_Total").DisplayFormat = "{0:n2}";
         settings.Settings.ShowFooter = true;
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
@@ -212,3 +219,27 @@
     });
 }
 @grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function SetPrecioProducto(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetPrecioProducto", "Producto",new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_guias_remision_det.GetEditor('gi_precio').SetValue(data.precio_1);
+                GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>
