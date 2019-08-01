@@ -51,6 +51,13 @@
                             @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdNumMovi"># movimiento</label>
+                            @Html.TextBoxFor(q => q.IdNumMovi, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdNumMovi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->
