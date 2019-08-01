@@ -46,47 +46,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="dIAS">Días</label>
-                            @Html.TextBoxFor(q => q.dIAS, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(q => q.dIAS, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="">Fecha inicio*</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_ini, settings =>
-                            {
-                                settings.Name = "fecha_ini";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="IdProductoPadre">Producto</label>
-                            @Html.Partial("_CmbProducto_Inventario", Model)
-                            @Html.ValidationMessageFor(q => q.IdProductoPadre, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="IdMarca">Marca</label>
-                            @Html.DropDownListFor(q => q.IdMarca, new SelectList(ViewBag.lst_marca, "IdMarca", "Descripcion"), new { @class = "form-control", @id = "IdMarca" })
-                            @Html.ValidationMessageFor(q => q.IdMarca, "", new { @class = "text-danger" })
+                            <label for="IdMovi_inven_tipo">Tipo movimiento</label>
+                            @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_movi, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
