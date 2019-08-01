@@ -82,11 +82,11 @@ namespace Core.Erp.Data.Inventario
                             IdMovi_inven_tipo_elaboracion_ing = info.IdMovi_inven_tipo_elaboracion_ing,
                             IdMotivo_Inv_elaboracion_egr = info.IdMotivo_Inv_elaboracion_egr,
                             IdMotivo_Inv_elaboracion_ing = info.IdMotivo_Inv_elaboracion_ing,
-                            IdMotivo_Inv_ajuste_egr = Entity.IdMotivo_Inv_ajuste_egr,
-                            IdMotivo_Inv_ajuste_ing = Entity.IdMotivo_Inv_ajuste_ing,
-                            IdMovi_inven_tipo_ajuste_egr = Entity.IdMovi_inven_tipo_ajuste_egr,
-                            IdMovi_inven_tipo_ajuste_ing = Entity.IdMovi_inven_tipo_ajuste_ing,
-                            IdCatalogoEstadoAjuste = Entity.IdCatalogoEstadoAjuste
+                            IdMotivo_Inv_ajuste_egr = info.IdMotivo_Inv_ajuste_egr,
+                            IdMotivo_Inv_ajuste_ing = info.IdMotivo_Inv_ajuste_ing,
+                            IdMovi_inven_tipo_ajuste_egr = info.IdMovi_inven_tipo_ajuste_egr,
+                            IdMovi_inven_tipo_ajuste_ing = info.IdMovi_inven_tipo_ajuste_ing,
+                            IdCatalogoEstadoAjuste = info.IdCatalogoEstadoAjuste
                         };
                         Context.in_parametro.Add(Entity);
                     }
@@ -120,7 +120,7 @@ namespace Core.Erp.Data.Inventario
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

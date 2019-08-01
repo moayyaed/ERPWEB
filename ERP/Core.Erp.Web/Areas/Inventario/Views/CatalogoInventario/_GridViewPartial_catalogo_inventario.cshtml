@@ -80,15 +80,14 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-
-        settings.Columns.Add("Orden", "Orden").Width = Unit.Percentage(20);
-        settings.Columns.Add("Abrebiatura", "Abreviatura").Width = Unit.Percentage(20);
+        settings.Columns.Add("IdCatalogo", "ID").Width = Unit.Percentage(20);
         settings.Columns.Add("Nombre", "Nombre").Width = Unit.Percentage(40);
+        settings.Columns.Add("Orden", "Orden").Width = Unit.Percentage(20);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
             column.EditorProperties().CheckBox(sp =>
             {
 

@@ -168,8 +168,13 @@ namespace Core.Erp.Data.Inventario
             try
             {
                 int sec = 1;
+
                 using (Entities_inventario Context = new Entities_inventario())
                 {
+                    var TipoMovimiento = Context.in_movi_inven_tipo.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo).FirstOrDefault();
+                    if (TipoMovimiento == null)
+                        return false;
+
                     in_Ing_Egr_Inven Entity = new in_Ing_Egr_Inven
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -184,7 +189,7 @@ namespace Core.Erp.Data.Inventario
                         Estado = info.Estado = "A",
                         IdResponsable = info.IdResponsable,
                         signo = info.signo,
-                        IdEstadoAproba = info.IdEstadoAproba,
+                        IdEstadoAproba = TipoMovimiento.IdCatalogoAprobacion,
                         IdUsuarioAR = info.IdUsuarioAR,
                         FechaAR = info.FechaAR,
                         FechaDespacho = info.FechaDespacho,
@@ -201,13 +206,13 @@ namespace Core.Erp.Data.Inventario
                             item.mv_costo_sinConversion = data_costo.get_ultimo_costo(info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info.IdBodega), item.IdProducto, info.cm_fecha);
                         in_Ing_Egr_Inven_det entity_det = new in_Ing_Egr_Inven_det
                         {
-                            
+
                             IdEmpresa = info.IdEmpresa,
                             IdSucursal = info.IdSucursal,
                             IdMovi_inven_tipo = info.IdMovi_inven_tipo,
                             IdNumMovi = info.IdNumMovi,
                             Secuencia = item.Secuencia = sec,
-                            IdBodega =(int) info.IdBodega,
+                            IdBodega = (int)info.IdBodega,
                             IdProducto = item.IdProducto,
 
                             dm_observacion = item.dm_observacion,
@@ -239,10 +244,15 @@ namespace Core.Erp.Data.Inventario
                     }
                     Context.SaveChanges();
 
-                    // ejecutando el sp para in_movi_det
-                    Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
+
+                    if (TipoMovimiento.IdCatalogoAprobacion == "APRO")
+                    {
+                        Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
+                        Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
+                    }
+                    
                 }
-                Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
+                
                 return true;
             }
             catch (Exception ex)
@@ -257,11 +267,15 @@ namespace Core.Erp.Data.Inventario
             try
             {
                 int sec = 1;
-                //Reversar_Aprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, "");
-                ReversarAprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi);
+                
+                //ReversarAprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi);
 
                 using (Entities_inventario Context = new Entities_inventario())
                 {
+                    var TipoMovimiento = Context.in_movi_inven_tipo.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo).FirstOrDefault();
+                    if (TipoMovimiento == null)
+                        return false;
+
                     in_Ing_Egr_Inven Entity = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo && q.IdNumMovi == info.IdNumMovi);
                     if (Entity == null) return false;
 
@@ -271,6 +285,7 @@ namespace Core.Erp.Data.Inventario
                     Entity.IdResponsable = info.IdResponsable;
                     Entity.IdMotivo_Inv = info.IdMotivo_Inv;
                     Entity.IdBodega = info.IdBodega;
+                    Entity.IdEstadoAproba = TipoMovimiento.IdCatalogoAprobacion;
                     Entity.IdUsuarioUltModi = info.IdUsuarioUltModi;
                     Entity.Fecha_UltMod = DateTime.Now;
 
@@ -319,9 +334,11 @@ namespace Core.Erp.Data.Inventario
                         sec++;
                     }
                     Context.SaveChanges();
-
-                    Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
-                    Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
+                    if (TipoMovimiento.IdCatalogoAprobacion == "APRO")
+                    {
+                        Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
+                        Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
+                    }
                     return true;
                 }
             }
