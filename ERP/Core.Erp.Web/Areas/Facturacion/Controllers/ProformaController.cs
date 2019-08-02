@@ -24,6 +24,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     {
         #region Variables
         fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
+        fa_proforma_det_Bus bus_proforma_det = new fa_proforma_det_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         fa_cliente_x_fa_Vendedor_x_sucursal_Bus bus_v_x_c = new fa_cliente_x_fa_Vendedor_x_sucursal_Bus();
         fa_proforma_det_List List_det = new fa_proforma_det_List();
@@ -282,6 +283,59 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
         }
+
+        public ActionResult ModificarProFact(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            fa_proforma_Info model = bus_proforma.get_info(IdEmpresa, IdSucursal, IdProforma);
+            if (model == null)
+                return RedirectToAction("Index");
+            model.IdEntidad = model.IdCliente;
+            model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdProforma);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.pf_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ModificarProFact(fa_proforma_Info model)
+        {
+            model.lst_det = List_det.get_list(model.IdTransaccionSession);
+            if (!validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+            model.IdUsuario_modificacion = Session["IdUsuario"].ToString();
+
+            if (!bus_proforma.modificarDB(model))
+            {
+                ViewBag.mensaje = mensaje;
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            };
+
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
+        }
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0, decimal IdProforma = 0)
         {
             #region Validar Session
@@ -479,6 +533,17 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_proforma_det", model);
         }
 
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_proforma_facturada_det()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            SessionFixed.IdNivelDescuento = Request.Params["NivelDescuento"] != null ? Request.Params["NivelDescuento"].ToString() : SessionFixed.IdNivelDescuento;
+            SessionFixed.IdEntidad = !string.IsNullOrEmpty(Request.Params["IdCliente"]) ? Request.Params["IdCliente"].ToString() : "-1";
+            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
+            return PartialView("_GridViewPartial_proforma_facturada_det", model);
+        }
+
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] fa_proforma_det_Info info_det)
         {
@@ -531,31 +596,24 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (producto != null)
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
-
-                    //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-                    //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    //if (cliente != null)
-                    //{
-                    //    info_det.pd_precio = producto.precio_1;
-                    //    int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
-
-                    //    var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
-
-                    //    if (SessionFixed.EsSuperAdmin == "False")
-                    //    {
-                    //        info_det.pd_por_descuento_uni = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
-                    //    }
-                    //    else
-                    //    {
-                    //        info_det.pd_por_descuento_uni = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.pd_por_descuento_uni;
-                    //    }
-                    //}
                 }
             }
             List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_proforma_det", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate_Fact([ModelBinder(typeof(DevExpressEditorsBinder))] fa_proforma_fact_det_Info info_det)
+        {
+            if (ModelState.IsValid) { }            
+            List_det.UpdateRowFact(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            bus_proforma_det.modificarDB(List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(q => q.Secuencia == info_det.Secuencia).FirstOrDefault());
+
+            var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
+            return PartialView("_GridViewPartial_proforma_facturada_det", model);
         }
 
         public ActionResult EditingDelete(int Secuencia)
@@ -659,6 +717,41 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
         }
 
+        public void UpdateRowFact(fa_proforma_fact_det_Info info_det, decimal IdTransaccionSession)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            fa_proforma_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            var producto = bus_producto.get_info(IdEmpresa, edited_info.IdProducto);
+            if (producto != null)
+            {
+                edited_info.pr_descripcion = producto.pr_descripcion;
+            }
+           
+            if (!string.IsNullOrEmpty(edited_info.IdCod_Impuesto))
+            {
+                var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto);
+                if (impuesto != null)
+                    edited_info.pd_por_iva = impuesto.porcentaje;
+            }
+
+            edited_info.NumCotizacion = info_det.NumCotizacion;
+            edited_info.NumOPr = info_det.NumOPr;
+
+            #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
+        }
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<fa_proforma_det_Info> list = get_list(IdTransaccionSession);

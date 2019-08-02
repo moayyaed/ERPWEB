@@ -61,5 +61,29 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
+
+        public bool modificarDB(fa_proforma_det_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_proforma_det Entity = Context.fa_proforma_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdProforma == info.IdProforma).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.NumCotizacion = info.NumCotizacion;
+                    Entity.NumOPr = info.NumOPr;
+                    Entity.IdCentroCosto = info.IdCentroCosto;
+
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

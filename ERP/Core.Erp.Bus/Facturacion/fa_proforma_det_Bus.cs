@@ -23,5 +23,18 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public bool modificarDB(fa_proforma_det_Info info)
+        {
+            try
+            {
+                return odata.modificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

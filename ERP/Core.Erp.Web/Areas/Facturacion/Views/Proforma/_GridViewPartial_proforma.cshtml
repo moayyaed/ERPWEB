@@ -78,7 +78,7 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoCierre")) == "FACTURADO")
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") }) + "&nbsp;" +
+                        Html.ActionLink("Modificar", "ModificarProFact", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
