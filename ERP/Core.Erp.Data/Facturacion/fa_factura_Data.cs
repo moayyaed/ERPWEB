@@ -636,7 +636,7 @@ namespace Core.Erp.Data.Facturacion
                     }).ToList();
                     foreach (var item in lstVtaDscto)
                     {
-                        if (!string.IsNullOrEmpty(IdCtaCble_Dscto))
+                        if (!string.IsNullOrEmpty(IdCtaCble_Dscto) && item.vt_DescuentoTotal > 0)
                             diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
                             {
                                 IdEmpresa = diario.IdEmpresa,
@@ -675,7 +675,7 @@ namespace Core.Erp.Data.Facturacion
                     if (descuadre < -0.02 || 0.02 <= descuadre)
                         return null;
 
-                    if (descuadre <= 0.02 || -0.02 <= descuadre && descuadre != 0)
+                    if ((descuadre <= 0.02 || -0.02 <= descuadre) && descuadre != 0)
                     {
                         if (descuadre > 0)
                             diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor < 0).FirstOrDefault().dc_Valor -= descuadre;

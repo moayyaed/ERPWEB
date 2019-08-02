@@ -11,7 +11,7 @@ namespace Core.Erp.Data.General
             try
             {
                 using (Entities_general db = new Entities_general())
-                {
+                { if(!string.IsNullOrEmpty(info.IPUsuario))
                     db.tb_ColaImpresionDirecta.Add(new tb_ColaImpresionDirecta
                     {
                         IdEmpresa = info.IdEmpresa,
