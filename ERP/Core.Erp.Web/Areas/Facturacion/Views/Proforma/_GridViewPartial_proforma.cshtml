@@ -70,7 +70,15 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoCierre")) == "ABIERTO")
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") }) + "&nbsp;" +
+                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoCierre")) == "FACTURADO")
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdProforma = DataBinder.Eval(tc.DataItem, "IdProforma") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
@@ -88,6 +96,8 @@
         });
 
         settings.Columns.Add("IdProforma", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("pf_codigo", "Código").Width = Unit.Percentage(5);
+        
         settings.Columns.Add(column =>
         {
             column.FieldName = "pf_fecha";

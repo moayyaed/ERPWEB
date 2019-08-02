@@ -44,7 +44,9 @@ namespace Core.Erp.Data.Facturacion
                                  lote_num_lote = q.lote_num_lote,
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  IdCentroCosto = q.IdCentroCosto,
-                                 cc_Descripcion = q.cc_Descripcion
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 NumCotizacion = q.NumCotizacion,
+                                 NumOPr = q.NumOPr
                              }).ToList();
                 }
                 Lista.ForEach(V =>

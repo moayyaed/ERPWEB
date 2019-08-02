@@ -3,7 +3,8 @@ AS
 SELECT        dbo.fa_proforma_det.IdSucursal, dbo.fa_proforma_det.IdProforma, dbo.fa_proforma_det.Secuencia, dbo.fa_proforma_det.IdProducto, dbo.fa_proforma_det.pd_cantidad, dbo.fa_proforma_det.pd_precio, 
                          dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, dbo.fa_proforma_det.IdCod_Impuesto, 
                          dbo.fa_proforma_det.pd_por_iva, dbo.fa_proforma_det.pd_iva, dbo.fa_proforma_det.pd_total, dbo.fa_proforma_det.anulado, dbo.in_Producto.pr_descripcion, dbo.in_presentacion.nom_presentacion, 
-                         dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto, dbo.fa_proforma_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion, dbo.fa_proforma_det.IdEmpresa
+                         dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto, dbo.fa_proforma_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion, dbo.fa_proforma_det.IdEmpresa, dbo.fa_proforma_det.NumCotizacion, 
+                         dbo.fa_proforma_det.NumOPr
 FROM            dbo.ct_CentroCosto RIGHT OUTER JOIN
                          dbo.fa_proforma_det ON dbo.ct_CentroCosto.IdEmpresa = dbo.fa_proforma_det.IdEmpresa AND dbo.ct_CentroCosto.IdCentroCosto = dbo.fa_proforma_det.IdCentroCosto LEFT OUTER JOIN
                          dbo.in_presentacion INNER JOIN
@@ -99,7 +100,7 @@ Begin DesignProperties =
                Right = 584
             End
             DisplayFlags = 280
-            TopColumn = 11
+            TopColumn = 13
          End
          Begin Table = "in_presentacion"
             Begin Extent = 
@@ -155,6 +156,8 @@ Begin DesignProperties =
       End
    End
    Begin CriteriaPane =', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det';
+
+
 
 
 

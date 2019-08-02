@@ -58,7 +58,6 @@ namespace Core.Erp.Data
         public DbSet<fa_factura_resumen> fa_factura_resumen { get; set; }
         public DbSet<vwfa_factura_sin_automatico> vwfa_factura_sin_automatico { get; set; }
         public DbSet<vwfa_cliente_consulta> vwfa_cliente_consulta { get; set; }
-        public DbSet<vwfa_factura> vwfa_factura { get; set; }
         public DbSet<fa_cliente> fa_cliente { get; set; }
         public DbSet<fa_cliente_tipo> fa_cliente_tipo { get; set; }
         public DbSet<fa_parametro> fa_parametro { get; set; }
@@ -66,26 +65,27 @@ namespace Core.Erp.Data
         public DbSet<fa_MotivoTraslado> fa_MotivoTraslado { get; set; }
         public DbSet<fa_CambioProducto> fa_CambioProducto { get; set; }
         public DbSet<fa_CambioProductoDet> fa_CambioProductoDet { get; set; }
-        public DbSet<fa_factura> fa_factura { get; set; }
         public DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public DbSet<fa_PuntoVta> fa_PuntoVta { get; set; }
         public DbSet<vwfa_CambioProducto> vwfa_CambioProducto { get; set; }
         public DbSet<vwfa_CambioProductoDet> vwfa_CambioProductoDet { get; set; }
         public DbSet<vwfa_PuntoVta> vwfa_PuntoVta { get; set; }
-        public DbSet<vwfa_proforma> vwfa_proforma { get; set; }
-        public DbSet<fa_proforma> fa_proforma { get; set; }
         public DbSet<fa_factura_det> fa_factura_det { get; set; }
         public DbSet<fa_guia_remision_det> fa_guia_remision_det { get; set; }
-        public DbSet<fa_proforma_det> fa_proforma_det { get; set; }
         public DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
-        public DbSet<vwfa_proforma_det> vwfa_proforma_det { get; set; }
         public DbSet<vwfa_factura_det> vwfa_factura_det { get; set; }
         public DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
         public DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
-        public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
-        public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
-        public DbSet<vwfa_proforma_det_por_guia> vwfa_proforma_det_por_guia { get; set; }
+        public DbSet<fa_proforma_det> fa_proforma_det { get; set; }
+        public DbSet<vwfa_proforma_det> vwfa_proforma_det { get; set; }
         public DbSet<vwfa_proforma_det_por_facturar> vwfa_proforma_det_por_facturar { get; set; }
+        public DbSet<vwfa_proforma_det_por_guia> vwfa_proforma_det_por_guia { get; set; }
+        public DbSet<fa_factura> fa_factura { get; set; }
+        public DbSet<fa_guia_remision> fa_guia_remision { get; set; }
+        public DbSet<fa_proforma> fa_proforma { get; set; }
+        public DbSet<vwfa_proforma> vwfa_proforma { get; set; }
+        public DbSet<vwfa_factura> vwfa_factura { get; set; }
+        public DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

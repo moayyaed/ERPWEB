@@ -36,5 +36,7 @@ namespace Core.Erp.Data
         public string IdCentroCosto { get; set; }
         public string cc_Descripcion { get; set; }
         public int IdEmpresa { get; set; }
+        public Nullable<decimal> NumCotizacion { get; set; }
+        public Nullable<decimal> NumOPr { get; set; }
     }
 }

@@ -34,5 +34,6 @@ namespace Core.Erp.Data
         public Nullable<decimal> IdNumMovi_in_eg_x_inv { get; set; }
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public string vt_autorizacion { get; set; }
+        public string CodCbteVta { get; set; }
     }
 }

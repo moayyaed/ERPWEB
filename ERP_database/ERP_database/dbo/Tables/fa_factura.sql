@@ -3,7 +3,7 @@
     [IdSucursal]           INT           NOT NULL,
     [IdBodega]             INT           NOT NULL,
     [IdCbteVta]            NUMERIC (18)  NOT NULL,
-    [CodCbteVta]           VARCHAR (20)  NULL,
+    [CodCbteVta]           VARCHAR (500) NULL,
     [vt_tipoDoc]           VARCHAR (20)  NOT NULL,
     [vt_serie1]            VARCHAR (3)   NULL,
     [vt_serie2]            VARCHAR (3)   NULL,
@@ -44,6 +44,8 @@
     CONSTRAINT [FK_fa_factura_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_factura_tb_sis_Documento_Tipo_Talonario] FOREIGN KEY ([IdEmpresa], [vt_tipoDoc], [vt_serie2], [vt_serie1], [vt_NumFactura]) REFERENCES [dbo].[tb_sis_Documento_Tipo_Talonario] ([IdEmpresa], [CodDocumentoTipo], [PuntoEmision], [Establecimiento], [NumDocumento])
 );
+
+
 
 
 

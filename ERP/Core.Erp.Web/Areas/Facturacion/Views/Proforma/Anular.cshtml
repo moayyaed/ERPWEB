@@ -25,6 +25,17 @@
 
     }
     <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.pf_codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.pf_codigo, "", new { @class = "text-danger", @id = "pf_codigo", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
                 <div class="form-group">

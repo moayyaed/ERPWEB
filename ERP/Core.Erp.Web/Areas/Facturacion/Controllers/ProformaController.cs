@@ -641,6 +641,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.pd_iva = edited_info.pd_subtotal * (edited_info.pd_por_iva / 100);
             edited_info.pd_total = edited_info.pd_subtotal + edited_info.pd_iva;
 
+            edited_info.NumCotizacion = info_det.NumCotizacion;
+            edited_info.NumOPr = info_det.NumOPr;
+
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))

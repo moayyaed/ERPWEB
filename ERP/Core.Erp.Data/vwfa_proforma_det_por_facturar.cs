@@ -39,5 +39,7 @@ namespace Core.Erp.Data
         public string tp_ManejaInven { get; set; }
         public string cc_Descripcion { get; set; }
         public string IdCentroCosto { get; set; }
+        public Nullable<decimal> NumCotizacion { get; set; }
+        public Nullable<decimal> NumOPr { get; set; }
     }
 }

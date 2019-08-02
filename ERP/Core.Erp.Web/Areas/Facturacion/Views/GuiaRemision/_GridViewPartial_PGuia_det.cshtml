@@ -41,6 +41,18 @@
         });
         settings.Columns.Add(column =>
         {
+            column.FieldName = "NumCotizacion";
+            column.Caption = "# Cotizacion";
+            column.Width = Unit.Percentage(8);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumOPr";
+            column.Caption = "# Orden Pedido";
+            column.Width = Unit.Percentage(8);
+        });
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
             column.Width = Unit.Percentage(30);

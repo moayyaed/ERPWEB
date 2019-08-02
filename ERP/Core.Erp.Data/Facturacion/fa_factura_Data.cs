@@ -41,6 +41,7 @@ namespace Core.Erp.Data.Facturacion
                                  IdSucursal = q.IdSucursal,
                                  IdBodega = q.IdBodega,
                                  IdCbteVta = q.IdCbteVta,
+                                 CodCbteVta = q.CodCbteVta,
 
                                  vt_NumFactura = q.vt_NumFactura,
                                  vt_fecha = q.vt_fecha,
@@ -60,7 +61,7 @@ namespace Core.Erp.Data.Facturacion
 
                                  vt_autorizacion = q.vt_autorizacion,
                                  Fecha_Autorizacion = q.Fecha_Autorizacion,
-
+                                 
                                  EstadoBool = q.Estado == "A" ? true : false
 
                              }).ToList();

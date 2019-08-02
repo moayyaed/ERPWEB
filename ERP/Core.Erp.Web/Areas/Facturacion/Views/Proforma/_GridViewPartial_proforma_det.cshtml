@@ -51,7 +51,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -59,7 +59,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -111,7 +111,7 @@
         {
             column.FieldName = "IdCod_Impuesto";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.Visible = false;
             column.EditorProperties().ComboBox(p =>
             {
@@ -159,7 +159,7 @@
         {
             column.FieldName = "IdCentroCosto";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.Visible = false;
             column.VisibleIndex = 7;
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -173,8 +173,22 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumCotizacion";
+            column.Caption = "# Cotizacion";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumOPr";
+            column.Caption = "# Orden Pedido";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
