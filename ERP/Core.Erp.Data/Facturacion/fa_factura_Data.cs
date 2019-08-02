@@ -556,7 +556,7 @@ namespace Core.Erp.Data.Facturacion
                                 secuencia = secuencia++,
                                 IdCtaCble = item.IdCtaCble_vta,
                                 IdCentroCosto = item.IdCentroCosto,
-                                dc_Valor = Math.Round(item.vt_Subtotal * -1,2,MidpointRounding.AwayFromZero)
+                                dc_Valor = string.IsNullOrEmpty(IdCtaCble_Dscto) ? Math.Round(item.vt_Subtotal * -1,2,MidpointRounding.AwayFromZero) : Math.Round(item.vt_SubtotalSinDscto * -1, 2, MidpointRounding.AwayFromZero)
                             });
                     }
 
@@ -567,7 +567,8 @@ namespace Core.Erp.Data.Facturacion
                     {
                         q.Key.IdCentroCosto,
                         q.Key.IdCtaCble_vta,
-                        vt_Subtotal = q.Sum(g => g.vt_Subtotal)
+                        vt_Subtotal = q.Sum(g => g.vt_Subtotal),
+                        vt_SubtotalSinDscto = q.Sum(g => g.vt_SubtotalSinDscto)
                     }).ToList();
                     foreach (var item in lstVtaIVA0)
                     {
@@ -580,11 +581,15 @@ namespace Core.Erp.Data.Facturacion
                                 secuencia = secuencia++,
                                 IdCtaCble = item.IdCtaCble_vta,
                                 IdCentroCosto = item.IdCentroCosto,
-                                dc_Valor = Math.Round(item.vt_Subtotal * -1,2,MidpointRounding.AwayFromZero)
+                                dc_Valor = string.IsNullOrEmpty(IdCtaCble_Dscto) ? Math.Round(item.vt_Subtotal * -1, 2, MidpointRounding.AwayFromZero) : Math.Round(item.vt_SubtotalSinDscto * -1, 2, MidpointRounding.AwayFromZero)
                             });
                     }
+                    double DiferenciaSubtotal = 0;
+                    if(string.IsNullOrEmpty(IdCtaCble_Dscto))
+                        DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalConDscto,2,MidpointRounding.AwayFromZero);
+                    else
+                        DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalSinDscto, 2, MidpointRounding.AwayFromZero);
 
-                    var DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalConDscto,2,MidpointRounding.AwayFromZero);
                     if (DiferenciaSubtotal > 0)
                         diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
                     else
@@ -624,16 +629,35 @@ namespace Core.Erp.Data.Facturacion
                     #endregion
 
                     #region Descuento
+                    var lstVtaDscto = lst.GroupBy(q => new { q.IdCentroCosto }).Select(q => new
+                    {
+                        q.Key.IdCentroCosto,
+                        vt_DescuentoTotal = q.Sum(g => g.vt_DescuentoTotal)
+                    }).ToList();
+                    foreach (var item in lstVtaDscto)
+                    {
+                        if (!string.IsNullOrEmpty(IdCtaCble_Dscto))
+                            diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
+                            {
+                                IdEmpresa = diario.IdEmpresa,
+                                IdTipoCbte = diario.IdTipoCbte,
+                                IdCbteCble = diario.IdCbteCble,
+                                secuencia = secuencia++,
+                                IdCtaCble = IdCtaCble_Dscto,
+                                IdCentroCosto = item.IdCentroCosto,
+                                dc_Valor = Math.Round(item.vt_DescuentoTotal,2,MidpointRounding.AwayFromZero)
+                            });
+                    }
                     if (!string.IsNullOrEmpty(IdCtaCble_Dscto))
-                        diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
-                        {
-                            IdEmpresa = diario.IdEmpresa,
-                            IdTipoCbte = diario.IdTipoCbte,
-                            IdCbteCble = diario.IdCbteCble,
-                            secuencia = secuencia++,
-                            IdCtaCble = IdCtaCble_Dscto,
-                            dc_Valor = Convert.ToDouble(info.info_resumen.Descuento)
-                        });
+                    {
+                        DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Where(q => q.IdCtaCble == IdCtaCble_Dscto).Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) - (double)info.info_resumen.Descuento, 2, MidpointRounding.AwayFromZero);
+
+                        if (DiferenciaSubtotal > 0)
+                            diario.lst_ct_cbtecble_det.Where(q => q.IdCtaCble == IdCtaCble_Dscto).FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
+                        else
+                            if (DiferenciaSubtotal < 0)
+                            diario.lst_ct_cbtecble_det.Where(q => q.IdCtaCble == IdCtaCble_Dscto).FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
+                    }
                     #endregion
 
                     if (info.lst_det.Count == 0)
