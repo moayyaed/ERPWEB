@@ -44,6 +44,8 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<int> IdBodega_fact { get; set; }
         public string cc_Descripcion { get; set; }
         public string SecuencialUnico { get; set; }
+        public decimal NumCotizacion { get; set; }
+        public decimal NumOPr { get; set; }
         //public string ca_Categoria { get; set; }
         //public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         //public string lote_num_lote { get; set; }

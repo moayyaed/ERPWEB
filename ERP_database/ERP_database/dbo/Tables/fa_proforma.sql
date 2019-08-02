@@ -5,7 +5,7 @@
     [IdCliente]              NUMERIC (18)  NOT NULL,
     [IdTerminoPago]          VARCHAR (20)  NOT NULL,
     [pf_plazo]               INT           NOT NULL,
-    [pf_codigo]              VARCHAR (30)  NULL,
+    [pf_codigo]              VARCHAR (500) NULL,
     [pf_observacion]         VARCHAR (MAX) NULL,
     [pf_fecha]               DATETIME      NOT NULL,
     [pf_fecha_vcto]          DATETIME      NOT NULL,
@@ -30,6 +30,8 @@
     CONSTRAINT [FK_fa_proforma_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_proforma_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

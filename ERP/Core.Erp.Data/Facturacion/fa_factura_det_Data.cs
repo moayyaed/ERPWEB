@@ -100,7 +100,9 @@ namespace Core.Erp.Data.Facturacion
                                  tp_manejaInven = q.tp_ManejaInven,
                                  se_distribuye = q.se_distribuye,
                                  IdCentroCosto = q.IdCentroCosto,
-                                 cc_Descripcion = q.cc_Descripcion
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 NumCotizacion = q.NumCotizacion ?? 0,
+                                 NumOPr = q.NumOPr ?? 0
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -154,7 +156,9 @@ namespace Core.Erp.Data.Facturacion
                                  tp_manejaInven = q.tp_ManejaInven,
                                  se_distribuye = q.se_distribuye,
                                  IdCentroCosto = q.IdCentroCosto,
-                                 cc_Descripcion = q.cc_Descripcion
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 NumCotizacion = q.NumCotizacion ?? 0,
+                                 NumOPr = q.NumOPr ?? 0
                              }).ToList();
                 }
                 Lista.ForEach(V =>

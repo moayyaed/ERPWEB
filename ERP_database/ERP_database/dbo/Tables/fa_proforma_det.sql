@@ -18,6 +18,8 @@
     [IdCentroCosto]        VARCHAR (200) NULL,
     [IdPunto_cargo_grupo]  INT           NULL,
     [IdPunto_cargo]        INT           NULL,
+    [NumCotizacion]        NUMERIC (18)  NULL,
+    [NumOPr]               NUMERIC (18)  NULL,
     CONSTRAINT [PK_fa_proforma_det] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdProforma] ASC, [Secuencia] ASC),
     CONSTRAINT [FK_fa_proforma_det_ct_CentroCosto] FOREIGN KEY ([IdEmpresa], [IdCentroCosto]) REFERENCES [dbo].[ct_CentroCosto] ([IdEmpresa], [IdCentroCosto]),
     CONSTRAINT [FK_fa_proforma_det_ct_punto_cargo] FOREIGN KEY ([IdEmpresa], [IdPunto_cargo]) REFERENCES [dbo].[ct_punto_cargo] ([IdEmpresa], [IdPunto_cargo]),
@@ -26,6 +28,8 @@
     CONSTRAINT [FK_fa_proforma_det_in_Producto] FOREIGN KEY ([IdEmpresa], [IdProducto]) REFERENCES [dbo].[in_Producto] ([IdEmpresa], [IdProducto]),
     CONSTRAINT [FK_fa_proforma_det_tb_sis_Impuesto] FOREIGN KEY ([IdCod_Impuesto]) REFERENCES [dbo].[tb_sis_Impuesto] ([IdCod_Impuesto])
 );
+
+
 
 
 

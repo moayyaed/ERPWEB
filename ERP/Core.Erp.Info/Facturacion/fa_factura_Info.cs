@@ -105,6 +105,7 @@ namespace Core.Erp.Info.Facturacion
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public decimal IdCbteVta { get; set; }
+        public string CodCbteVta { get; set; }
         public DateTime vt_fecha { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }

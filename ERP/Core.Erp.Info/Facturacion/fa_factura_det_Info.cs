@@ -44,6 +44,8 @@ namespace Core.Erp.Info.Facturacion
         public double CantidadAnterior { get; set; }
         public bool? se_distribuye { get; set; }
         public string cc_Descripcion { get; set; }
+        public decimal NumCotizacion { get; set; }
+        public decimal NumOPr { get; set; }
         #endregion
 
     }

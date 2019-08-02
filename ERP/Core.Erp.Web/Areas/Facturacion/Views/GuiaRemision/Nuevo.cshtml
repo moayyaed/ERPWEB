@@ -170,6 +170,8 @@
             win.focus();
         }
     }
+
+
 </script>
 @using (Html.BeginForm("Nuevo", "GuiaRemision", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
@@ -196,6 +198,18 @@
         </div>
 
     }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.CodGuiaRemision, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodGuiaRemision, "", new { @class = "text-danger", @id = "CodGuiaRemision" })
+                </div>
+            </div>
+        </div>
+    </div>
 
         <div class="row">
             <div class="col-md-6">
@@ -843,6 +857,27 @@ function cargar_contactos() {
     else{
         $("#DatosCliente").val("");
     }
+}
+
+function SetCodigo() {
+    var datos = {
+        IdTransaccionSession: $("#IdTransaccionSession").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("SetCodigo", "GuiaRemision", new { Area = "Facturacion" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#CodGuiaRemision").val(data);
+        },
+        error: function (error) {
+        }
+    });
 }
 </script>
 

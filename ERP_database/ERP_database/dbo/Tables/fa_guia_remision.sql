@@ -4,7 +4,7 @@
     [IdBodega]               INT           NOT NULL,
     [IdGuiaRemision]         NUMERIC (18)  NOT NULL,
     [IdPuntoVta]             INT           NOT NULL,
-    [CodGuiaRemision]        VARCHAR (50)  NULL,
+    [CodGuiaRemision]        VARCHAR (500) NULL,
     [CodDocumentoTipo]       VARCHAR (20)  NOT NULL,
     [Serie1]                 VARCHAR (3)   NULL,
     [Serie2]                 VARCHAR (3)   NULL,
@@ -43,6 +43,8 @@
     CONSTRAINT [FK_fa_guia_remision_tb_sis_Documento_Tipo_Talonario] FOREIGN KEY ([IdEmpresa], [CodDocumentoTipo], [Serie2], [Serie1], [NumGuia_Preimpresa]) REFERENCES [dbo].[tb_sis_Documento_Tipo_Talonario] ([IdEmpresa], [CodDocumentoTipo], [PuntoEmision], [Establecimiento], [NumDocumento]),
     CONSTRAINT [FK_fa_guia_remision_tb_transportista] FOREIGN KEY ([IdEmpresa], [IdTransportista]) REFERENCES [dbo].[tb_transportista] ([IdEmpresa], [IdTransportista])
 );
+
+
 
 
 

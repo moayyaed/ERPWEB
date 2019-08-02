@@ -29,6 +29,9 @@ namespace Core.Erp.Info.Facturacion
         public string IdCentroCosto { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }
+        public Nullable<decimal> NumCotizacion { get; set; }
+        public Nullable<decimal> NumOPr { get; set; }
+
 
         #region Campos que no existen en la tabla
         public string pr_descripcion { get; set; }

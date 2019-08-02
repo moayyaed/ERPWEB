@@ -80,11 +80,18 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdCtaCble">Cuenta contable de utilidad*</label>
                     @Html.Partial("_CmbCuenta_Anio", Model.info_anio_ctautil.IdCtaCble)
                     @Html.ValidationMessageFor(q => q.info_anio_ctautil.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cuenta contable de cierre*</label>
+                    @Html.Partial("_CmbCuenta_Anio_Cierre", Model.info_anio_ctautil.IdCtaCbleCierre)
+                    @Html.ValidationMessageFor(q => q.info_anio_ctautil.IdCtaCbleCierre, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

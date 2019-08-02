@@ -4,7 +4,7 @@ SELECT        dbo.fa_proforma_det.IdEmpresa, dbo.fa_proforma_det.IdSucursal, dbo
                          dbo.fa_proforma_det.pd_precio, dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, 
                          dbo.fa_proforma_det.IdCod_Impuesto, dbo.fa_proforma_det.pd_por_iva, dbo.fa_proforma_det.pd_iva, dbo.fa_proforma_det.pd_total, dbo.fa_proforma_det.anulado, in_Producto_1.pr_descripcion, 
                          dbo.in_presentacion.nom_presentacion, in_Producto_1.lote_num_lote, in_Producto_1.lote_fecha_vcto, dbo.fa_proforma.IdCliente, in_Producto_1.se_distribuye, dbo.in_ProductoTipo.tp_ManejaInven, 
-                         dbo.fa_proforma_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion
+                         dbo.fa_proforma_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion, dbo.fa_proforma_det.NumCotizacion, dbo.fa_proforma_det.NumOPr
 FROM            dbo.ct_CentroCosto RIGHT OUTER JOIN
                          dbo.fa_proforma INNER JOIN
                          dbo.fa_proforma_det ON dbo.fa_proforma.IdEmpresa = dbo.fa_proforma_det.IdEmpresa AND dbo.fa_proforma.IdSucursal = dbo.fa_proforma_det.IdSucursal AND dbo.fa_proforma.IdProforma = dbo.fa_proforma_det.IdProforma ON 
@@ -23,6 +23,10 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'th = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -66,6 +70,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'th = 1500
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det_por_guia';
+
+
 
 
 
@@ -152,16 +158,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "in_Producto_1"
-            Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 272
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "in_ProductoTipo"
             Begin Extent = 
                Top = 270
@@ -172,12 +168,32 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "in_Producto_1"
+            Begin Extent = 
+               Top = 138
+               Left = 38
+               Bottom = 268
+               Right = 272
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ct_CentroCosto"
+            Begin Extent = 
+               Top = 18
+               Left = 660
+               Bottom = 148
+               Right = 869
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "fa_proforma"
             Begin Extent = 
-               Top = 6
-               Left = 263
-               Bottom = 211
-               Right = 477
+               Top = 14
+               Left = 645
+               Bottom = 219
+               Right = 859
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -190,17 +206,7 @@ Begin DesignProperties =
                Right = 550
             End
             DisplayFlags = 280
-            TopColumn = 11
-         End
-         Begin Table = "ct_CentroCosto"
-            Begin Extent = 
-               Top = 18
-               Left = 660
-               Bottom = 148
-               Right = 869
-            End
-            DisplayFlags = 280
-            TopColumn = 3
+            TopColumn = 0
          End
       End
    End
@@ -209,9 +215,11 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 24
+      Begin ColumnWidths = 28
          Width = 284
          Wid', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det_por_guia';
+
+
 
 
 

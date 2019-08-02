@@ -88,7 +88,7 @@ Begin DesignProperties =
                Right = 247
             End
             DisplayFlags = 280
-            TopColumn = 27
+            TopColumn = 1
          End
          Begin Table = "fa_cliente"
             Begin Extent = 
@@ -148,6 +148,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_guia_remision';
+
+
 
 
 GO

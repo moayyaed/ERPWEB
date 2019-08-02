@@ -437,7 +437,6 @@
     }
 
     function AddProformas() {
-
         var datos = {
             IDs: selectedIDs,
             IdTransaccionSession: $("#IdTransaccionSession").val()
@@ -452,19 +451,38 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
+                
             },
             error: function (error) {
             }
         });
-            selectedIDs = "";
+        selectedIDs = "";
         GridView_PFactura_det.PerformCallback();
         GridView_PFactura_det.UnselectRows();
         GridView_factura_det.PerformCallback();
-            $("#ProformasModal").modal("hide");
+        $("#ProformasModal").modal("hide");
     }
 
-
+    function SetCodigo() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetCodigo", "Factura", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#CodCbteVta").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
 
     function ValidarGrid() {
         var datos = {
@@ -678,6 +696,17 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.CodCbteVta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodCbteVta, "", new { @class = "text-danger", @id = "CodCbteVta", @readonly= "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">

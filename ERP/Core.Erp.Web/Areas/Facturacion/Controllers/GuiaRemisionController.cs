@@ -581,6 +581,26 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult SetCodigo(decimal IdTransaccionSession = 0)
+        {
+            string Codigo = "";
+            var ListaDetalle = detalle_info.get_list(IdTransaccionSession);
+            var lstCotizacion = ListaDetalle.GroupBy(q => q.NumCotizacion).Select(q => q.Key).ToList();
+            var lstOpr = ListaDetalle.GroupBy(q => q.NumOPr).Select(q => q.Key).ToList();
+
+            for (int i = 0; i < lstCotizacion.Count(); i++)
+            {
+                Codigo += (i == 0) ? Codigo = "Cot:" + lstCotizacion[i] : (i == (lstCotizacion.Count() - 1)) ? "-" + lstCotizacion[i] : "-" + lstCotizacion[i] + "-";
+            }
+
+            for (int i = 0; i < lstOpr.Count(); i++)
+            {
+                Codigo += (i == 0) ? Codigo = " Opr:" + lstOpr[i] : (i == (lstOpr.Count() - 1)) ? "-" + lstOpr[i] : "-" + lstOpr[i] + "-";
+            }
+
+            return Json(Codigo, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region funciones del detalle
