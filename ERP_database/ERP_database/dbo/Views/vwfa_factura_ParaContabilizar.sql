@@ -1,9 +1,9 @@
-﻿CREATE VIEW vwfa_factura_ParaContabilizar
+﻿CREATE VIEW [dbo].[vwfa_factura_ParaContabilizar]
 AS
 SELECT dbo.fa_factura_det.IdEmpresa, dbo.fa_factura_det.IdSucursal, dbo.fa_factura_det.IdBodega, dbo.fa_factura_det.IdCbteVta, dbo.fa_factura_det.Secuencia, dbo.fa_factura_det.vt_iva, dbo.fa_factura_det.vt_Subtotal, 
                   dbo.fa_factura_det.vt_total, dbo.fa_factura_det.IdCentroCosto, dbo.fa_factura_det.vt_por_iva, dbo.tb_sis_Impuesto_x_ctacble.IdCtaCble AS IdCtaCbleIva, dbo.tb_sis_Impuesto_x_ctacble.IdCtaCble_vta, dbo.fa_factura.vt_fecha, 
                   dbo.tb_persona.pe_nombreCompleto, dbo.fa_cliente.IdCtaCble_cxc_Credito, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.vt_Observacion, 
-                  dbo.fa_factura_resumen.SubtotalConDscto AS RSubtotal, dbo.fa_factura_resumen.ValorIVA AS RValorIva, dbo.fa_factura_resumen.Total AS RTotal
+                  dbo.fa_factura_resumen.SubtotalConDscto AS RSubtotal, dbo.fa_factura_resumen.ValorIVA AS RValorIva, dbo.fa_factura_resumen.Total AS RTotal, vt_cantidad*vt_Precio as vt_SubtotalSinDscto, vt_cantidad*vt_DescUnitario as vt_DescuentoTotal
 FROM     dbo.fa_factura_det INNER JOIN
                   dbo.fa_factura ON dbo.fa_factura_det.IdEmpresa = dbo.fa_factura.IdEmpresa AND dbo.fa_factura_det.IdSucursal = dbo.fa_factura.IdSucursal AND dbo.fa_factura_det.IdBodega = dbo.fa_factura.IdBodega AND 
                   dbo.fa_factura_det.IdCbteVta = dbo.fa_factura.IdCbteVta INNER JOIN

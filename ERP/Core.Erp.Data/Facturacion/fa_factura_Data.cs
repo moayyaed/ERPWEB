@@ -537,11 +537,12 @@ namespace Core.Erp.Data.Facturacion
 
                     #region Ventas con IVA
 
-                    var lstVtaIVA = lst.Where(q => q.vt_por_iva > 0).GroupBy(q => new { q.IdCtaCble_vta, q.IdCentroCosto }).Select(q => new
+                    var lstVtaIVA = lst.Where(q => q.vt_por_iva > 0).GroupBy(q => new { q.IdCtaCble_vta, q.IdCentroCosto,  }).Select(q => new
                     {
                         q.Key.IdCentroCosto,
                         q.Key.IdCtaCble_vta,
-                        vt_total = q.Sum(g=> g.vt_total)
+                        vt_Subtotal =  q.Sum(g=> g.vt_Subtotal),
+                        vt_SubtotalSinDscto = q.Sum(g=> g.vt_SubtotalSinDscto)
                     }).ToList();
 
                     foreach (var item in lstVtaIVA)
@@ -555,7 +556,7 @@ namespace Core.Erp.Data.Facturacion
                                 secuencia = secuencia++,
                                 IdCtaCble = item.IdCtaCble_vta,
                                 IdCentroCosto = item.IdCentroCosto,
-                                dc_Valor = Math.Round(item.vt_total*-1,2,MidpointRounding.AwayFromZero)
+                                dc_Valor = Math.Round(item.vt_Subtotal * -1,2,MidpointRounding.AwayFromZero)
                             });
                     }
 
@@ -566,7 +567,7 @@ namespace Core.Erp.Data.Facturacion
                     {
                         q.Key.IdCentroCosto,
                         q.Key.IdCtaCble_vta,
-                        vt_total = q.Sum(g => g.vt_total)
+                        vt_Subtotal = q.Sum(g => g.vt_Subtotal)
                     }).ToList();
                     foreach (var item in lstVtaIVA0)
                     {
@@ -579,7 +580,7 @@ namespace Core.Erp.Data.Facturacion
                                 secuencia = secuencia++,
                                 IdCtaCble = item.IdCtaCble_vta,
                                 IdCentroCosto = item.IdCentroCosto,
-                                dc_Valor = Math.Round(item.vt_total*-1,2,MidpointRounding.AwayFromZero)
+                                dc_Valor = Math.Round(item.vt_Subtotal * -1,2,MidpointRounding.AwayFromZero)
                             });
                     }
 
@@ -597,7 +598,7 @@ namespace Core.Erp.Data.Facturacion
                     {
                         q.Key.IdCtaCbleIva,
                     }).FirstOrDefault();
-                    if (!string.IsNullOrEmpty(lstIVA.IdCtaCbleIva))
+                    if (lstIVA != null && !string.IsNullOrEmpty(lstIVA.IdCtaCbleIva))
                         diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
                         {
                             IdEmpresa = diario.IdEmpresa,

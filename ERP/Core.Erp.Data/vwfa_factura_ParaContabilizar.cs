@@ -36,5 +36,7 @@ namespace Core.Erp.Data
         public decimal RSubtotal { get; set; }
         public decimal RValorIva { get; set; }
         public decimal RTotal { get; set; }
+        public double vt_SubtotalSinDscto { get; set; }
+        public double vt_DescuentoTotal { get; set; }
     }
 }
