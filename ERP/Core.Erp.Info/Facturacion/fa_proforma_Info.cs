@@ -50,6 +50,7 @@ namespace Core.Erp.Info.Facturacion
         #region Campos que no existen en la tabla
         public decimal IdEntidad { get; set; }
         public List<fa_proforma_det_Info> lst_det { get; set; }
+        public List<fa_proforma_fact_det_Info> lst_proforma_fact_det { get; set; }
         public string pe_nombreCompleto { get; set; }
         public double pd_total { get; set; }
         public double pd_iva { get; set; }

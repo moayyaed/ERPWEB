@@ -719,16 +719,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             string Codigo = "";
             var ListaDetalle = List_det.get_list(IdTransaccionSession);
             var lstCotizacion = ListaDetalle.GroupBy(q=>q.NumCotizacion).Select(q=> q.Key).ToList();
-            var lstOpr = ListaDetalle.GroupBy(q => q.NumOPr).Select(q => q.Key).ToList();            
+            var lstOpr = ListaDetalle.GroupBy(q => q.NumOPr).Select(q => q.Key).ToList();
 
             for (int i = 0; i < lstCotizacion.Count(); i++)
             {
-                Codigo += (i==0) ? Codigo = "Cot:" + lstCotizacion[i] : (i == (lstCotizacion.Count() - 1)) ? "-" + lstCotizacion[i] : "-" + lstCotizacion[i] + "-";
+                Codigo += (i == 0) ? Codigo = "Cot:" + lstCotizacion[i].ToString() : (i == (lstCotizacion.Count() - 1)) ? lstCotizacion[i].ToString() : "-" + lstCotizacion[i].ToString() + "-";
             }
 
             for (int i = 0; i < lstOpr.Count(); i++)
             {
-                Codigo += (i == 0) ? Codigo = " Opr:" + lstOpr[i] : (i == (lstOpr.Count() - 1)) ? "-" + lstOpr[i] : "-" + lstOpr[i] + "-";
+                Codigo += (i == 0) ? Codigo = " Opr:" + lstOpr[i].ToString() : (i == (lstOpr.Count() - 1)) ? lstOpr[i].ToString() : "-" + lstOpr[i].ToString() + "-";
             }
 
             return Json(Codigo, JsonRequestBehavior.AllowGet);

@@ -309,7 +309,7 @@
     }
 </script>
 
-@using (Html.BeginForm("Modificar", "Proforma", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("ModificarProFact", "Proforma", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdSucursal)
@@ -557,17 +557,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-12">
-                    @Html.Action("GridViewPartial_proforma_det")
+                    @Html.Action("GridViewPartial_proforma_facturada_det")
                 </div>
             </div>
         </div>
 
         <div class="box-footer">
-            @if (ViewBag.MostrarBoton ?? false)
-            {
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            }
-
             <a class="btn btn-default" href="@Url.Action("Index","Proforma",new { Area = "Facturacion" },null)">Cancelar</a>
         </div>
         @section Scripts {
