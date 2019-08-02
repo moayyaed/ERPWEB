@@ -20,7 +20,7 @@ namespace Core.Erp.Data
         public int IdTipoCbte { get; set; }
         public decimal IdCbteCble { get; set; }
     
-        public virtual ct_anio_fiscal_x_cuenta_utilidad ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public virtual ct_cbtecble ct_cbtecble { get; set; }
+        public virtual ct_anio_fiscal_x_cuenta_utilidad ct_anio_fiscal_x_cuenta_utilidad { get; set; }
     }
 }

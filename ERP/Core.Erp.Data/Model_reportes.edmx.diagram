@@ -49,9 +49,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWCXP_004" Width="1.5" PointX="3.375" PointY="35.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_013" Width="1.5" PointX="35.375" PointY="26.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_001" Width="1.5" PointX="3.375" PointY="26.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCXP_001" Width="1.5" PointX="7.375" PointY="36.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_009" Width="1.5" PointX="23.375" PointY="33.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCONTA_001" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_019" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_007" Width="1.5" PointX="37.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_007_Cobros" Width="1.5" PointX="23.375" PointY="29.75" />
@@ -83,7 +81,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWACTF_007" Width="1.5" PointX="35.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_017" Width="1.5" PointX="3.375" PointY="42.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_018" Width="1.5" PointX="21.375" PointY="42.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCOMP_001" Width="1.5" PointX="43.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_reportes.VWPRE_001" Width="1.5" PointX="13.375" PointY="32.75" />
         <EntityTypeShape EntityType="Model_reportes.VWFAC_018" Width="1.5" PointX="43.375" PointY="9.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_010" Width="1.5" PointX="15.375" PointY="43.75" />
@@ -103,6 +100,9 @@
         <EntityTypeShape EntityType="Model_reportes.VWINV_008" Width="1.5" PointX="41.375" PointY="35.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_012" Width="1.5" PointX="41.375" PointY="42.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_019" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCOMP_001" Width="1.5" PointX="5.375" PointY="36.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCONTA_001" Width="1.5" PointX="27.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCXP_001" Width="1.5" PointX="43.375" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -35,7 +35,7 @@ namespace Core.Erp.Data
         public string MotivoAnulacion { get; set; }
     
         public virtual ICollection<ct_cbtecble_det> ct_cbtecble_det { get; set; }
-        public virtual ct_punto_cargo_grupo ct_punto_cargo_grupo { get; set; }
         public virtual ICollection<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
+        public virtual ct_punto_cargo_grupo ct_punto_cargo_grupo { get; set; }
     }
 }

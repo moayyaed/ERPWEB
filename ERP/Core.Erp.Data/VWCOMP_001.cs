@@ -47,5 +47,6 @@ namespace Core.Erp.Data
         public double SubtotalIVA { get; set; }
         public double Subtotal0 { get; set; }
         public double DescuentoTotal { get; set; }
+        public string NombreUsuario { get; set; }
     }
 }

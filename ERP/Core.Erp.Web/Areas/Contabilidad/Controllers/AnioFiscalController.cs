@@ -44,6 +44,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             string model = "";
             return PartialView("_CmbCuenta_Anio", model);
         }
+        public ActionResult CmbCuenta_Anio_Cierre()
+        {
+            string model = "";
+            return PartialView("_CmbCuenta_Anio_Cierre", model);
+        }
         public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
@@ -52,7 +57,21 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
+
+
+
+        public List<ct_plancta_Info> get_list_bajo_demanda_Cierre(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_Cierre(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+
         #endregion
+
+
 
 
 
