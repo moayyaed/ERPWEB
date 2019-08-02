@@ -345,8 +345,6 @@ namespace Core.Erp.Data.Inventario
                     };
                 }
 
-                info.pr_descripcion_combo = info.pr_descripcion + " - " + info.ca_descripcion;
-
                 return info;
             }
             catch (Exception)
@@ -779,10 +777,7 @@ namespace Core.Erp.Data.Inventario
              
             }
             if (info != null)
-            {
-                info.pr_descripcion = info.pr_descripcion + " " + info.nom_presentacion + " - " + info.lote_num_lote + " - " + (info.lote_fecha_vcto != null ? Convert.ToDateTime(info.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
-                info.pr_descripcion_combo = info.pr_descripcion + " " + info.nom_presentacion + " - " + info.lote_num_lote + " - " + (info.lote_fecha_vcto != null ? Convert.ToDateTime(info.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
-            }
+                info.pr_descripcion_combo = info.pr_descripcion;
             else
                 info = new in_Producto_Info();
 

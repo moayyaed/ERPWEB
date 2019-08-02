@@ -980,6 +980,49 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_cliente_contactos' no tiene d
           <Property Name="Descripcion_Ciudad" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_factura_ParaContabilizar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_factura_ParaContabilizar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="vt_por_iva" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="vt_Observacion" />
+            <PropertyRef Name="RSubtotal" />
+            <PropertyRef Name="RValorIva" />
+            <PropertyRef Name="RTotal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="vt_iva" Type="float" Nullable="false" />
+          <Property Name="vt_Subtotal" Type="float" Nullable="false" />
+          <Property Name="vt_total" Type="float" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="varchar" MaxLength="200" />
+          <Property Name="vt_por_iva" Type="float" Nullable="false" />
+          <Property Name="IdCtaCbleIva" Type="varchar" MaxLength="20" />
+          <Property Name="IdCtaCble_vta" Type="varchar" MaxLength="20" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdCtaCble_cxc_Credito" Type="varchar" MaxLength="20" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="20" />
+          <Property Name="vt_Observacion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="RSubtotal" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RValorIva" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RTotal" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_factura_sin_automatico' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwfa_factura_sin_automatico">
           <Key>
@@ -1400,7 +1443,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_factura_sin_guia' no tiene de
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="CodCbteVta" Type="varchar" MaxLength="20" />
+          <Property Name="CodCbteVta" Type="varchar" MaxLength="500" />
           <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
@@ -1424,7 +1467,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_factura_x_fa_guia_remision' n
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="CodCbteVta" Type="varchar" MaxLength="20" />
+          <Property Name="CodCbteVta" Type="varchar" MaxLength="500" />
           <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
           <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
@@ -1585,7 +1628,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Valor_Aplicado" Type="float" Nullable="false" />
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="41" />
           <Property Name="vt_Observacion" Type="varchar(max)" />
-          <Property Name="CodDoc" Type="varchar" MaxLength="50" />
+          <Property Name="CodDoc" Type="varchar" MaxLength="500" />
           <Property Name="vt_Subtotal" Type="float" />
           <Property Name="vt_iva" Type="float" />
           <Property Name="vt_total" Type="float" />
@@ -2437,6 +2480,32 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
     [vwfa_cliente_contactos].[Descripcion_Ciudad] AS [Descripcion_Ciudad]
     FROM [dbo].[vwfa_cliente_contactos] AS [vwfa_cliente_contactos]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwfa_factura_ParaContabilizar" EntityType="Self.vwfa_factura_ParaContabilizar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwfa_factura_ParaContabilizar].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_factura_ParaContabilizar].[IdSucursal] AS [IdSucursal], 
+    [vwfa_factura_ParaContabilizar].[IdBodega] AS [IdBodega], 
+    [vwfa_factura_ParaContabilizar].[IdCbteVta] AS [IdCbteVta], 
+    [vwfa_factura_ParaContabilizar].[Secuencia] AS [Secuencia], 
+    [vwfa_factura_ParaContabilizar].[vt_iva] AS [vt_iva], 
+    [vwfa_factura_ParaContabilizar].[vt_Subtotal] AS [vt_Subtotal], 
+    [vwfa_factura_ParaContabilizar].[vt_total] AS [vt_total], 
+    [vwfa_factura_ParaContabilizar].[IdCentroCosto] AS [IdCentroCosto], 
+    [vwfa_factura_ParaContabilizar].[vt_por_iva] AS [vt_por_iva], 
+    [vwfa_factura_ParaContabilizar].[IdCtaCbleIva] AS [IdCtaCbleIva], 
+    [vwfa_factura_ParaContabilizar].[IdCtaCble_vta] AS [IdCtaCble_vta], 
+    [vwfa_factura_ParaContabilizar].[vt_fecha] AS [vt_fecha], 
+    [vwfa_factura_ParaContabilizar].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwfa_factura_ParaContabilizar].[IdCtaCble_cxc_Credito] AS [IdCtaCble_cxc_Credito], 
+    [vwfa_factura_ParaContabilizar].[vt_serie1] AS [vt_serie1], 
+    [vwfa_factura_ParaContabilizar].[vt_serie2] AS [vt_serie2], 
+    [vwfa_factura_ParaContabilizar].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_factura_ParaContabilizar].[vt_Observacion] AS [vt_Observacion], 
+    [vwfa_factura_ParaContabilizar].[RSubtotal] AS [RSubtotal], 
+    [vwfa_factura_ParaContabilizar].[RValorIva] AS [RValorIva], 
+    [vwfa_factura_ParaContabilizar].[RTotal] AS [RTotal]
+    FROM [dbo].[vwfa_factura_ParaContabilizar] AS [vwfa_factura_ParaContabilizar]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwfa_factura_sin_automatico" EntityType="Self.vwfa_factura_sin_automatico" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwfa_factura_sin_automatico].[IdEmpresa] AS [IdEmpresa], 
@@ -3276,7 +3345,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="IdBodega" Type="Int32" Nullable="false" />
           <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="CodCbteVta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodCbteVta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IdCliente" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="vt_tipoDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -3298,7 +3367,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="IdBodega" Type="Int32" Nullable="false" />
           <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="CodCbteVta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodCbteVta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="vt_tipoDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -3358,7 +3427,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Valor_Aplicado" Type="Double" Nullable="false" />
           <Property Name="vt_NumFactura" Type="String" MaxLength="41" FixedLength="false" Unicode="false" />
           <Property Name="vt_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CodDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodDoc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="vt_Subtotal" Type="Double" />
           <Property Name="vt_iva" Type="Double" />
           <Property Name="vt_total" Type="Double" />
@@ -3640,6 +3709,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="vwfa_proforma" EntityType="Model_facturacion.vwfa_proforma" />
           <EntitySet Name="vwfa_factura" EntityType="Model_facturacion.vwfa_factura" />
           <EntitySet Name="vwfa_guia_remision" EntityType="Model_facturacion.vwfa_guia_remision" />
+          <EntitySet Name="vwfa_factura_ParaContabilizar" EntityType="Model_facturacion.vwfa_factura_ParaContabilizar" />
           </EntityContainer>
         <EntityType Name="vwfa_cliente_contactos">
           <Key>
@@ -5608,6 +5678,47 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="vwfa_factura_ParaContabilizar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="vt_por_iva" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="vt_Observacion" />
+            <PropertyRef Name="RSubtotal" />
+            <PropertyRef Name="RValorIva" />
+            <PropertyRef Name="RTotal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="vt_iva" Type="Double" Nullable="false" />
+          <Property Name="vt_Subtotal" Type="Double" Nullable="false" />
+          <Property Name="vt_total" Type="Double" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vt_por_iva" Type="Double" Nullable="false" />
+          <Property Name="IdCtaCbleIva" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_vta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_cxc_Credito" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_Observacion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="RSubtotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="RValorIva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="RTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6881,6 +6992,34 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
                 <ScalarProperty Name="CodGuiaRemision" ColumnName="CodGuiaRemision" />
                 <ScalarProperty Name="IdGuiaRemision" ColumnName="IdGuiaRemision" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_factura_ParaContabilizar">
+            <EntityTypeMapping TypeName="Model_facturacion.vwfa_factura_ParaContabilizar">
+              <MappingFragment StoreEntitySet="vwfa_factura_ParaContabilizar">
+                <ScalarProperty Name="RTotal" ColumnName="RTotal" />
+                <ScalarProperty Name="RValorIva" ColumnName="RValorIva" />
+                <ScalarProperty Name="RSubtotal" ColumnName="RSubtotal" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="IdCtaCble_cxc_Credito" ColumnName="IdCtaCble_cxc_Credito" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="IdCtaCble_vta" ColumnName="IdCtaCble_vta" />
+                <ScalarProperty Name="IdCtaCbleIva" ColumnName="IdCtaCbleIva" />
+                <ScalarProperty Name="vt_por_iva" ColumnName="vt_por_iva" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
+                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
+                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
