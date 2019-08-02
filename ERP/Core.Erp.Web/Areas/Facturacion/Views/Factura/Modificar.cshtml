@@ -129,12 +129,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-2 col-md-2">
+            <div class="col-md-offset-2 col-md-2" id="ride">
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="ImprimirRIDE();" title="Imprimir">
                     <i class="fa fa-print"></i>  RIDE
                 </button>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" id="sri">
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI
                 </button>
@@ -564,6 +564,7 @@
         ValidarCliente();
         Set_NivelDescuento_x_FormaPago();
         cargar_contactos();
+        MostrarBotonesSRI();
 
         $("#vt_tipo_venta").change(function () {
             get_info_termino_pago();
@@ -582,6 +583,7 @@
         });
         $("#IdPuntoVta").change(function () {
             GetUltimoDocumento();
+            MostrarBotonesSRI();
         });
         $("#valor_abono").change(function () {
             CargarCuotas();
@@ -811,7 +813,48 @@
         });
     }
 
-       function GetUltimoDocumento() {
+    function GetUltimoDocumento() {
+    var datos = {
+        IdSucursal: $("#IdSucursal").val(),
+        IdPuntoVta: $("#IdPuntoVta").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("GetUltimoDocumento", "Factura",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data.data_puntovta != null)
+            {
+                if (data.data_puntovta.EsElectronico == true)
+                {
+                    $("#datos_punto_venta1").hide();
+                    $("#datos_punto_venta2").hide();
+                    $("#datos_punto_venta3").hide();
+                }
+                else
+                {
+                    $("#datos_punto_venta1").show();
+                    $("#datos_punto_venta2").show();
+                    $("#datos_punto_venta3").show();
+
+                    if (data.data_talonario != null)
+                    {
+                        $("#vt_serie1").val(data.data_talonario.Establecimiento);
+                        $("#vt_serie2").val(data.data_talonario.PuntoEmision);
+                        $("#vt_NumFactura").val(data.data_talonario.NumDocumento);
+                    }
+                }
+            }
+        },
+        error: function (error) {
+        }
+    });
+    }
+
+    function MostrarBotonesSRI() {
         var datos = {
             IdSucursal: $("#IdSucursal").val(),
             IdPuntoVta: $("#IdPuntoVta").val()
@@ -819,19 +862,26 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("GetUltimoDocumento", "Factura",new { Area = "Facturacion"})',
+            url: '@Url.Action("MostrarBotonesSRI", "Factura",new { Area = "Facturacion"})',
             async: false,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#vt_serie1").val(data.Establecimiento);
-                $("#vt_serie2").val(data.PuntoEmision);
-                $("#vt_NumFactura").val(data.NumDocumento);
+                if (data.resultado == 1)
+                {
+                    $("#ride").show();
+                    $("#sri").show();
+                }
+                else
+                {
+                    $("#ride").hide();
+                    $("#sri").hide();
+                }
             },
             error: function (error) {
             }
         });
-        }
+    }
 
     function CargarCuotas() {
             var datos = {

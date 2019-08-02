@@ -465,9 +465,24 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#vt_serie1").val(data.Establecimiento);
-                $("#vt_serie2").val(data.PuntoEmision);
-                $("#vt_NumFactura").val(data.NumDocumento);
+                if (data.data_puntovta != null) {
+                    if (data.data_puntovta.EsElectronico == true) {
+                        $("#datos_punto_venta1").hide();
+                        $("#datos_punto_venta2").hide();
+                        $("#datos_punto_venta3").hide();
+                    }
+                    else {
+                        $("#datos_punto_venta1").show();
+                        $("#datos_punto_venta2").show();
+                        $("#datos_punto_venta3").show();
+
+                        if (data.data_talonario != null) {
+                            $("#vt_serie1").val(data.data_talonario.Establecimiento);
+                            $("#vt_serie2").val(data.data_talonario.PuntoEmision);
+                            $("#vt_NumFactura").val(data.data_talonario.NumDocumento);
+                        }
+                    }
+                }
             },
             error: function (error) {
             }

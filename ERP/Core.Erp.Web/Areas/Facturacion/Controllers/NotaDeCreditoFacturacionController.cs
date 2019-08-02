@@ -592,6 +592,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
         string variable = "fa_notaCreDeb_det_Info";
         public List<fa_notaCreDeb_det_Info> get_list(decimal IdTransaccion)
         {
@@ -611,6 +612,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public void AddRow(fa_notaCreDeb_det_Info info_det, decimal IdTransaccion)
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            decimal IdCliente = Convert.ToDecimal(SessionFixed.IdEntidad);
             List<fa_notaCreDeb_det_Info> list = get_list(IdTransaccion);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
             info_det.IdProducto = info_det.IdProducto;            
@@ -620,6 +623,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
                 info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
             }
+
+            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            if (cliente != null)
+            {
+                if (cliente.EsClienteExportador)
+                {
+                    info_det.IdCod_Impuesto_Iva = "IVA0";
+                }
+            }
+
             info_det.sc_descUni = Math.Round(info_det.sc_Precio * (info_det.sc_PordescUni / 100), 2, MidpointRounding.AwayFromZero);
             info_det.sc_precioFinal = Math.Round(info_det.sc_Precio - info_det.sc_descUni, 2, MidpointRounding.AwayFromZero);
             info_det.sc_subtotal = Math.Round(info_det.sc_cantidad * info_det.sc_precioFinal, 2, MidpointRounding.AwayFromZero);
@@ -646,6 +659,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public void UpdateRow(fa_notaCreDeb_det_Info info_det, decimal IdTransaccion)
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            decimal IdCliente = Convert.ToDecimal(SessionFixed.IdEntidad);
             fa_notaCreDeb_det_Info edited_info = get_list(IdTransaccion).Where(m => m.Secuencia == info_det.Secuencia).First();
             edited_info.IdProducto = info_det.IdProducto;
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
@@ -654,6 +669,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 edited_info.pr_descripcion = producto.pr_descripcion_combo;
                 edited_info.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
             }
+
+            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            if (cliente != null)
+            {
+                if (cliente.EsClienteExportador)
+                {
+                    info_det.IdCod_Impuesto_Iva = "IVA0";
+                }
+            }
+
             edited_info.sc_cantidad = info_det.sc_cantidad;
             edited_info.sc_PordescUni = info_det.sc_PordescUni;
             edited_info.sc_Precio = info_det.sc_Precio;

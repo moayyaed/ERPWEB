@@ -609,12 +609,23 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] fa_guia_remision_det_Info info_det)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            decimal IdCliente = Convert.ToDecimal(SessionFixed.IdEntidad);
+
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
             {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
                 info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-            }                
+            }
+
+            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            if (cliente != null)
+            {
+                if (cliente.EsClienteExportador)
+                {
+                    info_det.IdCod_Impuesto = "IVA0";
+                }
+            }
 
             if (ModelState.IsValid)
                 detalle_info.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -626,6 +637,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] fa_guia_remision_det_Info info_det)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            decimal IdCliente = Convert.ToDecimal(SessionFixed.IdEntidad);
+
             if (info_det != null)
                 if (info_det.Secuencia != 0 && info_det.gi_cantidad!=0)
                 {
@@ -634,7 +647,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
                         info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-                    }                        
+                    }
+
+                    var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                    if (cliente != null)
+                    {
+                        if (cliente.EsClienteExportador)
+                        {
+                            info_det.IdCod_Impuesto = "IVA0";
+                        }
+                    }
 
                     if (ModelState.IsValid)
                         detalle_info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));

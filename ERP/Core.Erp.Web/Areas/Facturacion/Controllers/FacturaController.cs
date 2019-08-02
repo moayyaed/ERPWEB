@@ -624,6 +624,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
             return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult MostrarBotonesSRI(int IdSucursal = 0, int IdPuntoVta = 0)
+        {
+            var resultado = 0;
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+            
+            resultado = (punto_venta.EsElectronico == true) ? 1 : 0;
+
+            return Json(new { resultado }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetProformasPorFacturar(int IdSucursal = 0, decimal IdCliente = 0)
         {
             bool resultado = true;
@@ -953,25 +963,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.se_distribuye = producto.se_distribuye;
                     info_det.tp_manejaInven = producto.tp_ManejaInven;
-                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
+                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;                    
+                }
 
-                    //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    //if (cliente != null)
-                    //{
-                    //    info_det.vt_Precio = producto.precio_1;
-                    //    int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
-
-                    //    var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
-
-                    //    if (SessionFixed.EsSuperAdmin == "False")
-                    //    {
-                    //        info_det.vt_PorDescUnitario = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
-                    //    }
-                    //    else
-                    //    {
-                    //        info_det.vt_PorDescUnitario = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.vt_PorDescUnitario;
-                    //    }
-                    //}
+                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                if (cliente != null)
+                {
+                    if (cliente.EsClienteExportador)
+                    {
+                        info_det.IdCod_Impuesto_Iva = "IVA0";
+                    }
                 }
             }
             List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -994,25 +995,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.tp_manejaInven = producto.tp_ManejaInven;
                     info_det.se_distribuye = producto.se_distribuye;
-                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
+                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;                    
+                }
 
-                    //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    //if (cliente != null)
-                    //{
-                    //    info_det.vt_Precio = producto.precio_1;
-                    //    int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
-                        
-                    //    var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
-
-                    //    if (SessionFixed.EsSuperAdmin == "False")
-                    //    {
-                    //        info_det.vt_PorDescUnitario = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
-                    //    }
-                    //    else
-                    //    {
-                    //        info_det.vt_PorDescUnitario = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.vt_PorDescUnitario;
-                    //    }
-                    //}
+                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                if (cliente != null)
+                {
+                    if (cliente.EsClienteExportador)
+                    {
+                        info_det.IdCod_Impuesto_Iva = "IVA0";
+                    }
                 }
             }
             List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));

@@ -556,25 +556,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (producto != null)
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
-                    info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                    info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;                    
+                }
 
-                    //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    //if (cliente != null)
-                    //{
-                    //    info_det.pd_precio = producto.precio_1;
-                    //    int nivel_precio = IdNivelDescuento > 1 ? IdNivelDescuento : (cliente.IdNivel == 0 ? 1 : cliente.IdNivel);
-
-                    //    var nivelproducto = bus_nivelproducto.GetInfo(IdEmpresa, producto.IdProducto, nivel_precio);
-
-                    //    if (SessionFixed.EsSuperAdmin == "False")
-                    //    {
-                    //        info_det.pd_por_descuento_uni = nivelproducto == null ? 0 : nivelproducto.Porcentaje;
-                    //    }
-                    //    else
-                    //    {
-                    //        info_det.pd_por_descuento_uni = IdNivelDescuento > 1 ? (nivelproducto == null ? 0 : nivelproducto.Porcentaje) : info_det.pd_por_descuento_uni;
-                    //    }
-                    //}
+                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                if (cliente != null)
+                {
+                    if (cliente.EsClienteExportador)
+                    {
+                        info_det.IdCod_Impuesto = "IVA0";
+                    }
                 }
             }
 
@@ -597,6 +588,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                }
+
+                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+                if (cliente != null)
+                {
+                    if (cliente.EsClienteExportador)
+                    {
+                        info_det.IdCod_Impuesto = "IVA0";
+                    }
                 }
             }
             List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
