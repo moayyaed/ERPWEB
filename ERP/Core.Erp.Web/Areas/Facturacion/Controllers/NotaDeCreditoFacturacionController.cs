@@ -618,6 +618,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (producto != null)
             {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
+                info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
             }
             info_det.sc_descUni = Math.Round(info_det.sc_Precio * (info_det.sc_PordescUni / 100), 2, MidpointRounding.AwayFromZero);
             info_det.sc_precioFinal = Math.Round(info_det.sc_Precio - info_det.sc_descUni, 2, MidpointRounding.AwayFromZero);
@@ -648,9 +649,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             fa_notaCreDeb_det_Info edited_info = get_list(IdTransaccion).Where(m => m.Secuencia == info_det.Secuencia).First();
             edited_info.IdProducto = info_det.IdProducto;
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
-            if (producto != null && info_det.IdProducto != edited_info.IdProducto)
+            if (producto != null && info_det.IdProducto!=0)
             {
                 edited_info.pr_descripcion = producto.pr_descripcion_combo;
+                edited_info.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
             }
             edited_info.sc_cantidad = info_det.sc_cantidad;
             edited_info.sc_PordescUni = info_det.sc_PordescUni;
@@ -659,7 +661,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.sc_precioFinal = Math.Round(info_det.sc_Precio - edited_info.sc_descUni, 2, MidpointRounding.AwayFromZero);
             edited_info.sc_subtotal = Math.Round(info_det.sc_cantidad * edited_info.sc_precioFinal, 2, MidpointRounding.AwayFromZero);
             edited_info.IdCod_Impuesto_Iva = info_det.IdCod_Impuesto_Iva;
-            if (!string.IsNullOrEmpty(info_det.IdCod_Impuesto_Iva))
+            if (!string.IsNullOrEmpty(edited_info.IdCod_Impuesto_Iva))
             {
                 var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);
                 if (impuesto != null)

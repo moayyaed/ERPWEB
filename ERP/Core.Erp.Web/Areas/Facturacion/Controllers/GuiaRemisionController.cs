@@ -591,12 +591,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             for (int i = 0; i < lstCotizacion.Count(); i++)
             {
-                Codigo += (i == 0) ? Codigo = "Cot:" + lstCotizacion[i].ToString() : (i == (lstCotizacion.Count() - 1)) ? lstCotizacion[i].ToString() : "-" + lstCotizacion[i].ToString() + "-";
+                Codigo += (i == 0) ? Codigo = "Cot:" + lstCotizacion[i].ToString() + "-" : (i == (lstCotizacion.Count() - 1)) ? lstCotizacion[i].ToString() : lstCotizacion[i].ToString() + "-";
             }
 
             for (int i = 0; i < lstOpr.Count(); i++)
             {
-                Codigo += (i == 0) ? Codigo = " Opr:" + lstOpr[i].ToString() : (i == (lstOpr.Count() - 1)) ? lstOpr[i].ToString() : "-" + lstOpr[i].ToString() + "-";
+                Codigo += (i == 0) ? Codigo = " Opr:" + lstOpr[i].ToString() + "-" : (i == (lstOpr.Count() - 1)) ? lstOpr[i].ToString() : lstOpr[i].ToString() + "-";
             }
 
             return Json(Codigo, JsonRequestBehavior.AllowGet);
@@ -613,7 +613,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (producto != null)
             {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
-                //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
             }                
 
             if (ModelState.IsValid)
@@ -633,7 +633,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     if (producto != null)
                     {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
-                        //info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
+                        info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
                     }                        
 
                     if (ModelState.IsValid)
