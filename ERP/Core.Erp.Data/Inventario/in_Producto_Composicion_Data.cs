@@ -41,7 +41,6 @@ namespace Core.Erp.Data.Inventario
                     int secuencia = 1;
                     Lista.ForEach(V => {
                         V.secuencia = secuencia++;
-                        V.pr_descripcion = V.pr_descripcion;// + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "")+ " - "+V.ca_Categoria;
                     });
                 }
 

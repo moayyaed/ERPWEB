@@ -109,6 +109,7 @@
         <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_ParaContabilizar" Width="1.5" PointX="26.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

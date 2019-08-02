@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
     function ImprimirRIDE() {
-        var location = GetPathServer();        
+        var location = GetPathServer();
         var win = window.open(location +"/Reportes/FacturacionReportes/FAC_007?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
         win.focus();
     }
@@ -44,41 +44,6 @@
         });
     }
     @*
-        function Imprimir() {
-
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val(),
-            IdBodega: $("#IdBodega").val(),
-            IdCbteVta: $("#IdCbteVta").val(),
-            IdPuntoVta: $("#IdPuntoVta").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Imprimir", "Factura",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data == "FAC_007") {
-                    var win = window.open(window.location.origin +"/FixedERP/Reportes/FacturacionReportes/FAC_007?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
-                    win.focus();
-                }
-                if (data == "FAC_003") {
-                    var win = window.open(window.location.origin +"/FixedERP/Reportes/FacturacionReportes/FAC_003?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
-                    win.focus();
-                }
-                if (data == "FAC_013") {
-                    var win = window.open(window.location.origin +"/FixedERP/Reportes/FacturacionReportes/FAC_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
-                    win.focus();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
-    *@
     function Imprimir() {
 
         var datos = {
@@ -102,7 +67,14 @@
             }
         });
     }
-    
+  *@
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(window.location.origin +"/FixedERP/Reportes/FacturacionReportes/FAC_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdCbteVta="+@Model.IdCbteVta, '_blank');
+        win.focus();
+    }
+
     function CrearModificarCliente() {
         var location = GetPathServer();
         if(IdCliente.GetValue() > 0)

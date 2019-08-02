@@ -12,19 +12,31 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwfa_factura_sin_guia
+    public partial class vwfa_factura_ParaContabilizar
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public decimal IdCbteVta { get; set; }
-        public string CodCbteVta { get; set; }
-        public decimal IdCliente { get; set; }
-        public string vt_tipoDoc { get; set; }
+        public int Secuencia { get; set; }
+        public double vt_iva { get; set; }
+        public double vt_Subtotal { get; set; }
+        public double vt_total { get; set; }
+        public string IdCentroCosto { get; set; }
+        public double vt_por_iva { get; set; }
+        public string IdCtaCbleIva { get; set; }
+        public string IdCtaCble_vta { get; set; }
+        public System.DateTime vt_fecha { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public string IdCtaCble_cxc_Credito { get; set; }
         public string vt_serie1 { get; set; }
         public string vt_serie2 { get; set; }
         public string vt_NumFactura { get; set; }
         public string vt_Observacion { get; set; }
-        public System.DateTime vt_fecha { get; set; }
+        public decimal RSubtotal { get; set; }
+        public decimal RValorIva { get; set; }
+        public decimal RTotal { get; set; }
+        public double vt_SubtotalSinDscto { get; set; }
+        public double vt_DescuentoTotal { get; set; }
     }
 }

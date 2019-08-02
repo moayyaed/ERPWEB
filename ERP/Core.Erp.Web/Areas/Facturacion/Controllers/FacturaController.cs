@@ -334,7 +334,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
 
             #region ValidarStock
-            
+            /*
             var lst_validar = i_validar.lst_det.GroupBy(q=> new { q.IdProducto, q.pr_descripcion, q.tp_manejaInven, q.se_distribuye}).Select(q => new in_Producto_Stock_Info
             {
                 IdEmpresa = i_validar.IdEmpresa,
@@ -353,6 +353,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 return false;
             }
+            */
             #endregion
 
             return true;
