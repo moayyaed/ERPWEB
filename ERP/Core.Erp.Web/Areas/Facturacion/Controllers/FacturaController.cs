@@ -953,8 +953,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.se_distribuye = producto.se_distribuye;
                     info_det.tp_manejaInven = producto.tp_ManejaInven;
+                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
 
-                    //info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
                     //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
                     //if (cliente != null)
                     //{
@@ -994,8 +994,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.tp_manejaInven = producto.tp_ManejaInven;
                     info_det.se_distribuye = producto.se_distribuye;
+                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
 
-                    //info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
                     //var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
                     //if (cliente != null)
                     //{
