@@ -476,12 +476,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return Json(EstadoDesbloqueo, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SetPrecioProducto(decimal IdProducto = 0, int IdNivel = 0)
+        public JsonResult SetPrecioProducto(decimal IdProducto = 0, int IdNivel = 0, int IdCliente=0)
         {
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var producto = bus_producto.get_info(IdEmpresa, IdProducto);
             double PorDescUnitario = 0;
+            string IdCod_Impuesto_Iva = "";
             var nivel = new fa_NivelDescuento_Info();
 
             if (producto == null)
@@ -501,9 +502,22 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             else
             {
                 PorDescUnitario = IdNivel > 1 ? (nivelproducto == null ? nivel.Porcentaje : nivelproducto.Porcentaje) : 0;
-            }            
-            
-            return Json(new {precio= producto.precio_1, IdCodImpuesto = producto.IdCod_Impuesto_Iva, PorcentajeDesc = PorDescUnitario }, JsonRequestBehavior.AllowGet);
+            }
+
+            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
+            if (cliente != null)
+            {
+                if (cliente.EsClienteExportador)
+                {
+                    IdCod_Impuesto_Iva = "IVA0";
+                }
+                else
+                {
+                    IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
+                }
+            }
+
+            return Json(new {precio= producto.precio_1, IdCodImpuesto = IdCod_Impuesto_Iva, PorcentajeDesc = PorDescUnitario }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

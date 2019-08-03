@@ -151,7 +151,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdPuntoVta">Punto de venta*</label>
-                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @readonly="readonly" })
+                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -475,12 +475,12 @@
 <script>
     $(function () {
         MostrarDatosFactura();
-        CargarPuntosDeVenta();
         CargarPuntosDeVenta_Factura();
         GetUltimoDocumento_Factura();
         get_direccion();
         get_placa();
-        cargar_contactos()
+        cargar_contactos();
+        MostrarBotonesSRI();
 
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
@@ -488,7 +488,7 @@
         });
 
         $("#IdPuntoVta_Fact").change(function () {
-            GetUltimoDocumento_Factura();
+            GetUltimoDocumento_Factura();           
         });
     });
 
@@ -730,6 +730,35 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#CodGuiaRemision").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function MostrarBotonesSRI() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("MostrarBotonesSRI", "GuiaRemision", new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.resultado == 1)
+                {
+                    //$("#ride").show();
+                    //$("#sri").show();
+                }
+                else
+                {
+                    //$("#ride").hide();
+                    //$("#sri").hide();
+                }
             },
             error: function (error) {
             }

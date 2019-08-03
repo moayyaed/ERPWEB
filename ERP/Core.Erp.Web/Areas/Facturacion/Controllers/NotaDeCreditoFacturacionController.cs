@@ -150,6 +150,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.NTCR.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult MostrarBotonesSRI(int IdSucursal = 0, int IdPuntoVta = 0)
+        {
+            var resultado = 0;
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+
+            resultado = (punto_venta.EsElectronico == true) ? 1 : 0;
+
+            return Json(new { resultado }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult get_info_cliente(decimal IdCliente = 0, int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
@@ -286,6 +296,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult GridViewPartial_notaCredito_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            SessionFixed.IdEntidad = !string.IsNullOrEmpty(Request.Params["IdCliente"]) ? Request.Params["IdCliente"].ToString() : "-1";
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_NotaCrebitoFacturacion_det", model);
@@ -621,16 +632,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (producto != null)
             {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
-                info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
-            }
-
-            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            if (cliente != null)
-            {
-                if (cliente.EsClienteExportador)
-                {
-                    info_det.IdCod_Impuesto_Iva = "IVA0";
-                }
             }
 
             info_det.sc_descUni = Math.Round(info_det.sc_Precio * (info_det.sc_PordescUni / 100), 2, MidpointRounding.AwayFromZero);
@@ -667,16 +668,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (producto != null && info_det.IdProducto!=0)
             {
                 edited_info.pr_descripcion = producto.pr_descripcion_combo;
-                edited_info.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
-            }
-
-            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            if (cliente != null)
-            {
-                if (cliente.EsClienteExportador)
-                {
-                    info_det.IdCod_Impuesto_Iva = "IVA0";
-                }
             }
 
             edited_info.sc_cantidad = info_det.sc_cantidad;
@@ -685,10 +676,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.sc_descUni = Math.Round(info_det.sc_Precio * (info_det.sc_PordescUni / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.sc_precioFinal = Math.Round(info_det.sc_Precio - edited_info.sc_descUni, 2, MidpointRounding.AwayFromZero);
             edited_info.sc_subtotal = Math.Round(info_det.sc_cantidad * edited_info.sc_precioFinal, 2, MidpointRounding.AwayFromZero);
-            edited_info.IdCod_Impuesto_Iva = info_det.IdCod_Impuesto_Iva;
+            
             if (!string.IsNullOrEmpty(edited_info.IdCod_Impuesto_Iva))
             {
-                var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);
+                var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto_Iva);
                 if (impuesto != null)
                     edited_info.vt_por_iva = impuesto.porcentaje;
             }

@@ -131,6 +131,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult GridViewPartial_guias_remision_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            SessionFixed.IdEntidad = !string.IsNullOrEmpty(Request.Params["IdCliente"]) ? Request.Params["IdCliente"].ToString() : "-1";
             var model = detalle_info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_guias_remision_det", model);
@@ -429,6 +430,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult MostrarBotonesSRI(int IdSucursal = 0, int IdPuntoVta = 0)
+        {
+            var resultado = 0;
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+
+            resultado = (punto_venta.EsElectronico == true) ? 1 : 0;
+
+            return Json(new { resultado }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult Cargar_facturas(decimal IdCliente = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -615,16 +626,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (producto != null)
             {
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
-                info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-            }
-
-            var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            if (cliente != null)
-            {
-                if (cliente.EsClienteExportador)
-                {
-                    info_det.IdCod_Impuesto = "IVA0";
-                }
             }
 
             if (ModelState.IsValid)
@@ -646,16 +647,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     if (producto != null)
                     {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
-                        info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-                    }
-
-                    var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                    if (cliente != null)
-                    {
-                        if (cliente.EsClienteExportador)
-                        {
-                            info_det.IdCod_Impuesto = "IVA0";
-                        }
                     }
 
                     if (ModelState.IsValid)
@@ -786,7 +777,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_cantidad = info_det.gi_cantidad;
             edited_info.gi_precio = info_det.gi_precio;
             edited_info.gi_por_desc = info_det.gi_por_desc;
-            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
             edited_info.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);

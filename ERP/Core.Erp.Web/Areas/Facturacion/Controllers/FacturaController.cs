@@ -962,18 +962,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.se_distribuye = producto.se_distribuye;
-                    info_det.tp_manejaInven = producto.tp_ManejaInven;
-                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;                    
-                }
-
-                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                if (cliente != null)
-                {
-                    if (cliente.EsClienteExportador)
-                    {
-                        info_det.IdCod_Impuesto_Iva = "IVA0";
-                    }
-                }
+                    info_det.tp_manejaInven = producto.tp_ManejaInven;              
+                }                
             }
             List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -994,17 +984,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                     info_det.tp_manejaInven = producto.tp_ManejaInven;
-                    info_det.se_distribuye = producto.se_distribuye;
-                    info_det.IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;                    
-                }
-
-                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                if (cliente != null)
-                {
-                    if (cliente.EsClienteExportador)
-                    {
-                        info_det.IdCod_Impuesto_Iva = "IVA0";
-                    }
+                    info_det.se_distribuye = producto.se_distribuye;                  
                 }
             }
             List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -1128,9 +1108,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.vt_Subtotal = info_det.vt_cantidad * edited_info.vt_PrecioFinal;
             edited_info.tp_manejaInven = info_det.tp_manejaInven;
             edited_info.se_distribuye = info_det.se_distribuye;
-            if (!string.IsNullOrEmpty(info_det.IdCod_Impuesto_Iva))
+            if (!string.IsNullOrEmpty(edited_info.IdCod_Impuesto_Iva))
             {
-                var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);
+                var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto_Iva);
                 if (impuesto != null)
                     edited_info.vt_por_iva = impuesto.porcentaje;
             }

@@ -109,8 +109,7 @@
         {
             column.FieldName = "IdCod_Impuesto_Iva";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(10);
-            column.Visible = false;
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("nom_impuesto", "Descripción").Width = Unit.Percentage(100);
@@ -119,7 +118,7 @@
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
             });
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
@@ -157,7 +156,7 @@
         {
             column.FieldName = "IdCentroCosto";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.Visible = false;
             column.VisibleIndex = 7;
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -171,7 +170,7 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -189,7 +188,9 @@
 <script type="text/javascript">
     function SetPrecioProducto(s, e) {
         var datos = {
-            IdProducto: s.GetValue()
+            IdProducto: s.GetValue(),
+            IdNivel: 0,
+            IdCliente: IdCliente.GetValue()
         }
         $.ajax({
             type: 'POST',

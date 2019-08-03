@@ -35,13 +35,14 @@
     $(function () {
         SetNaturalezaNota();
         cargar_contactos();
+        MostrarBotonesSRI();
 
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
             GetUltimoDocumento();
         });
         $("#IdPuntoVta").change(function () {
-            //GetUltimoDocumento();
+            MostrarBotonesSRI();
         });
         $("#NaturalezaNota").change(function () {
             SetNaturalezaNota();
@@ -284,6 +285,33 @@
         var win = window.open(location +"/Reportes/FacturacionReportes/FAC_008?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdNota="+@Model.IdNota, '_blank');
         win.focus();
     }
+
+    function MostrarBotonesSRI() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("MostrarBotonesSRI", "NotaDeCreditoFacturacion", new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.resultado == 1)
+                {
+                    $("#sri").show();
+                }
+                else
+                {
+                    $("#sri").hide();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
 </script>
 
 
@@ -338,7 +366,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-5 col-md-1">
+            <div class="col-md-offset-5 col-md-1" id="sri">
                 <label for="Autorizar"></label>
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI

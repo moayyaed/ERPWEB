@@ -555,17 +555,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 var producto = bus_producto.get_info(IdEmpresa, info_det.IdProducto);
                 if (producto != null)
                 {
-                    info_det.pr_descripcion = producto.pr_descripcion_combo;
-                    info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;                    
-                }
-
-                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                if (cliente != null)
-                {
-                    if (cliente.EsClienteExportador)
-                    {
-                        info_det.IdCod_Impuesto = "IVA0";
-                    }
+                    info_det.pr_descripcion = producto.pr_descripcion_combo;                  
                 }
             }
 
@@ -587,16 +577,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (producto != null)
                 {
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
-                    info_det.IdCod_Impuesto = producto.IdCod_Impuesto_Iva;
-                }
-
-                var cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-                if (cliente != null)
-                {
-                    if (cliente.EsClienteExportador)
-                    {
-                        info_det.IdCod_Impuesto = "IVA0";
-                    }
                 }
             }
             List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -690,10 +670,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.pd_descuento_uni = info_det.pd_precio * (info_det.pd_por_descuento_uni / 100);
             edited_info.pd_precio_final = info_det.pd_precio - edited_info.pd_descuento_uni;
             edited_info.pd_subtotal = info_det.pd_cantidad * edited_info.pd_precio_final;
-            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
-            if(!string.IsNullOrEmpty(info_det.IdCod_Impuesto))
+            if(!string.IsNullOrEmpty(edited_info.IdCod_Impuesto))
             {
-                var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
+                var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto);
                 if (impuesto != null)
                     edited_info.pd_por_iva = impuesto.porcentaje;
             }

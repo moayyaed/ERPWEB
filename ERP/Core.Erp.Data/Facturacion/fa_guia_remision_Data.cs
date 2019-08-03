@@ -105,6 +105,7 @@ namespace Core.Erp.Data.Facturacion
                         Estado = Entity.Estado,
                         IdMotivoTraslado = Entity.IdMotivoTraslado,
                         IdCbteVta = Entity.IdCbteVta,
+                        IdPuntoVta = Entity.IdPuntoVta                        
                         //GenerarFactura = (Entity.IdCbteVta != null || Entity.IdCbteVta != 0) ? true : false
                     };
                 }

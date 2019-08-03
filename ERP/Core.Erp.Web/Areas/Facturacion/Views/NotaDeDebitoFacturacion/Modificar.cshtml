@@ -34,9 +34,9 @@
         });
     }
     $(function () {
-        CargarPuntosDeVenta();
         SetNaturalezaNota();
         cargar_contactos();
+        MostrarBotonesSRI();
 
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
@@ -44,6 +44,7 @@
         });
         $("#IdPuntoVta").change(function () {
             //GetUltimoDocumento();
+            MostrarBotonesSRI();
         });
         $("#NaturalezaNota").change(function () {
             SetNaturalezaNota();
@@ -286,6 +287,34 @@
         var win = window.open(location +"/Reportes/FacturacionReportes/FAC_008?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdNota="+@Model.IdNota, '_blank');
         win.focus();
     }
+
+    function MostrarBotonesSRI() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("MostrarBotonesSRI", "NotaDeDebitoFacturacion", new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data.resultado == 1)
+                {
+                    $("#sri").show();
+                }
+                else
+                {
+                    $("#sri").hide();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
 </script>
 
 @using (Html.BeginForm("Modificar", "NotaDeDebitoFacturacion", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -339,7 +368,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-5 col-md-1">
+            <div class="col-md-offset-5 col-md-1" id="sri">
                 <label for="Autorizar"></label>
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI
@@ -347,11 +376,9 @@
             </div>
             <div class="col-md-offset-4 col-md-1">
                 <label for="IdImprimir"></label>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
-                </div>
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
             </div>
             <div class="col-md-1">
                 <label for="IdNuevo"></label>

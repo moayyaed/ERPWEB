@@ -119,7 +119,7 @@
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
             });
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
@@ -221,7 +221,8 @@
     function SetPrecioProducto(s, e) {
         var datos = {
             IdProducto: s.GetValue(),
-            IdNivel: $('#IdNivel').val()
+            IdNivel: $('#IdNivel').val(),
+            IdCliente: IdCliente.GetValue()
         }
         $.ajax({
             type: 'POST',

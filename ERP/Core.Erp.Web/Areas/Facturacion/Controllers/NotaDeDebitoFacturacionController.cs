@@ -194,6 +194,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
             return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult MostrarBotonesSRI(int IdSucursal = 0, int IdPuntoVta = 0)
+        {
+            var resultado = 0;
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
+
+            resultado = (punto_venta.EsElectronico == true) ? 1 : 0;
+
+            return Json(new { resultado }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetDocumentosPorCobrar(int IdSucursal = 0, decimal IdCliente = 0, decimal IdTransaccionSession = 0)
         {
             bool resultado = true;
@@ -291,6 +301,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult GridViewPartial_notaDebito_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            SessionFixed.IdEntidad = !string.IsNullOrEmpty(Request.Params["IdCliente"]) ? Request.Params["IdCliente"].ToString() : "-1";
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_NotaDebitoFacturacion_det", model);
