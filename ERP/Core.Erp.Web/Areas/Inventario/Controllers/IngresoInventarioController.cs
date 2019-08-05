@@ -188,11 +188,17 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+
+            if (model.IdEstadoAproba == "APRO")
+            {
                 ViewBag.MostrarBoton = false;
             }
             #endregion

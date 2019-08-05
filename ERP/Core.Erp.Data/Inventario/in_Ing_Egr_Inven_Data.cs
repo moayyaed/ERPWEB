@@ -539,6 +539,9 @@ namespace Core.Erp.Data.Inventario
                 if (tipo_movi.IdTipoCbte == null)
                     return false;
 
+                if (tipo_movi.Genera_Diario_Contable == false)
+                    return false;
+
                 var lst = db_i.vwin_Ing_Egr_Inven_PorContabilizar.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdMovi_inven_tipo == IdMovi_inven_tipo && q.IdNumMovi == IdNumMovi).ToList();
                 if (lst.Count == 0)
                     return false;
@@ -603,6 +606,7 @@ namespace Core.Erp.Data.Inventario
                 var diario = odata_ct.armar_info(lst_ct, IdEmpresa, IdSucursal, (int)tipo_movi.IdTipoCbte, 0, tipo_movi.tm_descripcion + " #" + IdNumMovi + " " + Observacion, Fecha);
 
                 diario.lst_ct_cbtecble_det.RemoveAll(q => q.dc_Valor == 0);
+                diario.lst_ct_cbtecble_det.RemoveAll(q => string.IsNullOrEmpty(q.IdCtaCble));
 
                 if (diario.lst_ct_cbtecble_det.Count == 0)
                     return false;
