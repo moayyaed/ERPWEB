@@ -241,6 +241,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;
             }
+
+            if (model.IdEstadoAproba == "APRO")
+            {
+                ViewBag.MostrarBoton = false;
+            }
             #endregion
 
             return View(model);
