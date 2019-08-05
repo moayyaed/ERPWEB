@@ -429,7 +429,8 @@ namespace Core.Erp.Data.Inventario
                                 IdProducto = info.IdProducto,
                                 IdSucursal = item.IdSucursal,
                                 IdBodega = item.IdBodega,
-                                Stock_minimo = item.Stock_minimo
+                                Stock_minimo = item.Stock_minimo,
+                                IdCtaCble_Costo = item.IdCtaCble_Costo
                             });
 
                         }
@@ -657,7 +658,8 @@ namespace Core.Erp.Data.Inventario
                                 IdProducto = info.IdProducto,
                                 IdSucursal = item.IdSucursal,
                                 IdBodega = item.IdBodega,
-                                Stock_minimo = item.Stock_minimo
+                                Stock_minimo = item.Stock_minimo,
+                                IdCtaCble_Costo = item.IdCtaCble_Costo
                             });
                         }
                         else
