@@ -63,7 +63,6 @@ namespace Core.Erp.Data
         public DbSet<in_transferencia> in_transferencia { get; set; }
         public DbSet<in_movi_inve_x_ct_cbteCble> in_movi_inve_x_ct_cbteCble { get; set; }
         public DbSet<in_movi_inve_detalle_x_ct_cbtecble_det> in_movi_inve_detalle_x_ct_cbtecble_det { get; set; }
-        public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
         public DbSet<vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo> vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo { get; set; }
         public DbSet<vwin_producto_x_tb_bodega_Costo_Historico> vwin_producto_x_tb_bodega_Costo_Historico { get; set; }
         public DbSet<vwin_UnidadMedida_Equiv_conversion> vwin_UnidadMedida_Equiv_conversion { get; set; }
@@ -91,6 +90,7 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_det> vwin_Ing_Egr_Inven_det { get; set; }
         public DbSet<in_Ing_Egr_Inven> in_Ing_Egr_Inven { get; set; }
         public DbSet<in_movi_inve> in_movi_inve { get; set; }
+        public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {

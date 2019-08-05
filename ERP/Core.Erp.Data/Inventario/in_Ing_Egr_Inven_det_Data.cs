@@ -119,7 +119,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool guardarDB(in_Ing_Egr_Inven_det_Info info)
         {
             try
@@ -135,7 +134,7 @@ namespace Core.Erp.Data.Inventario
                         Secuencia = info.Secuencia,
                         IdBodega = info.IdBodega,
                         IdProducto = info.IdProducto,                        
-
+                        
                         dm_observacion = info.dm_observacion,
                         IdMotivo_Inv = info.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv_det,
 
@@ -171,7 +170,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool eliminarDB(int IdEmpresa, int IdSucursal, int IdMovi_inven_tipo, decimal IdNumMovi)
         {
             try

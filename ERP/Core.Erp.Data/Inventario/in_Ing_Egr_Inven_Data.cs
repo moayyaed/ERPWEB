@@ -15,7 +15,7 @@ namespace Core.Erp.Data.Inventario
     {
         ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
         in_producto_x_tb_bodega_Costo_Historico_Data data_costo = new in_producto_x_tb_bodega_Costo_Historico_Data();
-        public List<in_Ing_Egr_Inven_Info> get_list (int IdEmpresa, string signo,int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
+        public List<in_Ing_Egr_Inven_Info> get_list(int IdEmpresa, string signo,int IdSucursal, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
@@ -216,7 +216,7 @@ namespace Core.Erp.Data.Inventario
                             IdProducto = item.IdProducto,
 
                             dm_observacion = item.dm_observacion,
-                            IdMotivo_Inv = item.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv,
+                            IdMotivo_Inv = item.IdMotivo_Inv_det == 0 ? null : (int?)item.IdMotivo_Inv_det,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,
@@ -238,7 +238,9 @@ namespace Core.Erp.Data.Inventario
                             dm_cantidad = Math.Abs(item.dm_cantidad_sinConversion) * (info.signo == "-" ? -1 : 1),
                             mv_costo = item.mv_costo_sinConversion,
 
-                            IdCentroCosto = item.IdCentroCosto
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo = item.IdPunto_cargo,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
 
                         };
                         Context.in_Ing_Egr_Inven_det.Add(entity_det);
@@ -309,7 +311,7 @@ namespace Core.Erp.Data.Inventario
                             IdProducto = item.IdProducto,
 
                             dm_observacion = item.dm_observacion,
-                            IdMotivo_Inv = item.IdMotivo_Inv_det == 0 ? null : (int?)info.IdMotivo_Inv,
+                            IdMotivo_Inv = item.IdMotivo_Inv_det == 0 ? null : (int?)item.IdMotivo_Inv_det,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,
@@ -333,7 +335,9 @@ namespace Core.Erp.Data.Inventario
                             mv_costo_sinConversion = item.mv_costo_sinConversion,
                             mv_costo =  item.mv_costo_sinConversion,
 
-                            IdCentroCosto = item.IdCentroCosto
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo = item.IdPunto_cargo,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         });                        
                         sec++;
                     }
@@ -539,29 +543,30 @@ namespace Core.Erp.Data.Inventario
                 if (lst.Count == 0)
                     return false;
 
-                var lst_g = (from q in lst
-                             group q by new
+                var lst_g = lst.GroupBy(q=> new
                              {
                                  q.IdCtaCble_Motivo,
                                  q.IdCtaCtble_Costo,
                                  q.IdCtaCtble_Inve,
                                  q.P_IdCtaCble_transitoria_transf_inven,
                                  q.EsTransferencia,
+                                 q.IdCtaCble_MotivoDet,
+                                 q.IdCentroCosto,
 
                                  q.IdEmpresa_inv,
                                  q.IdSucursal_inv,
                                  q.IdMovi_inven_tipo_inv,
                                  q.IdBodega_inv,
                                  q.IdNumMovi_inv
-                             }
-                            into g
-                             select new
+                             }).Select(g=> new
                              {
                                  g.Key.IdCtaCble_Motivo,
                                  g.Key.IdCtaCtble_Costo,
                                  g.Key.IdCtaCtble_Inve,
                                  g.Key.P_IdCtaCble_transitoria_transf_inven,
                                  g.Key.EsTransferencia,
+                                 g.Key.IdCtaCble_MotivoDet,
+                                 g.Key.IdCentroCosto,
 
                                  g.Key.IdEmpresa_inv,
                                  g.Key.IdSucursal_inv,
@@ -577,46 +582,20 @@ namespace Core.Erp.Data.Inventario
                 int Secuencia = 1;
                 foreach (var item in lst_g)
                 {
-                    /*
-                    lst_rel.Add(new in_movi_inve_detalle_x_ct_cbtecble_det
-                    {
-                        IdEmpresa_inv = (int)item.IdEmpresa_inv,
-                        IdSucursal_inv = (int)item.IdSucursal_inv,
-                        IdBodega_inv = (int)item.IdBodega_inv,
-                        IdMovi_inven_tipo_inv = (int)item.IdMovi_inven_tipo_inv,
-                        IdNumMovi_inv = (decimal)item.IdNumMovi_inv,
-                        Secuencia_inv = (int)item.secuencia_inv,
-
-                        secuencia_ct = Secuencia,
-                        Secuencial_reg = Secuencia,
-                        observacion = ""
-                    });*/
                     //Debe
                     lst_ct.Add(new ct_cbtecble_det_Info
                     {
                         secuencia = Secuencia++,
-                        IdCtaCble = tipo_movi.cm_tipo_movi == "+" ? item.IdCtaCtble_Inve : ( (bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_Motivo) ? item.IdCtaCtble_Costo : item.IdCtaCble_Motivo)),
+                        IdCtaCble = tipo_movi.cm_tipo_movi == "+" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCtble_Costo : item.IdCtaCble_MotivoDet)),
+                        IdCentroCosto = item.IdCentroCosto,
                         dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero))
                     });
-                    /*
-                    lst_rel.Add(new in_movi_inve_detalle_x_ct_cbtecble_det
-                    {
-                        IdEmpresa_inv = (int)item.IdEmpresa_inv,
-                        IdSucursal_inv = (int)item.IdSucursal_inv,
-                        IdBodega_inv = (int)item.IdBodega_inv,
-                        IdMovi_inven_tipo_inv = (int)item.IdMovi_inven_tipo_inv,
-                        IdNumMovi_inv = (decimal)item.IdNumMovi_inv,
-                        Secuencia_inv = (int)item.secuencia_inv,
-                        
-                        secuencia_ct = Secuencia,
-                        Secuencial_reg = Secuencia,
-                        observacion = ""
-                    });*/
                     //Haber
                     lst_ct.Add(new ct_cbtecble_det_Info
                     {
                         secuencia = Secuencia++,
-                        IdCtaCble = tipo_movi.cm_tipo_movi == "-" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_Motivo) ? item.IdCtaCtble_Costo : item.IdCtaCble_Motivo)),
+                        IdCtaCble = tipo_movi.cm_tipo_movi == "-" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCtble_Costo : item.IdCtaCble_MotivoDet)),
+                        IdCentroCosto = item.IdCentroCosto,
                         dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)) * -1
                     });
                 }
@@ -649,14 +628,6 @@ namespace Core.Erp.Data.Inventario
 
                 if (odata_ct.guardarDB(diario))
                 {
-                    /*
-                    lst_rel.ForEach(q =>
-                    {
-                        q.IdEmpresa_ct = diario.IdEmpresa;
-                        q.IdTipoCbte_ct = diario.IdTipoCbte;
-                        q.IdCbteCble_ct = diario.IdCbteCble;
-                    });
-                    */
                     var First = lst_g.First();
                     db_i.in_movi_inve_x_ct_cbteCble.Add(new in_movi_inve_x_ct_cbteCble
                     {
@@ -672,7 +643,6 @@ namespace Core.Erp.Data.Inventario
 
                         Observacion = ""
                     });
-                    //db_i.in_movi_inve_detalle_x_ct_cbtecble_det.AddRange(lst_rel);
                     db_i.SaveChanges();
                 }
 
@@ -938,7 +908,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public List<in_Ing_Egr_Inven_Info> get_list_orden_compra(int IdEmpresa, int IdSucursal, bool mostrar_anulados, int IdBodega, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
@@ -1021,7 +990,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public List<in_Ing_Egr_Inven_Info> get_list_orden_compra_x_ingresar(int IdEmpresa, int IdSucursal,  int IdMovi_inven_tipo)
         {
             try
@@ -1063,7 +1031,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public List<in_Ing_Egr_Inven_Info> get_list_x_aprobar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
@@ -1119,7 +1086,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool aprobarDB(in_Ing_Egr_Inven_Info info)
         {
             try
@@ -1147,7 +1113,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
@@ -1203,7 +1168,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool reversarDB(in_Ing_Egr_Inven_Info info)
         {
             try
@@ -1231,7 +1195,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public List<in_Ing_Egr_Inven_Info> GetListPorDespachar(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             try
@@ -1286,7 +1249,6 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-
         public bool DespacharDB(in_Ing_Egr_Inven_Info info)
         {
             try

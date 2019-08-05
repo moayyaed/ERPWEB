@@ -32,5 +32,7 @@ namespace Core.Erp.Data
         public double Valor { get; set; }
         public string Estado { get; set; }
         public Nullable<bool> EsTransferencia { get; set; }
+        public string IdCentroCosto { get; set; }
+        public string IdCtaCble_MotivoDet { get; set; }
     }
 }

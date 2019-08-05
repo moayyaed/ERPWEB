@@ -61,7 +61,6 @@
         <EntityTypeShape EntityType="Model_inventario.in_transferencia" Width="1.5" PointX="22" PointY="21.5" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inve_x_ct_cbteCble" Width="1.5" PointX="18.5" PointY="35.25" />
         <EntityTypeShape EntityType="Model_inventario.in_movi_inve_detalle_x_ct_cbtecble_det" Width="1.5" PointX="23.375" PointY="4.75" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="23.375" PointY="9.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo" Width="1.5" PointX="23.375" PointY="15.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega_Costo_Historico" Width="1.5" PointX="24.375" PointY="19.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_UnidadMedida_Equiv_conversion" Width="1.5" PointX="7.375" PointY="21.75" />
@@ -140,6 +139,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="5.375" PointY="15.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
