@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPCXC_005] 2,1,9999,1,9999,'2019/12/31',0
+﻿--exec [web].[SPCXC_005] 2,1,9999,1,9999,'2019/12/31',0
 CREATE PROCEDURE [web].[SPCXC_005]
 (
 @IdEmpresa int,
@@ -45,7 +44,11 @@ and ROUND(D.Total - ISNULL(cobro.ValorPago,0),2) != IIF(@MostrarSaldo0 = 1, -999
 
 UNION ALL
 
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdNota, c.CodDocumentoTipo, ISNULL(c.NumNota_Impresa,'INT-'+CAST(C.IdNota AS VARCHAR(10))), c.IdCliente, tb_persona.pe_nombreCompleto AS NomCliente, 
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdNota, c.CodDocumentoTipo, 
+CASE WHEN C.NaturalezaNota = 'SRI' THEN C.Serie1+'-'+C.Serie2+'-'+C.NumNota_Impresa
+ELSE ISNULL(C.CodNota,CAST(C.IdNota as varchar(20))) END, 
+
+c.IdCliente, tb_persona.pe_nombreCompleto AS NomCliente, 
  c.no_fecha, c.no_fecha_venc, d.Subtotal, d.IVA, D.Total, isnull(cobro.ValorPago,0) as Cobrado, ISNULL(NC.ValorPago,0) as NotaCredito, ROUND(D.Total - ISNULL(NC.ValorPago,0) -  ISNULL(cobro.ValorPago,0),2) AS Saldo, S.Su_Descripcion
 FROM           
           fa_notaCreDeb AS c INNER JOIN
