@@ -410,7 +410,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             int cont = 0;
             decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();            
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            
             #endregion
 
             Stream stream = new MemoryStream(e.UploadedFile.FileBytes);
@@ -426,6 +427,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     if (!reader.IsDBNull(0) && cont > 0)
                     {
                         var pr_codigo_producto = Convert.ToString(reader.GetValue(3));
+                        var IdUnidadMedida = Convert.ToString(reader.GetValue(2));
                         var costo_total = Convert.ToDouble(reader.GetValue(6));
                         var cantidad = Convert.ToDouble(reader.GetValue(5));
                         var info_producto = lst_producto.Where(q => q.pr_codigo == pr_codigo_producto).FirstOrDefault();
@@ -434,10 +436,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         {
                             in_Ing_Egr_Inven_det_Info info_detalle = new in_Ing_Egr_Inven_det_Info
                             {
+                                Secuencia = cont++,
                                 IdEmpresa = IdEmpresa,
                                 IdProducto = info_producto.IdProducto,
-                                pr_descripcion = lst_producto.Where(q => q.IdProducto == info_producto.IdProducto).FirstOrDefault().pr_descripcion,
-                                IdUnidadMedida_sinConversion = "UNID",
+                                pr_descripcion = info_producto.pr_descripcion,
+                                IdUnidadMedida_sinConversion = string.IsNullOrEmpty(IdUnidadMedida) ? info_producto.IdUnidadMedida_Consumo : IdUnidadMedida,
                                 dm_cantidad_sinConversion = cantidad,
                                 mv_costo_sinConversion = costo_total / cantidad,                                
                             };
