@@ -30,6 +30,9 @@ namespace Core.Erp.Info.Inventario
         public string bo_Descripcion { get; set; }
         public bool Eliminar { get; set; }
         public string IdString { get; set; }//PK PARA PRODUCTO POR BODEGA
+        public string pr_descripcion { get; set; }
+        public string pr_codigo { get; set; }
+        public string pc_Cuenta { get; set; }
         #endregion
 
     }

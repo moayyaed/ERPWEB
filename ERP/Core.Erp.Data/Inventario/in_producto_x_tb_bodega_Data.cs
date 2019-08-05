@@ -28,7 +28,12 @@ namespace Core.Erp.Data.Inventario
                                 IdBodega=q.IdBodega,
                                 IdProducto=q.IdProducto,
                                 Su_Descripcion =q.Su_Descripcion,
-                                bo_Descripcion = q.bo_Descripcion
+                                bo_Descripcion = q.bo_Descripcion,
+                                IdCtaCble_Costo = q.IdCtaCble_Costo,
+                                Stock_minimo = q.Stock_minimo,
+                                 pc_Cuenta = q.pc_Cuenta,
+                                 pr_codigo= q.pr_codigo,
+                                 pr_descripcion = q.pr_descripcion
 
                              }).ToList();
                         
