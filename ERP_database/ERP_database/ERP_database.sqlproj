@@ -1169,6 +1169,7 @@
     <Build Include="web\Views\VWINV_019.sql" />
     <Build Include="dbo\Views\vwfa_factura_ParaContabilizar.sql" />
     <Build Include="web\Views\VWFAC_013_diario.sql" />
+    <Build Include="web\Views\VWFAC_008_diario.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
