@@ -7,6 +7,7 @@ using Core.Erp.Bus.Reportes.CuentasPorCobrar;
 using Core.Erp.Info.Reportes.CuentasPorCobrar;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.CuentasPorCobrar
 {
@@ -32,8 +33,16 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             List<CXC_005_Info> lst_rpt = new List<CXC_005_Info>();
 
-            
 
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            lbl_empresa.Text = emp.em_nombre;
+
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                logo.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
             CXC_005_Bus bus_rpt = new CXC_005_Bus();
             
             if (IntArray != null)
