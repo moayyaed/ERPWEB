@@ -344,11 +344,13 @@
     <Compile Include="Reportes\Facturacion\FAC_007_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_008_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_008_aplicaciones_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_diario_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_009_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_010_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_011_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_012_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_013_diario_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_015_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_017_Bus.cs" />

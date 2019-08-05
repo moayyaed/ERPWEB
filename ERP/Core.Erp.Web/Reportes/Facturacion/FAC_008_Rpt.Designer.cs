@@ -112,6 +112,7 @@
             this.lbl_fecha = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
+            this.Subreport_diario = new DevExpress.XtraReports.UI.XRSubreport();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -557,14 +558,15 @@
             // ReportFooter
             // 
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.Subreport_diario,
             this.Subreporte_apliaciones,
             this.xrTable5});
-            this.ReportFooter.HeightF = 139.0833F;
+            this.ReportFooter.HeightF = 174.5F;
             this.ReportFooter.Name = "ReportFooter";
             // 
             // Subreporte_apliaciones
             // 
-            this.Subreporte_apliaciones.LocationFloat = new DevExpress.Utils.PointFloat(0F, 119.0833F);
+            this.Subreporte_apliaciones.LocationFloat = new DevExpress.Utils.PointFloat(0F, 154.4999F);
             this.Subreporte_apliaciones.Name = "Subreporte_apliaciones";
             this.Subreporte_apliaciones.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_008_aplicaciones_Rpt();
             this.Subreporte_apliaciones.SizeF = new System.Drawing.SizeF(750.9999F, 19.99998F);
@@ -844,6 +846,14 @@
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrPageInfo2.TextFormatString = "Página {0} de {1}";
             // 
+            // Subreport_diario
+            // 
+            this.Subreport_diario.LocationFloat = new DevExpress.Utils.PointFloat(0F, 109.3334F);
+            this.Subreport_diario.Name = "Subreport_diario";
+            this.Subreport_diario.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_008_diario_Rpt();
+            this.Subreport_diario.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.Subreport_diario.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.Subreport_diario_BeforePrint);
+            // 
             // FAC_008_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -958,5 +968,6 @@
         private DevExpress.XtraReports.UI.XRPageInfo xrPageInfo2;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow3;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
+        private DevExpress.XtraReports.UI.XRSubreport Subreport_diario;
     }
 }
