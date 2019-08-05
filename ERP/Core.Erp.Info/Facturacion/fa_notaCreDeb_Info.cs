@@ -62,6 +62,7 @@ namespace Core.Erp.Info.Facturacion
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public decimal IdNota { get; set; }
+        public string CodNota { get; set; }
         public string CreDeb { get; set; }
         public string NumNota_Impresa { get; set; }
         public System.DateTime no_fecha { get; set; }

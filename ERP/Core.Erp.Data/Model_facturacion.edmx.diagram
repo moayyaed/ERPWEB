@@ -21,7 +21,6 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_TipoNota_x_Empresa_x_Sucursal" Width="1.5" PointX="13.5" PointY="52.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_sin_guia" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_x_fa_guia_remision" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Model_facturacion.FK_fa_catalogo_fa_catalogo_tipo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_facturacion.FK_fa_TerminoPago_Distribucion_fa_TerminoPago" ManuallyRouted="false" />
@@ -110,6 +109,7 @@
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision" Width="1.5" PointX="23.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_ParaContabilizar" Width="1.5" PointX="26.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb" Width="1.5" PointX="5.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
