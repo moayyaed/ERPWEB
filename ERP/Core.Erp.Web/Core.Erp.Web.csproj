@@ -403,6 +403,7 @@
     <Compile Include="Areas\Inventario\Controllers\LineaController.cs" />
     <Compile Include="Areas\Inventario\Controllers\MarcaController.cs" />
     <Compile Include="Areas\Inventario\Controllers\MotivoInventarioController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\ParametrizacionContableProductoController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ParametroInventarioController.cs" />
     <Compile Include="Areas\Inventario\Controllers\PresentacionController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ProductoController.cs" />
@@ -10202,6 +10203,8 @@
     <Content Include="Areas\Contabilidad\Views\AnioFiscal\_CmbCuenta_Anio_Cierre.cshtml" />
     <Content Include="Areas\Facturacion\Views\Proforma\ModificarProFact.cshtml" />
     <Content Include="Areas\Facturacion\Views\Proforma\_GridViewPartial_proforma_facturada_det.cshtml" />
+    <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_GridViewPartial_ParametrizacionContableProducto.cshtml" />
+    <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\Index.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
