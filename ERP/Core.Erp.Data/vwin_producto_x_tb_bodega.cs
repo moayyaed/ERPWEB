@@ -22,5 +22,9 @@ namespace Core.Erp.Data
         public string pr_descripcion { get; set; }
         public string bo_Descripcion { get; set; }
         public string Su_Descripcion { get; set; }
+        public string ca_Categoria { get; set; }
+        public string pr_codigo { get; set; }
+        public string IdCtaCble_Costo { get; set; }
+        public string pc_Cuenta { get; set; }
     }
 }
