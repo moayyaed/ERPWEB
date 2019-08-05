@@ -590,7 +590,10 @@ namespace Core.Erp.Data.Inventario
                     lst_ct.Add(new ct_cbtecble_det_Info
                     {
                         secuencia = Secuencia++,
-                        IdCtaCble = tipo_movi.cm_tipo_movi == "+" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCtble_Costo : item.IdCtaCble_MotivoDet)),
+                        IdCtaCble = tipo_movi.cm_tipo_movi == "+" ? item.IdCtaCtble_Inve 
+                        : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven 
+                        : (!string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCble_MotivoDet 
+                        : (string.IsNullOrEmpty(item.IdCtaCble_CostoProducto) ? item.IdCtaCtble_Costo : item.IdCtaCble_CostoProducto))),
                         IdCentroCosto = item.IdCentroCosto,
                         dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero))
                     });
@@ -598,7 +601,10 @@ namespace Core.Erp.Data.Inventario
                     lst_ct.Add(new ct_cbtecble_det_Info
                     {
                         secuencia = Secuencia++,
-                        IdCtaCble = tipo_movi.cm_tipo_movi == "-" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCtble_Costo : item.IdCtaCble_MotivoDet)),
+                        IdCtaCble = tipo_movi.cm_tipo_movi == "-" ? item.IdCtaCtble_Inve 
+                        : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven 
+                        : (!string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCble_MotivoDet 
+                        : (string.IsNullOrEmpty(item.IdCtaCble_CostoProducto) ? item.IdCtaCtble_Costo : item.IdCtaCble_CostoProducto))),
                         IdCentroCosto = item.IdCentroCosto,
                         dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)) * -1
                     });
