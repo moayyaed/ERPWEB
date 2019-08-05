@@ -560,8 +560,9 @@ namespace Core.Erp.Data.Inventario
                                  q.IdSucursal_inv,
                                  q.IdMovi_inven_tipo_inv,
                                  q.IdBodega_inv,
-                                 q.IdNumMovi_inv
-                             }).Select(g=> new
+                                 q.IdNumMovi_inv,
+                                 q.IdCtaCble_CostoProducto
+                }).Select(g=> new
                              {
                                  g.Key.IdCtaCble_Motivo,
                                  g.Key.IdCtaCtble_Costo,
@@ -576,7 +577,7 @@ namespace Core.Erp.Data.Inventario
                                  g.Key.IdMovi_inven_tipo_inv,
                                  g.Key.IdBodega_inv,
                                  g.Key.IdNumMovi_inv,
-
+                                 g.Key.IdCtaCble_CostoProducto,
                                  Valor = g.Sum(q=>q.Valor)
                              }).ToList();
 
@@ -589,7 +590,10 @@ namespace Core.Erp.Data.Inventario
                     lst_ct.Add(new ct_cbtecble_det_Info
                     {
                         secuencia = Secuencia++,
-                        IdCtaCble = tipo_movi.cm_tipo_movi == "+" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCtble_Costo : item.IdCtaCble_MotivoDet)),
+                        IdCtaCble = tipo_movi.cm_tipo_movi == "+" ? item.IdCtaCtble_Inve 
+                        : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven 
+                        : (!string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCble_MotivoDet 
+                        : (string.IsNullOrEmpty(item.IdCtaCble_CostoProducto) ? item.IdCtaCtble_Costo : item.IdCtaCble_CostoProducto))),
                         IdCentroCosto = item.IdCentroCosto,
                         dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero))
                     });
@@ -597,7 +601,10 @@ namespace Core.Erp.Data.Inventario
                     lst_ct.Add(new ct_cbtecble_det_Info
                     {
                         secuencia = Secuencia++,
-                        IdCtaCble = tipo_movi.cm_tipo_movi == "-" ? item.IdCtaCtble_Inve : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven : (string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCtble_Costo : item.IdCtaCble_MotivoDet)),
+                        IdCtaCble = tipo_movi.cm_tipo_movi == "-" ? item.IdCtaCtble_Inve 
+                        : ((bool)item.EsTransferencia ? item.P_IdCtaCble_transitoria_transf_inven 
+                        : (!string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCble_MotivoDet 
+                        : (string.IsNullOrEmpty(item.IdCtaCble_CostoProducto) ? item.IdCtaCtble_Costo : item.IdCtaCble_CostoProducto))),
                         IdCentroCosto = item.IdCentroCosto,
                         dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)) * -1
                     });

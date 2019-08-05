@@ -34,5 +34,6 @@ namespace Core.Erp.Data
         public Nullable<bool> EsTransferencia { get; set; }
         public string IdCentroCosto { get; set; }
         public string IdCtaCble_MotivoDet { get; set; }
+        public string IdCtaCble_CostoProducto { get; set; }
     }
 }
