@@ -43,7 +43,7 @@ namespace Core.Erp.Data.Facturacion
                                  sc_iva = q.sc_iva,
                                  sc_total = q.sc_total,
                                  Estado = q.Estado,
-
+                                 CodNota = q.CodNota,
                                  EstadoBool = q.Estado == "A" ? true : false
                              }).ToList();
                 }

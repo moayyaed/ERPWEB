@@ -12,6 +12,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
 {
     public partial class FAC_013_Rpt : DevExpress.XtraReports.UI.XtraReport
     {
+        List<FAC_013_diario_Info> Lista_detalle = new List<FAC_013_diario_Info>();
         public FAC_013_Rpt()
         {
             InitializeComponent();
@@ -38,6 +39,12 @@ namespace Core.Erp.Web.Reportes.Facturacion
                 ImageConverter obj = new ImageConverter();
                 logo.Image = (Image)obj.ConvertFrom(empresa.em_logo);
             }
+        }
+
+        private void Subreporte_diario_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            ((XRSubreport)sender).ReportSource.DataSource = Lista_detalle;
+
         }
     }
 }

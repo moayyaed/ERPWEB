@@ -13,6 +13,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        List<FAC_008_diario_Info> Lista_detalle = new List<FAC_008_diario_Info>();
         public FAC_008_Rpt()
         {
             InitializeComponent();
@@ -43,6 +44,12 @@ namespace Core.Erp.Web.Reportes.Facturacion
             ((XRSubreport)sender).ReportSource.Parameters["p_IdBodega_nt"].Value = p_IdBodega.Value == null ? 0 : Convert.ToInt32(p_IdBodega.Value);
             ((XRSubreport)sender).ReportSource.Parameters["p_IdNota_nt"].Value = p_IdNota.Value == null ? 0 : Convert.ToDecimal(p_IdNota.Value);
             ((XRSubreport)sender).ReportSource.RequestParameters = false;
+        }
+
+        private void Subreport_diario_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            ((XRSubreport)sender).ReportSource.DataSource = Lista_detalle;
+
         }
     }
 }

@@ -374,11 +374,13 @@
     <Compile Include="Reportes\Facturacion\FAC_006_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_007_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_008_aplicaciones_Info.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_diario_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_008_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_009_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_010_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_011_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_012_Info.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_013_diario_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_015_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Info.cs" />

@@ -1268,11 +1268,13 @@
     <Compile Include="Reportes\Facturacion\FAC_007_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_008_aplicaciones_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_008_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_diario_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_009_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_010_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_011_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_012_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_013_diario_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_015_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_017_Data.cs" />
@@ -2250,6 +2252,9 @@
     <Compile Include="VWFAC_008_aplicaciones.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="VWFAC_008_diario.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="VWFAC_009.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -2257,6 +2262,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWFAC_013.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_013_diario.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWFAC_018.cs">

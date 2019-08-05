@@ -686,8 +686,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
                 #region Saldo Fact      
                 var info_fa_parametro = bus_fa_parametro.get_info(IdEmpresa);
-                var IdTipoNota = 1; //default
+                var IdTipoNota = 12; //default
                 var infoTipoNota = bus_tipo_nota.get_info(IdEmpresa, IdTipoNota);
+                var CodDocumentoTipo = "NTDB";
+                var IdPuntoVta = 7;
 
                 while (reader.Read())
                 {
@@ -698,7 +700,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                         var IdSucursal = lst_sucursal.Where(q => q.Su_CodigoEstablecimiento == Su_CodigoEstablecimiento).FirstOrDefault().IdSucursal;
                         var InfoCliente = bus_cliente.get_info_x_num_cedula(IdEmpresa, Convert.ToString(reader.GetValue(1)));                                                
                         var infoBodega = bus_bodega.get_info(IdEmpresa, IdSucursal, 1);
-
+                        
                         if (InfoCliente != null && InfoCliente.IdCliente != 0)
                         {
                             //var InfoContactosCliente = bus_cliente_contatos.get_list(IdEmpresa, InfoCliente.IdCliente);
@@ -713,7 +715,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 dev_IdDev_Inven = null,
                                 CodNota = Convert.ToString(reader.GetValue(2)),
                                 CreDeb = "D",
-                                CodDocumentoTipo = null,
+                                CodDocumentoTipo = CodDocumentoTipo,
                                 Serie1 = null,
                                 Serie2 = null,
                                 NumNota_Impresa = null,
@@ -727,7 +729,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 IdUsuario = SessionFixed.IdUsuario,
                                 NaturalezaNota = null,
                                 IdCtaCble_TipoNota = infoTipoNota.IdCtaCble,
-                                //IdPuntoVta = null,
+                                IdPuntoVta = IdPuntoVta,
                                 aprobada_enviar_sri = false
                             };
 

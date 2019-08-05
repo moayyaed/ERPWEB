@@ -1017,6 +1017,12 @@
     <Compile Include="Reportes\Facturacion\FAC_008_aplicaciones_Rpt.Designer.cs">
       <DependentUpon>FAC_008_aplicaciones_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_008_diario_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_008_diario_Rpt.Designer.cs">
+      <DependentUpon>FAC_008_diario_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_008_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1058,6 +1064,12 @@
     </Compile>
     <Compile Include="Reportes\Facturacion\FAC_012_Rpt.Designer.cs">
       <DependentUpon>FAC_012_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_013_diario_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_013_diario_Rpt.Designer.cs">
+      <DependentUpon>FAC_013_diario_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Facturacion\FAC_013_Rpt.cs">
       <SubType>Component</SubType>
@@ -10562,6 +10574,9 @@
     <EmbeddedResource Include="Reportes\Facturacion\FAC_008_aplicaciones_Rpt.resx">
       <DependentUpon>FAC_008_aplicaciones_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_008_diario_Rpt.resx">
+      <DependentUpon>FAC_008_diario_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_008_Rpt.resx">
       <DependentUpon>FAC_008_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10582,6 +10597,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_012_Rpt.resx">
       <DependentUpon>FAC_012_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_013_diario_Rpt.resx">
+      <DependentUpon>FAC_013_diario_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_013_Rpt.resx">
       <DependentUpon>FAC_013_Rpt.cs</DependentUpon>
