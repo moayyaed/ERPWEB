@@ -33,7 +33,8 @@ namespace Core.Erp.Data.Inventario
                                 Stock_minimo = q.Stock_minimo,
                                  pc_Cuenta = q.pc_Cuenta,
                                  pr_codigo= q.pr_codigo,
-                                 pr_descripcion = q.pr_descripcion
+                                 pr_descripcion = q.pr_descripcion,
+                                 ca_Categoria = q.ca_Categoria
 
                              }).ToList();
                         
