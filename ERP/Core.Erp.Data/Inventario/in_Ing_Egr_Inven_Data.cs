@@ -560,7 +560,8 @@ namespace Core.Erp.Data.Inventario
                                  q.IdSucursal_inv,
                                  q.IdMovi_inven_tipo_inv,
                                  q.IdBodega_inv,
-                                 q.IdNumMovi_inv
+                                 q.IdNumMovi_inv,
+                                 q.IdCtaCtble_CostoProducto
                              }).Select(g=> new
                              {
                                  g.Key.IdCtaCble_Motivo,
@@ -576,7 +577,7 @@ namespace Core.Erp.Data.Inventario
                                  g.Key.IdMovi_inven_tipo_inv,
                                  g.Key.IdBodega_inv,
                                  g.Key.IdNumMovi_inv,
-
+                                 g.Key.IdCtaCtble_CostoProducto,
                                  Valor = g.Sum(q=>q.Valor)
                              }).ToList();
 

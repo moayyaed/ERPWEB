@@ -990,6 +990,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorContabilizar
           <Property Name="EsTransferencia" Type="bit" />
           <Property Name="IdCentroCosto" Type="varchar" MaxLength="200" />
           <Property Name="IdCtaCble_MotivoDet" Type="varchar" MaxLength="20" />
+          <Property Name="IdCtaCble_CostoProducto" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorDespachar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2827,7 +2828,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Ing_Egr_Inven_PorContabilizar].[Estado] AS [Estado], 
     [vwin_Ing_Egr_Inven_PorContabilizar].[EsTransferencia] AS [EsTransferencia], 
     [vwin_Ing_Egr_Inven_PorContabilizar].[IdCentroCosto] AS [IdCentroCosto], 
-    [vwin_Ing_Egr_Inven_PorContabilizar].[IdCtaCble_MotivoDet] AS [IdCtaCble_MotivoDet]
+    [vwin_Ing_Egr_Inven_PorContabilizar].[IdCtaCble_MotivoDet] AS [IdCtaCble_MotivoDet], 
+    [vwin_Ing_Egr_Inven_PorContabilizar].[IdCtaCble_CostoProducto] AS [IdCtaCble_CostoProducto]
     FROM [dbo].[vwin_Ing_Egr_Inven_PorContabilizar] AS [vwin_Ing_Egr_Inven_PorContabilizar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_Ing_Egr_Inven_PorDespachar" EntityType="Self.vwin_Ing_Egr_Inven_PorDespachar" store:Type="Views" store:Schema="dbo">
@@ -6563,6 +6565,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="EsTransferencia" Type="Boolean" />
           <Property Name="IdCentroCosto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble_MotivoDet" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_CostoProducto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -7809,6 +7812,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySetMapping Name="vwin_Ing_Egr_Inven_PorContabilizar">
             <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar">
               <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven_PorContabilizar">
+                <ScalarProperty Name="IdCtaCble_CostoProducto" ColumnName="IdCtaCble_CostoProducto" />
                 <ScalarProperty Name="IdCtaCble_MotivoDet" ColumnName="IdCtaCble_MotivoDet" />
                 <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
                 <ScalarProperty Name="EsTransferencia" ColumnName="EsTransferencia" />

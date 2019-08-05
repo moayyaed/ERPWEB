@@ -139,7 +139,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="5.375" PointY="15.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="0.75" PointY="21.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
