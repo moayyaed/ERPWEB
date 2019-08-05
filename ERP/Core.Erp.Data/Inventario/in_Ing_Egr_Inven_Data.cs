@@ -1117,7 +1117,7 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega)
+        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega, string IdSigno, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
@@ -1135,6 +1135,9 @@ namespace Core.Erp.Data.Inventario
                              && q.IdSucursal <= IdSucursalFin
                              && IdBodegaIni <= q.IdBodega
                              && q.IdBodega <= IdBodegaFin
+                             && q.signo == IdSigno
+                             && q.cm_fecha >= fecha_ini
+                             && q.cm_fecha <= fecha_fin
                              orderby new { q.IdNumMovi } descending
                              select new in_Ing_Egr_Inven_Info
                              {

@@ -47,17 +47,25 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
             var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
             ViewBag.lst_bodega = lst_bodega;
+
+            var lst_signo = new Dictionary<string, string>();
+            lst_signo.Add("+", "Ingresos");
+            lst_signo.Add("-", "Egresos");
+            ViewBag.lst_signo = lst_signo;
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_movimiento_inventario_x_reversar(int IdSucursal = 0, int IdBodega = 0)
+        public ActionResult GridViewPartial_movimiento_inventario_x_reversar(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0, int IdBodega = 0, string IdSigno = "")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
             ViewBag.IdBodega = IdBodega;
+            ViewBag.IdSigno = IdSigno;
 
-            List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_x_reversar(IdEmpresa, IdSucursal, IdBodega);
+            List<in_Ing_Egr_Inven_Info> model = bus_ing_inv.get_list_x_reversar(IdEmpresa, IdSucursal, IdBodega, IdSigno, ViewBag.fecha_ini, ViewBag.fecha_fin);
 
             return PartialView("_GridViewPartial_movimiento_inventario_x_reversar", model);
         }
