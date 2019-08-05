@@ -164,11 +164,11 @@ namespace Core.Erp.Bus.Inventario
             }
         }
 
-        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega)
+        public List<in_Ing_Egr_Inven_Info> get_list_x_reversar(int IdEmpresa, int IdSucursal, int IdBodega, string IdSigno, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
-                return odata.get_list_x_reversar(IdEmpresa, IdSucursal, IdBodega);
+                return odata.get_list_x_reversar(IdEmpresa, IdSucursal, IdBodega, IdSigno, fecha_ini, fecha_fin);
             }
             catch (Exception)
             {
