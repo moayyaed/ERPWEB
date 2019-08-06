@@ -786,7 +786,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
-            var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto);
+            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
+            var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
                 edited_info.gi_por_iva = impuesto.porcentaje;
             else

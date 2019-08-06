@@ -1005,7 +1005,8 @@ namespace Core.Erp.Data.Inventario
                                 IdEmpresa = p.IdEmpresa,
                                 IdProducto = p.IdProducto,
                                 pr_descripcion = p.pr_descripcion,
-                                nom_categoria = p.nom_categoria,                                
+                                nom_categoria = p.nom_categoria,
+                                pr_codigo = p.pr_codigo,
                                 stock = p.Stock ?? 0
                             })
                              .OrderBy(p => p.IdProducto)
