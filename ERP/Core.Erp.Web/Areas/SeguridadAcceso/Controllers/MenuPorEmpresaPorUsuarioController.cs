@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 {
-//    [SessionTimeout]
+    //    [SessionTimeout]
     public class MenuPorEmpresaPorUsuarioController : Controller
     {
         #region Index
@@ -38,7 +38,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 var url = string.IsNullOrEmpty(row.info_menu.web_nom_Controller) ? null :
                     ("~/" + row.info_menu.web_nom_Area + "/" + row.info_menu.web_nom_Controller + "/" + row.info_menu.web_nom_Action + "/");
                 MVCxTreeViewNode node = nodesCollection.Add(row.info_menu.DescripcionMenu, row.IdMenu.ToString(), null, url);
-                CreateTreeViewNodesRecursive(model, node.Nodes, row.IdMenu,IdEmpresa,IdUsuario);
+                CreateTreeViewNodesRecursive(model, node.Nodes, row.IdMenu, IdEmpresa, IdUsuario);
             }
         }
         private void cargar_combos()
@@ -64,7 +64,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             {
                 int x = 0;
                 string selectedIDs = "";
-                foreach (var item in model.Where(q=>q.seleccionado == true).ToList())
+                foreach (var item in model.Where(q => q.seleccionado == true).ToList())
                 {
                     if (x == 0)
                         selectedIDs = item.IdMenu.ToString();
@@ -74,11 +74,11 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 }
                 ViewData["selectedIDs"] = selectedIDs;
             }
-                
+
             return PartialView("_TreeListPartial_menu_x_usuario", model);
         }
 
-        public JsonResult guardar(int IdEmpresa = 0,string IdUsuario = "", string Ids = "")
+        public JsonResult guardar(int IdEmpresa = 0, string IdUsuario = "", string Ids = "")
         {
             string[] array = Ids.Split(',');
 
@@ -95,13 +95,33 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                         IdUsuario = IdUsuario
                     };
                     lista.Add(info);
-                }                
+                }
             }
-                bus_menu_x_empresa_x_usuario.eliminarDB(IdEmpresa, IdUsuario);
-                var resultado = bus_menu_x_empresa_x_usuario.guardarDB(lista, IdEmpresa, IdUsuario);
-            
+            bus_menu_x_empresa_x_usuario.eliminarDB(IdEmpresa, IdUsuario);
+            var resultado = bus_menu_x_empresa_x_usuario.guardarDB(lista, IdEmpresa, IdUsuario);
+
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+    }
+
+    public class seg_Menu_x_Empresa_x_Usuario_Lista
+    {
+        string Variable = "fx_MenuXEmpresaXUsuarioFixed";
+        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list()
+        {
+            if (HttpContext.Current.Session[Variable] == null)
+            {
+                List<seg_Menu_x_Empresa_x_Usuario_Info> list = new List<seg_Menu_x_Empresa_x_Usuario_Info>();
+
+                HttpContext.Current.Session[Variable] = list;
+            }
+            return (List<seg_Menu_x_Empresa_x_Usuario_Info>)HttpContext.Current.Session[Variable];
+        }
+
+        public void set_list(List<seg_Menu_x_Empresa_x_Usuario_Info> list)
+        {
+            HttpContext.Current.Session[Variable] = list;
         }
     }
 }
