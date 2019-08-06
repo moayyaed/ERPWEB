@@ -338,6 +338,9 @@ namespace Core.Erp.Data.Banco
                 Entities_contabilidad db_c = new Entities_contabilidad();
                 Entities_banco db_b = new Entities_banco();
 
+                if (db_c.ct_cbtecble_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdCtaCble == IdCtaCble).Count() == 0)
+                    return false;
+
                 var saldo = db_c.ct_cbtecble_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdCtaCble == IdCtaCble).Sum(q => q.dc_Valor);
                 var saldo_act = Math.Round(saldo + Valor, 2, MidpointRounding.AwayFromZero);
 

@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.ActivoFijo;
 using Core.Erp.Info.Reportes.ActivoFijo;
 using System.Collections.Generic;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.ActivoFijo
 {
@@ -35,6 +36,13 @@ namespace Core.Erp.Web.Reportes.ActivoFijo
             ACTF_004_resumen_Bus bus_rpt = new ACTF_004_resumen_Bus();
             List<ACTF_004_resumen_Info > lst_rpt = bus_rpt.get_list(IdEmpresa, IdActivoFijoTipo, IdCategoriaAF, fecha_corte, Estado_Proceso, IdUsuario);
             this.DataSource = lst_rpt;
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }
