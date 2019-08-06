@@ -1108,6 +1108,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.vt_Subtotal = info_det.vt_cantidad * edited_info.vt_PrecioFinal;
             edited_info.tp_manejaInven = info_det.tp_manejaInven;
             edited_info.se_distribuye = info_det.se_distribuye;
+            edited_info.vt_detallexItems = info_det.vt_detallexItems;
             if (!string.IsNullOrEmpty(edited_info.IdCod_Impuesto_Iva))
             {
                 var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto_Iva);
