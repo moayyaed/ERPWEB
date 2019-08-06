@@ -734,12 +734,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             for (int i = 0; i < lstCotizacion.Count(); i++)
             {
-                Codigo += (i == 0) ? Codigo = "COT:" + lstCotizacion[i].ToString() + "-" : (i == (lstCotizacion.Count() - 1)) ? lstCotizacion[i].ToString() : lstCotizacion[i].ToString() + "-";
+                Codigo += (i == 0) ? Codigo = "COT:" + lstCotizacion[i].ToString() : (i < (lstCotizacion.Count() - 1)) ? lstCotizacion[i].ToString() + "-" : lstCotizacion[i].ToString();
             }
 
             for (int i = 0; i < lstOpr.Count(); i++)
             {
-                Codigo += (i == 0) ? Codigo = " OP:" + lstOpr[i].ToString() + "-" : (i == (lstOpr.Count() - 1)) ? lstOpr[i].ToString() : lstOpr[i].ToString() + "-";
+                Codigo += (i == 0) ? Codigo = " OP:" + lstOpr[i].ToString() : (i < (lstOpr.Count() - 1)) ? lstOpr[i].ToString() + "-" : lstOpr[i].ToString();
             }
 
             return Json(Codigo, JsonRequestBehavior.AllowGet);
@@ -1137,7 +1137,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<fa_factura_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
     public class fa_cuotas_x_doc_List

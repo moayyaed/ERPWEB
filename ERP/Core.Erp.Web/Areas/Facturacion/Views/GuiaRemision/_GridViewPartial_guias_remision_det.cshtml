@@ -215,7 +215,7 @@
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "gi_Total").DisplayFormat = "{0:n2}";
         settings.Settings.ShowFooter = true;
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.ClientSideEvents.EndCallback = "function(s,e){ SetCodigo(); if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
     });
 }
 @grid.Bind(Model).GetHtml()
