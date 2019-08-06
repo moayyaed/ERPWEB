@@ -332,7 +332,8 @@ namespace Core.Erp.Data.Facturacion
 
                         IdCentroCosto = item.IdCentroCosto,
                         IdPunto_Cargo = item.IdPunto_Cargo,
-                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
+                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                        vt_detallexItems = item.vt_detallexItems
                     });
                 }
                 #endregion
@@ -927,7 +928,8 @@ namespace Core.Erp.Data.Facturacion
 
                         IdCentroCosto = item.IdCentroCosto,
                         IdPunto_Cargo = item.IdPunto_Cargo,
-                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
+                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                        vt_detallexItems = item.vt_detallexItems
                     });
                 }
                 #endregion

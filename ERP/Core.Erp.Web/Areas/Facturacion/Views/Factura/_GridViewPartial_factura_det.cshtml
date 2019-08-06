@@ -167,7 +167,18 @@
                 Html.RenderPartial("_CmbCentroCosto_Factura", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
             });
         });
-
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_detallexItems";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(7);
+            column.Visible = false;
+            column.EditorProperties().Memo(q =>
+            {
+                
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "cc_Descripcion";
