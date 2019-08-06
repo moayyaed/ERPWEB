@@ -91,6 +91,7 @@ namespace Core.Erp.Data
         public DbSet<in_movi_inve> in_movi_inve { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
         public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
+        public DbSet<vwin_Producto_PorBodega> vwin_Producto_PorBodega { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {

@@ -43,7 +43,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa),cl_enumeradores.eTipoBusquedaProducto.PORMODULO,cl_enumeradores.eModulo.INV,0,0);
+            return bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa),cl_enumeradores.eTipoBusquedaProducto.PORMODULO,cl_enumeradores.eModulo.INV,0);
         }
         public in_Producto_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
         {
@@ -387,7 +387,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var resultado = bus_bodega.get_list(IdEmpresa, IdSucursal, false);
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult SetSucursalBodega(int IdSucursal = 0, int IdBodega = 0)
+        {
+            SessionFixed.IdSucursalInv = IdSucursal.ToString();
+            SessionFixed.IdBodegaInv = IdBodega.ToString();
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Importacion

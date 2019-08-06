@@ -22,6 +22,8 @@ namespace Core.Erp.Web.Helps
         string IdDivision { get; set; }
         string IdDivision_IC { get; set; }
         string Idtipo_cliente { get; set; }
+        string IdSucursalInv { get; set; } //Para filtrar producto por bodega
+        string IdBodegaInv { get; set; } //Para filtrar producto por bodega
     }
 
     public static class SessionFixed
@@ -128,6 +130,18 @@ namespace Core.Erp.Web.Helps
             get { return _sessionValueProvider.Idtipo_cliente; }
             set { _sessionValueProvider.Idtipo_cliente = value; }
         }
+
+        public static string IdSucursalInv
+        {
+            get { return _sessionValueProvider.IdSucursalInv; }
+            set { _sessionValueProvider.IdSucursalInv = value; }
+        }
+
+        public static string IdBodegaInv
+        {
+            get { return _sessionValueProvider.IdBodegaInv; }
+            set { _sessionValueProvider.IdBodegaInv = value; }
+        }
     }
 
     public class WebSessionValueProvider : ISessionValueProvider
@@ -150,6 +164,8 @@ namespace Core.Erp.Web.Helps
         private const string _IdDivision = "Fx_IdDivision";
         private const string _IdDivision_IC = "Fx_IdDivision_IC";
         private const string _Idtipo_cliente = "Fx_Idtipo_cliente";
+        private const string _IdSucursalInv = "Fx_IdSucursalInv";
+        private const string _IdBodegaInv = "Fx_IdBodegaInv";
 
         public string TipoPersona
         {
@@ -244,6 +260,18 @@ namespace Core.Erp.Web.Helps
         {
             get { return (string)HttpContext.Current.Session[_Idtipo_cliente]; }
             set { HttpContext.Current.Session[_Idtipo_cliente] = value; }
+        }
+
+        public string IdSucursalInv
+        {
+            get { return (string)HttpContext.Current.Session[_IdSucursalInv]; }
+            set { HttpContext.Current.Session[_IdSucursalInv] = value; }
+        }
+
+        public string IdBodegaInv
+        {
+            get { return (string)HttpContext.Current.Session[_IdBodegaInv]; }
+            set { HttpContext.Current.Session[_IdBodegaInv] = value; }
         }
     }
 }

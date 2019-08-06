@@ -388,7 +388,7 @@ namespace Core.Erp.Data.Inventario
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdProducto = info.IdProducto = get_id(info.IdEmpresa),
-                        pr_codigo = string.IsNullOrEmpty(info.pr_codigo) ? ("PROD" + info.IdProducto.ToString("0000000")) : info.pr_codigo,
+                        pr_codigo = string.IsNullOrEmpty(info.pr_codigo) ? info.IdProducto.ToString() : info.pr_codigo,
                         pr_codigo2 = info.pr_codigo2,
                         pr_descripcion = info.pr_descripcion,
                         pr_descripcion_2 = info.pr_descripcion_2,
@@ -564,7 +564,7 @@ namespace Core.Erp.Data.Inventario
                 {
                     in_Producto Entity = Context.in_Producto.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdProducto == info.IdProducto);
                     if (Entity == null) return false;
-                    Entity.pr_codigo = string.IsNullOrEmpty(info.pr_codigo) ? ("PROD" + info.IdProducto.ToString("0000000")) : info.pr_codigo;
+                    Entity.pr_codigo = string.IsNullOrEmpty(info.pr_codigo) ? info.IdProducto.ToString() : info.pr_codigo;
                     Entity.pr_codigo2 = info.pr_codigo2;
                     Entity.pr_descripcion = info.pr_descripcion;
                     Entity.pr_descripcion_2 = info.pr_descripcion_2;
@@ -593,28 +593,6 @@ namespace Core.Erp.Data.Inventario
                     Entity.pr_imagen = info.pr_imagen;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
-                    /*
-                    string SQL = "UPDATE in_Producto SET pr_descripcion = '" + info.pr_descripcion +
-                        "', pr_descripcion_2 = '" + info.pr_descripcion_2 +
-                        "', precio_1 = " + info.precio_1 +
-                        ", IdCod_Impuesto_Iva = '" + info.IdCod_Impuesto_Iva +
-                        "', pr_codigo = '" + info.pr_codigo +
-                        "', pr_codigo2 = '" + info.pr_codigo2 +
-                        "', IdPresentacion = '" + info.IdPresentacion +
-                        "', IdMarca = " + info.IdMarca +
-                        ", IdUnidadMedida = '" + info.IdUnidadMedida +
-                        "', IdUnidadMedida_Consumo = '" + info.IdUnidadMedida_Consumo +
-                        "', IdCategoria = '" + info.IdCategoria +
-                        "', IdLinea = " + info.IdLinea +
-                        ", IdGrupo = " + info.IdGrupo +
-                        ", IdSubGrupo = " + info.IdSubGrupo +
-                        ", pr_observacion = '" + info.pr_observacion +
-                        "', pr_codigo_barra = '" + info.pr_codigo_barra +
-                        "' where in_Producto.IdEmpresa = " + info.IdEmpresa + " AND in_Producto.IdProducto_padre = " + info.IdProducto;
-                    int row = Context.Database.ExecuteSqlCommand(SQL);
-                    */
-                    //var lst_det_producto_x_bodega_costo_hist = Context.in_producto_x_tb_bodega_Costo_Historico.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdProducto == info.IdProducto).ToList();
-
                     #region Producto por bodega
                     info.lst_producto_x_bodega = info.lst_producto_x_bodega ?? new List<in_producto_x_tb_bodega_Info>();
 
@@ -707,7 +685,7 @@ namespace Core.Erp.Data.Inventario
         {
             int OrdenVcto = 1;
             Lista.ForEach(V => {
-                V.pr_descripcion = V.pr_descripcion + "-"+V.ca_descripcion;
+                V.pr_descripcion = V.pr_descripcion;
                 V.pr_descripcion_combo = V.pr_descripcion;
                 V.OrdenVcto = OrdenVcto++;
             });
@@ -716,7 +694,7 @@ namespace Core.Erp.Data.Inventario
         #endregion
         #region metodo baja demanda
 
-        public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, cl_enumeradores.eTipoBusquedaProducto Busqueda, cl_enumeradores.eModulo Modulo, decimal IdProductoPadre, int IdSucursal)
+        public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, cl_enumeradores.eTipoBusquedaProducto Busqueda, cl_enumeradores.eModulo Modulo, int IdSucursal, int IdBodega)
         {
             var skip = args.BeginIndex;
             var take = args.EndIndex - args.BeginIndex + 1;
@@ -731,6 +709,9 @@ namespace Core.Erp.Data.Inventario
                     break;
                 case cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL:
                     Lista = get_list_PorSucursal(IdEmpresa, skip, take, args.Filter, IdSucursal);
+                    break;
+                case cl_enumeradores.eTipoBusquedaProducto.PORBODEGA:
+                    Lista = get_list_PorBodega(IdEmpresa, skip, take, args.Filter, IdSucursal, IdBodega);
                     break;
                 case cl_enumeradores.eTipoBusquedaProducto.SOLOSERVICIOS:
                     Lista = get_list_Servicios(IdEmpresa, skip, take, args.Filter, IdSucursal);
@@ -1004,11 +985,43 @@ namespace Core.Erp.Data.Inventario
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-       
+
+        public List<in_Producto_Info> get_list_PorBodega(int IdEmpresa, int skip, int take, string filter, int IdSucursal, int IdBodega)
+        {
+            try
+            {
+                List<in_Producto_Info> Lista = new List<in_Producto_Info>();
+
+                Entities_inventario Context = new Entities_inventario();
+
+                Lista = Context.vwin_Producto_PorBodega.Where(p => p.IdEmpresa == IdEmpresa
+                           && p.IdSucursal == IdSucursal
+                           && p.IdBodega == IdBodega
+                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)).Select(p => new in_Producto_Info
+                            {
+                                IdEmpresa = p.IdEmpresa,
+                                IdProducto = p.IdProducto,
+                                pr_descripcion = p.pr_descripcion,
+                                nom_categoria = p.nom_categoria,                                
+                                stock = p.Stock ?? 0
+                            })
+                             .OrderBy(p => p.IdProducto)
+                             .Skip(skip)
+                             .Take(take)
+                             .ToList();
+                Context.Dispose();
+                Lista = get_list_nombre_combo(Lista);
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public List<in_Producto_Info> get_list_Servicios(int IdEmpresa, int skip, int take, string filter, int IdSucursal)
         {
             try
