@@ -83,5 +83,46 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+        
+        public List<in_producto_x_tb_bodega_Info> get_list_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega)
+        {
+            int secuencia = 0;
+            int IdBodega_ini = IdBodega;
+            int IdBodega_fin = IdBodega == 0 ? 999999 : IdBodega;
+            List<in_producto_x_tb_bodega_Info> lista = null;
+            try
+            {
+                int IdSucursalIni = IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 99999 : IdSucursal;
+
+                using (Entities_general Context = new Entities_general())
+                {
+
+                    lista = (from q in Context.vwtb_bodega_x_sucursal
+                             where q.IdEmpresa == IdEmpresa
+                             && IdSucursalIni <= q.IdSucursal
+                             && q.IdSucursal <= IdSucursalFin
+                             && IdBodega_ini <= q.IdBodega
+                             && q.IdBodega <= IdBodega_fin
+                             select new in_producto_x_tb_bodega_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdBodega = q.IdBodega,
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 bo_Descripcion = q.bo_Descripcion,
+                                 IdCtaCble_Costo = ""
+                             }).ToList();
+
+                }
+                lista.ForEach(v => { v.Secuencia = secuencia++; v.IdString = v.IdSucursal.ToString("000") + v.IdBodega.ToString("000"); });
+                return lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

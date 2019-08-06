@@ -34,5 +34,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public List<in_producto_x_tb_bodega_Info> get_list_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega)
+        {
+            try
+            {
+                return odata.get_list_x_bodega(IdEmpresa, IdSucursal, IdBodega);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
