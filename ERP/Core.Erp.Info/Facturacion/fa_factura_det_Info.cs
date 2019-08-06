@@ -47,6 +47,9 @@ namespace Core.Erp.Info.Facturacion
         public string cc_Descripcion { get; set; }
         public decimal NumCotizacion { get; set; }
         public decimal NumOPr { get; set; }
+        public double vt_Subtotal_item { get; set; }
+        public double vt_iva_item { get; set; }
+        public double vt_total_item { get; set; }
         #endregion
 
     }
