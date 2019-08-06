@@ -14,10 +14,10 @@ namespace Core.Erp.Info.Facturacion
         [Range(1,int.MaxValue,ErrorMessage ="El campo producto es obligatorio")]
         public decimal IdProducto { get; set; }
         [Required(ErrorMessage = "El campo cantidad es obligatorio")]
-        [Range(1, int.MaxValue, ErrorMessage = "El campo cantidad es obligatorio")]
+        [Range(0.01, int.MaxValue, ErrorMessage = "El campo cantidad es obligatorio")]
         public double sc_cantidad { get; set; }
         [Required(ErrorMessage = "El campo precio es obligatorio")]
-        [Range(1, int.MaxValue, ErrorMessage = "El campo precio es obligatorio")]
+        [Range(0.01, int.MaxValue, ErrorMessage = "El campo precio es obligatorio")]
         public double sc_Precio { get; set; }
         public double sc_descUni { get; set; }
         [Required(ErrorMessage = "El campo % descuento es obligatorio")]
