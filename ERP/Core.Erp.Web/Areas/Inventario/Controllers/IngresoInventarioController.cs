@@ -387,7 +387,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             var resultado = bus_bodega.get_list(IdEmpresa, IdSucursal, false);
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult SetSucursalBodega(int IdSucursal = 0, int IdBodega = 0)
+        {
+            SessionFixed.IdSucursalInv = IdSucursal.ToString();
+            SessionFixed.IdBodegaInv = IdBodega.ToString();
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Importacion
