@@ -1105,6 +1105,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             info_det.vt_iva = info_det.vt_Subtotal * (info_det.vt_por_iva / 100);
             info_det.vt_total = info_det.vt_Subtotal + info_det.vt_iva;
 
+            info_det.vt_Subtotal_item = info_det.vt_Subtotal;
+            info_det.vt_iva_item = info_det.vt_iva;
+            info_det.vt_total_item = info_det.vt_total;
+
             #region Centro de costo
             info_det.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
@@ -1133,7 +1137,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.tp_manejaInven = info_det.tp_manejaInven;
             edited_info.se_distribuye = info_det.se_distribuye;
             edited_info.vt_detallexItems = info_det.vt_detallexItems;
-            edited_info.IdCod_Impuesto_Iva = info_det.IdCod_Impuesto_Iva;
+            edited_info.IdCod_Impuesto_Iva = info_det.IdCod_Impuesto_Iva;            
+
             if (!string.IsNullOrEmpty(info_det.IdCod_Impuesto_Iva))
             {
                 var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);
@@ -1142,6 +1147,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             edited_info.vt_iva = edited_info.vt_Subtotal * (edited_info.vt_por_iva / 100);
             edited_info.vt_total = edited_info.vt_Subtotal + edited_info.vt_iva;
+
+            edited_info.vt_Subtotal_item = info_det.vt_cantidad * edited_info.vt_PrecioFinal;
+            edited_info.vt_iva_item = edited_info.vt_Subtotal * (edited_info.vt_por_iva / 100);
+            edited_info.vt_total_item = edited_info.vt_Subtotal + edited_info.vt_iva;
 
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;

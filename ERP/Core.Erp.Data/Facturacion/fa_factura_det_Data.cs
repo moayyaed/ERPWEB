@@ -52,7 +52,10 @@ namespace Core.Erp.Data.Facturacion
                                  CantidadAnterior = q.vt_cantidad,
                                  tp_manejaInven = q.tp_ManejaInven,
                                  se_distribuye = q.se_distribuye,
-                                 cc_Descripcion = q.cc_Descripcion
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 vt_Subtotal_item = q.vt_Subtotal,
+                                 vt_iva_item = q.vt_iva,
+                                 vt_total_item = q.vt_total
                              }).ToList();
                 }
 

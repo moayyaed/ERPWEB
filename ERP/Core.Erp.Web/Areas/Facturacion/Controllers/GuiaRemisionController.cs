@@ -595,7 +595,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public JsonResult SetCodigo(decimal IdTransaccionSession = 0)
         {
-            string Codigo = "";
+            string Codigo = "COT: ";
             var ListaDetalle = detalle_info.get_list(IdTransaccionSession);
             var lstCotizacion = ListaDetalle.GroupBy(q => q.NumCotizacion).Select(q => q.Key).ToList();
             var lstOpr = ListaDetalle.GroupBy(q => q.NumOPr).Select(q => q.Key).ToList();
@@ -773,13 +773,19 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             info_det.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
             info_det.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
             info_det.gi_Subtotal = Math.Round(info_det.gi_cantidad * info_det.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
                 info_det.gi_por_iva = impuesto.porcentaje;
             else
                 info_det.gi_por_iva = 0;
+
             info_det.gi_Iva = Math.Round(info_det.gi_Subtotal * (info_det.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
             info_det.gi_Total = Math.Round(info_det.gi_Subtotal + info_det.gi_Iva, 2, MidpointRounding.AwayFromZero);
+
+            info_det.gi_Subtotal = info_det.gi_Subtotal;
+            info_det.gi_Iva_item = info_det.gi_Iva;
+            info_det.gi_Total_item = info_det.gi_Total;
 
             #region Centro de costo
             info_det.IdCentroCosto = info_det.IdCentroCosto;
@@ -810,6 +816,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
             edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
+
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
                 edited_info.gi_por_iva = impuesto.porcentaje;
@@ -819,12 +826,17 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_Iva = Math.Round(edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Total = Math.Round(edited_info.gi_Subtotal + edited_info.gi_Iva, 2, MidpointRounding.AwayFromZero);
 
+            edited_info.gi_Subtotal_item = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Iva_item = Math.Round(edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Total_item = Math.Round(edited_info.gi_Subtotal + edited_info.gi_Iva, 2, MidpointRounding.AwayFromZero);
+
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+            {
                 edited_info.cc_Descripcion = string.Empty;
+            }                
             else
-                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
             {
                 var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
                 if (cc != null)

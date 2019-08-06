@@ -339,9 +339,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridView_proforma_det.GetEditor('gi_Subtotal_item').SetValue(data.subtotal);
-                GridView_proforma_det.GetEditor('gi_Iva_item').SetValue(data.iva);
-                GridView_proforma_det.GetEditor('gi_Total_item').SetValue(data.total);
+                GridViewPartial_guias_remision_det.GetEditor('gi_Subtotal_item').SetValue(data.subtotal);
+                GridViewPartial_guias_remision_det.GetEditor('gi_Iva_item').SetValue(data.iva);
+                GridViewPartial_guias_remision_det.GetEditor('gi_Total_item').SetValue(data.total);
             },
             error: function (error) {
             }
