@@ -766,7 +766,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 vt_tipoDoc = "FACT",
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 DescuentoReadOnly = false,
-                IdCatalogo_FormaPago = "EFEC",
+                IdCatalogo_FormaPago = "CRE",
                 info_resumen = new fa_factura_resumen_Info()
             };
             
