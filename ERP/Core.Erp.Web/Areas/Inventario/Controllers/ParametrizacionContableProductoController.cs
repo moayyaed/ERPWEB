@@ -123,8 +123,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 }
 
                 edited_info.IdCtaCble_Costo = info_det.IdCtaCble_Costo;
-                edited_info.pc_Cuenta = cta.pc_Cuenta;
-                info_det.pc_Cuenta = cta.pc_Cuenta;
+                edited_info.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+                info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
                 bus_producto_x_tbbodega.modificarDB(edited_info);
 
             }
