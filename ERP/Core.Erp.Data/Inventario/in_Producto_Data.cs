@@ -1017,7 +1017,7 @@ namespace Core.Erp.Data.Inventario
                 Lista = get_list_nombre_combo(Lista);
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

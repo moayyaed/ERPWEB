@@ -12,7 +12,7 @@
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "IngresoInventarioOrdenCompra", Action = "EditingDelete", Area = "Inventario" };
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
@@ -115,6 +115,31 @@
 
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = IdProducto;editor.Focus(); SetSucursalBodega();}}";
     });
 }
 @grid.Bind(Model).GetHtml()
+
+<script>
+    function SetSucursalBodega() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdBodega: $("#IdBodega").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetSucursalBodega", "IngresoInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
