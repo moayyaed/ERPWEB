@@ -733,19 +733,26 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
 
                 #region Cuenta tipo nota
-                if (!string.IsNullOrEmpty(IdCtaCble_tipoNota))
+                var lstTipoNota = info.lst_det.GroupBy(q => q.IdCentroCosto).Select(q => new { IdCentroCosto = q.Key, Subtotal = q.Sum(g=> g.sc_subtotal) });
+
+                foreach (var item in lstTipoNota)
                 {
-                    diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
+                    if (!string.IsNullOrEmpty(IdCtaCble_tipoNota))
                     {
-                        IdEmpresa = diario.IdEmpresa,
-                        IdTipoCbte = diario.IdTipoCbte,
-                        IdCbteCble = diario.IdCbteCble,
-                        secuencia = secuencia++,
-                        IdCtaCble = IdCtaCble_tipoNota,
-                        dc_Valor = Math.Round(info.lst_det.Sum(q => q.sc_subtotal), 2, MidpointRounding.AwayFromZero) * (info.CreDeb.Trim() == "C" ? 1 : -1),
-                        dc_para_conciliar = false,
-                    });
+                        diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
+                        {
+                            IdEmpresa = diario.IdEmpresa,
+                            IdTipoCbte = diario.IdTipoCbte,
+                            IdCbteCble = diario.IdCbteCble,
+                            secuencia = secuencia++,
+                            IdCtaCble = IdCtaCble_tipoNota,
+                            IdCentroCosto = item.IdCentroCosto,
+                            dc_Valor = Math.Round(item.Subtotal) * (info.CreDeb.Trim() == "C" ? 1 : -1),
+                            dc_para_conciliar = false,
+                        });
+                    }
                 }
+                
                 #endregion
 
                 if (info.lst_det.Count == 0)
