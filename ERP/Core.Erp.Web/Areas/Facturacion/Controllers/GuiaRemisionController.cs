@@ -600,15 +600,20 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lstCotizacion = ListaDetalle.GroupBy(q => q.NumCotizacion).Select(q => q.Key).ToList();
             var lstOpr = ListaDetalle.GroupBy(q => q.NumOPr).Select(q => q.Key).ToList();
 
-            for (int i = 0; i < lstCotizacion.Count(); i++)
+            int Cont = 0;
+            lstCotizacion.ForEach(q =>
             {
-                Codigo += (i == 0) ? Codigo = "COT:" + lstCotizacion[i].ToString() : (i == (lstCotizacion.Count() -1)) ? lstCotizacion[i].ToString()  : "-" + lstCotizacion[i].ToString();
-            }
-
-            for (int i = 0; i < lstOpr.Count(); i++)
+                Codigo += Cont == 0 ? q.ToString() : (" - " + q.ToString());
+                Cont++;
+            });
+            Cont = 0;
+            string OP = " OP: ";
+            lstOpr.ForEach(q =>
             {
-                Codigo += (i == 0) ? Codigo = " OP:" + lstOpr[i].ToString() : (i == (lstOpr.Count() - 1)) ? lstOpr[i].ToString() : "-"+lstOpr[i].ToString();
-            }
+                OP += Cont == 0 ? q.ToString() : (" - " + q.ToString());
+                Cont++;
+            });
+            Codigo += OP;
 
             return Json(Codigo, JsonRequestBehavior.AllowGet);
         }
@@ -648,7 +653,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
                     }
-
+                                        
                     if (ModelState.IsValid)
                         detalle_info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 }
@@ -777,6 +782,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_cantidad = info_det.gi_cantidad;
             edited_info.gi_precio = info_det.gi_precio;
             edited_info.gi_por_desc = info_det.gi_por_desc;
+            edited_info.gi_detallexItems = info_det.gi_detallexItems;
             edited_info.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);

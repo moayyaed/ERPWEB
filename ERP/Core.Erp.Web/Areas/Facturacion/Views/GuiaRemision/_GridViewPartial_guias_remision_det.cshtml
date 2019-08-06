@@ -51,7 +51,7 @@
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
             column.Visible = true;
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(18);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -59,7 +59,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(18);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -187,7 +187,7 @@
         {
             column.FieldName = "IdCentroCosto";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.Visible = false;
             column.VisibleIndex = 7;
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -201,7 +201,7 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.CellEditorInitialize = (sender, e) =>
@@ -212,6 +212,18 @@
                 e.Editor.ReadOnly = true;
             }
         };
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_detallexItems";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.EditorProperties().Memo(q =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "gi_Total").DisplayFormat = "{0:n2}";
         settings.Settings.ShowFooter = true;
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";

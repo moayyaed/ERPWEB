@@ -102,7 +102,8 @@ namespace Core.Erp.Data.Facturacion
                                  IdCentroCosto = q.IdCentroCosto,
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion ?? 0,
-                                 NumOPr = q.NumOPr ?? 0
+                                 NumOPr = q.NumOPr ?? 0,
+                                 vt_detallexItems = q.pd_DetalleAdicional
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -158,7 +159,8 @@ namespace Core.Erp.Data.Facturacion
                                  IdCentroCosto = q.IdCentroCosto,
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion ?? 0,
-                                 NumOPr = q.NumOPr ?? 0
+                                 NumOPr = q.NumOPr ?? 0,
+                                 vt_detallexItems = q.pd_DetalleAdicional
                              }).ToList();
                 }
                 Lista.ForEach(V =>

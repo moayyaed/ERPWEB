@@ -46,7 +46,8 @@ namespace Core.Erp.Data.Facturacion
                                  IdCentroCosto = q.IdCentroCosto,
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion,
-                                 NumOPr = q.NumOPr
+                                 NumOPr = q.NumOPr,
+                                 pd_DetalleAdicional = q.pd_DetalleAdicional
                              }).ToList();
                 }
                 Lista.ForEach(V =>

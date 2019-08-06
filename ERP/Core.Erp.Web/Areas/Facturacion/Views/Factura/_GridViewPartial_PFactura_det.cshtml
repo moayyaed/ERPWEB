@@ -37,32 +37,32 @@
         {
             column.FieldName = "IdProforma";
             column.Caption = "# Proforma";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "NumCotizacion";
             column.Caption = "# Cotizacion";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "NumOPr";
             column.Caption = "# Orden Pedido";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(25);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         settings.Columns.Add(column =>
         {
             column.FieldName = "vt_cantidad";
-            column.Caption = "cantidad";
+            column.Caption = "Cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
         });
@@ -106,6 +106,18 @@
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_detallexItems";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.EditorProperties().Memo(q =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";

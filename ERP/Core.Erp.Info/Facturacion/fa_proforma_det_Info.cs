@@ -31,6 +31,7 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<int> IdPunto_cargo { get; set; }
         public Nullable<decimal> NumCotizacion { get; set; }
         public Nullable<decimal> NumOPr { get; set; }
+        public string pd_DetalleAdicional { get; set; }
 
 
         #region Campos que no existen en la tabla
