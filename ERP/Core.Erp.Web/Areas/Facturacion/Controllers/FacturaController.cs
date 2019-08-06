@@ -724,20 +724,25 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         public JsonResult SetCodigo(decimal IdTransaccionSession = 0)
         {
-            string Codigo = "";
+            string Codigo = "COT: ";
             var ListaDetalle = List_det.get_list(IdTransaccionSession);
             var lstCotizacion = ListaDetalle.GroupBy(q=>q.NumCotizacion).Select(q=> q.Key).ToList();
             var lstOpr = ListaDetalle.GroupBy(q => q.NumOPr).Select(q => q.Key).ToList();
 
-            for (int i = 0; i < lstCotizacion.Count(); i++)
+            int Cont = 0;
+            lstCotizacion.ForEach(q =>
             {
-                Codigo += (i == 0) ? Codigo = "COT:" + lstCotizacion[i].ToString() : (i < (lstCotizacion.Count() - 1)) ? lstCotizacion[i].ToString() + "-" : lstCotizacion[i].ToString();
-            }
-
-            for (int i = 0; i < lstOpr.Count(); i++)
+                Codigo += Cont == 0 ? q.ToString() : (" - " + q.ToString());
+                Cont++;
+            });
+            Cont = 0;
+            string OP = " OP: ";
+            lstOpr.ForEach(q =>
             {
-                Codigo += (i == 0) ? Codigo = " OP:" + lstOpr[i].ToString() : (i < (lstOpr.Count() - 1)) ? lstOpr[i].ToString() + "-" : lstOpr[i].ToString();
-            }
+                OP += Cont == 0 ? q.ToString() : (" - " + q.ToString());
+                Cont++;
+            });
+            Codigo += OP;
 
             return Json(Codigo, JsonRequestBehavior.AllowGet);
         }
