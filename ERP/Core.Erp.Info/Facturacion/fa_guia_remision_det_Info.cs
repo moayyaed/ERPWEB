@@ -46,6 +46,9 @@ namespace Core.Erp.Info.Facturacion
         public string SecuencialUnico { get; set; }
         public decimal NumCotizacion { get; set; }
         public decimal NumOPr { get; set; }
+        public double gi_Subtotal_item { get; set; }
+        public double gi_Iva_item { get; set; }
+        public double gi_Total_item { get; set; }
         //public string ca_Categoria { get; set; }
         //public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         //public string lote_num_lote { get; set; }

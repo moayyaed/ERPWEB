@@ -40,6 +40,9 @@ namespace Core.Erp.Info.Facturacion
         public string lote_num_lote { get; set; }
         public string nom_presentacion { get; set; }
         public string cc_Descripcion { get; set; }
+        public double pd_subtotal_item { get; set; }
+        public double pd_iva_item { get; set; }
+        public double pd_total_item { get; set; }
         #endregion        
     }
 

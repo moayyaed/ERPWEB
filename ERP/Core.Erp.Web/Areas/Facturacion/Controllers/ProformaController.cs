@@ -514,6 +514,29 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult CalcularValores(int Cantidad = 0, double Precio = 0, string IdCodImpuesto = "", double PorcentajeDesc = 0)
+        {
+            double subtotal = 0;
+            double iva_porc = 0;
+            double iva = 0;
+            double total = 0;
+            double DescUnitario = 0;
+            double PrecioFinal = 0;
+
+            DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
+            PrecioFinal = Precio - DescUnitario;
+            subtotal = Convert.ToDouble(Cantidad * PrecioFinal);
+
+            var impuesto = bus_impuesto.get_info(IdCodImpuesto);
+            if (impuesto != null)
+                iva_porc = impuesto.porcentaje;
+
+            iva = subtotal * (iva_porc / 100);
+            total = subtotal + iva;
+
+            return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region funciones del detalle
         private void cargar_combos_detalle()
