@@ -27,10 +27,11 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             lbl_empresa.Text = empresa;
             lbl_usuario.Text = usuario;
 
-            int IdEmpresa = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
+            int IdEmpresa = string.IsNullOrEmpty(p_IdEmpresa.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa.Value);            
+            int Idtipo_cliente = string.IsNullOrEmpty(p_Idtipo_cliente.Value.ToString()) ? 0 : Convert.ToInt32(p_Idtipo_cliente.Value);
             decimal IdCLiente = string.IsNullOrEmpty(p_IdCliente.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdCliente.Value);
-            DateTime fecha_corte = p_fecha_corte.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_corte.Value);
-            bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
+            DateTime fecha_corte = string.IsNullOrEmpty(p_fecha_corte.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_corte.Value);
+            bool mostrarSaldo0 = string.IsNullOrEmpty(p_mostrarSaldo0.Value.ToString()) ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             List<CXC_005_Info> lst_rpt = new List<CXC_005_Info>();
 
 
@@ -49,7 +50,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             {
                 for (int i = 0; i < IntArray.Count(); i++)
                 {
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IntArray[i], IdCLiente, fecha_corte, mostrarSaldo0));
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IntArray[i], IdCLiente, Idtipo_cliente, fecha_corte, mostrarSaldo0));
                 }
             }
             this.DataSource = lst_rpt;

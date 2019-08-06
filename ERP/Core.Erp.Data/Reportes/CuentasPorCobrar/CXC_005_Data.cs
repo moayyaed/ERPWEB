@@ -7,7 +7,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 {
     public class CXC_005_Data
     {
-        public List<CXC_005_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCLiente, DateTime? fecha_corte, bool mostrarSaldo0)
+        public List<CXC_005_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCLiente,int Idtipo_cliente,  DateTime? fecha_corte, bool mostrarSaldo0)
         {
             try
             {
@@ -16,11 +16,13 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 
                 decimal IdCliente_ini = IdCLiente;
                 decimal IdCliente_fin = IdCLiente == 0 ? 99999999 : IdCLiente;
-                
+
+                int Idtipo_clienteIni = Idtipo_cliente;
+                int Idtipo_clienteFin = Idtipo_cliente == 0 ? 999999999 : Idtipo_cliente;
                 List<CXC_005_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCXC_005(IdEmpresa, IdSucursal_ini, IdSucursal_fin, 0,0, IdCliente_ini, IdCliente_fin, fecha_corte, mostrarSaldo0)
+                    Lista = (from q in Context.SPCXC_005(IdEmpresa, IdSucursal_ini, IdSucursal_fin, Idtipo_clienteIni, Idtipo_clienteFin, IdCliente_ini, IdCliente_fin, fecha_corte, mostrarSaldo0)
                              select new CXC_005_Info
                              {
                                 IdEmpresa = q.IdEmpresa,
@@ -39,7 +41,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                 vt_fech_venc = q.vt_fech_venc,
                                 vt_NumFactura = q.vt_NumFactura,
                                 vt_tipoDoc = q.vt_tipoDoc,
-                                Su_Descripcion = q.Su_Descripcion
+                                Su_Descripcion = q.Su_Descripcion,
+                                Descripcion_tip_cliente = q.Descripcion_tip_cliente,
+                                Idtipo_cliente = q.Idtipo_cliente
                              }).ToList();
                 }
                 return Lista;

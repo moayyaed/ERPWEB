@@ -61,7 +61,7 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="form-group">
                         <label for="IdSucursal">Sucursal</label>
                         @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
@@ -108,11 +108,21 @@
                         @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Idtipo_cliente">Tipo cliente</label>
+                        @Html.DropDownListFor(q => q.Idtipo_cliente, new SelectList(ViewBag.lst_tipo_cliente, "Idtipo_cliente", "Descripcion_tip_cliente"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(q => q.Idtipo_cliente, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="IdCliente">Cliente</label>
