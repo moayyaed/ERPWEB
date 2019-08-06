@@ -86,7 +86,7 @@ namespace Core.Erp.Data.Inventario
         
         public List<in_producto_x_tb_bodega_Info> get_list_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega)
         {
-            int secuencia = 0;
+            int secuencia = 1;
             int IdBodega_ini = IdBodega;
             int IdBodega_fin = IdBodega == 0 ? 999999 : IdBodega;
             List<in_producto_x_tb_bodega_Info> lista = null;
@@ -95,10 +95,10 @@ namespace Core.Erp.Data.Inventario
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 99999 : IdSucursal;
 
-                using (Entities_general Context = new Entities_general())
+                using (Entities_inventario Context = new Entities_inventario())
                 {
 
-                    lista = (from q in Context.vwtb_bodega_x_sucursal
+                    lista = (from q in Context.vwin_producto_x_tb_bodega
                              where q.IdEmpresa == IdEmpresa
                              && IdSucursalIni <= q.IdSucursal
                              && q.IdSucursal <= IdSucursalFin
@@ -109,14 +109,42 @@ namespace Core.Erp.Data.Inventario
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,
                                  IdBodega = q.IdBodega,
+                                 IdProducto = q.IdProducto,
                                  Su_Descripcion = q.Su_Descripcion,
                                  bo_Descripcion = q.bo_Descripcion,
-                                 IdCtaCble_Costo = ""
+                                 IdCtaCble_Costo = q.IdCtaCble_Costo,
+                                 Stock_minimo = q.Stock_minimo,
+                                 pc_Cuenta = q.pc_Cuenta,
+                                 pr_codigo = q.pr_codigo,
+                                 pr_descripcion = q.pr_descripcion,
+                                 ca_Categoria = q.ca_Categoria                                 
                              }).ToList();
 
                 }
                 lista.ForEach(v => { v.Secuencia = secuencia++; v.IdString = v.IdSucursal.ToString("000") + v.IdBodega.ToString("000"); });
                 return lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool modificarDB(in_producto_x_tb_bodega_Info info)
+        {
+            try
+            {
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    in_producto_x_tb_bodega Entity = Context.in_producto_x_tb_bodega.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdProducto == info.IdProducto).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.IdCtaCble_Costo = info.IdCtaCble_Costo;
+
+                    Context.SaveChanges();
+                }
+                return true;
             }
             catch (Exception)
             {

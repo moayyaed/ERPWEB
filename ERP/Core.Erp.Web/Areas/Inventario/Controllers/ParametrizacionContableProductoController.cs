@@ -1,8 +1,11 @@
-﻿using Core.Erp.Bus.General;
+﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,24 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_producto_x_tb_bodega_Info_List Lis_in_producto_x_tb_bodega_Info_List = new in_producto_x_tb_bodega_Info_List();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+        ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        #endregion
+
+        #region Metodos ComboBox bajo demanda
+
+        public ActionResult CmbCuenta()
+        {
+            in_producto_x_tb_bodega_Info model = new in_producto_x_tb_bodega_Info();
+            return PartialView("_CmbCuenta", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
         #endregion
 
         #region Vistas
@@ -59,11 +80,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult GridViewPartial_ParametrizacionContableProducto(int IdSucursal = 0, int IdBodega = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
             ViewBag.IdBodega = IdBodega;
 
-            List<in_Producto_Info> model = bus_producto.get_list();
+            List<in_producto_x_tb_bodega_Info> model = bus_producto_x_tbbodega.get_list_x_bodega(IdEmpresa, IdSucursal, IdBodega);
+            Lis_in_producto_x_tb_bodega_Info_List.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_ParametrizacionContableProducto", model);
         }
@@ -80,32 +103,34 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EditingUpdate_pro_x_bod([ModelBinder(typeof(DevExpressEditorsBinder))] in_producto_x_tb_bodega_Info info_det)
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] in_producto_x_tb_bodega_Info info_det)
         {
-            in_Producto_Info model = new in_Producto_Info();
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst = Lis_in_producto_x_tb_bodega_Info_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).ToList();
+            in_producto_x_tb_bodega_Info edited_info = lst.Where(m => m.Secuencia == info_det.Secuencia).FirstOrDefault();
 
-            if (info_det != null)
+            if (edited_info != null)
             {
-                var suc = bus_sucursal.get_info(IdEmpresa, info_det.IdSucursal);
-
-                info_det.IdBodega = string.IsNullOrEmpty(info_det.IdString) ? 0 : Convert.ToInt32(info_det.IdString.Substring(3, 3));
-
-                var bod = bus_bodega.get_info(IdEmpresa, info_det.IdSucursal, info_det.IdBodega);
+                var suc = bus_sucursal.get_info(IdEmpresa, edited_info.IdSucursal);
+                var bod = bus_bodega.get_info(IdEmpresa, edited_info.IdSucursal, edited_info.IdBodega);
+                var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble_Costo);
                 if (suc != null && bod != null)
                 {
-                    info_det.IdSucursal = info_det.IdSucursal;
+                    info_det.IdSucursal = edited_info.IdSucursal;
                     info_det.Su_Descripcion = suc.Su_Descripcion;
-                    info_det.IdBodega = info_det.IdBodega;
+                    info_det.IdBodega = edited_info.IdBodega;
                     info_det.bo_Descripcion = bod.bo_Descripcion;
                 }
+
+                edited_info.IdCtaCble_Costo = info_det.IdCtaCble_Costo;
+                edited_info.pc_Cuenta = cta.pc_Cuenta;
+                info_det.pc_Cuenta = cta.pc_Cuenta;
+                bus_producto_x_tbbodega.modificarDB(edited_info);
+
             }
 
-            if (ModelState.IsValid)
-            {
-                Lis_in_producto_x_tb_bodega_Info_List.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            }
-            model.lst_producto_x_bodega = Lis_in_producto_x_tb_bodega_Info_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<in_producto_x_tb_bodega_Info> model = Lis_in_producto_x_tb_bodega_Info_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_ParametrizacionContableProducto", model);
         }
 

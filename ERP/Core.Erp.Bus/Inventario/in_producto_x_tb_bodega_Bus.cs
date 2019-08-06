@@ -47,5 +47,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public bool modificarDB(in_producto_x_tb_bodega_Info info)
+        {
+            try
+            {
+                return odata.modificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
