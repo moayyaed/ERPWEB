@@ -28,6 +28,7 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<int> IdPunto_Cargo { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public string IdCod_Impuesto_Iva { get; set; }
+        [Required(ErrorMessage ="El campo centro de costo es obligatorio")]
         public string IdCentroCosto { get; set; }
         public Nullable<int> IdEmpresa_pf { get; set; }
         public Nullable<int> IdSucursal_pf { get; set; }
