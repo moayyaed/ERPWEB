@@ -45,7 +45,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_producto.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoBusquedaProducto.PORMODULO, cl_enumeradores.eModulo.INV,  0);
+            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursalInv) ? 0 : Convert.ToInt32(SessionFixed.IdSucursalInv);
+            int IdBodega = string.IsNullOrEmpty(SessionFixed.IdBodegaInv) ? 0 : Convert.ToInt32(SessionFixed.IdBodegaInv);
+
+            return bus_producto.get_list_bajo_demanda(args, IdEmpresa, cl_enumeradores.eTipoBusquedaProducto.PORBODEGA, cl_enumeradores.eModulo.INV, IdSucursal, IdBodega);
         }
         public in_Producto_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
         {
