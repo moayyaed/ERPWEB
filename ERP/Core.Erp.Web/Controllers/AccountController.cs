@@ -3,6 +3,7 @@ using Core.Erp.Bus.General;
 using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.General;
 using Core.Erp.Info.SeguridadAcceso;
+using Core.Erp.Web.Areas.SeguridadAcceso.Controllers;
 using Core.Erp.Web.Helps;
 using Core.Erp.Web.Models;
 using System;
@@ -14,7 +15,9 @@ namespace Core.Erp.Web.Controllers
 {
     public class AccountController : Controller
     {
+        seg_Menu_x_Empresa_x_Usuario_Lista ListMenuPorEmpresa = new seg_Menu_x_Empresa_x_Usuario_Lista();
         seg_Usuario_x_Empresa_Bus bus_usuario_x_empresa = new seg_Usuario_x_Empresa_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_MenuPorEmpresa = new seg_Menu_x_Empresa_x_Usuario_Bus();
         seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
@@ -83,7 +86,7 @@ namespace Core.Erp.Web.Controllers
                 SessionFixed.IdUsuario = usuario.IdUsuario;
                 SessionFixed.EsSuperAdmin = usuario.es_super_admin.ToString();
                 SessionFixed.IdCaja = bus_caja.GetIdCajaPorUsuario(model.IdEmpresa, SessionFixed.IdUsuario).ToString();
-
+                ListMenuPorEmpresa.set_list(bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario));
                 if (usuario.IdMenu != null)
                 {
                     var menu = bus_menu.get_info((int)usuario.IdMenu);
