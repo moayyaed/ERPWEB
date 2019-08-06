@@ -634,14 +634,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 info_det.pr_descripcion = producto.pr_descripcion_combo;
             }
 
-            info_det.sc_descUni = Math.Round(info_det.sc_Precio * (info_det.sc_PordescUni / 100), 2, MidpointRounding.AwayFromZero);
-            info_det.sc_precioFinal = Math.Round(info_det.sc_Precio - info_det.sc_descUni, 2, MidpointRounding.AwayFromZero);
-            info_det.sc_subtotal = Math.Round(info_det.sc_cantidad * info_det.sc_precioFinal, 2, MidpointRounding.AwayFromZero);
+            info_det.sc_descUni = info_det.sc_Precio * (info_det.sc_PordescUni / 100);
+            info_det.sc_precioFinal = info_det.sc_Precio - info_det.sc_descUni;
+            info_det.sc_subtotal = info_det.sc_cantidad * info_det.sc_precioFinal;
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);
             if (impuesto != null)
                 info_det.vt_por_iva = impuesto.porcentaje;
-            info_det.sc_iva = Math.Round(info_det.sc_subtotal * (info_det.vt_por_iva / 100), 2, MidpointRounding.AwayFromZero);
-            info_det.sc_total = Math.Round(info_det.sc_subtotal + info_det.sc_iva, 2, MidpointRounding.AwayFromZero);
+            info_det.sc_iva = info_det.sc_subtotal * (info_det.vt_por_iva / 100);
+            info_det.sc_total = Math.Round(info_det.sc_subtotal + info_det.sc_iva,2);
 
             #region Centro de costo
             info_det.IdCentroCosto = info_det.IdCentroCosto;
@@ -673,9 +673,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.sc_cantidad = info_det.sc_cantidad;
             edited_info.sc_PordescUni = info_det.sc_PordescUni;
             edited_info.sc_Precio = info_det.sc_Precio;
-            edited_info.sc_descUni = Math.Round(info_det.sc_Precio * (info_det.sc_PordescUni / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.sc_precioFinal = Math.Round(info_det.sc_Precio - edited_info.sc_descUni, 2, MidpointRounding.AwayFromZero);
-            edited_info.sc_subtotal = Math.Round(info_det.sc_cantidad * edited_info.sc_precioFinal, 2, MidpointRounding.AwayFromZero);
+            edited_info.sc_descUni = info_det.sc_Precio * (info_det.sc_PordescUni / 100);
+            edited_info.sc_precioFinal = info_det.sc_Precio - edited_info.sc_descUni;
+            edited_info.sc_subtotal = info_det.sc_cantidad * edited_info.sc_precioFinal;
             edited_info.IdCod_Impuesto_Iva = info_det.IdCod_Impuesto_Iva;
             if (!string.IsNullOrEmpty(info_det.IdCod_Impuesto_Iva))
             {
@@ -683,8 +683,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 if (impuesto != null)
                     edited_info.vt_por_iva = impuesto.porcentaje;
             }
-            edited_info.sc_iva = Math.Round(edited_info.sc_subtotal * (edited_info.vt_por_iva / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.sc_total = Math.Round(edited_info.sc_subtotal + edited_info.sc_iva, 2, MidpointRounding.AwayFromZero);
+            edited_info.sc_iva =edited_info.sc_subtotal * (edited_info.vt_por_iva / 100);
+            edited_info.sc_total = Math.Round(edited_info.sc_subtotal + edited_info.sc_iva,2);
 
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;

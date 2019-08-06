@@ -1,10 +1,10 @@
 ﻿CREATE VIEW [dbo].[vwcxc_cartera_x_cobrar]
 AS
-SELECT cabfac.IdEmpresa, cabfac.IdSucursal, cabfac.IdBodega, cabfac.vt_tipoDoc, cabfac.vt_tipoDoc + '-' + cast(cast(cabfac.vt_NumFactura AS int) AS varchar(20)) AS vt_NunDocumento, cabfac.vt_Observacion AS Referencia, 
-                  cabfac.IdCbteVta AS IdComprobante, cabfac.CodCbteVta AS CodComprobante, Sucu.Su_Descripcion, cabfac.IdCliente, cabfac.vt_fecha, CAST( detfac.Total AS FLOAT ) AS vt_total, ROUND(detfac.Total 
-                  - ROUND(ISNULL(vwcxc_total_cobros_x_Docu.dc_ValorPago, 0), 2), 2) AS Saldo, ISNULL(vwcxc_total_cobros_x_Docu.dc_ValorPago, 0) AS TotalxCobrado, Bod.bo_Descripcion AS Bodega, CAST(detfac.SubtotalConDscto  AS FLOAT)
-                  AS vt_Subtotal, CAST(detfac.ValorIVA AS FLOAT) AS vt_iva, cabfac.vt_fech_venc, ROUND(ISNULL(Cob_RtFu.dc_ValorPago, 0), 2) AS dc_ValorRetFu, ROUND(ISNULL(Cob_RtIVA.dc_ValorPago, 0), 2) AS dc_ValorRetIva, 
-                  Cli.Codigo AS CodCliente, tb_persona.pe_nombreCompleto AS NomCliente, tb_empresa.em_nombre, cabfac.Estado
+SELECT cabfac.IdEmpresa, cabfac.IdSucursal, cabfac.IdBodega, cabfac.vt_tipoDoc, cabfac.vt_serie1+'-'+cabfac.vt_serie2+'-' + cabfac.vt_NumFactura AS vt_NunDocumento, cabfac.vt_Observacion AS Referencia, 
+                  cabfac.IdCbteVta AS IdComprobante, cabfac.CodCbteVta AS CodComprobante, Sucu.Su_Descripcion, cabfac.IdCliente, cabfac.vt_fecha, CAST(detfac.Total AS FLOAT) AS vt_total, 
+                  ROUND(detfac.Total - ROUND(ISNULL(vwcxc_total_cobros_x_Docu.dc_ValorPago, 0), 2), 2) AS Saldo, ISNULL(vwcxc_total_cobros_x_Docu.dc_ValorPago, 0) AS TotalxCobrado, Bod.bo_Descripcion AS Bodega, 
+                  CAST(detfac.SubtotalConDscto AS FLOAT) AS vt_Subtotal, CAST(detfac.ValorIVA AS FLOAT) AS vt_iva, cabfac.vt_fech_venc, ROUND(ISNULL(Cob_RtFu.dc_ValorPago, 0), 2) AS dc_ValorRetFu, ROUND(ISNULL(Cob_RtIVA.dc_ValorPago, 
+                  0), 2) AS dc_ValorRetIva, Cli.Codigo AS CodCliente, tb_persona.pe_nombreCompleto AS NomCliente, tb_empresa.em_nombre, cabfac.Estado
 FROM     fa_factura_resumen AS detfac INNER JOIN
                   fa_factura AS cabfac ON detfac.IdBodega = cabfac.IdBodega AND detfac.IdSucursal = cabfac.IdSucursal AND detfac.IdEmpresa = cabfac.IdEmpresa AND detfac.IdCbteVta = cabfac.IdCbteVta INNER JOIN
                   tb_sucursal AS Sucu ON cabfac.IdEmpresa = Sucu.IdEmpresa AND cabfac.IdSucursal = Sucu.IdSucursal INNER JOIN
@@ -18,9 +18,9 @@ FROM     fa_factura_resumen AS detfac INNER JOIN
                   cabfac.IdBodega = Cob_RtIVA.IdBodega_Cbte AND cabfac.IdCbteVta = Cob_RtIVA.IdCbte_vta_nota LEFT OUTER JOIN
                   vwcxc_total_cobros_x_Docu ON cabfac.IdEmpresa = vwcxc_total_cobros_x_Docu.IdEmpresa AND cabfac.IdSucursal = vwcxc_total_cobros_x_Docu.IdSucursal AND cabfac.IdBodega = vwcxc_total_cobros_x_Docu.IdBodega_Cbte AND 
                   cabfac.vt_tipoDoc = vwcxc_total_cobros_x_Docu.dc_TipoDocumento AND cabfac.IdCbteVta = vwcxc_total_cobros_x_Docu.IdCbte_vta_nota
-WHERE cabfac.Estado = 'A'
+WHERE  cabfac.Estado = 'A'
 UNION
-SELECT A.IdEmpresa, A.IdSucursal, A.IdBodega, 'NTDB' AS CreDeb, CASE WHEN A.NumNota_Impresa IS NULL THEN 'N/D#' + CAST(A.IdNota AS varchar(20)) ELSE 'N/D#' + A.Serie1 + '-' + A.Serie2 + '' + A.NumNota_Impresa END AS Documento, 
+SELECT A.IdEmpresa, A.IdSucursal, A.IdBodega, 'NTDB' AS CreDeb, CASE WHEN A.NaturalezaNota = 'SRI' THEN A.Serie1 + '-' + A.Serie2 + '-' + A.NumNota_Impresa ELSE ISNULL(A.CodNota, cast(a.IdNota AS varchar(20))) END AS Documento, 
                   A.sc_observacion, A.IdNota, A.CodNota, su.Su_Descripcion, A.IdCliente, A.no_fecha, ROUND(SUM(B.sc_total), 2) AS sc_total, ROUND(SUM(B.sc_total) - ISNULL(SUM(CB.dc_ValorPago), 0), 2) AS Saldo, ISNULL(SUM(CB.dc_ValorPago), 0) 
                   AS totalCobrado, Bo.bo_Descripcion, ROUND(SUM(B.sc_subtotal), 2) AS sc_subtotal, ROUND(SUM(B.sc_iva), 2) AS sc_iva, A.no_fecha_venc, isnull(vwcxc_cobros_x_vta_nota_x_RetFuente_Sumatoria.dc_ValorPago, 0) AS RtFT, 
                   isnull(vwcxc_cobros_x_vta_nota_x_RetIVA_Sumatoria.dc_ValorPago, 0) AS RtIVA, Cli.Codigo AS CodCliente, tb_persona.pe_nombreCompleto, tb_empresa.em_nombre, A.Estado
@@ -39,13 +39,12 @@ FROM     fa_notaCreDeb AS A INNER JOIN
                   A.CodDocumentoTipo = vwcxc_cobros_x_vta_nota_x_RetFuente_Sumatoria.dc_TipoDocumento LEFT OUTER JOIN
                   vwcxc_total_cobros_x_Docu AS CB ON A.IdEmpresa = CB.IdEmpresa AND A.IdSucursal = CB.IdSucursal AND A.IdBodega = CB.IdBodega_Cbte AND A.IdNota = CB.IdCbte_vta_nota AND 
                   A.CodDocumentoTipo = CB.dc_TipoDocumento
-WHERE  A.Estado = 'A' AND
-NOT EXISTS
+WHERE  A.Estado = 'A' AND NOT EXISTS
                       (SELECT *
                        FROM      fa_notaCreDeb_x_fa_factura_NotaDeb Cruce
                        WHERE   Cruce.IdEmpresa_nt = A.IdEmpresa AND Cruce.IdSucursal_nt = A.IdSucursal AND Cruce.IdBodega_nt = A.IdBodega AND Cruce.IdNota_nt = A.IdNota AND Cruce.Valor_Aplicado <> 0)
-GROUP BY A.IdEmpresa, A.IdSucursal, A.IdBodega, A.no_fecha, A.CreDeb, A.IdNota, A.Serie1, A.Serie2, A.NumNota_Impresa, A.sc_observacion, A.CodNota, su.Su_Descripcion, A.IdCliente, Bo.bo_Descripcion, A.no_fecha_venc, Cli.Codigo, 
-                  tb_persona.pe_nombreCompleto, tb_empresa.em_nombre, vwcxc_cobros_x_vta_nota_x_RetFuente_Sumatoria.dc_ValorPago, vwcxc_cobros_x_vta_nota_x_RetIVA_Sumatoria.dc_ValorPago, A.Estado
+GROUP BY A.IdEmpresa, A.IdSucursal, A.IdBodega, A.no_fecha, A.CreDeb, a.NaturalezaNota, a.IdNota, A.Serie1, A.Serie2, A.NumNota_Impresa, A.sc_observacion, A.CodNota, su.Su_Descripcion, A.IdCliente, Bo.bo_Descripcion, A.no_fecha_venc, 
+                  Cli.Codigo, tb_persona.pe_nombreCompleto, tb_empresa.em_nombre, vwcxc_cobros_x_vta_nota_x_RetFuente_Sumatoria.dc_ValorPago, vwcxc_cobros_x_vta_nota_x_RetIVA_Sumatoria.dc_ValorPago, A.Estado
 HAVING (A.CreDeb = 'D')
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

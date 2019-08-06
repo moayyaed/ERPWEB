@@ -10,6 +10,7 @@
     [pd_descuento_uni]     FLOAT (53)    NOT NULL,
     [pd_precio_final]      FLOAT (53)    NOT NULL,
     [pd_subtotal]          FLOAT (53)    NOT NULL,
+    [pd_DetalleAdicional]  VARCHAR (MAX) NULL,
     [IdCod_Impuesto]       VARCHAR (25)  NOT NULL,
     [pd_por_iva]           FLOAT (53)    NOT NULL,
     [pd_iva]               FLOAT (53)    NOT NULL,
@@ -28,6 +29,8 @@
     CONSTRAINT [FK_fa_proforma_det_in_Producto] FOREIGN KEY ([IdEmpresa], [IdProducto]) REFERENCES [dbo].[in_Producto] ([IdEmpresa], [IdProducto]),
     CONSTRAINT [FK_fa_proforma_det_tb_sis_Impuesto] FOREIGN KEY ([IdCod_Impuesto]) REFERENCES [dbo].[tb_sis_Impuesto] ([IdCod_Impuesto])
 );
+
+
 
 
 

@@ -137,7 +137,7 @@
         });
 
         function OnSelectedProductoChanged(s, e) {
-            GridViewPartial_inv_det.GetEditor("IdUnidadMedida").PerformCallback();
+            GridViewPartial_inv_det.GetEditor("IdUnidadMedida_sinConversion").PerformCallback();
             SetUnidadMedida(s, e);
         }
 
@@ -160,7 +160,7 @@
                 success: function (data) {
                     console.log(s.GetValue());
                     console.log(data.IdUnidadMedida);
-                    GridViewPartial_inv_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+                    GridViewPartial_inv_det.GetEditor('IdUnidadMedida_sinConversion').SetValue(data.IdUnidadMedida);
                 },
                 error: function (error) {
                 }

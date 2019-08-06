@@ -1,14 +1,16 @@
-﻿CREATE VIEW web.vwfa_notaCreDeb
+﻿CREATE VIEW [web].[vwfa_notaCreDeb]
 AS
-SELECT        dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.CreDeb, dbo.fa_notaCreDeb.NumNota_Impresa, dbo.fa_notaCreDeb.no_fecha, 
-                         dbo.fa_cliente_contactos.Nombres, SUM(dbo.fa_notaCreDeb_det.sc_subtotal) AS sc_subtotal, SUM(dbo.fa_notaCreDeb_det.sc_iva) AS sc_iva, SUM(dbo.fa_notaCreDeb_det.sc_total) AS sc_total, dbo.fa_notaCreDeb.Estado, 
-                         dbo.fa_notaCreDeb.CodNota
-FROM            dbo.fa_notaCreDeb INNER JOIN
-                         dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente LEFT OUTER JOIN
-                         dbo.fa_notaCreDeb_det ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_notaCreDeb_det.IdEmpresa AND dbo.fa_notaCreDeb.IdSucursal = dbo.fa_notaCreDeb_det.IdSucursal AND 
-                         dbo.fa_notaCreDeb.IdBodega = dbo.fa_notaCreDeb_det.IdBodega AND dbo.fa_notaCreDeb.IdNota = dbo.fa_notaCreDeb_det.IdNota
+SELECT dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.CreDeb, dbo.fa_notaCreDeb.NumNota_Impresa, dbo.fa_notaCreDeb.no_fecha, 
+                  P.pe_nombreCompleto Nombres, SUM(dbo.fa_notaCreDeb_det.sc_subtotal) AS sc_subtotal, SUM(dbo.fa_notaCreDeb_det.sc_iva) AS sc_iva, SUM(dbo.fa_notaCreDeb_det.sc_total) AS sc_total, dbo.fa_notaCreDeb.Estado, 
+                  dbo.fa_notaCreDeb.CodNota
+FROM     dbo.fa_notaCreDeb INNER JOIN
+                  dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente LEFT OUTER JOIN
+                  dbo.fa_notaCreDeb_det ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_notaCreDeb_det.IdEmpresa AND dbo.fa_notaCreDeb.IdSucursal = dbo.fa_notaCreDeb_det.IdSucursal AND 
+                  dbo.fa_notaCreDeb.IdBodega = dbo.fa_notaCreDeb_det.IdBodega AND dbo.fa_notaCreDeb.IdNota = dbo.fa_notaCreDeb_det.IdNota INNER JOIN 
+				  fa_cliente AS C ON C.IdEmpresa = fa_notaCreDeb.IdEmpresa AND C.IdCliente = fa_notaCreDeb.IdCliente INNER JOIN
+				  tb_persona AS P ON P.IdPersona = C.IdPersona
 GROUP BY dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.CreDeb, dbo.fa_notaCreDeb.NumNota_Impresa, dbo.fa_notaCreDeb.no_fecha, 
-                         dbo.fa_cliente_contactos.Nombres, dbo.fa_notaCreDeb.Estado, dbo.fa_notaCreDeb.CodNota
+                  P.pe_nombreCompleto, dbo.fa_notaCreDeb.Estado, dbo.fa_notaCreDeb.CodNota
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_notaCreDeb';
 

@@ -27,5 +27,7 @@ namespace Core.Erp.Data
         public string NumDocumento { get; set; }
         public double Valor_Aplicado { get; set; }
         public System.DateTime fecha_cruce { get; set; }
+    
+        public virtual fa_notaCreDeb fa_notaCreDeb { get; set; }
     }
 }

@@ -153,7 +153,7 @@
         });
 
         function OnSelectedProductoChanged(s, e) {
-            GridView_egr_inv_det.GetEditor("IdUnidadMedida").PerformCallback();
+            GridView_egr_inv_det.GetEditor("IdUnidadMedida_sinConversion").PerformCallback();
             SetUnidadMedida(s, e);
         }
 
@@ -174,7 +174,7 @@
                 bProcessing: true,
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    GridView_egr_inv_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+                    GridView_egr_inv_det.GetEditor('IdUnidadMedida_sinConversion').SetValue(data.IdUnidadMedida_Consumo);
                 },
                 error: function (error) {
                 }
