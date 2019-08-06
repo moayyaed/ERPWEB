@@ -15,7 +15,6 @@ namespace Core.Erp.Web.Controllers
 {
     public class AccountController : Controller
     {
-        seg_Menu_x_Empresa_x_Usuario_Lista ListMenuPorEmpresa = new seg_Menu_x_Empresa_x_Usuario_Lista();
         seg_Usuario_x_Empresa_Bus bus_usuario_x_empresa = new seg_Usuario_x_Empresa_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_MenuPorEmpresa = new seg_Menu_x_Empresa_x_Usuario_Bus();
         seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
@@ -86,7 +85,7 @@ namespace Core.Erp.Web.Controllers
                 SessionFixed.IdUsuario = usuario.IdUsuario;
                 SessionFixed.EsSuperAdmin = usuario.es_super_admin.ToString();
                 SessionFixed.IdCaja = bus_caja.GetIdCajaPorUsuario(model.IdEmpresa, SessionFixed.IdUsuario).ToString();
-                ListMenuPorEmpresa.set_list(bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario));
+                seg_Menu_x_Empresa_x_Usuario_Lista.set_list(bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario,false));
                 if (usuario.IdMenu != null)
                 {
                     var menu = bus_menu.get_info((int)usuario.IdMenu);

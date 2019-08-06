@@ -9,7 +9,7 @@ namespace Core.Erp.Data.SeguridadAcceso
 {
     public class seg_Menu_x_Empresa_x_Usuario_Data
     {
-        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list(int IdEmpresa, string IdUsuario)
+        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list(int IdEmpresa, string IdUsuario, bool MostrarTodo)
         {
             try
             {
@@ -38,10 +38,14 @@ namespace Core.Erp.Data.SeguridadAcceso
                                      IdMenu = m.IdMenu,
                                      DescripcionMenu = m.DescripcionMenu,
                                      IdMenuPadre = m.IdMenuPadre,
-                                     PosicionMenu = m.PosicionMenu
+                                     PosicionMenu = m.PosicionMenu,
+                                     web_nom_Action = m.web_nom_Action,
+                                     web_nom_Area = m.web_nom_Area,
+                                     web_nom_Controller = m.web_nom_Controller
                                  }
                              }).ToList();
 
+                    if(MostrarTodo)
                     Lista.AddRange((from q in Context.seg_Menu
                                     join me in Context.seg_Menu_x_Empresa
                                     on q.IdMenu equals me.IdMenu

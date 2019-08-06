@@ -14,6 +14,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
     //    [SessionTimeout]
     public class MenuPorEmpresaPorUsuarioController : Controller
     {
+        
         #region Index
 
         static seg_Menu_x_Empresa_x_Usuario_Bus bus_menu_x_empresa_x_usuario = new seg_Menu_x_Empresa_x_Usuario_Bus();
@@ -31,7 +32,9 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         }
         public static void CreateTreeViewNodesRecursive(List<seg_Menu_x_Empresa_x_Usuario_Info> model, MVCxTreeViewNodeCollection nodesCollection, Int32 parentID, int IdEmpresa = 0, string IdUsuario = "")
         {
-            var rows = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario, parentID);
+
+            //var rows = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario, parentID);
+            var rows = seg_Menu_x_Empresa_x_Usuario_Lista.get_list().Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario && q.info_menu.IdMenuPadre == parentID).ToList();
 
             foreach (seg_Menu_x_Empresa_x_Usuario_Info row in rows)
             {
@@ -56,7 +59,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         [ValidateInput(false)]
         public ActionResult TreeListPartial_menu_x_usuario(int IdEmpresa = 0, string IdUsuario = "")
         {
-            var model = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario);
+            var model = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario,true);
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdUsuario = IdUsuario;
             ViewData["selectedIDs"] = Request.Params["selectedIDs"];
@@ -105,10 +108,10 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         }
     }
 
-    public class seg_Menu_x_Empresa_x_Usuario_Lista
+    public static class seg_Menu_x_Empresa_x_Usuario_Lista
     {
-        string Variable = "fx_MenuXEmpresaXUsuarioFixed";
-        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list()
+         static string Variable = "fx_MenuXEmpresaXUsuarioFixed";
+        public static List<seg_Menu_x_Empresa_x_Usuario_Info> get_list()
         {
             if (HttpContext.Current.Session[Variable] == null)
             {
@@ -119,7 +122,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             return (List<seg_Menu_x_Empresa_x_Usuario_Info>)HttpContext.Current.Session[Variable];
         }
 
-        public void set_list(List<seg_Menu_x_Empresa_x_Usuario_Info> list)
+        public static void set_list(List<seg_Menu_x_Empresa_x_Usuario_Info> list)
         {
             HttpContext.Current.Session[Variable] = list;
         }
