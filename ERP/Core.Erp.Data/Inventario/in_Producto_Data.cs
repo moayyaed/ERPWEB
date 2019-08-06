@@ -723,20 +723,11 @@ namespace Core.Erp.Data.Inventario
             List<in_Producto_Info> Lista = new List<in_Producto_Info>();
             switch (Busqueda)
             {
-                case cl_enumeradores.eTipoBusquedaProducto.SOLOPADRES:
-                    Lista = get_list(IdEmpresa, skip, take, args.Filter, 0);
-                    break;
-                case cl_enumeradores.eTipoBusquedaProducto.SOLOHIJOS:
-                    Lista = get_list(IdEmpresa, skip, take, args.Filter, IdProductoPadre);
-                    break;
                 case cl_enumeradores.eTipoBusquedaProducto.PORMODULO:
                     Lista = get_list(Modulo, IdEmpresa, skip, take, args.Filter);
                     break;
                 case cl_enumeradores.eTipoBusquedaProducto.TODOS:
                     Lista = get_list(IdEmpresa, skip, take, args.Filter);
-                    break;
-                case cl_enumeradores.eTipoBusquedaProducto.TODOS_MENOS_PADRES:
-                    Lista = get_list_todos_menos_padres(IdEmpresa, skip, take, args.Filter);
                     break;
                 case cl_enumeradores.eTipoBusquedaProducto.PORSUCURSAL:
                     Lista = get_list_PorSucursal(IdEmpresa, skip, take, args.Filter, IdSucursal);
@@ -847,61 +838,6 @@ namespace Core.Erp.Data.Inventario
             catch (Exception)
             {
 
-                throw;
-            }
-        }
-
-        public List<in_Producto_Info> get_list(int IdEmpresa, int skip, int take, string filter, decimal IdProductoPadre)
-        {
-            try
-            {
-                List<in_Producto_Info> Lista;
-
-                using (Entities_inventario Context = new Entities_inventario())
-                {
-                    if (IdProductoPadre != 0)
-                    {
-                        Lista = (from p in Context.vwin_producto_hijo_combo
-                                 where p.IdEmpresa == IdEmpresa
-                                 && p.IdProducto_padre == IdProductoPadre
-                                 && (p.IdProducto.ToString() + " " + p.pr_descripcion + " " + p.lote_num_lote).Contains(filter)
-                                 select new in_Producto_Info
-                                 {
-                                     IdEmpresa = p.IdEmpresa,
-                                     IdProducto = p.IdProducto,
-                                     pr_descripcion = p.pr_descripcion,
-                                     lote_num_lote = p.lote_num_lote,
-                                     lote_fecha_vcto = p.lote_fecha_vcto,
-                                     nom_categoria = p.ca_Categoria,
-                                     nom_presentacion = p.nom_presentacion
-                                 })
-                                    .OrderBy(p => p.IdProducto)
-                                    .Skip(skip)
-                                    .Take(take)
-                                    .ToList();
-                    }
-                    else
-                        Lista = (from p in Context.vwin_producto_padre_combo
-                                 where p.IdEmpresa == IdEmpresa
-                                 && (p.IdProducto.ToString() + " " + p.pr_descripcion ).Contains(filter)
-                                 select new in_Producto_Info
-                                 {
-                                     IdEmpresa = p.IdEmpresa,
-                                     IdProducto = p.IdProducto,
-                                     pr_descripcion = p.pr_descripcion,
-                                     nom_categoria = p.ca_Categoria,
-                                     nom_presentacion = p.nom_presentacion
-                                 })
-                                 .OrderBy(p => p.IdProducto)
-                                 .Skip(skip)
-                                 .Take(take)
-                                 .ToList();
-                }
-                Lista = get_list_nombre_combo(Lista);
-                return Lista;
-            }
-            catch (Exception)
-            {
                 throw;
             }
         }
@@ -1072,64 +1008,7 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-        public List<in_Producto_Info> get_list_todos_menos_padres(int IdEmpresa, int skip, int take, string filter)
-        {
-            try
-            {
-                List<in_Producto_Info> Lista = new List<in_Producto_Info>();
-
-                Entities_inventario Context = new Entities_inventario();
-
-                var lst = (from
-                          p in Context.vwin_Producto_para_composicion
-                           where p.IdEmpresa == IdEmpresa
-                            && p.Estado == "A"
-                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)
-                           select new
-                           {
-                               p.IdEmpresa,
-                               p.IdProducto,
-                               p.pr_descripcion,
-                               p.pr_descripcion_2,
-                               p.pr_codigo,
-                               p.lote_num_lote,
-                               p.lote_fecha_vcto,
-                               p.ca_Categoria,
-                               p.nom_presentacion
-                           })
-                             .OrderBy(p => p.IdProducto)
-                             .Skip(skip)
-                             .Take(take)
-                             .ToList();
-
-
-                foreach (var q in lst)
-                {
-                    Lista.Add(new in_Producto_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        IdProducto = q.IdProducto,
-                        pr_descripcion = q.pr_descripcion,
-                        pr_descripcion_2 = q.pr_descripcion_2,
-                        pr_codigo = q.pr_codigo,
-                        lote_num_lote = q.lote_num_lote,
-                        lote_fecha_vcto = q.lote_fecha_vcto,
-                        nom_categoria = q.ca_Categoria,
-                        nom_presentacion = q.nom_presentacion
-                    });
-                }
-
-                Context.Dispose();
-                Lista = get_list_nombre_combo(Lista);
-                return Lista;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
+       
         public List<in_Producto_Info> get_list_Servicios(int IdEmpresa, int skip, int take, string filter, int IdSucursal)
         {
             try

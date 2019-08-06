@@ -62,11 +62,8 @@
 
         public enum eTipoBusquedaProducto
         {
-            SOLOPADRES,
-            SOLOHIJOS,
             PORMODULO,
             TODOS,
-            TODOS_MENOS_PADRES,
             PORSUCURSAL,
             SOLOSERVICIOS
         }        
