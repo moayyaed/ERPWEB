@@ -57,7 +57,7 @@ namespace Core.Erp.Bus.Facturacion
             {
                 return odata.modificarDB(info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

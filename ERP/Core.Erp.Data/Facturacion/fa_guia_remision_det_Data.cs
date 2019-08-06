@@ -40,7 +40,10 @@ namespace Core.Erp.Data.Facturacion
                                  gi_Iva = q.gi_Iva,
                                  gi_Total = q.gi_Total,
                                  IdCentroCosto = q.IdCentroCosto,
-                                 cc_Descripcion = q.cc_Descripcion
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 gi_Subtotal_item = q.gi_Subtotal,
+                                 gi_Iva_item = q.gi_Iva,
+                                 gi_Total_item = q.gi_Total
                              }).ToList();
                 }
 

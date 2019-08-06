@@ -514,6 +514,29 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult CalcularValores(int Cantidad = 0, double Precio = 0, string IdCodImpuesto = "", double PorcentajeDesc = 0)
+        {
+            double subtotal = 0;
+            double iva_porc = 0;
+            double iva = 0;
+            double total = 0;
+            double DescUnitario = 0;
+            double PrecioFinal = 0;
+
+            DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
+            PrecioFinal = Precio - DescUnitario;
+            subtotal = Convert.ToDouble(Cantidad * PrecioFinal);
+
+            var impuesto = bus_impuesto.get_info(IdCodImpuesto);
+            if (impuesto != null)
+                iva_porc = impuesto.porcentaje;
+
+            iva = subtotal * (iva_porc / 100);
+            total = subtotal + iva;
+
+            return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region funciones del detalle
         private void cargar_combos_detalle()
@@ -639,11 +662,17 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             info_det.pd_descuento_uni = info_det.pd_precio * (info_det.pd_por_descuento_uni / 100);
             info_det.pd_precio_final = info_det.pd_precio - info_det.pd_descuento_uni;
             info_det.pd_subtotal = info_det.pd_cantidad * info_det.pd_precio_final;
+
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
                 info_det.pd_por_iva = impuesto.porcentaje;
+
             info_det.pd_iva = info_det.pd_subtotal * (info_det.pd_por_iva / 100);
             info_det.pd_total = info_det.pd_subtotal + info_det.pd_iva;
+
+            info_det.pd_subtotal_item = info_det.pd_subtotal;
+            info_det.pd_iva_item = info_det.pd_iva;
+            info_det.pd_total_item = info_det.pd_total;
 
             #region Centro de costo
             info_det.IdCentroCosto = info_det.IdCentroCosto;
@@ -656,6 +685,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     info_det.cc_Descripcion = cc.cc_Descripcion;
             }
             #endregion
+
             list.Add(info_det);
         }
 
@@ -683,6 +713,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             edited_info.NumCotizacion = info_det.NumCotizacion;
             edited_info.NumOPr = info_det.NumOPr;
+
+            edited_info.pd_subtotal_item = info_det.pd_cantidad * edited_info.pd_precio_final;
+            edited_info.pd_iva_item = edited_info.pd_subtotal * (edited_info.pd_por_iva / 100);
+            edited_info.pd_total_item = edited_info.pd_subtotal + edited_info.pd_iva;
 
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;
