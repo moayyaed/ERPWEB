@@ -65,7 +65,8 @@
             PORMODULO,
             TODOS,
             PORSUCURSAL,
-            SOLOSERVICIOS
+            SOLOSERVICIOS,
+            PORBODEGA
         }        
 
         public enum eTipoCatalogoInventario

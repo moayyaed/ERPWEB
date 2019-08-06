@@ -14,16 +14,13 @@
         settings.Properties.ValueField = "IdProducto";
         settings.Properties.ValueType = typeof(decimal);
 
-        settings.Properties.Columns.Add("IdProducto", "ID", 5);
-        settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
-        settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
-        settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
+        settings.Properties.Columns.Add("IdProducto", "ID", 10);
+        settings.Properties.Columns.Add("pr_codigo", "Código", 10);
+        settings.Properties.Columns.Add("pr_descripcion", "Producto", 60);
+        settings.Properties.Columns.Add("nom_categoria", "Categoria", 10);
+        settings.Properties.Columns.Add("Stock", "Stock", 20);
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
-
-
-
     })
-
      .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_list_bajo_demanda,
       new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_info_bajo_demanda).Bind((Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info>)) ? "" : (Model == 0 ? "" : Model));
 

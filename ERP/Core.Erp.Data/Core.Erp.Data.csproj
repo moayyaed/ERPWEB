@@ -2462,6 +2462,9 @@
     <Compile Include="vwin_Producto_para_composicion.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_Producto_PorBodega.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwin_Producto_PorSucursal.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>

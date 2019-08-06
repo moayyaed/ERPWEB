@@ -86,9 +86,9 @@ namespace Core.Erp.Bus.Inventario
             }
         }
 
-        public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, cl_enumeradores.eTipoBusquedaProducto Busqueda, cl_enumeradores.eModulo Modulo, decimal IdProductoPadre, int IdSucursal)
+        public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa, cl_enumeradores.eTipoBusquedaProducto Busqueda, cl_enumeradores.eModulo Modulo, int IdSucursal)
         {
-            return odata.get_list_bajo_demanda(args, IdEmpresa, Busqueda,Modulo,IdProductoPadre, IdSucursal);
+            return odata.get_list_bajo_demanda(args, IdEmpresa, Busqueda,Modulo, IdSucursal);
         }
 
         public in_Producto_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
