@@ -146,12 +146,13 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                SetCodigo();
+                
             },
             error: function (error) {
             }
         });
         selectedIDs_Pf = "";
+        SetCodigo();
         GridViewPartial_PGuia_det.PerformCallback();
         GridViewPartial_PGuia_det.UnselectRows();
         GridViewPartial_guias_remision_det.PerformCallback();
@@ -396,7 +397,17 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.CodGuiaRemision, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodGuiaRemision, "", new { @class = "text-danger", @id = "CodGuiaRemision" })
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -501,17 +512,6 @@
                                 <label for="NumNota_Impresa"># Documento*</label>
                                 @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura" })
                                 @Html.ValidationMessageFor(q => q.vt_NumFactura, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="codigo">Código</label>
-                                @Html.TextBoxFor(q => q.CodGuiaRemision, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.CodGuiaRemision, "", new { @class = "text-danger", @id = "CodGuiaRemision" })
                             </div>
                         </div>
                     </div>
