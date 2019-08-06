@@ -246,17 +246,6 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="codigo">Código</label>
-                    @Html.TextBoxFor(q => q.CodCbteVta, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CodCbteVta, "", new { @class = "text-danger", @id = "CodCbteVta", @readonly = "readonly" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
                 <div class="form-group">
@@ -462,6 +451,17 @@
                         @Html.Action("GridViewPartial_factura_cuotas")
                         <br />
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.CodCbteVta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodCbteVta, "", new { @class = "text-danger", @id = "CodCbteVta", @readonly = "readonly" })
                 </div>
             </div>
         </div>

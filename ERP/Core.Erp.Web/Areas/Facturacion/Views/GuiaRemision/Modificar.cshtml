@@ -128,17 +128,6 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="codigo">Código</label>
-                    @Html.TextBoxFor(q => q.CodGuiaRemision, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CodGuiaRemision, "", new { @class = "text-danger", @id = "CodGuiaRemision" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
                 <div class="form-group">
@@ -312,6 +301,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -323,7 +313,17 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.CodGuiaRemision, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodGuiaRemision, "", new { @class = "text-danger", @id = "CodGuiaRemision" })
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

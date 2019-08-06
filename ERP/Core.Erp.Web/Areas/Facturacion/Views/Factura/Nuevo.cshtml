@@ -457,6 +457,7 @@
             }
         });
         selectedIDs = "";
+        SetCodigo();
         GridView_PFactura_det.PerformCallback();
         GridView_PFactura_det.UnselectRows();
         GridView_factura_det.PerformCallback();
@@ -697,17 +698,6 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="codigo">Código</label>
-                    @Html.TextBoxFor(q => q.CodCbteVta, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CodCbteVta, "", new { @class = "text-danger", @id = "CodCbteVta", @readonly= "readonly" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
                 <div class="form-group">
@@ -929,6 +919,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.CodCbteVta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodCbteVta, "", new { @class = "text-danger", @id = "CodCbteVta", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="alert alert-warning alert-dismissible" id="divMensaje" hidden>
                     <h4>
                         <i class="icon fa fa-warning"></i> <label id="txtMensaje">MENSAJE</label>
@@ -938,7 +939,6 @@
         </div>
     </div>
 
-    
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

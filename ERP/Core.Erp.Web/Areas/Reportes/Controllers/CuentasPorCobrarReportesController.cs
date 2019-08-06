@@ -70,6 +70,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_cliente = lst_cliente;
 
+            fa_cliente_tipo_Bus bus_tipo_cliente = new fa_cliente_tipo_Bus();
+            var lst_tipo_cliente = bus_tipo_cliente.get_list(model.IdEmpresa, false);
+            ViewBag.lst_tipo_cliente = lst_tipo_cliente;
+
             fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
             var lst_contacto = bus_contacto.get_list(model.IdEmpresa, model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente));
             lst_contacto.Add(new fa_cliente_contactos_Info
@@ -261,6 +265,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.IntArray = model.IntArray;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_fecha_corte.Value = model.fecha_corte;
+            report.p_Idtipo_cliente.Value = model.Idtipo_cliente;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa;
@@ -286,6 +291,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_fecha_corte.Value = model.fecha_corte;
+            report.p_Idtipo_cliente.Value = model.Idtipo_cliente;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa;
