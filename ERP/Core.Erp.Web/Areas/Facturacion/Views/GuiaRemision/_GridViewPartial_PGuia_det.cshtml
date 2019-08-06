@@ -55,7 +55,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(25);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -64,50 +64,61 @@
             column.FieldName = "gi_cantidad";
             column.Caption = "Cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "gi_precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "gi_por_desc";
             column.Caption = "% Desc. uni.";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "gi_PrecioFinal";
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "gi_Subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "gi_Iva";
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "gi_Total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(6);
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_detallexItems";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(10);
+            column.Visible = true;
+            column.EditorProperties().Memo(q =>
+            {
 
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_Pf";
     });
 }

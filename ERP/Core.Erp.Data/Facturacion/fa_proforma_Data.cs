@@ -165,7 +165,8 @@ namespace Core.Erp.Data.Facturacion
                             pd_total = item.pd_total,
                             IdCentroCosto = item.IdCentroCosto,
                             NumCotizacion = item.NumCotizacion,
-                            NumOPr = item.NumOPr
+                            NumOPr = item.NumOPr,
+                            pd_DetalleAdicional = item.pd_DetalleAdicional
                         });
                     }
 
@@ -230,7 +231,8 @@ namespace Core.Erp.Data.Facturacion
                             pd_total = item.pd_total,
                             IdCentroCosto = item.IdCentroCosto,
                             NumCotizacion = item.NumCotizacion,
-                            NumOPr = item.NumOPr
+                            NumOPr = item.NumOPr,
+                            pd_DetalleAdicional = item.pd_DetalleAdicional
                         });
                     }
 

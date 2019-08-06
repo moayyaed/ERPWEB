@@ -68,7 +68,7 @@
                 Html.RenderPartial("_CmbProducto_Proforma", DataBinder.Eval(c.DataItem, "IdProducto"));
                 ViewContext.Writer.Write("</div>");
             });
-        });
+        });        
 
         settings.Columns.Add(column =>
         {
@@ -87,7 +87,7 @@
             column.FieldName = "pd_precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -111,7 +111,7 @@
         {
             column.FieldName = "IdCod_Impuesto";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
             column.Visible = true;
             column.EditorProperties().ComboBox(p =>
             {
@@ -190,11 +190,25 @@
             column.Width = Unit.Percentage(5);
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pd_DetalleAdicional";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.EditorProperties().Memo(q =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+
         settings.Columns.Add(column =>
         {
             column.Caption = "*";
             column.FieldName = "Secuencia";
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(3);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.SetDataItemTemplateContent(c =>

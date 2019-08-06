@@ -670,7 +670,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.pd_descuento_uni = info_det.pd_precio * (info_det.pd_por_descuento_uni / 100);
             edited_info.pd_precio_final = info_det.pd_precio - edited_info.pd_descuento_uni;
             edited_info.pd_subtotal = info_det.pd_cantidad * edited_info.pd_precio_final;
-            if(!string.IsNullOrEmpty(edited_info.IdCod_Impuesto))
+            edited_info.pd_DetalleAdicional = info_det.pd_DetalleAdicional;
+            if (!string.IsNullOrEmpty(edited_info.IdCod_Impuesto))
             {
                 var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto);
                 if (impuesto != null)

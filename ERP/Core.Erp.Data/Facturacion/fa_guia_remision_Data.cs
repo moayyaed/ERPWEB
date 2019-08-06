@@ -209,7 +209,7 @@ namespace Core.Erp.Data.Facturacion
                             IdEmpresa_pf = item.IdEmpresa_pf,
                             IdSucursal_pf = item.IdSucursal_pf,
                             IdProforma = item.IdProforma,
-                            Secuencia_pf = item.Secuencia_pf
+                            Secuencia_pf = item.Secuencia_pf                            
                         });
 
                         if(item.IdCbteVta != null && item.IdCbteVta !=0)
