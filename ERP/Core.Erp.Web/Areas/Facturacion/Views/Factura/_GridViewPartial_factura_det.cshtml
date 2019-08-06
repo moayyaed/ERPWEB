@@ -74,7 +74,7 @@
             column.FieldName = "vt_cantidad";
             column.Caption = "cantidad";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -86,7 +86,7 @@
             column.FieldName = "vt_Precio";
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
@@ -169,22 +169,22 @@
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "vt_detallexItems";
-            column.Caption = "Detalle adicional";
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
             column.Width = Unit.Percentage(7);
-            column.Visible = false;
-            column.EditorProperties().Memo(q =>
-            {
-                
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "cc_Descripcion";
-            column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.FieldName = "vt_detallexItems";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.EditorProperties().Memo(q =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {

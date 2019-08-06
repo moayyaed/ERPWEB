@@ -20,7 +20,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                 List<CXC_005_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCXC_005(IdEmpresa, IdSucursal_ini, IdSucursal_fin, IdCliente_ini, IdCliente_fin, fecha_corte, mostrarSaldo0)
+                    Lista = (from q in Context.SPCXC_005(IdEmpresa, IdSucursal_ini, IdSucursal_fin, 0,0, IdCliente_ini, IdCliente_fin, fecha_corte, mostrarSaldo0)
                              select new CXC_005_Info
                              {
                                 IdEmpresa = q.IdEmpresa,
