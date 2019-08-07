@@ -531,9 +531,11 @@ namespace Core.Erp.Data.Contabilidad
                 }
 
                 lst.ForEach(q => q.Secuencia = sec++);
+                ct_plancta_Info Inicio = lst.Where(q => q.IdCtaCble == IdCtaCbleIni).FirstOrDefault();
+                ct_plancta_Info Fin = lst.Where(q => q.IdCtaCble == IdCtaCbleFin_).FirstOrDefault();
 
-                var SecuenciaInicio = lst.Where(q=>q.IdCtaCble == IdCtaCbleIni).FirstOrDefault().Secuencia;
-                var SecuenciaFin = lst.Where(q => q.IdCtaCble == IdCtaCbleFin_).FirstOrDefault().Secuencia;
+                var SecuenciaInicio = (Inicio== null) ? 0 : Inicio.Secuencia;
+                var SecuenciaFin = (Fin == null) ? 0 : Fin.Secuencia;
 
                 Lista = lst.Where(q => q.Secuencia >= SecuenciaInicio && q.Secuencia <= SecuenciaFin).ToList();
 
