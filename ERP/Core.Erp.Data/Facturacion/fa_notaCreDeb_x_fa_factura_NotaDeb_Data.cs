@@ -105,7 +105,7 @@ namespace Core.Erp.Data.Facturacion
                                  Saldo_final = q.saldo,
                                  seleccionado = true,
                                  Valor_Aplicado = q.Valor_Aplicado,
-                                 NumDocumento = null
+                                 NumDocumento = q.NumDocumento
                              }).ToList();
                 }
                 Lista.ForEach(q => { q.secuencial = q.vt_tipoDoc + "-" + q.IdBodega_fac_nd_doc_mod.ToString() + "-" + q.IdCbteVta_fac_nd_doc_mod.ToString(); });

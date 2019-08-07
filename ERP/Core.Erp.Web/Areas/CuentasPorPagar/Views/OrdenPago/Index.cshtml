@@ -34,6 +34,7 @@
         var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_017?IdEmpresa="+IdEmpresa+"&selectedIDs="+IDs, '_blank');
         win.focus();
         selectedIDs = "";
+        GridView_ordenes_pagos.UnselectRows();
         GridView_ordenes_pagos.PerformCallback();
     }
 </script>
