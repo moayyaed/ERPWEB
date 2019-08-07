@@ -301,7 +301,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("actualizarGridDetFlujo", "ChequeBanco",new { Area = "Banco"})',
+            url: '@Url.Action("GetBancoImpresion", "ChequeBanco",new { Area = "Banco"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
