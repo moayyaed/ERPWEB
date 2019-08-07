@@ -66,7 +66,7 @@
         {
             column.FieldName = "IdUnidadMedida_sinConversion";
             column.Caption = "Unidad de medida";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>
             {
@@ -86,7 +86,7 @@
         {
             column.FieldName = "Desc_mov_inv";
             column.Caption = "Motivo";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -94,7 +94,7 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -102,9 +102,18 @@
         {
             column.FieldName = "dm_cantidad_sinConversion";
             column.Caption = "cantidad";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(7);
 
         });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "mv_costo_sinConversion";
+            column.Caption = "Costo";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdMotivo_Inv_det";

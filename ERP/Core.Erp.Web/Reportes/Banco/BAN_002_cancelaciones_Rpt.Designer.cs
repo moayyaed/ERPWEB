@@ -101,7 +101,7 @@
             // xrTableCell5
             // 
             this.xrTableCell5.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IdCbte_vta_nota]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[mcj_IdCbteCble]")});
             this.xrTableCell5.Name = "xrTableCell5";
             this.xrTableCell5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 3, 0, 100F);
             this.xrTableCell5.StylePriority.UsePadding = false;
@@ -112,7 +112,7 @@
             // xrTableCell6
             // 
             this.xrTableCell6.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Referencia]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[cm_fecha]")});
             this.xrTableCell6.Name = "xrTableCell6";
             this.xrTableCell6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 3, 0, 100F);
             this.xrTableCell6.StylePriority.UsePadding = false;
@@ -123,7 +123,7 @@
             // xrTableCell7
             // 
             this.xrTableCell7.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Observacion]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[cm_observacion]")});
             this.xrTableCell7.Name = "xrTableCell7";
             this.xrTableCell7.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 3, 0, 100F);
             this.xrTableCell7.StylePriority.UsePadding = false;
@@ -134,7 +134,7 @@
             // xrTableCell8
             // 
             this.xrTableCell8.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[monto]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[cm_valor]")});
             this.xrTableCell8.Name = "xrTableCell8";
             this.xrTableCell8.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell8.StylePriority.UsePadding = false;
@@ -255,7 +255,7 @@
             // xrTableCell2
             // 
             this.xrTableCell2.Name = "xrTableCell2";
-            this.xrTableCell2.Text = "Referencia";
+            this.xrTableCell2.Text = "Fecha";
             this.xrTableCell2.Weight = 0.53333333333333344D;
             // 
             // xrTableCell3
@@ -316,7 +316,7 @@
             // 
             this.xrTableCell13.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell13.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([monto])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([cm_valor])")});
             this.xrTableCell13.Name = "xrTableCell13";
             this.xrTableCell13.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell13.StylePriority.UseBorders = false;
