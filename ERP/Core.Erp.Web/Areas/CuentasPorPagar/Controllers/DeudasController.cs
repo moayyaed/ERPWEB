@@ -884,7 +884,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     nom_tipo_Documento = item.nom_tipo_Documento,
                     IdSucursal = (int)item.IdSucursal,
                     IdUsuario = SessionFixed.IdUsuario,
-                    co_observacion = item.co_observacion
+                    co_observacion = item.co_observacion,
+                    
                 });
             }
             Session["list_facturas_seleccionadas"] = null;

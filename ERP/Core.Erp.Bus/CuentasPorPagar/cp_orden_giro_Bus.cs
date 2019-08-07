@@ -486,6 +486,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info_op.Estado = "A";
                 info_op.IdSucursal = info.IdSucursal;
                 info_op.Fecha = DateTime.Now.Date;
+                info_op.IdUsuario = info.IdUsuario;
                 
                 // crear detalle de op
                 cp_orden_pago_det_Info info_op_det = new cp_orden_pago_det_Info();
