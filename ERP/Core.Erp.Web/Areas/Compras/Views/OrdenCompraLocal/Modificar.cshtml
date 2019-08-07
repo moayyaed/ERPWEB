@@ -218,27 +218,52 @@
 }
 <script type="text/javascript">
 
-                function GetInfoProducto(s, e) {
-                    $("#Secuencia").text(0);
-                    var datos = {
-                        IdEmpresa: $("#IdEmpresa").val(),
-                        IdProducto: s.GetValue()
+    function GetInfoProducto(s, e) {
+        $("#Secuencia").text(0);
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProducto: s.GetValue()
 
-                    }
-                    $.ajax({
-                        type: 'POST',
-                        data: JSON.stringify(datos),
-                        url: '@Url.Action("GetInfoProducto", "OrdenCompraLocal",new { Area = "Compras"})',
-                        async: false,
-                        bDeferRender: true,
-                        bProcessing: true,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-                            GridView_ordencompralocal_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
-                        },
-                        error: function (error) {
-                        }
-                    });
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfoProducto", "OrdenCompraLocal",new { Area = "Compras"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_ordencompralocal_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function set_termino_pago_x_proveedor() {
+        if (IdProveedor.GetValue() > 0) {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor: IdProveedor.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_termino_pago_x_proveedor", "OrdenCompraLocal", new { Area = "Compras" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#IdTerminoPago").val(data.IdTerminoPago);
+                    $("#oc_plazo").val(data.plazo);
+                },
+                error: function (error) {
                 }
+            });
+        }
+    };
 </script>
