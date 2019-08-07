@@ -110,7 +110,10 @@ namespace Core.Erp.Data.Facturacion
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion ?? 0,
                                  NumOPr = q.NumOPr ?? 0,
-                                 gi_detallexItems = q.pd_DetalleAdicional
+                                 gi_detallexItems = q.pd_DetalleAdicional,
+                                 gi_Subtotal_item = q.pd_subtotal,
+                                 gi_Iva_item = q.pd_iva,
+                                 gi_Total_item = q.pd_total
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -162,7 +165,10 @@ namespace Core.Erp.Data.Facturacion
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion??0,
                                  NumOPr = q.NumOPr??0,
-                                 gi_detallexItems = q.pd_DetalleAdicional
+                                 gi_detallexItems = q.pd_DetalleAdicional,
+                                 gi_Subtotal_item = q.pd_subtotal,
+                                 gi_Iva_item = q.pd_iva,
+                                 gi_Total_item = q.pd_total
                              }).ToList();
                 }
                 Lista.ForEach(V =>

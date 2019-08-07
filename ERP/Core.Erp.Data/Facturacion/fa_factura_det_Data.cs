@@ -106,7 +106,10 @@ namespace Core.Erp.Data.Facturacion
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion ?? 0,
                                  NumOPr = q.NumOPr ?? 0,
-                                 vt_detallexItems = q.pd_DetalleAdicional
+                                 vt_detallexItems = q.pd_DetalleAdicional,
+                                 vt_Subtotal_item = q.pd_subtotal,
+                                 vt_iva_item = q.pd_iva,
+                                 vt_total_item = q.pd_total
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -122,7 +125,6 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
-
 
         public List<fa_factura_det_Info> get_list_proforma(int IdEmpresa, int IdSucursal, decimal IdCliente, decimal IdProforma)
         {
@@ -163,7 +165,10 @@ namespace Core.Erp.Data.Facturacion
                                  cc_Descripcion = q.cc_Descripcion,
                                  NumCotizacion = q.NumCotizacion ?? 0,
                                  NumOPr = q.NumOPr ?? 0,
-                                 vt_detallexItems = q.pd_DetalleAdicional
+                                 vt_detallexItems = q.pd_DetalleAdicional,
+                                 vt_Subtotal_item = q.pd_subtotal,
+                                 vt_iva_item = q.pd_iva,
+                                 vt_total_item = q.pd_total
                              }).ToList();
                 }
                 Lista.ForEach(V =>
