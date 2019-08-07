@@ -31,7 +31,6 @@ namespace Core.Erp.Data
         public DbSet<VWACTF_001> VWACTF_001 { get; set; }
         public DbSet<VWACTF_002> VWACTF_002 { get; set; }
         public DbSet<VWACTF_003> VWACTF_003 { get; set; }
-        public DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
         public DbSet<VWBAN_007> VWBAN_007 { get; set; }
         public DbSet<VWCXC_001_diario> VWCXC_001_diario { get; set; }
         public DbSet<VWCXC_002_diario> VWCXC_002_diario { get; set; }
@@ -129,6 +128,7 @@ namespace Core.Erp.Data
         public DbSet<VWBAN_002_cancelaciones> VWBAN_002_cancelaciones { get; set; }
         public DbSet<VWCXC_001> VWCXC_001 { get; set; }
         public DbSet<VWFAC_002> VWFAC_002 { get; set; }
+        public DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
