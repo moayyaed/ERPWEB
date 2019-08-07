@@ -9,7 +9,34 @@
     Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    var selectedIDs;
 
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdOrdenPago", GetSelectedFieldValuesCallback);
+
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+
+    function ImprimirListado() {
+        var IdEmpresa = $("#IdEmpresa").val();
+        var IDs = selectedIDs;
+        var location = GetPathServer();
+        console.log(IDs);
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_017?IdEmpresa="+IdEmpresa+"&selectedIDs="+IDs, '_blank');
+        win.focus();
+        selectedIDs = "";
+        GridView_ordenes_pagos.PerformCallback();
+    }
+</script>
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(q=>q.IdEmpresa)
@@ -81,6 +108,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for=""></label>
+                            <button type="button" class="btn btn-primary" id="btn_imprimir" onclick="ImprimirListado();" title="Imprimir ordenes seleccionadas">
+                                <i class="fa fa-print"></i>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

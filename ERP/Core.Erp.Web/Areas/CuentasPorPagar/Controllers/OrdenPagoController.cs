@@ -38,11 +38,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_pago_cancelaciones_Bus bus_cancelacion = new cp_orden_pago_cancelaciones_Bus();
         List<cp_orden_pago_tipo_x_empresa_Info> lst_tipo_orden_pago = new List<cp_orden_pago_tipo_x_empresa_Info>();
         cp_orden_pago_det_Info_list lis_cp_orden_pago_det_Info = new cp_orden_pago_det_Info_list();
+        cp_orden_pago_List lista_orden_pago = new cp_orden_pago_List();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         ct_cbtecble_det_List list_ct_cbtecble_det = new ct_cbtecble_det_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
+
         #region Index
 
         public ActionResult Index()
@@ -50,10 +52,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
 
+            lst_ordenes_pagos = bus_orden_pago.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal);
+            lista_orden_pago.set_list(lst_ordenes_pagos, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
             cargar_combos_consulta(model.IdEmpresa);
+
             return View(model);
         }
         [HttpPost]
@@ -61,6 +69,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
             cargar_combos_consulta(model.IdEmpresa);
+            lst_ordenes_pagos = bus_orden_pago.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal);
+            lista_orden_pago.set_list(lst_ordenes_pagos, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
             return View(model);
         }
 
@@ -72,7 +83,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ViewBag.IdSucursal = IdSucursal == 0 ? 0: Convert.ToInt32(IdSucursal);
             ViewBag.IdEmpresa = IdEmpresa == 0 ? 0 : Convert.ToInt32(IdEmpresa);
 
-            lst_ordenes_pagos = bus_orden_pago.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdSucursal);
+            //lst_ordenes_pagos = bus_orden_pago.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdSucursal);
+            lst_ordenes_pagos = lista_orden_pago.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
             return PartialView("_GridViewPartial_ordenes_pagos", lst_ordenes_pagos);
         }
 
@@ -170,6 +182,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region Acciones
 
         public ActionResult Nuevo(int IdEmpresa = 0 )
@@ -392,6 +405,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 }
         }
         #endregion
+
         #region json
        
         public JsonResult armar_diario(string IdTipo_op = "", string IdTipo_Persona = "" ,decimal IdEntidad = 0, double Valor_a_pagar = 0, string observacion="",int IdEmpresa = 0, decimal IdTransaccionSession = 0)
@@ -455,6 +469,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region DEtalles
 
         [ValidateInput(false)]
@@ -554,7 +569,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
         }
 
-
     }
 
     public class cp_orden_pago_det_Info_list
@@ -574,11 +588,27 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             HttpContext.Current.Session["cp_orden_pago_det_Info" + IdTransaccionSession.ToString()] = list;
         }
+    }
 
-      
+    public class cp_orden_pago_List
+    {
+        public List<cp_orden_pago_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session["cp_orden_pago_Info" + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_orden_pago_det_Info> list = new List<cp_orden_pago_det_Info>();
 
+                HttpContext.Current.Session["cp_orden_pago_Info" + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_orden_pago_Info>)HttpContext.Current.Session["cp_orden_pago_Info" + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_orden_pago_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session["cp_orden_pago_Info" + IdTransaccionSession.ToString()] = list;
+        }
     }
     #endregion
 
-    
+
 }

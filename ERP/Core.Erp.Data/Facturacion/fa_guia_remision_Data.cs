@@ -638,11 +638,21 @@ namespace Core.Erp.Data.Facturacion
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
                     fa_guia_remision Entity = Context.fa_guia_remision.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdGuiaRemision == info.IdGuiaRemision);
+                    List<fa_guia_remision_det> EntityDet = Context.fa_guia_remision_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdGuiaRemision == info.IdGuiaRemision).ToList();
+
                     if (Entity == null) return false;
                     Entity.Estado = info.Estado = false;
                     Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
                     Entity.FechaAnulacion = DateTime.Now;
                     Entity.MotivoAnulacion = info.MotiAnula;
+
+                    foreach (var item in EntityDet)
+                    {
+                        item.IdEmpresa_pf = null;
+                        item.IdSucursal_pf = null;
+                        item.Secuencia_pf = null;
+                        item.IdProforma = null;
+                    }
 
                     var lst_det = Context.fa_guia_remision_det_x_factura.Where(q => q.IdEmpresa_guia == info.IdEmpresa && q.IdGuiaRemision_guia == info.IdGuiaRemision).ToList();
                     Context.fa_guia_remision_det_x_factura.RemoveRange(lst_det);
