@@ -1,9 +1,8 @@
-﻿CREATE VIEW web.VWBAN_001_cancelaciones
+﻿CREATE VIEW [web].[VWBAN_001_cancelaciones]
 AS
 SELECT dbo.cp_orden_pago_cancelaciones.IdEmpresa, dbo.cp_orden_pago_cancelaciones.Idcancelacion, dbo.cp_orden_pago_cancelaciones.Secuencia, dbo.cp_orden_pago_cancelaciones.IdEmpresa_cxp, 
                   dbo.cp_orden_pago_cancelaciones.IdTipoCbte_cxp, dbo.cp_orden_pago_cancelaciones.IdCbteCble_cxp, CASE WHEN cp_orden_giro.co_factura IS NULL AND cp_nota_DebCre.cod_nota IS NULL 
-                  THEN 'OP ' + CAST(cp_orden_pago_cancelaciones.IdOrdenPago_op AS VARCHAR(20)) WHEN cp_orden_giro.co_factura IS NULL AND cp_nota_DebCre.cod_nota IS NOT NULL THEN 'ND ' + CAST(CAST(cp_nota_DebCre.cod_nota AS INT) 
-                  AS VARCHAR(20)) ELSE 'FACT ' + CAST(CAST(cp_orden_giro.co_factura AS INT) AS VARCHAR(20)) END AS Referencia, CASE WHEN cp_orden_giro.co_factura IS NULL AND cp_nota_DebCre.cod_nota IS NULL 
+                  THEN 'OP ' + CAST(cp_orden_pago_cancelaciones.IdOrdenPago_op AS VARCHAR(20)) WHEN cp_orden_giro.co_factura IS NULL AND cp_nota_DebCre.cod_nota IS NOT NULL THEN 'ND ' + cp_nota_DebCre.cod_nota ELSE 'FACT ' + CAST(CAST(cp_orden_giro.co_factura AS INT) AS VARCHAR(20)) END AS Referencia, CASE WHEN cp_orden_giro.co_factura IS NULL AND cp_nota_DebCre.cod_nota IS NULL 
                   THEN cp_orden_pago.Observacion WHEN cp_orden_giro.co_factura IS NULL AND cp_nota_DebCre.cod_nota IS NOT NULL THEN cp_nota_DebCre.cn_observacion ELSE cp_orden_giro.co_observacion END AS Observacion, 
                   dbo.cp_orden_pago_cancelaciones.MontoAplicado, dbo.cp_orden_pago_cancelaciones.IdEmpresa_pago, dbo.cp_orden_pago_cancelaciones.IdTipoCbte_pago, dbo.cp_orden_pago_cancelaciones.IdCbteCble_pago
 FROM     dbo.cp_orden_pago_cancelaciones INNER JOIN
