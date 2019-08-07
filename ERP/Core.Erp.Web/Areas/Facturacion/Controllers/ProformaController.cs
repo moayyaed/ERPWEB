@@ -582,7 +582,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 }
             }
 
-            List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            if (ModelState.IsValid)
+                List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_proforma_det", model);
@@ -602,7 +604,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     info_det.pr_descripcion = producto.pr_descripcion_combo;
                 }
             }
-            List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            if (ModelState.IsValid)
+                List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             var model = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_proforma_det", model);
