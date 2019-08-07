@@ -42,5 +42,6 @@ namespace Core.Erp.Data
         public Nullable<decimal> NumCotizacion { get; set; }
         public Nullable<decimal> NumOPr { get; set; }
         public string pd_DetalleAdicional { get; set; }
+        public Nullable<double> Saldo { get; set; }
     }
 }
