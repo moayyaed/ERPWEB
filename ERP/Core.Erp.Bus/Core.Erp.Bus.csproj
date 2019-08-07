@@ -338,6 +338,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Bus.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_017_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_002_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_004_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_005_Bus.cs" />
