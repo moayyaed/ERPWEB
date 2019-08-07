@@ -2236,6 +2236,9 @@
     <Compile Include="VWFAC_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="VWFAC_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="VWFAC_003.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>

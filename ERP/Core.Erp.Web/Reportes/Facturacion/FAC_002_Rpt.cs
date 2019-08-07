@@ -23,11 +23,12 @@ namespace Core.Erp.Web.Reportes.Facturacion
         {
 
             int IdEmpresa = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
-            //int IdSucursal = p_IdSucursal.Value == null ? 0 : Convert.ToInt32(p_IdSucursal.Value);
-            int IdNota = p_IdNota.Value == null ? 0 : Convert.ToInt32(p_IdNota.Value);
+            int IdSucursal = p_IdSucursal.Value == null ? 0 : Convert.ToInt32(p_IdSucursal.Value);
+            int IdBodega = p_IdBodega.Value == null ? 0 : Convert.ToInt32(p_IdBodega.Value);
+            decimal IdNota = p_IdNota.Value == null ? 0 : Convert.ToInt32(p_IdNota.Value);
 
             FAC_002_Bus bus_rpt = new FAC_002_Bus();
-            List<FAC_002_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdNota);
+            List<FAC_002_Info> lst_rpt = bus_rpt.get_list(IdEmpresa,IdSucursal, IdBodega, IdNota);
             this.DataSource = lst_rpt;
 
 
