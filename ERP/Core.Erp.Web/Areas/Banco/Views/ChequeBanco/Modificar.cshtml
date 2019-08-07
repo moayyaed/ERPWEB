@@ -295,9 +295,30 @@
     }
 
     function Imprimir() {
-        var location = GetPathServer();
-        var win = window.open(location +"/Reportes/BancoReportes/BAN_006?IdEmpresa="+@Model.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble+"&IdBanco="+@Model.IdBanco, '_blank');
-        win.focus();
+        var datos = {
+            IdBanco: $("#IdBanco").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("actualizarGridDetFlujo", "ChequeBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var location = GetPathServer();
+                if(data == "S")
+                    var win = window.open(location +"/Reportes/BancoReportes/BAN_005?IdEmpresa="+@Model.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble+"&IdBanco="+@Model.IdBanco, '_blank');
+                else
+                    var win = window.open(location +"/Reportes/BancoReportes/BAN_006?IdEmpresa="+@Model.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble+"&IdBanco="+@Model.IdBanco, '_blank');
+                win.focus();
+            },
+            error: function (error) {
+            }
+        });
+
     }
 
 </script>

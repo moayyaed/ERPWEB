@@ -532,11 +532,18 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             #endregion
             return Json(new {NumCheque= resultado , Error = error }, JsonRequestBehavior.AllowGet);
         }
+
         public void vaciar_detalle(decimal IdTransaccionSession = 0)
         {
             List_op.set_list(new List<cp_orden_pago_cancelaciones_Info>(), IdTransaccionSession);
             List_ct.set_list(new List<ct_cbtecble_det_Info>(),IdTransaccionSession);
             List_Flujo.set_list(new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>(), IdTransaccionSession);
+        }
+
+        public JsonResult GetBancoImpresion(int IdBanco = 0)
+        {
+            var banco = bus_banco_cuenta.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdBanco);
+            return Json(banco.Imprimir_Solo_el_cheque == true ? "S" : "N", JsonRequestBehavior.AllowGet);
         }
         #endregion
     }
