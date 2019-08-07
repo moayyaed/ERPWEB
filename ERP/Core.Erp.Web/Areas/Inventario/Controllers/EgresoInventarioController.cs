@@ -160,7 +160,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            decimal IdProducto = Request.Params["in_IdProducto"] != null ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
+            decimal IdProducto = Request.Params["in_IdProducto"] != null && Request.Params["in_IdProducto"] != "" ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
 
             in_Producto_Info info_produto = bus_producto.get_info(IdEmpresa, IdProducto);
             return GridViewExtension.GetComboBoxCallbackResult(p =>
