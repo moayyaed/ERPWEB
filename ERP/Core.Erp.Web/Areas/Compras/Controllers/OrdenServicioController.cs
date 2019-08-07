@@ -375,7 +375,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 info_termino_pago = info_termino_pago_mayor;
             }
 
-            return Json(info_termino_pago, JsonRequestBehavior.AllowGet);
+            return Json(new { IdTerminoPago = info_termino_pago.IdTerminoPago, plazo = info_proveedor.pr_plazo }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult get_info_termino_pago(int IdEmpresa = 0, int IdTerminoPago = 0)
@@ -492,12 +492,15 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 edited_info.Por_Iva = 0;
             edited_info.do_iva = Math.Round(edited_info.do_subtotal * (edited_info.Por_Iva / 100), 2, MidpointRounding.AwayFromZero);
             edited_info.do_total = Math.Round(edited_info.do_subtotal + edited_info.do_iva, 2, MidpointRounding.AwayFromZero);
+
             #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
-                edited_info.cc_Descripcion = string.Empty;
-            else
-                if (info_det.IdCentroCosto != edited_info.IdCentroCosto)
             {
+                edited_info.cc_Descripcion = string.Empty;
+            }
+            else
+            {           
                 var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
                 if (cc != null)
                 {
