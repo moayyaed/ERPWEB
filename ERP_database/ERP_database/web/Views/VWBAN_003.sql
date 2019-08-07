@@ -3,7 +3,7 @@ AS
 SELECT dbo.ba_Cbte_Ban_tipo.CodTipoCbteBan, dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdCbteCble, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdBanco, dbo.ba_Banco_Cuenta.ba_descripcion, dbo.ba_Cbte_Ban.cb_Fecha, 
                   dbo.ba_Cbte_Ban.cb_Observacion, dbo.ba_Cbte_Ban.Estado, dbo.ba_Cbte_Ban.IdTipoNota, dbo.tb_persona.pe_nombreCompleto, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_plancta.pc_Cuenta, dbo.ct_cbtecble_det.dc_Valor, 
                   CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ct_cbtecble_det.dc_Valor ELSE 0 END AS dc_Valor_Debe, CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, 
-                  dbo.ba_Cbte_Ban.cb_Cheque, dbo.ba_Cbte_Ban.cb_giradoA, dbo.seg_usuario.Nombre AS NombreUsuario, dbo.tb_sucursal.Su_Descripcion
+                  dbo.ba_Cbte_Ban.cb_Cheque, dbo.ba_Cbte_Ban.cb_giradoA, dbo.seg_usuario.Nombre AS NombreUsuario, dbo.tb_sucursal.Su_Descripcion, dbo.ct_cbtecble_det.secuencia
 FROM     dbo.ba_Cbte_Ban_tipo INNER JOIN
                   dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo ON dbo.ba_Cbte_Ban_tipo.CodTipoCbteBan = dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.CodTipoCbteBan INNER JOIN
                   dbo.ba_Cbte_Ban ON dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdEmpresa = dbo.ba_Cbte_Ban.IdEmpresa AND dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdTipoCbteCble = dbo.ba_Cbte_Ban.IdTipocbte INNER JOIN
@@ -96,10 +96,10 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "ba_Cbte_Ban_tipo"
             Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 234
+               Top = 29
+               Left = 374
+               Bottom = 159
+               Right = 570
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -136,10 +136,10 @@ Begin DesignProperties =
          End
          Begin Table = "ct_cbtecble_det"
             Begin Extent = 
-               Top = 276
-               Left = 38
-               Bottom = 406
-               Right = 317
+               Top = 95
+               Left = 355
+               Bottom = 317
+               Right = 634
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -154,18 +154,30 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_persona"
+         Begin Table = "tb_sucursal"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-              ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWBAN_003';
+               Top = 21
+               Left = 483
+               Bottom = 184
+           ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWBAN_003';
+
+
 
 
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Right = 286
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Right = 771
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 286
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -196,16 +208,6 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Right = 2
                Left = 1448
                Bottom = 470
                Right = 1737
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_sucursal"
-            Begin Extent = 
-               Top = 96
-               Left = 1243
-               Bottom = 259
-               Right = 1531
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -258,6 +260,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Right = 2
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWBAN_003';
+
+
 
 
 
