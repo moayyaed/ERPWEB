@@ -31,7 +31,10 @@ namespace Core.Erp.Web.Reportes.Facturacion
             decimal IdNota = p_IdNota.Value == null ? 0 : Convert.ToDecimal(p_IdNota.Value);
 
             FAC_008_Bus bus_rpt = new FAC_008_Bus();
+            FAC_008_diario_Bus bus_rpt_diario = new FAC_008_diario_Bus();
             List<FAC_008_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
+            Lista_detalle = bus_rpt_diario.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
+
             lst_rpt.ForEach(q => q.nomReporte = q.CreDeb.Trim() == "C" ? "NOTA DE CRÉDITO" : "NOTA DE DÉBITO");
             this.DataSource = lst_rpt;
         }

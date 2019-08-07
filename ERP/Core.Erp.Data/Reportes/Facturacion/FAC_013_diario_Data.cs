@@ -17,7 +17,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                 using (Entities_reportes Context = new Entities_reportes())
                 {
                     Lista = Context.VWFAC_013_diario.Where(
-                        q => q.vt_IdCbteVta == IdEmpresa
+                        q => q.vt_IdEmpresa == IdEmpresa
                         && q.vt_IdSucursal == IdSucursal
                         && q.vt_IdBodega == IdBodega
                         && q.vt_IdCbteVta == IdCbteVta
