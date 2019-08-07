@@ -50,7 +50,6 @@ namespace Core.Erp.Data
         public DbSet<vwin_producto_hijo_combo> vwin_producto_hijo_combo { get; set; }
         public DbSet<vwin_producto_padre_combo> vwin_producto_padre_combo { get; set; }
         public DbSet<vwin_producto_x_tb_bodega_stock_x_lote> vwin_producto_x_tb_bodega_stock_x_lote { get; set; }
-        public DbSet<vwin_Producto_Stock> vwin_Producto_Stock { get; set; }
         public DbSet<in_producto_x_tb_bodega> in_producto_x_tb_bodega { get; set; }
         public DbSet<in_Consignacion> in_Consignacion { get; set; }
         public DbSet<in_ConsignacionDet> in_ConsignacionDet { get; set; }
@@ -92,6 +91,7 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
         public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
         public DbSet<vwin_Producto_PorBodega> vwin_Producto_PorBodega { get; set; }
+        public DbSet<vwin_Producto_Stock> vwin_Producto_Stock { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {

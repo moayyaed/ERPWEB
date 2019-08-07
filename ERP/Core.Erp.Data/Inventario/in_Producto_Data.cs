@@ -1000,7 +1000,7 @@ namespace Core.Erp.Data.Inventario
                 Lista = Context.vwin_Producto_PorBodega.Where(p => p.IdEmpresa == IdEmpresa
                            && p.IdSucursal == IdSucursal
                            && p.IdBodega == IdBodega
-                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)).Select(p => new in_Producto_Info
+                            && (p.IdProducto.ToString() + " " + p.pr_codigo + " "+ p.pr_descripcion).Contains(filter)).Select(p => new in_Producto_Info
                             {
                                 IdEmpresa = p.IdEmpresa,
                                 IdProducto = p.IdProducto,
@@ -1093,40 +1093,24 @@ namespace Core.Erp.Data.Inventario
                 {
                     foreach (var item in Lista)
                     {
-                        if (!item.SeDestribuye)
+                        if (item.tp_manejaInven == "S")
                         {
-                            var stock = (from q in Context.vwin_producto_x_tb_bodega_stock_x_lote
-                                         where q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal
+                            var stock1 = (from q in Context.vwin_Producto_Stock
+                                          where q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal
                                          && q.IdBodega == item.IdBodega && q.IdProducto == item.IdProducto
-                                         select q).FirstOrDefault();
-                            if (stock == null)
+                                          select q).FirstOrDefault();
+                            if (stock1 == null)
                             {
-                                if (item.tp_manejaInven == "S")
-                                {
-                                    var stock1 = (from q in Context.vwin_Producto_Stock
-                                                  where q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal
-                                                 && q.IdBodega == item.IdBodega && q.IdProducto == item.IdProducto
-                                                  select q).FirstOrDefault();
-                                    if (stock1 == null)
-                                    {
-                                        mensaje = "No existe stock para el producto: " + item.pr_descripcion;
-                                        return false;
-                                    }
-                                    else
-                                    if ((stock1.Stock + item.CantidadAnterior) < item.Cantidad)
-                                    {
-                                        mensaje = "El stock para el producto: " + item.pr_descripcion + " es: " + stock1.Stock + " e intenta egresar: " + item.Cantidad;
-                                        return false;
-                                    }
-                                }
-                            }
-                            else
-                            if ((stock.stock + item.CantidadAnterior) < item.Cantidad)
-                            {
-                                mensaje = "El stock para el producto: " + item.pr_descripcion + " es: " + stock.stock + " e intenta egresar: " + item.Cantidad;
+                                mensaje = "No existe stock para el producto: " + item.pr_descripcion;
                                 return false;
                             }
-                        }                        
+                            else
+                            if ((stock1.Stock + item.CantidadAnterior) < item.Cantidad)
+                            {
+                                mensaje = "El stock para el producto: " + item.pr_descripcion + " es: " + stock1.Stock + " e intenta egresar: " + item.Cantidad;
+                                return false;
+                            }
+                        }
                     }
                 }
                 return true;
