@@ -32,7 +32,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" ManuallyRouted="false" />
         <AssociationConnector Association="Model_inventario.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega_stock_x_lote" Width="1.5" PointX="21.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Stock" Width="1.5" PointX="21.375" PointY="4.75" />
         <EntityTypeShape EntityType="Model_inventario.in_producto_x_tb_bodega" Width="1.5" PointX="16.25" PointY="17.125" />
         <AssociationConnector Association="Model_inventario.FK_in_producto_x_tb_bodega_Costo_Historico_in_producto_x_tb_bodega" />
         <EntityTypeShape EntityType="Model_inventario.in_Consignacion" Width="1.5" PointX="19" PointY="21.375" />
@@ -141,6 +140,7 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega" Width="1.5" PointX="5.375" PointY="15.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorBodega" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Stock" Width="1.5" PointX="0.75" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

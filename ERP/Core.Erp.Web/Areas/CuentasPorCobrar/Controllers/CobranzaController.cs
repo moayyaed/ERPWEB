@@ -142,7 +142,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             i_validar.cr_observacion = observacion;
             i_validar.cr_fechaCobro = i_validar.cr_fecha;
             i_validar.cr_fechaDocu = i_validar.cr_fecha;
-
+            i_validar.IdUsuario = SessionFixed.IdUsuario;
             if (!string.IsNullOrEmpty(i_validar.IdCobro_tipo))
                 i_validar.lst_det.ForEach(q => q.IdCobro_tipo_det = i_validar.IdCobro_tipo);
 

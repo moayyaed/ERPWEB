@@ -1342,7 +1342,8 @@ namespace Core.Erp.Data.Facturacion
                     cr_fechaCobro = fac.vt_fecha,
                     cr_observacion = "COBRO DE FACTURA # " + fac.vt_serie1 + "-" + fac.vt_serie2 + "-" + fac.vt_NumFactura,
                     cr_estado = "A",
-                    IdCaja = fac.IdCaja
+                    IdCaja = fac.IdCaja,
+                    IdUsuario = fac.IdUsuario
                 };
                 cobro.lst_det = new List<cxc_cobro_det_Info>();
                 cobro.lst_det.Add(new cxc_cobro_det_Info

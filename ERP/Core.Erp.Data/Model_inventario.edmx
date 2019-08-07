@@ -4075,7 +4075,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="IdProducto" Mode="In" Type="Decimal" />
           </FunctionImport>
           <EntitySet Name="vwin_producto_x_tb_bodega_stock_x_lote" EntityType="Model_inventario.vwin_producto_x_tb_bodega_stock_x_lote" />
-          <EntitySet Name="vwin_Producto_Stock" EntityType="Model_inventario.vwin_Producto_Stock" />
           <EntitySet Name="in_producto_x_tb_bodega" EntityType="Model_inventario.in_producto_x_tb_bodega" />
           <AssociationSet Name="FK_in_producto_x_tb_bodega_Costo_Historico_in_producto_x_tb_bodega" Association="Model_inventario.FK_in_producto_x_tb_bodega_Costo_Historico_in_producto_x_tb_bodega">
             <End Role="in_producto_x_tb_bodega" EntitySet="in_producto_x_tb_bodega" />
@@ -4413,6 +4412,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="vwin_Ing_Egr_Inven_PorContabilizar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" />
           <EntitySet Name="vwin_producto_x_tb_bodega" EntityType="Model_inventario.vwin_producto_x_tb_bodega" />
           <EntitySet Name="vwin_Producto_PorBodega" EntityType="Model_inventario.vwin_Producto_PorBodega" />
+          <EntitySet Name="vwin_Producto_Stock" EntityType="Model_inventario.vwin_Producto_Stock" />
           </EntityContainer>
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
@@ -4434,19 +4434,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
           <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="stock" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vwin_Producto_Stock">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Stock" Type="Double" />
         </EntityType>
         <EntityType Name="in_producto_x_tb_bodega">
           <Key>
@@ -6636,6 +6623,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="Stock" Type="Double" />
           <Property Name="nom_categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vwin_Producto_Stock">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Stock" Type="Double" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6979,17 +6979,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdProducto_padre" ColumnName="IdProducto_padre" />
                 <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
                 <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwin_Producto_Stock">
-            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_Stock">
-              <MappingFragment StoreEntitySet="vwin_Producto_Stock">
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
@@ -7916,6 +7905,17 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
                 <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_Producto_Stock">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_Producto_Stock">
+              <MappingFragment StoreEntitySet="vwin_Producto_Stock">
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
