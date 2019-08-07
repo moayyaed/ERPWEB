@@ -873,7 +873,6 @@
     <Build Include="EntidadRegulatoria\Views\vwfa_factura.sql" />
     <Build Include="EntidadRegulatoria\Views\vwcp_retencion_detalle.sql" />
     <Build Include="EntidadRegulatoria\Views\vwcp_retencion.sql" />
-    <Build Include="EntidadRegulatoria\Views\vwfa_nota_credito_impuestos.sql" />
     <Build Include="EntidadRegulatoria\Tables\fa_elec_registros_generados.sql" />
     <Build Include="dbo\Tables\cp_orden_giro_det.sql" />
     <Build Include="web\Views\vwtb_bodega_x_sucursal.sql" />
@@ -899,9 +898,6 @@
     <Build Include="web\Views\vwct_RevisionContableFacturas.sql" />
     <Build Include="web\Stored Procedures\SPROL_015.sql" />
     <Build Include="web\Views\VWROL_016.sql" />
-    <Build Include="EntidadRegulatoria\Views\vwfa_nota_debito_impuestos.sql" />
-    <Build Include="EntidadRegulatoria\Views\vwfa_nota_debito_detalle.sql" />
-    <Build Include="EntidadRegulatoria\Views\vwfa_nota_debito.sql" />
     <Build Include="web\Stored Procedures\SPROL_017.sql" />
     <Build Include="dbo\Tables\ro_permiso_x_empleado.sql" />
     <Build Include="dbo\Views\vwro_permiso_x_empleado.sql" />

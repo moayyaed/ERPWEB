@@ -1,4 +1,5 @@
 ﻿
+
 CREATE VIEW [EntidadRegulatoria].[vwfe_nota_credito]
 AS
 SELECT        nota_credito.IdEmpresa, nota_credito.IdSucursal, nota_credito.IdBodega, nota_credito.IdNota, nota_credito.dev_IdEmpresa, nota_credito.dev_IdDev_Inven, nota_credito.CodNota, nota_credito.CreDeb, 
@@ -7,7 +8,11 @@ SELECT        nota_credito.IdEmpresa, nota_credito.IdSucursal, nota_credito.IdBo
                          nota_credito.sc_observacion, nota_credito.em_direccion, nota_credito.em_ruc, nota_credito.RazonSocial, nota_credito.NombreComercial, nota_credito.Telefono AS Expr1, nota_credito.ContribuyenteEspecial, 
                          'SI' AS ObligadoAllevarConta, nota_credito.vt_serie1, nota_credito.vt_serie2, nota_credito.vt_NumFactura, nota_credito.vt_fecha, nota_credito_detalle.importeTotal, nota_credito_detalle.impuesto, nota_credito.em_telefonos, 
                          nota_credito_detalle.total_sin_impuesto, nota_credito_detalle.totalDescuento
-FROM            (SELECT        dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.dev_IdEmpresa, dbo.fa_notaCreDeb.dev_IdDev_Inven, 
+FROM            (
+
+
+
+SELECT        dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.dev_IdEmpresa, dbo.fa_notaCreDeb.dev_IdDev_Inven, 
                                                     dbo.fa_notaCreDeb.CodNota, dbo.fa_notaCreDeb.CreDeb, dbo.fa_notaCreDeb.CodDocumentoTipo, dbo.fa_notaCreDeb.Serie1, dbo.fa_notaCreDeb.Serie2, dbo.fa_notaCreDeb.NumNota_Impresa, 
                                                     dbo.fa_notaCreDeb.NumAutorizacion, dbo.fa_notaCreDeb.Fecha_Autorizacion, dbo.fa_cliente_contactos.Nombres, dbo.fa_cliente_contactos.Telefono, dbo.fa_cliente_contactos.Celular, 
                                                     dbo.fa_cliente_contactos.Correo, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_razonSocial, 
@@ -15,7 +20,7 @@ FROM            (SELECT        dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.Id
                                                     'SI' AS ObligadoAllevarConta, dbo.tb_empresa.em_ruc, dbo.tb_empresa.em_direccion, dbo.tb_empresa.em_Email, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, 
                                                     dbo.fa_factura.vt_fecha, dbo.tb_empresa.em_telefonos, dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico
                           FROM            dbo.fa_notaCreDeb INNER JOIN
-                                                    dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente  INNER JOIN
+                                                    dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente INNER JOIN
                                                     dbo.fa_cliente ON dbo.fa_cliente_contactos.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_cliente_contactos.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
                                                     dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
                                                     dbo.tb_empresa ON dbo.fa_cliente.IdEmpresa = dbo.tb_empresa.IdEmpresa INNER JOIN
@@ -32,12 +37,48 @@ FROM            (SELECT        dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.Id
                                                     dbo.fa_factura.vt_serie2 = dbo.tb_sis_Documento_Tipo_Talonario.PuntoEmision AND dbo.fa_factura.vt_serie1 = dbo.tb_sis_Documento_Tipo_Talonario.Establecimiento AND 
                                                     dbo.fa_factura.vt_NumFactura = dbo.tb_sis_Documento_Tipo_Talonario.NumDocumento
                           WHERE        (dbo.fa_notaCreDeb.NaturalezaNota = 'SRI') AND (dbo.fa_notaCreDeb.Estado = 'A') AND (dbo.fa_notaCreDeb.aprobada_enviar_sri = 1) AND (dbo.fa_notaCreDeb.CreDeb = 'C') AND 
-                                                    (dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico = 1) AND (dbo.fa_notaCreDeb.NumAutorizacion IS NULL) and fa_notaCreDeb.GeneradO is null) AS nota_credito INNER JOIN
+                                                    (dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico = 1) AND (dbo.fa_notaCreDeb.NumAutorizacion IS NULL)
+													
+							union all
+							
+							SELECT        dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.dev_IdEmpresa, dbo.fa_notaCreDeb.dev_IdDev_Inven, dbo.fa_notaCreDeb.CodNota, 
+                         dbo.fa_notaCreDeb.CreDeb, dbo.fa_notaCreDeb.CodDocumentoTipo, dbo.fa_notaCreDeb.Serie1, dbo.fa_notaCreDeb.Serie2, dbo.fa_notaCreDeb.NumNota_Impresa, dbo.fa_notaCreDeb.NumAutorizacion, 
+                         dbo.fa_notaCreDeb.Fecha_Autorizacion, dbo.fa_cliente_contactos.Nombres, dbo.fa_cliente_contactos.Telefono, dbo.fa_cliente_contactos.Celular, dbo.fa_cliente_contactos.Correo, dbo.tb_persona.pe_Naturaleza, 
+                         dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_razonSocial, dbo.fa_notaCreDeb.no_fecha, dbo.fa_notaCreDeb.sc_observacion, 
+                         dbo.tb_empresa.em_nombre, dbo.tb_empresa.RazonSocial, dbo.tb_empresa.NombreComercial, dbo.tb_empresa.ContribuyenteEspecial, 'SI' AS ObligadoAllevarConta, dbo.tb_empresa.em_ruc, dbo.tb_empresa.em_direccion, 
+                         dbo.tb_empresa.em_Email, 
+						 
+						SUBSTRING( fa_notaCreDeb_1.CodNota,0,4) vt_serie1,
+						 SUBSTRING( fa_notaCreDeb_1.CodNota,5,3) vt_serie2,
+						 SUBSTRING( fa_notaCreDeb_1.CodNota,9,9)vt_NumFactura,
+						 fa_notaCreDeb_1.no_fecha vt_fecha, 
+						 
+						 dbo.tb_empresa.em_telefonos, 
+                         dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico
+FROM            dbo.fa_notaCreDeb INNER JOIN
+                         dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente INNER JOIN
+                         dbo.fa_cliente ON dbo.fa_cliente_contactos.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_cliente_contactos.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
+                         dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                         dbo.tb_empresa ON dbo.fa_cliente.IdEmpresa = dbo.tb_empresa.IdEmpresa INNER JOIN
+                         dbo.fa_notaCreDeb_x_fa_factura_NotaDeb ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdEmpresa_nt AND 
+                         dbo.fa_notaCreDeb.IdSucursal = dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdSucursal_nt AND dbo.fa_notaCreDeb.IdBodega = dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdBodega_nt AND 
+                         dbo.fa_notaCreDeb.IdNota = dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdNota_nt INNER JOIN
+                         dbo.tb_sis_Documento_Tipo_Talonario ON dbo.fa_notaCreDeb.IdEmpresa = dbo.tb_sis_Documento_Tipo_Talonario.IdEmpresa AND 
+                         dbo.fa_notaCreDeb.CodDocumentoTipo = dbo.tb_sis_Documento_Tipo_Talonario.CodDocumentoTipo AND dbo.fa_notaCreDeb.Serie2 = dbo.tb_sis_Documento_Tipo_Talonario.PuntoEmision AND 
+                         dbo.fa_notaCreDeb.Serie1 = dbo.tb_sis_Documento_Tipo_Talonario.Establecimiento AND dbo.fa_notaCreDeb.NumNota_Impresa = dbo.tb_sis_Documento_Tipo_Talonario.NumDocumento INNER JOIN
+                         dbo.fa_notaCreDeb AS fa_notaCreDeb_1 ON dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdEmpresa_fac_nd_doc_mod = fa_notaCreDeb_1.IdEmpresa AND 
+                         dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdSucursal_fac_nd_doc_mod = fa_notaCreDeb_1.IdSucursal AND dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdBodega_fac_nd_doc_mod = fa_notaCreDeb_1.IdBodega AND 
+                         dbo.fa_notaCreDeb_x_fa_factura_NotaDeb.IdCbteVta_fac_nd_doc_mod = fa_notaCreDeb_1.IdNota
+WHERE        (dbo.fa_notaCreDeb.NaturalezaNota = 'SRI') AND (dbo.fa_notaCreDeb.Estado = 'A') AND (dbo.fa_notaCreDeb.aprobada_enviar_sri = 1) AND (dbo.fa_notaCreDeb.CreDeb = 'C') AND 
+                         (dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico = 1) AND (dbo.fa_notaCreDeb.NumAutorizacion IS NULL)			
+													
+													
+													) AS nota_credito INNER JOIN
                              (SELECT        IdEmpresa, IdSucursal, IdBodega, IdNota, CAST(SUM(sc_subtotal) AS numeric(10, 2)) AS Base_imponible, CAST(SUM(sc_iva) AS numeric(10, 2)) AS impuesto, CAST(SUM(sc_Precio) AS numeric(10, 2)) 
                                                          AS totalDescuento, CAST(SUM(sc_subtotal) AS numeric(10, 2)) AS total_sin_impuesto, CAST(SUM(sc_total) AS numeric(10, 2)) AS importeTotal
                                FROM            dbo.fa_notaCreDeb_det
                                GROUP BY IdEmpresa, IdSucursal, IdBodega, IdNota) AS nota_credito_detalle ON nota_credito.IdEmpresa = nota_credito_detalle.IdEmpresa AND nota_credito.IdSucursal = nota_credito_detalle.IdSucursal AND 
-                         nota_credito.IdBodega = nota_credito_detalle.IdBodega AND nota_credito.IdNota = nota_credito_detalle.IdNota;
+                         nota_credito.IdBodega = nota_credito_detalle.IdBodega AND nota_credito.IdNota = nota_credito_detalle.IdNota
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'EntidadRegulatoria', @level1type = N'VIEW', @level1name = N'vwfe_nota_credito';
 

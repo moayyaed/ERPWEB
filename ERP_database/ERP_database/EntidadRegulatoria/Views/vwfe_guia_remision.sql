@@ -16,7 +16,7 @@ FROM            dbo.tb_transportista INNER JOIN
                          dbo.fa_cliente_contactos.IdContacto = 1 INNER JOIN
                          dbo.tb_persona INNER JOIN
                          dbo.fa_cliente ON dbo.tb_persona.IdPersona = dbo.fa_cliente.IdPersona ON dbo.fa_cliente_contactos.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_cliente_contactos.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
-                         dbo.tb_empresa ON dbo.fa_cliente.IdEmpresa = dbo.tb_empresa.IdEmpresa AND dbo.fa_guia_remision.Estado = 'A' AND dbo.fa_guia_remision.aprobada_enviar_sri = 1 AND NOT EXISTS
+                         dbo.tb_empresa ON dbo.fa_cliente.IdEmpresa = dbo.tb_empresa.IdEmpresa AND dbo.fa_guia_remision.Estado = 1 AND dbo.fa_guia_remision.aprobada_enviar_sri = 1 AND NOT EXISTS
                              (SELECT        ID_REGISTRO, FECHA_CARGA, ESTADO
                                FROM            EntidadRegulatoria.fa_elec_registros_generados
                                WHERE        (ID_REGISTRO = SUBSTRING(dbo.tb_empresa.em_nombre, 0, 4) + '-' + 'GUI' + '-' + dbo.fa_guia_remision.Serie1 + '-' + dbo.fa_guia_remision.Serie2 + '-' + dbo.fa_guia_remision.NumGuia_Preimpresa)) INNER JOIN
