@@ -5,6 +5,8 @@ namespace Core.Erp.Info.Facturacion
 {
     public class fa_factura_det_Info
     {
+        public double pd_cantidad;
+
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
@@ -51,6 +53,7 @@ namespace Core.Erp.Info.Facturacion
         public double vt_Subtotal_item { get; set; }
         public double vt_iva_item { get; set; }
         public double vt_total_item { get; set; }
+        public double? Saldo { get; set; }
         #endregion
 
     }

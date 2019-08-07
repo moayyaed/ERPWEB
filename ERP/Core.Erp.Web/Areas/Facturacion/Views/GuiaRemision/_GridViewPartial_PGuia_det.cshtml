@@ -61,8 +61,15 @@
 
         settings.Columns.Add(column =>
         {
-            column.FieldName = "gi_cantidad";
+            column.FieldName = "pd_cantidad";
             column.Caption = "Cantidad";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Saldo";
+            column.Caption = "Saldo";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(6);
         });
@@ -78,13 +85,6 @@
             column.FieldName = "gi_por_desc";
             column.Caption = "% Desc. uni.";
             column.Width = Unit.Percentage(5);
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "gi_PrecioFinal";
-            column.Caption = "Precio final";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(6);
         });
         settings.Columns.Add(column =>
         {

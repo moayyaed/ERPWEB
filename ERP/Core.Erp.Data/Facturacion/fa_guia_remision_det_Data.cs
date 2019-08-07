@@ -93,7 +93,7 @@ namespace Core.Erp.Data.Facturacion
                                  IdProforma = q.IdProforma,
                                  Secuencia_pf = q.Secuencia,
                                  IdProducto = q.IdProducto,
-                                 gi_cantidad = q.pd_cantidad,
+                                 gi_cantidad = q.Saldo ?? 0,
                                  pr_descripcion = q.pr_descripcion,
                                  gi_precio = q.pd_precio,
                                  gi_por_desc = q.pd_por_descuento_uni,
@@ -113,7 +113,9 @@ namespace Core.Erp.Data.Facturacion
                                  gi_detallexItems = q.pd_DetalleAdicional,
                                  gi_Subtotal_item = q.pd_subtotal,
                                  gi_Iva_item = q.pd_iva,
-                                 gi_Total_item = q.pd_total
+                                 gi_Total_item = q.pd_total,
+                                 Saldo = q.Saldo,
+                                 pd_cantidad = q.pd_cantidad
                              }).ToList();
                 }
                 Lista.ForEach(V =>
@@ -148,7 +150,7 @@ namespace Core.Erp.Data.Facturacion
                                  IdProforma = q.IdProforma,
                                  Secuencia_pf = q.Secuencia,
                                  IdProducto = q.IdProducto,
-                                 gi_cantidad = q.pd_cantidad,
+                                 gi_cantidad = q.Saldo ?? 0,
                                  pr_descripcion = q.pr_descripcion,
                                  gi_precio = q.pd_precio,
                                  gi_por_desc = q.pd_por_descuento_uni,
@@ -168,7 +170,9 @@ namespace Core.Erp.Data.Facturacion
                                  gi_detallexItems = q.pd_DetalleAdicional,
                                  gi_Subtotal_item = q.pd_subtotal,
                                  gi_Iva_item = q.pd_iva,
-                                 gi_Total_item = q.pd_total
+                                 gi_Total_item = q.pd_total,
+                                 Saldo = q.Saldo,
+                                 pd_cantidad = q.pd_cantidad
                              }).ToList();
                 }
                 Lista.ForEach(V =>
