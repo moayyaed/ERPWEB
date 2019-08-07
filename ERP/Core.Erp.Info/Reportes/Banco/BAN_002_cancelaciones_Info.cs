@@ -11,13 +11,13 @@ namespace Core.Erp.Info.Reportes.Banco
         public int mba_IdEmpresa { get; set; }
         public decimal mba_IdCbteCble { get; set; }
         public int mba_IdTipocbte { get; set; }
-        public Nullable<int> IdEmpresa { get; set; }
-        public Nullable<int> IdSucursal { get; set; }
-        public Nullable<int> IdBodega_Cbte { get; set; }
-        public Nullable<decimal> IdCbte_vta_nota { get; set; }
-        public string dc_TipoDocumento { get; set; }
-        public string Referencia { get; set; }
-        public string Observacion { get; set; }
-        public Nullable<double> monto { get; set; }
+        public int mcj_IdEmpresa { get; set; }
+        public decimal mcj_IdCbteCble { get; set; }
+        public int mcj_IdTipocbte { get; set; }
+        public string cm_observacion { get; set; }
+        public System.DateTime cm_fecha { get; set; }
+        public double cm_valor { get; set; }
+        public decimal cbr_IdCobro { get; set; }
+        public decimal ct_IdCbteCble { get; set; }
     }
 }

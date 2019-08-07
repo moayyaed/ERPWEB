@@ -33,5 +33,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
         public string ba_descripcion { get; set; }
         public string cr_NumDocumento { get; set; }
         public double? cr_TotalCobro { get; set; }
+        public decimal? ct_IdCbteCble { get; set; }
+        public string Nombre { get; set; }
     }
 }

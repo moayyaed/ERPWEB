@@ -25,14 +25,14 @@ namespace Core.Erp.Data.Reportes.Banco
                                  mba_IdTipocbte = q.mba_IdTipocbte,
                                  mba_IdCbteCble = q.mba_IdCbteCble,
                                  mba_IdEmpresa = q.mba_IdEmpresa,
-                                 Observacion = q.Observacion,
-                                 Referencia = q.Referencia,
-                                 dc_TipoDocumento =q.dc_TipoDocumento,
-                                 IdBodega_Cbte = q.IdBodega_Cbte,
-                                 IdCbte_vta_nota = q.IdCbte_vta_nota,
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdSucursal = q.IdSucursal,
-                                 monto = q.monto
+                                 mcj_IdEmpresa = q.mcj_IdEmpresa,
+                                 cm_observacion = q.cm_observacion,
+                                 mcj_IdCbteCble = q.mcj_IdCbteCble,
+                                 mcj_IdTipocbte = q.mcj_IdTipocbte,
+                                 cm_fecha = q.cm_fecha,
+                                 cm_valor = q.cm_valor,
+                                 cbr_IdCobro = q.cbr_IdCobro,
+                                 ct_IdCbteCble = q.ct_IdCbteCble
                              }).ToList();
                 }
                 return Lista;
