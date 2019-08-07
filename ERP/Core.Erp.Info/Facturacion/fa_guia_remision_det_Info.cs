@@ -8,6 +8,8 @@ namespace Core.Erp.Info.Facturacion
 {
    public class fa_guia_remision_det_Info
     {
+        public double pd_cantidad { get; set; }
+
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
@@ -49,6 +51,7 @@ namespace Core.Erp.Info.Facturacion
         public double gi_Subtotal_item { get; set; }
         public double gi_Iva_item { get; set; }
         public double gi_Total_item { get; set; }
+        public double? Saldo { get; set; }
         //public string ca_Categoria { get; set; }
         //public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         //public string lote_num_lote { get; set; }

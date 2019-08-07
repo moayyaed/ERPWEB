@@ -665,7 +665,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  Total_Pagado = q.Total_Pagado,
                                  Saldo_OG = q.Saldo_OG,
                                  Fecha_Transac = q.co_FechaFactura_vct,
-                                 nom_tipo_Documento = q.nom_tipo_Documento,
+                                 nom_tipo_Documento = q.nom_tipo_Documento,                                 
                                  info_proveedor = new cp_proveedor_Info
                                  {
                                      IdPersona = q.IdPersona,

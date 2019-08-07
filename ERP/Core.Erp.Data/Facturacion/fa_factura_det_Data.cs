@@ -82,7 +82,7 @@ namespace Core.Erp.Data.Facturacion
                              select new fa_factura_det_Info
                              {
                                  IdProducto = q.IdProducto,
-                                 vt_cantidad = q.pd_cantidad,
+                                 vt_cantidad = q.Saldo ?? 0,
                                  vt_DescUnitario = q.pd_descuento_uni,
                                  vt_PrecioFinal = q.pd_precio_final,
                                  vt_Precio = q.pd_precio,
@@ -109,12 +109,13 @@ namespace Core.Erp.Data.Facturacion
                                  vt_detallexItems = q.pd_DetalleAdicional,
                                  vt_Subtotal_item = q.pd_subtotal,
                                  vt_iva_item = q.pd_iva,
-                                 vt_total_item = q.pd_total
+                                 vt_total_item = q.pd_total,
+                                 Saldo = q.Saldo,
+                                 pd_cantidad = q.pd_cantidad
                              }).ToList();
                 }
                 Lista.ForEach(V =>
                 {
-                    V.pr_descripcion = V.pr_descripcion + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
                     V.secuencial = Convert.ToInt32(V.IdEmpresa_pf).ToString("00") + Convert.ToInt32(V.IdSucursal_pf).ToString("00") + Convert.ToInt32(V.IdProforma).ToString("000000") + Convert.ToInt32(V.Secuencia_pf).ToString("00");
                 });
                 return Lista;
@@ -141,7 +142,7 @@ namespace Core.Erp.Data.Facturacion
                              select new fa_factura_det_Info
                              {
                                  IdProducto = q.IdProducto,
-                                 vt_cantidad = q.pd_cantidad,
+                                 vt_cantidad = q.Saldo ?? 0,
                                  vt_DescUnitario = q.pd_descuento_uni,
                                  vt_PrecioFinal = q.pd_precio_final,
                                  vt_Precio = q.pd_precio,
@@ -168,12 +169,13 @@ namespace Core.Erp.Data.Facturacion
                                  vt_detallexItems = q.pd_DetalleAdicional,
                                  vt_Subtotal_item = q.pd_subtotal,
                                  vt_iva_item = q.pd_iva,
-                                 vt_total_item = q.pd_total
+                                 vt_total_item = q.pd_total,
+                                 Saldo = q.Saldo,
+                                 pd_cantidad = q.pd_cantidad
                              }).ToList();
                 }
                 Lista.ForEach(V =>
                 {
-                    V.pr_descripcion = V.pr_descripcion + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
                     V.secuencial = Convert.ToInt32(V.IdEmpresa_pf).ToString("00") + Convert.ToInt32(V.IdSucursal_pf).ToString("00") + Convert.ToInt32(V.IdProforma).ToString("000000") + Convert.ToInt32(V.Secuencia_pf).ToString("00");
                 });
                 return Lista;
