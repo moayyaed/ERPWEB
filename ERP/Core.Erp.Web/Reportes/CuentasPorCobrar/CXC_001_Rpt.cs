@@ -4,6 +4,7 @@ using Core.Erp.Info.Reportes.CuentasPorCobrar;
 using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Core.Erp.Web.Reportes.CuentasPorCobrar
 {

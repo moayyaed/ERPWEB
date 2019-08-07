@@ -327,18 +327,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWBAN_002_cancelaciones' no tiene 
             <PropertyRef Name="mba_IdEmpresa" />
             <PropertyRef Name="mba_IdCbteCble" />
             <PropertyRef Name="mba_IdTipocbte" />
+            <PropertyRef Name="mcj_IdEmpresa" />
+            <PropertyRef Name="mcj_IdCbteCble" />
+            <PropertyRef Name="mcj_IdTipocbte" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="cm_valor" />
+            <PropertyRef Name="cbr_IdCobro" />
+            <PropertyRef Name="ct_IdCbteCble" />
           </Key>
           <Property Name="mba_IdEmpresa" Type="int" Nullable="false" />
           <Property Name="mba_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="mba_IdTipocbte" Type="int" Nullable="false" />
-          <Property Name="IdEmpresa" Type="int" />
-          <Property Name="IdSucursal" Type="int" />
-          <Property Name="IdBodega_Cbte" Type="int" />
-          <Property Name="IdCbte_vta_nota" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="dc_TipoDocumento" Type="varchar" MaxLength="20" />
-          <Property Name="Referencia" Type="varchar" MaxLength="55" />
-          <Property Name="Observacion" Type="varchar(max)" />
-          <Property Name="monto" Type="float" />
+          <Property Name="mcj_IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="mcj_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="mcj_IdTipocbte" Type="int" Nullable="false" />
+          <Property Name="cm_observacion" Type="varchar(max)" />
+          <Property Name="cm_fecha" Type="date" Nullable="false" />
+          <Property Name="cm_valor" Type="float" Nullable="false" />
+          <Property Name="cbr_IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ct_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWBAN_003' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -818,8 +825,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_001' no tiene definida ningu
             <PropertyRef Name="IdCbte_vta_nota" />
             <PropertyRef Name="dc_ValorPago" />
             <PropertyRef Name="vt_fecha" />
-            <PropertyRef Name="ObservacionFact" />
-            <PropertyRef Name="NombreContacto" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -834,10 +839,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_001' no tiene definida ningu
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" />
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="50" />
           <Property Name="vt_fecha" Type="datetime" Nullable="false" />
-          <Property Name="ObservacionFact" Type="varchar(max)" Nullable="false" />
+          <Property Name="ObservacionFact" Type="varchar(max)" />
           <Property Name="ObservacionCobro" Type="varchar" MaxLength="700" />
           <Property Name="cr_fecha" Type="datetime" />
-          <Property Name="NombreContacto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NombreContacto" Type="varchar" MaxLength="200" />
           <Property Name="Direccion" Type="varchar" MaxLength="1000" />
           <Property Name="Correo" Type="varchar" MaxLength="1000" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" />
@@ -846,6 +851,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_001' no tiene definida ningu
           <Property Name="ba_descripcion" Type="varchar" MaxLength="50" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
           <Property Name="cr_TotalCobro" Type="float" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="ct_IdCbteCble" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_001_diario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -5033,14 +5040,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWBAN_002_cancelaciones].[mba_IdEmpresa] AS [mba_IdEmpresa], 
     [VWBAN_002_cancelaciones].[mba_IdCbteCble] AS [mba_IdCbteCble], 
     [VWBAN_002_cancelaciones].[mba_IdTipocbte] AS [mba_IdTipocbte], 
-    [VWBAN_002_cancelaciones].[IdEmpresa] AS [IdEmpresa], 
-    [VWBAN_002_cancelaciones].[IdSucursal] AS [IdSucursal], 
-    [VWBAN_002_cancelaciones].[IdBodega_Cbte] AS [IdBodega_Cbte], 
-    [VWBAN_002_cancelaciones].[IdCbte_vta_nota] AS [IdCbte_vta_nota], 
-    [VWBAN_002_cancelaciones].[dc_TipoDocumento] AS [dc_TipoDocumento], 
-    [VWBAN_002_cancelaciones].[Referencia] AS [Referencia], 
-    [VWBAN_002_cancelaciones].[Observacion] AS [Observacion], 
-    [VWBAN_002_cancelaciones].[monto] AS [monto]
+    [VWBAN_002_cancelaciones].[mcj_IdEmpresa] AS [mcj_IdEmpresa], 
+    [VWBAN_002_cancelaciones].[mcj_IdCbteCble] AS [mcj_IdCbteCble], 
+    [VWBAN_002_cancelaciones].[mcj_IdTipocbte] AS [mcj_IdTipocbte], 
+    [VWBAN_002_cancelaciones].[cm_observacion] AS [cm_observacion], 
+    [VWBAN_002_cancelaciones].[cm_fecha] AS [cm_fecha], 
+    [VWBAN_002_cancelaciones].[cm_valor] AS [cm_valor], 
+    [VWBAN_002_cancelaciones].[cbr_IdCobro] AS [cbr_IdCobro], 
+    [VWBAN_002_cancelaciones].[ct_IdCbteCble] AS [ct_IdCbteCble]
     FROM [web].[VWBAN_002_cancelaciones] AS [VWBAN_002_cancelaciones]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWBAN_003" EntityType="Self.VWBAN_003" store:Type="Views" store:Schema="web">
@@ -5346,7 +5353,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCXC_001].[Su_Descripcion] AS [Su_Descripcion], 
     [VWCXC_001].[ba_descripcion] AS [ba_descripcion], 
     [VWCXC_001].[cr_NumDocumento] AS [cr_NumDocumento], 
-    [VWCXC_001].[cr_TotalCobro] AS [cr_TotalCobro]
+    [VWCXC_001].[cr_TotalCobro] AS [cr_TotalCobro], 
+    [VWCXC_001].[Nombre] AS [Nombre], 
+    [VWCXC_001].[ct_IdCbteCble] AS [ct_IdCbteCble]
     FROM [web].[VWCXC_001] AS [VWCXC_001]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCXC_001_diario" EntityType="Self.VWCXC_001_diario" store:Type="Views" store:Schema="web">
@@ -7716,24 +7725,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdTipoCbte_pago" Type="Int32" Nullable="false" />
           <Property Name="IdCbteCble_pago" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <EntityType Name="VWBAN_002_cancelaciones">
-          <Key>
-            <PropertyRef Name="mba_IdEmpresa" />
-            <PropertyRef Name="mba_IdCbteCble" />
-            <PropertyRef Name="mba_IdTipocbte" />
-          </Key>
-          <Property Name="mba_IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="mba_IdCbteCble" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="mba_IdTipocbte" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa" Type="Int32" />
-          <Property Name="IdSucursal" Type="Int32" />
-          <Property Name="IdBodega_Cbte" Type="Int32" />
-          <Property Name="IdCbte_vta_nota" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="dc_TipoDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Referencia" Type="String" MaxLength="55" FixedLength="false" Unicode="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="monto" Type="Double" />
-        </EntityType>
         <EntityType Name="VWBAN_007">
           <Key>
             <PropertyRef Name="IdRow" />
@@ -8542,7 +8533,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySet Name="VWACTF_002" EntityType="Self.VWACTF_002" />
           <EntitySet Name="VWACTF_003" EntityType="Self.VWACTF_003" />
           <EntitySet Name="VWBAN_001_cancelaciones" EntityType="Self.VWBAN_001_cancelaciones" />
-          <EntitySet Name="VWBAN_002_cancelaciones" EntityType="Self.VWBAN_002_cancelaciones" />
           <EntitySet Name="VWBAN_007" EntityType="Self.VWBAN_007" />
           <EntitySet Name="VWCXC_001_diario" EntityType="Self.VWCXC_001_diario" />
           <EntitySet Name="VWCXC_002_diario" EntityType="Self.VWCXC_002_diario" />
@@ -8950,7 +8940,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
             <Parameter Name="Balance" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="VWCXC_001" EntityType="Model_reportes.VWCXC_001" />
           <EntitySet Name="VWCXC_002" EntityType="Model_reportes.VWCXC_002" />
           <EntitySet Name="VWFAC_003" EntityType="Model_reportes.VWFAC_003" />
           <EntitySet Name="VWFAC_005" EntityType="Model_reportes.VWFAC_005" />
@@ -9041,6 +9030,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="VWCXP_017" EntityType="Model_reportes.VWCXP_017" />
+          <EntitySet Name="VWBAN_002_cancelaciones" EntityType="Model_reportes.VWBAN_002_cancelaciones" />
+          <EntitySet Name="VWCXC_001" EntityType="Model_reportes.VWCXC_001" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12061,44 +12052,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Decimal" Name="Diciembre" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="Total" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
-        <EntityType Name="VWCXC_001">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdCobro" />
-            <PropertyRef Name="secuencial" />
-            <PropertyRef Name="IdCbte_vta_nota" />
-            <PropertyRef Name="dc_ValorPago" />
-            <PropertyRef Name="vt_fecha" />
-            <PropertyRef Name="ObservacionFact" />
-            <PropertyRef Name="NombreContacto" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="secuencial" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega_Cbte" Type="Int32" />
-          <Property Name="IdCbte_vta_nota" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="dc_TipoDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
-          <Property Name="tc_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdPersona" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="vt_NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ObservacionFact" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ObservacionCobro" Type="String" MaxLength="700" FixedLength="false" Unicode="false" />
-          <Property Name="cr_fecha" Type="DateTime" Precision="3" />
-          <Property Name="NombreContacto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Correo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ba_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="cr_TotalCobro" Type="Double" />
-        </EntityType>
         <EntityType Name="VWCXC_002">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -13215,6 +13168,69 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="VWBAN_002_cancelaciones">
+          <Key>
+            <PropertyRef Name="mba_IdEmpresa" />
+            <PropertyRef Name="mba_IdCbteCble" />
+            <PropertyRef Name="mba_IdTipocbte" />
+            <PropertyRef Name="mcj_IdEmpresa" />
+            <PropertyRef Name="mcj_IdCbteCble" />
+            <PropertyRef Name="mcj_IdTipocbte" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="cm_valor" />
+            <PropertyRef Name="cbr_IdCobro" />
+            <PropertyRef Name="ct_IdCbteCble" />
+          </Key>
+          <Property Name="mba_IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="mba_IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="mba_IdTipocbte" Type="Int32" Nullable="false" />
+          <Property Name="mcj_IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="mcj_IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="mcj_IdTipocbte" Type="Int32" Nullable="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cm_valor" Type="Double" Nullable="false" />
+          <Property Name="cbr_IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="ct_IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="VWCXC_001">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="IdCbte_vta_nota" />
+            <PropertyRef Name="dc_ValorPago" />
+            <PropertyRef Name="vt_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencial" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega_Cbte" Type="Int32" />
+          <Property Name="IdCbte_vta_nota" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dc_TipoDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
+          <Property Name="tc_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ObservacionFact" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ObservacionCobro" Type="String" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="cr_fecha" Type="DateTime" Precision="3" />
+          <Property Name="NombreContacto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ba_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cr_TotalCobro" Type="Double" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ct_IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13326,23 +13342,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdEmpresa_pago" ColumnName="IdEmpresa_pago" />
                 <ScalarProperty Name="IdTipoCbte_pago" ColumnName="IdTipoCbte_pago" />
                 <ScalarProperty Name="IdCbteCble_pago" ColumnName="IdCbteCble_pago" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VWBAN_002_cancelaciones">
-            <EntityTypeMapping TypeName="Model_reportes.VWBAN_002_cancelaciones">
-              <MappingFragment StoreEntitySet="VWBAN_002_cancelaciones">
-                <ScalarProperty Name="mba_IdEmpresa" ColumnName="mba_IdEmpresa" />
-                <ScalarProperty Name="mba_IdCbteCble" ColumnName="mba_IdCbteCble" />
-                <ScalarProperty Name="mba_IdTipocbte" ColumnName="mba_IdTipocbte" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega_Cbte" ColumnName="IdBodega_Cbte" />
-                <ScalarProperty Name="IdCbte_vta_nota" ColumnName="IdCbte_vta_nota" />
-                <ScalarProperty Name="dc_TipoDocumento" ColumnName="dc_TipoDocumento" />
-                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="monto" ColumnName="monto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -16351,37 +16350,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="VWCXC_001">
-            <EntityTypeMapping TypeName="Model_reportes.VWCXC_001">
-              <MappingFragment StoreEntitySet="VWCXC_001">
-                <ScalarProperty Name="cr_TotalCobro" ColumnName="cr_TotalCobro" />
-                <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
-                <ScalarProperty Name="ba_descripcion" ColumnName="ba_descripcion" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="cr_estado" ColumnName="cr_estado" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="NombreContacto" ColumnName="NombreContacto" />
-                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
-                <ScalarProperty Name="ObservacionCobro" ColumnName="ObservacionCobro" />
-                <ScalarProperty Name="ObservacionFact" ColumnName="ObservacionFact" />
-                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
-                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="tc_descripcion" ColumnName="tc_descripcion" />
-                <ScalarProperty Name="dc_ValorPago" ColumnName="dc_ValorPago" />
-                <ScalarProperty Name="dc_TipoDocumento" ColumnName="dc_TipoDocumento" />
-                <ScalarProperty Name="IdCbte_vta_nota" ColumnName="IdCbte_vta_nota" />
-                <ScalarProperty Name="IdBodega_Cbte" ColumnName="IdBodega_Cbte" />
-                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
-                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VWCXC_002">
             <EntityTypeMapping TypeName="Model_reportes.VWCXC_002">
               <MappingFragment StoreEntitySet="VWCXC_002">
@@ -17206,6 +17174,56 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
                 <ScalarProperty Name="IdTipo_op" ColumnName="IdTipo_op" />
                 <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWBAN_002_cancelaciones">
+            <EntityTypeMapping TypeName="Model_reportes.VWBAN_002_cancelaciones">
+              <MappingFragment StoreEntitySet="VWBAN_002_cancelaciones">
+                <ScalarProperty Name="ct_IdCbteCble" ColumnName="ct_IdCbteCble" />
+                <ScalarProperty Name="cbr_IdCobro" ColumnName="cbr_IdCobro" />
+                <ScalarProperty Name="cm_valor" ColumnName="cm_valor" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="mcj_IdTipocbte" ColumnName="mcj_IdTipocbte" />
+                <ScalarProperty Name="mcj_IdCbteCble" ColumnName="mcj_IdCbteCble" />
+                <ScalarProperty Name="mcj_IdEmpresa" ColumnName="mcj_IdEmpresa" />
+                <ScalarProperty Name="mba_IdTipocbte" ColumnName="mba_IdTipocbte" />
+                <ScalarProperty Name="mba_IdCbteCble" ColumnName="mba_IdCbteCble" />
+                <ScalarProperty Name="mba_IdEmpresa" ColumnName="mba_IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWCXC_001">
+            <EntityTypeMapping TypeName="Model_reportes.VWCXC_001">
+              <MappingFragment StoreEntitySet="VWCXC_001">
+                <ScalarProperty Name="ct_IdCbteCble" ColumnName="ct_IdCbteCble" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="cr_TotalCobro" ColumnName="cr_TotalCobro" />
+                <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
+                <ScalarProperty Name="ba_descripcion" ColumnName="ba_descripcion" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="cr_estado" ColumnName="cr_estado" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="NombreContacto" ColumnName="NombreContacto" />
+                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
+                <ScalarProperty Name="ObservacionCobro" ColumnName="ObservacionCobro" />
+                <ScalarProperty Name="ObservacionFact" ColumnName="ObservacionFact" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="tc_descripcion" ColumnName="tc_descripcion" />
+                <ScalarProperty Name="dc_ValorPago" ColumnName="dc_ValorPago" />
+                <ScalarProperty Name="dc_TipoDocumento" ColumnName="dc_TipoDocumento" />
+                <ScalarProperty Name="IdCbte_vta_nota" ColumnName="IdCbte_vta_nota" />
+                <ScalarProperty Name="IdBodega_Cbte" ColumnName="IdBodega_Cbte" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
