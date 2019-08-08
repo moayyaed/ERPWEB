@@ -30,6 +30,7 @@ namespace Core.Erp.Info.Facturacion
         public string Estado { get; set; }
         public string NaturalezaNota { get; set; }
         public string IdCtaCble_TipoNota { get; set; }
+        public Nullable<int> IdVendedor { get; set; }
 
         // campos que no existen en la tabla
 

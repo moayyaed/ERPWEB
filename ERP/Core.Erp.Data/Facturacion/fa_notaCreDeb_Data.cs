@@ -89,7 +89,8 @@ namespace Core.Erp.Data.Facturacion
                         sc_observacion = Entity.sc_observacion,
                         Estado = Entity.Estado,
                         NaturalezaNota = Entity.NaturalezaNota,
-                        IdCtaCble_TipoNota = Entity.IdCtaCble_TipoNota
+                        IdCtaCble_TipoNota = Entity.IdCtaCble_TipoNota,
+                        IdVendedor = Entity.IdVendedor
                     };
                 }
 
@@ -190,6 +191,7 @@ namespace Core.Erp.Data.Facturacion
                         NaturalezaNota = info.NaturalezaNota,
                         IdCtaCble_TipoNota = info.IdCtaCble_TipoNota,
 
+                        IdVendedor = info.IdVendedor,
                         IdUsuario = info.IdUsuario
                     };
                     #endregion
@@ -401,6 +403,7 @@ namespace Core.Erp.Data.Facturacion
                     entity.IdCtaCble_TipoNota = info.IdCtaCble_TipoNota;
                     entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     entity.Fecha_UltMod = DateTime.Now;
+                    entity.IdVendedor = info.IdVendedor;
 
                     #endregion
 
