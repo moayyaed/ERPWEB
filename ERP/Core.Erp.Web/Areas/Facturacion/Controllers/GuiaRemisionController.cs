@@ -152,6 +152,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         private bool validar(fa_guia_remision_Info i_validar, ref string msg)
         {
+            i_validar.IdUsuarioCreacion = SessionFixed.IdUsuario;
+            i_validar.IdUsuarioModificacion = SessionFixed.IdUsuario;
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.gi_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
             {
                 return false;

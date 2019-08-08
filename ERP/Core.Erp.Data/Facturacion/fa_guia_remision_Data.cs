@@ -288,14 +288,14 @@ namespace Core.Erp.Data.Facturacion
                     #endregion
 
                     #region Factura
-                    if (info.GenerarFactura == true && (info.IdCbteVta==null || info.IdCbteVta ==0))
+                    if (info.GenerarFactura == true && (info.IdCbteVta == null || info.IdCbteVta == 0))
                     {
                         fa_factura_Info info_fact = new fa_factura_Info();
                         info_fact.lst_det = new List<fa_factura_det_Info>();
                         info_fact.lst_cuota = new List<fa_cuotas_x_doc_Info>();
                         int secuencia_fact = 1;
 
-                        if (termino_pago != null && termino_pago.IdTerminoPago!= "")
+                        if (termino_pago != null && termino_pago.IdTerminoPago != "")
                         {
                             info.vt_fech_venc = info.gi_fecha.AddDays(termino_pago.Dias_Vct);
                         }
@@ -331,40 +331,41 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.valor_abono = null;
                         info_fact.IdUsuario = info.IdUsuarioCreacion;
                         info_fact.IdNivel = 1;
+                        info_fact.CodCbteVta = info.CodGuiaRemision;
 
                         foreach (var item in info.lst_detalle)
                         {
-                            fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info();
+                            fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info
+                            {
+                                IdEmpresa = info_fact.IdEmpresa,
+                                IdSucursal = info_fact.IdSucursal,
+                                IdBodega = info_fact.IdBodega,
+                                Secuencia = secuencia_fact++,
 
-                            info_fact_detalle.IdEmpresa = info_fact.IdEmpresa;
-                            info_fact_detalle.IdSucursal = info_fact.IdSucursal;
-                            info_fact_detalle.IdBodega = info_fact.IdBodega;
-                            info_fact_detalle.Secuencia = secuencia_fact++;
+                                IdProducto = item.IdProducto,
+                                vt_cantidad = item.gi_cantidad,
+                                vt_Precio = item.gi_precio,
+                                vt_PorDescUnitario = item.gi_por_desc,
+                                vt_DescUnitario = item.gi_descuentoUni,
+                                vt_PrecioFinal = item.gi_PrecioFinal,
+                                vt_Subtotal = item.gi_Subtotal,
+                                vt_por_iva = item.gi_por_iva,
+                                IdCod_Impuesto_Iva = item.IdCod_Impuesto,
+                                vt_iva = item.gi_Iva,
+                                vt_total = item.gi_Total,
 
-                            info_fact_detalle.IdProducto = item.IdProducto;
-                            info_fact_detalle.vt_cantidad = item.gi_cantidad;
-                            info_fact_detalle.vt_Precio = item.gi_precio;
-                            info_fact_detalle.vt_PorDescUnitario = item.gi_por_desc;
-                            info_fact_detalle.vt_DescUnitario = item.gi_descuentoUni;
-                            info_fact_detalle.vt_PrecioFinal = item.gi_PrecioFinal;
-                            info_fact_detalle.vt_Subtotal = item.gi_Subtotal;
-                            info_fact_detalle.vt_por_iva = item.gi_por_iva;
-                            info_fact_detalle.IdCod_Impuesto_Iva = item.IdCod_Impuesto;
-                            info_fact_detalle.vt_iva = item.gi_Iva;
-                            info_fact_detalle.vt_total = item.gi_Total;
+                                IdEmpresa_pf = item.IdEmpresa_pf,
+                                IdSucursal_pf = item.IdSucursal_pf,
+                                IdProforma = item.IdProforma,
+                                Secuencia_pf = item.Secuencia_pf,
 
-                            info_fact_detalle.IdEmpresa_pf = item.IdEmpresa_pf;
-                            info_fact_detalle.IdSucursal_pf = item.IdSucursal_pf;
-                            info_fact_detalle.IdProforma = item.IdProforma;
-                            info_fact_detalle.Secuencia_pf = item.Secuencia_pf;
-
-                            info_fact_detalle.IdCentroCosto = item.IdCentroCosto;
-                            info_fact_detalle.IdPunto_Cargo = item.IdPunto_cargo;
-                            info_fact_detalle.IdPunto_cargo_grupo = item.IdPunto_cargo_grupo;
-
+                                IdCentroCosto = item.IdCentroCosto,
+                                IdPunto_Cargo = item.IdPunto_cargo,
+                                IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                            };
                             info_fact.lst_det.Add(info_fact_detalle);
                         }
-                        
+
                         var SubtotalConDscto = (decimal)Math.Round(info.lst_detalle.Sum(q => q.gi_Subtotal), 2, MidpointRounding.AwayFromZero);
                         var SubtotalIVASinDscto = (decimal)Math.Round(info_fact.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero);
                         var SubtotalSinIVASinDscto = (decimal)Math.Round(info_fact.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero);
@@ -375,25 +376,26 @@ namespace Core.Erp.Data.Facturacion
                         var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
                         var Total = SubtotalConDscto + ValorIVA;
 
-                        info_fact.info_resumen = new fa_factura_resumen_Info();
-                        info_fact.info_resumen.IdEmpresa = info_fact.IdEmpresa;
-                        info_fact.info_resumen.IdSucursal = info_fact.IdSucursal;
-                        info_fact.info_resumen.IdBodega = info_fact.IdBodega;
-                        //info_fact.info_resumen.IdCbteVta = info_fact.IdCbteVta;
+                        info_fact.info_resumen = new fa_factura_resumen_Info
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdSucursal = info.IdSucursal,
+                            IdBodega = info.IdBodega,
+                            //  IdCbteVta =  IdCbteVta,
 
-                        info_fact.info_resumen.SubtotalConDscto = SubtotalConDscto;
-                        info_fact.info_resumen.SubtotalIVAConDscto = SubtotalIVAConDscto;
-                        info_fact.info_resumen.SubtotalIVASinDscto = SubtotalIVASinDscto;
-                        info_fact.info_resumen.SubtotalSinDscto = SubtotalSinDscto;
-                        info_fact.info_resumen.SubtotalSinIVAConDscto = SubtotalSinIVAConDscto;
-                        info_fact.info_resumen.SubtotalSinIVASinDscto = SubtotalSinIVASinDscto;
+                            SubtotalConDscto = SubtotalConDscto,
+                            SubtotalIVAConDscto = SubtotalIVAConDscto,
+                            SubtotalIVASinDscto = SubtotalIVASinDscto,
+                            SubtotalSinDscto = SubtotalSinDscto,
+                            SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                            SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
 
-                        info_fact.info_resumen.Total = Total;
-                        info_fact.info_resumen.Descuento = Descuento;
-                        info_fact.info_resumen.ValorEfectivo = 0;
-                        info_fact.info_resumen.ValorIVA = ValorIVA;
-                        info_fact.info_resumen.Cambio = Total;
-
+                            Total = Total,
+                            Descuento = Descuento,
+                            ValorEfectivo = 0,
+                            ValorIVA = ValorIVA,
+                            Cambio = Total,
+                        };
                         data_fact.guardarDB(info_fact);
                         Entity.IdCbteVta = info_fact.IdCbteVta;
                     }
@@ -551,37 +553,38 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.valor_abono = null;
                         info_fact.IdUsuario = info.IdUsuarioCreacion;
                         info_fact.IdNivel = 1;
+                        info_fact.CodCbteVta = info.CodGuiaRemision;
 
                         foreach (var item in info.lst_detalle)
                         {
-                            fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info();
+                            fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info
+                            {
+                                IdEmpresa = info_fact.IdEmpresa,
+                                IdSucursal = info_fact.IdSucursal,
+                                IdBodega = info_fact.IdBodega,
+                                Secuencia = secuencia_fact++,
 
-                            info_fact_detalle.IdEmpresa = info_fact.IdEmpresa;
-                            info_fact_detalle.IdSucursal = info_fact.IdSucursal;
-                            info_fact_detalle.IdBodega = info_fact.IdBodega;
-                            info_fact_detalle.Secuencia = secuencia_fact++;
+                                IdProducto = item.IdProducto,
+                                vt_cantidad = item.gi_cantidad,
+                                vt_Precio = item.gi_precio,
+                                vt_PorDescUnitario = item.gi_por_desc,
+                                vt_DescUnitario = item.gi_descuentoUni,
+                                vt_PrecioFinal = item.gi_PrecioFinal,
+                                vt_Subtotal = item.gi_Subtotal,
+                                vt_por_iva = item.gi_por_iva,
+                                IdCod_Impuesto_Iva = item.IdCod_Impuesto,
+                                vt_iva = item.gi_Iva,
+                                vt_total = item.gi_Total,
 
-                            info_fact_detalle.IdProducto = item.IdProducto;
-                            info_fact_detalle.vt_cantidad = item.gi_cantidad;
-                            info_fact_detalle.vt_Precio = item.gi_precio;
-                            info_fact_detalle.vt_PorDescUnitario = item.gi_por_desc;
-                            info_fact_detalle.vt_DescUnitario = item.gi_descuentoUni;
-                            info_fact_detalle.vt_PrecioFinal = item.gi_PrecioFinal;
-                            info_fact_detalle.vt_Subtotal = item.gi_Subtotal;
-                            info_fact_detalle.vt_por_iva = item.gi_por_iva;
-                            info_fact_detalle.IdCod_Impuesto_Iva = item.IdCod_Impuesto;
-                            info_fact_detalle.vt_iva = item.gi_Iva;
-                            info_fact_detalle.vt_total = item.gi_Total;
+                                IdEmpresa_pf = item.IdEmpresa_pf,
+                                IdSucursal_pf = item.IdSucursal_pf,
+                                IdProforma = item.IdProforma,
+                                Secuencia_pf = item.Secuencia_pf,
 
-                            info_fact_detalle.IdEmpresa_pf = item.IdEmpresa_pf;
-                            info_fact_detalle.IdSucursal_pf = item.IdSucursal_pf;
-                            info_fact_detalle.IdProforma = item.IdProforma;
-                            info_fact_detalle.Secuencia_pf = item.Secuencia_pf;
-
-                            info_fact_detalle.IdCentroCosto = item.IdCentroCosto;
-                            info_fact_detalle.IdPunto_Cargo = item.IdPunto_cargo;
-                            info_fact_detalle.IdPunto_cargo_grupo = item.IdPunto_cargo_grupo;
-
+                                IdCentroCosto = item.IdCentroCosto,
+                                IdPunto_Cargo = item.IdPunto_cargo,
+                                IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                            };
                             info_fact.lst_det.Add(info_fact_detalle);
                         }
 
@@ -595,25 +598,27 @@ namespace Core.Erp.Data.Facturacion
                         var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
                         var Total = SubtotalConDscto + ValorIVA;
 
-                        info_fact.info_resumen = new fa_factura_resumen_Info();
-                        info_fact.info_resumen.IdEmpresa = info_fact.IdEmpresa;
-                        info_fact.info_resumen.IdSucursal = info_fact.IdSucursal;
-                        info_fact.info_resumen.IdBodega = info_fact.IdBodega;
-                        //info_fact.info_resumen.IdCbteVta = info_fact.IdCbteVta;
+                        info_fact.info_resumen = new fa_factura_resumen_Info
+                        {
 
-                        info_fact.info_resumen.SubtotalConDscto = SubtotalConDscto;
-                        info_fact.info_resumen.SubtotalIVAConDscto = SubtotalIVAConDscto;
-                        info_fact.info_resumen.SubtotalIVASinDscto = SubtotalIVASinDscto;
-                        info_fact.info_resumen.SubtotalSinDscto = SubtotalSinDscto;
-                        info_fact.info_resumen.SubtotalSinIVAConDscto = SubtotalSinIVAConDscto;
-                        info_fact.info_resumen.SubtotalSinIVASinDscto = SubtotalSinIVASinDscto;
+                            IdEmpresa = info_fact.IdEmpresa,
+                            IdSucursal = info_fact.IdSucursal,
+                            IdBodega = info_fact.IdBodega,
+                            // IdCbteVta = info_fact.IdCbteVta,
 
-                        info_fact.info_resumen.Total = Total;
-                        info_fact.info_resumen.Descuento = Descuento;
-                        info_fact.info_resumen.ValorEfectivo = 0;
-                        info_fact.info_resumen.ValorIVA = ValorIVA;
-                        info_fact.info_resumen.Cambio = Total;
+                            SubtotalConDscto = SubtotalConDscto,
+                            SubtotalIVAConDscto = SubtotalIVAConDscto,
+                            SubtotalIVASinDscto = SubtotalIVASinDscto,
+                            SubtotalSinDscto = SubtotalSinDscto,
+                            SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                            SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
 
+                            Total = Total,
+                            Descuento = Descuento,
+                            ValorEfectivo = 0,
+                            ValorIVA = ValorIVA,
+                            Cambio = Total,
+                        };
                         data_fact.guardarDB(info_fact);
                         Entity.IdCbteVta = info_fact.IdCbteVta;
                     }
