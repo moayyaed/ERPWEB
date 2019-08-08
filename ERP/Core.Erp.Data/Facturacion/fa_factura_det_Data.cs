@@ -82,7 +82,7 @@ namespace Core.Erp.Data.Facturacion
                              select new fa_factura_det_Info
                              {
                                  IdProducto = q.IdProducto,
-                                 vt_cantidad = q.Saldo ?? 0,
+                                 vt_cantidad = q.Saldo,
                                  vt_DescUnitario = q.pd_descuento_uni,
                                  vt_PrecioFinal = q.pd_precio_final,
                                  vt_Precio = q.pd_precio,
@@ -142,7 +142,7 @@ namespace Core.Erp.Data.Facturacion
                              select new fa_factura_det_Info
                              {
                                  IdProducto = q.IdProducto,
-                                 vt_cantidad = q.Saldo ?? 0,
+                                 vt_cantidad = q.Saldo,
                                  vt_DescUnitario = q.pd_descuento_uni,
                                  vt_PrecioFinal = q.pd_precio_final,
                                  vt_Precio = q.pd_precio,

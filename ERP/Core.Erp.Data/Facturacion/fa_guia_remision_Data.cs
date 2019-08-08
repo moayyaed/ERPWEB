@@ -418,7 +418,7 @@ namespace Core.Erp.Data.Facturacion
                                 IdEmpresa_fact = info.IdEmpresa,
                                 IdSucursal_fact = info.IdSucursal,
                                 IdBodega_fact = info.IdBodega,
-                                IdCbteVta_fact = info.IdCbteVta ?? 0,
+                                IdCbteVta_fact = info_fact.IdCbteVta,
                                 Secuencia_fact = secuencia,
 
                                 IdEmpresa_guia = info.IdEmpresa,
@@ -672,7 +672,7 @@ namespace Core.Erp.Data.Facturacion
                                 IdEmpresa_fact = info.IdEmpresa,
                                 IdSucursal_fact = info.IdSucursal,
                                 IdBodega_fact = info.IdBodega,
-                                IdCbteVta_fact = info.IdCbteVta ?? 0,
+                                IdCbteVta_fact = info_fact.IdCbteVta,
                                 Secuencia_fact = secuencia,
 
                                 IdEmpresa_guia = info.IdEmpresa,
