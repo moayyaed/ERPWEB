@@ -48,5 +48,6 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public string CreDeb { get; set; }
         public string CodDocumentoTipo { get; set; }
+        public double sc_cantidad { get; set; }
     }
 }
