@@ -43,6 +43,13 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                 lst_rpt = bus_rpt.GetList(IdEmpresa, IdUsuario, MostrarSaldo0, fechaIni, fechaFin);
                 this.DataSource = lst_rpt;
 
+                tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+                var emp = bus_empresa.get_info(IdEmpresa);
+                if (emp != null && emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
             }
             catch (Exception)
             {

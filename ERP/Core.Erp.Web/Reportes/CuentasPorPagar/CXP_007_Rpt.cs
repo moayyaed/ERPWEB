@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.CuentasPorPagar;
 using Core.Erp.Info.Reportes.CuentasPorPagar;
 using System.Collections.Generic;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.CuentasPorPagar
 {
@@ -43,6 +44,16 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                 }
             }
             this.DataSource = lst_rpt;
+
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
+
         }
 
         private void GroupFooter_codigo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
