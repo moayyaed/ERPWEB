@@ -74,15 +74,15 @@
                             <i class="fa fa-calendar"></i>
                         </div>
                         @Html.DevExpress().DateEditFor(q => q.co_FechaFactura, settings =>
-                       {
-                           settings.Name = "co_FechaFactura";
-                           settings.Properties.UseMaskBehavior = true;
-                           settings.Properties.EditFormat = EditFormat.Date;
-                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){co_FechaContabilizacion.SetValue(s.GetValue());}";
-                       }).GetHtml()
+                   {
+                       settings.Name = "co_FechaFactura";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){co_FechaContabilizacion.SetValue(s.GetValue());}";
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaFactura, "", new { @class = "text-danger" })
                     </div>
                 </div>
