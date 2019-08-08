@@ -43,7 +43,11 @@ namespace Core.Erp.Data.Facturacion
                                  cc_Descripcion = q.cc_Descripcion,
                                  gi_Subtotal_item = q.gi_Subtotal,
                                  gi_Iva_item = q.gi_Iva,
-                                 gi_Total_item = q.gi_Total
+                                 gi_Total_item = q.gi_Total,
+                                 IdEmpresa_pf = q.IdEmpresa_pf,
+                                 IdSucursal_pf = q.IdSucursal_pf,
+                                 IdProforma = q.IdProforma,
+                                 Secuencia_pf = q.Secuencia_pf
                              }).ToList();
                 }
 

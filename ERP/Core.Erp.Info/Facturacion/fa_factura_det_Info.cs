@@ -5,7 +5,7 @@ namespace Core.Erp.Info.Facturacion
 {
     public class fa_factura_det_Info
     {
-        public double pd_cantidad;
+        public double pd_cantidad { get; set; }
 
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
