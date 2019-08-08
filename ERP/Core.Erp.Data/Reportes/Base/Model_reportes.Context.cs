@@ -14,17 +14,14 @@ namespace Core.Erp.Data.Reportes.Base
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
             : base("name=Entities_reportes")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -59,7 +56,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWCXC_007_Cobros> VWCXC_007_Cobros { get; set; }
         public virtual DbSet<VWCXC_007_Diario> VWCXC_007_Diario { get; set; }
         public virtual DbSet<VWCXC_008> VWCXC_008 { get; set; }
-        public virtual DbSet<VWCXP_001> VWCXP_001 { get; set; }
         public virtual DbSet<VWCXP_001_detalle> VWCXP_001_detalle { get; set; }
         public virtual DbSet<VWCXP_002> VWCXP_002 { get; set; }
         public virtual DbSet<VWCXP_002_diario> VWCXP_002_diario { get; set; }
@@ -83,7 +79,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWFAC_004> VWFAC_004 { get; set; }
         public virtual DbSet<VWFAC_005> VWFAC_005 { get; set; }
         public virtual DbSet<VWFAC_006> VWFAC_006 { get; set; }
-        public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
         public virtual DbSet<VWFAC_008> VWFAC_008 { get; set; }
         public virtual DbSet<VWFAC_008_aplicaciones> VWFAC_008_aplicaciones { get; set; }
         public virtual DbSet<VWFAC_008_diario> VWFAC_008_diario { get; set; }
@@ -131,6 +126,8 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWROL_024> VWROL_024 { get; set; }
         public virtual DbSet<VWROL_026> VWROL_026 { get; set; }
         public virtual DbSet<VWROL_028> VWROL_028 { get; set; }
+        public virtual DbSet<VWCXP_001> VWCXP_001 { get; set; }
+        public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

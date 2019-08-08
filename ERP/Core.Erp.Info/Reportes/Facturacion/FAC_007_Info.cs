@@ -52,5 +52,7 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public Nullable<decimal> ValorEfectivo { get; set; }
         public Nullable<decimal> Cambio { get; set; }
         public string vt_detallexItems { get; set; }
+        public string FormaPago { get; set; }
+        public string nom_FormaPago { get; set; }
     }
 }
