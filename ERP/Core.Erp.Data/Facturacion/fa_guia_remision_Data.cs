@@ -69,7 +69,6 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
-
         public fa_guia_remision_Info get_info(int IdEmpresa, decimal IdGuiaRemision)
         {
             try
@@ -118,7 +117,6 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
-
         private decimal get_id(int IdEmpresa)
         {
             try
@@ -140,14 +138,12 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
-
         public bool guardarDB(fa_guia_remision_Info info)
         {
             fa_TerminoPago_Info termino_pago = new fa_TerminoPago_Info();
             fa_PuntoVta_Info punto_venta = new fa_PuntoVta_Info();
             termino_pago = data_tpago.get_info(info.vt_tipo_venta);
             punto_venta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta_Fact);
-
             try
             {
                 int secuencia = 1;
@@ -366,7 +362,7 @@ namespace Core.Erp.Data.Facturacion
                                 IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
                             };
 
-                            info_fact.lst_det.Add(info_fact_detalle);                            
+                            info_fact.lst_det.Add(info_fact_detalle);
                         }
 
                         var SubtotalConDscto = (decimal)Math.Round(info.lst_detalle.Sum(q => q.gi_Subtotal), 2, MidpointRounding.AwayFromZero);
@@ -401,7 +397,39 @@ namespace Core.Erp.Data.Facturacion
                         };
                         data_fact.guardarDB(info_fact);
                         Entity.IdCbteVta = info_fact.IdCbteVta;
-                    }                    
+
+                        #region Relacion Guia
+                        Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
+                        {
+                            fa_IdEmpresa = info.IdEmpresa,
+                            fa_IdSucursal = info.IdSucursal,
+                            fa_IdBodega = info.IdBodega,
+                            fa_IdCbteVta = info_fact.IdCbteVta,
+                            gi_IdEmpresa = info.IdEmpresa,
+                            gi_IdSucursal = info.IdSucursal,
+                            gi_IdBodega = info.IdBodega,
+                            gi_IdGuiaRemision = info.IdGuiaRemision
+                        });
+                        secuencia = 1;
+                        foreach (var item in info.lst_detalle)
+                        {
+                            Context.fa_guia_remision_det_x_factura.Add(new fa_guia_remision_det_x_factura
+                            {
+                                IdEmpresa_fact = info.IdEmpresa,
+                                IdSucursal_fact = info.IdSucursal,
+                                IdBodega_fact = info.IdBodega,
+                                IdCbteVta_fact = info.IdCbteVta ?? 0,
+                                Secuencia_fact = secuencia,
+
+                                IdEmpresa_guia = info.IdEmpresa,
+                                IdSucursal_guia = info.IdSucursal,
+                                IdBodega_guia = info.IdBodega,
+                                IdGuiaRemision_guia = info.IdGuiaRemision,
+                                Secuencia_guia = secuencia++,
+                            });
+                        }
+                        #endregion
+                    }
                     #endregion
 
                     Context.fa_guia_remision.Add(Entity);
@@ -416,7 +444,6 @@ namespace Core.Erp.Data.Facturacion
                 return false;
             }
         }
-
         public bool modificarDB(fa_guia_remision_Info info)
         {
             try
@@ -624,6 +651,38 @@ namespace Core.Erp.Data.Facturacion
                         };
                         data_fact.guardarDB(info_fact);
                         Entity.IdCbteVta = info_fact.IdCbteVta;
+
+                        #region Relacion Guia
+                        Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
+                        {
+                            fa_IdEmpresa = info.IdEmpresa,
+                            fa_IdSucursal = info.IdSucursal,
+                            fa_IdBodega = info.IdBodega,
+                            fa_IdCbteVta = info_fact.IdCbteVta,
+                            gi_IdEmpresa = info.IdEmpresa,
+                            gi_IdSucursal = info.IdSucursal,
+                            gi_IdBodega = info.IdBodega,
+                            gi_IdGuiaRemision = info.IdGuiaRemision
+                        });
+                        secuencia = 1;
+                        foreach (var item in info.lst_detalle)
+                        {
+                            Context.fa_guia_remision_det_x_factura.Add(new fa_guia_remision_det_x_factura
+                            {
+                                IdEmpresa_fact = info.IdEmpresa,
+                                IdSucursal_fact = info.IdSucursal,
+                                IdBodega_fact = info.IdBodega,
+                                IdCbteVta_fact = info.IdCbteVta ?? 0,
+                                Secuencia_fact = secuencia,
+
+                                IdEmpresa_guia = info.IdEmpresa,
+                                IdSucursal_guia = info.IdSucursal,
+                                IdBodega_guia = info.IdBodega,
+                                IdGuiaRemision_guia = info.IdGuiaRemision,
+                                Secuencia_guia = secuencia++,
+                            });
+                        }
+                        #endregion
                     }
                     #endregion
 
@@ -680,7 +739,6 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
-
         public bool si_existe(int IdEmpresa, string Establecimiento, string Puntoemision, string Numero)
         {
             try
