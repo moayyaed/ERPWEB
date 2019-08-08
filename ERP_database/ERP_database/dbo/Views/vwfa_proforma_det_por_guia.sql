@@ -4,7 +4,7 @@ SELECT dbo.fa_proforma_det.IdEmpresa, dbo.fa_proforma_det.IdSucursal, dbo.fa_pro
                   dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, dbo.fa_proforma_det.IdCod_Impuesto, dbo.fa_proforma_det.pd_por_iva, 
                   dbo.fa_proforma_det.pd_iva, dbo.fa_proforma_det.pd_total, dbo.fa_proforma_det.anulado, in_Producto_1.pr_descripcion, dbo.in_presentacion.nom_presentacion, in_Producto_1.lote_num_lote, in_Producto_1.lote_fecha_vcto, 
                   dbo.fa_proforma.IdCliente, in_Producto_1.se_distribuye, dbo.in_ProductoTipo.tp_ManejaInven, dbo.fa_proforma_det.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion, dbo.fa_proforma_det.NumCotizacion, 
-                  dbo.fa_proforma_det.NumOPr, dbo.fa_proforma_det.pd_DetalleAdicional, ROUND(dbo.fa_proforma_det.pd_cantidad - f.gi_cantidad, 2) AS Saldo
+                  dbo.fa_proforma_det.NumOPr, dbo.fa_proforma_det.pd_DetalleAdicional, ROUND(dbo.fa_proforma_det.pd_cantidad - ISNULL(f.gi_cantidad,0), 2) AS Saldo
 FROM     dbo.ct_CentroCosto RIGHT OUTER JOIN
                   dbo.fa_proforma INNER JOIN
                   dbo.fa_proforma_det ON dbo.fa_proforma.IdEmpresa = dbo.fa_proforma_det.IdEmpresa AND dbo.fa_proforma.IdSucursal = dbo.fa_proforma_det.IdSucursal AND dbo.fa_proforma.IdProforma = dbo.fa_proforma_det.IdProforma ON 
@@ -17,7 +17,7 @@ FROM     dbo.ct_CentroCosto RIGHT OUTER JOIN
                        FROM      dbo.fa_guia_remision_det
                        GROUP BY IdEmpresa_pf, IdSucursal_pf, IdProforma, Secuencia_pf) AS f ON dbo.fa_proforma_det.IdEmpresa = f.IdEmpresa_pf AND dbo.fa_proforma_det.IdSucursal = f.IdSucursal_pf AND 
                   dbo.fa_proforma_det.IdProforma = f.IdProforma AND dbo.fa_proforma_det.Secuencia = f.Secuencia_pf
-WHERE  (dbo.fa_proforma.estado = 1) AND (ROUND(dbo.fa_proforma_det.pd_cantidad - f.gi_cantidad, 2) > 0) AND fa_proforma_det.anulado = 0
+WHERE  (dbo.fa_proforma.estado = 1) AND (ROUND(dbo.fa_proforma_det.pd_cantidad - ISNULL(f.gi_cantidad,0), 2) > 0) AND (dbo.fa_proforma_det.anulado = 0)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_proforma_det_por_guia';
 

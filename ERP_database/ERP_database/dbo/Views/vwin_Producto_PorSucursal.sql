@@ -1,16 +1,16 @@
 ﻿CREATE VIEW dbo.vwin_Producto_PorSucursal
 AS
-SELECT        dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, 
-                         SUM(ISNULL(dbo.in_movi_inve_detalle.dm_cantidad, 0)) AS Stock, dbo.in_Producto.precio_1, dbo.in_ProductoTipo.tp_ManejaInven
-FROM            dbo.in_ProductoTipo INNER JOIN
-                         dbo.in_Producto ON dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo RIGHT OUTER JOIN
-                         dbo.in_producto_x_tb_bodega ON dbo.in_Producto.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto LEFT OUTER JOIN
-                         dbo.in_movi_inve_detalle ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_movi_inve_detalle.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_movi_inve_detalle.IdSucursal AND 
-                         dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_movi_inve_detalle.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_movi_inve_detalle.IdProducto LEFT OUTER JOIN
-                         dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria
-WHERE        (dbo.in_Producto.Estado = 'A') AND (dbo.in_producto_x_tb_bodega.IdBodega = 1)
+SELECT dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, 
+                  SUM(ISNULL(dbo.in_movi_inve_detalle.dm_cantidad, 0)) AS Stock, dbo.in_Producto.precio_1, dbo.in_ProductoTipo.tp_ManejaInven, dbo.in_Producto.pr_codigo
+FROM     dbo.in_ProductoTipo INNER JOIN
+                  dbo.in_Producto ON dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo RIGHT OUTER JOIN
+                  dbo.in_producto_x_tb_bodega ON dbo.in_Producto.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto LEFT OUTER JOIN
+                  dbo.in_movi_inve_detalle ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_movi_inve_detalle.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_movi_inve_detalle.IdSucursal AND 
+                  dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_movi_inve_detalle.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_movi_inve_detalle.IdProducto LEFT OUTER JOIN
+                  dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria
+WHERE  (dbo.in_Producto.Estado = 'A')
 GROUP BY dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.precio_1, 
-                         dbo.in_ProductoTipo.tp_ManejaInven
+                  dbo.in_ProductoTipo.tp_ManejaInven, dbo.in_Producto.pr_codigo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
 
@@ -85,10 +85,30 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -360
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "in_ProductoTipo"
+            Begin Extent = 
+               Top = 174
+               Left = 38
+               Bottom = 304
+               Right = 281
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "in_Producto"
+            Begin Extent = 
+               Top = 42
+               Left = 673
+               Bottom = 342
+               Right = 964
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "in_producto_x_tb_bodega"
             Begin Extent = 
                Top = 7
@@ -98,16 +118,6 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 2
-         End
-         Begin Table = "in_Producto"
-            Begin Extent = 
-               Top = 0
-               Left = 392
-               Bottom = 300
-               Right = 683
-            End
-            DisplayFlags = 280
-            TopColumn = 25
          End
          Begin Table = "in_movi_inve_detalle"
             Begin Extent = 
@@ -128,16 +138,6 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
-         End
-         Begin Table = "in_ProductoTipo"
-            Begin Extent = 
-               Top = 174
-               Left = 38
-               Bottom = 304
-               Right = 281
-            End
-            DisplayFlags = 280
-            TopColumn = 1
          End
       End
    End
@@ -160,22 +160,24 @@ Begin DesignProperties =
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 12
-         ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
+      ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
+
+
 
 
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'Column = 1440
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -183,4 +185,6 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'Column = 1
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
+
+
 
