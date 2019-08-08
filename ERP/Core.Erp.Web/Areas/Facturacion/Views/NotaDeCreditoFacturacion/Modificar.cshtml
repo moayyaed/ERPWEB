@@ -9,6 +9,11 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script type="text/javascript">
+    function ImprimirRIDE() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/FacturacionReportes/FAC_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega="+@Model.IdBodega+"&IdNota="+@Model.IdNota, '_blank');
+        win.focus();
+    }
     function AutorizarSRI() {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -51,7 +56,7 @@
             SetNaturalezaNota();
             GetUltimoDocumento();
         });
-    });    
+    });
 
     function get_info_cliente() {
         var tipo = IdCliente.GetValue();
@@ -366,7 +371,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-5 col-md-1">
+            <div class="col-md-offset-2 col-md-2">
+                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir">
+                    <i class="fa fa-print"></i>  RIDE
+                </button>
+            </div>
+            <div class="col-md-1">
                 <label for="Autorizar"></label>
                 <button type="button" class="btn btn-primary form-control"  id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI
