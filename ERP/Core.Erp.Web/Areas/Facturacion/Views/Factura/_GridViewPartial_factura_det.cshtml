@@ -81,6 +81,7 @@
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
+                q.AllowMouseWheel = false;
                 q.Width = Unit.Percentage(100);
                 q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
@@ -96,6 +97,7 @@
             {
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.AllowMouseWheel = false;
                 q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -110,6 +112,7 @@
             {
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.AllowMouseWheel = false;
                 q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -217,6 +220,7 @@
             column.VisibleIndex = 12;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
             });
@@ -233,6 +237,7 @@
             column.VisibleIndex = 13;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
             });
@@ -249,6 +254,7 @@
             column.VisibleIndex = 14;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
             });
@@ -282,16 +288,7 @@
 
         settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdCliente'] = IdCliente.GetValue(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); e.customArgs['NivelDescuento'] = $('#IdNivel').val();}";
         settings.ClientSideEvents.EndCallback = "function(s,e){ CargarCuotas(); ValidarGrid(); if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
-        //if (s.IsEditing()) {var editor = s.GetEditor('IdProducto');editor.Focus();} //Para combos normal
-        //if (s.IsEditing()) {var editor = IdProducto; editor.Focus();} //Para combo bajo demanda como producto
-
-        /*settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_Subtotal").DisplayFormat = "{0:n2}";
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_iva").DisplayFormat = "{0:n2}";
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_total").DisplayFormat = "{0:n2}";
-        settings.Settings.ShowFooter = true;*/
     });
-
-
 }
 @grid.Bind(Model).GetHtml()
 
