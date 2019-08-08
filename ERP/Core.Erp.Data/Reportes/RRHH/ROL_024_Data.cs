@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_024_Data
@@ -38,7 +38,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                         pe_FechaIni = q.pe_FechaIni,
                         pe_nombreCompleto = q.pe_nombreCompleto,
                         Su_Descripcion = q.Su_Descripcion,
-                        Valor = q.Valor
+                        Valor = q.Valor??0
                     }).ToList();
                 }
                 return Lista;

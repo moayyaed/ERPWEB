@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="Model_presupuesto.pre_PresupuestoDet" Width="1.5" PointX="13.25" PointY="9.375" />
         <EntityTypeShape EntityType="Model_presupuesto.vwpre_Presupuesto" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_presupuesto.vwpre_PresupuestoDet" Width="1.5" PointX="2.75" PointY="4.75" />
-        <EntityTypeShape EntityType="Model_presupuesto.VWPRE_001" Width="1.5" PointX="4.75" PointY="4.75" />
         <AssociationConnector Association="Model_presupuesto.FK_pre_Presupuesto_pre_PresupuestoPeriodo" />
         <AssociationConnector Association="Model_presupuesto.FK_pre_PresupuestoDet_pre_Presupuesto" />
         <AssociationConnector Association="Model_presupuesto.FK_pre_Presupuesto_x_grupo_det_pre_rubro" />

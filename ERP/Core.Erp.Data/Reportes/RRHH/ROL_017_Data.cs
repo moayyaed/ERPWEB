@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_017_Data
@@ -31,12 +31,12 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  IdEmpleado = q.IdEmpleado,
                                  Entrada1 =q.Entrada1,
                                  Entrada2 =q.Entrada2,
-                                 es_anio =q.es_anio,
-                                 es_dia = q.es_dia,
+                                 //es_anio =q.es_anio,
+                                 //es_dia = q.es_dia,
                                  es_fechaRegistro = q.es_fechaRegistro,
-                                 es_mes = q.es_mes,
-                                 es_sdia = q.es_sdia,
-                                 es_semana = q.es_semana,
+                                // es_mes = q.es_mes,
+                                // es_sdia = q.es_sdia,
+                                // es_semana = q.es_semana,
                                  pe_cedulaRuc = q.pe_cedulaRuc,
                                  pe_nombreCompleto = q.pe_nombreCompleto,
                                  RegresoLounch = q.RegresoLounch,

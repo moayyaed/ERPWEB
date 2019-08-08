@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.Reportes.Compra;
+﻿using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Info.Reportes.Compra;
 using System;
 using System.Collections.Generic;
 using System.Linq;

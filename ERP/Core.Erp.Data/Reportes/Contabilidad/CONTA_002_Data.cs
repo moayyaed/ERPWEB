@@ -4,7 +4,7 @@ using Core.Erp.Info.Reportes.Contabilidad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.Contabilidad
 {
     public class CONTA_002_Data
