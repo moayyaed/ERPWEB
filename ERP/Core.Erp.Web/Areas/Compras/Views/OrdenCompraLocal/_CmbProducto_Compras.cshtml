@@ -10,17 +10,18 @@
         settings.Properties.CallbackPageSize = 15;
         settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
         settings.Properties.TextField = "pr_descripcion";
-        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.TextFormatString = "[{0}] [{1}] {2}";
         settings.Properties.ValueField = "IdProducto";
         settings.Properties.ValueType = typeof(decimal);
 
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
         settings.Properties.AllowNull = true;
 
-        settings.Properties.Columns.Add("IdProducto", "ID", 5);
-        settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
-        settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
-        settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
+        settings.Properties.Columns.Add("IdProducto", "ID", 10);
+        settings.Properties.Columns.Add("pr_codigo", "Código", 10);
+        settings.Properties.Columns.Add("pr_descripcion", "Producto", 40);
+        settings.Properties.Columns.Add("nom_categoria", "Categoria", 20);
+        settings.Properties.Columns.Add("Stock", "Stock", 20);
         settings.Properties.FilterMinLength =3;
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "GetInfoProducto";
 

@@ -967,10 +967,11 @@ namespace Core.Erp.Data.Inventario
 
                 Lista = Context.vwin_Producto_PorSucursal.Where(p=> p.IdEmpresa == IdEmpresa
                            && p.IdSucursal == IdSucursal
-                            && (p.IdProducto.ToString() + " " + p.pr_descripcion).Contains(filter)).Select(p=>  new in_Producto_Info
+                            && (p.IdProducto.ToString() + " "+ p.pr_codigo+ " " + p.pr_descripcion).Contains(filter)).Select(p=>  new in_Producto_Info
                            {
                                IdEmpresa = p.IdEmpresa,
                                 IdProducto = p.IdProducto,
+                                pr_codigo = p.pr_codigo,
                                 pr_descripcion = p.pr_descripcion,
                                 nom_categoria = p.ca_Categoria,
                                 precio_1 = p.precio_1 ?? 0,
