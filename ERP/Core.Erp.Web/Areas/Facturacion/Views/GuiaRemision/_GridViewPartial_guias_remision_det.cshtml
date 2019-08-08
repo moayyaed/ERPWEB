@@ -82,6 +82,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
                 q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
@@ -98,6 +99,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
                 q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
@@ -114,6 +116,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
                 q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
@@ -148,6 +151,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
             });
@@ -163,6 +167,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().SpinEdit(q =>
             {
+                q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
             });

@@ -74,6 +74,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
+                sp.AllowMouseWheel = false;
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
@@ -87,6 +88,7 @@
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().SpinEdit(sp =>
             {
+                sp.AllowMouseWheel = false;
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
