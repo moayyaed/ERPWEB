@@ -17,7 +17,7 @@
         settings.Properties.Columns.Add("nom_punto_cargo", "Descripción", 90);
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
     })
-      .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_division, new Core.Erp.Web.Areas.Reportes.Controllers.RRHHReportesController().get_info_bajo_demanda_division)
+      .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_grupo, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_grupo)
     .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) ? "" : (Model == 0 ? "" : Model));
 }
 @comboBox.GetHtml()

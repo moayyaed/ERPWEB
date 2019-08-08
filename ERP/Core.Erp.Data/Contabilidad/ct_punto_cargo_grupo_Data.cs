@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Info.Contabilidad;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -166,6 +167,46 @@ namespace Core.Erp.Data.Contabilidad
                 throw;
             }
         }
+
+        #region Punto cargo grupo
+        public List<ct_punto_cargo_grupo_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<ct_punto_cargo_grupo_Info> Lista = new List<ct_punto_cargo_grupo_Info>();
+            Lista = get_list(IdEmpresa, skip, take, args.Filter);
+            return Lista;
+        }
+
+        public List<ct_punto_cargo_grupo_Info> get_list(int IdEmpresa, int skip, int take, string filter)
+        {
+            try
+            {
+                List<ct_punto_cargo_grupo_Info> Lista = new List<ct_punto_cargo_grupo_Info>();
+
+                using (Entities_contabilidad context_g = new Entities_contabilidad())
+                {
+                    Lista = context_g.ct_punto_cargo_grupo.Where(q => q.IdEmpresa == IdEmpresa && q.estado && (q.IdPunto_cargo_grupo + " " + q.nom_punto_cargo_grupo).Contains(filter)).OrderBy(q => q.IdPunto_cargo_grupo).Skip(skip).Take(take).ToList().Select(q => new ct_punto_cargo_grupo_Info
+                    {
+                        IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                        nom_punto_cargo_grupo = q.nom_punto_cargo_grupo
+                    }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ct_punto_cargo_grupo_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            //La variable args del devexpress ya trae el ID seleccionado en la propiedad Value, se pasa el IdEmpresa porque es un filtro que no tiene
+            return GetInfo(IdEmpresa, args.Value == null ? 0 : Convert.ToInt32(args.Value));
+        }
+        #endregion
 
     }
 }

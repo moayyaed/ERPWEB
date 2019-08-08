@@ -47,11 +47,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         #region Combo punto cargo grupo
         ct_punto_cargo_Bus bus_punto_cargo = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_grupo = new ct_punto_cargo_grupo_Bus();
-        public List<ct_punto_cargo_grupo_Bus> get_list_bajo_demanda_grupo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        public List<ct_punto_cargo_grupo_Info> get_list_bajo_demanda_grupo(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_grupo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+            return bus_grupo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
-        public ct_punto_cargo_grupo_Bus get_info_bajo_demanda_grupo(ListEditItemRequestedByValueEventArgs args)
+        public ct_punto_cargo_grupo_Info get_info_bajo_demanda_grupo(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_grupo.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }

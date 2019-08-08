@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.Contabilidad;
 using Core.Erp.Info.Contabilidad;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,5 +78,31 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
+        #region Bajo demanda
+        public List<ct_punto_cargo_grupo_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_list_bajo_demanda(args, IdEmpresa);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ct_punto_cargo_grupo_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_info_bajo_demanda(args, IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
     }
 }
