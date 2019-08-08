@@ -491,6 +491,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             edited_info.do_porc_des = info_det.do_porc_des;
             edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
             edited_info.do_descuento = info_det.do_precioCompra * (info_det.do_porc_des / 100);
+            edited_info.IdUnidadMedida = info_det.IdUnidadMedida;
             var desc = edited_info.do_descuento;
             edited_info.do_precioFinal = info_det.do_precioCompra - desc;
             edited_info.do_subtotal = info_det.do_Cantidad * edited_info.do_precioFinal;

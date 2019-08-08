@@ -72,7 +72,6 @@ namespace Core.Erp.Data
         public DbSet<in_Ajuste> in_Ajuste { get; set; }
         public DbSet<in_AjusteDet> in_AjusteDet { get; set; }
         public DbSet<vwin_Ajuste> vwin_Ajuste { get; set; }
-        public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
         public DbSet<in_transferencia_det> in_transferencia_det { get; set; }
         public DbSet<vwin_movi_inve_x_estado_contabilizacion> vwin_movi_inve_x_estado_contabilizacion { get; set; }
         public DbSet<vwin_Transferencias> vwin_Transferencias { get; set; }
@@ -92,6 +91,7 @@ namespace Core.Erp.Data
         public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
         public DbSet<vwin_Producto_PorBodega> vwin_Producto_PorBodega { get; set; }
         public DbSet<vwin_Producto_Stock> vwin_Producto_Stock { get; set; }
+        public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {
