@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.Inventario;
 using System.Collections.Generic;
 using Core.Erp.Info.Reportes.Inventario;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Inventario
 {
@@ -38,6 +39,14 @@ namespace Core.Erp.Web.Reportes.Inventario
             INV_005_Bus bus_rpt = new INV_005_Bus();
             List<INV_005_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdProducto, fecha_ini, fecha_fin, IdUsuario, no_mostrar_valores_en_0, mostrar_detallado, IdProductoPadre);
             this.DataSource = lst_rpt;
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }

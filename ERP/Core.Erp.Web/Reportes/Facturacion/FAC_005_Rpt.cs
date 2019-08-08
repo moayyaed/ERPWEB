@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using System.Collections.Generic;
 using Core.Erp.Info.Reportes.Facturacion;
 using Core.Erp.Bus.Reportes.Facturacion;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Facturacion
 {
@@ -34,6 +35,14 @@ namespace Core.Erp.Web.Reportes.Facturacion
             FAC_005_Bus bus_rpt = new FAC_005_Bus();
             List<FAC_005_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal,IdCliente, Fecha_ini, Fecha_fin, ref lst_resumen);
             this.DataSource = lst_rpt;
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
 
         private void xrSubreport1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)

@@ -51,6 +51,7 @@
             this.p_IdBodega = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdCbteVta = new DevExpress.XtraReports.Parameters.Parameter();
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
+            this.Subreporte_diario = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTable9 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow17 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell55 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -138,7 +139,6 @@
             this.xrTableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow16 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.Subreporte_diario = new DevExpress.XtraReports.UI.XRSubreport();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).BeginInit();
@@ -320,6 +320,14 @@
             this.xrTable7});
             this.ReportFooter.HeightF = 203.3624F;
             this.ReportFooter.Name = "ReportFooter";
+            // 
+            // Subreporte_diario
+            // 
+            this.Subreporte_diario.LocationFloat = new DevExpress.Utils.PointFloat(0F, 10.00001F);
+            this.Subreporte_diario.Name = "Subreporte_diario";
+            this.Subreporte_diario.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_013_diario_Rpt();
+            this.Subreporte_diario.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.Subreporte_diario.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.Subreporte_diario_BeforePrint);
             // 
             // xrTable9
             // 
@@ -880,7 +888,7 @@
             // 
             this.logo.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.logo.Name = "logo";
-            this.logo.SizeF = new System.Drawing.SizeF(93.02094F, 79.99998F);
+            this.logo.SizeF = new System.Drawing.SizeF(125F, 75F);
             this.logo.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
             // 
             // xrTable3
@@ -1243,7 +1251,7 @@
             // xrTable8
             // 
             this.xrTable8.Font = new System.Drawing.Font("Verdana", 7F);
-            this.xrTable8.LocationFloat = new DevExpress.Utils.PointFloat(93.02084F, 0F);
+            this.xrTable8.LocationFloat = new DevExpress.Utils.PointFloat(125F, 0F);
             this.xrTable8.Name = "xrTable8";
             this.xrTable8.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTable8.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
@@ -1251,7 +1259,7 @@
             this.xrTableRow15,
             this.xrTableRow18,
             this.xrTableRow16});
-            this.xrTable8.SizeF = new System.Drawing.SizeF(657.9791F, 80F);
+            this.xrTable8.SizeF = new System.Drawing.SizeF(626F, 80F);
             this.xrTable8.StylePriority.UseFont = false;
             this.xrTable8.StylePriority.UsePadding = false;
             this.xrTable8.StylePriority.UseTextAlignment = false;
@@ -1342,14 +1350,6 @@
             this.xrTableCell18.Name = "xrTableCell18";
             this.xrTableCell18.StylePriority.UseFont = false;
             this.xrTableCell18.Weight = 1.5999999999999999D;
-            // 
-            // Subreporte_diario
-            // 
-            this.Subreporte_diario.LocationFloat = new DevExpress.Utils.PointFloat(0F, 10.00001F);
-            this.Subreporte_diario.Name = "Subreporte_diario";
-            this.Subreporte_diario.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_013_diario_Rpt();
-            this.Subreporte_diario.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.Subreporte_diario.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.Subreporte_diario_BeforePrint);
             // 
             // FAC_013_Rpt
             // 

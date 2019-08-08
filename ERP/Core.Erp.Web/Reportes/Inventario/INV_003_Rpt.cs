@@ -70,7 +70,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             if (emp != null && emp.em_logo != null)
             {
                 ImageConverter obj = new ImageConverter();
-                logo.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
             }
 
         }
