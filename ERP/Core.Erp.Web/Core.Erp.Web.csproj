@@ -10224,6 +10224,8 @@
     <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_CmbCuenta.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_017.cshtml" />
     <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_002.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\_CmbPuntoCargoGrupo_Reportes.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\_CmbPuntoCargo_Reportes.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

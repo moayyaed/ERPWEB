@@ -43,6 +43,25 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
 
         #endregion
+
+        #region Combo punto cargo grupo
+        ct_punto_cargo_Bus bus_punto_cargo = new ct_punto_cargo_Bus();
+        ct_punto_cargo_grupo_Bus bus_grupo = new ct_punto_cargo_grupo_Bus();
+        public List<ct_punto_cargo_grupo_Bus> get_list_bajo_demanda_grupo(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_grupo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+        }
+        public ct_punto_cargo_grupo_Bus get_info_bajo_demanda_grupo(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_grupo.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        public ActionResult CmbPuntoCargoGrupo()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+            return PartialView("_CmbPuntoCargoGrupo_Reportes", model);
+        }
+        #endregion
+
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
         public ActionResult CONTA_001(int IdTipoCbte = 0, decimal IdCbteCble = 0)
