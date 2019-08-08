@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.CuentasPorCobrar;
 using Core.Erp.Info.Reportes.CuentasPorCobrar;
 using System.Collections.Generic;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.CuentasPorCobrar
 {
@@ -34,6 +35,15 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             CXC_010_Bus bus_rpt = new CXC_010_Bus();
             List<CXC_010_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdCliente, Idtipo_cliente, fechaCorte, MostrarSoloCarteraVencida);
             this.DataSource = lst_rpt;
+
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null && emp.em_logo != null)
+            {
+                ImageConverter obj = new ImageConverter();
+                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
         }
     }
 }

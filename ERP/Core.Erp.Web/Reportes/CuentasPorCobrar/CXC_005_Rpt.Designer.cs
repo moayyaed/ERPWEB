@@ -541,12 +541,12 @@
             // 
             // xrTable1
             // 
-            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(120.8333F, 0F);
+            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(125F, 0F);
             this.xrTable1.Name = "xrTable1";
             this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1,
             this.xrTableRow2});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(629.1667F, 50F);
+            this.xrTable1.SizeF = new System.Drawing.SizeF(625F, 50F);
             this.xrTable1.StylePriority.UseTextAlignment = false;
             this.xrTable1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
@@ -562,11 +562,11 @@
             // 
             this.lbl_empresa.Font = new System.Drawing.Font("Verdana", 12F);
             this.lbl_empresa.Name = "lbl_empresa";
-            this.lbl_empresa.Padding = new DevExpress.XtraPrinting.PaddingInfo(65, 125, 0, 0, 100F);
+            this.lbl_empresa.Padding = new DevExpress.XtraPrinting.PaddingInfo(81, 125, 0, 0, 100F);
             this.lbl_empresa.StylePriority.UseFont = false;
             this.lbl_empresa.StylePriority.UsePadding = false;
             this.lbl_empresa.Text = "lbl_empresa";
-            this.lbl_empresa.Weight = 1.8133333333333335D;
+            this.lbl_empresa.Weight = 1.7439999348958335D;
             // 
             // CXC_005
             // 
@@ -574,7 +574,7 @@
             this.CXC_005.Name = "CXC_005";
             this.CXC_005.StylePriority.UseFont = false;
             this.CXC_005.Text = "CXC_005";
-            this.CXC_005.Weight = 0.18666666666666673D;
+            this.CXC_005.Weight = 0.25600006510416673D;
             // 
             // xrTableRow2
             // 
@@ -585,7 +585,7 @@
             // 
             // xrTableCell1
             // 
-            this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
+            this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.xrTableCell1.Name = "xrTableCell1";
             this.xrTableCell1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 125, 0, 0, 100F);
             this.xrTableCell1.StylePriority.UseFont = false;
@@ -605,7 +605,7 @@
             // 
             this.logo.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.logo.Name = "logo";
-            this.logo.SizeF = new System.Drawing.SizeF(120F, 75F);
+            this.logo.SizeF = new System.Drawing.SizeF(125F, 75F);
             this.logo.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
             // 
             // xrTable3
