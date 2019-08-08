@@ -57,11 +57,12 @@
             column.FieldName = "dm_cantidad_sinConversion";
             column.Caption = "Cantidad";
             column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(15);            
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.AllowMouseWheel = false;
                 q.ClientSideEvents.ValueChanged = "function(s,e,){ValidarCantidad()}";
             });
 

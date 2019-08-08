@@ -99,6 +99,7 @@
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
+                q.AllowMouseWheel = false;
                 q.Width = Unit.Percentage(100);
             });
         });
@@ -112,6 +113,7 @@
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
+                q.AllowMouseWheel = false;
                 q.Width = Unit.Percentage(100);
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -125,6 +127,7 @@
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
+                q.AllowMouseWheel = false;
                 q.Width = Unit.Percentage(100);
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
