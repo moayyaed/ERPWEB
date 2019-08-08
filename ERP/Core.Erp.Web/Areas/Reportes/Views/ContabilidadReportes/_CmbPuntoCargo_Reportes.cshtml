@@ -2,26 +2,24 @@
 @{
     var comboBox = Html.DevExpress().ComboBox(settings =>
     {
-        settings.Name = "IdCtaCble";
+        settings.Name = "IdPunto_cargo";
         settings.Width = Unit.Percentage(100);
-        settings.Properties.DropDownWidth = Unit.Pixel(1200);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-        settings.CallbackRouteValues = new { Controller = "ContabilidadReportes", Action = "CmbCuenta_contable_Conta", Area = "Reportes" };
+        settings.CallbackRouteValues = new { Controller = "ContabilidadReportes", Action = "CmbPuntoCargo", Area = "Reportes" };
         settings.Properties.CallbackPageSize = 15;
         settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
-        settings.Properties.TextField = "pc_Cuenta";
+        settings.Properties.TextField = "nom_punto_cargo";
         settings.Properties.TextFormatString = "[{0}] {1}";
-        settings.Properties.ValueField = "IdCtaCble";
-        settings.Properties.ValueType = typeof(string);
-        settings.Properties.Columns.Add("IdCtaCble", "ID", 10);
-        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta", 40);
-        settings.Properties.Columns.Add("IdCtaCblePadre", "ID Padre", 10);
-        settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
-        settings.Properties.FilterMinLength = 3;
+        settings.Properties.ValueField = "IdPunto_cargo";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdPunto_cargo", "ID", 10);
+        settings.Properties.Columns.Add("nom_punto_cargo", "Descripcion", 90);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['ContaRpt_IdPunto_cargo_grupo'] = IdPunto_cargo_grupo.GetValue(); }";
 
     })
-    .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_cta, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_cta)
-    .Bind(Model.IdCtaCble);
-
+     .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_punto, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_punto)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) || Model.GetType() == typeof(Core.Erp.Info.Contabilidad.ct_punto_cargo_Info)) || Model == 0 ? "" : Model);
 }
 @comboBox.GetHtml()

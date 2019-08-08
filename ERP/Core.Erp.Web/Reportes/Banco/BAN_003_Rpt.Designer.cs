@@ -558,13 +558,13 @@
             // 
             this.xrTable8.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTable8.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.xrTable8.LocationFloat = new DevExpress.Utils.PointFloat(49.79152F, 255.5208F);
+            this.xrTable8.LocationFloat = new DevExpress.Utils.PointFloat(290.9167F, 255.5208F);
             this.xrTable8.Name = "xrTable8";
             this.xrTable8.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow8,
             this.xrTableRow16,
             this.xrTableRow17});
-            this.xrTable8.SizeF = new System.Drawing.SizeF(199.1668F, 60F);
+            this.xrTable8.SizeF = new System.Drawing.SizeF(187.5002F, 59.99998F);
             this.xrTable8.StylePriority.UseBorders = false;
             this.xrTable8.StylePriority.UseFont = false;
             this.xrTable8.StylePriority.UseTextAlignment = false;

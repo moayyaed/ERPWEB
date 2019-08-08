@@ -19,9 +19,10 @@ namespace Core.Erp.Info.Helps
         public bool mostrar_observacion_completa { get; set; }
         public int IdBodega { get; set; }
         public string CodDocumentoTipo { get; set; }
-
         public int IdTipoCbte { get; set; }
         public decimal IdCbteCble { get; set; }
+        public int IdPunto_cargo_grupo { get; set; }
+        public int IdPunto_cargo { get; set; }
 
         #region Filtros activo
         public int IdActivoFijoTipo { get; set; }

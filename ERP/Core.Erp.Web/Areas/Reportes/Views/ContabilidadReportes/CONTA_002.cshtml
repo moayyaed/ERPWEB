@@ -88,6 +88,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdPunto_cargo_grupo">Grupo de cargo</label>
+                        @Html.Partial("_CmbPuntoCargoGrupo_Reportes", Model.IdPunto_cargo_grupo)
+                        @Html.ValidationMessageFor(q => q.IdPunto_cargo_grupo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdPunto_cargo">Punto de cargo</label>
+                        @Html.Partial("_CmbPuntoCargo_Reportes", Model.IdPunto_cargo)
+                        @Html.ValidationMessageFor(q => q.IdPunto_cargo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">

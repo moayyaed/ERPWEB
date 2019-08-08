@@ -60,6 +60,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_Info model = new cl_filtros_Info();
             return PartialView("_CmbPuntoCargoGrupo_Reportes", model);
         }
+
+        public List<ct_punto_cargo_Info> get_list_bajo_demanda_punto(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            int IdGrupo = Request == null ? 0 : (Request.Params["ContaRpt_IdPunto_cargo_grupo"] != null || Request.Params["ContaRpt_IdPunto_cargo_grupo"] != "" ? 0 : Convert.ToInt32(Request.Params["ContaRpt_IdPunto_cargo_grupo"]));
+            return bus_punto_cargo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa),IdGrupo);
+        }
+        public ct_punto_cargo_Info get_info_bajo_demanda_punto(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_punto_cargo.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        public ActionResult CmbPuntoCargo()
+        {
+            cl_filtros_Info model = new cl_filtros_Info();
+            return PartialView("_CmbPuntoCargo_Reportes", model);
+        }
         #endregion
 
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
