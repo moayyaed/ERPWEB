@@ -56,14 +56,13 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  SubtotalIva = q.SubtotalIva,
                                  SubtotalSinIva = q.SubtotalSinIva,
                                  Telefono = q.Telefono,
-                                 TotalDescuento = q.TotalDescuento
+                                 TotalDescuento = q.TotalDescuento,
                              }).ToList();
                 }
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
                 throw;
             }
         }
