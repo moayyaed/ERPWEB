@@ -10,7 +10,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_020_Data
     {
-        public List<FAC_020_Info> get_list(int IdEmpresa, int IdSucursal, int IdGuiaRemision)
+        public List<FAC_020_Info> get_list(int IdEmpresa, int IdSucursal, int IdBodega, int IdGuiaRemision)
         {
             try
             {
@@ -20,6 +20,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                     Lista = (from q in Context.VWFAC_020
                              where q.gi_IdEmpresa == IdEmpresa
                              && q.gi_IdSucursal == IdSucursal
+                             && q.gi_IdBodega == IdBodega
                              && q.gi_IdGuiaRemision == IdGuiaRemision
                              select new FAC_020_Info
                              {
