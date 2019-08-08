@@ -23,7 +23,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+        public double GetPrecioCompraPromedio(int IdEmpresa, decimal IdProducto)
+        {
+            try
+            {
+                return odata.GetPrecioCompraPromedio(IdEmpresa, IdProducto);
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         public bool validar_anulacion(int IdEmpresa, decimal IdProducto, ref string mensaje)
         {
             try

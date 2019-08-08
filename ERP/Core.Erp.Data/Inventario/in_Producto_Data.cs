@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.Helps;
+﻿using Core.Erp.Data.Compras.Base;
+using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
 using DevExpress.Web;
 using System;
@@ -1121,6 +1122,27 @@ namespace Core.Erp.Data.Inventario
             }
         }
         #endregion
+        public double GetPrecioCompraPromedio(int IdEmpresa, decimal IdProducto)
+        {
+            try
+            {
+                double PrecioPromedio = 0;
+                using (Entities_compras db = new Entities_compras())
+                {
+                    var lst = db.com_ordencompra_local_det.Include("com_ordencompra_local").Where(q => q.com_ordencompra_local.Estado == "A" && q.IdEmpresa == IdEmpresa && q.IdProducto == IdProducto).Select(q=> q.do_precioCompra).ToList();
+                    if (lst.Count == 0)
+                        return 0;
+
+                    PrecioPromedio = lst.Sum(q => q) / lst.Count;
+                }
+                return PrecioPromedio;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     
         public bool GuardarDbImportacion( List<in_subgrupo_Info> Lista_Subgrupo, List<in_presentacion_Info> Lista_Presentacion, List<in_Marca_Info> Lista_Marca, List<in_Producto_Info> Lista_Producto)
         {

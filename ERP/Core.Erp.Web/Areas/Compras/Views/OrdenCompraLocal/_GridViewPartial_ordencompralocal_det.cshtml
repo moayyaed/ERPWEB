@@ -78,7 +78,7 @@
             column.Caption = "Unidad";
             column.VisibleIndex = 2;
             column.Width = Unit.Percentage(8);
-            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("descripcion", "Descripción").Width = Unit.Percentage(100);
@@ -194,23 +194,6 @@
             column.Width = Unit.Percentage(15);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
-
-        /*
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "nom_punto_cargo_grupo";
-            column.Caption = "Grupo";
-            column.Width = Unit.Percentage(10);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "nom_punto_cargo";
-            column.Caption = "Cargo";
-            column.Width = Unit.Percentage(10);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        */
 
         settings.SettingsBehavior.AllowSort = false;
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";

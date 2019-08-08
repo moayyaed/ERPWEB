@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.Reportes.Compra;
+﻿using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Info.Reportes.Compra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,12 +56,11 @@ namespace Core.Erp.Data.Reportes
                         Su_Descripcion = q.Su_Descripcion,
                         TelefonosProveedor = q.TelefonosProveedor,
                         NombreUsuario = q.NombreUsuario
-                        
                     }).ToList();
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_013_Data
@@ -48,7 +48,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                         Area = q.Area,
                         Mes = q.Mes,
                         Prestamo = q.Prestamo,
-                        Sueldo = q.Sueldo
+                        Sueldo = q.Sueldo ??0
                     }).ToList();
                 }
                 return Lista;

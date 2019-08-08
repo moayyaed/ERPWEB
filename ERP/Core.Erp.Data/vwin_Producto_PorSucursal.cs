@@ -22,5 +22,6 @@ namespace Core.Erp.Data
         public Nullable<double> Stock { get; set; }
         public Nullable<double> precio_1 { get; set; }
         public string tp_ManejaInven { get; set; }
+        public string pr_codigo { get; set; }
     }
 }

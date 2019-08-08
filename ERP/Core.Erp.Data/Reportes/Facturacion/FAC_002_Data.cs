@@ -4,70 +4,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_002_Data
     {
-        public List<FAC_002_Info> get_list(int IdEmpresa, int IdNota)
+        public List<FAC_002_Info> get_list(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdNota)
         {
             try
             {
                 List<FAC_002_Info> Lista = new List<FAC_002_Info>();
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    //Lista = (from q in Context.VWFAC_007
-                    //         where q.IdEmpresa == IdEmpresa
-                    //         && q.IdNota == IdNota
-                    //         select new FAC_007_Info
-                    //         {
-                                 //cli_cedulaRuc = q.cli_cedulaRuc,
-                                 //cli_correo = q.cli_correo,
-                                 //cli_direccion = q.cli_direccion,
-                                 //cli_Nombre = q.cli_Nombre,
-                                 //cli_Telefonos = q.cli_Telefonos,
-                                 //DescuentoTotal = q.DescuentoTotal,
-                                 //Fecha_Autorizacion = q.Fecha_Autorizacion,
-                                 //FormaDePago = q.FormaDePago,
-                                 //IdBodega = q.IdBodega,
-                                 //IdCatalogo_FormaPago = q.IdCatalogo_FormaPago,
-                                 //IdCbteVta = q.IdCbteVta,
-                                 //IdEmpresa = q.IdEmpresa,
-                                 //IdProducto = q.IdProducto,
-                                 //IdSucursal = q.IdSucursal,
-                                 //pr_descripcion = q.pr_descripcion,
-                                 //Secuencia = q.Secuencia,
-                                 //SubtotalConDscto = q.SubtotalConDscto,
-                                 //SubtotalIVA = q.SubtotalIVA,
-                                 //SubtotalSinDscto = q.SubtotalSinDscto,
-                                 //SubtotalSinIVA = q.SubtotalSinIVA,
-                                 //Su_Descripcion = q.Su_Descripcion,
-                                 //Su_Direccion = q.Su_Direccion,
-                                 //Su_Telefonos = q.Su_Telefonos,
-                                 //vt_autorizacion = q.vt_autorizacion,
-                                 //Cambio = q.Cambio,
-                                 //vt_cantidad = q.vt_cantidad,
-                                 //vt_fecha = q.vt_fecha,
-                                 //vt_iva = q.vt_iva,
-                                 //vt_NumFactura = q.vt_NumFactura,
-                                 //vt_por_iva = q.vt_por_iva,
-                                 //vt_Precio = q.vt_Precio,
-                                 //Total = q.Total,
-                                 //ValorEfectivo = q.ValorEfectivo,
-                                 //vt_Observacion = q.vt_Observacion,
-
-                                 //Descuento = q.Descuento,
-                                 //SubtotalIVAConDscto = q.SubtotalIVAConDscto,
-                                 //SubtotalIVASinDscto = q.SubtotalIVASinDscto,
-                                 //SubtotalSinIVAConDscto = q.SubtotalSinIVAConDscto,
-                                 //SubtotalSinIVASinDscto = q.SubtotalSinIVASinDscto,
-                                 //T_SubtotalConDscto = q.T_SubtotalConDscto,
-                                 //T_SubtotalSinDscto = q.T_SubtotalSinDscto,
-                                 //ValorIVA = q.ValorIVA,
-                                 //vt_total = q.vt_total,
-
-                                 //vt_detallexItems = q.vt_detallexItems
-                             //}).ToList();
+                    Lista = (from q in Context.VWFAC_002
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdSucursal == IdSucursal
+                             && q.IdBodega == IdBodega
+                             && q.IdNota == IdNota
+                             select new FAC_002_Info
+                             {
+                                 Fecha_Autorizacion = q.Fecha_Autorizacion,
+                                 IdBodega = q.IdBodega,
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdProducto = q.IdProducto,
+                                 IdSucursal = q.IdSucursal,
+                                 pr_descripcion = q.pr_descripcion,
+                                 Secuencia = q.Secuencia,
+                                 Celular = q.Celular,
+                                 CodDocumentoTipo = q.CodDocumentoTipo,
+                                 Correo = q.Correo,
+                                 CreDeb = q.CreDeb,
+                                 DetalleAdicional = q.DetalleAdicional,
+                                 Direccion = q.Direccion,
+                                 DocumentoAplicado = q.DocumentoAplicado,
+                                 FechaDocumentoAplica = q.FechaDocumentoAplica,
+                                 IdNota = q.IdNota,
+                                 no_fecha = q.no_fecha,
+                                 NumAutorizacion = q.NumAutorizacion,
+                                 NumNota_Impresa = q.NumNota_Impresa,
+                                 pe_cedulaRuc = q.pe_cedulaRuc,
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 pr_codigo = q.pr_codigo,
+                                 sc_iva = q.sc_iva,
+                                 sc_observacion = q.sc_observacion,
+                                 sc_precioFinal = q.sc_precioFinal,
+                                 sc_subtotal = q.sc_subtotal,
+                                 sc_total = q.sc_total,
+                                 Serie1 = q.Serie1,
+                                 Serie2 = q.Serie2,
+                                 SubtotalAntesDescuento = q.SubtotalAntesDescuento,
+                                 SubtotalIva = q.SubtotalIva,
+                                 SubtotalSinIva = q.SubtotalSinIva,
+                                 Telefono = q.Telefono,
+                                 TotalDescuento = q.TotalDescuento
+                             }).ToList();
                 }
                 return Lista;
             }

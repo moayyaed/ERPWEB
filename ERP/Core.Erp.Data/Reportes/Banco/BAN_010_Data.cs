@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.Banco
 {
   public  class BAN_010_Data
@@ -23,7 +23,7 @@ namespace Core.Erp.Data.Reportes.Banco
                         ba_descripcion = q.ba_descripcion,
                         cb_Fecha = q.cb_Fecha,
                         CodigoLegalBanco = q.CodigoLegalBanco,
-                        Contabilizado = q.Contabilizado,
+                        Contabilizado = q.Contabilizado ?? false,
                         Estado = q.Estado,
                         Fecha_proceso = q.Fecha_proceso,
                         IdBanco_acreditacion = q.IdBanco_acreditacion,

@@ -6,6 +6,7 @@ using DevExpress.XtraReports.UI;
 using Core.Erp.Bus.Reportes.Compra;
 using Core.Erp.Info.Reportes.Compra;
 using System.Collections.Generic;
+using Core.Erp.Bus.General;
 
 namespace Core.Erp.Web.Reportes.Compra
 {
@@ -33,6 +34,20 @@ namespace Core.Erp.Web.Reportes.Compra
             List<COMP_001_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdOrdenCompra);
             
             this.DataSource = lst_rpt;
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null)
+            {
+                lblDireccion.Text = emp.em_direccion;
+                lblRuc.Text = emp.em_ruc;
+                lblTelefono.Text = (string.IsNullOrEmpty(emp.em_telefonos) ? "" : ("Tel. " + emp.em_telefonos)) + " " + (string.IsNullOrEmpty(emp.em_Email) ? "" : ("Email. "+emp.em_Email));
+                if (emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
+            }
         }
     }
 }

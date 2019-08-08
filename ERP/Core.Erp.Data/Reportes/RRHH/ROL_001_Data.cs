@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.Reportes.RRHH;
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.RRHH
 {
    public class ROL_001_Data

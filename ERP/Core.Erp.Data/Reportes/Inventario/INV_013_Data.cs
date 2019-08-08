@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.Inventario
 {
     public class INV_013_Data

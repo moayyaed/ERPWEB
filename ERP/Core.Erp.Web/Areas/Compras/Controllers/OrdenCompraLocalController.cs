@@ -318,7 +318,10 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
-                         info_det.pr_descripcion = producto.pr_descripcion_combo;
+            {
+                info_det.IdUnidadMedida = producto.IdUnidadMedida;
+                info_det.pr_descripcion = producto.pr_descripcion_combo;
+            }
 
                 if (ModelState.IsValid)
                     List_det.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -334,7 +337,10 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
-               info_det.pr_descripcion = producto.pr_descripcion_combo;
+            {
+                info_det.IdUnidadMedida = producto.IdUnidadMedida;
+                info_det.pr_descripcion = producto.pr_descripcion_combo;
+            }
 
             if (ModelState.IsValid)
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -354,7 +360,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         public JsonResult GetInfoProducto(int IdEmpresa = 0 ,int IdProducto = 0)
         {
             in_Producto_Bus bus_producto = new in_Producto_Bus();
-            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
+            var resultado = bus_producto.GetPrecioCompraPromedio(IdEmpresa, IdProducto);
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
@@ -451,16 +457,16 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         {
             List<com_ordencompra_local_det_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            info_det.do_descuento = Math.Round(info_det.do_precioCompra * (info_det.do_porc_des / 100), 2, MidpointRounding.AwayFromZero);
-            info_det.do_precioFinal = Math.Round(info_det.do_precioCompra - info_det.do_descuento, 2, MidpointRounding.AwayFromZero);
-            info_det.do_subtotal = Math.Round(info_det.do_Cantidad * info_det.do_precioFinal, 2, MidpointRounding.AwayFromZero);
+            info_det.do_descuento = info_det.do_precioCompra * (info_det.do_porc_des / 100);
+            info_det.do_precioFinal = info_det.do_precioCompra - info_det.do_descuento;
+            info_det.do_subtotal = info_det.do_Cantidad * info_det.do_precioFinal;
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
                 info_det.Por_Iva = impuesto.porcentaje;
             else
                 info_det.Por_Iva = 0;
-            info_det.do_iva = Math.Round(info_det.do_subtotal * (info_det.Por_Iva / 100), 2, MidpointRounding.AwayFromZero);
-            info_det.do_total = Math.Round(info_det.do_subtotal + info_det.do_iva, 2, MidpointRounding.AwayFromZero);
+            info_det.do_iva = info_det.do_subtotal * (info_det.Por_Iva / 100);
+            info_det.do_total = info_det.do_subtotal + info_det.do_iva;
 
             #region Centro de costo
             if (string.IsNullOrEmpty(info_det.IdCentroCosto))
@@ -484,17 +490,18 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             edited_info.do_precioCompra = info_det.do_precioCompra;
             edited_info.do_porc_des = info_det.do_porc_des;
             edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
-            edited_info.do_descuento = Math.Round(info_det.do_precioCompra * (info_det.do_porc_des / 100), 2, MidpointRounding.AwayFromZero);
+            edited_info.do_descuento = info_det.do_precioCompra * (info_det.do_porc_des / 100);
+            edited_info.IdUnidadMedida = info_det.IdUnidadMedida;
             var desc = edited_info.do_descuento;
-            edited_info.do_precioFinal = Math.Round(info_det.do_precioCompra - desc, 2, MidpointRounding.AwayFromZero);
-            edited_info.do_subtotal = Math.Round(info_det.do_Cantidad * edited_info.do_precioFinal, 2, MidpointRounding.AwayFromZero);
-            var impuesto = bus_impuesto.get_info(edited_info.IdCod_Impuesto);
+            edited_info.do_precioFinal = info_det.do_precioCompra - desc;
+            edited_info.do_subtotal = info_det.do_Cantidad * edited_info.do_precioFinal;
+            var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
                 edited_info.Por_Iva = impuesto.porcentaje;
             else
                 edited_info.Por_Iva = 0;
-            edited_info.do_iva = Math.Round(edited_info.do_subtotal * (edited_info.Por_Iva / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.do_total = Math.Round(edited_info.do_subtotal + edited_info.do_iva, 2, MidpointRounding.AwayFromZero);
+            edited_info.do_iva = edited_info.do_subtotal * (edited_info.Por_Iva / 100);
+            edited_info.do_total = edited_info.do_subtotal + edited_info.do_iva;
 
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;
