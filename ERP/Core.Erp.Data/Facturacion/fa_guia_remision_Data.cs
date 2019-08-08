@@ -13,6 +13,7 @@ namespace Core.Erp.Data.Facturacion
    public class fa_guia_remision_Data
     {
         tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
+        fa_guia_remision_det_x_factura_Data data_guia_x_factura = new fa_guia_remision_det_x_factura_Data();
         fa_PuntoVta_Data data_puntovta = new fa_PuntoVta_Data();
         fa_factura_Data data_fact = new fa_factura_Data();
         fa_TerminoPago_Data data_tpago = new fa_TerminoPago_Data();
@@ -293,6 +294,7 @@ namespace Core.Erp.Data.Facturacion
                         fa_factura_Info info_fact = new fa_factura_Info();
                         info_fact.lst_det = new List<fa_factura_det_Info>();
                         info_fact.lst_cuota = new List<fa_cuotas_x_doc_Info>();
+                        List<fa_guia_remision_det_x_factura_Info> info_guia_x_factura = new List<fa_guia_remision_det_x_factura_Info>();
                         int secuencia_fact = 1;
 
                         if (termino_pago != null && termino_pago.IdTerminoPago != "")
@@ -363,7 +365,8 @@ namespace Core.Erp.Data.Facturacion
                                 IdPunto_Cargo = item.IdPunto_cargo,
                                 IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
                             };
-                            info_fact.lst_det.Add(info_fact_detalle);
+
+                            info_fact.lst_det.Add(info_fact_detalle);                            
                         }
 
                         var SubtotalConDscto = (decimal)Math.Round(info.lst_detalle.Sum(q => q.gi_Subtotal), 2, MidpointRounding.AwayFromZero);
@@ -398,7 +401,7 @@ namespace Core.Erp.Data.Facturacion
                         };
                         data_fact.guardarDB(info_fact);
                         Entity.IdCbteVta = info_fact.IdCbteVta;
-                    }
+                    }                    
                     #endregion
 
                     Context.fa_guia_remision.Add(Entity);
