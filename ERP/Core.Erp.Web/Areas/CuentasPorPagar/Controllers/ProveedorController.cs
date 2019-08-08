@@ -59,6 +59,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             int model = new int();
             return PartialView("_CmbCtaCbleCXP_Proveedor", model);
         }
+
+        public ActionResult ChangeValuePartial_CXP(string IdCtaCble = "")
+        {
+            string model = IdCtaCble;
+            return PartialView("_CmbCtaCbleCXP_Proveedor", model);
+        }
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_cxp(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -77,6 +83,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             int model = new int();
             return PartialView("_CmbCtaCbleGasto_Proveedor", model);
         }
+        public ActionResult ChangeValuePartial_Gasto(string IdCtaCble = "")
+        {
+            string model = IdCtaCble;
+            return PartialView("_CmbCtaCbleGasto_Proveedor", model);
+        }
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_gasto(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
             var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -93,6 +104,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult CmbCtaCbleAnticipo_Proveedor()
         {
             int model = new int();
+            return PartialView("_CmbCtaCbleAnticipo_Proveedor", model);
+        }
+        public ActionResult ChangeValuePartial_Anticipo(string IdCtaCble = "")
+        {
+            string model = IdCtaCble;
             return PartialView("_CmbCtaCbleAnticipo_Proveedor", model);
         }
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_Anticipo(ListEditItemsRequestedByFilterConditionEventArgs args)

@@ -213,12 +213,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWBAN_001' no tiene definida ningu
             <PropertyRef Name="ba_descripcion" />
             <PropertyRef Name="cb_Fecha" />
             <PropertyRef Name="Estado" />
-            <PropertyRef Name="Descripcion_TipoNota" />
             <PropertyRef Name="NomBeneficiario" />
             <PropertyRef Name="IdCtaCble" />
             <PropertyRef Name="pc_Cuenta" />
             <PropertyRef Name="dc_Valor" />
             <PropertyRef Name="dc_Valor_Debe" />
+            <PropertyRef Name="Descripcion_TipoNota" />
           </Key>
           <Property Name="CodTipoCbteBan" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
@@ -2647,6 +2647,66 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_018' no tiene definida ningu
           <Property Name="NomEstado" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Orden" Type="int" Nullable="false" />
           <Property Name="CreDeb" Type="char" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_020' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWFAC_020">
+          <Key>
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="gi_cantidad" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="CodDocumentoTipo" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="IdTransportista" />
+            <PropertyRef Name="gi_fecha" />
+            <PropertyRef Name="gi_FechaFinTraslado" />
+            <PropertyRef Name="gi_FechaInicioTraslado" />
+            <PropertyRef Name="placa" />
+            <PropertyRef Name="Direccion_Origen" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="tr_Descripcion" />
+          </Key>
+          <Property Name="fa_IdEmpresa" Type="int" />
+          <Property Name="fa_IdSucursal" Type="int" />
+          <Property Name="fa_IdBodega" Type="int" />
+          <Property Name="fa_IdCbteVta" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="gi_IdEmpresa" Type="int" />
+          <Property Name="gi_IdSucursal" Type="int" />
+          <Property Name="gi_IdBodega" Type="int" />
+          <Property Name="gi_IdGuiaRemision" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="gi_cantidad" Type="float" Nullable="false" />
+          <Property Name="gi_detallexItems" Type="varchar(max)" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NumGuia_Preimpresa" Type="varchar" MaxLength="28" />
+          <Property Name="CodGuiaRemision" Type="varchar" MaxLength="500" />
+          <Property Name="NUAutorizacion" Type="varchar" MaxLength="200" />
+          <Property Name="Fecha_Autorizacion" Type="datetime" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTransportista" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="gi_fecha" Type="datetime" Nullable="false" />
+          <Property Name="gi_FechaFinTraslado" Type="date" Nullable="false" />
+          <Property Name="gi_FechaInicioTraslado" Type="date" Nullable="false" />
+          <Property Name="gi_Observacion" Type="varchar(max)" />
+          <Property Name="placa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion_Origen" Type="varchar(max)" Nullable="false" />
+          <Property Name="Direccion_Destino" Type="varchar(max)" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="tr_Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="NumComprobanteVenta" Type="varchar" MaxLength="28" />
+          <Property Name="CedulaTransportista" Type="varchar" MaxLength="20" />
+          <Property Name="NombreTransportista" Type="varchar" MaxLength="500" />
+          <Property Name="vt_fecha" Type="datetime" />
+          <Property Name="vt_autorizacion" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWIMP_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6521,6 +6581,47 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWFAC_018].[Orden] AS [Orden], 
     [VWFAC_018].[CreDeb] AS [CreDeb]
     FROM [web].[VWFAC_018] AS [VWFAC_018]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VWFAC_020" EntityType="Self.VWFAC_020" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWFAC_020].[fa_IdEmpresa] AS [fa_IdEmpresa], 
+    [VWFAC_020].[fa_IdSucursal] AS [fa_IdSucursal], 
+    [VWFAC_020].[fa_IdBodega] AS [fa_IdBodega], 
+    [VWFAC_020].[fa_IdCbteVta] AS [fa_IdCbteVta], 
+    [VWFAC_020].[gi_IdEmpresa] AS [gi_IdEmpresa], 
+    [VWFAC_020].[gi_IdSucursal] AS [gi_IdSucursal], 
+    [VWFAC_020].[gi_IdBodega] AS [gi_IdBodega], 
+    [VWFAC_020].[gi_IdGuiaRemision] AS [gi_IdGuiaRemision], 
+    [VWFAC_020].[Secuencia] AS [Secuencia], 
+    [VWFAC_020].[IdProducto] AS [IdProducto], 
+    [VWFAC_020].[pr_codigo] AS [pr_codigo], 
+    [VWFAC_020].[pr_descripcion] AS [pr_descripcion], 
+    [VWFAC_020].[gi_cantidad] AS [gi_cantidad], 
+    [VWFAC_020].[gi_detallexItems] AS [gi_detallexItems], 
+    [VWFAC_020].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [VWFAC_020].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [VWFAC_020].[CodDocumentoTipo] AS [CodDocumentoTipo], 
+    [VWFAC_020].[NumGuia_Preimpresa] AS [NumGuia_Preimpresa], 
+    [VWFAC_020].[CodGuiaRemision] AS [CodGuiaRemision], 
+    [VWFAC_020].[NUAutorizacion] AS [NUAutorizacion], 
+    [VWFAC_020].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
+    [VWFAC_020].[IdCliente] AS [IdCliente], 
+    [VWFAC_020].[IdTransportista] AS [IdTransportista], 
+    [VWFAC_020].[gi_fecha] AS [gi_fecha], 
+    [VWFAC_020].[gi_FechaFinTraslado] AS [gi_FechaFinTraslado], 
+    [VWFAC_020].[gi_FechaInicioTraslado] AS [gi_FechaInicioTraslado], 
+    [VWFAC_020].[gi_Observacion] AS [gi_Observacion], 
+    [VWFAC_020].[placa] AS [placa], 
+    [VWFAC_020].[Direccion_Origen] AS [Direccion_Origen], 
+    [VWFAC_020].[Direccion_Destino] AS [Direccion_Destino], 
+    [VWFAC_020].[Estado] AS [Estado], 
+    [VWFAC_020].[tr_Descripcion] AS [tr_Descripcion], 
+    [VWFAC_020].[NumComprobanteVenta] AS [NumComprobanteVenta], 
+    [VWFAC_020].[CedulaTransportista] AS [CedulaTransportista], 
+    [VWFAC_020].[NombreTransportista] AS [NombreTransportista], 
+    [VWFAC_020].[vt_fecha] AS [vt_fecha], 
+    [VWFAC_020].[vt_autorizacion] AS [vt_autorizacion]
+    FROM [web].[VWFAC_020] AS [VWFAC_020]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWIMP_001" EntityType="Self.VWIMP_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -12265,6 +12366,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySet Name="VWCXP_001" EntityType="Model_reportes.VWCXP_001" />
           <EntitySet Name="VWFAC_002" EntityType="Model_reportes.VWFAC_002" />
           <EntitySet Name="VWFAC_007" EntityType="Model_reportes.VWFAC_007" />
+          <EntitySet Name="VWFAC_020" EntityType="Model_reportes.VWFAC_020" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13367,6 +13469,64 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="vt_detallexItems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FormaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="nom_FormaPago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VWFAC_020">
+          <Key>
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="gi_cantidad" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="CodDocumentoTipo" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="IdTransportista" />
+            <PropertyRef Name="gi_fecha" />
+            <PropertyRef Name="gi_FechaFinTraslado" />
+            <PropertyRef Name="gi_FechaInicioTraslado" />
+            <PropertyRef Name="placa" />
+            <PropertyRef Name="Direccion_Origen" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="tr_Descripcion" />
+          </Key>
+          <Property Name="fa_IdEmpresa" Type="Int32" />
+          <Property Name="fa_IdSucursal" Type="Int32" />
+          <Property Name="fa_IdBodega" Type="Int32" />
+          <Property Name="fa_IdCbteVta" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="gi_IdEmpresa" Type="Int32" />
+          <Property Name="gi_IdSucursal" Type="Int32" />
+          <Property Name="gi_IdBodega" Type="Int32" />
+          <Property Name="gi_IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="gi_cantidad" Type="Double" Nullable="false" />
+          <Property Name="gi_detallexItems" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodDocumentoTipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumGuia_Preimpresa" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="CodGuiaRemision" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NUAutorizacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdTransportista" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="gi_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gi_FechaFinTraslado" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="gi_FechaInicioTraslado" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="gi_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="placa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion_Origen" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion_Destino" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="tr_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NumComprobanteVenta" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="CedulaTransportista" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NombreTransportista" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Precision="3" />
+          <Property Name="vt_autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -17388,6 +17548,49 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWFAC_020">
+            <EntityTypeMapping TypeName="Model_reportes.VWFAC_020">
+              <MappingFragment StoreEntitySet="VWFAC_020">
+                <ScalarProperty Name="vt_autorizacion" ColumnName="vt_autorizacion" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="NombreTransportista" ColumnName="NombreTransportista" />
+                <ScalarProperty Name="CedulaTransportista" ColumnName="CedulaTransportista" />
+                <ScalarProperty Name="NumComprobanteVenta" ColumnName="NumComprobanteVenta" />
+                <ScalarProperty Name="tr_Descripcion" ColumnName="tr_Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Direccion_Destino" ColumnName="Direccion_Destino" />
+                <ScalarProperty Name="Direccion_Origen" ColumnName="Direccion_Origen" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
+                <ScalarProperty Name="gi_Observacion" ColumnName="gi_Observacion" />
+                <ScalarProperty Name="gi_FechaInicioTraslado" ColumnName="gi_FechaInicioTraslado" />
+                <ScalarProperty Name="gi_FechaFinTraslado" ColumnName="gi_FechaFinTraslado" />
+                <ScalarProperty Name="gi_fecha" ColumnName="gi_fecha" />
+                <ScalarProperty Name="IdTransportista" ColumnName="IdTransportista" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="NUAutorizacion" ColumnName="NUAutorizacion" />
+                <ScalarProperty Name="CodGuiaRemision" ColumnName="CodGuiaRemision" />
+                <ScalarProperty Name="NumGuia_Preimpresa" ColumnName="NumGuia_Preimpresa" />
+                <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="gi_detallexItems" ColumnName="gi_detallexItems" />
+                <ScalarProperty Name="gi_cantidad" ColumnName="gi_cantidad" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="gi_IdGuiaRemision" ColumnName="gi_IdGuiaRemision" />
+                <ScalarProperty Name="gi_IdBodega" ColumnName="gi_IdBodega" />
+                <ScalarProperty Name="gi_IdSucursal" ColumnName="gi_IdSucursal" />
+                <ScalarProperty Name="gi_IdEmpresa" ColumnName="gi_IdEmpresa" />
+                <ScalarProperty Name="fa_IdCbteVta" ColumnName="fa_IdCbteVta" />
+                <ScalarProperty Name="fa_IdBodega" ColumnName="fa_IdBodega" />
+                <ScalarProperty Name="fa_IdSucursal" ColumnName="fa_IdSucursal" />
+                <ScalarProperty Name="fa_IdEmpresa" ColumnName="fa_IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

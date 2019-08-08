@@ -1126,6 +1126,12 @@
     <Compile Include="Reportes\Facturacion\FAC_019_Rpt.Designer.cs">
       <DependentUpon>FAC_019_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_020_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_020_Rpt.Designer.cs">
+      <DependentUpon>FAC_020_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Importacion\IMP_002_gastos_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10334,6 +10340,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10642,6 +10649,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_019_Rpt.resx">
       <DependentUpon>FAC_019_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_020_Rpt.resx">
+      <DependentUpon>FAC_020_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Importacion\IMP_002_gastos_Rpt.resx">
       <DependentUpon>IMP_002_gastos_Rpt.cs</DependentUpon>

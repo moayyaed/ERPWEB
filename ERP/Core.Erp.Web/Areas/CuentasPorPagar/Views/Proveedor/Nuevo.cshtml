@@ -216,7 +216,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
-                                @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                                <div id="Ajax_CXP">
+                                    @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                                </div>                                
                                 @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -227,7 +229,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdCtaCble_Gasto">Cta. Cble. Gasto</label>
-                                @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_Gasto)
+                                <div id="Ajax_Gasto">
+                                    @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_Gasto)
+                                </div>                                 
                                 @Html.ValidationMessageFor(q => q.IdCtaCble_Gasto, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -238,7 +242,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdCtaCble_Anticipo">Cta. Cble. Anticipo</label>
-                                @Html.Partial("_CmbCtaCbleAnticipo_Proveedor", Model.IdCtaCble_Anticipo)
+                                <div id="Ajax_Anticipo">
+                                    @Html.Partial("_CmbCtaCbleAnticipo_Proveedor", Model.IdCtaCble_Anticipo)
+                                </div>                                  
                                 @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -438,7 +444,8 @@
     function get_info_clase_proveedor() {
         var clase = $("#IdClaseProveedor").val();
 
-        if (clase != null) {
+        if (clase != null)
+        {
             var datos = {
                 IdClaseProveedor: clase,
                 IdEmpresa: $("#IdEmpresa").val()
@@ -455,19 +462,85 @@
                     if (data.length == 0) {
                         console.log("NO DATA!")
                     } else {
-                        $("#IdCtaCble_CXP").val(data.IdCtaCble_CXP);
-                        $("#IdCtaCble_Gasto").val(data.IdCtaCble_Gasto);
+                        SetCXP(data.IdCtaCble_CXP);
+                        SetGasto(data.IdCtaCble_gasto);
+                        SetAnticipo(data.IdCtaCble_Anticipo);
                     }
                 },
                 error: function (error) {
                     alert(error);
                 }
             });
-        } else {
-            $("#IdCtaCble_CXP").val(null);
-            $("#IdCtaCble_Gasto").val(null);
+        }
+        else {
+            IdCtaCble_CXP.SetValue(null);
+            IdCtaCble_Gasto.SetValue(null);
+            IdCtaCble_Anticipo.SetValue(null);
         }
     }
+
+function SetCXP(IdCtaCble_CXP) {
+        var datos =  {
+            IdCtaCble: IdCtaCble_CXP
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ChangeValuePartial_CXP", "Proveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Ajax_CXP").html(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function SetGasto(IdCtaCble_Gasto) {
+        var datos =  {
+            IdCtaCble: IdCtaCble_Gasto
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ChangeValuePartial_Gasto", "Proveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Ajax_Gasto").html(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function SetAnticipo(IdCtaCble_Anticipo) {
+        var datos = {
+            IdCtaCble: IdCtaCble_Anticipo
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ChangeValuePartial_Anticipo", "Proveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Ajax_Anticipo").html(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
 
     function Validar_cedula_ruc() {
         var datos = {
