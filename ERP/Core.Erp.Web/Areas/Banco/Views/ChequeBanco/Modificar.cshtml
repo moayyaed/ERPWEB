@@ -11,6 +11,13 @@
 <script src="~/Scripts/ScriptsGenerales.js"></script>
 
 <script type="text/javascript">
+
+    function ImprimirCBTE() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/BancoReportes/BAN_003?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+        win.focus();
+    }
+
     $(function() {
         $("#Error").hide();
 
@@ -89,7 +96,7 @@
         });
     }
 
-  function MostrarModal() {
+    function MostrarModal() {
         selectedIDs = "";
 
         var datos = {
@@ -405,7 +412,7 @@
                     @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
                 </div>
             </div>*@
-            <div class="col-md-offset-5 col-md-2">
+            <div class="col-md-offset-4 col-md-2">
                 <div class="form-group">
                     <label for="cb_Fecha">Fecha:*</label>
                     <div class="input-group date">
@@ -428,7 +435,15 @@
             <div class="col-md-1">
                 <label for="IdImprimir"></label>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir pre-impreso">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="ImprimirCBTE();" title="Imprimir cbte">
                         <i class="fa fa-print"></i>
                     </button>
                 </div>
