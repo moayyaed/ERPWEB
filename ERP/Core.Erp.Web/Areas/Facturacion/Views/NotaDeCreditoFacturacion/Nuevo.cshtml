@@ -438,6 +438,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdVendedor">Vendedor</label>
+                                @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_cuotas">
 
