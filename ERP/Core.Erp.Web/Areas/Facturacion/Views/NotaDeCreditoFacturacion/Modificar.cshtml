@@ -371,8 +371,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-2 col-md-2">
-                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir">
+            <div class="col-md-offset-3 col-md-1">
+                <label for=""></label>
+ <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir">
                     <i class="fa fa-print"></i>  RIDE
                 </button>
             </div>
@@ -542,6 +543,13 @@
                                     @Html.TextBoxFor(q => q.NumNota_Impresa, new { @class = "form-control", @id = "vt_NumFactura", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(q => q.NumNota_Impresa, "", new { @class = "text-danger" })
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdVendedor">Vendedor</label>
+                                @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

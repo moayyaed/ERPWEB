@@ -358,6 +358,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             var lst_tipo_nota = bus_tipo_nota.get_list(model.IdEmpresa, "D", false);
             ViewBag.lst_tipo_nota = lst_tipo_nota;
+
+            fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
+            var lst_vendedor = bus_vendedor.get_list(model.IdEmpresa, false);
+            ViewBag.lst_vendedor = lst_vendedor;
         }
         private bool validar(fa_notaCreDeb_Info i_validar, ref string msg)
         {
