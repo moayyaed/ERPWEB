@@ -1,10 +1,10 @@
-﻿CREATE VIEW dbo.vwfa_proforma_det_por_facturar
+﻿CREATE VIEW [dbo].[vwfa_proforma_det_por_facturar]
 AS
 SELECT dbo.fa_proforma_det.IdEmpresa, dbo.fa_proforma_det.IdSucursal, dbo.fa_proforma_det.IdProforma, dbo.fa_proforma_det.Secuencia, dbo.fa_proforma_det.IdProducto, dbo.fa_proforma_det.pd_cantidad, dbo.fa_proforma_det.pd_precio, 
                   dbo.fa_proforma_det.pd_por_descuento_uni, dbo.fa_proforma_det.pd_descuento_uni, dbo.fa_proforma_det.pd_precio_final, dbo.fa_proforma_det.pd_subtotal, dbo.fa_proforma_det.IdCod_Impuesto, dbo.fa_proforma_det.pd_por_iva, 
                   dbo.fa_proforma_det.pd_iva, dbo.fa_proforma_det.pd_total, dbo.fa_proforma_det.anulado, in_Producto_1.pr_descripcion, dbo.in_presentacion.nom_presentacion, in_Producto_1.lote_num_lote, in_Producto_1.lote_fecha_vcto, 
                   dbo.fa_proforma.IdCliente, in_Producto_1.se_distribuye, dbo.in_ProductoTipo.tp_ManejaInven, dbo.ct_CentroCosto.cc_Descripcion, dbo.fa_proforma_det.IdCentroCosto, dbo.fa_proforma_det.NumCotizacion, 
-                  dbo.fa_proforma_det.NumOPr, dbo.fa_proforma_det.pd_DetalleAdicional
+                  dbo.fa_proforma_det.NumOPr, dbo.fa_proforma_det.pd_DetalleAdicional, round(fa_proforma_det.pd_cantidad - f.gi_cantidad,2) Saldo
 FROM     dbo.ct_CentroCosto RIGHT OUTER JOIN
                   dbo.fa_proforma INNER JOIN
                   dbo.fa_proforma_det ON dbo.fa_proforma.IdEmpresa = dbo.fa_proforma_det.IdEmpresa AND dbo.fa_proforma.IdSucursal = dbo.fa_proforma_det.IdSucursal AND dbo.fa_proforma.IdProforma = dbo.fa_proforma_det.IdProforma ON 
@@ -12,12 +12,13 @@ FROM     dbo.ct_CentroCosto RIGHT OUTER JOIN
                   dbo.in_presentacion INNER JOIN
                   dbo.in_Producto AS in_Producto_1 ON dbo.in_presentacion.IdEmpresa = in_Producto_1.IdEmpresa AND dbo.in_presentacion.IdPresentacion = in_Producto_1.IdPresentacion INNER JOIN
                   dbo.in_ProductoTipo ON in_Producto_1.IdProductoTipo = dbo.in_ProductoTipo.IdProductoTipo AND in_Producto_1.IdEmpresa = dbo.in_ProductoTipo.IdEmpresa ON dbo.fa_proforma_det.IdEmpresa = in_Producto_1.IdEmpresa AND 
-                  dbo.fa_proforma_det.IdProducto = in_Producto_1.IdProducto
-WHERE  (NOT EXISTS
-                      (SELECT IdEmpresa
-                       FROM      dbo.fa_factura_det AS f
-                       WHERE   (dbo.fa_proforma_det.IdEmpresa = IdEmpresa_pf) AND (dbo.fa_proforma_det.IdSucursal = IdSucursal_pf) AND (dbo.fa_proforma_det.IdProforma = IdProforma) AND (dbo.fa_proforma_det.Secuencia = Secuencia_pf))) AND 
-                  (dbo.fa_proforma.estado = 1)
+                  dbo.fa_proforma_det.IdProducto = in_Producto_1.IdProducto LEFT JOIN
+				  (
+				  SELECT IdEmpresa_pf,IdSucursal_pf,IdProforma, secuencia_pf, SUM(vt_cantidad) gi_cantidad
+				  FROM fa_factura_det 
+				  GROUP BY IdEmpresa_pf,IdSucursal_pf,IdProforma, secuencia_pf
+				  ) f on dbo.fa_proforma_det.IdEmpresa = f.IdEmpresa_pf AND dbo.fa_proforma_det.IdSucursal = f.IdSucursal_pf AND dbo.fa_proforma_det.IdProforma = f.IdProforma AND dbo.fa_proforma_det.Secuencia = f.Secuencia_pf
+WHERE  (dbo.fa_proforma.estado = 1) and round(fa_proforma_det.pd_cantidad - f.gi_cantidad,2) > 0 AND fa_proforma_det.anulado = 0
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 

@@ -4,10 +4,16 @@
         settings.Name = "GridView_ordenes_pagos";
         settings.CallbackRouteValues = new { Controller = "OrdenPago", Action = "GridViewPartial_ordenes_pagos", Fecha_ini= ViewBag.Fecha_ini, Fecha_fin=ViewBag.Fecha_fin, IdSucursal=ViewBag.IdSucursal };
         settings.KeyFieldName = "IdOrdenPago";
+
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
         settings.Width = Unit.Percentage(100);
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
 
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
@@ -87,13 +93,13 @@
             c.Width = Unit.Pixel(125);
         });
 
-        settings.Columns.Add("IdOrdenPago","ID").Width=Unit.Percentage(10);
+        settings.Columns.Add("IdOrdenPago","ID").Width=Unit.Percentage(5);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
             column.Caption = "Fecha pago";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -116,13 +122,13 @@
 
             });
         });
-        settings.Columns.Add("Observacion","Observación").Width = Unit.Percentage(20);
+        settings.Columns.Add("Observacion","Observación").Width = Unit.Percentage(10);
         settings.Columns.Add("Descripcion", "Estado Aprobación").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
             column.EditorProperties().CheckBox(sp =>
             {
 
@@ -137,6 +143,8 @@
             column.Width = Unit.Percentage(5);
         });
 
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
     });
 }
 @grid.Bind(Model).GetHtml()

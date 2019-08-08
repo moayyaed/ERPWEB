@@ -46,7 +46,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                  ba_descripcion = q.ba_descripcion,
                                  Correo = q.Correo,
                                  Direccion = q.Direccion,
-                                 NombreContacto = q.NombreContacto
+                                 NombreContacto = q.NombreContacto,
+                                 ct_IdCbteCble = q.ct_IdCbteCble,
+                                 Nombre = q.Nombre
                              }).ToList();
                 }
                 return Lista;

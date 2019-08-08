@@ -1,8 +1,10 @@
-﻿CREATE VIEW dbo.vwin_Producto_Stock
+﻿CREATE VIEW [dbo].[vwin_Producto_Stock]
 AS
-SELECT        IdEmpresa, IdSucursal, IdBodega, IdProducto, ROUND(SUM(dm_cantidad), 2) AS Stock
-FROM            dbo.in_movi_inve_detalle
-GROUP BY IdEmpresa, IdSucursal, IdBodega, IdProducto
+SELECT d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdProducto, ROUND(SUM(dm_cantidad), 2) AS Stock
+FROM     dbo.in_Ing_Egr_Inven c inner join in_Ing_Egr_Inven_det as d on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdMovi_inven_tipo = d.IdMovi_inven_tipo
+and c.IdNumMovi = d.IdNumMovi
+where c.Estado = 'A' 
+GROUP BY d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdProducto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 

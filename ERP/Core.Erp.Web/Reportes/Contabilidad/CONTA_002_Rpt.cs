@@ -33,6 +33,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             CONTA_002_Bus bus_rpt = new CONTA_002_Bus();
             List<CONTA_002_Info> lst_rpt = new List<CONTA_002_Info>();
+
             if (IntArray != null)
             {
                 foreach (var item in IntArray)

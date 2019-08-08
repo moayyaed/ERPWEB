@@ -56,7 +56,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      Vencido_31_60 = q.Vencido_31_60,
                                      Vencido_60_90 = q.Vencido_60_90,
                                      Vencido_mayor_90 = q.Vencido_mayor_90,
-                                     en_conciliacion = q.en_conciliacion
+                                     en_conciliacion = q.en_conciliacion,
+                                     Su_Descripcion = q.Su_Descripcion
                                  }).ToList();
                     }
                     else
@@ -94,7 +95,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      Vencido_31_60 = q.Vencido_31_60,
                                      Vencido_60_90 = q.Vencido_60_90,
                                      Vencido_mayor_90 = q.Vencido_mayor_90,
-                                     en_conciliacion = q.en_conciliacion
+                                     en_conciliacion = q.en_conciliacion,
+                                     Su_Descripcion = q.Su_Descripcion
                                  }).ToList();
                     }
                     else
@@ -132,7 +134,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      Vencido_31_60 = q.Vencido_31_60,
                                      Vencido_60_90 = q.Vencido_60_90,
                                      Vencido_mayor_90 = q.Vencido_mayor_90,
-                                     en_conciliacion = q.en_conciliacion
+                                     en_conciliacion = q.en_conciliacion,
+                                     Su_Descripcion = q.Su_Descripcion
                                  }).ToList();
                     }
                     else
@@ -167,7 +170,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  Vencido_31_60 = q.Vencido_31_60,
                                  Vencido_60_90 = q.Vencido_60_90,
                                  Vencido_mayor_90 = q.Vencido_mayor_90,
-                                 en_conciliacion = q.en_conciliacion
+                                 en_conciliacion = q.en_conciliacion,
+                                 Su_Descripcion = q.Su_Descripcion
                              }).ToList();
                 }
                 return Lista;

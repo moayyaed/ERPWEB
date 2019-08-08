@@ -27,7 +27,9 @@ namespace Core.Erp.Web.Reportes.Facturacion
             decimal IdCbteVta = p_IdCbteVta.Value == null ? 0 : Convert.ToDecimal(p_IdCbteVta.Value);
 
             FAC_013_Bus bus_rpt = new FAC_013_Bus();
+            FAC_013_diario_Bus bus_rpt_diario = new FAC_013_diario_Bus();
             List<FAC_013_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, IdCbteVta);
+            Lista_detalle = bus_rpt_diario.GetList(IdEmpresa, IdSucursal, IdBodega, IdCbteVta);
 
             this.DataSource = lst_rpt;
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

@@ -647,5 +647,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult CXP_017(int IdEmpresa = 0, string selectedIDs = "")
+        {
+            CXP_017_Rpt model = new CXP_017_Rpt();
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa;
+
+            model.p_IdEmpresa.Value = IdEmpresa;
+            model.p_selectedIDs.Value = selectedIDs;
+            return View(model);
+        }
     }
 }

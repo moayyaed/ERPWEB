@@ -34,7 +34,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="IdNivel">Cargo</label>
-                                @Html.DropDownListFor(q => q.IdPunto_cargo_grupo, new SelectList(ViewBag.lst_punto, "IdPunto_cargo_grupo", "nom_punto_cargo"), new { @class = "form-control" })
+                                @Html.DropDownListFor(q => q.IdPunto_cargo_grupo, new SelectList(ViewBag.lst_punto, "IdPunto_cargo_grupo", "nom_punto_cargo_grupo"), new { @class = "form-control" })
                                 @Html.ValidationMessageFor(q => q.IdPunto_cargo_grupo, "", new { @class = "form", @role = "text-danger" })
                             </div>
                         </div>

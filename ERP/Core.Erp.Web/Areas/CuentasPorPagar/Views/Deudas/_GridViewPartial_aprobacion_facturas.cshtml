@@ -138,8 +138,9 @@
                 p.DisplayFormatString = "N2";
             });
         });
+        settings.Settings.ShowFooter = true;
         settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario();if (s.IsEditing()) {var editor = s.GetEditor('co_valorpagar');editor.Focus();}}";
-
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "co_valorpagar").DisplayFormat = "Total {0:c2}";
 
     });
 

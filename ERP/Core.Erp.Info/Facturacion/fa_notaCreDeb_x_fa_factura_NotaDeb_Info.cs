@@ -21,6 +21,7 @@ namespace Core.Erp.Info.Facturacion
         public string NumDocumento { get; set; }
         public double Valor_Aplicado { get; set; }
         public System.DateTime fecha_cruce { get; set; }
+
         #region Campos que no existen en la tabla
         public string secuencial { get; set; }
         public string vt_NumDocumento { get; set; }

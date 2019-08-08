@@ -970,11 +970,23 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Rpt.Designer.cs">
       <DependentUpon>CXP_016_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_017_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_017_Rpt.Designer.cs">
+      <DependentUpon>CXP_017_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.Designer.cs">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_002_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Facturacion\FAC_002_Rpt.Designer.cs">
+      <DependentUpon>FAC_002_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Facturacion\FAC_003_Rpt.cs">
       <SubType>Component</SubType>
@@ -10204,6 +10216,8 @@
     <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_GridViewPartial_ParametrizacionContableProducto.cshtml" />
     <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_CmbCuenta.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_017.cshtml" />
+    <Content Include="Areas\Reportes\Views\FacturacionReportes\FAC_002.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10320,6 +10334,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10551,8 +10566,14 @@
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_016_Rpt.resx">
       <DependentUpon>CXP_016_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_017_Rpt.resx">
+      <DependentUpon>CXP_017_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_001_Rpt.resx">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturacion\FAC_002_Rpt.resx">
+      <DependentUpon>FAC_002_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_003_Rpt.resx">
       <DependentUpon>FAC_003_Rpt.cs</DependentUpon>

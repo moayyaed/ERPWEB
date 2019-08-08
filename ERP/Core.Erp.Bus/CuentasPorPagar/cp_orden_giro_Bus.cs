@@ -477,7 +477,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 bus_op = new cp_orden_pago_Bus();
                 info_op.IdEmpresa = info.IdEmpresa;
                 info_op.IdTipo_op = info_tipo_op.IdTipo_op;
-                info_op.Observacion = "Por cancelacion de la "+info.nom_tipo_Documento+" "+info.co_factura;
+                info_op.Observacion = info.co_observacion;
                 info_op.IdTipo_Persona = "PROVEE";
                 info_op.IdPersona = IdPersona;
                 info_op.IdEntidad = info.IdProveedor;
@@ -486,6 +486,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info_op.Estado = "A";
                 info_op.IdSucursal = info.IdSucursal;
                 info_op.Fecha = DateTime.Now.Date;
+                info_op.IdUsuario = info.IdUsuario;
                 
                 // crear detalle de op
                 cp_orden_pago_det_Info info_op_det = new cp_orden_pago_det_Info();
@@ -495,9 +496,9 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info_op_det.IdCbteCble_cxp = info.IdCbteCble_Ogiro;
                 info_op_det.IdTipoCbte_cxp = info.IdTipoCbte_Ogiro;
                 info_op_det.Valor_a_pagar = info.co_valorpagar;
-                info_op_det.Referencia = info.nom_tipo_Documento+" "+ info.co_factura;
+                info_op_det.Referencia = info.co_observacion;
                 info_op_det.IdFormaPago = "CHEQUE";
-                info_op_det.Fecha_Pago = DateTime.Now;
+                info_op_det.Fecha_Pago = DateTime.Now.Date;
                 info_op_det.IdEstadoAprobacion = info_tipo_op.IdEstadoAprobacion;
                 info_op.detalle.Add(info_op_det);
                 bus_op.guardar_op_x_fpDB(info_op);

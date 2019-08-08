@@ -32,6 +32,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        in_producto_x_tb_bodega_Costo_Historico_Bus bus_prod_x_bod = new in_producto_x_tb_bodega_Costo_Historico_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -159,7 +160,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            decimal IdProducto = Request.Params["in_IdProducto"] != null ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
+            decimal IdProducto = Request.Params["in_IdProducto"] != null && Request.Params["in_IdProducto"] != "" ? Convert.ToDecimal(Request.Params["in_IdProducto"]) : 0;
 
             in_Producto_Info info_produto = bus_producto.get_info(IdEmpresa, IdProducto);
             return GridViewExtension.GetComboBoxCallbackResult(p =>
@@ -398,10 +399,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     if (info_producto != null)
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
-                        //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
-                        info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
+                        info_det.mv_costo_sinConversion = bus_prod_x_bod.get_ultimo_costo(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursalInv), Convert.ToInt32(SessionFixed.IdBodegaInv), info_det.IdProducto, DateTime.Now.Date);
                     }
                 }
             }
@@ -424,10 +424,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     if (info_producto != null)
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
-                        //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
-                        info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
+                        info_det.mv_costo_sinConversion = bus_prod_x_bod.get_ultimo_costo(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursalInv), Convert.ToInt32(SessionFixed.IdBodegaInv), info_det.IdProducto, DateTime.Now.Date);
                     }
                 }
             }

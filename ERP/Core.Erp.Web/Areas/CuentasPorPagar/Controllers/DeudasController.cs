@@ -883,7 +883,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     co_valorpagar = item.co_valorpagar,
                     nom_tipo_Documento = item.nom_tipo_Documento,
                     IdSucursal = (int)item.IdSucursal,
-                    IdUsuario = SessionFixed.IdUsuario
+                    IdUsuario = SessionFixed.IdUsuario,
+                    co_observacion = item.co_observacion,
+                    
                 });
             }
             Session["list_facturas_seleccionadas"] = null;
@@ -924,6 +926,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                                 IdProveedor = info_add.IdProveedor,
                                 SecuencialID = info_add.SecuencialID,
                                 nom_tipo_Documento = info_add.nom_tipo_Documento,
+                                co_observacion = info_add.co_observacion,
                                 info_proveedor = new cp_proveedor_Info{
                                     info_persona = new tb_persona_Info{
                                         pe_nombreCompleto = info_add.info_proveedor.info_persona.pe_nombreCompleto

@@ -477,7 +477,6 @@
     <Build Include="web\Views\vwcxc_cobro_para_retencion.sql" />
     <Build Include="dbo\Views\vw_TipoTitulo.sql" />
     <Build Include="web\Views\vwcp_retencion.sql" />
-    <Build Include="dbo\Views\vwfa_notaCreDeb_x_fa_factura_NotaDeb.sql" />
     <Build Include="dbo\Views\vwcp_cp_retencion_x_empresa.sql" />
     <Build Include="dbo\Views\vwcxc_cobros_conciliados.sql" />
     <Build Include="web\Views\VWFAC_003.sql" />
@@ -1167,6 +1166,8 @@
     <Build Include="web\Views\VWFAC_013_diario.sql" />
     <Build Include="web\Views\VWFAC_008_diario.sql" />
     <Build Include="dbo\Views\vwin_Producto_PorBodega.sql" />
+    <Build Include="web\Views\VWCXP_017.sql" />
+    <Build Include="web\Views\VWFAC_002.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

@@ -3,12 +3,16 @@ AS
 SELECT dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_det.secuencial, dbo.cxc_cobro_det.IdBodega_Cbte, dbo.cxc_cobro_det.IdCbte_vta_nota, dbo.cxc_cobro_det.dc_TipoDocumento, 
                   dbo.cxc_cobro_det.dc_ValorPago, dbo.cxc_cobro_tipo.tc_descripcion, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, 
                   dbo.fa_factura.vt_serie1 + '-' + dbo.fa_factura.vt_serie2 + '-' + dbo.fa_factura.vt_NumFactura AS vt_NumFactura, dbo.fa_factura.vt_fecha, dbo.fa_factura.vt_Observacion AS ObservacionFact, 
-                  dbo.cxc_cobro.cr_observacion AS ObservacionCobro, dbo.cxc_cobro.cr_fecha, tb_persona.pe_nombreCompleto AS NombreContacto, dbo.fa_cliente_contactos.Direccion, dbo.fa_cliente_contactos.Correo, 
-                  dbo.tb_persona.pe_cedulaRuc, dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_Banco AS ba_descripcion, dbo.cxc_cobro.cr_NumDocumento, dbo.cxc_cobro.cr_TotalCobro
+                  dbo.cxc_cobro.cr_observacion AS ObservacionCobro, dbo.cxc_cobro.cr_fecha, dbo.tb_persona.pe_nombreCompleto AS NombreContacto, dbo.fa_cliente_contactos.Direccion, dbo.fa_cliente_contactos.Correo, 
+                  dbo.tb_persona.pe_cedulaRuc, dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_Banco AS ba_descripcion, dbo.cxc_cobro.cr_NumDocumento, dbo.cxc_cobro.cr_TotalCobro, dbo.seg_usuario.Nombre, 
+                  dbo.cxc_cobro_x_ct_cbtecble.ct_IdCbteCble
 FROM     dbo.fa_cliente INNER JOIN
                   dbo.cxc_cobro ON dbo.fa_cliente.IdEmpresa = dbo.cxc_cobro.IdEmpresa AND dbo.fa_cliente.IdCliente = dbo.cxc_cobro.IdCliente INNER JOIN
                   dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.tb_sucursal ON dbo.cxc_cobro.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.tb_sucursal.IdSucursal RIGHT OUTER JOIN
+                  dbo.tb_sucursal ON dbo.cxc_cobro.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
+                  dbo.cxc_cobro_x_ct_cbtecble ON dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_x_ct_cbtecble.cbr_IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_x_ct_cbtecble.cbr_IdSucursal AND 
+                  dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_x_ct_cbtecble.cbr_IdCobro LEFT OUTER JOIN
+                  dbo.seg_usuario ON dbo.cxc_cobro.IdUsuario = dbo.seg_usuario.IdUsuario RIGHT OUTER JOIN
                   dbo.fa_factura INNER JOIN
                   dbo.cxc_cobro_det ON dbo.fa_factura.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.fa_factura.IdBodega = dbo.cxc_cobro_det.IdBodega_Cbte AND 
                   dbo.fa_factura.IdCbteVta = dbo.cxc_cobro_det.IdCbte_vta_nota AND dbo.fa_factura.vt_tipoDoc = dbo.cxc_cobro_det.dc_TipoDocumento INNER JOIN
@@ -18,21 +22,22 @@ FROM     dbo.fa_cliente INNER JOIN
 UNION ALL
 SELECT dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_det.secuencial, dbo.cxc_cobro_det.IdBodega_Cbte, dbo.cxc_cobro_det.IdCbte_vta_nota, dbo.cxc_cobro_det.dc_TipoDocumento, 
                   dbo.cxc_cobro_det.dc_ValorPago, dbo.cxc_cobro_tipo.tc_descripcion, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, 
-                  CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN
-				  dbo.fa_notaCreDeb.Serie1 + '-' + dbo.fa_notaCreDeb.Serie2 + '-' + dbo.fa_notaCreDeb.NumNota_Impresa 
-				  ELSE isnull(fa_notaCreDeb.CodNota,cast(fa_notaCreDeb.IdNota as Varchar(20))) end AS vt_NumFactura, 
-				  dbo.fa_notaCreDeb.no_fecha, dbo.fa_notaCreDeb.sc_observacion AS ObservacionFact, 
-                  dbo.cxc_cobro.cr_observacion AS ObservacionCobro, dbo.cxc_cobro.cr_fecha, tb_persona.pe_nombreCompleto AS NombreContacto, dbo.fa_cliente_contactos.Direccion, dbo.fa_cliente_contactos.Correo, 
-                  dbo.tb_persona.pe_cedulaRuc, dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_Banco AS ba_descripcion, dbo.cxc_cobro.cr_NumDocumento, dbo.cxc_cobro.cr_TotalCobro
+                  CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN dbo.fa_notaCreDeb.Serie1 + '-' + dbo.fa_notaCreDeb.Serie2 + '-' + dbo.fa_notaCreDeb.NumNota_Impresa ELSE isnull(fa_notaCreDeb.CodNota, 
+                  CAST(fa_notaCreDeb.IdNota AS Varchar(20))) END AS vt_NumFactura, dbo.fa_notaCreDeb.no_fecha, dbo.fa_notaCreDeb.sc_observacion AS ObservacionFact, dbo.cxc_cobro.cr_observacion AS ObservacionCobro, 
+                  dbo.cxc_cobro.cr_fecha, dbo.tb_persona.pe_nombreCompleto AS NombreContacto, dbo.fa_cliente_contactos.Direccion, dbo.fa_cliente_contactos.Correo, dbo.tb_persona.pe_cedulaRuc, dbo.cxc_cobro.cr_estado, 
+                  dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_Banco AS ba_descripcion, dbo.cxc_cobro.cr_NumDocumento, dbo.cxc_cobro.cr_TotalCobro, dbo.seg_usuario.Nombre, dbo.cxc_cobro_x_ct_cbtecble.ct_IdCbteCble
 FROM     dbo.fa_cliente INNER JOIN
                   dbo.cxc_cobro ON dbo.fa_cliente.IdEmpresa = dbo.cxc_cobro.IdEmpresa AND dbo.fa_cliente.IdCliente = dbo.cxc_cobro.IdCliente INNER JOIN
                   dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.tb_sucursal ON dbo.cxc_cobro.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.tb_sucursal.IdSucursal RIGHT OUTER JOIN
+                  dbo.tb_sucursal ON dbo.cxc_cobro.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
+                  dbo.cxc_cobro_x_ct_cbtecble ON dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_x_ct_cbtecble.cbr_IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_x_ct_cbtecble.cbr_IdSucursal AND 
+                  dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_x_ct_cbtecble.cbr_IdCobro LEFT OUTER JOIN
+                  dbo.seg_usuario ON dbo.cxc_cobro.IdUsuario = dbo.seg_usuario.IdUsuario RIGHT OUTER JOIN
                   dbo.fa_notaCreDeb INNER JOIN
                   dbo.cxc_cobro_det ON dbo.fa_notaCreDeb.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.fa_notaCreDeb.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.fa_notaCreDeb.IdBodega = dbo.cxc_cobro_det.IdBodega_Cbte AND 
                   dbo.fa_notaCreDeb.IdNota = dbo.cxc_cobro_det.IdCbte_vta_nota AND dbo.fa_notaCreDeb.CodDocumentoTipo = dbo.cxc_cobro_det.dc_TipoDocumento INNER JOIN
-                  dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente AND dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa ON dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND 
-                  dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_det.IdCobro LEFT OUTER JOIN
+                  dbo.fa_cliente_contactos ON dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente_contactos.IdCliente AND dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa ON 
+                  dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_det.IdCobro LEFT OUTER JOIN
                   dbo.cxc_cobro_tipo ON dbo.cxc_cobro_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

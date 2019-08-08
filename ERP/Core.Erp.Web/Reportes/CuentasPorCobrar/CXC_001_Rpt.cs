@@ -1,8 +1,10 @@
-﻿using Core.Erp.Bus.Reportes.CuentasPorCobrar;
+﻿using Core.Erp.Bus.General;
+using Core.Erp.Bus.Reportes.CuentasPorCobrar;
 using Core.Erp.Info.Reportes.CuentasPorCobrar;
 using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Core.Erp.Web.Reportes.CuentasPorCobrar
 {
@@ -29,6 +31,17 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             CXC_001_Bus bus_rpt = new CXC_001_Bus();
             List<CXC_001_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdCobro);
             this.DataSource = lst_rpt;
+
+            tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+            var emp = bus_empresa.get_info(IdEmpresa);
+            if (emp != null)
+            {
+                if (emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
+            }
         }
 
         private void Subreporte_diario_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)

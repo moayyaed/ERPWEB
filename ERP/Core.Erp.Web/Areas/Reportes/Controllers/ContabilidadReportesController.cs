@@ -150,7 +150,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdTipoCbte = 1,
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
-            cargar_combos(model.IdEmpresa);
+            //cargar_combos(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
             #region Cargo diseño desde base
@@ -196,8 +196,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
+            
+            //cargar_combos(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
-            cargar_combos(model.IdEmpresa);
             ViewBag.Report = report;
             return View(model);
         }

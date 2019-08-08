@@ -295,6 +295,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult FAC_002(int IdEmpresa, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
+        {
+            FAC_002_Rpt model = new FAC_002_Rpt();
+
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.p_IdSucursal.Value = IdSucursal;
+            model.p_IdBodega.Value = IdBodega;
+            model.p_IdNota.Value = IdNota;
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa; 
+            return View(model);
+        }
         public ActionResult FAC_003(int IdSucursal = 0, int IdBodega= 0, decimal IdCbteVta= 0)
         {
             FAC_003_Rpt model = new FAC_003_Rpt();
