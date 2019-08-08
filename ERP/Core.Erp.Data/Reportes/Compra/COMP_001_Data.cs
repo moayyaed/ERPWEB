@@ -55,12 +55,11 @@ namespace Core.Erp.Data.Reportes
                         Su_Descripcion = q.Su_Descripcion,
                         TelefonosProveedor = q.TelefonosProveedor,
                         NombreUsuario = q.NombreUsuario
-                        
                     }).ToList();
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
