@@ -1123,7 +1123,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         info_det_inv.oc_IdOrdenCompra = info_det.oc_IdOrdenCompra;
                         info_det_inv.oc_Secuencia = info_det.oc_Secuencia;
                         info_det_inv.pr_descripcion = info_det.pr_descripcion;
-                        info_det_inv.IdCtaCble = info_det.IdCtaCble;
+                        info_det_inv.IdCtaCble = info_det.IdCtaCble_oc;
                         info_det_inv.IdCtaCble_oc = info_det.IdCtaCble_oc;
                         info_det_inv.dm_cantidad = info_det.dm_cantidad;
                         info_det_inv.do_precioCompra = info_det.do_precioCompra;
@@ -1397,7 +1397,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_orden_giro_det_ing_x_oc_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
-            edited_info.IdCtaCble = info_det.IdCtaCble;
+            edited_info.IdCtaCble = info_det.IdCtaCble_oc;
             edited_info.IdCtaCble_oc = info_det.IdCtaCble_oc;
 
             edited_info.dm_cantidad = info_det.dm_cantidad;

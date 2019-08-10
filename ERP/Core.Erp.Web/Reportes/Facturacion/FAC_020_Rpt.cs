@@ -36,7 +36,6 @@ namespace Core.Erp.Web.Reportes.Facturacion
             lbl_empresa.Text = empresa.em_nombre;
             lbl_direccion.Text = empresa.em_direccion;
             lbl_contribuyente.Text = empresa.ContribuyenteEspecial;
-            lbl_direccion_sucursal.Text = empresa.em_Email;
             lbl_ruc.Text = empresa.em_ruc;
 
             if (empresa != null && empresa.em_logo != null)

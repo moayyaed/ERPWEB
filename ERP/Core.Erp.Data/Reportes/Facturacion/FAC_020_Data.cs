@@ -10,7 +10,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_020_Data
     {
-        public List<FAC_020_Info> get_list(int IdEmpresa, int IdSucursal, int IdBodega, int IdGuiaRemision)
+        public List<FAC_020_Info> get_list(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdGuiaRemision)
         {
             try
             {
@@ -60,7 +60,9 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                 CedulaTransportista = q.CedulaTransportista,
                                 NombreTransportista = q.NombreTransportista,
                                 vt_fecha = q.vt_fecha,
-                                vt_autorizacion = q.vt_autorizacion
+                                vt_autorizacion = q.vt_autorizacion,
+                                Su_Direccion = q.Su_Direccion,
+                                Su_Descripcion = q.Su_Descripcion
                              }).ToList();
                 }
                 return Lista;

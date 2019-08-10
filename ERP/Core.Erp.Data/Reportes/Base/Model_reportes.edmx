@@ -2669,6 +2669,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_020' no tiene definida ningu
             <PropertyRef Name="Direccion_Origen" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="tr_Descripcion" />
+            <PropertyRef Name="Su_Descripcion" />
           </Key>
           <Property Name="fa_IdEmpresa" Type="int" />
           <Property Name="fa_IdSucursal" Type="int" />
@@ -2707,6 +2708,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_020' no tiene definida ningu
           <Property Name="NombreTransportista" Type="varchar" MaxLength="500" />
           <Property Name="vt_fecha" Type="datetime" />
           <Property Name="vt_autorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Su_Direccion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWIMP_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6620,7 +6623,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWFAC_020].[CedulaTransportista] AS [CedulaTransportista], 
     [VWFAC_020].[NombreTransportista] AS [NombreTransportista], 
     [VWFAC_020].[vt_fecha] AS [vt_fecha], 
-    [VWFAC_020].[vt_autorizacion] AS [vt_autorizacion]
+    [VWFAC_020].[vt_autorizacion] AS [vt_autorizacion], 
+    [VWFAC_020].[Su_Descripcion] AS [Su_Descripcion], 
+    [VWFAC_020].[Su_Direccion] AS [Su_Direccion]
     FROM [web].[VWFAC_020] AS [VWFAC_020]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWIMP_001" EntityType="Self.VWIMP_001" store:Type="Views" store:Schema="web">
@@ -13489,6 +13494,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <PropertyRef Name="Direccion_Origen" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="tr_Descripcion" />
+            <PropertyRef Name="Su_Descripcion" />
           </Key>
           <Property Name="fa_IdEmpresa" Type="Int32" />
           <Property Name="fa_IdSucursal" Type="Int32" />
@@ -13527,6 +13533,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="NombreTransportista" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="vt_fecha" Type="DateTime" Precision="3" />
           <Property Name="vt_autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -17554,6 +17562,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySetMapping Name="VWFAC_020">
             <EntityTypeMapping TypeName="Model_reportes.VWFAC_020">
               <MappingFragment StoreEntitySet="VWFAC_020">
+                <ScalarProperty Name="Su_Direccion" ColumnName="Su_Direccion" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
                 <ScalarProperty Name="vt_autorizacion" ColumnName="vt_autorizacion" />
                 <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
                 <ScalarProperty Name="NombreTransportista" ColumnName="NombreTransportista" />

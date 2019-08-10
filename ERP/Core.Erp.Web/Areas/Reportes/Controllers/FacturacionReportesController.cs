@@ -987,5 +987,20 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult FAC_020(int IdSucursal = 0, int IdBodega = 0, decimal IdGuiaRemision = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            FAC_020_Rpt model = new FAC_020_Rpt();
+            
+            model.p_IdEmpresa.Value = IdEmpresa;
+            model.p_IdBodega.Value = IdBodega;
+            model.p_IdSucursal.Value = IdSucursal;
+            model.p_IdGuiaRemision.Value = IdGuiaRemision;
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa;
+            model.RequestParameters = false;
+            return View(model);
+        }
     }
 }

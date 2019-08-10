@@ -90,7 +90,7 @@
         settings.Columns.Add("CodGuiaRemision", "Código").Width = Unit.Percentage(5);
         settings.Columns.Add("IdCbteVta", "Factura").Width = Unit.Percentage(8);
         settings.Columns.Add("NumGuia_Preimpresa", "#Guia").Width = Unit.Percentage(15);
-        settings.Columns.Add("pe_nombreCompleto", "Cliente").Width = Unit.Percentage(25);
+        settings.Columns.Add("pe_nombreCompleto", "Cliente").Width = Unit.Percentage(20);
         settings.Columns.Add("gi_Observacion", "Observación").Width = Unit.Percentage(25);
         settings.Columns.Add(column =>
         {
@@ -109,6 +109,15 @@
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("FAC_009", "FacturacionReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(c.DataItem, "IdBodega"), IdGuiaRemision = DataBinder.Eval(c.DataItem, "IdGuiaRemision") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "RIDE";
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("FAC_020", "FacturacionReportes", new { Area = "Reportes", IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(c.DataItem, "IdBodega"), IdGuiaRemision = DataBinder.Eval(c.DataItem, "IdGuiaRemision") }, Request.Url.Scheme) + "');\"></span>");
             });
             column.Width = Unit.Percentage(5);
         });

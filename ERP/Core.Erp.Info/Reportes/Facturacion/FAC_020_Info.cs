@@ -45,5 +45,7 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public string NombreTransportista { get; set; }
         public Nullable<System.DateTime> vt_fecha { get; set; }
         public string vt_autorizacion { get; set; }
+        public string Su_Descripcion { get; set; }
+        public string Su_Direccion { get; set; }
     }
 }
