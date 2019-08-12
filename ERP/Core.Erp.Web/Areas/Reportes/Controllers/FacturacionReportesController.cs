@@ -934,8 +934,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCliente = 0,
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
             FAC_019_Rpt report = new FAC_019_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -982,8 +982,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdUsuario.Value = Convert.ToString(SessionFixed.IdUsuario);
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_combos(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
             ViewBag.Report = report;
             return View(model);
         }
