@@ -292,13 +292,6 @@
                     @Html.ValidationMessageFor(q => q.IdIden_credito, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="co_observacion">Observación*</label>
-                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
-                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
         </div>
 
         <div class="col-md-6">
@@ -397,8 +390,22 @@
                     @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdOrden_giro_Tipo, "", new { @class = "text-danger" })
                 </div>
+            </div>                
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
+                </div>
             </div>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="co_serie">Serie*</label>
@@ -422,7 +429,6 @@
             </div>
         </div>
     </div>
-
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
