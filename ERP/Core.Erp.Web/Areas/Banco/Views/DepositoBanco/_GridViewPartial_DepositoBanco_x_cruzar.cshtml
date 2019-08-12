@@ -40,6 +40,7 @@
 
 
         settings.Columns.Add("mcj_IdCbteCble", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("tc_descripcion", "Tipo").Width = Unit.Percentage(10);
         settings.Columns.Add("cm_observacion", "Observación").Width = Unit.Percentage(20);
         settings.Columns.Add(column => {
             column.Width = Unit.Percentage(10);
@@ -49,7 +50,7 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(30);
             column.FieldName = "pe_nombreCompleto";
             column.Caption = "Cliente";
         });
