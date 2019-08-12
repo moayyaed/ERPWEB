@@ -354,9 +354,10 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         public JsonResult GetInfoProducto(int IdEmpresa = 0, int IdProducto = 0)
         {
             in_Producto_Bus bus_producto = new in_Producto_Bus();
-            var resultado = bus_producto.get_info(IdEmpresa, IdProducto);
+            var resultado = bus_producto.GetPrecioCompraPromedio(IdEmpresa, IdProducto);
+            var info_producto = bus_producto.get_info(IdEmpresa, IdProducto);
 
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            return Json(new { precio = resultado, info_producto = info_producto }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult get_info_termino_pago_x_proveedor(int IdEmpresa = 0, decimal IdProveedor = 0)
