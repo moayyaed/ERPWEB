@@ -55,7 +55,9 @@ namespace Core.Erp.Data.Reportes
                         SubtotalIVA = q.SubtotalIVA,
                         Su_Descripcion = q.Su_Descripcion,
                         TelefonosProveedor = q.TelefonosProveedor,
-                        NombreUsuario = q.NombreUsuario
+                        NombreUsuario = q.NombreUsuario,
+                        FechaAprobacion = q.FechaAprobacion,
+                        Fecha_Transac = q.Fecha_Transac
                     }).ToList();
                 }
                 return Lista;

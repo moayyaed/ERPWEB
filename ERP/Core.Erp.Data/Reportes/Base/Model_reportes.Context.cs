@@ -45,7 +45,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWCAJ_002> VWCAJ_002 { get; set; }
         public virtual DbSet<VWCAJ_002_ingresos> VWCAJ_002_ingresos { get; set; }
         public virtual DbSet<VWCAJ_002_ValesNoConciliados> VWCAJ_002_ValesNoConciliados { get; set; }
-        public virtual DbSet<VWCOMP_001> VWCOMP_001 { get; set; }
         public virtual DbSet<VWCONTA_001> VWCONTA_001 { get; set; }
         public virtual DbSet<VWCXC_001> VWCXC_001 { get; set; }
         public virtual DbSet<VWCXC_001_diario> VWCXC_001_diario { get; set; }
@@ -129,6 +128,7 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWFAC_002> VWFAC_002 { get; set; }
         public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
         public virtual DbSet<VWFAC_020> VWFAC_020 { get; set; }
+        public virtual DbSet<VWCOMP_001> VWCOMP_001 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
@@ -647,7 +647,7 @@ namespace Core.Erp.Data.Reportes.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_007_Result>("SPCXP_007", idEmpresaParameter, fecha_iniParameter, fecha_finParameter, mostrar_agrupadoParameter, idSucursalIniParameter, idSucursalFinParameter);
         }
     
-        public virtual ObjectResult<SPCXP_008_Result> SPCXP_008(Nullable<int> idempresa, Nullable<System.DateTime> fecha, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFIn)
+        public virtual ObjectResult<SPCXP_008_Result> SPCXP_008(Nullable<int> idempresa, Nullable<System.DateTime> fecha, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<int> idClaseProveedorIni, Nullable<int> idClaseProveedorFin, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFIn)
         {
             var idempresaParameter = idempresa.HasValue ?
                 new ObjectParameter("idempresa", idempresa) :
@@ -665,6 +665,14 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("IdSucursalFin", idSucursalFin) :
                 new ObjectParameter("IdSucursalFin", typeof(int));
     
+            var idClaseProveedorIniParameter = idClaseProveedorIni.HasValue ?
+                new ObjectParameter("IdClaseProveedorIni", idClaseProveedorIni) :
+                new ObjectParameter("IdClaseProveedorIni", typeof(int));
+    
+            var idClaseProveedorFinParameter = idClaseProveedorFin.HasValue ?
+                new ObjectParameter("IdClaseProveedorFin", idClaseProveedorFin) :
+                new ObjectParameter("IdClaseProveedorFin", typeof(int));
+    
             var idProveedorIniParameter = idProveedorIni.HasValue ?
                 new ObjectParameter("idProveedorIni", idProveedorIni) :
                 new ObjectParameter("idProveedorIni", typeof(decimal));
@@ -673,7 +681,7 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("idProveedorFIn", idProveedorFIn) :
                 new ObjectParameter("idProveedorFIn", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_008_Result>("SPCXP_008", idempresaParameter, fechaParameter, idSucursalIniParameter, idSucursalFinParameter, idProveedorIniParameter, idProveedorFInParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_008_Result>("SPCXP_008", idempresaParameter, fechaParameter, idSucursalIniParameter, idSucursalFinParameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter, idProveedorIniParameter, idProveedorFInParameter);
         }
     
         public virtual ObjectResult<SPCXP_010_Result> SPCXP_010(Nullable<int> idEmpresa, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarAnulados)
@@ -705,7 +713,7 @@ namespace Core.Erp.Data.Reportes.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_010_Result>("SPCXP_010", idEmpresaParameter, idProveedorIniParameter, idProveedorFinParameter, fechaIniParameter, fechaFinParameter, mostrarAnuladosParameter);
         }
     
-        public virtual ObjectResult<SPCXP_015_Result> SPCXP_015(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaCorte, Nullable<bool> mostrarSaldo0)
+        public virtual ObjectResult<SPCXP_015_Result> SPCXP_015(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaCorte, Nullable<bool> mostrarSaldo0, Nullable<int> idClaseProveedorIni, Nullable<int> idClaseProveedorFin)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
@@ -735,10 +743,18 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
                 new ObjectParameter("MostrarSaldo0", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_015_Result>("SPCXP_015", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idProveedorIniParameter, idProveedorFinParameter, fechaCorteParameter, mostrarSaldo0Parameter);
+            var idClaseProveedorIniParameter = idClaseProveedorIni.HasValue ?
+                new ObjectParameter("IdClaseProveedorIni", idClaseProveedorIni) :
+                new ObjectParameter("IdClaseProveedorIni", typeof(int));
+    
+            var idClaseProveedorFinParameter = idClaseProveedorFin.HasValue ?
+                new ObjectParameter("IdClaseProveedorFin", idClaseProveedorFin) :
+                new ObjectParameter("IdClaseProveedorFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_015_Result>("SPCXP_015", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idProveedorIniParameter, idProveedorFinParameter, fechaCorteParameter, mostrarSaldo0Parameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter);
         }
     
-        public virtual ObjectResult<SPCXP_016_Result> SPCXP_016(Nullable<int> idEmpresa, string idUsuario, Nullable<bool> mostrarSaldo0, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
+        public virtual ObjectResult<SPCXP_016_Result> SPCXP_016(Nullable<int> idEmpresa, string idUsuario, Nullable<bool> mostrarSaldo0, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<int> idClaseProveedorIni, Nullable<int> idClaseProveedorFin)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
@@ -760,7 +776,15 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("FechaFin", fechaFin) :
                 new ObjectParameter("FechaFin", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_016_Result>("SPCXP_016", idEmpresaParameter, idUsuarioParameter, mostrarSaldo0Parameter, fechaIniParameter, fechaFinParameter);
+            var idClaseProveedorIniParameter = idClaseProveedorIni.HasValue ?
+                new ObjectParameter("IdClaseProveedorIni", idClaseProveedorIni) :
+                new ObjectParameter("IdClaseProveedorIni", typeof(int));
+    
+            var idClaseProveedorFinParameter = idClaseProveedorFin.HasValue ?
+                new ObjectParameter("IdClaseProveedorFin", idClaseProveedorFin) :
+                new ObjectParameter("IdClaseProveedorFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_016_Result>("SPCXP_016", idEmpresaParameter, idUsuarioParameter, mostrarSaldo0Parameter, fechaIniParameter, fechaFinParameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter);
         }
     
         public virtual ObjectResult<SPFAC_005_Result> SPFAC_005(Nullable<int> idEmpresa, Nullable<int> idSucursal_ini, Nullable<int> idSucursal_fin, Nullable<decimal> idCliente_ini, Nullable<decimal> idCliente_fin, Nullable<System.DateTime> fecha_ini, Nullable<System.DateTime> fecha_fin)

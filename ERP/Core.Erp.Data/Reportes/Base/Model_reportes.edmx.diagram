@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_002" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_002_ingresos" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_002_ValesNoConciliados" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_reportes.VWCOMP_001" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWCONTA_001" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_001" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_001_diario" Width="1.5" PointX="14.75" PointY="7.75" IsExpanded="true" />
@@ -107,6 +106,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWFAC_002" Width="1.5" PointX="17.375" PointY="37.75" />
         <EntityTypeShape EntityType="Model_reportes.VWFAC_007" Width="1.5" PointX="19.375" PointY="38.75" />
         <EntityTypeShape EntityType="Model_reportes.VWFAC_020" Width="1.5" PointX="39.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCOMP_001" Width="1.5" PointX="39.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
