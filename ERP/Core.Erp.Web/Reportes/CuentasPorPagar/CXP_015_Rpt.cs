@@ -30,10 +30,11 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             decimal IdProveedor = string.IsNullOrEmpty(p_IdProveedor.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdProveedor.Value);
             DateTime fecha_corte = p_fecha_corte.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_corte.Value);
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
+            int IdClaseProveedor = string.IsNullOrEmpty(p_IdClaseProveedor.Value.ToString()) ? 0 : Convert.ToInt32(p_IdClaseProveedor.Value);
 
 
             CXP_015_Bus bus_rpt = new CXP_015_Bus();
-            List<CXP_015_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0);
+            List<CXP_015_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0, IdClaseProveedor);
             this.DataSource = lst_rpt;
 
 

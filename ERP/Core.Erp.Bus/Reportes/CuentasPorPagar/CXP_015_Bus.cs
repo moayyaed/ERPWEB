@@ -11,11 +11,11 @@ namespace Core.Erp.Bus.Reportes.CuentasPorPagar
     public class CXP_015_Bus
     {
         CXP_015_Data odata = new CXP_015_Data();
-        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0)
+        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0, int IdClaseProveedor)
         {
             try
             {
-                return odata.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0);
+                return odata.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0, IdClaseProveedor);
             }
             catch (Exception)
             {

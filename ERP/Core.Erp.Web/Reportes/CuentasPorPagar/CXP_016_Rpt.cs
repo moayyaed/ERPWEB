@@ -33,6 +33,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                 DateTime fechaFin = p_FechaFin.Value == null ? DateTime.Now : Convert.ToDateTime(p_FechaFin.Value);
                 string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : p_IdUsuario.Value.ToString();
                 bool MostrarSaldo0 = string.IsNullOrEmpty(p_MostrarSaldo0.Value.ToString()) ? false : Convert.ToBoolean(p_MostrarSaldo0.Value);
+                int IdClaseProveedor = string.IsNullOrEmpty(p_IdClaseProveedor.Value.ToString()) ? 0 : Convert.ToInt32(p_IdClaseProveedor.Value);
 
                 CXP_016_Bus bus_rpt = new CXP_016_Bus();
                 List<CXP_016_Info> lst_rpt = new List<CXP_016_Info>();
@@ -40,7 +41,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                 tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
                 bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
 
-                lst_rpt = bus_rpt.GetList(IdEmpresa, IdUsuario, MostrarSaldo0, fechaIni, fechaFin);
+                lst_rpt = bus_rpt.GetList(IdEmpresa, IdUsuario, MostrarSaldo0, fechaIni, fechaFin, IdClaseProveedor);
                 this.DataSource = lst_rpt;
 
                 tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
