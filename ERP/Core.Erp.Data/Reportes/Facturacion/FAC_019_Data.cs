@@ -40,7 +40,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                         Ve_Vendedor = q.Ve_Vendedor,
                         vt_fecha = q.vt_fecha,
                         vt_fech_venc = q.vt_fech_venc,
-                        ValorRetencion = q.ValorRetencion                       
+                        ValorRetencion = q.ValorRetencion,
+                        Telefonos = q.Telefonos                     
                     }).ToList();
                 }
                 return Lista;

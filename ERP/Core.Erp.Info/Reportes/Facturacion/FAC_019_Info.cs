@@ -19,12 +19,14 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public decimal IdCliente { get; set; }
         public string pe_nombreCompleto { get; set; }
         public string pe_cedulaRuc { get; set; }
-        public int IdVendedor { get; set; }
+        public Nullable<int> IdVendedor { get; set; }
         public string Ve_Vendedor { get; set; }
-        public Nullable<decimal> Total { get; set; }
+        public Nullable<double> Total { get; set; }
         public Nullable<int> DiasVencido { get; set; }
         public double TotalCobrado { get; set; }
         public Nullable<double> Saldo { get; set; }
         public double ValorRetencion { get; set; }
+        public string vt_tipoDoc { get; set; }
+        public string Telefonos { get; set; }
     }
 }
