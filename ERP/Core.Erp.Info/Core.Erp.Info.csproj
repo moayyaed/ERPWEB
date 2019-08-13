@@ -93,6 +93,7 @@
     <Compile Include="Compras\com_estado_cierre_Info.cs" />
     <Compile Include="Compras\com_ordencompra_local_det_Info.cs" />
     <Compile Include="Compras\com_ordencompra_local_Info.cs" />
+    <Compile Include="Compras\com_ordencompra_local_resumen_Info.cs" />
     <Compile Include="Compras\com_parametro_Info.cs" />
     <Compile Include="Compras\com_TerminoPago_Info.cs" />
     <Compile Include="Contabilidad\ATS\ATS_Info\ats_Info.cs" />
