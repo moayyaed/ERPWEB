@@ -24,6 +24,7 @@ namespace Core.Erp.Web.Helps
         string Idtipo_cliente { get; set; }
         string IdSucursalInv { get; set; } //Para filtrar producto por bodega
         string IdBodegaInv { get; set; } //Para filtrar producto por bodega
+        string IdPuntoGrupo { get; set; }
     }
 
     public static class SessionFixed
@@ -142,6 +143,12 @@ namespace Core.Erp.Web.Helps
             get { return _sessionValueProvider.IdBodegaInv; }
             set { _sessionValueProvider.IdBodegaInv = value; }
         }
+
+        public static string IdPuntoGrupo
+        {
+            get { return _sessionValueProvider.IdPuntoGrupo; }
+            set { _sessionValueProvider.IdPuntoGrupo = value; }
+        }
     }
 
     public class WebSessionValueProvider : ISessionValueProvider
@@ -166,6 +173,7 @@ namespace Core.Erp.Web.Helps
         private const string _Idtipo_cliente = "Fx_Idtipo_cliente";
         private const string _IdSucursalInv = "Fx_IdSucursalInv";
         private const string _IdBodegaInv = "Fx_IdBodegaInv";
+        private const string _IdPuntoGrupo = "Fx_IdPuntoGrupo";
 
         public string TipoPersona
         {
@@ -272,6 +280,12 @@ namespace Core.Erp.Web.Helps
         {
             get { return (string)HttpContext.Current.Session[_IdBodegaInv]; }
             set { HttpContext.Current.Session[_IdBodegaInv] = value; }
+        }
+
+        public string IdPuntoGrupo
+        {
+            get { return (string)HttpContext.Current.Session[_IdPuntoGrupo]; }
+            set { HttpContext.Current.Session[_IdPuntoGrupo] = value; }
         }
     }
 }
