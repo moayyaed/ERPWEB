@@ -1,4 +1,4 @@
-﻿--exec [web].[SPCXP_015] 2,8,8,3204,3204,'28/02/2019',0
+﻿--exec [web].[SPCXP_015] 1,1,1,1,999999,'2019/08/20',0,0,99999
 CREATE PROCEDURE [web].[SPCXP_015]
 (
 @IdEmpresa int,
@@ -7,19 +7,23 @@ CREATE PROCEDURE [web].[SPCXP_015]
 @IdProveedorIni numeric,
 @IdProveedorFin numeric,
 @FechaCorte date,
-@MostrarSaldo0 bit
+@MostrarSaldo0 bit,
+@IdClaseProveedorIni int,
+@IdClaseProveedorFin int
 )
 AS
 select * from (
 select og.IdEmpresa, og.IdTipoCbte_Ogiro, og.IdCbteCble_Ogiro, og.IdSucursal, su.Su_Descripcion, og.co_factura, og.IdProveedor, per.pe_nombreCompleto, 
 og.co_observacion, og.co_FechaFactura, og.co_FechaFactura_vct, tp.Codigo, og.co_subtotal_iva, og.co_subtotal_siniva, og.co_valoriva, og.co_total, 
 isnull(ret.re_valor_retencion,0)ValorRetencion, isnull(ValorNC,0)ValorNC, isnull(ab.ValorAbono,0)ValorAbono, 
-round(og.co_total - isnull(ret.re_valor_retencion,0) - isnull(ValorNC,0) - isnull(ab.ValorAbono,0),2) as Saldo
+round(og.co_total - isnull(ret.re_valor_retencion,0) - isnull(ValorNC,0) - isnull(ab.ValorAbono,0),2) as Saldo,
+pro.IdClaseProveedor, cl.descripcion_clas_prove
 from cp_orden_giro as og inner join
 cp_proveedor as pro on og.IdEmpresa = pro.IdEmpresa and og.IdProveedor = pro.IdProveedor inner join
 tb_persona as per on pro.IdPersona = per.IdPersona left join
 cp_TipoDocumento as tp on tp.CodTipoDocumento = og.IdOrden_giro_Tipo left join
-tb_sucursal as su on og.IdEmpresa = su.IdEmpresa and og.IdSucursal = su.IdSucursal
+tb_sucursal as su on og.IdEmpresa = su.IdEmpresa and og.IdSucursal = su.IdSucursal left join
+cp_proveedor_clase as cl on pro.IdEmpresa = cl.IdEmpresa and pro.IdClaseProveedor = cl.IdClaseProveedor
 /*RETENCION*/
 left join (
 select c.IdEmpresa_Ogiro, c.IdTipoCbte_Ogiro, c.IdCbteCble_Ogiro, sum(d.re_valor_retencion)re_valor_retencion
@@ -60,17 +64,20 @@ group by f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp
 ) as ab on og.IdEmpresa = ab.IdEmpresa_cxp and og.IdTipoCbte_Ogiro = ab.IdTipoCbte_cxp and og.IdCbteCble_Ogiro = ab.IdCbteCble_cxp
 WHERE og.IdEmpresa = @IdEmpresa and og.IdSucursal between @IdSucursalIni AND @IdSucursalFin and og.co_fechaFactura <= @FechaCorte
 and og.IdProveedor between @IdProveedorIni AND @IdProveedorFin and og.Estado = 'A'
+and pro.IdClaseProveedor between @IdClaseProveedorIni and @IdClaseProveedorFin
 
 UNION ALL
 
 select og.IdEmpresa, og.IdTipoCbte_Nota, og.IdCbteCble_Nota, og.IdSucursal, su.Su_Descripcion, isnull(og.cod_nota, cast(og.IdCbteCble_Nota as varchar(20))), og.IdProveedor, per.pe_nombreCompleto, 
 og.cn_observacion, og.cn_fecha, og.cn_Fecha_vcto, 'ND', og.cn_subtotal_iva, og.cn_subtotal_siniva, og.cn_valoriva, og.cn_total, 
 0 ValorRetencion, isnull(ValorNC,0)ValorNC, isnull(ab.ValorAbono,0)ValorAbono, 
-round(og.cn_total - isnull(ValorNC,0) - isnull(ab.ValorAbono,0),2) as Saldo
+round(og.cn_total - isnull(ValorNC,0) - isnull(ab.ValorAbono,0),2) as Saldo,
+pro.IdClaseProveedor, cl.descripcion_clas_prove
 from cp_nota_DebCre as og inner join
 cp_proveedor as pro on og.IdEmpresa = pro.IdEmpresa and og.IdProveedor = pro.IdProveedor inner join
 tb_persona as per on pro.IdPersona = per.IdPersona left join
-tb_sucursal as su on og.IdEmpresa = su.IdEmpresa and og.IdSucursal = su.IdSucursal
+tb_sucursal as su on og.IdEmpresa = su.IdEmpresa and og.IdSucursal = su.IdSucursal left join
+cp_proveedor_clase as cl on pro.IdEmpresa = cl.IdEmpresa and pro.IdClaseProveedor = cl.IdClaseProveedor
 /*NOTAS DE CREDITO*/
 LEFT JOIN (
 SELECT f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp, sum(f.MontoAplicado)ValorNC
@@ -101,17 +108,20 @@ group by f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp
 ) as ab on og.IdEmpresa = ab.IdEmpresa_cxp and og.IdTipoCbte_Nota = ab.IdTipoCbte_cxp and og.IdCbteCble_Nota = ab.IdCbteCble_cxp
 WHERE og.IdEmpresa = @IdEmpresa and og.IdSucursal between @IdSucursalIni AND @IdSucursalFin and og.cn_Fecha <= @FechaCorte
 and og.IdProveedor between @IdProveedorIni AND @IdProveedorFin and og.Estado = 'A' and og.DebCre = 'D'
+and pro.IdClaseProveedor between @IdClaseProveedorIni and @IdClaseProveedorFin
 
 UNION ALL
 
 SELECT ISNULL(D.IdEmpresa_cxp,0) IdEmpresa, ISNULL(D.IdTipoCbte_cxp,0) IdTipoCbte, ISNULL(D.IdCbteCble_cxp,0) IdCbteCble, C.IdSucursal, su.Su_Descripcion, cast(c.IdOrdenPago as varchar(20)),
 c.IdEntidad, pe_nombreCompleto, c.Observacion, c.Fecha, c.Fecha, 'OP', 0,D.Valor_a_pagar,0,D.Valor_a_pagar,0,
-isnull(ValorNC,0), isnull(ValorAbono,0), round(D.Valor_a_pagar - isnull(ValorNC,0) - isnull(ValorAbono,0),2) Saldo
+isnull(ValorNC,0), isnull(ValorAbono,0), round(D.Valor_a_pagar - isnull(ValorNC,0) - isnull(ValorAbono,0),2) Saldo,
+pro.IdClaseProveedor, cl.descripcion_clas_prove
 FROM cp_orden_pago_det AS D INNER JOIN
 cp_orden_pago AS C ON C.IdEmpresa = D.IdEmpresa AND C.IdOrdenPago = D.IdOrdenPago LEFT JOIN
 cp_proveedor AS PRO ON PRO.IdEmpresa = C.IdEmpresa AND PRO.IdProveedor = C.IdEntidad AND C.IdTipo_Persona = 'PROVEE' INNER JOIN
 tb_sucursal AS su on su.IdEmpresa = c.IdEmpresa and su.IdSucursal = c.IdSucursal left join
-tb_persona as per on pro.IdPersona = per.IdPersona 
+tb_persona as per on pro.IdPersona = per.IdPersona left join
+cp_proveedor_clase as cl on pro.IdEmpresa = cl.IdEmpresa and pro.IdClaseProveedor = cl.IdClaseProveedor
 /*NOTAS DE CREDITO*/
 LEFT JOIN (
 SELECT f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp, sum(f.MontoAplicado)ValorNC
@@ -144,6 +154,7 @@ group by f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp
 ) as AB on d.IdEmpresa = AB.IdEmpresa_cxp and D.IdTipoCbte_cxp = AB.IdTipoCbte_cxp and D.IdCbteCble_cxp = AB.IdCbteCble_cxp
 WHERE C.IdEmpresa = @IdEmpresa AND C.IdSucursal BETWEEN @IdSucursalIni AND @IdSucursalFin
 AND C.IdTipo_Persona = 'PROVEE' and c.Estado = 'A' and c.IdEntidad between @IdProveedorIni and @IdProveedorFin 
+and pro.IdClaseProveedor between @IdClaseProveedorIni and @IdClaseProveedorFin
 AND NOT EXISTS(
 SELECT IdEmpresa FROM cp_orden_giro ne
 where ne.IdEmpresa = d.IdEmpresa_cxp

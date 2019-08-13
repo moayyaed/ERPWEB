@@ -11,6 +11,10 @@
     [Retenciones]       FLOAT (53)     NOT NULL,
     [Pagos]             FLOAT (53)     NOT NULL,
     [Saldo]             FLOAT (53)     NOT NULL,
+    [IdProveedorClase]  INT            NULL,
+    [DescripcionClase]  VARCHAR (MAX)  NULL,
     CONSTRAINT [PK_SPCXP_016] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdProveedor] ASC, [IdUsuario] ASC)
 );
+
+
 

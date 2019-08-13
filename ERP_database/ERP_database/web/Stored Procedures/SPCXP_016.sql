@@ -5,7 +5,9 @@ CREATE PROCEDURE [web].[SPCXP_016]
 @IdUsuario varchar(50),
 @MostrarSaldo0 bit,
 @FechaIni date,
-@FechaFin date
+@FechaFin date,
+@IdClaseProveedorIni int,
+@IdClaseProveedorFin int
 )
 AS
 delete [web].[cp_SPCXP_016] where IdUsuario = @IdUsuario
@@ -23,15 +25,18 @@ INSERT INTO [web].[cp_SPCXP_016]
            ,[Compra]
            ,[Retenciones]
            ,[Pagos]
-           ,[Saldo])
+           ,[Saldo]
+		   ,[IdProveedorClase]
+		   ,[DescripcionClase])
 
      select SU.IdEmpresa, f.IdSucursal, IdProveedor, @IdUsuario, su.Su_Descripcion, per.pe_cedulaRuc, per.pe_nombreCompleto,
-	 0,0,0,0,0
+	 0,0,0,0,0, p.IdClaseProveedor, cl.descripcion_clas_prove
 	 from cp_proveedor as p inner join 
 	 tb_persona as per on p.IdPersona = per.IdPersona inner join
 	 tb_sucursal as su on su.IdEmpresa = p.IdEmpresa inner join
-	 web.tb_FiltroReportes as f on su.IdEmpresa = f.IdEmpresa and su.IdSucursal = f.IdSucursal
-	 where su.IdEmpresa = @IdEmpresa and f.IdUsuario = @IdUsuario
+	 web.tb_FiltroReportes as f on su.IdEmpresa = f.IdEmpresa and su.IdSucursal = f.IdSucursal inner join
+	 cp_proveedor_clase as cl on p.IdEmpresa = cl.IdEmpresa and p.IdClaseProveedor = cl.IdClaseProveedor
+	 where su.IdEmpresa = @IdEmpresa and f.IdUsuario = @IdUsuario and p.IdClaseProveedor between @IdClaseProveedorIni and @IdClaseProveedorFin
 	 and (exists(
 	 select * from cp_orden_giro as og
 	 where og.IdEmpresa = p.IdEmpresa
@@ -204,6 +209,7 @@ BEGIN
 END
 
 select [IdEmpresa]		   ,[IdSucursal]           ,[IdProveedor]           ,[IdUsuario]		   ,[Su_Descripcion]           ,[pe_CedulaRuc]           ,[pe_nombreCompleto]
-           ,[SaldoInicial]           ,[Compra]           ,[Retenciones]           ,[Pagos]           ,[Saldo] 
-from [web].[cp_SPCXP_016]
+           ,[SaldoInicial]           ,[Compra]           ,[Retenciones]           ,[Pagos]           ,[Saldo] ,[IdProveedorClase]
+		   ,[DescripcionClase]
+from [web].[cp_SPCXP_016] 
 WHERE IdUsuario = @IdUsuario

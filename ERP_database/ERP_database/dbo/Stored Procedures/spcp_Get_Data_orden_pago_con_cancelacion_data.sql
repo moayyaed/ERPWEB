@@ -79,11 +79,11 @@ where data.IdUsuario = @IdUsuario
 
 update [cp_orden_pago_con_cancelacion_data]  
 set Referencia=
-CASE WHEN ND.cn_Nota is NULL  or ND.cn_Nota='' THEN  +'ND#:' + cast(ND.IdCbteCble_Nota as varchar(20)) 
-else 'ND#' + ND.cn_Nota
+CASE WHEN ND.cod_nota is NULL  or ND.cod_nota='' THEN  +'ND#:' +  cast(ND.IdCbteCble_Nota as varchar(20)) 
+else 'ND#' + ND.cod_nota
 END 
-,Referencia2=CASE WHEN ND.cn_Nota is NULL  or ND.cn_Nota='' THEN  +'ND#:' + cast(ND.IdCbteCble_Nota as varchar(20)) 
-else 'ND#' + ND.cn_Nota
+,Referencia2=CASE WHEN ND.cod_nota is NULL  or ND.cod_nota='' THEN  +'ND#:' + cast(ND.IdCbteCble_Nota as varchar(20)) 
+else 'ND#' + ND.cod_nota
 END
 
 ,Fecha_Fa_Prov=ND.cn_fecha
