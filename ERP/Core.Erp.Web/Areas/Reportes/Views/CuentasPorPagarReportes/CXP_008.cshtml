@@ -36,12 +36,25 @@
                             @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdClaseProveedor">Clase proveedor</label>
+                            @Html.DropDownListFor(q => q.IdClaseProveedor, new SelectList(ViewBag.lst_clase_proveedor, "IdClaseProveedor", "descripcion_clas_prove"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdClaseProveedor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdProveedor">Proveedor</label>
                             @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
                         </div>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha *</label>
@@ -49,15 +62,15 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.DevExpress().DateEditFor(q=> q.fecha_fin, settings =>
-                            {
-                                settings.Name = "fecha_fin";
-                                settings.Properties.UseMaskBehavior = true;
-                                settings.Properties.EditFormat = EditFormat.Date;
-                                settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                            }).GetHtml()
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                           {
+                               settings.Name = "fecha_fin";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -80,6 +93,7 @@
             </div>
             <!-- /.box-body -->
         </div>
+
     </div>
     <div class="box">
         <div class="box-header with-border">
