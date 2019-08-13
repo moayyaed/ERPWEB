@@ -8,6 +8,7 @@ using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
@@ -63,7 +64,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
         public List<ct_punto_cargo_Info> get_list_bajo_demanda_punto(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            int IdGrupo = Request == null ? 0 : (Request.Params["ContaRpt_IdPunto_cargo_grupo"] != null || Request.Params["ContaRpt_IdPunto_cargo_grupo"] != "" ? 0 : Convert.ToInt32(Request.Params["ContaRpt_IdPunto_cargo_grupo"]));
+            var x = Request;
+            int IdGrupo = Request == null ? 0 : (Request.Params["ContaRpt_IdPunto_cargo_grupo"] != null || Request.Params["ContaRpt_IdPunto_cargo_grupo"] != "" ? Convert.ToInt32(Request.Params["ContaRpt_IdPunto_cargo_grupo"]) : 0);
             return bus_punto_cargo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa),IdGrupo);
         }
         public ct_punto_cargo_Info get_info_bajo_demanda_punto(ListEditItemRequestedByValueEventArgs args)

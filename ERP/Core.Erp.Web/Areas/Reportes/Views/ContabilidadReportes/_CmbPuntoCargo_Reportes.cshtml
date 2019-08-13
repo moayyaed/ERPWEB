@@ -16,7 +16,7 @@
         settings.Properties.Columns.Add("IdPunto_cargo", "ID", 10);
         settings.Properties.Columns.Add("nom_punto_cargo", "Descripcion", 90);
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['ContaRpt_IdPunto_cargo_grupo'] = IdPunto_cargo_grupo.GetValue(); }";
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['ContaRpt_IdPunto_cargo_grupo'] = IdPunto_cargo_grupo.GetValue();  console.log(e.customArgs['ContaRpt_IdPunto_cargo_grupo']);}";
 
     })
      .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_punto, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_punto)
