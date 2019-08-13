@@ -12,7 +12,7 @@ CREATE PROCEDURE [web].[SPCXC_005]
 @MostrarSaldo0 bit
 )
 AS
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_tipoDoc, c.vt_NumFactura, c.IdCliente, RTRIM(LTRIM(tb_persona.pe_nombreCompleto)) AS NomCliente, 
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_tipoDoc, C.vt_serie1+'-'+C.vt_serie2+'-'+ c.vt_NumFactura vt_NumFactura, c.IdCliente, RTRIM(LTRIM(tb_persona.pe_nombreCompleto)) AS NomCliente, 
  c.vt_fecha, c.vt_fech_venc, SubtotalConDscto AS Subtotal, ValorIVA AS IVA, Total AS Total, isnull(cobro.ValorPago,0) as Cobrado, ISNULL(NC.ValorPago,0) as NotaCredito, ROUND(D.Total - ISNULL(NC.ValorPago,0) - ISNULL(cobro.ValorPago,0),2) AS Saldo,
  S.Su_Descripcion, fa_cliente.Idtipo_cliente, fa_cliente_tipo.Descripcion_tip_cliente
 FROM                     fa_factura AS c INNER JOIN
