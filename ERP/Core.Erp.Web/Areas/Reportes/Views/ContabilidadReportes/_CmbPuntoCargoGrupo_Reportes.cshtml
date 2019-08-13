@@ -15,7 +15,7 @@
         settings.Properties.ValueType = typeof(int);
         settings.Properties.Columns.Add("IdPunto_cargo_grupo", "ID", 10);
         settings.Properties.Columns.Add("nom_punto_cargo_grupo", "Descripción", 90);
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){IdPunto_cargo.PerformCallback();}";
+        //settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){ IdPunto_cargo.PerformCallback(); }";
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
     })
       .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_grupo, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_grupo)

@@ -16,10 +16,31 @@
         settings.Properties.Columns.Add("IdPunto_cargo", "ID", 10);
         settings.Properties.Columns.Add("nom_punto_cargo", "Descripcion", 90);
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['ContaRpt_IdPunto_cargo_grupo'] = IdPunto_cargo_grupo.GetValue();  console.log(e.customArgs['ContaRpt_IdPunto_cargo_grupo']);}";
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { SetPuntoCargoGrupo();}";
 
     })
-     .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_punto, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_punto)
-    .Bind((Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) || Model.GetType() == typeof(Core.Erp.Info.Contabilidad.ct_punto_cargo_Info)) || Model == 0 ? "" : Model);
+     .BindList(new Core.Erp.Bus.Contabilidad.ct_punto_cargo_Bus().GetList(Model.IdEmpresa,Model.IdPunto_cargo_grupo, false))
+    .Bind(Model.IdPunto_cargo);
 }
 @comboBox.GetHtml()
+
+<script>
+    function SetPuntoCargoGrupo() {
+        var datos = {
+            IdGrupo : IdPunto_cargo_grupo.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetPuntoCargoGrupo", "ContabilidadReportes",new { Area = "Reportes"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
