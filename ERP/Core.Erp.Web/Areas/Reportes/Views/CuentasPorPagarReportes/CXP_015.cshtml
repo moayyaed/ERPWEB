@@ -36,12 +36,26 @@
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-5">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdClaseProveedor">Clase proveedor</label>
+                            @Html.DropDownListFor(q => q.IdClaseProveedor, new SelectList(ViewBag.lst_clase_proveedor, "IdClaseProveedor", "descripcion_clas_prove"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdClaseProveedor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdCliente">Proveedor</label>
                             @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
                         </div>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha corte*</label>

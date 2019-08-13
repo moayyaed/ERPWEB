@@ -23,6 +23,7 @@ namespace Core.Erp.Info.Helps
         public decimal IdCbteCble { get; set; }
         public int IdPunto_cargo_grupo { get; set; }
         public int IdPunto_cargo { get; set; }
+        public int IdClaseProveedor { get; set; }
 
         #region Filtros activo
         public int IdActivoFijoTipo { get; set; }

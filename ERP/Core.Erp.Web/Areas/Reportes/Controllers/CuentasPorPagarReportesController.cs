@@ -221,6 +221,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_proveedor = bus_proveedor.get_list(IdEmpresa, false);
             ViewBag.lst_proveedor = lst_proveedor;
 
+            cp_proveedor_clase_Bus bus_clase_proveedor = new cp_proveedor_clase_Bus();
+            var lst_clase_proveedor = bus_clase_proveedor.get_list(IdEmpresa, false);
+            ViewBag.lst_clase_proveedor = lst_clase_proveedor; 
+
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
 
@@ -261,6 +265,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha.Value = model.fecha_fin;
             report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_no_mostrar_en_conciliacion.Value = model.no_mostrar_en_conciliacion;
             report.p_no_mostrar_saldo_0.Value = model.no_mostrar_saldo_en_0;
             report.usuario = SessionFixed.IdUsuario;
@@ -285,6 +290,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha.Value = model.fecha_fin;
             report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_no_mostrar_en_conciliacion.Value = model.no_mostrar_en_conciliacion;
             report.p_no_mostrar_saldo_0.Value = model.no_mostrar_saldo_en_0;
             report.usuario = SessionFixed.IdUsuario;
@@ -554,6 +560,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
@@ -579,6 +586,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_fecha_corte.Value = model.fecha_fin;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             cargar_combos(true);
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
@@ -595,6 +603,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
+            cargar_combos(true);
             model.IntArray = new int[] { model.IdSucursal};
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_016_Rpt report = new CXP_016_Rpt();
@@ -611,6 +620,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_FechaIni.Value = model.fecha_ini;
             report.p_FechaFin.Value = model.fecha_fin;
             report.IntArray = model.IntArray;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_IdUsuario.Value = SessionFixed.IdUsuario;
             report.p_MostrarSaldo0.Value = model.mostrarSaldo0;
 
@@ -640,10 +650,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.IntArray = model.IntArray;
             report.p_IdUsuario.Value = SessionFixed.IdUsuario;
             report.p_MostrarSaldo0.Value = model.mostrarSaldo0;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
 
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
+            cargar_combos(true);
             ViewBag.Report = report;
             return View(model);
         }
