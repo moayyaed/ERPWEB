@@ -1,4 +1,4 @@
-﻿
+﻿--exec [web].[SPCXC_010] 1,1,1,572,572,1,99999,'13/08/2019',0
 CREATE PROCEDURE [web].[SPCXC_010]
 	@IdEmpresa as int,
 	@SucursalIni as int,
@@ -101,7 +101,7 @@ GROUP BY		dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_nota
 SELECT A.IdEmpresa, A.IdSucursal, A.dc_TipoDocumento, A.IdBodega_Cbte, A.IdCbte_vta_nota, SUM(dc_ValorPago) dc_ValorPago
 FROM(
 		SELECT d.IdEmpresa, d.IdSucursal, d.dc_TipoDocumento, d.IdBodega_Cbte, d.IdCbte_vta_nota, 
-		case when C.IdCobro_tipo <> 'TARJ' then
+		case when ISNULL(C.IdCobro_tipo,'') <> 'TARJ' then
 		d.dc_ValorPago
 		when C.IdCobro_tipo = 'TARJ' AND ISNULL(L.Fecha, DATEADD(DAY,1,@fechaCorte)) <= @fechaCorte then
 		d.dc_ValorPago

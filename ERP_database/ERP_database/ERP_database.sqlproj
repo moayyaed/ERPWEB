@@ -1169,6 +1169,8 @@
     <Build Include="web\Views\VWCXP_017.sql" />
     <Build Include="web\Views\VWFAC_002.sql" />
     <Build Include="web\Views\VWFAC_020.sql" />
+    <Build Include="dbo\Tables\com_ordencompra_local_resumen.sql" />
+    <Build Include="web\Views\VWBAN_013.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

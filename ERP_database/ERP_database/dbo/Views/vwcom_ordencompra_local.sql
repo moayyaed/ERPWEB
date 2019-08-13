@@ -1,16 +1,15 @@
 ﻿CREATE VIEW dbo.vwcom_ordencompra_local
 AS
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdOrdenCompra, c.Tipo, c.SecuenciaTipo, s.codigo + '-' + CAST(c.IdOrdenCompra AS VARCHAR(18)) AS Codigo, s.Su_Descripcion, c.oc_fecha, per.pe_nombreCompleto, d.Total, 
-                         c.IdEstadoAprobacion_cat, CASE WHEN c.IdEstadoAprobacion_cat = 'APRO' THEN 'Aprobado' WHEN c.IdEstadoAprobacion_cat = 'XAPRO' THEN 'Por Aprobar' ELSE 'Anulado' END AS EstadoAprobacion, c.oc_observacion, 
-                         com.Descripcion, c.IdEstado_cierre, CASE WHEN c.IdEstado_cierre = 'ABI' THEN 'Abierta' WHEN c.IdEstado_cierre = 'CERR' THEN 'Cerrada' ELSE 'Pendiente' END AS EstadoCierre, c.Estado, tp.Descripcion AS TerminoPago, 
-                         c.oc_plazo
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdOrdenCompra, c.Tipo, c.SecuenciaTipo, s.codigo + '-' + CAST(c.IdOrdenCompra AS VARCHAR(18)) AS Codigo, s.Su_Descripcion, c.oc_fecha, per.pe_nombreCompleto, c.IdEstadoAprobacion_cat, 
+                         CASE WHEN c.IdEstadoAprobacion_cat = 'APRO' THEN 'Aprobado' WHEN c.IdEstadoAprobacion_cat = 'XAPRO' THEN 'Por Aprobar' ELSE 'Anulado' END AS EstadoAprobacion, c.oc_observacion, com.Descripcion, 
+                         c.IdEstado_cierre, CASE WHEN c.IdEstado_cierre = 'ABI' THEN 'Abierta' WHEN c.IdEstado_cierre = 'CERR' THEN 'Cerrada' ELSE 'Pendiente' END AS EstadoCierre, c.Estado, tp.Descripcion AS TerminoPago, c.oc_plazo, 
+                         dbo.com_ordencompra_local_resumen.Total
 FROM            dbo.com_ordencompra_local AS c LEFT OUTER JOIN
                          dbo.tb_sucursal AS s ON c.IdEmpresa = s.IdEmpresa AND c.IdSucursal = s.IdSucursal LEFT OUTER JOIN
                          dbo.cp_proveedor AS pro ON c.IdEmpresa = pro.IdEmpresa AND c.IdProveedor = pro.IdProveedor INNER JOIN
                          dbo.tb_persona AS per ON pro.IdPersona = per.IdPersona LEFT OUTER JOIN
-                             (SELECT        IdEmpresa, IdSucursal, IdOrdenCompra, SUM(do_total) AS Total
-                               FROM            dbo.com_ordencompra_local_det AS det
-                               GROUP BY IdEmpresa, IdSucursal, IdOrdenCompra) AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdOrdenCompra = d.IdOrdenCompra LEFT OUTER JOIN
+                         dbo.com_ordencompra_local_resumen ON c.IdOrdenCompra = dbo.com_ordencompra_local_resumen.IdOrdenCompra AND c.IdSucursal = dbo.com_ordencompra_local_resumen.IdSucursal AND 
+                         c.IdEmpresa = dbo.com_ordencompra_local_resumen.IdEmpresa LEFT OUTER JOIN
                          dbo.com_comprador AS com ON c.IdEmpresa = com.IdEmpresa AND c.IdComprador = com.IdComprador LEFT OUTER JOIN
                          dbo.com_TerminoPago AS tp ON c.IdEmpresa = tp.IdEmpresa AND c.IdTerminoPago = tp.IdTerminoPago
 GO
@@ -19,7 +18,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[55] 4[17] 2[12] 3) )"
+         Configuration = "(H (1[29] 4[27] 2[21] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -82,15 +81,15 @@ Begin DesignProperties =
    Begin DiagramPane = 
       Begin Origin = 
          Top = 0
-         Left = -474
+         Left = 0
       End
       Begin Tables = 
          Begin Table = "c"
             Begin Extent = 
                Top = 0
-               Left = 755
+               Left = 595
                Bottom = 649
-               Right = 988
+               Right = 828
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -125,16 +124,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "d"
-            Begin Extent = 
-               Top = 6
-               Left = 286
-               Bottom = 218
-               Right = 477
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "com"
             Begin Extent = 
                Top = 798
@@ -154,6 +143,15 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "com_ordencompra_local_resumen"
+            Begin Extent = 
+               Top = 11
+               Left = 940
+               Bottom = 185
+               Right = 1159
+            End
+            DisplayFlags = 280
        ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
 
 
@@ -165,8 +163,11 @@ Begin DesignProperties =
 
 
 
+
+
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     TopColumn = 6
+         End
       End
    End
    Begin SQLPane = 
@@ -174,8 +175,9 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 20
+      Begin ColumnWidths = 21
          Width = 284
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -216,6 +218,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+
+
 
 
 
