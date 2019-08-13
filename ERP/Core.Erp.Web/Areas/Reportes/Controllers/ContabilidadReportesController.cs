@@ -86,6 +86,20 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             SessionFixed.IdDivision_IC = IdGrupo.ToString();
             return Json(IdGrupo, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult CargarPuntoCargo(int IdEmpresa = 0, int IdPuntoCargoGrupo = 0)
+        {
+            ct_punto_cargo_Bus bus_punto_cargo = new ct_punto_cargo_Bus();
+            var resultado = bus_punto_cargo.GetList(IdEmpresa, IdPuntoCargoGrupo, false);
+            resultado.Add(new ct_punto_cargo_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdPunto_cargo = 0,
+                nom_punto_cargo = "TODOS"
+            });
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
@@ -123,6 +137,30 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ct_punto_cargo_grupo_Bus bus_punto = new ct_punto_cargo_grupo_Bus();
             var lst_punto = bus_punto.GetList(IdEmpresa, false);
             ViewBag.lst_punto = lst_punto;
+        }
+
+        private void cargar_combos_punto_cargo(cl_filtros_Info model)
+        {
+            ct_punto_cargo_grupo_Bus bus_punto = new ct_punto_cargo_grupo_Bus();
+            var lst_punto = bus_punto.GetList(model.IdEmpresa, false);
+            lst_punto.Add(new ct_punto_cargo_grupo_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdPunto_cargo_grupo = 0,
+                nom_punto_cargo_grupo = "TODOS"
+            });
+            ViewBag.lst_punto = lst_punto;
+
+            ct_punto_cargo_Bus bus_punto_cargo = new ct_punto_cargo_Bus();
+            var lst_punto_cargo = bus_punto_cargo.GetList(model.IdEmpresa, model.IdPunto_cargo_grupo, false);
+            lst_punto_cargo.Add(new ct_punto_cargo_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdPunto_cargo = 0,
+                nom_punto_cargo = "TODOS"
+            });
+            ViewBag.lst_punto_cargo = lst_punto_cargo;
+
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -190,9 +228,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCtaCbleFin = "",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoCbte = 1,
-                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                IdPunto_cargo_grupo = 0
             };
             //cargar_combos(model.IdEmpresa);
+            cargar_combos_punto_cargo(model);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
             #region Cargo diseño desde base
@@ -241,6 +281,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.empresa = SessionFixed.NomEmpresa;
             SessionFixed.IdDivision_IC = model.IdPunto_cargo_grupo.ToString();
             //cargar_combos(model.IdEmpresa);
+            cargar_combos_punto_cargo(model);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);

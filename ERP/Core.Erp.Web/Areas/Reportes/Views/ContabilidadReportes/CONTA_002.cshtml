@@ -92,17 +92,17 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="IdPunto_cargo_grupo">Grupo de cargo</label>
-                        @Html.Partial("_CmbPuntoCargoGrupo_Reportes", Model.IdPunto_cargo_grupo)
+                        <label for="IdSucursal">Punto de cargo grupo</label>
+                        @Html.DropDownListFor(q => q.IdPunto_cargo_grupo, new SelectList(ViewBag.lst_punto, "IdPunto_cargo_grupo", "nom_punto_cargo_grupo"), new { @class = "form-control", @id = "IdPunto_cargo_grupo" })
                         @Html.ValidationMessageFor(q => q.IdPunto_cargo_grupo, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="IdPunto_cargo">Punto de cargo</label>
-                        @Html.Partial("_CmbPuntoCargo_Reportes", Model)
+                        <label for="IdBodega">Punto de cargo</label>
+                        @Html.DropDownListFor(q => q.IdPunto_cargo, new SelectList(ViewBag.lst_punto_cargo, "IdPunto_cargo", "nom_punto_cargo"), new { @class = "form-control", @id = "IdPunto_cargo" })
                         @Html.ValidationMessageFor(q => q.IdPunto_cargo, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -291,3 +291,39 @@
                 <!-- /.box-footer-->
             </div>
             }
+
+<script type="text/javascript">
+    $(function () {
+        CargarPuntoCargo();
+        $("#IdPunto_cargo_grupo").change(function () {
+            CargarPuntoCargo();
+        });
+    });
+
+    function CargarPuntoCargo() {
+        $("#IdPunto_cargo").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdPuntoCargoGrupo : $("#IdPunto_cargo_grupo").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntoCargo", "ContabilidadReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdPunto_cargo").append("<option value=" + row.IdPunto_cargo + ">" + row.nom_punto_cargo + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>
