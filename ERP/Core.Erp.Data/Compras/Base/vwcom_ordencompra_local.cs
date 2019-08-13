@@ -23,7 +23,6 @@ namespace Core.Erp.Data.Compras.Base
         public string Su_Descripcion { get; set; }
         public System.DateTime oc_fecha { get; set; }
         public string pe_nombreCompleto { get; set; }
-        public Nullable<double> Total { get; set; }
         public string IdEstadoAprobacion_cat { get; set; }
         public string EstadoAprobacion { get; set; }
         public string oc_observacion { get; set; }
@@ -33,5 +32,6 @@ namespace Core.Erp.Data.Compras.Base
         public string Estado { get; set; }
         public string TerminoPago { get; set; }
         public int oc_plazo { get; set; }
+        public Nullable<decimal> Total { get; set; }
     }
 }

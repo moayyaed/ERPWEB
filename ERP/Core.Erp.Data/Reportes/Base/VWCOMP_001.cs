@@ -48,5 +48,7 @@ namespace Core.Erp.Data.Reportes.Base
         public double Subtotal0 { get; set; }
         public double DescuentoTotal { get; set; }
         public string NombreUsuario { get; set; }
+        public Nullable<System.DateTime> Fecha_Transac { get; set; }
+        public Nullable<System.DateTime> FechaAprobacion { get; set; }
     }
 }

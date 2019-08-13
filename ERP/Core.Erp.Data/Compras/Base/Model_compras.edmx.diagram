@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="Model_compras.com_parametro" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_compras.com_solicitante" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_compras.com_TerminoPago" Width="1.5" PointX="0.75" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Model_compras.FK_com_catalogo_com_catalogo_tipo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_catalogo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_compras.FK_com_parametro_com_catalogo" ManuallyRouted="false" />
@@ -28,6 +27,8 @@
         <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_det" Width="1.5" PointX="5.25" PointY="9.125" />
         <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_det_com_ordencompra_local" />
         <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_detPorIngresar" Width="1.5" PointX="8.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_resumen" Width="1.5" PointX="10.375" PointY="7.75" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local" Width="1.5" PointX="8.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

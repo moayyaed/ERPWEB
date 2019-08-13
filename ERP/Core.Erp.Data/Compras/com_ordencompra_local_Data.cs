@@ -43,7 +43,7 @@ namespace Core.Erp.Data.Compras
                                      oc_plazo = q.oc_plazo,
                                      oc_observacion = q.oc_observacion,
                                      oc_fecha = q.oc_fecha,
-
+                                     Total = q.Total,
                                      EstadoBool = q.Estado == "A" ? true : false,
                                      pe_nombreCompleto = q.pe_nombreCompleto,
                                      pr_codigo = q.Codigo,
@@ -72,7 +72,7 @@ namespace Core.Erp.Data.Compras
                                      oc_plazo = q.oc_plazo,
                                      oc_observacion = q.oc_observacion,
                                      oc_fecha = q.oc_fecha,
-
+                                     Total = q.Total,
                                      EstadoBool = q.Estado == "A" ? true : false,
                                      pe_nombreCompleto = q.pe_nombreCompleto,
                                      pr_codigo = q.Codigo,
@@ -177,6 +177,7 @@ namespace Core.Erp.Data.Compras
 
         public bool guardarDB(com_ordencompra_local_Info info)
         {
+            com_ordencompra_local_resumen_Info info_resumen = new com_ordencompra_local_resumen_Info();
             try
             {
                 using (Entities_compras Context = new Entities_compras())
@@ -231,9 +232,37 @@ namespace Core.Erp.Data.Compras
                                 IdPunto_cargo = item.IdPunto_cargo,
                                 IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                             };
-                        Context.com_ordencompra_local_det.Add(Entity_det);
-
+                        Context.com_ordencompra_local_det.Add(Entity_det);                        
                     }
+
+                    var Descuento = Convert.ToDecimal(info.lst_det.Sum(q=>q.do_Cantidad * q.do_descuento));
+                    var ValorIVA = Convert.ToDecimal(info.lst_det.Sum(q => q.do_iva));
+                    var SubtotalIVASinDscto =  Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
+                    var SubtotalSinIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
+                    var SubtotalIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_subtotal));
+                    var SubtotalSinIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_subtotal));
+                    var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
+                    var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
+                    var Total = SubtotalConDscto + ValorIVA;
+
+                    com_ordencompra_local_resumen Entity_Resumen = new com_ordencompra_local_resumen
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
+                        IdOrdenCompra = info.IdOrdenCompra,
+                        SubtotalIVASinDscto = SubtotalIVASinDscto,
+                        SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
+                        SubtotalSinDscto = SubtotalSinDscto,
+                        Descuento = Descuento,
+                        SubtotalIVAConDscto = SubtotalIVAConDscto,
+                        SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                        SubtotalConDscto = SubtotalConDscto,
+                        ValorIVA = ValorIVA,
+                        Total = Total
+                    };
+
+                    Context.com_ordencompra_local_resumen.Add(Entity_Resumen);
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -301,8 +330,36 @@ namespace Core.Erp.Data.Compras
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         };
                         Context.com_ordencompra_local_det.Add(Entity_det);
-
                     }
+
+                    var Descuento = Convert.ToDecimal(info.lst_det.Sum(q => q.do_Cantidad * q.do_descuento));
+                    var ValorIVA = Convert.ToDecimal(info.lst_det.Sum(q => q.do_iva));
+                    var SubtotalIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
+                    var SubtotalSinIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
+                    var SubtotalIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_subtotal));
+                    var SubtotalSinIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_subtotal));
+                    var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
+                    var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
+                    var Total = SubtotalConDscto + ValorIVA;
+
+                    com_ordencompra_local_resumen Entity_Resumen = new com_ordencompra_local_resumen
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
+                        IdOrdenCompra = info.IdOrdenCompra,
+                        SubtotalIVASinDscto = SubtotalIVASinDscto,
+                        SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
+                        SubtotalSinDscto = SubtotalSinDscto,
+                        Descuento = Descuento,
+                        SubtotalIVAConDscto = SubtotalIVAConDscto,
+                        SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                        SubtotalConDscto = SubtotalConDscto,
+                        ValorIVA = ValorIVA,
+                        Total = Total
+                    };
+
+                    Context.com_ordencompra_local_resumen.Add(Entity_Resumen);
+
                     Context.SaveChanges();
 
             }

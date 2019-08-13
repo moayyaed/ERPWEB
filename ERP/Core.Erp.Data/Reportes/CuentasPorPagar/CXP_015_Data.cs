@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
   public class CXP_015_Data
     {
-        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0)
+        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0, int IdClaseProveedor)
         {
             try
             {
@@ -19,10 +19,13 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                 decimal IdProveedorIni = IdProveedor;
                 decimal IdProveedorFin = IdProveedor == 0 ? 99999 : IdProveedor;
 
+
+                int IdClaseProveedorIni = IdClaseProveedor;
+                int IdClaseProveedorFin = IdClaseProveedor == 0 ? 99999999 : IdClaseProveedor;
                 List<CXP_015_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPCXP_015(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0).Select(q => new CXP_015_Info
+                    Lista = Context.SPCXP_015(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin).Select(q => new CXP_015_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
