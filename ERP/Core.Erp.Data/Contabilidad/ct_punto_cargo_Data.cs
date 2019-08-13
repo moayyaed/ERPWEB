@@ -195,23 +195,16 @@ namespace Core.Erp.Data.Contabilidad
         {
             try
             {
-                List<ct_punto_cargo_Info> Lista = new List<ct_punto_cargo_Info>();
-                Entities_contabilidad context_g = new Entities_contabilidad();
-
+                List<ct_punto_cargo_Info> Lista;
+                using (Entities_contabilidad context_g = new Entities_contabilidad())
                 {
-                    List<ct_punto_cargo> lstg;
-                    lstg = context_g.ct_punto_cargo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == true && (q.IdPunto_cargo + " " + q.nom_punto_cargo).Contains(filter)).OrderBy(q => q.IdPunto_cargo).Skip(skip).Take(take).ToList();
-                    foreach (var q in lstg)
+                    Lista = context_g.ct_punto_cargo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == true && (q.IdPunto_cargo + " " + q.nom_punto_cargo).Contains(filter)).OrderBy(q => q.IdPunto_cargo).Skip(skip).Take(take).Select(q=> new ct_punto_cargo_Info
                     {
-                        Lista.Add(new ct_punto_cargo_Info
-                        {
-                            IdPunto_cargo = q.IdPunto_cargo,
-                            IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                            nom_punto_cargo = q.nom_punto_cargo,
-                        });
-                    }
+                        IdPunto_cargo = q.IdPunto_cargo,
+                        IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                        nom_punto_cargo = q.nom_punto_cargo,
+                    }).ToList();
                 }
-                context_g.Dispose();
                 return Lista;
             }
             catch (Exception)

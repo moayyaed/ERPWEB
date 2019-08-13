@@ -58,14 +58,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult CmbPuntoCargoGrupo()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            int model = new int();
             return PartialView("_CmbPuntoCargoGrupo_Reportes", model);
         }
 
         public List<ct_punto_cargo_Info> get_list_bajo_demanda_punto(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            var x = Request;
-            int IdGrupo = Request == null ? 0 : (Request.Params["ContaRpt_IdPunto_cargo_grupo"] != null || Request.Params["ContaRpt_IdPunto_cargo_grupo"] != "" ? Convert.ToInt32(Request.Params["ContaRpt_IdPunto_cargo_grupo"]) : 0);
+            int IdGrupo = string.IsNullOrEmpty(SessionFixed.IdDivision_IC) ? 0 : Convert.ToInt32(SessionFixed.IdDivision_IC);
+            cl_filtros_Info model = new cl_filtros_Info { IdPunto_cargo_grupo = IdGrupo };
             return bus_punto_cargo.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa),IdGrupo);
         }
         public ct_punto_cargo_Info get_info_bajo_demanda_punto(ListEditItemRequestedByValueEventArgs args)
@@ -74,8 +74,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult CmbPuntoCargo()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            int IdGrupo = string.IsNullOrEmpty(SessionFixed.IdDivision_IC) ? 0 : Convert.ToInt32(SessionFixed.IdDivision_IC);
+            cl_filtros_Info model = new cl_filtros_Info { IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa), IdPunto_cargo_grupo = IdGrupo };
             return PartialView("_CmbPuntoCargo_Reportes", model);
+        }
+        #endregion
+
+        #region Json
+        public JsonResult SetPuntoCargoGrupo(int IdGrupo = 0)
+        {
+            SessionFixed.IdDivision_IC = IdGrupo.ToString();
+            return Json(IdGrupo, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -147,8 +156,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             lst_balance.Add("", "Balance de comprobación");
             ViewBag.lst_balance = lst_balance;
         }
-
-
         private void cargar_nivel_CONTA006()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -174,7 +181,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_periodo = bus_periodo.get_list(IdEmpresa, false);
             ViewBag.lst_periodo = lst_periodo;
         }
-
         public ActionResult CONTA_002()
         {
             cl_filtros_Info model = new cl_filtros_Info
@@ -208,6 +214,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
+            SessionFixed.IdDivision_IC = "0";
             return View(model);
         }
         [HttpPost]
@@ -232,7 +239,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            
+            SessionFixed.IdDivision_IC = model.IdPunto_cargo_grupo.ToString();
             //cargar_combos(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
@@ -339,8 +346,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_nivel();
             return View(model);
         }
-
-
         public ActionResult CONTA_004()
         {
             cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
@@ -417,7 +422,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 cargar_nivel_CONTA006();
             return View(model);
         }
-
         public ActionResult CONTA_005()
         {
             cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
