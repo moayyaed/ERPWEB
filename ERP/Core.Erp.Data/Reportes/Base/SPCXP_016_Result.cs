@@ -25,5 +25,7 @@ namespace Core.Erp.Data.Reportes.Base
         public double Retenciones { get; set; }
         public double Pagos { get; set; }
         public double Saldo { get; set; }
+        public Nullable<int> IdProveedorClase { get; set; }
+        public string DescripcionClase { get; set; }
     }
 }

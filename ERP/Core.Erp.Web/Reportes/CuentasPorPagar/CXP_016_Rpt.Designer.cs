@@ -123,6 +123,7 @@
             this.p_MostrarSaldo0 = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdUsuario = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_IdClaseProveedor = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -1112,6 +1113,11 @@
             this.p_IdEmpresa.Name = "p_IdEmpresa";
             this.p_IdEmpresa.Visible = false;
             // 
+            // p_IdClaseProveedor
+            // 
+            this.p_IdClaseProveedor.Name = "p_IdClaseProveedor";
+            this.p_IdClaseProveedor.Visible = false;
+            // 
             // CXP_016_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1135,7 +1141,8 @@
             this.p_FechaFin,
             this.p_MostrarSaldo0,
             this.p_IdUsuario,
-            this.p_IdEmpresa});
+            this.p_IdEmpresa,
+            this.p_IdClaseProveedor});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXP_016_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -1236,5 +1243,6 @@
         public DevExpress.XtraReports.Parameters.Parameter p_MostrarSaldo0;
         public DevExpress.XtraReports.Parameters.Parameter p_IdUsuario;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpresa;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdClaseProveedor;
     }
 }

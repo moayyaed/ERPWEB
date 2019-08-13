@@ -43,5 +43,7 @@ namespace Core.Erp.Data.Reportes.Base
         public double Vencido_mayor_90 { get; set; }
         public int en_conciliacion { get; set; }
         public string Su_Descripcion { get; set; }
+        public int IdClaseProveedor { get; set; }
+        public string descripcion_clas_prove { get; set; }
     }
 }

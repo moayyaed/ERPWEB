@@ -25,8 +25,10 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public double co_valoriva { get; set; }
         public double co_total { get; set; }
         public double ValorRetencion { get; set; }
-        public Nullable<double> ValorNC { get; set; }
-        public Nullable<double> ValorAbono { get; set; }
+        public double ValorNC { get; set; }
+        public double ValorAbono { get; set; }
         public Nullable<double> Saldo { get; set; }
+        public Nullable<int> IdClaseProveedor { get; set; }
+        public string descripcion_clas_prove { get; set; }
     }
 }
