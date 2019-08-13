@@ -42,8 +42,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  Su_Descripcion = q.Su_Descripcion,
                                  cr_observacion = q.cr_observacion,
                                  nom_Motivo_tipo_cobro = q.nom_Motivo_tipo_cobro,
-                                cr_NumDocumento = q.cr_NumDocumento,
-
+                                 cr_NumDocumento = q.cr_NumDocumento,
+                                 cr_NumDocumento_Dep = q.cr_NumDocumento,
                                  EstadoBool = q.cr_estado == "A" ? true : false
                              }).ToList();
                 }
@@ -108,6 +108,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         cr_Banco = Entity.cr_Banco,
                         cr_cuenta = Entity.cr_cuenta,
                         cr_NumDocumento = Entity.cr_NumDocumento,
+                        cr_NumDocumento_Dep = Entity.cr_NumDocumento,
                         cr_Tarjeta = Entity.cr_Tarjeta,
                         cr_propietarioCta = Entity.cr_propietarioCta,
                         cr_estado = Entity.cr_estado,

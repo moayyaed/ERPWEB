@@ -26,7 +26,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public string cr_observacion { get; set; }
         public string cr_Banco { get; set; }
         public string cr_cuenta { get; set; }
-        public string cr_NumDocumento { get; set; }
+        public string cr_NumDocumento { get; set; }        
         public string cr_Tarjeta { get; set; }
         public string cr_propietarioCta { get; set; }
         public string cr_estado { get; set; }
@@ -67,6 +67,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public DateTime vt_fecha { get; set; }
         public string vt_tipoDoc { get; set; }
         public string nom_Motivo_tipo_cobro { get; set; }
+        public string cr_NumDocumento_Dep { get; set; }
         #endregion
     }
 }

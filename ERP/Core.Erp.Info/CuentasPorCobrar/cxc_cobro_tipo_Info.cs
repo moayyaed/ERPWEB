@@ -44,7 +44,8 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public bool ESRetenIVA_bool { get; set; }
         public bool ESRetenFTE_bool { get; set; }
         public int IdEmpresa { get; set; }
-        
+        public bool Seleccionado { get; set; }
+
         #endregion
     }
 }

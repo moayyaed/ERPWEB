@@ -146,6 +146,22 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 }
             ViewBag.lst_sucursal = lst_sucursal;
         }
+
+        private void cargar_tipo_cobro_check(string[] stringArray)
+        {
+            cxc_cobro_tipo_Bus bus_tipo_cobro = new cxc_cobro_tipo_Bus();
+            var lst_cobro = bus_tipo_cobro.get_list(false);
+            if (stringArray == null || stringArray.Count() == 0)
+            {
+                //lst_cobro.Where(q => q.Estado == "A").FirstOrDefault().Seleccionado = true;
+            }
+            else
+                foreach (var item in lst_cobro)
+                {
+                    item.Seleccionado = (stringArray.Where(q => q == item.IdCobro_tipo).Count() > 0 ? true : false);
+                }
+            ViewBag.lst_cobro = lst_cobro;
+        }
         public ActionResult CXC_001(int IdSucursal = 0, decimal IdCobro = 0)
         {
             CXC_001_Rpt model = new CXC_001_Rpt();
@@ -329,7 +345,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdCliente = 0,
-                IdCobro_tipo = ""
+                IntArray = new int[] { }
 
             };
             cargar_combos(model.IdEmpresa);
@@ -347,6 +363,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente ?? 0;
             report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
+            cargar_tipo_cobro_check(model.StringArray);
+            report.StringArray = model.StringArray;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
@@ -369,16 +387,19 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.LoadLayout(RootReporte);
             }
             #endregion
+            cargar_combos(model.IdEmpresa);
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente ?? 0;
             report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
+            cargar_tipo_cobro_check(model.StringArray);
+            report.StringArray = model.StringArray;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_combos(model.IdEmpresa);
+            
             ViewBag.Report = report;
 
             return View(model);

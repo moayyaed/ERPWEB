@@ -14,6 +14,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        public string[] StringArray { get; set; }
         public CXC_008_Rpt()
         {
             InitializeComponent();
@@ -33,7 +34,16 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             bool mostrar_anulados = string.IsNullOrEmpty(p_mostrar_anulados.Value.ToString()) ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
 
             CXC_008_Bus bus_rpt = new CXC_008_Bus();
-            List<CXC_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdCliente, IdCobro_tipo, fecha_ini, fecha_fin, mostrar_anulados);
+            List<CXC_008_Info> lst_rpt = new List<CXC_008_Info>();
+             
+            if (StringArray != null)
+            {
+                foreach (var item in StringArray)
+                {
+                    lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdSucursal, IdCliente, item, fecha_ini, fecha_fin, mostrar_anulados));
+                }
+            }
+            
             this.DataSource = lst_rpt;
 
 

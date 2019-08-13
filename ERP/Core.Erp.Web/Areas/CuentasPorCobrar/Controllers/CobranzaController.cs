@@ -118,6 +118,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 msg = "El valor aplicado a los documentos es mayor al total a cobrar";
                 return false;
             }
+
             i_validar.lst_det = list_det.get_list(i_validar.IdTransaccionSession);
             if (i_validar.lst_det.Count == 0)
             {
@@ -134,6 +135,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 msg = "Existen documentos cuyo valor aplicado es mayor al saldo de la factura";
                 return false;
             }
+
+            if (i_validar.IdCobro_tipo == "DEPO")
+            {
+                i_validar.cr_NumDocumento = i_validar.cr_NumDocumento_Dep;
+            }
+
             string observacion = "Canc./ ";
             foreach (var item in i_validar.lst_det)
             {
@@ -144,9 +151,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             i_validar.cr_fechaDocu = i_validar.cr_fecha;
             i_validar.IdUsuario = SessionFixed.IdUsuario;
             if (!string.IsNullOrEmpty(i_validar.IdCobro_tipo))
-                i_validar.lst_det.ForEach(q => q.IdCobro_tipo_det = i_validar.IdCobro_tipo);
-
-            
+                i_validar.lst_det.ForEach(q => q.IdCobro_tipo_det = i_validar.IdCobro_tipo);            
             
             switch (i_validar.IdCobro_tipo)
             {

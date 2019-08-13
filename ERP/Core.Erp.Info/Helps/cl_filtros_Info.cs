@@ -234,6 +234,7 @@ namespace Core.Erp.Info.Helps
         public int IdAnio { get; set; }
         public string IdCobro_tipo { get; set; }
         public int[] IntArray { get; set; }
+        public string[] StringArray { get; set; }
         public int IdTipoNota { get; set; }
         public string CreDeb { get; set; }
         public cl_filtros_facturacion_Info()

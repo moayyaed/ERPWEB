@@ -309,6 +309,13 @@
                     @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-2" id="NumDocumento">
+                <div class="form-group">
+                    <label for="cr_NumDocumento"># Documento*</label>
+                    @Html.TextBoxFor(q => q.cr_NumDocumento_Dep, new { @id = "cr_NumDocumento_Dep", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cr_NumDocumento_Dep, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">

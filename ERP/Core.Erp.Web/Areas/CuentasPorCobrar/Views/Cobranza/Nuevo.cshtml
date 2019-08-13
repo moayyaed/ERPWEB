@@ -329,7 +329,7 @@
                     @Html.ValidationMessageFor(q => q.cr_cuenta, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" id="NumDocumento">
                 <div class="form-group">
                     <label for="cr_NumDocumento"># Cheque*</label>
                     @Html.TextBoxFor(q => q.cr_NumDocumento, new { @id = "cr_NumDocumento", @class = "form-control" })
@@ -346,6 +346,13 @@
                     <label for="IdBanco">Cuenta bancaria*</label>
                     @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco_cuenta, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco" })
                     @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2" id="NumDocumento">
+                <div class="form-group">
+                    <label for="cr_NumDocumento"># Documento*</label>
+                    @Html.TextBoxFor(q => q.cr_NumDocumento_Dep, new { @id = "cr_NumDocumento_Dep", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cr_NumDocumento_Dep, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
