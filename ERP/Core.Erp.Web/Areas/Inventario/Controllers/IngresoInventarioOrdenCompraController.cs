@@ -544,7 +544,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<in_Ing_Egr_Inven_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
 
