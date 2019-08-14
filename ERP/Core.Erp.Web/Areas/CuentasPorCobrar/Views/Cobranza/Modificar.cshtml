@@ -56,11 +56,34 @@
             alert("Debe ingresar el total a cobrar");
             return;
         }
+        else{
+            selectedIDs = "";
+            var datos = {
+                IdTransaccionSession: $("#IdTransaccionSession").val(),
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdSucursal: $("#IdSucursal").val(),
+                IdCliente: IdCliente.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("GetListFacturas_PorIngresar", "Cobranza", new { Area = "CuentasPorCobrar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    GridView_cobranza_facturas_x_cruzar.PerformCallback();
+                    GridView_cobranza_facturas_x_cruzar.UnselectRows();
+                    $("#FacturasModal").modal("show");
 
-        selectedIDs = "";
-        GridView_cobranza_facturas_x_cruzar.PerformCallback();
-        GridView_cobranza_facturas_x_cruzar.UnselectRows();
-        $("#FacturasModal").modal("show");
+                },
+                error: function (error) {
+                }
+            });
+        }
     }
 
     function AddFacturas() {
@@ -80,7 +103,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cr_saldo").val(data);
+                $("#cr_Excedente").val(data);
             },
             error: function (error) {
             }
@@ -108,7 +131,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cr_saldo").val(data);
+                $("#cr_Excedente").val(data);
             },
             error: function (error) {
             }
@@ -267,9 +290,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="cr_saldo">Saldo</label>
-                        @Html.TextBoxFor(q => q.cr_saldo, new { @id = "cr_saldo", @class = "form-control", @readonly = "readonly" })
-                        @Html.ValidationMessageFor(q => q.cr_saldo, "", new { @class = "text-danger" })
+                        <label for="cr_Excedente">ValorExcedente</label>
+                        @Html.TextBoxFor(q => q.cr_Excedente, new { @id = "cr_Excedente", @class = "form-control", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(q => q.cr_Excedente, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

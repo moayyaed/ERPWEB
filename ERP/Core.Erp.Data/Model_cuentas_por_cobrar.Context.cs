@@ -27,7 +27,6 @@ namespace Core.Erp.Data
     
         public DbSet<cxc_Catalogo> cxc_Catalogo { get; set; }
         public DbSet<cxc_CatalogoTipo> cxc_CatalogoTipo { get; set; }
-        public DbSet<cxc_cobro> cxc_cobro { get; set; }
         public DbSet<cxc_cobro_det> cxc_cobro_det { get; set; }
         public DbSet<cxc_cobro_tipo_motivo> cxc_cobro_tipo_motivo { get; set; }
         public DbSet<cxc_cobro_tipo_Param_conta_x_sucursal> cxc_cobro_tipo_Param_conta_x_sucursal { get; set; }
@@ -46,6 +45,7 @@ namespace Core.Erp.Data
         public DbSet<cxc_LiquidacionTarjeta> cxc_LiquidacionTarjeta { get; set; }
         public DbSet<vwcxc_LiquidacionTarjeta> vwcxc_LiquidacionTarjeta { get; set; }
         public DbSet<vwcxc_cobro_det> vwcxc_cobro_det { get; set; }
+        public DbSet<cxc_cobro> cxc_cobro { get; set; }
         public DbSet<vwcxc_cobro_para_retencion> vwcxc_cobro_para_retencion { get; set; }
     }
 }

@@ -16,9 +16,9 @@ namespace Core.Erp.Data
     {
         public cxc_cobro_tipo()
         {
-            this.cxc_cobro = new HashSet<cxc_cobro>();
             this.cxc_cobro_det = new HashSet<cxc_cobro_det>();
             this.cxc_cobro_tipo_Param_conta_x_sucursal = new HashSet<cxc_cobro_tipo_Param_conta_x_sucursal>();
+            this.cxc_cobro = new HashSet<cxc_cobro>();
         }
     
         public string IdCobro_tipo { get; set; }
@@ -40,9 +40,9 @@ namespace Core.Erp.Data
         public bool SeDeposita { get; set; }
         public double PorcentajeDescuento { get; set; }
     
-        public virtual ICollection<cxc_cobro> cxc_cobro { get; set; }
         public virtual ICollection<cxc_cobro_det> cxc_cobro_det { get; set; }
         public virtual cxc_cobro_tipo_motivo cxc_cobro_tipo_motivo { get; set; }
         public virtual ICollection<cxc_cobro_tipo_Param_conta_x_sucursal> cxc_cobro_tipo_Param_conta_x_sucursal { get; set; }
+        public virtual ICollection<cxc_cobro> cxc_cobro { get; set; }
     }
 }

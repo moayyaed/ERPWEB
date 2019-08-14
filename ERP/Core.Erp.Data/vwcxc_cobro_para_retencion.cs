@@ -30,5 +30,6 @@ namespace Core.Erp.Data
         public string Su_Descripcion { get; set; }
         public decimal IdCliente { get; set; }
         public Nullable<bool> TieneRetencion { get; set; }
+        public bool cr_EsElectronico { get; set; }
     }
 }

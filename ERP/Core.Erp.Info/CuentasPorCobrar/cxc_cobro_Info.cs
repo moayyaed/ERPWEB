@@ -19,6 +19,10 @@ namespace Core.Erp.Info.CuentasPorCobrar
         [Range(0.01,double.MaxValue, ErrorMessage ="El campo total cobro es obligatorio")]
         [Required(ErrorMessage ="El campo total cobro es obligatorio")]
         public double cr_TotalCobro { get; set; }
+        public Nullable<double> cr_Excedente { get; set; }
+        [Required(ErrorMessage = "El campo es electrónico es obligatorio")]
+        public Nullable<bool> cr_EsElectronico { get; set; }
+
         [Required(ErrorMessage ="El campo fecha es obligatorio")]
         public System.DateTime cr_fecha { get; set; }
         public System.DateTime cr_fechaDocu { get; set; }
@@ -54,7 +58,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public string pe_nombreCompleto { get; set; }
         public string tc_descripcion { get; set; }
         public string Su_Descripcion { get; set; }
-        public double cr_saldo { get; set; }
+        //public double cr_saldo { get; set; }
         public int IdBodega { get; set; }
         public decimal IdEntidad { get; set; }
         public double vt_Subtotal { get; set; }

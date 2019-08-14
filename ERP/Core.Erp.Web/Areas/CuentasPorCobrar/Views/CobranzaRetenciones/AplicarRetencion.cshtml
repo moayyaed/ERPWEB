@@ -90,7 +90,18 @@
                     @Html.ValidationMessageFor(q => q.cr_NumDocumento, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-6 col-md-2">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cr_EsElectronico"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.cr_EsElectronico, settings =>
+                            {
+                                settings.Name = "cr_EsElectronico";
+                                settings.Text = "Es Electronico";                                
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.cr_EsElectronico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-4 col-md-2">
                 <div class="form-group">
                     <label for="cr_fecha">Fecha*</label>
                     @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>

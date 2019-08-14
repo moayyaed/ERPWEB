@@ -147,7 +147,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cr_saldo").val(data);
+                console.log(data);
+                $("#cr_Excedente").val(data);
             },
             error: function (error) {
             }
@@ -175,7 +176,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cr_saldo").val(data);
+                $("#cr_Excedente").val(data);
             },
             error: function (error) {
             }
@@ -306,9 +307,9 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="cr_saldo">Saldo</label>
-                    @Html.TextBoxFor(q => q.cr_saldo, new { @id = "cr_saldo", @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(q => q.cr_saldo, "", new { @class = "text-danger" })
+                    <label for="cr_saldo">Valor Excedente</label>
+                    @Html.TextBoxFor(q => q.cr_Excedente, new { @id = "cr_Excedente", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.cr_Excedente, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

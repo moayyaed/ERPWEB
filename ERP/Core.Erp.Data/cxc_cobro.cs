@@ -29,6 +29,8 @@ namespace Core.Erp.Data
         public string IdCobro_tipo { get; set; }
         public decimal IdCliente { get; set; }
         public double cr_TotalCobro { get; set; }
+        public Nullable<double> cr_Excedente { get; set; }
+        public Nullable<bool> cr_EsElectronico { get; set; }
         public System.DateTime cr_fecha { get; set; }
         public System.DateTime cr_fechaDocu { get; set; }
         public System.DateTime cr_fechaCobro { get; set; }
@@ -47,16 +49,14 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
         public Nullable<int> IdBanco { get; set; }
         public int IdCaja { get; set; }
         public string MotiAnula { get; set; }
         public Nullable<int> IdTipoNotaCredito { get; set; }
     
+        public virtual cxc_cobro_tipo cxc_cobro_tipo { get; set; }
         public virtual ICollection<cxc_cobro_det> cxc_cobro_det { get; set; }
         public virtual ICollection<cxc_cobro_x_ct_cbtecble> cxc_cobro_x_ct_cbtecble { get; set; }
-        public virtual cxc_cobro_tipo cxc_cobro_tipo { get; set; }
         public virtual ICollection<cxc_LiquidacionTarjeta_x_cxc_cobro> cxc_LiquidacionTarjeta_x_cxc_cobro { get; set; }
     }
 }

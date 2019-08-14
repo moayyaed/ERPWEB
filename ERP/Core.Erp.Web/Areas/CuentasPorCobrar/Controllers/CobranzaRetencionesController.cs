@@ -31,7 +31,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)                
             };
             cargar_combos();
             return View(model);
@@ -163,7 +163,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 
             cxc_cobro_Info model = bus_cobro.get_info_para_retencion(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodTipoDocumento);
             if (model == null)            
-                return RedirectToAction("Index");            
+                return RedirectToAction("Index");
+      
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodTipoDocumento);
             if (model.lst_det.Count == 0)
             {                

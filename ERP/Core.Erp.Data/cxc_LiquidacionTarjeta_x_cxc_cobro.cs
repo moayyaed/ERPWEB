@@ -21,7 +21,7 @@ namespace Core.Erp.Data
         public double Valor { get; set; }
         public decimal IdCobro { get; set; }
     
-        public virtual cxc_cobro cxc_cobro { get; set; }
         public virtual cxc_LiquidacionTarjeta cxc_LiquidacionTarjeta { get; set; }
+        public virtual cxc_cobro cxc_cobro { get; set; }
     }
 }

@@ -113,11 +113,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 msg = "No ha seleccionado documentos para realizar la cobranza";
                 return false;
             }
-            if (Math.Round(i_validar.cr_saldo,2,MidpointRounding.AwayFromZero) < 0)
-            {
-                msg = "El valor aplicado a los documentos es mayor al total a cobrar";
-                return false;
-            }
+            //if (Math.Round(i_validar.cr_saldo,2,MidpointRounding.AwayFromZero) < 0)
+            //{
+            //    msg = "El valor aplicado a los documentos es mayor al total a cobrar";
+            //    return false;
+            //}
 
             i_validar.lst_det = list_det.get_list(i_validar.IdTransaccionSession);
             if (i_validar.lst_det.Count == 0)
@@ -422,6 +422,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         public JsonResult EditingAddNewFactura(string IDs = "", double TotalACobrar = 0, decimal IdTransaccionSession = 0)
         {
             double saldo = TotalACobrar;
+            double excedente = 0;
             if (IDs != "")
             {
                 int IdEmpresaSesion = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -436,6 +437,9 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 }
             }
             var lst = list_det.get_list(IdTransaccionSession);
+            var TotalFactPagar = lst.Sum(q=> q.vt_total);
+            excedente = Convert.ToDouble( TotalACobrar - TotalFactPagar);
+
             foreach (var item in lst)
             {
                 if (saldo > 0)
@@ -450,7 +454,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             list_det.set_list(lst, IdTransaccionSession);            
 
             var resultado = saldo;
-            return Json(Math.Round(resultado,2,MidpointRounding.AwayFromZero), JsonRequestBehavior.AllowGet);
+            //return Json(Math.Round(resultado,2,MidpointRounding.AwayFromZero), JsonRequestBehavior.AllowGet);
+            return Json(excedente, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CalcularSaldo(double TotalACobrar = 0, decimal IdTransaccionSession = 0)

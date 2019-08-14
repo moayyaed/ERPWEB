@@ -114,6 +114,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         cr_estado = Entity.cr_estado,
                         cr_recibo = Entity.cr_recibo,
                         cr_es_anticipo = Entity.cr_es_anticipo,
+                        cr_Excedente = Entity.cr_Excedente,
                         IdBanco = Entity.IdBanco,
                         IdCaja = Entity.IdCaja
                     };
@@ -265,7 +266,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     cr_propietarioCta = info.cr_propietarioCta,
                     cr_estado = "A",
                     cr_es_anticipo = "N",
-
+                    cr_EsElectronico = info.cr_EsElectronico,
+                    cr_Excedente = info.cr_Excedente,
                     IdBanco = info.IdBanco,
                     IdCaja = info.IdCaja,
 
@@ -471,7 +473,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 Entity.cr_propietarioCta = info.cr_propietarioCta;
                 Entity.IdBanco = info.IdBanco;
                 Entity.IdCaja = info.IdCaja;
-
+                Entity.cr_EsElectronico = info.cr_EsElectronico;
+                Entity.cr_Excedente = info.cr_Excedente;
                 Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                 Entity.Fecha_UltMod = DateTime.Now;
                 #endregion
@@ -1027,8 +1030,9 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         vt_Subtotal = Convert.ToDouble(Entity.vt_Subtotal),
                         IdCliente = Entity.IdCliente,
                         IdEntidad = Entity.IdCliente,
-                        vt_tipoDoc = Entity.vt_tipoDoc
-                                               
+                        vt_tipoDoc = Entity.vt_tipoDoc,
+                        cr_EsElectronico = Entity.cr_EsElectronico
+
                     };
                 }
                 return info;
