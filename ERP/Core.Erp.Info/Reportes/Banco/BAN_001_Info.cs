@@ -27,5 +27,7 @@ namespace Core.Erp.Info.Reportes.Banco
         public Nullable<double> dc_Valor_Haber { get; set; }
         public string Nombre { get; set; }
         public string Su_Descripcion { get; set; }
+        public string nom_punto_cargo_grupo { get; set; }
+        public string nom_punto_cargo { get; set; }
     }
 }

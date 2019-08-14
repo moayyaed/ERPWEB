@@ -40,7 +40,9 @@ namespace Core.Erp.Data.Reportes.Banco
                                  IdCtaCble = q.IdCtaCble,
                                  pc_Cuenta = q.pc_Cuenta,
                                  Nombre = q.Nombre,
-                                 Su_Descripcion = q.Su_Descripcion
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 nom_punto_cargo = q.nom_punto_cargo,
+                                 nom_punto_cargo_grupo= q.nom_punto_cargo_grupo
                              }).ToList();
                 }
                 return Lista;
