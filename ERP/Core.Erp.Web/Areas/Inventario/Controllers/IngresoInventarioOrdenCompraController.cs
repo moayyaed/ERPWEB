@@ -190,6 +190,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             com_parametro_Info info_param_oc = bus_com_param.get_info(model.IdEmpresa);
             model.lst_in_Ing_Egr_Inven_det = List_in_Ing_Egr_Inven_det.get_list(model.IdTransaccionSession);
+            var IdOrdenCompra = (model.lst_in_Ing_Egr_Inven_det.Count() >0) ? model.lst_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == model.IdEmpresa).FirstOrDefault().IdOrdenCompra : 0;
+            model.CodMoviInven = Convert.ToString(IdOrdenCompra);
             if (!validar(model, ref mensaje))
             {
                 cargar_combos(model);
@@ -244,6 +246,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult Modificar(in_Ing_Egr_Inven_Info model)
         {
             model.lst_in_Ing_Egr_Inven_det = List_in_Ing_Egr_Inven_det.get_list(model.IdTransaccionSession);
+            var IdOrdenCompra = (model.lst_in_Ing_Egr_Inven_det.Count() > 0) ? model.lst_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == model.IdEmpresa).FirstOrDefault().IdOrdenCompra : 0;
+            model.CodMoviInven = Convert.ToString(IdOrdenCompra);
             if (!validar(model, ref mensaje))
             {
                 cargar_combos(model);
@@ -518,8 +522,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             List<in_Ing_Egr_Inven_det_Info> list = get_list(IdTransaccionSession);
             info_det_inv.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            info_det_inv.secuencia_inv = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            info_det_inv.Secuencia_oc = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            //info_det_inv.secuencia_inv = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+            //info_det_inv.Secuencia_oc = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
 
             list.Add(info_det_inv);
         }

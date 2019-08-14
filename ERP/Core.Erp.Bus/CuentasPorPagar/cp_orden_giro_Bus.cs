@@ -81,8 +81,8 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 {
                     if (info.co_observacion == null)
                         info.co_observacion = "";
-                    info.info_comrobante.cb_Observacion ="Prov: "+ prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
-                    
+
+                    info.info_comrobante.cb_Observacion ="Prov: "+ prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;                    
                 }
                 else
                     info.info_comrobante.cb_Observacion = info.co_observacion;
@@ -127,7 +127,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.fecha = info.co_fechaOg;
                         info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                         info.info_retencion.IdUsuario = info.IdUsuario;
-                        info.info_retencion.observacion = "Retencion de factura #" + info.co_serie +'-'+ info.co_factura;
+                        if (prov != null)
+                        {
+                            info.info_retencion.observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " Retencion# ";                            
+                        }
+                        
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
                         info.info_retencion.aprobada_enviar_sri = false;
 
@@ -154,6 +158,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
         {
             try
             {
+                var prov = bus_proveedor.get_info(info.IdEmpresa, info.IdProveedor);
                 info.co_baseImponible = info.co_subtotal_iva + info.co_subtotal_siniva;
                 info.info_comrobante.IdEmpresa = info.IdEmpresa;
                 info.info_comrobante.IdTipoCbte = info.IdTipoCbte_Ogiro;
@@ -163,7 +168,15 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info.info_comrobante.cb_Estado = "A";
                 info.info_comrobante.IdPeriodo = Convert.ToInt32(info.info_comrobante.cb_Fecha.Year.ToString() + info.info_comrobante.cb_Fecha.Month.ToString().PadLeft(2, '0'));
                 info.info_comrobante.IdEmpresa = info.IdEmpresa;
-               
+
+                if (prov != null)
+                {
+                    if (info.co_observacion == null)
+                        info.co_observacion = "";
+
+                    info.info_comrobante.cb_Observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
+                }
+                else
                     info.info_comrobante.cb_Observacion = info.co_observacion;
 
                 info.co_valorpagar = info.co_total;
@@ -222,7 +235,12 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         //    info.info_retencion.serie2 = info.info_retencion.serie2;
                         //}
                         info.info_retencion.IdUsuario = info.IdUsuario;
-                        info.info_retencion.observacion = "Retencion de factura #" + info.co_serie + '-' + info.co_factura;
+                        if (prov != null)
+                        {
+                            info.info_retencion.observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " Retencion# ";
+                        }
+
+                        //info.info_retencion.observacion = "Retencion de factura #" + info.co_serie + '-' + info.co_factura;
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
                         info.info_retencion.aprobada_enviar_sri = false;
 

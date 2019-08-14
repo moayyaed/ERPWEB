@@ -19,7 +19,7 @@
     @Html.HiddenFor(q => q.IdNumMovi)
     @Html.HiddenFor(q => q.signo)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo)
-
+    @Html.HiddenFor(q => q.CodMoviInven)
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -31,13 +31,13 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            @*<div class="col-md-3">
                 <div class="form-group">
                     <label for="CodMoviInven">Código</label>
                     @Html.TextBoxFor(q => q.CodMoviInven, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.CodMoviInven, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>*@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>

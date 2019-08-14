@@ -199,7 +199,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         NumRetencion = info.NumRetencion = info_documento == null ? null : info_documento.NumDocumento,
 
                         NAutorizacion = info.NAutorizacion,
-                        observacion = info.observacion,
+                        observacion = info.observacion = info.observacion + info.serie1 + "-" + info.serie2 + "-" + info.NumRetencion,
                         fecha = info.fecha.Date,
                         Estado = "A",
                         IdPuntoVta = info.IdPuntoVta,
@@ -233,8 +233,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
                         var param = Context.cp_parametros.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
                         var diario = odata_ct.armar_info(info.info_comprobante.lst_ct_cbtecble_det, info.IdEmpresa, info.IdSucursal, (int)param.pa_IdTipoCbte_x_Retencion, 0,
-                            "Comprobante contable de retención #" + info.serie1 + " " + info.serie2 + " " + info.NumRetencion
-                        , info.fecha);
+                         info.observacion , info.fecha);
                         odata_ct.guardarDB(diario);
 
                         Context.cp_retencion_x_ct_cbtecble.Add(new cp_retencion_x_ct_cbtecble
@@ -286,7 +285,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         //contact.IdPuntoVta = info.IdPuntoVta;
                         contact.IdSucursal = info.IdSucursal;
                         contact.fecha = info.fecha;
-                        contact.observacion = info.observacion;
+                        contact.observacion = info.observacion= info.observacion+ info.serie1+"-"+ info.serie2+"-"+info.NumRetencion;
                         contact.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         contact.Fecha_UltMod = DateTime.Now;
                         contact.IdUsuarioUltMod = info.IdUsuario;
@@ -322,7 +321,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                             ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
                             var param = Context.cp_parametros.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
                             var diario = odata_ct.armar_info(info.info_comprobante.lst_ct_cbtecble_det, info.IdEmpresa, info.IdSucursal, (info.info_comprobante.IdTipoCbte == 0 ? Convert.ToInt32(param.pa_IdTipoCbte_x_Retencion) : info.info_comprobante.IdTipoCbte), 0,
-                                "Comprobante contable de retención #" + info.serie1 + " " + info.serie2 + " " + info.NumRetencion, info.fecha);
+                                info.observacion, info.fecha);
+                            /*"Comprobante contable de retención #" + info.serie1 + " " + info.serie2 + " " + info.NumRetencion, */
                             if (diario != null)
                             {
                                 var rel = Context.cp_retencion_x_ct_cbtecble.Where(q => q.rt_IdEmpresa == info.IdEmpresa && q.rt_IdRetencion == info.IdRetencion).FirstOrDefault();
