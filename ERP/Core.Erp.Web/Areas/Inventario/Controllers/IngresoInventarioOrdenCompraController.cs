@@ -452,7 +452,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                             mensaje = "La cantidad ingresada supera al saldo pendiente del producto: "+item.pr_descripcion;
                             return false;
                         }
-                    }                                      
+                    }
+
+                    var Cant_OC = i_validar.lst_in_Ing_Egr_Inven_det.GroupBy(q => q.IdOrdenCompra).Count();
+                    if (Cant_OC > 1)
+                    {
+                        mensaje = "Debe ingresar items de una sola orden de compra";
+                        return false;
+                    }
                 }
             }
             
