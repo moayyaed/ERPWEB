@@ -143,6 +143,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 bool generar_diario = true;
                 
                 string IdCtaCble_haber = string.Empty;
+                string IdCtaCble_Anticipo = string.Empty;
                 int IdTipoCbte = 0;
                 int IdTipoMoviCaja = 0;
                 #endregion
@@ -153,6 +154,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 if (cliente == null)
                     return false;
                 IdCtaCble_haber = cliente.IdCtaCble_cxc_Credito;
+                IdCtaCble_Anticipo = cliente.IdCtaCble_Anticipo;
                 #endregion
                 
                 #region CtaCble Haber
@@ -318,7 +320,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                         IdUsuario = cab.IdUsuario,
                         cb_FechaTransac = DateTime.Now,
-                        cb_Valor = Math.Round(info.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero),
+                        cb_Valor = Math.Round(info.cr_TotalCobro, 2, MidpointRounding.AwayFromZero),
                     };
                     Context_ct.ct_cbtecble.Add(diario);
                     Secuencia = 1;
@@ -358,10 +360,22 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         IdCbteCble = diario.IdCbteCble,
                         secuencia = Secuencia++,
                         IdCtaCble = IdCtaCble_haber,
-                        dc_Valor = Math.Round(Convert.ToDouble(diario.cb_Valor), 2, MidpointRounding.AwayFromZero) * -1,
+                        dc_Valor = Math.Round(Convert.ToDouble(info.lst_det.Sum(q=> q.dc_ValorPago)), 2, MidpointRounding.AwayFromZero) * -1,
                     };
-                    
                     Context_ct.ct_cbtecble_det.Add(Haber);
+
+                    if ((info.cr_Excedente ?? 0) > 0)
+                    {
+                        Context_ct.ct_cbtecble_det.Add(new ct_cbtecble_det
+                        {
+                            IdEmpresa = diario.IdEmpresa,
+                            IdTipoCbte = diario.IdTipoCbte,
+                            IdCbteCble = diario.IdCbteCble,
+                            secuencia = Secuencia++,
+                            IdCtaCble = IdCtaCble_Anticipo,
+                            dc_Valor = Math.Round(Convert.ToDouble(info.cr_Excedente ?? 0), 2, MidpointRounding.AwayFromZero) * -1,
+                        });
+                    }
                     #endregion
 
                     #region Relacion cobro - diario
@@ -451,6 +465,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 int Secuencia = 1;
                 bool generar_diario = true;
                 string IdCtaCble_haber = string.Empty;
+                string IdCtaCble_Anticipo = string.Empty;
                 int IdTipoCbte = 0;
                 int IdTipoMoviCaja = 0;
                 #endregion
@@ -485,6 +500,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 if (cliente == null)
                     return false;
                 IdCtaCble_haber = cliente.IdCtaCble_cxc_Credito;
+                IdCtaCble_Anticipo = cliente.IdCtaCble_Anticipo;
                 #endregion
 
                 #region CtaCble Haber
@@ -634,7 +650,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                             IdUsuario = info.IdUsuario,
                             cb_FechaTransac = DateTime.Now,
-                            cb_Valor = Math.Round(info.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero),
+                            cb_Valor = Math.Round(info.cr_TotalCobro, 2, MidpointRounding.AwayFromZero),
                         };
                         Context_ct.ct_cbtecble.Add(diario);
                         Secuencia = 1;
@@ -677,8 +693,22 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             IdCtaCble = IdCtaCble_haber,
                             dc_Valor = Math.Round(Convert.ToDouble(diario.cb_Valor), 2, MidpointRounding.AwayFromZero) * -1,
                         };
-
                         Context_ct.ct_cbtecble_det.Add(Haber);
+
+                        if ((info.cr_Excedente ?? 0) > 0)
+                        {
+                            Context_ct.ct_cbtecble_det.Add(new ct_cbtecble_det
+                            {
+                                IdEmpresa = diario.IdEmpresa,
+                                IdTipoCbte = diario.IdTipoCbte,
+                                IdCbteCble = diario.IdCbteCble,
+                                secuencia = Secuencia++,
+                                IdCtaCble = IdCtaCble_Anticipo,
+                                dc_Valor = Math.Round(Convert.ToDouble(info.cr_Excedente ?? 0), 2, MidpointRounding.AwayFromZero) * -1,
+                            });
+                        }
+
+                        
                         #endregion
 
                         #region Relacion cobro - diario
@@ -750,7 +780,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         diario.cb_Observacion = "COBRO #" + info.IdCobro + " "+ info.cr_observacion + " CLIENTE: " + personac.pe_nombreCompleto;
                         diario.IdUsuarioUltModi = info.IdUsuarioUltMod;
                         diario.cb_FechaUltModi = DateTime.Now;
-                        diario.cb_Valor = Math.Round(info.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero);
+                        diario.cb_Valor = Math.Round(info.cr_TotalCobro, 2, MidpointRounding.AwayFromZero);
 
                         var diario_det = Context_ct.ct_cbtecble_det.Where(q => q.IdEmpresa == relacion.ct_IdEmpresa && q.IdTipoCbte == relacion.ct_IdTipoCbte && q.IdCbteCble == relacion.ct_IdCbteCble).ToList();
                         foreach (var item in diario_det)
@@ -795,9 +825,22 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             IdCbteCble = relacion.ct_IdCbteCble,
                             secuencia = Secuencia++,
                             IdCtaCble = IdCtaCble_haber,
-                            dc_Valor = Math.Round(Convert.ToDouble(diario.cb_Valor), 2, MidpointRounding.AwayFromZero) * -1,
+                            dc_Valor = Math.Round(Convert.ToDouble(info.lst_det.Sum(q=> q.dc_ValorPago)), 2, MidpointRounding.AwayFromZero) * -1,
                         };
                         Context_ct.ct_cbtecble_det.Add(Haber);
+
+                        if ((info.cr_Excedente ?? 0) > 0)
+                        {
+                            Context_ct.ct_cbtecble_det.Add(new ct_cbtecble_det
+                            {
+                                IdEmpresa = diario.IdEmpresa,
+                                IdTipoCbte = diario.IdTipoCbte,
+                                IdCbteCble = diario.IdCbteCble,
+                                secuencia = Secuencia++,
+                                IdCtaCble = IdCtaCble_Anticipo,
+                                dc_Valor = Math.Round(Convert.ToDouble(info.cr_Excedente ?? 0), 2, MidpointRounding.AwayFromZero) * -1,
+                            });
+                        }
                         #endregion
 
                         if (IdTipoMoviCaja != 0)
