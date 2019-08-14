@@ -55,7 +55,6 @@ namespace Core.Erp.Data
         public Nullable<bool> Generado { get; set; }
         public Nullable<int> IdVendedor { get; set; }
     
-        public virtual fa_cliente fa_cliente { get; set; }
         public virtual ICollection<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
         public virtual fa_PuntoVta fa_PuntoVta { get; set; }
         public virtual fa_TipoNota fa_TipoNota { get; set; }
@@ -63,5 +62,6 @@ namespace Core.Erp.Data
         public virtual ICollection<fa_notaCreDeb_x_ct_cbtecble> fa_notaCreDeb_x_ct_cbtecble { get; set; }
         public virtual ICollection<fa_notaCreDeb_x_cxc_cobro> fa_notaCreDeb_x_cxc_cobro { get; set; }
         public virtual ICollection<fa_notaCreDeb_x_fa_factura_NotaDeb> fa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
+        public virtual fa_cliente fa_cliente { get; set; }
     }
 }

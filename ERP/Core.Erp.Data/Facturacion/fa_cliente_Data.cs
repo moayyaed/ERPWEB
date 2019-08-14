@@ -94,6 +94,7 @@ namespace Core.Erp.Data.Facturacion
                     IdCliente = Entity.IdCliente,
                     FormaPago = Entity.FormaPago,
                     IdCtaCble_cxc_Credito = Entity.IdCtaCble_cxc_Credito,
+                    IdCtaCble_Anticipo = Entity.IdCtaCble_Anticipo,
                     IdPersona = Entity.IdPersona,
                     IdTipoCredito = Entity.IdTipoCredito,
                     Idtipo_cliente = Entity.Idtipo_cliente,
@@ -244,6 +245,7 @@ namespace Core.Erp.Data.Facturacion
                         es_empresa_relacionada = info.es_empresa_relacionada,
                         FormaPago = info.FormaPago,
                         IdCtaCble_cxc_Credito = info.IdCtaCble_cxc_Credito,
+                        IdCtaCble_Anticipo = info.IdCtaCble_Anticipo,
                         IdPersona = info.IdPersona,
                         IdTipoCredito = info.IdTipoCredito,
                         Idtipo_cliente = info.Idtipo_cliente,
@@ -308,6 +310,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.es_empresa_relacionada = info.es_empresa_relacionada;
                     Entity.FormaPago = info.FormaPago;
                     Entity.IdCtaCble_cxc_Credito = info.IdCtaCble_cxc_Credito;
+                    Entity.IdCtaCble_Anticipo = info.IdCtaCble_Anticipo;
                     Entity.IdTipoCredito = info.IdTipoCredito;
                     Entity.Idtipo_cliente = info.Idtipo_cliente;
                     Entity.IdNivel = info.IdNivel;

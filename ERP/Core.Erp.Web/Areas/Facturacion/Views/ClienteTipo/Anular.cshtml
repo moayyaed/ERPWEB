@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdCtaCble_CXC_Cred">Cuenta contable credito*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble_CXC_Cred, settings =>
@@ -57,6 +57,13 @@
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                }).BindList(ViewBag.lst_cuentas).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdCtaCble_CXC_Cred, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_Anticipo">Cuenta anticipo*</label>
+                    @Html.Partial("_CmbCuenta_Anticipo", Model.IdCtaCble_Anticipo)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger", @id = "IdCtaCble_Anticipo" })
                 </div>
             </div>
         </div>

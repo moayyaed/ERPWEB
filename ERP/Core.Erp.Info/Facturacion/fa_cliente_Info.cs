@@ -32,6 +32,7 @@ namespace Core.Erp.Info.Facturacion
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string IdCtaCble_cxc_Credito { get; set; }
+        public string IdCtaCble_Anticipo { get; set; }
         public bool es_empresa_relacionada { get; set; }
         public string FormaPago { get; set; }
         public bool EsClienteExportador { get; set; }

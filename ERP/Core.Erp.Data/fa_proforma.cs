@@ -43,10 +43,10 @@ namespace Core.Erp.Data
         public int IdNivel { get; set; }
         public string IdCatalogo_FormaPago { get; set; }
     
-        public virtual fa_cliente fa_cliente { get; set; }
         public virtual fa_NivelDescuento fa_NivelDescuento { get; set; }
         public virtual fa_TerminoPago fa_TerminoPago { get; set; }
         public virtual fa_Vendedor fa_Vendedor { get; set; }
         public virtual ICollection<fa_proforma_det> fa_proforma_det { get; set; }
+        public virtual fa_cliente fa_cliente { get; set; }
     }
 }

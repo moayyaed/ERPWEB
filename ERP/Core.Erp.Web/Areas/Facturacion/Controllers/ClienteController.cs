@@ -15,6 +15,8 @@ using Core.Erp.Web.Helps;
 using ExcelDataReader;
 using System.IO;
 using Core.Erp.Web.Areas.General.Controllers;
+using Core.Erp.Info.Contabilidad;
+using DevExpress.Web;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -34,6 +36,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_persona_List ListaPersona = new tb_persona_List();
         fa_cliente_tipo_List ListaTipoCliente = new fa_cliente_tipo_List();
         fa_cliente_List ListaCliente = new fa_cliente_List();
+        ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string mensaje = string.Empty;
         #endregion
         #region Index
@@ -87,6 +90,21 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             tb_ciudad_Bus bus_ciudad = new tb_ciudad_Bus();
             var lst_ciudad = bus_ciudad.get_list("", false);
             ViewBag.lst_ciudad = lst_ciudad;
+        }
+        #endregion
+        #region Combo Cuenta bajo demanda
+        public ActionResult CmbCuenta_Anticipo()
+        {
+            fa_cliente_Info model = new fa_cliente_Info();
+            return PartialView("_CmbCuenta_Anticipo", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
         #region Acciones

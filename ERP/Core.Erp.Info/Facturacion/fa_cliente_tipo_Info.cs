@@ -17,8 +17,7 @@ namespace Core.Erp.Info.Facturacion
         [StringLength(50, MinimumLength = 1, ErrorMessage = "el campo descripción debe tener mínimo 1 caracter y máximo 50")]
         public string Descripcion_tip_cliente { get; set; }
         public string IdCtaCble_CXC_Cred { get; set; }
-        public string estado { get; set; }
-        public bool EstadoBool { get; set; }
+        public string IdCtaCble_Anticipo { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }
@@ -26,7 +25,7 @@ namespace Core.Erp.Info.Facturacion
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnula { get; set; }
-        public string nom_pc { get; set; }
-        public string ip { get; set; }
+        public string Estado { get; set; }
+        public bool EstadoBool { get; set; }
     }
 }

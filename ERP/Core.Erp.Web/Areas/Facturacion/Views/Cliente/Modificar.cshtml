@@ -283,8 +283,8 @@
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_contabilidad">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdCtaCble_cxc_Credito">Cuenta contable credito</label>
                                 @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble_cxc_Credito, settings =>
@@ -305,6 +305,13 @@
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                    }).BindList(ViewBag.lst_cuentas).GetHtml()
                                 @Html.ValidationMessageFor(q => q.IdCtaCble_cxc_Credito, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Anticipo">Cuenta anticipo*</label>
+                                @Html.Partial("_CmbCuenta_Anticipo", Model.IdCtaCble_Anticipo)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger", @id = "IdCtaCble_Anticipo" })
                             </div>
                         </div>
                     </div>

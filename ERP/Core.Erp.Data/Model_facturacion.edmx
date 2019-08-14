@@ -117,6 +117,7 @@
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdCtaCble_cxc_Credito" Type="varchar" MaxLength="20" />
+          <Property Name="IdCtaCble_Anticipo" Type="varchar" MaxLength="20" />
           <Property Name="es_empresa_relacionada" Type="bit" Nullable="false" />
           <Property Name="FormaPago" Type="varchar" MaxLength="2" />
           <Property Name="EsClienteExportador" Type="bit" Nullable="false" />
@@ -149,6 +150,7 @@
           <Property Name="Cod_cliente_tipo" Type="varchar" MaxLength="10" />
           <Property Name="Descripcion_tip_cliente" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdCtaCble_CXC_Cred" Type="varchar" MaxLength="20" />
+          <Property Name="IdCtaCble_Anticipo" Type="varchar" MaxLength="20" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
@@ -3369,8 +3371,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Dias_Vct" Type="Int32" Nullable="false" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="fa_TerminoPago_Distribucion" Relationship="Self.FK_fa_TerminoPago_Distribucion_fa_TerminoPago" FromRole="fa_TerminoPago" ToRole="fa_TerminoPago_Distribucion" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_cliente_fa_TerminoPago" FromRole="fa_TerminoPago" ToRole="fa_cliente" />
           <NavigationProperty Name="fa_proforma" Relationship="Model_facturacion.FK_fa_proforma_fa_TerminoPago" FromRole="fa_TerminoPago" ToRole="fa_proforma" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_cliente_fa_TerminoPago" FromRole="fa_TerminoPago" ToRole="fa_cliente" />
         </EntityType>
         <EntityType Name="fa_TerminoPago_Distribucion">
           <Key>
@@ -3510,37 +3512,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="fa_factura_resumen" EntityType="Model_facturacion.fa_factura_resumen" />
           <EntitySet Name="vwfa_factura_sin_automatico" EntityType="Model_facturacion.vwfa_factura_sin_automatico" />
           <EntitySet Name="vwfa_cliente_consulta" EntityType="Model_facturacion.vwfa_cliente_consulta" />
-          <EntitySet Name="fa_cliente" EntityType="Model_facturacion.fa_cliente" />
-          <EntitySet Name="fa_cliente_tipo" EntityType="Model_facturacion.fa_cliente_tipo" />
           <EntitySet Name="fa_parametro" EntityType="Model_facturacion.fa_parametro" />
-          <AssociationSet Name="FK_fa_cliente_contactos_fa_cliente" Association="Model_facturacion.FK_fa_cliente_contactos_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_cliente_contactos" EntitySet="fa_cliente_contactos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_cliente_fa_cliente_tipo" Association="Model_facturacion.FK_fa_cliente_fa_cliente_tipo">
-            <End Role="fa_cliente_tipo" EntitySet="fa_cliente_tipo" />
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_cliente_fa_forma_pago" Association="Model_facturacion.FK_fa_cliente_fa_forma_pago">
-            <End Role="fa_formaPago" EntitySet="fa_formaPago" />
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_cliente_fa_NivelDescuento" Association="Model_facturacion.FK_fa_cliente_fa_NivelDescuento">
-            <End Role="fa_NivelDescuento" EntitySet="fa_NivelDescuento" />
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_cliente_fa_TerminoPago" Association="Model_facturacion.FK_fa_cliente_fa_TerminoPago">
-            <End Role="fa_TerminoPago" EntitySet="fa_TerminoPago" />
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" Association="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_cliente_x_fa_Vendedor_x_sucursal" EntitySet="fa_cliente_x_fa_Vendedor_x_sucursal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_parametro_fa_cliente" Association="Model_facturacion.FK_fa_parametro_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_parametro" EntitySet="fa_parametro" />
-          </AssociationSet>
           <EntitySet Name="fa_MotivoTraslado" EntityType="Model_facturacion.fa_MotivoTraslado" />
           <EntitySet Name="fa_CambioProducto" EntityType="Model_facturacion.fa_CambioProducto" />
           <EntitySet Name="fa_CambioProductoDet" EntityType="Model_facturacion.fa_CambioProductoDet" />
@@ -3580,18 +3552,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <AssociationSet Name="FK_fa_factura_fa_catalogo" Association="Model_facturacion.FK_fa_factura_fa_catalogo">
             <End Role="fa_catalogo" EntitySet="fa_catalogo" />
             <End Role="fa_factura" EntitySet="fa_factura" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_factura_fa_cliente" Association="Model_facturacion.FK_fa_factura_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_factura" EntitySet="fa_factura" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_guia_remision_fa_cliente" Association="Model_facturacion.FK_fa_guia_remision_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_guia_remision" EntitySet="fa_guia_remision" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_proforma_fa_cliente" Association="Model_facturacion.FK_fa_proforma_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_proforma" EntitySet="fa_proforma" />
           </AssociationSet>
           <AssociationSet Name="FK_fa_cuotas_x_doc_fa_factura" Association="Model_facturacion.FK_fa_cuotas_x_doc_fa_factura">
             <End Role="fa_factura" EntitySet="fa_factura" />
@@ -3684,10 +3644,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="vwfa_proforma_det_por_guia" EntityType="Model_facturacion.vwfa_proforma_det_por_guia" />
           <EntitySet Name="vwfa_notaCreDeb_x_fa_factura_NotaDeb" EntityType="Model_facturacion.vwfa_notaCreDeb_x_fa_factura_NotaDeb" />
           <EntitySet Name="fa_notaCreDeb" EntityType="Model_facturacion.fa_notaCreDeb" />
-          <AssociationSet Name="FK_fa_notaCreDeb_fa_cliente" Association="Model_facturacion.FK_fa_notaCreDeb_fa_cliente">
-            <End Role="fa_cliente" EntitySet="fa_cliente" />
-            <End Role="fa_notaCreDeb" EntitySet="fa_notaCreDeb" />
-          </AssociationSet>
           <AssociationSet Name="FK_fa_notaCreDeb_det_fa_notaCreDeb" Association="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb">
             <End Role="fa_notaCreDeb" EntitySet="fa_notaCreDeb" />
             <End Role="fa_notaCreDeb_det" EntitySet="fa_notaCreDeb_det" />
@@ -3717,6 +3673,52 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             <End Role="fa_notaCreDeb_x_fa_factura_NotaDeb" EntitySet="fa_notaCreDeb_x_fa_factura_NotaDeb" />
           </AssociationSet>
           <EntitySet Name="vwfa_proforma_det_por_facturar" EntityType="Model_facturacion.vwfa_proforma_det_por_facturar" />
+          <EntitySet Name="fa_cliente" EntityType="Model_facturacion.fa_cliente" />
+          <EntitySet Name="fa_cliente_tipo" EntityType="Model_facturacion.fa_cliente_tipo" />
+          <AssociationSet Name="FK_fa_cliente_contactos_fa_cliente" Association="Model_facturacion.FK_fa_cliente_contactos_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_cliente_contactos" EntitySet="fa_cliente_contactos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_cliente_fa_cliente_tipo" Association="Model_facturacion.FK_fa_cliente_fa_cliente_tipo">
+            <End Role="fa_cliente_tipo" EntitySet="fa_cliente_tipo" />
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_cliente_fa_forma_pago" Association="Model_facturacion.FK_fa_cliente_fa_forma_pago">
+            <End Role="fa_formaPago" EntitySet="fa_formaPago" />
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_cliente_fa_NivelDescuento" Association="Model_facturacion.FK_fa_cliente_fa_NivelDescuento">
+            <End Role="fa_NivelDescuento" EntitySet="fa_NivelDescuento" />
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_cliente_fa_TerminoPago" Association="Model_facturacion.FK_fa_cliente_fa_TerminoPago">
+            <End Role="fa_TerminoPago" EntitySet="fa_TerminoPago" />
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" Association="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_cliente_x_fa_Vendedor_x_sucursal" EntitySet="fa_cliente_x_fa_Vendedor_x_sucursal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_factura_fa_cliente" Association="Model_facturacion.FK_fa_factura_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_factura" EntitySet="fa_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_guia_remision_fa_cliente" Association="Model_facturacion.FK_fa_guia_remision_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_guia_remision" EntitySet="fa_guia_remision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_notaCreDeb_fa_cliente" Association="Model_facturacion.FK_fa_notaCreDeb_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_notaCreDeb" EntitySet="fa_notaCreDeb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_parametro_fa_cliente" Association="Model_facturacion.FK_fa_parametro_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_parametro" EntitySet="fa_parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fa_proforma_fa_cliente" Association="Model_facturacion.FK_fa_proforma_fa_cliente">
+            <End Role="fa_cliente" EntitySet="fa_cliente" />
+            <End Role="fa_proforma" EntitySet="fa_proforma" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="vwfa_cliente_contactos">
           <Key>
@@ -3903,9 +3905,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Porcentaje" Type="Double" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_cliente_fa_NivelDescuento" FromRole="fa_NivelDescuento" ToRole="fa_cliente" />
           <NavigationProperty Name="fa_factura" Relationship="Model_facturacion.FK_fa_factura_fa_NivelDescuento" FromRole="fa_NivelDescuento" ToRole="fa_factura" />
           <NavigationProperty Name="fa_proforma" Relationship="Model_facturacion.FK_fa_proforma_fa_NivelDescuento" FromRole="fa_NivelDescuento" ToRole="fa_proforma" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_cliente_fa_NivelDescuento" FromRole="fa_NivelDescuento" ToRole="fa_cliente" />
         </EntityType>
         <EntityType Name="fa_TipoNota">
           <Key>
@@ -3998,63 +4000,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion_tip_cliente" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="fa_cliente">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdCliente" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Idtipo_cliente" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCredito" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="cl_plazo" Type="Int32" Nullable="false" />
-          <Property Name="cl_Cupo" Type="Double" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCble_cxc_Credito" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="es_empresa_relacionada" Type="Boolean" Nullable="false" />
-          <Property Name="FormaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="EsClienteExportador" Type="Boolean" Nullable="false" />
-          <Property Name="IdNivel" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="fa_cliente_contactos" Relationship="Model_facturacion.FK_fa_cliente_contactos_fa_cliente" FromRole="fa_cliente" ToRole="fa_cliente_contactos" />
-          <NavigationProperty Name="fa_cliente_tipo" Relationship="Model_facturacion.FK_fa_cliente_fa_cliente_tipo" FromRole="fa_cliente" ToRole="fa_cliente_tipo" />
-          <NavigationProperty Name="fa_formaPago" Relationship="Model_facturacion.FK_fa_cliente_fa_forma_pago" FromRole="fa_cliente" ToRole="fa_formaPago" />
-          <NavigationProperty Name="fa_NivelDescuento" Relationship="Model_facturacion.FK_fa_cliente_fa_NivelDescuento" FromRole="fa_cliente" ToRole="fa_NivelDescuento" />
-          <NavigationProperty Name="fa_TerminoPago" Relationship="Model_facturacion.FK_fa_cliente_fa_TerminoPago" FromRole="fa_cliente" ToRole="fa_TerminoPago" />
-          <NavigationProperty Name="fa_cliente_x_fa_Vendedor_x_sucursal" Relationship="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" FromRole="fa_cliente" ToRole="fa_cliente_x_fa_Vendedor_x_sucursal" />
-          <NavigationProperty Name="fa_parametro" Relationship="Model_facturacion.FK_fa_parametro_fa_cliente" FromRole="fa_cliente" ToRole="fa_parametro" />
-          <NavigationProperty Name="fa_factura" Relationship="Model_facturacion.FK_fa_factura_fa_cliente" FromRole="fa_cliente" ToRole="fa_factura" />
-          <NavigationProperty Name="fa_guia_remision" Relationship="Model_facturacion.FK_fa_guia_remision_fa_cliente" FromRole="fa_cliente" ToRole="fa_guia_remision" />
-          <NavigationProperty Name="fa_proforma" Relationship="Model_facturacion.FK_fa_proforma_fa_cliente" FromRole="fa_cliente" ToRole="fa_proforma" />
-          <NavigationProperty Name="fa_notaCreDeb" Relationship="Model_facturacion.FK_fa_notaCreDeb_fa_cliente" FromRole="fa_cliente" ToRole="fa_notaCreDeb" />
-        </EntityType>
-        <EntityType Name="fa_cliente_tipo">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="Idtipo_cliente" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="Idtipo_cliente" Type="Int32" Nullable="false" />
-          <Property Name="Cod_cliente_tipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion_tip_cliente" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCble_CXC_Cred" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_cliente_fa_cliente_tipo" FromRole="fa_cliente_tipo" ToRole="fa_cliente" />
-        </EntityType>
         <EntityType Name="fa_parametro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4078,100 +4023,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="MontoMaximoConsumidorFinal" Type="Double" />
           <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_parametro_fa_cliente" FromRole="fa_parametro" ToRole="fa_cliente" />
         </EntityType>
-        <Association Name="FK_fa_cliente_contactos_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_cliente_contactos" Role="fa_cliente_contactos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_cliente_contactos">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_cliente_fa_cliente_tipo">
-          <End Type="Model_facturacion.fa_cliente_tipo" Role="fa_cliente_tipo" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="Idtipo_cliente" />
-            </Principal>
-            <Dependent Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="Idtipo_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_cliente_fa_forma_pago">
-          <End Type="Model_facturacion.fa_formaPago" Role="fa_formaPago" Multiplicity="0..1" />
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_formaPago">
-              <PropertyRef Name="IdFormaPago" />
-            </Principal>
-            <Dependent Role="fa_cliente">
-              <PropertyRef Name="FormaPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_cliente_fa_NivelDescuento">
-          <End Type="Model_facturacion.fa_NivelDescuento" Role="fa_NivelDescuento" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_NivelDescuento">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdNivel" />
-            </Principal>
-            <Dependent Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdNivel" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_cliente_fa_TerminoPago">
-          <End Type="Model_facturacion.fa_TerminoPago" Role="fa_TerminoPago" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_TerminoPago">
-              <PropertyRef Name="IdTerminoPago" />
-            </Principal>
-            <Dependent Role="fa_cliente">
-              <PropertyRef Name="IdTipoCredito" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_cliente_x_fa_Vendedor_x_sucursal" Role="fa_cliente_x_fa_Vendedor_x_sucursal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_cliente_x_fa_Vendedor_x_sucursal">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_parametro_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="0..1" />
-          <End Type="Model_facturacion.fa_parametro" Role="fa_parametro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_parametro">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdClienteConsumidorFinal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="fa_MotivoTraslado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4745,7 +4596,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="aprobada_enviar_sri" Type="Boolean" Nullable="false" />
           <Property Name="Generado" Type="Boolean" />
           <NavigationProperty Name="fa_catalogo" Relationship="Model_facturacion.FK_fa_factura_fa_catalogo" FromRole="fa_factura" ToRole="fa_catalogo" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_factura_fa_cliente" FromRole="fa_factura" ToRole="fa_cliente" />
           <NavigationProperty Name="fa_cuotas_x_doc" Relationship="Model_facturacion.FK_fa_cuotas_x_doc_fa_factura" FromRole="fa_factura" ToRole="fa_cuotas_x_doc" />
           <NavigationProperty Name="fa_factura_det" Relationship="Model_facturacion.FK_fa_factura_det_fa_factura" FromRole="fa_factura" ToRole="fa_factura_det" />
           <NavigationProperty Name="fa_NivelDescuento" Relationship="Model_facturacion.FK_fa_factura_fa_NivelDescuento" FromRole="fa_factura" ToRole="fa_NivelDescuento" />
@@ -4756,6 +4606,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <NavigationProperty Name="fa_factura_x_fa_guia_remision" Relationship="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_factura" FromRole="fa_factura" ToRole="fa_factura_x_fa_guia_remision" />
           <NavigationProperty Name="fa_factura_x_in_Ing_Egr_Inven" Relationship="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" FromRole="fa_factura" ToRole="fa_factura_x_in_Ing_Egr_Inven" />
           <NavigationProperty Name="fa_guia_remision" Relationship="Model_facturacion.FK_fa_guia_remision_fa_factura" FromRole="fa_factura" ToRole="fa_guia_remision" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_factura_fa_cliente" FromRole="fa_factura" ToRole="fa_cliente" />
         </EntityType>
         <EntityType Name="fa_guia_remision">
           <Key>
@@ -4799,12 +4650,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdCbteVta" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_guia_remision_fa_cliente" FromRole="fa_guia_remision" ToRole="fa_cliente" />
           <NavigationProperty Name="fa_factura" Relationship="Model_facturacion.FK_fa_guia_remision_fa_factura" FromRole="fa_guia_remision" ToRole="fa_factura" />
           <NavigationProperty Name="fa_factura_x_fa_guia_remision" Relationship="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_guia_remision" FromRole="fa_guia_remision" ToRole="fa_factura_x_fa_guia_remision" />
           <NavigationProperty Name="fa_guia_remision_det" Relationship="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" FromRole="fa_guia_remision" ToRole="fa_guia_remision_det" />
           <NavigationProperty Name="fa_MotivoTraslado" Relationship="Model_facturacion.FK_fa_guia_remision_fa_MotivoTraslado" FromRole="fa_guia_remision" ToRole="fa_MotivoTraslado" />
           <NavigationProperty Name="fa_PuntoVta" Relationship="Model_facturacion.FK_fa_guia_remision_fa_PuntoVta" FromRole="fa_guia_remision" ToRole="fa_PuntoVta" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_guia_remision_fa_cliente" FromRole="fa_guia_remision" ToRole="fa_cliente" />
         </EntityType>
         <EntityType Name="fa_proforma">
           <Key>
@@ -4835,11 +4686,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="pr_dias_entrega" Type="Int32" Nullable="false" />
           <Property Name="IdNivel" Type="Int32" Nullable="false" />
           <Property Name="IdCatalogo_FormaPago" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_proforma_fa_cliente" FromRole="fa_proforma" ToRole="fa_cliente" />
           <NavigationProperty Name="fa_NivelDescuento" Relationship="Model_facturacion.FK_fa_proforma_fa_NivelDescuento" FromRole="fa_proforma" ToRole="fa_NivelDescuento" />
           <NavigationProperty Name="fa_TerminoPago" Relationship="Model_facturacion.FK_fa_proforma_fa_TerminoPago" FromRole="fa_proforma" ToRole="fa_TerminoPago" />
           <NavigationProperty Name="fa_Vendedor" Relationship="Model_facturacion.FK_fa_proforma_fa_Vendedor" FromRole="fa_proforma" ToRole="fa_Vendedor" />
           <NavigationProperty Name="fa_proforma_det" Relationship="Model_facturacion.FK_fa_proforma_det_fa_proforma" FromRole="fa_proforma" ToRole="fa_proforma_det" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_proforma_fa_cliente" FromRole="fa_proforma" ToRole="fa_cliente" />
         </EntityType>
         <Association Name="FK_fa_factura_fa_catalogo">
           <End Type="Model_facturacion.fa_catalogo" Role="fa_catalogo" Multiplicity="0..1" />
@@ -4850,48 +4701,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             </Principal>
             <Dependent Role="fa_factura">
               <PropertyRef Name="IdCatalogo_FormaPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_factura_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_factura" Role="fa_factura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_factura">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_guia_remision_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_guia_remision" Role="fa_guia_remision" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_guia_remision">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fa_proforma_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_proforma" Role="fa_proforma" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_proforma">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5651,7 +5460,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="aprobada_enviar_sri" Type="Boolean" Nullable="false" />
           <Property Name="Generado" Type="Boolean" />
           <Property Name="IdVendedor" Type="Int32" />
-          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_notaCreDeb_fa_cliente" FromRole="fa_notaCreDeb" ToRole="fa_cliente" />
           <NavigationProperty Name="fa_notaCreDeb_det" Relationship="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb" FromRole="fa_notaCreDeb" ToRole="fa_notaCreDeb_det" />
           <NavigationProperty Name="fa_PuntoVta" Relationship="Model_facturacion.FK_fa_notaCreDeb_fa_PuntoVta" FromRole="fa_notaCreDeb" ToRole="fa_PuntoVta" />
           <NavigationProperty Name="fa_TipoNota" Relationship="Model_facturacion.FK_fa_notaCreDeb_fa_TipoNota1" FromRole="fa_notaCreDeb" ToRole="fa_TipoNota" />
@@ -5659,21 +5467,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <NavigationProperty Name="fa_notaCreDeb_x_ct_cbtecble" Relationship="Model_facturacion.FK_fa_notaCreDeb_x_ct_cbtecble_fa_notaCreDeb" FromRole="fa_notaCreDeb" ToRole="fa_notaCreDeb_x_ct_cbtecble" />
           <NavigationProperty Name="fa_notaCreDeb_x_cxc_cobro" Relationship="Model_facturacion.FK_fa_notaCreDeb_x_cxc_cobro_fa_notaCreDeb" FromRole="fa_notaCreDeb" ToRole="fa_notaCreDeb_x_cxc_cobro" />
           <NavigationProperty Name="fa_notaCreDeb_x_fa_factura_NotaDeb" Relationship="Model_facturacion.FK_fa_notaCreDeb_x_fa_factura_NotaDeb_fa_notaCreDeb" FromRole="fa_notaCreDeb" ToRole="fa_notaCreDeb_x_fa_factura_NotaDeb" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_notaCreDeb_fa_cliente" FromRole="fa_notaCreDeb" ToRole="fa_cliente" />
         </EntityType>
-        <Association Name="FK_fa_notaCreDeb_fa_cliente">
-          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
-          <End Type="Model_facturacion.fa_notaCreDeb" Role="fa_notaCreDeb" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_cliente">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="fa_notaCreDeb">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_fa_notaCreDeb_det_fa_notaCreDeb">
           <End Type="Model_facturacion.fa_notaCreDeb" Role="fa_notaCreDeb" Multiplicity="1" />
           <End Type="Model_facturacion.fa_notaCreDeb_det" Role="fa_notaCreDeb_det" Multiplicity="*" />
@@ -5841,6 +5636,215 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="pd_DetalleAdicional" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Saldo" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="fa_cliente">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Idtipo_cliente" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCredito" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cl_plazo" Type="Int32" Nullable="false" />
+          <Property Name="cl_Cupo" Type="Double" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_cxc_Credito" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Anticipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="es_empresa_relacionada" Type="Boolean" Nullable="false" />
+          <Property Name="FormaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EsClienteExportador" Type="Boolean" Nullable="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="fa_cliente_contactos" Relationship="Model_facturacion.FK_fa_cliente_contactos_fa_cliente" FromRole="fa_cliente" ToRole="fa_cliente_contactos" />
+          <NavigationProperty Name="fa_cliente_tipo" Relationship="Model_facturacion.FK_fa_cliente_fa_cliente_tipo" FromRole="fa_cliente" ToRole="fa_cliente_tipo" />
+          <NavigationProperty Name="fa_formaPago" Relationship="Model_facturacion.FK_fa_cliente_fa_forma_pago" FromRole="fa_cliente" ToRole="fa_formaPago" />
+          <NavigationProperty Name="fa_NivelDescuento" Relationship="Model_facturacion.FK_fa_cliente_fa_NivelDescuento" FromRole="fa_cliente" ToRole="fa_NivelDescuento" />
+          <NavigationProperty Name="fa_TerminoPago" Relationship="Model_facturacion.FK_fa_cliente_fa_TerminoPago" FromRole="fa_cliente" ToRole="fa_TerminoPago" />
+          <NavigationProperty Name="fa_cliente_x_fa_Vendedor_x_sucursal" Relationship="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" FromRole="fa_cliente" ToRole="fa_cliente_x_fa_Vendedor_x_sucursal" />
+          <NavigationProperty Name="fa_factura" Relationship="Model_facturacion.FK_fa_factura_fa_cliente" FromRole="fa_cliente" ToRole="fa_factura" />
+          <NavigationProperty Name="fa_guia_remision" Relationship="Model_facturacion.FK_fa_guia_remision_fa_cliente" FromRole="fa_cliente" ToRole="fa_guia_remision" />
+          <NavigationProperty Name="fa_notaCreDeb" Relationship="Model_facturacion.FK_fa_notaCreDeb_fa_cliente" FromRole="fa_cliente" ToRole="fa_notaCreDeb" />
+          <NavigationProperty Name="fa_parametro" Relationship="Model_facturacion.FK_fa_parametro_fa_cliente" FromRole="fa_cliente" ToRole="fa_parametro" />
+          <NavigationProperty Name="fa_proforma" Relationship="Model_facturacion.FK_fa_proforma_fa_cliente" FromRole="fa_cliente" ToRole="fa_proforma" />
+        </EntityType>
+        <EntityType Name="fa_cliente_tipo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Idtipo_cliente" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Idtipo_cliente" Type="Int32" Nullable="false" />
+          <Property Name="Cod_cliente_tipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion_tip_cliente" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_CXC_Cred" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Anticipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="fa_cliente" Relationship="Model_facturacion.FK_fa_cliente_fa_cliente_tipo" FromRole="fa_cliente_tipo" ToRole="fa_cliente" />
+        </EntityType>
+        <Association Name="FK_fa_cliente_contactos_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_cliente_contactos" Role="fa_cliente_contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_cliente_contactos">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_cliente_fa_cliente_tipo">
+          <End Type="Model_facturacion.fa_cliente_tipo" Role="fa_cliente_tipo" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Idtipo_cliente" />
+            </Principal>
+            <Dependent Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Idtipo_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_cliente_fa_forma_pago">
+          <End Type="Model_facturacion.fa_formaPago" Role="fa_formaPago" Multiplicity="0..1" />
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_formaPago">
+              <PropertyRef Name="IdFormaPago" />
+            </Principal>
+            <Dependent Role="fa_cliente">
+              <PropertyRef Name="FormaPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_cliente_fa_NivelDescuento">
+          <End Type="Model_facturacion.fa_NivelDescuento" Role="fa_NivelDescuento" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_NivelDescuento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_cliente_fa_TerminoPago">
+          <End Type="Model_facturacion.fa_TerminoPago" Role="fa_TerminoPago" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_TerminoPago">
+              <PropertyRef Name="IdTerminoPago" />
+            </Principal>
+            <Dependent Role="fa_cliente">
+              <PropertyRef Name="IdTipoCredito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_cliente_x_fa_Vendedor_x_sucursal" Role="fa_cliente_x_fa_Vendedor_x_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_cliente_x_fa_Vendedor_x_sucursal">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_factura_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_factura" Role="fa_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_factura">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_guia_remision_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_guia_remision" Role="fa_guia_remision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_guia_remision">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_notaCreDeb_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_notaCreDeb" Role="fa_notaCreDeb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_notaCreDeb">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_parametro_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="0..1" />
+          <End Type="Model_facturacion.fa_parametro" Role="fa_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_parametro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdClienteConsumidorFinal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fa_proforma_fa_cliente">
+          <End Type="Model_facturacion.fa_cliente" Role="fa_cliente" Multiplicity="1" />
+          <End Type="Model_facturacion.fa_proforma" Role="fa_proforma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fa_cliente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="fa_proforma">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6287,51 +6291,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="fa_cliente">
-            <EntityTypeMapping TypeName="Model_facturacion.fa_cliente">
-              <MappingFragment StoreEntitySet="fa_cliente">
-                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
-                <ScalarProperty Name="EsClienteExportador" ColumnName="EsClienteExportador" />
-                <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
-                <ScalarProperty Name="es_empresa_relacionada" ColumnName="es_empresa_relacionada" />
-                <ScalarProperty Name="IdCtaCble_cxc_Credito" ColumnName="IdCtaCble_cxc_Credito" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="cl_Cupo" ColumnName="cl_Cupo" />
-                <ScalarProperty Name="cl_plazo" ColumnName="cl_plazo" />
-                <ScalarProperty Name="IdTipoCredito" ColumnName="IdTipoCredito" />
-                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="fa_cliente_tipo">
-            <EntityTypeMapping TypeName="Model_facturacion.fa_cliente_tipo">
-              <MappingFragment StoreEntitySet="fa_cliente_tipo">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdCtaCble_CXC_Cred" ColumnName="IdCtaCble_CXC_Cred" />
-                <ScalarProperty Name="Descripcion_tip_cliente" ColumnName="Descripcion_tip_cliente" />
-                <ScalarProperty Name="Cod_cliente_tipo" ColumnName="Cod_cliente_tipo" />
-                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7155,6 +7114,53 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdProforma" ColumnName="IdProforma" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fa_cliente">
+            <EntityTypeMapping TypeName="Model_facturacion.fa_cliente">
+              <MappingFragment StoreEntitySet="fa_cliente">
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="EsClienteExportador" ColumnName="EsClienteExportador" />
+                <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
+                <ScalarProperty Name="es_empresa_relacionada" ColumnName="es_empresa_relacionada" />
+                <ScalarProperty Name="IdCtaCble_Anticipo" ColumnName="IdCtaCble_Anticipo" />
+                <ScalarProperty Name="IdCtaCble_cxc_Credito" ColumnName="IdCtaCble_cxc_Credito" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="cl_Cupo" ColumnName="cl_Cupo" />
+                <ScalarProperty Name="cl_plazo" ColumnName="cl_plazo" />
+                <ScalarProperty Name="IdTipoCredito" ColumnName="IdTipoCredito" />
+                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fa_cliente_tipo">
+            <EntityTypeMapping TypeName="Model_facturacion.fa_cliente_tipo">
+              <MappingFragment StoreEntitySet="fa_cliente_tipo">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdCtaCble_Anticipo" ColumnName="IdCtaCble_Anticipo" />
+                <ScalarProperty Name="IdCtaCble_CXC_Cred" ColumnName="IdCtaCble_CXC_Cred" />
+                <ScalarProperty Name="Descripcion_tip_cliente" ColumnName="Descripcion_tip_cliente" />
+                <ScalarProperty Name="Cod_cliente_tipo" ColumnName="Cod_cliente_tipo" />
+                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

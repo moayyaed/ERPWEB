@@ -1,7 +1,9 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.Facturacion;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -14,6 +16,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     {
         #region Index
         fa_cliente_tipo_Bus bus_clientetipo = new fa_cliente_tipo_Bus();
+        ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         public ActionResult Index()
         {
             return View();
@@ -27,6 +30,21 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_clientetipo", model);
         }
 
+        #endregion
+        #region Combo Cuenta bajo demanda
+        public ActionResult CmbCuenta_Anticipo()
+        {
+            fa_cliente_tipo_Info model = new fa_cliente_tipo_Info();
+            return PartialView("_CmbCuenta_Anticipo", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
         #endregion
         #region Metodos
         private void cargar_combos(int IdEmpresa)

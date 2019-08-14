@@ -61,7 +61,6 @@ namespace Core.Erp.Data
         public Nullable<bool> Generado { get; set; }
     
         public virtual fa_catalogo fa_catalogo { get; set; }
-        public virtual fa_cliente fa_cliente { get; set; }
         public virtual ICollection<fa_cuotas_x_doc> fa_cuotas_x_doc { get; set; }
         public virtual ICollection<fa_factura_det> fa_factura_det { get; set; }
         public virtual fa_NivelDescuento fa_NivelDescuento { get; set; }
@@ -72,5 +71,6 @@ namespace Core.Erp.Data
         public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         public virtual ICollection<fa_factura_x_in_Ing_Egr_Inven> fa_factura_x_in_Ing_Egr_Inven { get; set; }
         public virtual ICollection<fa_guia_remision> fa_guia_remision { get; set; }
+        public virtual fa_cliente fa_cliente { get; set; }
     }
 }

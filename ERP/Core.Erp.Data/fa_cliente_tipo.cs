@@ -24,6 +24,7 @@ namespace Core.Erp.Data
         public string Cod_cliente_tipo { get; set; }
         public string Descripcion_tip_cliente { get; set; }
         public string IdCtaCble_CXC_Cred { get; set; }
+        public string IdCtaCble_Anticipo { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }

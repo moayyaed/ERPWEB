@@ -25,9 +25,9 @@ namespace Core.Erp.Data.Facturacion
                                      Idtipo_cliente = q.Idtipo_cliente,
                                      Cod_cliente_tipo = q.Cod_cliente_tipo,
                                      Descripcion_tip_cliente = q.Descripcion_tip_cliente,
-                                     estado = q.Estado,
+                                     Estado = q.Estado,
                                      IdCtaCble_CXC_Cred = q.IdCtaCble_CXC_Cred,
-
+                                     IdCtaCble_Anticipo = q.IdCtaCble_Anticipo,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -40,9 +40,9 @@ namespace Core.Erp.Data.Facturacion
                                      Idtipo_cliente = q.Idtipo_cliente,
                                      Cod_cliente_tipo = q.Cod_cliente_tipo,
                                      Descripcion_tip_cliente = q.Descripcion_tip_cliente,
-                                     estado = q.Estado,
+                                     Estado = q.Estado,
                                      IdCtaCble_CXC_Cred = q.IdCtaCble_CXC_Cred,
-
+                                     IdCtaCble_Anticipo = q.IdCtaCble_Anticipo,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
@@ -70,7 +70,8 @@ namespace Core.Erp.Data.Facturacion
                         Cod_cliente_tipo = Entity.Cod_cliente_tipo,
                         Descripcion_tip_cliente = Entity.Descripcion_tip_cliente,
                         IdCtaCble_CXC_Cred = Entity.IdCtaCble_CXC_Cred,
-                        estado = Entity.Estado
+                        IdCtaCble_Anticipo = Entity.IdCtaCble_Anticipo,
+                        Estado = Entity.Estado
 
                     };
                 }
@@ -117,7 +118,8 @@ namespace Core.Erp.Data.Facturacion
                         Cod_cliente_tipo = info.Cod_cliente_tipo,
                         Descripcion_tip_cliente = info.Descripcion_tip_cliente,
                         IdCtaCble_CXC_Cred = info.IdCtaCble_CXC_Cred,
-                        Estado = info.estado="A",
+                        IdCtaCble_Anticipo =  info.IdCtaCble_Anticipo,
+                        Estado = info.Estado="A",
 
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
@@ -146,7 +148,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.Cod_cliente_tipo = info.Cod_cliente_tipo;
                     Entity.Descripcion_tip_cliente = info.Descripcion_tip_cliente;
                     Entity.IdCtaCble_CXC_Cred = info.IdCtaCble_CXC_Cred;
-
+                    Entity.IdCtaCble_Anticipo = info.IdCtaCble_Anticipo;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
                     Context.SaveChanges();
@@ -168,7 +170,7 @@ namespace Core.Erp.Data.Facturacion
                     fa_cliente_tipo Entity = Context.fa_cliente_tipo.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.Idtipo_cliente == info.Idtipo_cliente);
                     if (Entity == null) return false;
 
-                    Entity.Estado = info.estado="I";
+                    Entity.Estado = info.Estado="I";
 
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
                     Entity.Fecha_UltAnu = DateTime.Now;

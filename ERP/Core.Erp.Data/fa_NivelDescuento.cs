@@ -16,9 +16,9 @@ namespace Core.Erp.Data
     {
         public fa_NivelDescuento()
         {
-            this.fa_cliente = new HashSet<fa_cliente>();
             this.fa_factura = new HashSet<fa_factura>();
             this.fa_proforma = new HashSet<fa_proforma>();
+            this.fa_cliente = new HashSet<fa_cliente>();
         }
     
         public int IdEmpresa { get; set; }
@@ -28,8 +28,8 @@ namespace Core.Erp.Data
         public double Porcentaje { get; set; }
         public bool Estado { get; set; }
     
-        public virtual ICollection<fa_cliente> fa_cliente { get; set; }
         public virtual ICollection<fa_factura> fa_factura { get; set; }
         public virtual ICollection<fa_proforma> fa_proforma { get; set; }
+        public virtual ICollection<fa_cliente> fa_cliente { get; set; }
     }
 }
