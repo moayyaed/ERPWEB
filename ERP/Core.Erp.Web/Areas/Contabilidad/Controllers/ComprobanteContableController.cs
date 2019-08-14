@@ -389,7 +389,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 p.Columns.Add("nom_punto_cargo", "Punto de cargo", 90);
                 p.ClientSideEvents.BeginCallback = "PuntoCargoComboBox_BeginCallback";
                 p.ValueType = typeof(int);
-                p.BindList(bus_pc.GetList(IdEmpresa, IdPunto_cargo_grupo, false));
+                p.BindList(bus_pc.GetList(IdEmpresa, IdPunto_cargo_grupo, false,false));
             });
         }
         #endregion

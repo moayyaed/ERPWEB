@@ -19,14 +19,16 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public double dc_Valor_Debe { get; set; }
         public Nullable<double> dc_Valor_Haber { get; set; }
         public Nullable<double> Saldo { get; set; }
-        public System.DateTime cb_Fecha { get; set; }
+        public System.DateTime? cb_Fecha { get; set; }
         public string cb_Observacion { get; set; }
         public string cb_Estado { get; set; }
         public string tc_TipoCbte { get; set; }
         public Nullable<int> IdMes { get; set; }
         public string smes { get; set; }
-        public int IdAnio { get; set; }
-        public int IdSucursal { get; set; }
+        public int? IdAnio { get; set; }
+        public int? IdSucursal { get; set; }
         public string Su_Descripcion { get; set; }
+        public string nom_punto_cargo_grupo { get; set; }
+        public string nom_punto_cargo { get; set; }
     }
 }

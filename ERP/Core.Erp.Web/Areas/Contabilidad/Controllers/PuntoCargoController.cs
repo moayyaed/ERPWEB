@@ -23,7 +23,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public ActionResult GridViewPartial_punto_cargo(int IdPunto_cargo_grupo=0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_punto_cargo.GetList(IdEmpresa, IdPunto_cargo_grupo, true);
+            var model = bus_punto_cargo.GetList(IdEmpresa, IdPunto_cargo_grupo, true,false);
             ViewBag.IdPunto_cargo_grupo = IdPunto_cargo_grupo;
             return PartialView("_GridViewPartial_punto_cargo", model);
         }

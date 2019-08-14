@@ -90,7 +90,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public JsonResult CargarPuntoCargo(int IdEmpresa = 0, int IdPuntoCargoGrupo = 0)
         {
             ct_punto_cargo_Bus bus_punto_cargo = new ct_punto_cargo_Bus();
-            var resultado = bus_punto_cargo.GetList(IdEmpresa, IdPuntoCargoGrupo, false);
+            var resultado = bus_punto_cargo.GetList(IdEmpresa, IdPuntoCargoGrupo, false,true);
             resultado.Add(new ct_punto_cargo_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -152,7 +152,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.lst_punto = lst_punto;
 
             ct_punto_cargo_Bus bus_punto_cargo = new ct_punto_cargo_Bus();
-            var lst_punto_cargo = bus_punto_cargo.GetList(model.IdEmpresa, model.IdPunto_cargo_grupo, false);
+            var lst_punto_cargo = bus_punto_cargo.GetList(model.IdEmpresa, model.IdPunto_cargo_grupo, false,true);
             lst_punto_cargo.Add(new ct_punto_cargo_Info
             {
                 IdEmpresa = model.IdEmpresa,
@@ -251,6 +251,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fechaIni.Value = model.fecha_ini;
             report.p_fechaFin.Value = model.fecha_fin;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdPuntoCargo.Value = model.IdPunto_cargo;
+            report.p_IdGrupo.Value = model.IdPunto_cargo_grupo;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
@@ -279,6 +281,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
+            report.p_IdPuntoCargo.Value = model.IdPunto_cargo;
+            report.p_IdGrupo.Value = model.IdPunto_cargo_grupo;
             SessionFixed.IdDivision_IC = model.IdPunto_cargo_grupo.ToString();
             //cargar_combos(model.IdEmpresa);
             cargar_combos_punto_cargo(model);

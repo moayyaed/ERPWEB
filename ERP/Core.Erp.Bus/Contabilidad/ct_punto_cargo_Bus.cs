@@ -8,11 +8,11 @@ namespace Core.Erp.Bus.Contabilidad
     public class ct_punto_cargo_Bus
     {
          ct_punto_cargo_Data odata = new  ct_punto_cargo_Data();
-        public List<ct_punto_cargo_Info> GetList(int IdEmpresa, int IdPunto_cargo_grupo, bool mostrar_anulados)
+        public List<ct_punto_cargo_Info> GetList(int IdEmpresa, int IdPunto_cargo_grupo, bool mostrar_anulados, bool NoMostrarTodos)
         {
             try
             {
-                return odata.GetList(IdEmpresa, IdPunto_cargo_grupo, mostrar_anulados);
+                return odata.GetList(IdEmpresa, IdPunto_cargo_grupo, mostrar_anulados, NoMostrarTodos);
             }
             catch (Exception)
             {

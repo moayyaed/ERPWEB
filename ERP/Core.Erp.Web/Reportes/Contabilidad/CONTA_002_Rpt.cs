@@ -31,6 +31,8 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             DateTime fechaIni = p_fechaIni.Value == null ? DateTime.Now : Convert.ToDateTime(p_fechaIni.Value);
             DateTime fechaFin = p_fechaFin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fechaFin.Value);
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
+            int IdPuntoCargo = string.IsNullOrEmpty(p_IdPuntoCargo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdPuntoCargo.Value);
+            int IdPuntoCargoGrupo = string.IsNullOrEmpty(p_IdGrupo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdGrupo.Value);
             CONTA_002_Bus bus_rpt = new CONTA_002_Bus();
             List<CONTA_002_Info> lst_rpt = new List<CONTA_002_Info>();
 
@@ -38,7 +40,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             {
                 foreach (var item in IntArray)
                 {
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdCtaCble, IdCtaCbleFin, item, fechaIni, fechaFin));
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, IdCtaCble, IdCtaCbleFin, item, fechaIni, fechaFin,IdPuntoCargo,IdPuntoCargoGrupo));
                 }
             }
             this.DataSource = lst_rpt;

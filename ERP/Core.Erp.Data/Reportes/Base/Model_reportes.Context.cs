@@ -21,7 +21,10 @@ namespace Core.Erp.Data.Reportes.Base
             : base("name=Entities_reportes")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -345,35 +348,6 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_012_Result>("SPBAN_012", idEmpresaParameter, idSucursalParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter, idUsuarioParameter);
-        }
-    
-        public virtual ObjectResult<SPCONTA_002_Result> SPCONTA_002(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, string idCtaCble, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idSucursalIniParameter = idSucursalIni.HasValue ?
-                new ObjectParameter("IdSucursalIni", idSucursalIni) :
-                new ObjectParameter("IdSucursalIni", typeof(int));
-    
-            var idSucursalFinParameter = idSucursalFin.HasValue ?
-                new ObjectParameter("IdSucursalFin", idSucursalFin) :
-                new ObjectParameter("IdSucursalFin", typeof(int));
-    
-            var idCtaCbleParameter = idCtaCble != null ?
-                new ObjectParameter("IdCtaCble", idCtaCble) :
-                new ObjectParameter("IdCtaCble", typeof(string));
-    
-            var fechaIniParameter = fechaIni.HasValue ?
-                new ObjectParameter("FechaIni", fechaIni) :
-                new ObjectParameter("FechaIni", typeof(System.DateTime));
-    
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_002_Result>("SPCONTA_002", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idCtaCbleParameter, fechaIniParameter, fechaFinParameter);
         }
     
         public virtual ObjectResult<SPCONTA_003_balances_Result> SPCONTA_003_balances(Nullable<int> idEmpresa, Nullable<int> idAnio, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, string idUsuario, Nullable<int> idNivel, Nullable<bool> mostrarSaldo0, string balance, Nullable<bool> mostrarAcumulado)
@@ -1636,6 +1610,51 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("idProveedorFIn", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_008_Result>("SPCXP_008", idempresaParameter, fechaParameter, idSucursalIniParameter, idSucursalFinParameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter, idProveedorIniParameter, idProveedorFInParameter);
+        }
+    
+        public virtual ObjectResult<SPCONTA_002_Result> SPCONTA_002(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, string idCtaCble, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<int> idGrupoIni, Nullable<int> idGrupoFin, Nullable<int> idPunto_cargoIni, Nullable<int> idPunto_cargoFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            var idCtaCbleParameter = idCtaCble != null ?
+                new ObjectParameter("IdCtaCble", idCtaCble) :
+                new ObjectParameter("IdCtaCble", typeof(string));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var idGrupoIniParameter = idGrupoIni.HasValue ?
+                new ObjectParameter("IdGrupoIni", idGrupoIni) :
+                new ObjectParameter("IdGrupoIni", typeof(int));
+    
+            var idGrupoFinParameter = idGrupoFin.HasValue ?
+                new ObjectParameter("IdGrupoFin", idGrupoFin) :
+                new ObjectParameter("IdGrupoFin", typeof(int));
+    
+            var idPunto_cargoIniParameter = idPunto_cargoIni.HasValue ?
+                new ObjectParameter("IdPunto_cargoIni", idPunto_cargoIni) :
+                new ObjectParameter("IdPunto_cargoIni", typeof(int));
+    
+            var idPunto_cargoFinParameter = idPunto_cargoFin.HasValue ?
+                new ObjectParameter("IdPunto_cargoFin", idPunto_cargoFin) :
+                new ObjectParameter("IdPunto_cargoFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_002_Result>("SPCONTA_002", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idCtaCbleParameter, fechaIniParameter, fechaFinParameter, idGrupoIniParameter, idGrupoFinParameter, idPunto_cargoIniParameter, idPunto_cargoFinParameter);
         }
     }
 }

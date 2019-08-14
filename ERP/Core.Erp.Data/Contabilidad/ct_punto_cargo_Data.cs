@@ -10,21 +10,21 @@ namespace Core.Erp.Data.Contabilidad
 {
    public class ct_punto_cargo_Data
     {
-        public List<ct_punto_cargo_Info> GetList(int IdEmpresa,int IdPunto_cargo_grupo, bool mostrar_anulados)
+        public List<ct_punto_cargo_Info> GetList(int IdEmpresa,int IdPunto_cargo_grupo, bool mostrar_anulados, bool NoMostrarTodos)
         {
             try
             {
                 int IdPunto_cargo_grupo_ini = IdPunto_cargo_grupo;
-                int IdPunto_cargo_grupo_fin = IdPunto_cargo_grupo == 0 ? 999999 : IdPunto_cargo_grupo;
+                int IdPunto_cargo_grupo_fin = IdPunto_cargo_grupo == 0 ? (NoMostrarTodos ? 0 : 999999) : IdPunto_cargo_grupo;
 
                 List<ct_punto_cargo_Info> Lista;
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
-                    if (mostrar_anulados)
                         Lista = (from q in Context.ct_punto_cargo
                                  where q.IdEmpresa == IdEmpresa
                                  && q.IdPunto_cargo_grupo >= IdPunto_cargo_grupo_ini
                                  && q.IdPunto_cargo_grupo <= IdPunto_cargo_grupo_fin
+                                 &&  q.Estado == (mostrar_anulados ? q.Estado : true)
                                  select new ct_punto_cargo_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -34,21 +34,6 @@ namespace Core.Erp.Data.Contabilidad
                                      Estado = q.Estado,
                                      nom_punto_cargo = q.nom_punto_cargo
                                  }).ToList();
-                    else
-                        Lista = (from q in Context.ct_punto_cargo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdPunto_cargo_grupo >= IdPunto_cargo_grupo_ini
-                                 && q.IdPunto_cargo_grupo <= IdPunto_cargo_grupo_fin
-                                 && q.Estado == true
-                                 select new ct_punto_cargo_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdPunto_cargo = q.IdPunto_cargo,
-                                     IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
-                                     cod_punto_cargo = q.cod_punto_cargo,
-                                     Estado = q.Estado,
-                                     nom_punto_cargo = q.nom_punto_cargo
-                            }).ToList();
                 }
 
                 return Lista;

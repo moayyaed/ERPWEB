@@ -34,7 +34,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         Compra = q.Compra,
                         Retenciones = q.Retenciones,
                         Pagos = q.Pagos,
-                        Saldo = q.Saldo
+                        Saldo = q.Saldo,
+                        IdProveedorClase = q.IdProveedorClase,
+                        DescripcionClase = q.DescripcionClase
                     }).ToList();
                 }
                 return Lista;

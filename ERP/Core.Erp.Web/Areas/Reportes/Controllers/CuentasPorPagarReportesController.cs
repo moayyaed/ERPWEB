@@ -223,6 +223,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             cp_proveedor_clase_Bus bus_clase_proveedor = new cp_proveedor_clase_Bus();
             var lst_clase_proveedor = bus_clase_proveedor.get_list(IdEmpresa, false);
+            lst_clase_proveedor.Add(new Info.CuentasPorPagar.cp_proveedor_clase_Info
+            {
+                IdClaseProveedor = 0,
+                descripcion_clas_prove = "Todos"
+            });
             ViewBag.lst_clase_proveedor = lst_clase_proveedor; 
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();

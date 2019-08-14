@@ -46,9 +46,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         Su_Descripcion = q.Su_Descripcion,
                         ValorAbono = q.ValorAbono,
                         ValorNC = q.ValorNC,
-                        ValorRetencion = q.ValorRetencion
-
-
+                        ValorRetencion = q.ValorRetencion,
+                        descripcion_clas_prove = q.descripcion_clas_prove,
+                        IdClaseProveedor = q.IdClaseProveedor
                     }).ToList();
                 }
                 return Lista;
