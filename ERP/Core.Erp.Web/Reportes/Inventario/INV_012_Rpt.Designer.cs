@@ -96,6 +96,9 @@
             this.xrTableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.p_tipo_movi = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -766,6 +769,21 @@
             this.xrTableCell18.TextFormatString = "{0:n2}";
             this.xrTableCell18.Weight = 0.5740524437822272D;
             // 
+            // p_tipo_movi
+            // 
+            this.p_tipo_movi.Name = "p_tipo_movi";
+            this.p_tipo_movi.Visible = false;
+            // 
+            // p_fecha_ini
+            // 
+            this.p_fecha_ini.Name = "p_fecha_ini";
+            this.p_fecha_ini.Visible = false;
+            // 
+            // p_fecha_fin
+            // 
+            this.p_fecha_fin.Name = "p_fecha_fin";
+            this.p_fecha_fin.Visible = false;
+            // 
             // INV_012_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -789,7 +807,10 @@
             this.p_IdSucursal,
             this.p_IdBodega,
             this.p_IdMovi_inven_tipo,
-            this.p_IdNumMovi});
+            this.p_IdNumMovi,
+            this.p_tipo_movi,
+            this.p_fecha_ini,
+            this.p_fecha_fin});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.INV_012_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -873,5 +894,8 @@
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow7;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell30;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell31;
+        public DevExpress.XtraReports.Parameters.Parameter p_tipo_movi;
+        public DevExpress.XtraReports.Parameters.Parameter p_fecha_ini;
+        public DevExpress.XtraReports.Parameters.Parameter p_fecha_fin;
     }
 }

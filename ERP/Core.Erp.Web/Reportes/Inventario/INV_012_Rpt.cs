@@ -28,10 +28,13 @@ namespace Core.Erp.Web.Reportes.Inventario
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             int IdBodega = string.IsNullOrEmpty(p_IdBodega.Value.ToString()) ? 0 : Convert.ToInt32(p_IdBodega.Value);
             int IdMovi_inven_tipo = string.IsNullOrEmpty(p_IdMovi_inven_tipo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdMovi_inven_tipo.Value);
+            string tipo_movi = string.IsNullOrEmpty(p_tipo_movi.Value.ToString()) ? "" : Convert.ToString(p_tipo_movi.Value);
+            DateTime fechaIni = p_fecha_ini.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_ini.Value);
+            DateTime fechaFin = p_fecha_fin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             decimal IdNumMovi = string.IsNullOrEmpty(p_IdNumMovi.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdNumMovi.Value);
 
             INV_012_Bus bus_rpt = new INV_012_Bus();
-            List<INV_012_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, IdMovi_inven_tipo, IdNumMovi);
+            List<INV_012_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, tipo_movi, IdNumMovi, fechaIni, fechaFin);
             this.DataSource = lst_rpt;
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);

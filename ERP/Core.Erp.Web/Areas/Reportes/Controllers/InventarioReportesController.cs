@@ -404,6 +404,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Descripcion = "Todas"
             });
             ViewBag.lst_marca = lst_marca;
+
+            Dictionary<string, string> lst_TipoMov = new Dictionary<string, string>();
+            lst_TipoMov.Add("+", "INGRESOS");
+            lst_TipoMov.Add("-", "EGRESOS");
+            ViewBag.lst_TipoMov = lst_TipoMov;
         }
 
         public ActionResult INV_005(bool mostrar_detallado = false)
@@ -856,6 +861,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                tipo_movi = ""
             };
 
             cargar_combos(model);
@@ -874,6 +880,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdBodega.Value = model.IdBodega;
             report.p_IdMovi_inven_tipo.Value = model.IdMovi_inven_tipo;
             report.p_IdNumMovi.Value = model.IdNumMovi;
+            report.p_tipo_movi.Value = model.tipo_movi;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
@@ -899,6 +908,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdBodega.Value = model.IdBodega;
             report.p_IdMovi_inven_tipo.Value = model.IdMovi_inven_tipo;
             report.p_IdNumMovi.Value = model.IdNumMovi;
+            report.p_tipo_movi.Value = model.tipo_movi;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
