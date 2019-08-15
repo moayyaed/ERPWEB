@@ -158,9 +158,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     IdUnidadMedida_Consumo = "UNID"
                 };
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-                var lst_producto_x_bodega = bus_producto_x_bodega.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.IdSucursal));
+                // var lst_producto_x_bodega = bus_producto_x_bodega.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.IdSucursal));
+                var lst_producto_x_bodega = new List<in_producto_x_tb_bodega_Info>();
                 //var lst_producto_x_nivel = bus_producto_x_NivelDescuento.get_list(Convert.ToInt32(SessionFixed.IdEmpresa));
-                
+
                 model.pr_imagen = new byte[0];
                 list_producto_composicion.set_list(model.lst_producto_composicion, model.IdTransaccionSession);
                 Lis_in_producto_x_tb_bodega_Info_List.set_list(lst_producto_x_bodega, model.IdTransaccionSession);
@@ -524,6 +525,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             if(tipo == null)
             {
                 msg = "Seleccion el tipo de producto";
+                return false;
+            }
+
+            if (i_validar.lst_producto_x_bodega.Count() ==0)
+            {
+                msg = "Debe asignar al menos una bodega por producto";
                 return false;
             }
            /* if (tipo.tp_es_lote && string.IsNullOrEmpty(i_validar.lote_num_lote) )

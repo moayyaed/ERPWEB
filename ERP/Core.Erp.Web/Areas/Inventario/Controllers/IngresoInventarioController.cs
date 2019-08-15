@@ -31,6 +31,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_bodega_Bus bus_bodega;
+        in_producto_x_tb_bodega_Bus bus_producto_x_bodega = new in_producto_x_tb_bodega_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         #endregion
@@ -362,8 +363,23 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             {
                 return false;
             }
+
+            #region ValidarExisteProductoxBodega
+            foreach (var item in i_validar.lst_in_Ing_Egr_Inven_det)
+            {
+                var existe = bus_producto_x_bodega.existe_producto_x_bodega(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdBodega), item.IdProducto);
+
+                if (!existe)
+                {
+                    mensaje = "El producto: "+ item.pr_descripcion+", no se encuentra asignado a la bodega seleccionada";
+                    return false;
+                }
+            }
+            #endregion
+
             return true;
         }
+
         private void cargar_combos(in_Ing_Egr_Inven_Info model)
         {
             in_movi_inven_tipo_Bus bus_tipo = new in_movi_inven_tipo_Bus();

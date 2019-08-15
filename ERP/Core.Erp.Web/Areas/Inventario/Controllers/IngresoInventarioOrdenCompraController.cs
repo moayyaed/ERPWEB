@@ -35,6 +35,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         com_ordencompra_local_Bus bus_orden_compra = new com_ordencompra_local_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        in_producto_x_tb_bodega_Bus bus_producto_x_bodega = new in_producto_x_tb_bodega_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -460,6 +461,19 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                         mensaje = "Debe ingresar items de una sola orden de compra";
                         return false;
                     }
+
+                    #region ValidarExisteProductoxBodega
+                    foreach (var item in i_validar.lst_in_Ing_Egr_Inven_det)
+                    {
+                        var existe = bus_producto_x_bodega.existe_producto_x_bodega(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdBodega), item.IdProducto);
+
+                        if (!existe)
+                        {
+                            mensaje = "El producto: " + item.pr_descripcion + ", no se encuentra asignado a la bodega seleccionada";
+                            return false;
+                        }
+                    }
+                    #endregion
                 }
             }
             

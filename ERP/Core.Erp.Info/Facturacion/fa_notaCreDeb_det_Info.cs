@@ -42,6 +42,9 @@ namespace Core.Erp.Info.Facturacion
 
         public Nullable<double> sc_cantidad_factura { get; set; }
         public string cc_Descripcion { get; set; }
+        public double sc_subtotal_item { get; set; }
+        public double sc_iva_item { get; set; }
+        public double sc_total_item { get; set; }
         #endregion
 
     }

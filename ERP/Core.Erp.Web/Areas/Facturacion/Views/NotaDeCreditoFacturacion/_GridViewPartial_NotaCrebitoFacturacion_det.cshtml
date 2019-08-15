@@ -50,7 +50,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(18);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -58,7 +58,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(18);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -72,14 +72,15 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "sc_cantidad";
-            column.Caption = "cantidad";
+            column.Caption = "Cant";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
         });
         settings.Columns.Add(column =>
@@ -93,6 +94,7 @@
                 q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
@@ -106,6 +108,7 @@
                 q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
@@ -113,7 +116,7 @@
         {
             column.FieldName = "IdCod_Impuesto_Iva";
             column.Caption = "Impuesto";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("nom_impuesto", "Descripción").Width = Unit.Percentage(100);
@@ -121,6 +124,7 @@
                 p.ValueField = "IdCod_Impuesto";
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
+                p.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
@@ -138,7 +142,25 @@
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
+            column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_subtotal_item";
+            column.Caption = "Subtotal";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 12;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
         });
         settings.Columns.Add(column =>
         {
@@ -146,7 +168,25 @@
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
+            column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_iva_item";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 13;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
         });
         settings.Columns.Add(column =>
         {
@@ -154,7 +194,25 @@
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
+            column.Visible = true;
             column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_total_item";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 14;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
         });
         settings.Columns.Add(column =>
         {
@@ -177,7 +235,20 @@
             column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_observacion";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.VisibleIndex = 11;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditorProperties().Memo(q =>
+            {
 
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
         settings.CellEditorInitialize = (sender, e) =>
         {
             if (e.Column.FieldName == "sc_Precio" && SessionFixed.EsSuperAdmin != "True")
@@ -215,6 +286,32 @@
             success: function (data) {
                 GridView_notaCredito_det.GetEditor('sc_Precio').SetValue(data.precio);
                 GridView_notaCredito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCodImpuesto);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function CalcularValores(s, e) {
+        var datos = {
+            Cantidad: GridView_notaCredito_det.GetEditor('sc_cantidad').GetValue(),
+            Precio: GridView_notaCredito_det.GetEditor('sc_Precio').GetValue(),
+            IdCodImpuesto: GridView_notaCredito_det.GetEditor('IdCod_Impuesto_Iva').GetValue(),
+            PorcentajeDesc: GridView_notaCredito_det.GetEditor('sc_PordescUni').GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CalcularValores", "NotaDeCreditoFacturacion",new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_notaCredito_det.GetEditor('sc_subtotal_item').SetValue(data.subtotal);
+                GridView_notaCredito_det.GetEditor('sc_iva_item').SetValue(data.iva);
+                GridView_notaCredito_det.GetEditor('sc_total_item').SetValue(data.total);
             },
             error: function (error) {
             }

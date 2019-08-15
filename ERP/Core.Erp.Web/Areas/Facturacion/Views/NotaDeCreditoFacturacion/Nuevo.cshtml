@@ -48,6 +48,8 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                console.log(data.IdVendedor);
+                $("#IdVendedor").val(data.IdVendedor);
                 cargar_contactos();
             },
             error: function (error) {
@@ -442,7 +444,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdVendedor">Vendedor</label>
-                                @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdVendedor" })
                                 @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
                             </div>
                         </div>

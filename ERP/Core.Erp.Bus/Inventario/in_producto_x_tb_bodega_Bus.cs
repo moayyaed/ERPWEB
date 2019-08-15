@@ -60,5 +60,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public bool existe_producto_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdProducto)
+        {
+            try
+            {
+                return odata.existe_producto_x_bodega(IdEmpresa, IdSucursal, IdBodega, IdProducto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -46,6 +46,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_nota_x_empresa_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        fa_cliente_x_fa_Vendedor_x_sucursal_Bus bus_cliente_vendedor = new fa_cliente_x_fa_Vendedor_x_sucursal_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -164,7 +165,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
-            fa_cliente_Info resultado = bus_cliente.get_info(IdEmpresa, IdCliente);
+            fa_cliente_Info resultado = bus_cliente.get_info(IdEmpresa, IdCliente);            
             if (resultado == null)
             {
                 resultado = new fa_cliente_Info
@@ -231,6 +232,29 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
 
             return Json(retorno, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CalcularValores(int Cantidad = 0, double Precio = 0, string IdCodImpuesto = "", double PorcentajeDesc = 0)
+        {
+            double subtotal = 0;
+            double iva_porc = 0;
+            double iva = 0;
+            double total = 0;
+            double DescUnitario = 0;
+            double PrecioFinal = 0;
+
+            DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
+            PrecioFinal = Precio - DescUnitario;
+            subtotal = Math.Round(Convert.ToDouble(Cantidad * PrecioFinal),2);
+
+            var impuesto = bus_impuesto.get_info(IdCodImpuesto);
+            if (impuesto != null)
+                iva_porc = impuesto.porcentaje;
+
+            iva = Math.Round((subtotal * (iva_porc / 100)),2);
+            total = Math.Round((subtotal + iva),2);
+
+            return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -643,6 +667,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             info_det.sc_descUni = info_det.sc_Precio * (info_det.sc_PordescUni / 100);
             info_det.sc_precioFinal = info_det.sc_Precio - info_det.sc_descUni;
             info_det.sc_subtotal = info_det.sc_cantidad * info_det.sc_precioFinal;
+            info_det.sc_subtotal_item = info_det.sc_subtotal;
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);
             if (impuesto != null)
                 info_det.vt_por_iva = impuesto.porcentaje;
@@ -682,7 +707,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.sc_descUni = info_det.sc_Precio * (info_det.sc_PordescUni / 100);
             edited_info.sc_precioFinal = info_det.sc_Precio - edited_info.sc_descUni;
             edited_info.sc_subtotal = info_det.sc_cantidad * edited_info.sc_precioFinal;
+            edited_info.sc_subtotal_item = info_det.sc_subtotal;
             edited_info.IdCod_Impuesto_Iva = info_det.IdCod_Impuesto_Iva;
+            edited_info.sc_observacion = info_det.sc_observacion;
             if (!string.IsNullOrEmpty(info_det.IdCod_Impuesto_Iva))
             {
                 var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto_Iva);

@@ -152,5 +152,42 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+
+
+        public bool existe_producto_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdProducto)
+        {            
+            try
+            {
+                in_producto_x_tb_bodega_Info info = new in_producto_x_tb_bodega_Info();
+
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    in_producto_x_tb_bodega Entity = Context.in_producto_x_tb_bodega.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == q.IdSucursal && q.IdBodega == IdBodega && q.IdProducto == IdProducto);
+
+                    if (Entity == null) return false;
+                    info = new in_producto_x_tb_bodega_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdSucursal = Entity.IdSucursal,
+                        IdBodega = Entity.IdBodega,
+                        IdProducto = Entity.IdProducto,
+                        IdCtaCble_Costo = Entity.IdCtaCble_Costo,
+                        Stock_minimo = Entity.Stock_minimo
+                    };
+                }
+
+                if (info == null || info.IdBodega == 0)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
