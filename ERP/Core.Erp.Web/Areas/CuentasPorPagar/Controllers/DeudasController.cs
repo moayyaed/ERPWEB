@@ -1123,7 +1123,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         info_det_inv.oc_IdOrdenCompra = info_det.oc_IdOrdenCompra;
                         info_det_inv.oc_Secuencia = info_det.oc_Secuencia;
                         info_det_inv.pr_descripcion = info_det.pr_descripcion;
-                        info_det_inv.IdCtaCble = info_det.IdCtaCble_oc;
                         info_det_inv.IdCtaCble_oc = info_det.IdCtaCble_oc;
                         info_det_inv.dm_cantidad = info_det.dm_cantidad;
                         info_det_inv.do_precioCompra = info_det.do_precioCompra;
@@ -1135,6 +1134,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                         info_det_inv.IdProducto = info_det.IdProducto;
                         info_det_inv.pc_Cuenta = info_det.pc_Cuenta;
                         info_det_inv.do_precioCompra = info_det.do_precioCompra;
+                        info_det_inv.IdCtaCble = info_det.IdCtaCble;
 
                         ListaDetalleOC.AddRow(info_det_inv, IdTransaccionSession);
                     }

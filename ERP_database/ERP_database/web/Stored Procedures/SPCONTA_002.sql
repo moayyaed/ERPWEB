@@ -1,5 +1,5 @@
 ﻿--exec web.SPCONTA_002 1,1,1,'2110501','2019/01/01','2019/12/31',0,99999,0,99999
-ALTER PROC [web].[SPCONTA_002]
+CREATE PROCEDURE [web].[SPCONTA_002]
 (
 @IdEmpresa int,
 @IdSucursalIni int,
