@@ -29,5 +29,6 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string Descripcion { get; set; }
         public int IdSucursal { get; set; }
         public string Su_Descripcion { get; set; }
+        public string Referencia { get; set; }
     }
 }

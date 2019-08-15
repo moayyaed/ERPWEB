@@ -61,9 +61,14 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
 
-            if (Convert.ToString(e.GetValue("IdEstadoAprobacion")) == "APRO")
+            if (Convert.ToString(e.GetValue("IdEstadoAprobacion")) == "APRO" || Convert.ToString(e.GetValue("EstadoCancelacion")) != "CANCELADA")
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+
+            if (Convert.ToString(e.GetValue("EstadoCancelacion")) == "CANCELADA")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Green;
             }
         };
         settings.Columns.Add(c =>
@@ -73,7 +78,7 @@
             c.SetDataItemTemplateContent(tc =>
             {
 
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" || Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoCancelacion")) != "CANCELADA")
                 {
                     ViewContext.Writer.Write(
                     Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdOrdenPago = DataBinder.Eval(tc.DataItem, "IdOrdenPago") }) + "&nbsp;" +
@@ -85,7 +90,7 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI , IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
@@ -111,8 +116,8 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "Total_OP";
-            column.Caption = "$Valor";
-            column.Width = Unit.Percentage(10);
+            column.Caption = "Valor";
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -123,12 +128,13 @@
             });
         });
         settings.Columns.Add("Observacion","Observación").Width = Unit.Percentage(10);
-        settings.Columns.Add("Descripcion", "Estado Aprobación").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoCancelacion", "Estado").Width = Unit.Percentage(7);
+        settings.Columns.Add("Descripcion", "Estado Aprobación").Width = Unit.Percentage(7);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(7);
             column.EditorProperties().CheckBox(sp =>
             {
 

@@ -342,6 +342,7 @@ namespace Core.Erp.Data.Compras
                     var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
                     var Total = SubtotalConDscto + ValorIVA;
 
+
                     com_ordencompra_local_resumen Entity_Resumen = new com_ordencompra_local_resumen
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -357,7 +358,8 @@ namespace Core.Erp.Data.Compras
                         ValorIVA = ValorIVA,
                         Total = Total
                     };
-
+                    var oc = Context.com_ordencompra_local_resumen.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdOrdenCompra == info.IdOrdenCompra && q.IdSucursal == info.IdSucursal).FirstOrDefault();
+                    Context.com_ordencompra_local_resumen.Remove(oc);
                     Context.com_ordencompra_local_resumen.Add(Entity_Resumen);
 
                     Context.SaveChanges();

@@ -285,7 +285,7 @@
             this.xrTableCell5.Name = "xrTableCell5";
             this.xrTableCell5.StylePriority.UseFont = false;
             this.xrTableCell5.Text = "Fecha:";
-            this.xrTableCell5.Weight = 0.53404535848861634D;
+            this.xrTableCell5.Weight = 0.46283942042845688D;
             // 
             // xrTableCell6
             // 
@@ -293,7 +293,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[cr_fecha]")});
             this.xrTableCell6.Name = "xrTableCell6";
             this.xrTableCell6.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell6.Weight = 0.53404538293527248D;
+            this.xrTableCell6.Weight = 0.605251320995432D;
             // 
             // xrTableRow4
             // 
@@ -322,18 +322,20 @@
             // 
             // xrTableCell9
             // 
-            this.xrTableCell9.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
+            this.xrTableCell9.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.StylePriority.UseFont = false;
             this.xrTableCell9.Text = "# Cobro:";
-            this.xrTableCell9.Weight = 0.53404535848861634D;
+            this.xrTableCell9.Weight = 0.46283942042845688D;
             // 
             // xrTableCell10
             // 
             this.xrTableCell10.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IdCobro]")});
+            this.xrTableCell10.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
             this.xrTableCell10.Name = "xrTableCell10";
-            this.xrTableCell10.Weight = 0.53404538293527248D;
+            this.xrTableCell10.StylePriority.UseFont = false;
+            this.xrTableCell10.Weight = 0.605251320995432D;
             // 
             // xrTableRow5
             // 
@@ -366,14 +368,14 @@
             this.xrTableCell13.Name = "xrTableCell13";
             this.xrTableCell13.StylePriority.UseFont = false;
             this.xrTableCell13.Text = "Total:";
-            this.xrTableCell13.Weight = 0.53404535848861634D;
+            this.xrTableCell13.Weight = 0.46283942042845688D;
             // 
             // xrTableCell14
             // 
             this.xrTableCell14.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[cr_TotalCobro]")});
             this.xrTableCell14.Name = "xrTableCell14";
-            this.xrTableCell14.Weight = 0.53404538293527248D;
+            this.xrTableCell14.Weight = 0.605251320995432D;
             // 
             // xrTableRow6
             // 
@@ -406,14 +408,14 @@
             this.xrTableCell17.Name = "xrTableCell17";
             this.xrTableCell17.StylePriority.UseFont = false;
             this.xrTableCell17.Text = "Cuenta:";
-            this.xrTableCell17.Weight = 0.53404535848861634D;
+            this.xrTableCell17.Weight = 0.46283942042845688D;
             // 
             // xrTableCell18
             // 
             this.xrTableCell18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[cr_NumDocumento]")});
             this.xrTableCell18.Name = "xrTableCell18";
-            this.xrTableCell18.Weight = 0.53404538293527248D;
+            this.xrTableCell18.Weight = 0.605251320995432D;
             // 
             // xrTableRow7
             // 
@@ -443,18 +445,20 @@
             // 
             // xrTableCell37
             // 
-            this.xrTableCell37.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
+            this.xrTableCell37.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
             this.xrTableCell37.Name = "xrTableCell37";
             this.xrTableCell37.StylePriority.UseFont = false;
             this.xrTableCell37.Text = "# Cbte:";
-            this.xrTableCell37.Weight = 0.53404534708017715D;
+            this.xrTableCell37.Weight = 0.46283940902001769D;
             // 
             // xrTableCell20
             // 
             this.xrTableCell20.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ct_IdCbteCble]")});
+            this.xrTableCell20.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
             this.xrTableCell20.Name = "xrTableCell20";
-            this.xrTableCell20.Weight = 0.53404534382062252D;
+            this.xrTableCell20.StylePriority.UseFont = false;
+            this.xrTableCell20.Weight = 0.605251281880782D;
             // 
             // xrTable1
             // 

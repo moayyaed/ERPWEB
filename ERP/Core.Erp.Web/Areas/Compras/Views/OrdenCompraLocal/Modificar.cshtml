@@ -237,6 +237,7 @@
             success: function (data) {
                 GridView_ordencompralocal_det.GetEditor('do_precioCompra').SetValue(data.precio);
                 GridView_ordencompralocal_det.GetEditor('IdUnidadMedida').SetValue(data.info_producto.IdUnidadMedida);
+                GridView_ordencompralocal_det.GetEditor('IdCod_Impuesto').SetValue(data.info_producto.IdCod_Impuesto_Iva);
             },
             error: function (error) {
             }

@@ -501,14 +501,14 @@
             this.xrTable9,
             this.SubReporte_cancelaciones,
             this.xrTable5});
-            this.ReportFooter.HeightF = 91.16669F;
+            this.ReportFooter.HeightF = 124.5F;
             this.ReportFooter.Name = "ReportFooter";
             // 
             // xrTable7
             // 
             this.xrTable7.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTable7.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.xrTable7.LocationFloat = new DevExpress.Utils.PointFloat(38.20834F, 71.16669F);
+            this.xrTable7.LocationFloat = new DevExpress.Utils.PointFloat(36.54167F, 104.5F);
             this.xrTable7.Name = "xrTable7";
             this.xrTable7.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow8});
@@ -538,7 +538,7 @@
             // 
             this.xrTable9.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTable9.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.xrTable9.LocationFloat = new DevExpress.Utils.PointFloat(525.7F, 71.16669F);
+            this.xrTable9.LocationFloat = new DevExpress.Utils.PointFloat(525.7F, 104.5F);
             this.xrTable9.Name = "xrTable9";
             this.xrTable9.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow15});

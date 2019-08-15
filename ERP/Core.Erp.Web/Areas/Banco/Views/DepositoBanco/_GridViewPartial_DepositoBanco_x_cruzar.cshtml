@@ -39,7 +39,7 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
 
-        settings.Columns.Add("mcj_IdCbteCble", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("mcj_IdCbteCble", "# Cbte").Width = Unit.Percentage(10);
         settings.Columns.Add("tc_descripcion", "Tipo").Width = Unit.Percentage(10);
         settings.Columns.Add("cm_observacion", "Observación").Width = Unit.Percentage(20);
         settings.Columns.Add(column => {
@@ -58,7 +58,7 @@
         {
             column.Width = Unit.Percentage(10);
             column.FieldName = "cr_Valor";
-            column.Caption = "Valor aprobado";
+            column.Caption = "Valor";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";

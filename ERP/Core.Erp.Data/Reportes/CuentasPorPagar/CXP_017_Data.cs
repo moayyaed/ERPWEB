@@ -27,7 +27,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         pe_nombreCompleto = q.pe_nombreCompleto,
                         Fecha = q.Fecha,
                         Observacion = q.Observacion,
-                        Total_OP = q.Total_OP
+                        Total_OP = q.Total_OP,
+                        Referencia = q.Referencia
                     }).ToList();
                 }
                 return Lista;
