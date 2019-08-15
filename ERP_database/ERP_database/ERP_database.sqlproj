@@ -1172,7 +1172,6 @@
     <Build Include="dbo\Tables\com_ordencompra_local_resumen.sql" />
     <Build Include="web\Views\VWBAN_013.sql" />
     <Build Include="web\Stored Procedures\SPCXC_004.sql" />
-    <Build Include="web\Stored Procedures\SPCONTA_002_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
