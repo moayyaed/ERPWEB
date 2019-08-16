@@ -958,8 +958,9 @@ namespace Core.Erp.Data.Inventario
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
                                      Desc_mov_inv = q.Desc_mov_inv,
-                                     EstadoBool = q.Estado == "A" ? true : false
-
+                                     EstadoBool = q.Estado == "A" ? true : false,
+                                     IdEstadoAproba = q.IdEstadoAproba,
+                                     EstadoAprobacion = q.EstadoAprobacion
                                  }).ToList();
 
                     else
@@ -989,8 +990,9 @@ namespace Core.Erp.Data.Inventario
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
                                      Desc_mov_inv = q.Desc_mov_inv,
-                                     EstadoBool = q.Estado == "A" ? true : false
-
+                                     EstadoBool = q.Estado == "A" ? true : false,
+                                     IdEstadoAproba = q.IdEstadoAproba,
+                                     EstadoAprobacion = q.EstadoAprobacion
                                  }).ToList();
                 }
                 return Lista;

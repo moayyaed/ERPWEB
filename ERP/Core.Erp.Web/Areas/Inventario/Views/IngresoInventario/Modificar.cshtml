@@ -17,7 +17,7 @@
     @Html.HiddenFor(q => q.IdNumMovi)
     @Html.HiddenFor(q => q.signo)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo)
-    @Html.HiddenFor(q => q.IdEstadoAproba)
+    @Html.HiddenFor(q => q.IdEstadoAproba, new { @id = "IdEstadoAproba" })
 
     if (ViewBag.mensaje != null)
     {

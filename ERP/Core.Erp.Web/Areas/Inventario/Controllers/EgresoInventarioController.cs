@@ -248,7 +248,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 ViewBag.MostrarBoton = false;
             }
 
-            if (model.IdEstadoAproba == "APRO")
+            if (model.IdEstadoAproba == "APRO" || model.IdEstadoAproba == "REP")
             {
                 ViewBag.MostrarBoton = false;
             }

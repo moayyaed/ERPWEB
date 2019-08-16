@@ -83,6 +83,32 @@
         });
     });
 
+    function AprobarMovimiento(SecuencialID) {
+        var datos = {
+            SecuencialID: SecuencialID
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AprobarMovimiento", "AprobacionMovimientoInventario", new { Area = "Inventario"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert(data);
+                    GridViewPartial_movimiento_inventario_x_aprobar.PerformCallback();
+                } else {
+                    alert("No se ha podido aprobar el movimiento de inventario");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
     function CargarBodega() {
         $("#IdBodega").empty();
         var datos = {

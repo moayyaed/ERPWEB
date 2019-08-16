@@ -19,6 +19,7 @@
     @Html.HiddenFor(q => q.IdResponsable)
     @Html.HiddenFor(q => q.IdMovi_inven_tipo)
     @Html.HiddenFor(q => q.CodMoviInven)
+    @Html.HiddenFor(q => q.IdEstadoAproba, new { @id = "IdEstadoAproba" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">

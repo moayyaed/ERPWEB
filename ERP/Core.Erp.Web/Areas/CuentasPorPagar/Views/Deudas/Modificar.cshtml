@@ -100,13 +100,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-4 col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="ImprimirRIDE();" title="Imprimir RIDE">
+                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir RIDE">
                     <i class="fa fa-print"></i>  RIDE
                 </button>
             </div>
 
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
+                <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI
                 </button>
             </div>
@@ -422,7 +422,6 @@
                                             @Html.ValidationMessageFor(q => q.info_retencion.NumRetencion, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="row">
@@ -617,6 +616,7 @@
 <script>
     ValidarCompraSucursales();
     GetUltimoDocumento();
+    MostrarBotonesSRI();
 
     $("#IdSucursal").change(function () {
         cargar_bodega();
@@ -1043,5 +1043,16 @@
             error: function (error) {
             }
         });
+    }
+
+    function MostrarBotonesSRI() {
+        if($("#TieneRetencion").val() == 0){
+            $("#ride").hide();
+            $("#sri").hide();
+        }
+        else{
+            $("#ride").show();
+            $("#sri").show();
+        }
     }
 </script>

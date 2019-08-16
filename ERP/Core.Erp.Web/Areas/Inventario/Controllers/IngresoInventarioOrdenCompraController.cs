@@ -93,7 +93,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         #endregion
 
-
         #region Vistas
         public ActionResult Index()
         {
@@ -237,6 +236,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+
+            if (model.IdEstadoAproba =="APRO" || model.IdEstadoAproba == "REP")
+            {
                 ViewBag.MostrarBoton = false;
             }
             #endregion

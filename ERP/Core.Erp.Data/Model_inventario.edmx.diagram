@@ -81,7 +81,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_det_in_transferencia" />
         <AssociationConnector Association="Model_inventario.FK_in_transferencia_det_in_UnidadMedida" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Transferencias" Width="1.5" PointX="27.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="26.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorAprobar" Width="1.5" PointX="29.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorDespachar" Width="1.5" PointX="0.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorReversar" Width="1.5" PointX="2.75" PointY="29.75" />
@@ -141,6 +140,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo6" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo7" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega" Width="1.5" PointX="5.375" PointY="15.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="27.375" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
