@@ -30,6 +30,7 @@ namespace Core.Erp.Data.Compras
                                  && q.oc_fecha >= fecha_ini
                                  && q.oc_fecha <= fecha_fin
                                  && q.Tipo == Tipo
+                                 orderby q.IdOrdenCompra descending
                                  select new com_ordencompra_local_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -59,6 +60,7 @@ namespace Core.Erp.Data.Compras
                                  && q.oc_fecha <= fecha_fin
                                  && q.Tipo == Tipo
                                  && q.Estado == "A"
+                                 orderby q.IdOrdenCompra descending
                                  select new com_ordencompra_local_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
