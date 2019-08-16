@@ -17,6 +17,7 @@ using Core.Erp.Bus.Facturacion;
 using Core.Erp.Info.Facturacion;
 using System.IO;
 using ExcelDataReader;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Inventario.Controllers
 {

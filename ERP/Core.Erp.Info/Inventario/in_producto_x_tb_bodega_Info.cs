@@ -33,6 +33,7 @@ namespace Core.Erp.Info.Inventario
         public string pr_descripcion { get; set; }
         public string pr_codigo { get; set; }
         public string pc_Cuenta { get; set; }
+        public string pc_Cuenta_inven { get; set; }
         public string ca_Categoria { get; set; }
         #endregion
 

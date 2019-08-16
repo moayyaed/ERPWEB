@@ -10238,6 +10238,7 @@
     <Content Include="Areas\Facturacion\Views\Cliente\_CmbCuenta_Anticipo.cshtml" />
     <Content Include="Areas\Facturacion\Views\NotaDeCreditoFacturacion\_CmbPuntoCargo.cshtml" />
     <Content Include="Areas\Facturacion\Views\NotaDeDebitoFacturacion\_CmbPuntoCargo.cshtml" />
+    <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_CmbCuenta_Inven.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

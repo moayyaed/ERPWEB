@@ -108,7 +108,7 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCtaCble_Costo";
-            column.Caption = "Cuenta";
+            column.Caption = "Cuenta Costo";
             column.Width = Unit.Percentage(20);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -117,6 +117,19 @@
                 Html.RenderPartial("_CmbCuenta", DataBinder.Eval(c.DataItem, "IdCtaCble_Costo"));
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCtaCble_Inven";
+            column.Caption = "Cuenta Inventario";
+            column.Width = Unit.Percentage(20);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCuenta_Inven", DataBinder.Eval(c.DataItem, "IdCtaCble_Inven"));
+            });
+        });
+
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
     if (ViewData["EditError"] != null)

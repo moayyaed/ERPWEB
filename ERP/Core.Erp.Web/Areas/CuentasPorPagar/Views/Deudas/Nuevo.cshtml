@@ -64,7 +64,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridViewPartial_ing_inv_oc_x_ingresar.PerformCallback();
                 GridViewPartial_ing_inv_oc_x_ingresar.UnselectRows();
                 $("#OcModal").modal("show");
@@ -91,7 +90,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
             },
             error: function (error) {
             }
@@ -121,7 +119,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridViewPartial_ing_inv_os_x_ingresar.PerformCallback();
                 GridViewPartial_ing_inv_os_x_ingresar.UnselectRows();
                 $("#OsModal").modal("show");
@@ -148,7 +145,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
             },
             error: function (error) {
             }
@@ -202,6 +198,28 @@
             win.focus();
         }
     }
+
+    function limpiar_grids(s, e) {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("limpiar_grids", "Deudas",new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_ing_inv_oc_det.PerformCallback();
+                GridViewPartial_ing_inv_os_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    };
 
 </script>
 
@@ -1096,7 +1114,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 $.each(data, function (i, row) {
                     $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
                     $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());

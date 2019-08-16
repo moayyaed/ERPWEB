@@ -992,6 +992,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult limpiar_grids(decimal IdTransaccionSession = 0)
+        {
+            ListaDetalleOC.set_list(new List<cp_orden_giro_det_ing_x_oc_Info>(), IdTransaccionSession);
+            ListaDetalleOS.set_list(new List<cp_orden_giro_det_ing_x_os_Info>(), IdTransaccionSession);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Detalle de inventario
@@ -1024,6 +1032,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdateDetalle([ModelBinder(typeof(DevExpressEditorsBinder))] cp_orden_giro_det_Info info_det)
         {
+            in_producto_x_tb_bodega_Bus bus_prod_x_bodega = new in_producto_x_tb_bodega_Bus();
             var producto = bus_producto.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdProducto);
             if (producto != null)
             {
@@ -1032,7 +1041,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
 
             if (ModelState.IsValid)
+            {
                 List_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                in_producto_x_tb_bodega_Info info_prod_x_bodega = new in_producto_x_tb_bodega_Info();
+                //info_prod_x_bodega = bus_prod_x_bodega.get_list();
+            }
+                
             cp_orden_giro_Info model = new cp_orden_giro_Info();
             model.lst_det = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_deudas_det", model);

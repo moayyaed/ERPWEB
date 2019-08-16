@@ -141,6 +141,7 @@ namespace Core.Erp.Data.Inventario
                     if (Entity == null) return false;
 
                     Entity.IdCtaCble_Costo = info.IdCtaCble_Costo;
+                    Entity.IdCtaCble_Inven = info.IdCtaCble_Inven;
 
                     Context.SaveChanges();
                 }
