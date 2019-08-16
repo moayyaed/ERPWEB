@@ -73,5 +73,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+
+        public bool modificar_Cta_Inven(in_producto_x_tb_bodega_Info info)
+        {
+            try
+            {
+                return odata.modificar_Cta_Inven(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

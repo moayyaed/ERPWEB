@@ -190,5 +190,27 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+
+        public bool modificar_Cta_Inven(in_producto_x_tb_bodega_Info info)
+        {
+            try
+            {
+                using (Entities_inventario Context = new Entities_inventario())
+                {
+                    in_producto_x_tb_bodega Entity = Context.in_producto_x_tb_bodega.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdProducto == info.IdProducto).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.IdCtaCble_Inven = info.IdCtaCble_Inven;
+
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

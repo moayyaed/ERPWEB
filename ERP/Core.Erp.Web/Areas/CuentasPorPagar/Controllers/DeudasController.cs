@@ -1161,8 +1161,26 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate_IOC([ModelBinder(typeof(DevExpressEditorsBinder))] cp_orden_giro_det_ing_x_oc_Info info_det)
-        {            
-            ListaDetalleOC.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+        {
+            in_producto_x_tb_bodega_Bus bus_prod_x_bodega = new in_producto_x_tb_bodega_Bus();
+            in_producto_x_tb_bodega_Info info_prod_x_bodega = new in_producto_x_tb_bodega_Info();
+            in_Ing_Egr_Inven_Bus bus_mov_inv = new in_Ing_Egr_Inven_Bus();
+            in_Ing_Egr_Inven_Info info_mov_inv = new in_Ing_Egr_Inven_Info();
+
+            if (ModelState.IsValid)
+            {
+                ListaDetalleOC.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+                cp_orden_giro_det_ing_x_oc_Info edited_info = ListaDetalleOC.get_list( Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).Where(m => m.Secuencia == info_det.Secuencia).First();
+                info_mov_inv = bus_mov_inv.get_info(edited_info.IdEmpresa, edited_info.inv_IdSucursal, edited_info.inv_IdMovi_inven_tipo, edited_info.inv_IdNumMovi);
+                info_prod_x_bodega.IdEmpresa = edited_info.IdEmpresa;
+                info_prod_x_bodega.IdSucursal = edited_info.inv_IdSucursal;
+                info_prod_x_bodega.IdBodega = Convert.ToInt32(info_mov_inv.IdBodega);
+                info_prod_x_bodega.IdProducto = edited_info.IdProducto;
+                info_prod_x_bodega.IdCtaCble_Inven = info_det.IdCtaCble;
+                bus_prod_x_bodega.modificar_Cta_Inven(info_prod_x_bodega);
+            }  
+            
             var model = ListaDetalleOC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_ing_inv_oc_det", model);
@@ -1411,8 +1429,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_orden_giro_det_ing_x_oc_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
-            edited_info.IdCtaCble = info_det.IdCtaCble_oc;
-            edited_info.IdCtaCble_oc = info_det.IdCtaCble_oc;
+            edited_info.IdCtaCble = info_det.IdCtaCble;
 
             edited_info.dm_cantidad = info_det.dm_cantidad;
             edited_info.do_porc_des = info_det.do_porc_des;
