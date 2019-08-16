@@ -55,6 +55,28 @@
             }
         });
     }
+
+    function limpiar_grids(s, e) {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("limpiar_grids", "Deudas",new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_ing_inv_oc_det.PerformCallback();
+                GridViewPartial_ing_inv_os_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>
 
 @using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))

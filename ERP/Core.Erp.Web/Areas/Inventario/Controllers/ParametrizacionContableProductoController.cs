@@ -43,6 +43,22 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         #endregion
 
+        #region Metodos ComboBox bajo demanda CtaInven
+        public ActionResult CmbCuenta_Inven()
+        {
+            in_producto_x_tb_bodega_Info model = new in_producto_x_tb_bodega_Info();
+            return PartialView("_CmbCuenta_Inven", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_cta_inven(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_cta_inven(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
         #region Vistas
         public ActionResult Index()
         {
@@ -114,6 +130,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 var suc = bus_sucursal.get_info(IdEmpresa, edited_info.IdSucursal);
                 var bod = bus_bodega.get_info(IdEmpresa, edited_info.IdSucursal, edited_info.IdBodega);
                 var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble_Costo);
+                var cta_inven = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble_Inven);
+
                 if (suc != null && bod != null)
                 {
                     info_det.IdSucursal = edited_info.IdSucursal;
@@ -125,6 +143,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 edited_info.IdCtaCble_Costo = info_det.IdCtaCble_Costo;
                 edited_info.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
                 info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+
+                edited_info.IdCtaCble_Inven = info_det.IdCtaCble_Inven;
+                edited_info.pc_Cuenta_inven = cta_inven.IdCtaCble + " - " + cta_inven.pc_Cuenta;
+                info_det.pc_Cuenta_inven = cta_inven.IdCtaCble + " - " + cta_inven.pc_Cuenta;
+
                 bus_producto_x_tbbodega.modificarDB(edited_info);
 
             }
