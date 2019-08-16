@@ -380,7 +380,27 @@ function GetListBancoPorSucursal() {
                             @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-offset-2 col-md-2">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="cb_Fecha">Fecha cheque:*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.cb_FechaCheque, settings =>
+                               {
+                                   settings.Name = "cb_FechaCheque";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.cb_FechaCheque, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="cb_Cheque"># Cheque:*</label>
                             @Html.TextBoxFor(q => q.cb_Cheque, new { @class = "form-control", @id = "cb_Cheque", @readonly = "readonly" })

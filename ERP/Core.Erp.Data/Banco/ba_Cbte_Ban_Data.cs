@@ -130,7 +130,8 @@ namespace Core.Erp.Data.Banco
                         IdPersona = Entity.IdPersona == null ? 0 : Convert.ToDecimal(Entity.IdPersona),
                         IdEntidad = Entity.IdEntidad == null ? 0 : Convert.ToDecimal(Entity.IdEntidad),
                         IdTipo_Persona = Entity.IdTipo_Persona,
-                        IdSolicitudPago = Entity.IdSolicitudPago
+                        IdSolicitudPago = Entity.IdSolicitudPago,
+                        cb_FechaCheque = Entity.cb_FechaCheque
                     };
                 }
 
@@ -227,6 +228,7 @@ namespace Core.Erp.Data.Banco
                     IdEntidad = info.IdEntidad,
                     IdTipo_Persona = info.IdTipo_Persona,
                     IdSolicitudPago = info.IdSolicitudPago,
+                    cb_FechaCheque = info.cb_FechaCheque,
 
                     IdUsuario = info.IdUsuario,
                     Fecha_Transac = DateTime.Now,
@@ -489,7 +491,8 @@ namespace Core.Erp.Data.Banco
                         IdTipo_Persona = info.IdTipo_Persona,
                         IdSolicitudPago = info.IdSolicitudPago,
                         IdUsuarioUltMod = info.IdUsuarioUltMod,
-                        Fecha_UltMod = DateTime.Now
+                        Fecha_UltMod = DateTime.Now,
+                        cb_FechaCheque = info.cb_FechaCheque,
                     });
                 else
                 {                    

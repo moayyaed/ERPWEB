@@ -61,6 +61,7 @@ namespace Core.Erp.Info.Banco
         
 
         public List<ba_Cbte_Ban_x_ba_TipoFlujo_Info> list_det { get; set; }
+        public DateTime? cb_FechaCheque { get; set; }
         #endregion
     }
 }

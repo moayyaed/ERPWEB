@@ -27,5 +27,10 @@ namespace Core.Erp.Data
         public Nullable<double> sc_total { get; set; }
         public string Estado { get; set; }
         public string CodNota { get; set; }
+        public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
+        public string NumAutorizacion { get; set; }
+        public string NaturalezaNota { get; set; }
+        public Nullable<int> ct_IdTipoCbte { get; set; }
+        public Nullable<decimal> ct_IdCbteCble { get; set; }
     }
 }
