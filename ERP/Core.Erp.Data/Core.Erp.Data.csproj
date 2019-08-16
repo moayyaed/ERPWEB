@@ -614,7 +614,6 @@
     <Compile Include="Facturacion\fa_TerminoPago_Data.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Data.cs" />
     <Compile Include="Facturacion\fa_TipoNota_Data.cs" />
-    <Compile Include="Facturacion\fa_TipoNota_x_Empresa_x_Sucursal_Data.cs" />
     <Compile Include="Facturacion\fa_Vendedor_Data.cs" />
     <Compile Include="fa_CambioProducto.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
@@ -722,9 +721,6 @@
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="fa_TipoNota.cs">
-      <DependentUpon>Model_facturacion.tt</DependentUpon>
-    </Compile>
-    <Compile Include="fa_TipoNota_x_Empresa_x_Sucursal.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="fa_Vendedor.cs">
