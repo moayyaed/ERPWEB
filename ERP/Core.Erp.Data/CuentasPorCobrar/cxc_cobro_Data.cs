@@ -1011,6 +1011,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
             try
             {
                 List<cxc_cobro_Info> Lista;
+                double Saldo = TieneRetencion ? -1 : 0;
                 using (Entities_cuentas_por_cobrar Context = new Entities_cuentas_por_cobrar())
                 {
                     Lista = (from q in Context.vwcxc_cobro_para_retencion
@@ -1018,6 +1019,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                              && q.IdSucursal == IdSucursal
                              && fecha_ini <= q.vt_fecha && q.vt_fecha <= fecha_fin
                              && q.TieneRetencion == TieneRetencion
+                             && q.Saldo > Saldo
                              select new cxc_cobro_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -1035,8 +1037,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  vt_Iva = q.vt_iva,
                                  vt_Total = q.vt_total,
                                  Su_Descripcion = q.Su_Descripcion,
-                                 
-                                 
+                                 Saldo = q.Saldo
                              }).ToList();
                 }
                 return Lista;

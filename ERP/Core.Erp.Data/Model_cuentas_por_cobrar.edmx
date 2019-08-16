@@ -504,6 +504,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="TieneRetencion" Type="bit" />
           <Property Name="cr_EsElectronico" Type="bit" Nullable="false" />
+          <Property Name="Saldo" Type="float" />
         </EntityType>
         <Association Name="FK_cxc_Catalogo_cxc_CatalogoTipo">
           <End Role="cxc_CatalogoTipo" Type="Self.cxc_CatalogoTipo" Multiplicity="1" />
@@ -837,7 +838,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_cobro_para_retencion].[Su_Descripcion] AS [Su_Descripcion], 
     [vwcxc_cobro_para_retencion].[IdCliente] AS [IdCliente], 
     [vwcxc_cobro_para_retencion].[TieneRetencion] AS [TieneRetencion], 
-    [vwcxc_cobro_para_retencion].[cr_EsElectronico] AS [cr_EsElectronico]
+    [vwcxc_cobro_para_retencion].[cr_EsElectronico] AS [cr_EsElectronico], 
+    [vwcxc_cobro_para_retencion].[Saldo] AS [Saldo]
     FROM [web].[vwcxc_cobro_para_retencion] AS [vwcxc_cobro_para_retencion]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_cxc_Catalogo_cxc_CatalogoTipo" Association="Self.FK_cxc_Catalogo_cxc_CatalogoTipo">
@@ -1638,6 +1640,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="TieneRetencion" Type="Boolean" />
           <Property Name="cr_EsElectronico" Type="Boolean" Nullable="false" />
+          <Property Name="Saldo" Type="Double" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2031,6 +2034,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="vwcxc_cobro_para_retencion">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion">
               <MappingFragment StoreEntitySet="vwcxc_cobro_para_retencion">
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
                 <ScalarProperty Name="cr_EsElectronico" ColumnName="cr_EsElectronico" />
                 <ScalarProperty Name="TieneRetencion" ColumnName="TieneRetencion" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
