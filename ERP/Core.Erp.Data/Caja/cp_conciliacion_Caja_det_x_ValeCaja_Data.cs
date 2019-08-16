@@ -34,7 +34,10 @@ namespace Core.Erp.Data.Caja
                                  idTipoMovi = q.IdTipoMovi,
                                  IdPersona = q.IdPersona,
                                  Observacion = q.cm_observacion,
-                                 pe_nombreCompleto = q.pe_nombreCompleto
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 IdPunto_cargo_vales = q.IdPunto_cargo,
+                                 IdPunto_cargo_grupo_vales = q.IdPunto_cargo_grupo,
+                                 nom_punto_cargo = q.nom_punto_cargo,
                              }).ToList();
                 }
 

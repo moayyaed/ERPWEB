@@ -322,7 +322,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            int IdPunto_cargo_grupo = Request.Params["fx_IdPunto_cargo_grupo"] != null ? Convert.ToInt32(Request.Params["fx_IdPunto_cargo_grupo"]) : 0;
+            int IdPunto_cargo_grupo = (Request.Params["fx_IdPunto_cargo_grupo"] != null && Request.Params["fx_IdPunto_cargo_grupo"] != "") ? Convert.ToInt32(Request.Params["fx_IdPunto_cargo_grupo"]) : 0;
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
                 p.TextField = "nom_punto_cargo";

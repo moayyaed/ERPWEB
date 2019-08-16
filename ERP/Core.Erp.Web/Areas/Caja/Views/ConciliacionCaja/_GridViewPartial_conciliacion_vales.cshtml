@@ -51,7 +51,7 @@
         {
             column.FieldName = "pe_nombreCompleto";
             column.Caption = "Beneficiario";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(25);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -59,7 +59,7 @@
         {
             column.FieldName = "IdPersona";
             column.Caption = "Beneficiario";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(25);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -72,7 +72,7 @@
         {
             column.FieldName = "fecha";
             column.Caption = "Fecha";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().DateEdit(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -85,7 +85,7 @@
         {
             column.FieldName = "idTipoMovi";
             column.Caption = "Tipo";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(15);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -115,9 +115,48 @@
 
         settings.Columns.Add(column =>
         {
+            column.FieldName = "IdPunto_cargo_grupo_vales";
+            column.Caption = "Grupo";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+
+                p.Columns.Add("IdPunto_cargo_grupo", "ID").Width = Unit.Percentage(10);
+                p.Columns.Add("nom_punto_cargo_grupo", "Descripción").Width = Unit.Percentage(50);
+                p.ValueField = "IdPunto_cargo_grupo";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_punto_cargo_grupo;
+                p.Width = Unit.Percentage(100);
+                p.ClientSideEvents.SelectedIndexChanged = "OnSelectedGrupoPuntoCargoValesChanged";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPunto_cargo_vales";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 7;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbPuntoCargoConciliacion", DataBinder.Eval(c.DataItem, "IdPunto_cargo_vales"));
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "nom_punto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "Observacion";
             column.Caption = "Observación";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().Memo(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -132,3 +171,12 @@
     });
 }
 @grid.Bind(Model.lst_det_vale).GetHtml()
+
+<script>
+    function OnSelectedGrupoPuntoCargoValesChanged() {
+        IdPunto_cargo_vales.PerformCallback();
+    }
+    function PuntoCargoValesComboBox_BeginCallback(s, e) {
+        e.customArgs["fx_IdPunto_cargo_grupo_vales"] = GridView_conciliacion_vales.GetEditor("IdPunto_cargo_grupo_vales").GetValue();
+    }
+</script>

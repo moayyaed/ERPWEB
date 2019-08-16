@@ -645,14 +645,3 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
-
-<script type="text/javascript">
-    function OnSelectedCtaCbleChanged() {
-        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
-    }
-    function GrupoComboBox_BeginCallback(s, e) {
-        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
-        e.customArgs["pre_fecha"] = moment(FechaOP.GetDate()).format('DD/MM/YYYY');
-    }
-</script>

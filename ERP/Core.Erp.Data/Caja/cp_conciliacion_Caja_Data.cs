@@ -614,7 +614,9 @@ namespace Core.Erp.Data.Caja
                         IdEmpresa_movcaja = item.IdEmpresa_movcaja,
                         IdTipocbte_movcaja = item.IdTipocbte_movcaja,
                         IdCbteCble_movcaja = item.IdCbteCble_movcaja,
-                        IdCtaCble = item.IdCtaCble
+                        IdCtaCble = item.IdCtaCble,
+                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
+                        IdPunto_cargo = item.IdPunto_cargo_vales
                     };
                     Context.cp_conciliacion_Caja_det_x_ValeCaja.Add(Entity_d);
                 }
@@ -1052,7 +1054,9 @@ namespace Core.Erp.Data.Caja
                         IdEmpresa_movcaja = item.IdEmpresa_movcaja,
                         IdTipocbte_movcaja = item.IdTipocbte_movcaja,
                         IdCbteCble_movcaja = item.IdCbteCble_movcaja,
-                        IdCtaCble = item.IdCtaCble
+                        IdCtaCble = item.IdCtaCble,
+                        IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
+                        IdPunto_cargo = item.IdPunto_cargo_vales
                     };
                     Context.cp_conciliacion_Caja_det_x_ValeCaja.Add(Entity_d);
                 }

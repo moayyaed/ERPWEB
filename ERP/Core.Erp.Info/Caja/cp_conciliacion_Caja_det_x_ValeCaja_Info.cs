@@ -12,8 +12,8 @@ namespace Core.Erp.Info.Caja
         public decimal IdCbteCble_movcaja { get; set; }
         public int IdTipocbte_movcaja { get; set; }
         public string IdCtaCble { get; set; }
-        public Nullable<int> IdPunto_cargo { get; set; }
-        public Nullable<int> IdPunto_cargo_grupo { get; set; }
+        public Nullable<int> IdPunto_cargo_vales { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo_vales { get; set; }
         public string IdCentroCosto { get; set; }
         public string IdCentroCosto_sub_centro_costo { get; set; }
 
@@ -34,6 +34,7 @@ namespace Core.Erp.Info.Caja
         public string tm_descripcion { get; set; }
         public string IdTipo_Persona { get; set; }
         public decimal IdEntidad { get; set; }
+        public string nom_punto_cargo { get; set; }
         #endregion
 
     }

@@ -1,0 +1,28 @@
+﻿@using System.Web.UI.WebControls;
+@{
+        var comboBox = Html.DevExpress().ComboBox(settings =>
+        {
+            settings.Name = "IdPunto_cargo_vales";
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.DropDownWidth = Unit.Percentage(100);
+            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+            settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "CargarPuntoCargoConciliacion", Area = "Caja" };
+            settings.Properties.CallbackPageSize = 15;
+            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+            settings.Properties.TextField = "nom_punto_cargo";
+            settings.Properties.TextFormatString = "[{0}] {1}";
+            settings.Properties.ValueField = "IdPunto_cargo";
+            settings.Properties.ValueType = typeof(int);
+
+            settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            settings.Properties.AllowNull = true;
+
+            settings.Properties.Columns.Add("IdPunto_cargo", "ID", 10);
+            settings.Properties.Columns.Add("nom_punto_cargo", "Punto de cargo", 90);
+            settings.Properties.ClientSideEvents.BeginCallback = "PuntoCargoValesComboBox_BeginCallback";
+            //settings.Properties.FilterMinLength =3;
+        })
+        .BindList(new Core.Erp.Web.Areas.Caja.Controllers.ConciliacionCajaController().get_list_bajo_demandaPC, new Core.Erp.Web.Areas.Caja.Controllers.ConciliacionCajaController().get_info_bajo_demandaPC)
+        .Bind(Model.GetType() == typeof(Core.Erp.Info.Caja.cp_conciliacion_Caja_Info) || Model.GetType() == typeof(Core.Erp.Info.Caja.cp_conciliacion_Caja_det_x_ValeCaja_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Caja.cp_conciliacion_Caja_det_x_ValeCaja_Info>) ? "" : (Model));
+}
+@comboBox.GetHtml()

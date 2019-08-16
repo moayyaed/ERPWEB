@@ -35,6 +35,8 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         caj_Caja_Bus bus_caja = new caj_Caja_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
+        ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
 
         cp_conciliacion_Caja_det_x_Ingresar_List List_x_Cruzar = new cp_conciliacion_Caja_det_x_Ingresar_List();
 
@@ -46,6 +48,24 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         {
             decimal model = new decimal();
             return PartialView("_CmbFlujo_ConciliacionCaja", model);
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda punto de cargo        
+        public ActionResult CmbPuntoCargoConciliacion()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbPuntoCargoConciliacion", model);
+        }
+        public List<ct_punto_cargo_Info> get_list_bajo_demandaPC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            int IdPunto_cargo_grupo = 0;
+            List<ct_punto_cargo_Info> Lista = bus_pc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), IdPunto_cargo_grupo);
+            return Lista;
+        }
+        public ct_punto_cargo_Info get_info_bajo_demandaPC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_pc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
 
@@ -245,6 +265,13 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             ViewBag.lst_tipo_personas = lst_tipo_personas;
         }
 
+        private void cargar_combos_detalle()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_punto_cargo_grupo = bus_pcg.GetList(IdEmpresa, false);
+            ViewBag.lst_punto_cargo_grupo = lst_punto_cargo_grupo;
+        }
+        
         private bool validar(cp_conciliacion_Caja_Info i_validar, ref string msg)
         {
             i_validar.lst_det_ct = list_ct.get_list(i_validar.IdTransaccionSession);
@@ -337,6 +364,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             cp_conciliacion_Caja_Info model = new cp_conciliacion_Caja_Info();
             model.lst_det_vale = list_vale.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_conciliacion_vales", model);
         }
 
@@ -347,6 +375,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 list_vale.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cp_conciliacion_Caja_Info model = new cp_conciliacion_Caja_Info();
             model.lst_det_vale = list_vale.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_conciliacion_vales", model);
         }
 
@@ -357,6 +386,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 list_vale.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cp_conciliacion_Caja_Info model = new cp_conciliacion_Caja_Info();
             model.lst_det_vale = list_vale.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_conciliacion_vales", model);
         }
 
@@ -365,7 +395,25 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             list_vale.DeleteRow(secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cp_conciliacion_Caja_Info model = new cp_conciliacion_Caja_Info();
             model.lst_det_vale = list_vale.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_conciliacion_vales", model);
+        }
+
+        public ActionResult CargarPuntoCargoConciliacion()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            int IdPunto_cargo_grupo = (Request.Params["fx_IdPunto_cargo_grupo_vales"] != null && Request.Params["fx_IdPunto_cargo_grupo_vales"]!="") ? Convert.ToInt32(Request.Params["fx_IdPunto_cargo_grupo_vales"]) : 0;
+            return GridViewExtension.GetComboBoxCallbackResult(p =>
+            {
+                p.TextField = "nom_punto_cargo";
+                p.ValueField = "IdPunto_cargo";
+                p.Columns.Add("IdPunto_cargo", "ID", 10);
+                p.Columns.Add("nom_punto_cargo", "Punto de cargo", 90);
+                p.ClientSideEvents.BeginCallback = "PuntoCargoValesComboBox_BeginCallback";
+                p.ValueType = typeof(int);
+                p.BindList(bus_pc.GetList(IdEmpresa, IdPunto_cargo_grupo, false, false));
+            });
         }
         #endregion
 
@@ -676,6 +724,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
     {
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         caj_Caja_Movimiento_Bus bus_mov = new caj_Caja_Movimiento_Bus();
+        ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
 
         caj_Caja_Movimiento_Tipo_Bus bus_tipo_movi = new caj_Caja_Movimiento_Tipo_Bus();
         public List<cp_conciliacion_Caja_det_x_ValeCaja_Info> get_list(decimal IdTransaccionSession)
@@ -706,6 +755,17 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             if (tipo != null)
                 info_det.IdCtaCble = tipo.IdCtaCble;
 
+            if (info_det.IdPunto_cargo_vales == null || info_det.IdPunto_cargo_vales == 0)
+                info_det.nom_punto_cargo = string.Empty;
+            else
+            {
+                var pc = bus_pc.GetInfo(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.IdPunto_cargo_vales));
+                if (pc != null)
+                {
+                    info_det.nom_punto_cargo = pc.nom_punto_cargo;
+                }
+            }
+
             list.Add(info_det);
         }
 
@@ -730,6 +790,21 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             edited_info.idTipoMovi = info_det.idTipoMovi;
             edited_info.fecha = info_det.fecha;
             edited_info.se_modifico = true;
+
+            #region Punto Cargo
+            edited_info.IdPunto_cargo_vales = info_det.IdPunto_cargo_vales;
+            edited_info.IdPunto_cargo_grupo_vales = info_det.IdPunto_cargo_grupo_vales;
+            if (info_det.IdPunto_cargo_vales == null || info_det.IdPunto_cargo_vales == 0)
+                edited_info.nom_punto_cargo = string.Empty;
+            else
+            {
+                var pc = bus_pc.GetInfo(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.IdPunto_cargo_vales));
+                if (pc != null)
+                {
+                    edited_info.nom_punto_cargo = pc.nom_punto_cargo;
+                }
+            }
+            #endregion
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
