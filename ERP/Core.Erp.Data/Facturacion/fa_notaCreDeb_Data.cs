@@ -393,8 +393,6 @@ namespace Core.Erp.Data.Facturacion
                     entity.Serie1 = info.Serie1;
                     entity.Serie2 = info.Serie2;
                     entity.NumNota_Impresa = info.NumNota_Impresa;
-                    entity.NumAutorizacion = info.NumAutorizacion;
-                    entity.Fecha_Autorizacion = info.Fecha_Autorizacion;
                     entity.IdCliente = info.IdCliente;
                     entity.no_fecha = info.no_fecha.Date;
                     entity.no_fecha_venc = info.no_fecha_venc.Date;
@@ -756,7 +754,7 @@ namespace Core.Erp.Data.Facturacion
                             IdCentroCosto = item.IdCentroCosto,
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
                             IdPunto_cargo = item.IdPunto_Cargo,
-                            dc_Valor = Math.Round(item.Subtotal) * (info.CreDeb.Trim() == "C" ? 1 : -1),
+                            dc_Valor = Math.Round((item.Subtotal) * (info.CreDeb.Trim() == "C" ? 1 : -1), 2, MidpointRounding.AwayFromZero),
                             dc_para_conciliar = false,
                         });
                     }
@@ -766,6 +764,20 @@ namespace Core.Erp.Data.Facturacion
 
                 if (info.lst_det.Count == 0)
                     return null;
+
+                diario.lst_ct_cbtecble_det.RemoveAll(q => q.dc_Valor == 0);
+
+                double descuadre = Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero);
+                if (descuadre < -0.02 || 0.02 <= descuadre)
+                    return null;
+
+                if ((descuadre <= 0.02 || -0.02 <= descuadre) && descuadre != 0)
+                {
+                    if (descuadre > 0)
+                        diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor < 0).FirstOrDefault().dc_Valor -= descuadre;
+                    else
+                        diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor > 0).FirstOrDefault().dc_Valor += (descuadre * -1);
+                }
 
                 if (Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
                     return null;
