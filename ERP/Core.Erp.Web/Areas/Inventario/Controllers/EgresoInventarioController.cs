@@ -33,6 +33,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         in_producto_x_tb_bodega_Costo_Historico_Bus bus_prod_x_bod = new in_producto_x_tb_bodega_Costo_Historico_Bus();
+        in_producto_x_tb_bodega_Bus bus_producto_x_bodega = new in_producto_x_tb_bodega_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -343,8 +344,22 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             {
                 return false;
             }
-            #region ValidarStock
 
+            #region ValidarExisteProductoxBodega
+            var param = bus_in_param.get_info(i_validar.IdEmpresa);
+            mensaje = bus_producto_x_bodega.ValidarProductoPorBodega(new List<in_producto_x_tb_bodega_Info>(i_validar.lst_in_Ing_Egr_Inven_det.Select(q => new in_producto_x_tb_bodega_Info
+            {
+                IdEmpresa = i_validar.IdEmpresa,
+                IdSucursal = i_validar.IdSucursal,
+                IdBodega = i_validar.IdBodega ?? 0,
+                IdProducto = q.IdProducto,
+                pr_descripcion = q.pr_descripcion
+            }).ToList()), (param.ValidarCtaCbleTransacciones ?? false));
+            if (!string.IsNullOrEmpty(mensaje))
+                return false;
+            #endregion
+
+            #region ValidarStock
             var lst_validar = i_validar.lst_in_Ing_Egr_Inven_det.GroupBy(q => new { q.IdProducto, q.pr_descripcion, q.tp_ManejaInven, q.se_distribuye }).Select(q => new in_Producto_Stock_Info
             {
                 IdEmpresa = i_validar.IdEmpresa,
