@@ -92,8 +92,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
-
-
+        
         #region Vistas
         public ActionResult Index()
         {
