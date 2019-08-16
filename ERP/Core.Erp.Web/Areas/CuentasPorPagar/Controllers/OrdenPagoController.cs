@@ -435,6 +435,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 if(pro != null)
                     CtaCbleHaber = pro.IdCtaCble_CXP;
             }
+            if (!string.IsNullOrEmpty(tipo.IdCtaCble_Credito))
+                CtaCbleHaber = tipo.IdCtaCble_Credito;
 
             var list = lis_cp_orden_pago_det_Info.get_list(IdTransaccionSession);
             foreach (var item in list)
