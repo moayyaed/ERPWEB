@@ -210,7 +210,7 @@ namespace Core.Erp.Data.Compras
                     Context.com_ordencompra_local.Add(Entity);
                     int Secuencia = 1;
                     foreach (var item in info.lst_det)
-                        {
+                    {
                             com_ordencompra_local_det Entity_det = new com_ordencompra_local_det
                              {
                                 IdEmpresa = info.IdEmpresa,

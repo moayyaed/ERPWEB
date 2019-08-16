@@ -255,6 +255,28 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult CalcularValores(int Cantidad = 0, double Precio = 0, string IdCodImpuesto = "", double PorcentajeDesc = 0)
+        {
+            double subtotal = 0;
+            double iva_porc = 0;
+            double iva = 0;
+            double total = 0;
+            double DescUnitario = 0;
+            double PrecioFinal = 0;
+
+            DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
+            PrecioFinal = Precio - DescUnitario;
+            subtotal = Math.Round(Convert.ToDouble(Cantidad * PrecioFinal), 2);
+
+            var impuesto = bus_impuesto.get_info(IdCodImpuesto);
+            if (impuesto != null)
+                iva_porc = impuesto.porcentaje;
+
+            iva = Math.Round((subtotal * (iva_porc / 100)), 2);
+            total = Math.Round((subtotal + iva), 2);
+
+            return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region Grillas de cruce
         public ActionResult GridViewPartial_CruceND_x_cruzar()

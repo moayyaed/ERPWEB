@@ -575,7 +575,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             edited_info.dc_Valor = info_det.dc_Valor_debe > 0 ? info_det.dc_Valor_debe : info_det.dc_Valor_haber * - 1;
             edited_info.dc_Valor_debe = info_det.dc_Valor_debe;
             edited_info.dc_Valor_haber = info_det.dc_Valor_haber;
-            
+            edited_info.dc_Observacion = info_det.dc_Observacion;
+
             var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble);
             if (cta != null)
                 info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;

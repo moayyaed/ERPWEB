@@ -82,6 +82,7 @@
                 q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
         });
         settings.Columns.Add(column =>
@@ -96,6 +97,7 @@
                 q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
@@ -110,6 +112,7 @@
                 q.AllowMouseWheel = false;
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
+                q.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
@@ -126,6 +129,7 @@
                 p.ValueField = "IdCod_Impuesto";
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_impuesto;
+                p.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValores();}";
             });
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
@@ -226,7 +230,57 @@
             column.VisibleIndex = 12;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
-
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_subtotal_item";
+            column.Caption = "Subtotal";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 14;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_iva_item";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 15;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_total_item";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 16;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+        });
         settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdCliente'] = IdCliente.GetValue();e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();  }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
 
@@ -264,6 +318,32 @@
             success: function (data) {
                 GridView_notaDebito_det.GetEditor('sc_Precio').SetValue(data.precio);
                 GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCodImpuesto);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function CalcularValores(s, e) {
+        var datos = {
+            Cantidad: GridView_notaDebito_det.GetEditor('sc_cantidad').GetValue(),
+            Precio: GridView_notaDebito_det.GetEditor('sc_Precio').GetValue(),
+            IdCodImpuesto: GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').GetValue(),
+            PorcentajeDesc: GridView_notaDebito_det.GetEditor('sc_PordescUni').GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CalcularValores", "NotaDeDebitoFacturacion",new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_notaDebito_det.GetEditor('sc_subtotal_item').SetValue(data.subtotal);
+                GridView_notaDebito_det.GetEditor('sc_iva_item').SetValue(data.iva);
+                GridView_notaDebito_det.GetEditor('sc_total_item').SetValue(data.total);
             },
             error: function (error) {
             }

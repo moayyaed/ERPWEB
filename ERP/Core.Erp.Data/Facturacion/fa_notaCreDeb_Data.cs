@@ -161,6 +161,7 @@ namespace Core.Erp.Data.Facturacion
                 int Secuencia = 1;
                 ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
                 cxc_cobro_Data odata_cobr = new cxc_cobro_Data();
+                fa_notaCreDeb_resumen_Info info_resumen = new fa_notaCreDeb_resumen_Info();
                 #endregion
 
                 using (Entities_facturacion db_f = new Entities_facturacion())
@@ -226,6 +227,37 @@ namespace Core.Erp.Data.Facturacion
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         });
                     }
+                    #endregion
+
+                    #region Resumen
+                    var Descuento = Convert.ToDecimal(info.lst_det.Sum(q => q.sc_cantidad * q.sc_descUni));
+                    var ValorIVA = Convert.ToDecimal(info.lst_det.Sum(q => q.sc_iva));
+                    var SubtotalIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.sc_cantidad * q.sc_Precio));
+                    var SubtotalSinIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.sc_cantidad * q.sc_Precio));
+                    var SubtotalIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.sc_subtotal));
+                    var SubtotalSinIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.sc_subtotal));
+                    var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
+                    var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
+                    var Total = SubtotalConDscto + ValorIVA;
+
+                    fa_notaCreDeb_resumen Entity_Resumen = new fa_notaCreDeb_resumen
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
+                        IdBodega = info.IdBodega,
+                        IdNota = info.IdNota,
+                        SubtotalIVASinDscto = SubtotalIVASinDscto,
+                        SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
+                        SubtotalSinDscto = SubtotalSinDscto,
+                        Descuento = Descuento,
+                        SubtotalIVAConDscto = SubtotalIVAConDscto,
+                        SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                        SubtotalConDscto = SubtotalConDscto,
+                        ValorIVA = ValorIVA,
+                        Total = Total
+                    };
+
+                    db_f.fa_notaCreDeb_resumen.Add(Entity_Resumen);
                     #endregion
 
                     #region Cruce
@@ -378,6 +410,7 @@ namespace Core.Erp.Data.Facturacion
                 int Secuencia = 1;
                 ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
                 cxc_cobro_Data odata_cobr = new cxc_cobro_Data();
+                fa_notaCreDeb_resumen_Info info_resumen = new fa_notaCreDeb_resumen_Info();
                 #endregion
 
                 using (Entities_facturacion db_f = new Entities_facturacion())
@@ -439,6 +472,41 @@ namespace Core.Erp.Data.Facturacion
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                         });
                     }
+                    #endregion
+
+                    #region Resumen
+                    var Descuento = Convert.ToDecimal(info.lst_det.Sum(q => q.sc_cantidad * q.sc_descUni));
+                    var ValorIVA = Convert.ToDecimal(info.lst_det.Sum(q => q.sc_iva));
+                    var SubtotalIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.sc_cantidad * q.sc_Precio));
+                    var SubtotalSinIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.sc_cantidad * q.sc_Precio));
+                    var SubtotalIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.sc_subtotal));
+                    var SubtotalSinIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.sc_subtotal));
+                    var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
+                    var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
+                    var Total = SubtotalConDscto + ValorIVA;
+
+                    fa_notaCreDeb_resumen Entity_Resumen = new fa_notaCreDeb_resumen
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
+                        IdBodega = info.IdBodega,
+                        IdNota = info.IdNota,
+                        SubtotalIVASinDscto = SubtotalIVASinDscto,
+                        SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
+                        SubtotalSinDscto = SubtotalSinDscto,
+                        Descuento = Descuento,
+                        SubtotalIVAConDscto = SubtotalIVAConDscto,
+                        SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                        SubtotalConDscto = SubtotalConDscto,
+                        ValorIVA = ValorIVA,
+                        Total = Total
+                    };
+
+                    db_f.fa_notaCreDeb_resumen.Add(Entity_Resumen);
+
+                    var notaDebCred = db_f.fa_notaCreDeb_resumen.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdNota == info.IdNota).FirstOrDefault();
+                    db_f.fa_notaCreDeb_resumen.Remove(notaDebCred);
+                    db_f.fa_notaCreDeb_resumen.Add(Entity_Resumen);
                     #endregion
 
                     #region Cruce

@@ -111,6 +111,7 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_cliente" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb_det" Width="1.5" PointX="14.375" PointY="20.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_resumen" Width="1.5" PointX="13.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
