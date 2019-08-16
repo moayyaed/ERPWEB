@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.Contabilidad;
+﻿using Core.Erp.Data.Compras;
+using Core.Erp.Data.Contabilidad;
 using Core.Erp.Data.General;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
@@ -254,7 +255,21 @@ namespace Core.Erp.Data.Inventario
                         Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
                         Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
                     }
-                    
+
+                    #region Validar estado cierre OC
+                    var lstOC = info.lst_in_Ing_Egr_Inven_det.Where(q => q.IdOrdenCompra != null).GroupBy(q => new { q.IdEmpresa_oc, q.IdSucursal_oc, q.IdOrdenCompra }).Select(q => new
+                    {
+                        IdEmpresa_oc = q.Key.IdEmpresa_oc,
+                        IdSucursal_oc = q.Key.IdSucursal_oc,
+                        IdOrdenCompra = q.Key.IdOrdenCompra
+                    }).ToList();
+                    com_ordencompra_local_Data ComData = new com_ordencompra_local_Data();
+                    foreach (var item in lstOC)
+                    {
+                        if(item.IdEmpresa_oc != null && item.IdEmpresa_oc != 0)
+                            ComData.ValidarEstadoCierre(item.IdEmpresa_oc ?? 0, item.IdSucursal_oc ?? 0, item.IdOrdenCompra ?? 0);
+                    }
+                    #endregion
                 }
                 
                 return true;
@@ -347,6 +362,21 @@ namespace Core.Erp.Data.Inventario
                         Context.spINV_aprobacion_ing_egr(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdMovi_inven_tipo, info.IdNumMovi);
                         Contabilizar(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi, info.cm_observacion, info.cm_fecha);
                     }
+
+                    #region Validar estado cierre OC
+                    var lstOC = info.lst_in_Ing_Egr_Inven_det.Where(q => q.IdOrdenCompra != null).GroupBy(q => new { q.IdEmpresa_oc, q.IdSucursal_oc, q.IdOrdenCompra }).Select(q => new
+                    {
+                        IdEmpresa_oc = q.Key.IdEmpresa_oc,
+                        IdSucursal_oc = q.Key.IdSucursal_oc,
+                        IdOrdenCompra = q.Key.IdOrdenCompra
+                    }).ToList();
+                    com_ordencompra_local_Data ComData = new com_ordencompra_local_Data();
+                    foreach (var item in lstOC)
+                    {
+                        if (item.IdEmpresa_oc != null && item.IdEmpresa_oc != 0)
+                            ComData.ValidarEstadoCierre(item.IdEmpresa_oc ?? 0, item.IdSucursal_oc ?? 0, item.IdOrdenCompra ?? 0);
+                    }
+                    #endregion
                     return true;
                 }
             }
@@ -376,6 +406,21 @@ namespace Core.Erp.Data.Inventario
                     Context.SaveChanges();
 
                     ReversarAprobacion(info.IdEmpresa, info.IdSucursal, info.IdMovi_inven_tipo, info.IdNumMovi);
+
+                    #region Validar estado cierre OC
+                    var lstOC = info.lst_in_Ing_Egr_Inven_det.Where(q => q.IdOrdenCompra != null).GroupBy(q => new { q.IdEmpresa_oc, q.IdSucursal_oc, q.IdOrdenCompra }).Select(q => new
+                    {
+                        IdEmpresa_oc = q.Key.IdEmpresa_oc,
+                        IdSucursal_oc = q.Key.IdSucursal_oc,
+                        IdOrdenCompra = q.Key.IdOrdenCompra
+                    }).ToList();
+                    com_ordencompra_local_Data ComData = new com_ordencompra_local_Data();
+                    foreach (var item in lstOC)
+                    {
+                        if (item.IdEmpresa_oc != null && item.IdEmpresa_oc != 0)
+                            ComData.ValidarEstadoCierre(item.IdEmpresa_oc ?? 0, item.IdSucursal_oc ?? 0, item.IdOrdenCompra ?? 0);
+                    }
+                    #endregion
                 }
 
                 return true;

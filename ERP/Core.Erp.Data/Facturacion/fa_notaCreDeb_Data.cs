@@ -710,22 +710,6 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
                 int secuencia = 1;
 
-                #region Cuenta cliente
-                if (!string.IsNullOrEmpty(IdCtaCble_cliente))
-                {
-                    diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
-                    {
-                        IdEmpresa = diario.IdEmpresa,
-                        IdTipoCbte = diario.IdTipoCbte,
-                        IdCbteCble = diario.IdCbteCble,
-                        secuencia = secuencia++,
-                        IdCtaCble = IdCtaCble_cliente,
-                        dc_Valor = Math.Round(info.lst_det.Sum(q => q.sc_total), 2, MidpointRounding.AwayFromZero) * (info.CreDeb.Trim() == "C" ? -1 : 1),
-                        dc_para_conciliar = false
-                    });
-                }
-                #endregion
-
                 #region IVA
                 if (!string.IsNullOrEmpty(IdCtaCble_IVA))
                     diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
@@ -761,7 +745,23 @@ namespace Core.Erp.Data.Facturacion
                         });
                     }
                 }
-                
+
+                #endregion
+
+                #region Cuenta cliente
+                if (!string.IsNullOrEmpty(IdCtaCble_cliente))
+                {
+                    diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
+                    {
+                        IdEmpresa = diario.IdEmpresa,
+                        IdTipoCbte = diario.IdTipoCbte,
+                        IdCbteCble = diario.IdCbteCble,
+                        secuencia = secuencia++,
+                        IdCtaCble = IdCtaCble_cliente,
+                        dc_Valor = Math.Round(Math.Abs(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor)), 2, MidpointRounding.AwayFromZero) * (info.CreDeb.Trim() == "C" ? -1 : 1),
+                        dc_para_conciliar = false
+                    });
+                }
                 #endregion
 
                 if (info.lst_det.Count == 0)
