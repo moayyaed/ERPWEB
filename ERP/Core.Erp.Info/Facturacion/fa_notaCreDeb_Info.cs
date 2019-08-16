@@ -73,6 +73,7 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<double> sc_total { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-
+        public DateTime? Fecha_Autorizacion { get; set; }
+        public string NumAutorizacion { get; set; }
     }
 }

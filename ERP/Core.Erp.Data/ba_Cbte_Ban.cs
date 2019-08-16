@@ -27,6 +27,7 @@ namespace Core.Erp.Data
         public int IdPeriodo { get; set; }
         public int IdBanco { get; set; }
         public System.DateTime cb_Fecha { get; set; }
+        public Nullable<System.DateTime> cb_FechaCheque { get; set; }
         public string cb_Observacion { get; set; }
         public double cb_Valor { get; set; }
         public string cb_Cheque { get; set; }
@@ -53,12 +54,12 @@ namespace Core.Erp.Data
         public string IdTipo_Persona { get; set; }
         public Nullable<decimal> IdSolicitudPago { get; set; }
     
+        public virtual ba_Banco_Cuenta ba_Banco_Cuenta { get; set; }
         public virtual ICollection<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito> ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito { get; set; }
         public virtual ba_Catalogo ba_Catalogo { get; set; }
         public virtual ba_Catalogo ba_Catalogo1 { get; set; }
+        public virtual ba_tipo_nota ba_tipo_nota { get; set; }
         public virtual ba_TipoFlujo ba_TipoFlujo { get; set; }
         public virtual ICollection<ba_Cbte_Ban_x_ba_TipoFlujo> ba_Cbte_Ban_x_ba_TipoFlujo { get; set; }
-        public virtual ba_Banco_Cuenta ba_Banco_Cuenta { get; set; }
-        public virtual ba_tipo_nota ba_tipo_nota { get; set; }
     }
 }

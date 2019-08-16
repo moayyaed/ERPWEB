@@ -266,7 +266,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 lst_det_canc_op = new List<cp_orden_pago_cancelaciones_Info>(),
                 lst_det_ct = new List<ct_cbtecble_det_Info>(),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
-                list_det = new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>()
+                list_det = new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>(),
+                cb_FechaCheque = DateTime.Now.Date
             };
             SessionFixed.TipoPersona = model.IdTipo_Persona;
             List_ct.set_list(model.lst_det_ct,model.IdTransaccionSession);

@@ -17,11 +17,11 @@ namespace Core.Erp.Data
         public ba_Banco_Cuenta()
         {
             this.ba_Banco_Cuenta_x_tb_sucursal = new HashSet<ba_Banco_Cuenta_x_tb_sucursal>();
-            this.ba_Cbte_Ban = new HashSet<ba_Cbte_Ban>();
             this.ba_Conciliacion = new HashSet<ba_Conciliacion>();
             this.ba_Talonario_cheques_x_banco = new HashSet<ba_Talonario_cheques_x_banco>();
             this.ba_TipoFlujo_Movimiento = new HashSet<ba_TipoFlujo_Movimiento>();
             this.ba_Archivo_Transferencia = new HashSet<ba_Archivo_Transferencia>();
+            this.ba_Cbte_Ban = new HashSet<ba_Cbte_Ban>();
         }
     
         public int IdEmpresa { get; set; }
@@ -46,10 +46,10 @@ namespace Core.Erp.Data
         public bool EsFlujoObligatorio { get; set; }
     
         public virtual ICollection<ba_Banco_Cuenta_x_tb_sucursal> ba_Banco_Cuenta_x_tb_sucursal { get; set; }
-        public virtual ICollection<ba_Cbte_Ban> ba_Cbte_Ban { get; set; }
         public virtual ICollection<ba_Conciliacion> ba_Conciliacion { get; set; }
         public virtual ICollection<ba_Talonario_cheques_x_banco> ba_Talonario_cheques_x_banco { get; set; }
         public virtual ICollection<ba_TipoFlujo_Movimiento> ba_TipoFlujo_Movimiento { get; set; }
         public virtual ICollection<ba_Archivo_Transferencia> ba_Archivo_Transferencia { get; set; }
+        public virtual ICollection<ba_Cbte_Ban> ba_Cbte_Ban { get; set; }
     }
 }

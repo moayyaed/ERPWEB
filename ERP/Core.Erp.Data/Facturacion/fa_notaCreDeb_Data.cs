@@ -44,7 +44,9 @@ namespace Core.Erp.Data.Facturacion
                                  sc_total = q.sc_total,
                                  Estado = q.Estado,
                                  CodNota = q.CodNota,
-                                 EstadoBool = q.Estado == "A" ? true : false
+                                 EstadoBool = q.Estado == "A" ? true : false,
+                                 Fecha_Autorizacion = q.Fecha_Autorizacion,
+                                 NumAutorizacion = q.NumAutorizacion
                              }).ToList();
                 }
 

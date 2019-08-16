@@ -22,7 +22,7 @@ namespace Core.Erp.Data
         public double Porcentaje { get; set; }
         public double Valor { get; set; }
     
-        public virtual ba_Cbte_Ban ba_Cbte_Ban { get; set; }
         public virtual ba_TipoFlujo ba_TipoFlujo { get; set; }
+        public virtual ba_Cbte_Ban ba_Cbte_Ban { get; set; }
     }
 }
