@@ -335,8 +335,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost, ValidateInput(false)]
         public JsonResult EditingAddNew(string IDs = "", decimal IdTransaccionSession = 0, int IdEmpresa = 0)
         {
+            string ObservacionOC = string.Empty;
             if (IDs != "")
             {
+
                 int IdEmpresaSesion = Convert.ToInt32(SessionFixed.IdEmpresa);
                 var lst_x_ingresar = ListaPorIngresar.get_list(IdTransaccionSession);
                 string[] array = IDs.Split(',');
@@ -372,14 +374,15 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                             IdCentroCosto = info_det.IdCentroCosto,
                             IdPunto_cargo = info_det.IdPunto_cargo,
                             IdPunto_cargo_grupo = info_det.IdPunto_cargo_grupo,
-                            cc_Descripcion = info_det.cc_Descripcion
+                            cc_Descripcion = info_det.cc_Descripcion,                            
                         };
+                        ObservacionOC = "OC# "+info_det.IdOrdenCompra+" " + info_det.oc_observacion;
                         List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);
                     }
                 }
             }
-            var model = List_in_Ing_Egr_Inven_det.get_list(IdTransaccionSession);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            //var model = List_in_Ing_Egr_Inven_det.get_list(IdTransaccionSession);
+            return Json(ObservacionOC, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost, ValidateInput(false)]

@@ -51,10 +51,6 @@
         //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
         {
-            if (Convert.ToString(e.GetValue("IdEstadoAprobacion_cat")) == "APRO")
-            {
-                e.Row.ForeColor = System.Drawing.Color.Blue;
-            }
             if (Convert.ToString(e.GetValue("IdEstadoAprobacion_cat")) == "ANU")
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
@@ -62,6 +58,18 @@
             if (Convert.ToString(e.GetValue("Estado")) == "I")
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
+            }
+            if (Convert.ToString(e.GetValue("IdEstadoAprobacion_cat")) == "APRO" && Convert.ToString(e.GetValue("Estado")) == "A")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+            if (Convert.ToString(e.GetValue("IdEstadoAprobacion_cat")) == "APRO" && Convert.ToString(e.GetValue("Estado")) == "A" && Convert.ToString(e.GetValue("IdEstado_cierre")) == "PEN")
+            {
+                e.Row.ForeColor = System.Drawing.Color.DarkOrange;
+            }
+            if (Convert.ToString(e.GetValue("IdEstadoAprobacion_cat")) == "APRO" && Convert.ToString(e.GetValue("Estado")) == "A" && Convert.ToString(e.GetValue("IdEstado_cierre")) == "CERR")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Green;
             }
         };
         settings.Columns.Add(c =>
@@ -77,7 +85,7 @@
                                new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAprobacion_cat")) == "APRO")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstado_cierre")) == "ABI")
                 {
                     ViewContext.Writer.Write(
                              Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdOrdenCompra = DataBinder.Eval(tc.DataItem, "IdOrdenCompra") },
@@ -95,17 +103,19 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("IdOrdenCompra", "#Orden").Width = Unit.Percentage(10);
+        settings.Columns.Add("IdOrdenCompra", "#Orden").Width = Unit.Percentage(7);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
         settings.Columns.Add("pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(25);
         settings.Columns.Add("oc_observacion", "Observación").Width = Unit.Percentage(20);
         settings.Columns.Add("Total", "Total").Width = Unit.Percentage(10);
-        settings.Columns.Add("IdEstadoAprobacion_cat", "Estado Aprobación").Width = Unit.Percentage(10);
+        settings.Columns.Add("IdEstadoAprobacion_cat", "Apro").Width = Unit.Percentage(7);
+        settings.Columns.Add("IdEstado_cierre", "Cierre").Width = Unit.Percentage(7);
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(7);
             column.EditorProperties().CheckBox(sp =>
             {
 

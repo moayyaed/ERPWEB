@@ -33,7 +33,7 @@
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowSelectCheckbox = true;
         settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
-
+        /*
         settings.Columns.Add(column =>
         {
             column.Caption = "*";
@@ -42,13 +42,22 @@
             column.Width = System.Web.UI.WebControls.Unit.Percentage(2);
             column.Visible = false;
         });
-        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(20);
-        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(30);
+*/
+        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
+        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(20);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "co_observacion";
+            column.Caption = "Observación";
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.ReadOnly = false;
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_fechaOg";
             column.Caption = "Fecha";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(7);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -57,6 +66,7 @@
             });
             column.ReadOnly = false;
         });
+        
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_total";
@@ -86,8 +96,9 @@
 
             });
         });
-        settings.Columns.Add("Tipo_Vcto", "Estado").Width = Unit.Percentage(10);
-        settings.Columns.Add("Dias_Vencidos", "Vencido").Width = Unit.Percentage(5);
+        /*
+        settings.Columns.Add("Tipo_Vcto", "Estado").Width = Unit.Percentage(5);*/
+        settings.Columns.Add("Dias_Vencidos", "D").Width = Unit.Percentage(5);
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";

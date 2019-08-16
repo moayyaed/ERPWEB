@@ -304,7 +304,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
-                        info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
+                        //info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
                     }                    
@@ -329,7 +329,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     {
                         info_det.pr_descripcion = info_producto.pr_descripcion_combo;
                         //info_det.IdUnidadMedida = info_producto.IdUnidadMedida;
-                        info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
+                        //info_det.IdUnidadMedida_sinConversion = info_producto.IdUnidadMedida;
                         info_det.tp_ManejaInven = info_producto.tp_ManejaInven;
                         info_det.se_distribuye = info_producto.se_distribuye;
                     }
