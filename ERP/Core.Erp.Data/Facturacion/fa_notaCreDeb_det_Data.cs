@@ -53,7 +53,8 @@ namespace Core.Erp.Data.Facturacion
                                  lote_fecha_vcto = q.lote_fecha_vcto,
                                  lote_num_lote = q.lote_num_lote,
                                  sc_cantidad_factura=q.sc_cantidad_factura,
-                                 cc_Descripcion = q.cc_Descripcion
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 nom_punto_cargo = q.nom_punto_cargo
                              }).ToList();
                 }
                 Lista.ForEach(V =>

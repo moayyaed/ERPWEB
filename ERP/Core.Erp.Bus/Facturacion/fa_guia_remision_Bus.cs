@@ -138,5 +138,18 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public bool modificarEstadoAutorizacion(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdGuiaRemision)
+        {
+            try
+            {
+                return odata.modificarEstadoAutorizacion(IdEmpresa, IdSucursal, IdBodega, IdGuiaRemision);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

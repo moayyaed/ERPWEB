@@ -1,0 +1,29 @@
+﻿@using System.Web.UI.WebControls;
+@{
+        var comboBox = Html.DevExpress().ComboBox(settings =>
+        {
+            settings.Name = "IdPunto_Cargo";
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.DropDownWidth = Unit.Percentage(100);
+            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+            settings.CallbackRouteValues = new { Controller = "NotaDeDebitoFacturacion", Action = "CargarPuntoCargo", Area = "Facturacion" };
+            settings.Properties.CallbackPageSize = 15;
+            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+            settings.Properties.TextField = "nom_punto_cargo";
+            settings.Properties.TextFormatString = "[{0}] {1}";
+            settings.Properties.ValueField = "IdPunto_cargo";
+            settings.Properties.ValueType = typeof(int);
+
+            settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            settings.Properties.AllowNull = true;
+
+            settings.Properties.Columns.Add("IdPunto_Cargo", "ID", 10);
+            settings.Properties.Columns.Add("nom_punto_cargo", "Punto de cargo", 90);
+            settings.Properties.ClientSideEvents.BeginCallback = "PuntoCargoComboBox_BeginCallback";
+            //settings.Properties.FilterMinLength =3;
+        })
+        .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.NotaDeDebitoFacturacionController().get_list_bajo_demandaPC,
+        new Core.Erp.Web.Areas.Facturacion.Controllers.NotaDeDebitoFacturacionController().get_info_bajo_demandaPC)
+        .Bind(Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_notaCreDeb_Info) || Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_notaCreDeb_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Facturacion.fa_notaCreDeb_det_Info>) ? "" : (Model));
+}
+@comboBox.GetHtml()

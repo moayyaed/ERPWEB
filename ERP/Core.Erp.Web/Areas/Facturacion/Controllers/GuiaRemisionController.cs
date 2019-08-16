@@ -642,6 +642,17 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult AutorizarSRI(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdGuiaRemision)
+        {
+            string retorno = string.Empty;
+
+            if (bus_guia.modificarEstadoAutorizacion(IdEmpresa, IdSucursal, IdBodega, IdGuiaRemision))
+                retorno = "Autorización exitosa";
+
+
+            return Json(retorno, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region funciones del detalle

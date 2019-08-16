@@ -10236,6 +10236,8 @@
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_013.cshtml" />
     <Content Include="Areas\Facturacion\Views\ClienteTipo\_CmbCuenta_Anticipo.cshtml" />
     <Content Include="Areas\Facturacion\Views\Cliente\_CmbCuenta_Anticipo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NotaDeCreditoFacturacion\_CmbPuntoCargo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NotaDeDebitoFacturacion\_CmbPuntoCargo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

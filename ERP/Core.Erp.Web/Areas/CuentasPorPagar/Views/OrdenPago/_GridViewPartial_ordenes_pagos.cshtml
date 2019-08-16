@@ -61,12 +61,12 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
 
-            if (Convert.ToString(e.GetValue("IdEstadoAprobacion")) == "APRO" || Convert.ToString(e.GetValue("EstadoCancelacion")) != "CANCELADA")
+            if ((Convert.ToString(e.GetValue("IdEstadoAprobacion")) == "APRO" || Convert.ToString(e.GetValue("EstadoCancelacion")) != "CANCELADA") && Convert.ToString(e.GetValue("Estado")) == "A")
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
             }
 
-            if (Convert.ToString(e.GetValue("EstadoCancelacion")) == "CANCELADA")
+            if ( (Convert.ToString(e.GetValue("EstadoCancelacion")) == "CANCELADA") && Convert.ToString(e.GetValue("Estado")) == "A")
             {
                 e.Row.ForeColor = System.Drawing.Color.Green;
             }
@@ -151,6 +151,9 @@
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+
+        settings.Settings.ShowFooter = true;
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total_OP").DisplayFormat = "{0:n2}";        
     });
 }
 @grid.Bind(Model).GetHtml()

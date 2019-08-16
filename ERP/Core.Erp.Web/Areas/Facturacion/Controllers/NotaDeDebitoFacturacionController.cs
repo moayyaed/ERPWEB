@@ -50,6 +50,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_nota_x_empresa_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
+        ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
 
         fa_notaCreDeb_List Lista_Factura = new fa_notaCreDeb_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -138,6 +140,23 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+        #region Metodos ComboBox bajo demanda punto de cargo        
+        public ActionResult CmbPuntoCargo()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbPuntoCargo", model);
+        }
+        public List<ct_punto_cargo_Info> get_list_bajo_demandaPC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            int IdPunto_cargo_grupo = 0;
+            List<ct_punto_cargo_Info> Lista = bus_pc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), IdPunto_cargo_grupo);
+            return Lista;
+        }
+        public ct_punto_cargo_Info get_info_bajo_demandaPC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_pc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
         #region Json
@@ -295,8 +314,28 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             var lst_impuesto = bus_impuesto.get_list("IVA", false);
             ViewBag.lst_impuesto = lst_impuesto;
+
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_punto_cargo_grupo = bus_pcg.GetList(IdEmpresa, false);
+            ViewBag.lst_punto_cargo_grupo = lst_punto_cargo_grupo;
         }
 
+        public ActionResult CargarPuntoCargo()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            int IdPunto_cargo_grupo = Request.Params["fx_IdPunto_cargo_grupo"] != null ? Convert.ToInt32(Request.Params["fx_IdPunto_cargo_grupo"]) : 0;
+            return GridViewExtension.GetComboBoxCallbackResult(p =>
+            {
+                p.TextField = "nom_punto_cargo";
+                p.ValueField = "IdPunto_Cargo";
+                p.Columns.Add("IdPunto_Cargo", "ID", 10);
+                p.Columns.Add("nom_punto_cargo", "Punto de cargo", 90);
+                p.ClientSideEvents.BeginCallback = "PuntoCargoComboBox_BeginCallback";
+                p.ValueType = typeof(int);
+                p.BindList(bus_pc.GetList(IdEmpresa, IdPunto_cargo_grupo, false, false));
+            });
+        }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_notaDebito_det()
         {

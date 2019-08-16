@@ -50,7 +50,8 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(18);
+            column.Width = Unit.Percentage(15);
+            column.VisibleIndex = 1;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -58,7 +59,7 @@
         {
             column.FieldName = "IdProducto";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(18);
+            column.Width = Unit.Percentage(15);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -75,6 +76,7 @@
             column.Caption = "Cant";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(5);
+            column.VisibleIndex = 2;
             column.EditorProperties().SpinEdit(q =>
             {
                 q.AllowMouseWheel = false;
@@ -89,6 +91,7 @@
             column.Caption = "Precio";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
+            column.VisibleIndex = 3;
             column.EditorProperties().SpinEdit(q =>
             {
                 q.AllowMouseWheel = false;
@@ -103,6 +106,7 @@
             column.FieldName = "sc_PordescUni";
             column.Caption = "% Desc. uni.";
             column.Width = Unit.Percentage(7);
+            column.VisibleIndex = 4;
             column.EditorProperties().SpinEdit(q =>
             {
                 q.AllowMouseWheel = false;
@@ -117,6 +121,7 @@
             column.FieldName = "IdCod_Impuesto_Iva";
             column.Caption = "Impuesto";
             column.Width = Unit.Percentage(8);
+            column.VisibleIndex = 5;
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("nom_impuesto", "Descripción").Width = Unit.Percentage(100);
@@ -134,6 +139,7 @@
             column.Caption = "Precio final";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
+            column.VisibleIndex = 6;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -143,64 +149,13 @@
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
             column.Visible = true;
+            column.VisibleIndex = 7;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "sc_subtotal_item";
             column.Caption = "Subtotal";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.ReadOnly = true;
-            column.Visible = false;
-            column.VisibleIndex = 12;
-            column.EditorProperties().SpinEdit(q =>
-            {
-                q.AllowMouseWheel = false;
-                q.MinValue = 0;
-                q.Width = Unit.Percentage(100);
-            });
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "sc_iva";
-            column.Caption = "I.V.A.";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
-            column.Visible = true;
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "sc_iva_item";
-            column.Caption = "I.V.A.";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-            column.ReadOnly = true;
-            column.Visible = false;
-            column.VisibleIndex = 13;
-            column.EditorProperties().SpinEdit(q =>
-            {
-                q.AllowMouseWheel = false;
-                q.MinValue = 0;
-                q.Width = Unit.Percentage(100);
-            });
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "sc_total";
-            column.Caption = "Total";
-            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.Width = Unit.Percentage(7);
-            column.Visible = true;
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "sc_total_item";
-            column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(7);
             column.EditFormSettings.Visible = DefaultBoolean.True;
@@ -216,11 +171,65 @@
         });
         settings.Columns.Add(column =>
         {
+            column.FieldName = "sc_iva";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.VisibleIndex = 8;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_iva_item";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 15;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_total";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.Visible = true;
+            column.VisibleIndex = 9;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "sc_total_item";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ReadOnly = true;
+            column.Visible = false;
+            column.VisibleIndex = 16;
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "IdCentroCosto";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(5);
             column.Visible = false;
-            column.VisibleIndex = 7;
+            column.VisibleIndex = 10;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
             {
@@ -232,16 +241,57 @@
         {
             column.FieldName = "cc_Descripcion";
             column.Caption = "Centro de costo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(5);
+            column.VisibleIndex = 10;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPunto_cargo_grupo";
+            column.Caption = "Grupo punto de cargo";
+            column.Width = Unit.Percentage(5);
+            column.VisibleIndex = 11;
+            column.EditorProperties().ComboBox(p =>
+            {
+
+                p.Columns.Add("IdPunto_cargo_grupo", "ID").Width = Unit.Percentage(10);
+                p.Columns.Add("nom_punto_cargo_grupo", "Descripción").Width = Unit.Percentage(50);
+                p.ValueField = "IdPunto_cargo_grupo";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_punto_cargo_grupo;
+                p.Width = Unit.Percentage(100);
+                p.ClientSideEvents.SelectedIndexChanged = "OnSelectedGrupoPuntoCargoChanged";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPunto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(5);
+            column.Visible = false;
+            column.VisibleIndex = 12;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbPuntoCargo", DataBinder.Eval(c.DataItem, "IdPunto_cargo"));
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "nom_punto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(5);
+            column.VisibleIndex = 12;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "sc_observacion";
             column.Caption = "Detalle adicional";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
             column.Visible = true;
-            column.VisibleIndex = 11;
+            column.VisibleIndex = 13;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().Memo(q =>
             {
@@ -268,6 +318,13 @@
 @grid.Bind(Model).GetHtml()
 
 <script type="text/javascript">
+    function OnSelectedGrupoPuntoCargoChanged() {
+        IdPunto_Cargo.PerformCallback();
+    }
+    function PuntoCargoComboBox_BeginCallback(s, e) {
+        e.customArgs["fx_IdPunto_cargo_grupo"] = GridView_notaCredito_det.GetEditor("IdPunto_cargo_grupo").GetValue();
+    }
+
     function SetPrecioProducto(s, e) {
         var datos = {
             IdProducto: s.GetValue(),
