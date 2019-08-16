@@ -68,7 +68,6 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_det_conversion> vwin_Ing_Egr_Inven_det_conversion { get; set; }
         public DbSet<vwin_Producto_Composicion> vwin_Producto_Composicion { get; set; }
         public DbSet<in_Catalogo> in_Catalogo { get; set; }
-        public DbSet<in_parametro> in_parametro { get; set; }
         public DbSet<in_Ajuste> in_Ajuste { get; set; }
         public DbSet<in_AjusteDet> in_AjusteDet { get; set; }
         public DbSet<vwin_Ajuste> vwin_Ajuste { get; set; }
@@ -88,10 +87,11 @@ namespace Core.Erp.Data
         public DbSet<in_Ing_Egr_Inven> in_Ing_Egr_Inven { get; set; }
         public DbSet<in_movi_inve> in_movi_inve { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
-        public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
         public DbSet<vwin_Producto_PorBodega> vwin_Producto_PorBodega { get; set; }
         public DbSet<vwin_Producto_Stock> vwin_Producto_Stock { get; set; }
         public DbSet<vwin_Producto_PorSucursal> vwin_Producto_PorSucursal { get; set; }
+        public DbSet<in_parametro> in_parametro { get; set; }
+        public DbSet<vwin_producto_x_tb_bodega> vwin_producto_x_tb_bodega { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {

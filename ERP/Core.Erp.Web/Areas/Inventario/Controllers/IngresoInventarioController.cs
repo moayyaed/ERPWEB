@@ -55,6 +55,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return bus_producto.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
+
         #region Metodos ComboBox bajo demanda centro de costo
 
         public ActionResult CmbCentroCosto_Inv_Ing()
@@ -363,18 +364,19 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             {
                 return false;
             }
-
+            
             #region ValidarExisteProductoxBodega
-            foreach (var item in i_validar.lst_in_Ing_Egr_Inven_det)
+            var param = bus_in_param.get_info(i_validar.IdEmpresa);
+            mensaje = bus_producto_x_bodega.ValidarProductoPorBodega(new List<in_producto_x_tb_bodega_Info>(i_validar.lst_in_Ing_Egr_Inven_det.Select(q => new in_producto_x_tb_bodega_Info
             {
-                var existe = bus_producto_x_bodega.existe_producto_x_bodega(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdBodega), item.IdProducto);
-
-                if (!existe)
-                {
-                    mensaje = "El producto: "+ item.pr_descripcion+", no se encuentra asignado a la bodega seleccionada";
-                    return false;
-                }
-            }
+                IdEmpresa = i_validar.IdEmpresa,
+                IdSucursal = i_validar.IdSucursal,
+                IdBodega = i_validar.IdBodega ?? 0,
+                IdProducto = q.IdProducto,
+                pr_descripcion = q.pr_descripcion
+            }).ToList()),(param.ValidarCtaCbleTransacciones ?? false));
+            if (!string.IsNullOrEmpty(mensaje))
+                return false;
             #endregion
 
             return true;

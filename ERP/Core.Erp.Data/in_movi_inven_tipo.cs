@@ -19,6 +19,7 @@ namespace Core.Erp.Data
             this.in_Ajuste = new HashSet<in_Ajuste>();
             this.in_Ajuste1 = new HashSet<in_Ajuste>();
             this.in_movi_inven_tipo_x_tb_bodega = new HashSet<in_movi_inven_tipo_x_tb_bodega>();
+            this.in_movi_inve = new HashSet<in_movi_inve>();
             this.in_parametro = new HashSet<in_parametro>();
             this.in_parametro1 = new HashSet<in_parametro>();
             this.in_parametro2 = new HashSet<in_parametro>();
@@ -31,7 +32,6 @@ namespace Core.Erp.Data
             this.in_parametro9 = new HashSet<in_parametro>();
             this.in_parametro10 = new HashSet<in_parametro>();
             this.in_parametro11 = new HashSet<in_parametro>();
-            this.in_movi_inve = new HashSet<in_movi_inve>();
         }
     
         public int IdEmpresa { get; set; }
@@ -56,6 +56,7 @@ namespace Core.Erp.Data
         public virtual ICollection<in_Ajuste> in_Ajuste1 { get; set; }
         public virtual in_Catalogo in_Catalogo { get; set; }
         public virtual ICollection<in_movi_inven_tipo_x_tb_bodega> in_movi_inven_tipo_x_tb_bodega { get; set; }
+        public virtual ICollection<in_movi_inve> in_movi_inve { get; set; }
         public virtual ICollection<in_parametro> in_parametro { get; set; }
         public virtual ICollection<in_parametro> in_parametro1 { get; set; }
         public virtual ICollection<in_parametro> in_parametro2 { get; set; }
@@ -68,6 +69,5 @@ namespace Core.Erp.Data
         public virtual ICollection<in_parametro> in_parametro9 { get; set; }
         public virtual ICollection<in_parametro> in_parametro10 { get; set; }
         public virtual ICollection<in_parametro> in_parametro11 { get; set; }
-        public virtual ICollection<in_movi_inve> in_movi_inve { get; set; }
     }
 }

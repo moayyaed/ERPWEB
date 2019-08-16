@@ -160,6 +160,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.DevExpress().CheckBoxFor(q => q.ValidarCtaCbleTransacciones, settings =>
+                                            {
+                                                settings.Name = "ValidarCtaCbleTransacciones";
+                                                settings.Text = "Validar cuentas en transacciones";
+                                            }).GetHtml()
+                                            @Html.ValidationMessageFor(q => q.ValidarCtaCbleTransacciones, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

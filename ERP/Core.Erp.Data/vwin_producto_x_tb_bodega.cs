@@ -26,5 +26,7 @@ namespace Core.Erp.Data
         public string pr_codigo { get; set; }
         public string IdCtaCble_Costo { get; set; }
         public string pc_Cuenta { get; set; }
+        public string IdCtaCble_Inven { get; set; }
+        public string pc_Cuenta_Inv { get; set; }
     }
 }

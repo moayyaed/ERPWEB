@@ -61,11 +61,11 @@ namespace Core.Erp.Bus.Inventario
             }
         }
 
-        public bool existe_producto_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdProducto)
+        public string ValidarProductoPorBodega(List<in_producto_x_tb_bodega_Info> Lista, bool ValidarCtaCble)
         {
             try
             {
-                return odata.existe_producto_x_bodega(IdEmpresa, IdSucursal, IdBodega, IdProducto);
+                return odata.ValidarProductoPorBodega(Lista, ValidarCtaCble);
             }
             catch (Exception)
             {

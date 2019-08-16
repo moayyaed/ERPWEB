@@ -40,7 +40,8 @@ namespace Core.Erp.Data.Inventario
                         IdMotivo_Inv_ajuste_ing = Entity.IdMotivo_Inv_ajuste_ing,
                         IdMovi_inven_tipo_ajuste_egr = Entity.IdMovi_inven_tipo_ajuste_egr,
                         IdMovi_inven_tipo_ajuste_ing = Entity.IdMovi_inven_tipo_ajuste_ing,
-                        IdCatalogoEstadoAjuste = Entity.IdCatalogoEstadoAjuste
+                        IdCatalogoEstadoAjuste = Entity.IdCatalogoEstadoAjuste,
+                        ValidarCtaCbleTransacciones = Entity.ValidarCtaCbleTransacciones
                     };
                 }
 
@@ -86,7 +87,8 @@ namespace Core.Erp.Data.Inventario
                             IdMotivo_Inv_ajuste_ing = info.IdMotivo_Inv_ajuste_ing,
                             IdMovi_inven_tipo_ajuste_egr = info.IdMovi_inven_tipo_ajuste_egr,
                             IdMovi_inven_tipo_ajuste_ing = info.IdMovi_inven_tipo_ajuste_ing,
-                            IdCatalogoEstadoAjuste = info.IdCatalogoEstadoAjuste
+                            IdCatalogoEstadoAjuste = info.IdCatalogoEstadoAjuste,
+                            ValidarCtaCbleTransacciones = info.ValidarCtaCbleTransacciones
                         };
                         Context.in_parametro.Add(Entity);
                     }
@@ -114,6 +116,7 @@ namespace Core.Erp.Data.Inventario
                         Entity.IdMovi_inven_tipo_ajuste_egr = info.IdMovi_inven_tipo_ajuste_egr;
                         Entity.IdMovi_inven_tipo_ajuste_ing = info.IdMovi_inven_tipo_ajuste_ing;
                         Entity.IdCatalogoEstadoAjuste = info.IdCatalogoEstadoAjuste;
+                        Entity.ValidarCtaCbleTransacciones = info.ValidarCtaCbleTransacciones;
                     }
                     Context.SaveChanges();
                 }

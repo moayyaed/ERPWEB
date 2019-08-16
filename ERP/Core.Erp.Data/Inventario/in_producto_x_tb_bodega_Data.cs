@@ -153,35 +153,33 @@ namespace Core.Erp.Data.Inventario
             }
         }
 
-
-        public bool existe_producto_x_bodega(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdProducto)
-        {            
+        public string ValidarProductoPorBodega(List<in_producto_x_tb_bodega_Info> Lista, bool ValidarCtaCble)
+        {
             try
             {
-                in_producto_x_tb_bodega_Info info = new in_producto_x_tb_bodega_Info();
-
-                using (Entities_inventario Context = new Entities_inventario())
+                string MensajeExiste = string.Empty;
+                string MensajeCta = string.Empty;
+                string Mensaje = string.Empty;
+                using (Entities_inventario db = new Entities_inventario())
                 {
-                    in_producto_x_tb_bodega Entity = Context.in_producto_x_tb_bodega.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == q.IdSucursal && q.IdBodega == IdBodega && q.IdProducto == IdProducto);
-
-                    if (Entity == null) return false;
-                    info = new in_producto_x_tb_bodega_Info
+                    foreach (var item in Lista)
                     {
-                        IdEmpresa = Entity.IdEmpresa,
-                        IdSucursal = Entity.IdSucursal,
-                        IdBodega = Entity.IdBodega,
-                        IdProducto = Entity.IdProducto,
-                        IdCtaCble_Costo = Entity.IdCtaCble_Costo,
-                        Stock_minimo = Entity.Stock_minimo
-                    };
+                        var info = db.vwin_producto_x_tb_bodega.Where(q => q.IdEmpresa == item.IdEmpresa && q.IdSucursal == item.IdSucursal && q.IdBodega == item.IdBodega && q.IdProducto == item.IdProducto).FirstOrDefault();
+                        if (info == null)
+                            MensajeExiste += (string.IsNullOrEmpty(MensajeExiste) ? "" : ",") + (item.pr_descripcion);
+                        else
+                            if(ValidarCtaCble && (string.IsNullOrEmpty(info.IdCtaCble_Costo) || string.IsNullOrEmpty(info.IdCtaCble_Inven)))
+                        {
+                            MensajeCta += (string.IsNullOrEmpty(MensajeCta) ? "" : ",") + (info.pr_codigo + "-" + info.pr_descripcion);
+                        }
+                    }
+                    
+                    if(!string.IsNullOrEmpty(MensajeExiste))
+                        Mensaje = "Productos que no pertenecen a la bodega: "+MensajeExiste+" ";
+                    if(!string.IsNullOrEmpty(MensajeCta))
+                        Mensaje += "Productos sin cuenta contable: " + MensajeExiste + " ";
                 }
-
-                if (info == null || info.IdBodega == 0)
-                {
-                    return false;
-                }
-
-                return true;
+                return Mensaje;
             }
             catch (Exception)
             {
