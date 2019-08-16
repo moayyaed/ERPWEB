@@ -556,5 +556,40 @@ namespace Core.Erp.Data.Compras
                 throw;
             }
         }
+
+        public bool ValidarEstadoCierre(int IdEmpresa, int IdSucursal, decimal IdOrdenCompra)
+        {
+            try
+            {
+                Entities_inventario dbi = new Entities_inventario();
+                Entities_compras dbc = new Entities_compras();
+
+                var EntityOC = dbc.com_ordencompra_local.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdOrdenCompra == IdOrdenCompra).FirstOrDefault();
+                if (EntityOC == null)
+                    return false;
+
+                var lstOcDet = dbc.com_ordencompra_local_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdOrdenCompra == IdOrdenCompra).ToList();
+                var lstInDet = dbi.in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa_oc == IdEmpresa && q.IdSucursal_oc == IdSucursal && q.IdOrdenCompra == IdOrdenCompra).ToList();
+
+                double CantIn = Math.Round(lstOcDet.Sum(q => q.do_Cantidad),2,MidpointRounding.AwayFromZero);
+                double CantOc = lstInDet.Sum(q => q.dm_cantidad_sinConversion);
+
+                if (Math.Round( CantOc - CantIn , 2) == 0)
+                    EntityOC.IdEstado_cierre = "CERR";
+                else
+                    if(Math.Round(CantOc - CantIn, 2) > 0 && CantIn != 0)
+                        EntityOC.IdEstado_cierre = "PEN";
+                else
+                    if (Math.Round(CantOc - CantIn, 2) > 0 && CantIn == 0)
+                    EntityOC.IdEstado_cierre = "ABI";
+
+                dbc.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -99,7 +99,17 @@ namespace Core.Erp.Bus.Compras
                 throw;
             }
         }
-
+        public bool ValidarEstadoCierre(int IdEmpresa, int IdSucursal, decimal IdOrdenCompra)
+        {
+            try
+            {
+                return odata.ValidarEstadoCierre(IdEmpresa, IdSucursal, IdOrdenCompra);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool RechazarOC(int IdEmpresa, int IdSucursal, string[] Lista, string MotivoAprobacion, string IdUsuarioAprobacion)
         {
             try
@@ -112,7 +122,6 @@ namespace Core.Erp.Bus.Compras
                 throw;
             }
         }
-
         public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal, decimal IdResponsable)
         {
             try
