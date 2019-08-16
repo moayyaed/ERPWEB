@@ -29,13 +29,14 @@ namespace Core.Erp.Web.Reportes.Facturacion
             int IdEmpresa = string.IsNullOrEmpty(p_IdEmpresa.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
             decimal IdCliente = string.IsNullOrEmpty(p_IdCliente.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdCliente.Value);
             int IdVendedor = string.IsNullOrEmpty(p_IdVendedor.Value.ToString()) ? 0 : Convert.ToInt32(p_IdVendedor.Value);
+            DateTime fechaIni = string.IsNullOrEmpty(p_fecha_ini.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_ini.Value);
             DateTime fechaCorte = string.IsNullOrEmpty(p_fechaCorte.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fechaCorte.Value);
             bool mostrarSoloVencido = p_mostrarSoloVencido.Value == null ? false : Convert.ToBoolean(p_mostrarSoloVencido.Value);
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : Convert.ToString(p_IdUsuario.Value);
 
             FAC_019_Bus bus_rpt = new FAC_019_Bus();
-            List<FAC_019_Info> lst_rpt = bus_rpt.GetList(IdEmpresa,IdCliente, IdVendedor, fechaCorte,mostrarSoloVencido, mostrarSaldo0, IdUsuario);
+            List<FAC_019_Info> lst_rpt = bus_rpt.GetList(IdEmpresa,IdCliente, IdVendedor, fechaIni,fechaCorte, mostrarSoloVencido, mostrarSaldo0, IdUsuario);
             this.DataSource = lst_rpt;
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);

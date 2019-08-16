@@ -932,7 +932,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdCliente = 0,
-                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                mostrarSaldo0 = true
+
             };
             cargar_combos(model);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
@@ -950,6 +952,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCliente.Value = model.IdCliente;
             report.p_IdVendedor.Value = model.IdVendedor;
+            report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fechaCorte.Value = model.fecha_fin;
             report.p_mostrarSoloVencido.Value = model.mostrarSoloVencido;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
@@ -976,6 +979,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCliente.Value = model.IdCliente;
             report.p_IdVendedor.Value = model.IdVendedor;
+            report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fechaCorte.Value = model.fecha_fin;
             report.p_mostrarSoloVencido.Value = model.mostrarSoloVencido;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
