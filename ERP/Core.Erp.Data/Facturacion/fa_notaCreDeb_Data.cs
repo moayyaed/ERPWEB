@@ -740,7 +740,7 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
 
                 #region Cuenta tipo nota
-                var lstTipoNota = info.lst_det.GroupBy(q => q.IdCentroCosto).Select(q => new { IdCentroCosto = q.Key, Subtotal = q.Sum(g=> g.sc_subtotal) });
+                var lstTipoNota = info.lst_det.GroupBy(q => new { q.IdCentroCosto, q.IdPunto_cargo_grupo, q.IdPunto_Cargo }).Select(q => new { IdCentroCosto = q.Key.IdCentroCosto, IdPunto_cargo_grupo = q.Key.IdPunto_cargo_grupo, IdPunto_Cargo = q.Key.IdPunto_Cargo, Subtotal = q.Sum(g=> g.sc_subtotal) });
 
                 foreach (var item in lstTipoNota)
                 {
@@ -754,6 +754,8 @@ namespace Core.Erp.Data.Facturacion
                             secuencia = secuencia++,
                             IdCtaCble = IdCtaCble_tipoNota,
                             IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
+                            IdPunto_cargo = item.IdPunto_Cargo,
                             dc_Valor = Math.Round(item.Subtotal) * (info.CreDeb.Trim() == "C" ? 1 : -1),
                             dc_para_conciliar = false,
                         });
