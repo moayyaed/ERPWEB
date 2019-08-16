@@ -46,8 +46,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TipoNota_Bus bus_tipo_nota = new fa_TipoNota_Bus();
         fa_notaCreDeb_x_fa_factura_NotaDeb_Bus bus_cruce = new fa_notaCreDeb_x_fa_factura_NotaDeb_Bus();
         fa_notaCreDeb_x_fa_factura_NotaDeb_List List_cruce = new fa_notaCreDeb_x_fa_factura_NotaDeb_List();
-        fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_tipo_nota_x_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
-        fa_TipoNota_x_Empresa_x_Sucursal_Bus bus_nota_x_empresa_sucursal = new fa_TipoNota_x_Empresa_x_Sucursal_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
@@ -431,7 +429,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             i_validar.IdBodega = (int)bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta)).IdBodega;
             i_validar.IdUsuario = SessionFixed.IdUsuario;
             i_validar.IdUsuarioUltMod = SessionFixed.IdUsuario;
-            var tipo_nota = bus_tipo_nota_x_sucursal.get_info(i_validar.IdEmpresa, i_validar.IdTipoNota, i_validar.IdSucursal);
+            var tipo_nota = bus_tipo_nota.get_info(i_validar.IdEmpresa, i_validar.IdTipoNota);
             if (tipo_nota != null)
                 i_validar.IdCtaCble_TipoNota = tipo_nota.IdCtaCble;
 
@@ -503,7 +501,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Nuevo(fa_notaCreDeb_Info model)
         {
-            var nota = bus_nota_x_empresa_sucursal.get_info(model.IdEmpresa, model.IdTipoNota, model.IdSucursal);
+            var nota = bus_tipo_nota.get_info(model.IdEmpresa, model.IdTipoNota);
             if (nota != null)
             {
                 if (nota.IdCtaCble == null | nota.IdCtaCble == "")
@@ -564,7 +562,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Modificar(fa_notaCreDeb_Info model)
         {
-            var nota = bus_nota_x_empresa_sucursal.get_info(model.IdEmpresa, model.IdTipoNota, model.IdSucursal);
+            var nota = bus_tipo_nota.get_info(model.IdEmpresa, model.IdTipoNota);
             if (nota != null)
             {
                 if (nota.IdCtaCble == null | nota.IdCtaCble == "")
