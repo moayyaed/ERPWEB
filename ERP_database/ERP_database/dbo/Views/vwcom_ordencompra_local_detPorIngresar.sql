@@ -1,4 +1,4 @@
-﻿CREATE VIEW dbo.vwcom_ordencompra_local_detPorIngresar
+﻿CREATE VIEW [dbo].[vwcom_ordencompra_local_detPorIngresar]
 AS
 SELECT ocd.IdEmpresa, ocd.IdSucursal, ocd.IdOrdenCompra, ocd.Secuencia, oc.Tipo, oc.SecuenciaTipo, ocd.IdProducto, p.pr_descripcion, ocd.do_Cantidad, ocd.do_precioFinal, ISNULL(SUM(invd.dm_cantidad_sinConversion), 0) 
                   AS CantidadIngresada, ocd.do_Cantidad - ISNULL(SUM(invd.dm_cantidad_sinConversion), 0) AS Saldo, ocd.IdUnidadMedida, per.pe_nombreCompleto, oc.oc_observacion, oc.oc_fecha, oc.IdProveedor, ocd.IdCentroCosto, 
@@ -10,10 +10,10 @@ FROM     dbo.com_ordencompra_local_det AS ocd LEFT OUTER JOIN
                   dbo.cp_proveedor AS pro ON pro.IdEmpresa = oc.IdEmpresa AND pro.IdProveedor = oc.IdProveedor INNER JOIN
                   dbo.tb_persona AS per ON per.IdPersona = pro.IdPersona LEFT OUTER JOIN
                   dbo.ct_CentroCosto ON ocd.IdEmpresa = dbo.ct_CentroCosto.IdEmpresa AND ocd.IdCentroCosto = dbo.ct_CentroCosto.IdCentroCosto
-WHERE  (oc.Estado = 'A')
+WHERE  (oc.Estado = 'A') and oc.IdEstadoAprobacion_cat = 'APRO' AND (oc.Tipo = 'OC')
 GROUP BY ocd.IdEmpresa, ocd.IdSucursal, ocd.IdOrdenCompra, ocd.Secuencia, ocd.IdProducto, p.pr_descripcion, ocd.do_Cantidad, ocd.do_precioFinal, ocd.IdUnidadMedida, per.pe_nombreCompleto, oc.oc_observacion, oc.oc_fecha, 
                   oc.IdProveedor, oc.SecuenciaTipo, oc.Tipo, ocd.IdCentroCosto, ocd.IdPunto_cargo_grupo, ocd.IdPunto_cargo, dbo.ct_CentroCosto.cc_Descripcion
-HAVING (ocd.do_Cantidad - ISNULL(SUM(invd.dm_cantidad_sinConversion), 0) <> 0) AND (oc.Tipo = 'OC')
+HAVING (ocd.do_Cantidad - ISNULL(SUM(invd.dm_cantidad_sinConversion), 0) <> 0)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local_detPorIngresar';
 

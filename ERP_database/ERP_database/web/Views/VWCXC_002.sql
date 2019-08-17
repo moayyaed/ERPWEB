@@ -1,35 +1,30 @@
-﻿
-
-CREATE VIEW [web].[VWCXC_002]
+﻿CREATE VIEW [web].[VWCXC_002]
 AS
-SELECT        dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_det.secuencial, dbo.cxc_cobro_det.dc_TipoDocumento, dbo.cxc_cobro_det.IdBodega_Cbte, 
-                         dbo.cxc_cobro_det.IdCbte_vta_nota, dbo.cxc_cobro_tipo.tc_descripcion, dbo.cxc_cobro_det.dc_ValorPago, dbo.tb_sucursal.Su_Descripcion, ISNULL(dbo.fa_cliente_contactos.Nombres, dbo.tb_persona.pe_nombreCompleto) 
-                         AS pe_nombreCompleto, dbo.cxc_cobro.cr_fecha, dbo.cxc_cobro.cr_TotalCobro, dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, CASE WHEN fa_factura.vt_NumFactura IS NULL 
-                         THEN fa_notaCreDeb.CodDocumentoTipo + '-' + isnull(fa_notaCreDeb.NumNota_Impresa, fa_notaCreDeb.CodNota) ELSE fa_factura.vt_tipoDoc + '-' + CAST(CAST(fa_factura.vt_NumFactura AS numeric) AS varchar(20)) 
-                         END AS vt_NumFactura, ISNULL(dbo.fa_factura.vt_fecha, dbo.fa_notaCreDeb.no_fecha) AS vt_fecha, ISNULL(fd.vt_Subtotal, nd.vt_Subtotal) AS vt_Subtotal, ISNULL(fd.vt_iva, nd.vt_iva) AS vt_iva, ISNULL(fd.vt_total, nd.vt_total) 
-                         AS vt_total, dbo.cxc_cobro_tipo.PorcentajeRet
-FROM            dbo.cxc_cobro INNER JOIN
-                         dbo.cxc_cobro_det ON dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_det.IdCobro INNER JOIN
-                         dbo.cxc_cobro_tipo ON dbo.cxc_cobro_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo INNER JOIN
-                         dbo.tb_sucursal ON dbo.cxc_cobro_det.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro_det.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
-                         dbo.fa_factura INNER JOIN
-                         dbo.fa_cliente_contactos ON dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente AND 
-                         dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa ON dbo.cxc_cobro_det.IdEmpresa = dbo.fa_factura.IdEmpresa AND dbo.cxc_cobro_det.IdSucursal = dbo.fa_factura.IdSucursal AND 
-                         dbo.cxc_cobro_det.IdBodega_Cbte = dbo.fa_factura.IdBodega AND dbo.cxc_cobro_det.IdCbte_vta_nota = dbo.fa_factura.IdCbteVta AND dbo.cxc_cobro_det.dc_TipoDocumento = dbo.fa_factura.vt_tipoDoc LEFT OUTER JOIN
-                         dbo.fa_cliente INNER JOIN
-                         dbo.fa_notaCreDeb ON dbo.fa_cliente.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND dbo.fa_cliente.IdCliente = dbo.fa_notaCreDeb.IdCliente INNER JOIN
-                         dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona ON dbo.cxc_cobro_det.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND dbo.cxc_cobro_det.IdSucursal = dbo.fa_notaCreDeb.IdSucursal AND 
-                         dbo.cxc_cobro_det.IdBodega_Cbte = dbo.fa_notaCreDeb.IdBodega AND dbo.cxc_cobro_det.IdCbte_vta_nota = dbo.fa_notaCreDeb.IdNota AND 
-                         dbo.cxc_cobro_det.dc_TipoDocumento = dbo.fa_notaCreDeb.CodDocumentoTipo left JOIN
-                             (SELECT        IdEmpresa, IdSucursal, IdBodega, IdCbteVta, SUM(vt_Subtotal) AS vt_Subtotal, SUM(vt_iva) AS vt_iva, SUM(vt_total) AS vt_total
-                               FROM            dbo.fa_factura_det
-                               GROUP BY IdEmpresa, IdSucursal, IdBodega, IdCbteVta) AS fd ON dbo.fa_factura.IdEmpresa = fd.IdEmpresa AND dbo.fa_factura.IdSucursal = fd.IdSucursal AND dbo.fa_factura.IdBodega = fd.IdBodega AND 
-                         dbo.fa_factura.IdCbteVta = fd.IdCbteVta left JOIN
-                             (SELECT        IdEmpresa, IdSucursal, IdBodega, IdNota, SUM(sc_subtotal) AS vt_Subtotal, SUM(sc_iva) AS vt_iva, SUM(sc_total) AS vt_total
-                               FROM            dbo.fa_notaCreDeb_det
-                               GROUP BY IdEmpresa, IdSucursal, IdBodega, IdNota) AS nd ON dbo.fa_notaCreDeb.IdEmpresa = nd.IdEmpresa AND dbo.fa_notaCreDeb.IdSucursal = nd.IdSucursal AND dbo.fa_notaCreDeb.IdBodega = nd.IdBodega AND 
-                         dbo.fa_notaCreDeb.IdNota = nd.IdNota
-WHERE        (dbo.cxc_cobro.IdCobro_tipo IS NULL)
+SELECT dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_det.secuencial, dbo.cxc_cobro_det.dc_TipoDocumento, dbo.cxc_cobro_det.IdBodega_Cbte, dbo.cxc_cobro_det.IdCbte_vta_nota, 
+                  dbo.cxc_cobro_tipo.tc_descripcion, dbo.cxc_cobro_det.dc_ValorPago, dbo.tb_sucursal.Su_Descripcion, isnull(tb_persona.pe_nombreCompleto, fa_per.pe_nombreCompleto) AS pe_nombreCompleto, dbo.cxc_cobro.cr_fecha, dbo.cxc_cobro.cr_TotalCobro, 
+                  dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, CASE WHEN fa_factura.vt_NumFactura IS NULL THEN fa_notaCreDeb.CodDocumentoTipo + '-' + isnull(fa_notaCreDeb.NumNota_Impresa, fa_notaCreDeb.CodNota) 
+                  ELSE fa_factura.vt_tipoDoc + '-' + CAST(CAST(fa_factura.vt_NumFactura AS numeric) AS varchar(20)) END AS vt_NumFactura, ISNULL(dbo.fa_factura.vt_fecha, dbo.fa_notaCreDeb.no_fecha) AS vt_fecha, cast(ISNULL(fd.SubtotalConDscto, 
+                  nd.vt_Subtotal)as float) AS vt_Subtotal, cast(ISNULL(fd.ValorIVA, nd.vt_iva) as float) AS vt_iva, cast(ISNULL(fd.Total, nd.vt_total) as float) AS vt_total, dbo.cxc_cobro_tipo.PorcentajeRet
+FROM     dbo.tb_persona INNER JOIN
+                  dbo.fa_factura INNER JOIN
+                  dbo.fa_cliente ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente.IdCliente ON dbo.tb_persona.IdPersona = dbo.fa_cliente.IdPersona RIGHT OUTER JOIN
+                  dbo.cxc_cobro INNER JOIN
+                  dbo.cxc_cobro_det ON dbo.cxc_cobro.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.cxc_cobro.IdCobro = dbo.cxc_cobro_det.IdCobro INNER JOIN
+                  dbo.cxc_cobro_tipo ON dbo.cxc_cobro_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo INNER JOIN
+                  dbo.tb_sucursal ON dbo.cxc_cobro_det.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro_det.IdSucursal = dbo.tb_sucursal.IdSucursal ON dbo.fa_factura.IdEmpresa = dbo.cxc_cobro_det.IdEmpresa AND 
+                  dbo.fa_factura.IdSucursal = dbo.cxc_cobro_det.IdSucursal AND dbo.fa_factura.IdBodega = dbo.cxc_cobro_det.IdBodega_Cbte AND dbo.fa_factura.IdCbteVta = dbo.cxc_cobro_det.IdCbte_vta_nota AND 
+                  dbo.fa_factura.vt_tipoDoc = dbo.cxc_cobro_det.dc_TipoDocumento LEFT OUTER JOIN
+                  dbo.fa_cliente AS fa_cli INNER JOIN
+                  dbo.tb_persona AS fa_per ON fa_cli.IdPersona = fa_per.IdPersona INNER JOIN
+                  dbo.fa_notaCreDeb ON fa_cli.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND fa_cli.IdCliente = dbo.fa_notaCreDeb.IdCliente ON dbo.cxc_cobro_det.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND 
+                  dbo.cxc_cobro_det.IdSucursal = dbo.fa_notaCreDeb.IdSucursal AND dbo.cxc_cobro_det.IdBodega_Cbte = dbo.fa_notaCreDeb.IdBodega AND dbo.cxc_cobro_det.IdCbte_vta_nota = dbo.fa_notaCreDeb.IdNota AND 
+                  dbo.cxc_cobro_det.dc_TipoDocumento = dbo.fa_notaCreDeb.CodDocumentoTipo LEFT OUTER JOIN
+                  dbo.fa_factura_resumen AS fd ON dbo.fa_factura.IdEmpresa = fd.IdEmpresa AND dbo.fa_factura.IdSucursal = fd.IdSucursal AND dbo.fa_factura.IdBodega = fd.IdBodega AND dbo.fa_factura.IdCbteVta = fd.IdCbteVta LEFT OUTER JOIN
+                      (SELECT IdEmpresa, IdSucursal, IdBodega, IdNota, SUM(sc_subtotal) AS vt_Subtotal, SUM(sc_iva) AS vt_iva, SUM(sc_total) AS vt_total
+                       FROM      dbo.fa_notaCreDeb_det
+                       GROUP BY IdEmpresa, IdSucursal, IdBodega, IdNota) AS nd ON dbo.fa_notaCreDeb.IdEmpresa = nd.IdEmpresa AND dbo.fa_notaCreDeb.IdSucursal = nd.IdSucursal AND dbo.fa_notaCreDeb.IdBodega = nd.IdBodega AND 
+                  dbo.fa_notaCreDeb.IdNota = nd.IdNota
+WHERE  (dbo.cxc_cobro.IdCobro_tipo IS NULL)
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

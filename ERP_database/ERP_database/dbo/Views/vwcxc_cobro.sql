@@ -1,21 +1,19 @@
-﻿
-CREATE VIEW [dbo].[vwcxc_cobro]
+﻿CREATE VIEW dbo.vwcxc_cobro
 AS
-SELECT     FC.IdPersona, C.IdEmpresa, C.IdSucursal, C.IdCobro, C.IdCobro_tipo, C.IdCliente, C.cr_TotalCobro, C.cr_fecha, C.cr_fechaCobro, C.cr_fechaDocu, C.cr_observacion, 
-                      C.cr_Banco, C.cr_cuenta, C.cr_Tarjeta, C.cr_NumDocumento, C.cr_estado, C.cr_recibo, C.Fecha_Transac, C.IdUsuario, C.IdUsuarioUltMod, C.Fecha_UltMod, 
-                      C.IdUsuarioUltAnu, C.Fecha_UltAnu, '' nom_pc, '' ip, S.Su_Descripcion AS nSucursal, P.pe_nombreCompleto AS nCliente, '' AS cr_NumCheque, 
-                      1 AS IdVendedorCliente, C.cr_Codigo, C.IdTipoNotaCredito, C.cr_propietarioCta, C.IdBanco, C.IdCaja, C.cr_es_anticipo
-FROM         dbo.tb_persona AS P INNER JOIN
-                      dbo.tb_sucursal AS S INNER JOIN
-                      dbo.cxc_cobro AS C ON S.IdEmpresa = C.IdEmpresa AND S.IdSucursal = C.IdSucursal INNER JOIN
-                      dbo.fa_cliente AS FC ON C.IdCliente = FC.IdCliente AND C.IdEmpresa = FC.IdEmpresa ON P.IdPersona = FC.IdPersona
+SELECT        FC.IdPersona, C.IdEmpresa, C.IdSucursal, C.IdCobro, C.IdCobro_tipo, C.IdCliente, C.cr_TotalCobro, C.cr_fecha, C.cr_fechaCobro, C.cr_fechaDocu, C.cr_observacion, C.cr_Banco, C.cr_cuenta, C.cr_Tarjeta, C.cr_NumDocumento, 
+                         C.cr_estado, C.cr_recibo, C.Fecha_Transac, C.IdUsuario, C.IdUsuarioUltMod, C.Fecha_UltMod, C.IdUsuarioUltAnu, C.Fecha_UltAnu, '-' AS nom_pc, '-' AS ip, S.Su_Descripcion AS nSucursal, P.pe_nombreCompleto AS nCliente, 
+                         '' AS cr_NumCheque, 1 AS IdVendedorCliente, C.cr_Codigo, C.IdTipoNotaCredito, C.cr_propietarioCta, C.IdBanco, C.IdCaja, C.cr_es_anticipo
+FROM            dbo.tb_persona AS P INNER JOIN
+                         dbo.tb_sucursal AS S INNER JOIN
+                         dbo.cxc_cobro AS C ON S.IdEmpresa = C.IdEmpresa AND S.IdSucursal = C.IdSucursal INNER JOIN
+                         dbo.fa_cliente AS FC ON C.IdCliente = FC.IdCliente AND C.IdEmpresa = FC.IdEmpresa ON P.IdPersona = FC.IdPersona
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[51] 4[10] 2[33] 3) )"
+         Configuration = "(H (1[52] 4[10] 2[19] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -128,7 +126,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 29
+      Begin ColumnWidths = 36
          Width = 284
          Width = 1500
          Width = 1500
@@ -159,8 +157,17 @@ Begin DesignProperties =
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
       End
    End
@@ -183,6 +190,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         W
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
+
+
 
 
 GO

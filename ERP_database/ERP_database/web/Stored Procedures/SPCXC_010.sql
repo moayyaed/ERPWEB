@@ -36,11 +36,13 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								F.CodCbteVta,F.vt_tipoDoc,F.vt_serie1,F.vt_serie2,F.vt_NumFactura, 
 								dbo.tb_sucursal.Su_Descripcion, LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) as pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
 								FD.Total Valor_Original,F.vt_fech_venc,
-								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, '' +'/'+ dbo.tb_persona.pe_telfono_Contacto as pe_telefonoOfic,
+								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, cc.Telefono+' '+cc.Celular as pe_telefonoOfic,
 								F.vt_Observacion,F.vt_plazo, p.pe_nombreCompleto as NomContacto, con.Telefono + '/' + con.Celular TelefonoContacto, t.Descripcion_tip_cliente
 			FROM            fa_factura AS F INNER JOIN
                          fa_factura_resumen AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
-                         fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente INNER JOIN
+                         fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente 
+						 inner join fa_cliente_contactos cc on cc.IdEmpresa = fa_cliente.IdEmpresa and cc.IdCliente = fa_cliente.IdCliente
+						 INNER JOIN
                          tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
                          tb_sucursal ON F.IdEmpresa = tb_sucursal.IdEmpresa AND F.IdSucursal = tb_sucursal.IdSucursal 
 						 inner join tb_persona as p on fa_cliente.IdPersona = p.IdPersona
@@ -66,8 +68,8 @@ SELECT			dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaC
 				
 				dbo.tb_sucursal.Su_Descripcion, 
 				LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) , dbo.tb_persona.pe_cedulaRuc, 
-				dbo.fa_notaCreDeb_det.sc_total, dbo.fa_notaCreDeb.no_fecha_venc,dbo.fa_notaCreDeb.no_fecha, dbo.fa_cliente.Idtipo_cliente,
-				dbo.tb_persona.pe_telfono_Contacto as pe_telefonoOfic, fa_notaCreDeb.sc_observacion,
+				dbo.fa_notaCreDeb_det.sc_total, dbo.fa_notaCreDeb.no_fecha_venc,dbo.fa_notaCreDeb.no_fecha, dbo.fa_cliente.Idtipo_cliente,				
+				cc.Telefono+' '+cc.Celular as pe_telefonoOfic, fa_notaCreDeb.sc_observacion,
 				DATEDIFF(DAY,dbo.fa_notaCreDeb.no_fecha,dbo.fa_notaCreDeb.no_fecha_venc), tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_telfono_Contacto,
 				t.Descripcion_tip_cliente
 FROM            fa_notaCreDeb INNER JOIN
@@ -75,7 +77,9 @@ FROM            fa_notaCreDeb INNER JOIN
                 fa_notaCreDeb.IdBodega = fa_notaCreDeb_det.IdBodega AND fa_notaCreDeb.IdNota = fa_notaCreDeb_det.IdNota INNER JOIN
                 fa_cliente ON fa_notaCreDeb.IdEmpresa = fa_cliente.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente.IdCliente INNER JOIN
                 tb_sucursal ON fa_notaCreDeb.IdEmpresa = tb_sucursal.IdEmpresa AND fa_notaCreDeb.IdSucursal = tb_sucursal.IdSucursal INNER JOIN
-                tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
+                tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona 
+				inner join fa_cliente_contactos cc on cc.IdEmpresa = fa_cliente.IdEmpresa and cc.IdCliente= fa_cliente.IdCliente
+				INNER JOIN
 				fa_cliente_tipo AS T on fa_cliente.IdEmpresa = T.IdEmpresa and fa_cliente.Idtipo_cliente = t.Idtipo_cliente
 where           dbo.fa_notaCreDeb.IdEmpresa = @IdEmpresa and dbo.fa_notaCreDeb.CreDeb='D' and fa_notaCreDeb.no_fecha <= @fechaCorte
 				and dbo.fa_notaCreDeb.Estado='A' 
@@ -92,7 +96,7 @@ GROUP BY		dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_nota
 				dbo.fa_notaCreDeb.NumNota_Impresa, dbo.tb_sucursal.Su_Descripcion, 
 				LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) , dbo.tb_persona.pe_cedulaRuc, 
 				dbo.fa_notaCreDeb_det.sc_total, dbo.fa_notaCreDeb.no_fecha_venc,dbo.fa_notaCreDeb.no_fecha,dbo.fa_cliente.Idtipo_cliente,
-				'' +'/'+ dbo.tb_persona.pe_telfono_Contacto, fa_notaCreDeb.sc_observacion, tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_telfono_Contacto,
+				cc.Telefono+' '+cc.Celular, fa_notaCreDeb.sc_observacion, tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_telfono_Contacto,
 				t.Descripcion_tip_cliente
 
 ) as  Facturas_y_notas_deb left join
@@ -144,5 +148,6 @@ where
     Facturas_y_notas_deb.IdEmpresa = @IdEmpresa 
 	and round(Facturas_y_notas_deb.Valor_Original,2) - round(isnull(Cobros_x_fac.dc_ValorPago,0),2) > 0
 	and iif(@MostrarSoloCarteraVencida = 1,DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte), 0) >= 0
+
 
 END

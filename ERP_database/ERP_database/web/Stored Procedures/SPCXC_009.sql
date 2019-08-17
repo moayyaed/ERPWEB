@@ -1,5 +1,4 @@
-﻿--EXEC web.SPCXC_009 2,23,'2019/07/02'
-CREATE PROCEDURE [web].[SPCXC_009]
+﻿CREATE PROCEDURE [web].[SPCXC_009]
 (
 @IdEmpresa int,
 @IdCliente numeric,
@@ -7,7 +6,8 @@ CREATE PROCEDURE [web].[SPCXC_009]
 )
 AS
 
-SELECT fa_factura.IdEmpresa, fa_factura.IdSucursal, fa_factura.IdBodega, fa_factura.IdCbteVta,fa_factura.vt_tipoDoc, fa_factura.vt_serie1 + '-' + fa_factura.vt_serie2 + '-' + fa_factura.vt_NumFactura AS NumDocumento, fa_factura.vt_fecha, fa_factura.vt_fech_venc, 
+SELECT fa_factura.IdEmpresa, fa_factura.IdSucursal, fa_factura.IdBodega, fa_factura.IdCbteVta,fa_factura.vt_tipoDoc, 
+fa_factura.vt_serie1 + '-' + fa_factura.vt_serie2 + '-' + fa_factura.vt_NumFactura AS NumDocumento, fa_factura.vt_fecha, fa_factura.vt_fech_venc, 
                   tb_sucursal.Su_Descripcion, fa_factura.IdCliente, tb_persona.pe_nombreCompleto, tb_persona.pe_cedulaRuc, fa_factura.IdVendedor, fa_Vendedor.Ve_Vendedor, fa_factura_resumen.Total, CASE WHEN DATEDIFF(DAY,fa_factura.vt_fech_venc,@FechaCorte) < 0 THEN 0 ELSE DATEDIFF(DAY,fa_factura.vt_fech_venc,@FechaCorte) END DiasVencido,
 				  isnull(COBRO.dc_ValorPago,0) TotalCobrado, round(fa_factura_resumen.Total - isnull(COBRO.dc_ValorPago,0),2) as Saldo, fa_factura.vt_Observacion,
 				  CASE WHEN DATEDIFF(DAY,fa_factura.vt_fech_venc,@FechaCorte) < 0  THEN round(fa_factura_resumen.Total - isnull(COBRO.dc_ValorPago,0),2) ELSE 0 END AS X_VENCER,
@@ -33,7 +33,8 @@ where fa_factura.IdEmpresa = @IdEmpresa and fa_factura.IdCliente = @IdCliente
 AND fa_factura.Estado = 'A' 
 and round(fa_factura_resumen.Total - isnull(COBRO.dc_ValorPago,0),2) >  0
 UNION ALL
-SELECT fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota,fa_notaCreDeb.CodDocumentoTipo, fa_notaCreDeb.Serie1 + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa AS NumDocumento, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, 
+SELECT fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota,fa_notaCreDeb.CodDocumentoTipo, 
+isnull(fa_notaCreDeb.Serie1 + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa, fa_notaCreDeb.CodNota)AS NumDocumento, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, 
                   tb_sucursal.Su_Descripcion, fa_notaCreDeb.IdCliente, tb_persona.pe_nombreCompleto, tb_persona.pe_cedulaRuc, 0, '' Ve_Vendedor, sum(fa_notaCreDeb_det.sc_total), CASE WHEN DATEDIFF(DAY,fa_notaCreDeb.no_fecha,@FechaCorte) < 0 THEN 0 ELSE DATEDIFF(DAY,fa_notaCreDeb.no_fecha_venc,@FechaCorte) END DiasVencido,
 				  isnull(COBRO.dc_ValorPago,0) TotalCobrado, round(sum(fa_notaCreDeb_det.sc_total) - isnull(COBRO.dc_ValorPago,0),2) as Saldo, fa_notaCreDeb.sc_observacion,
 				  CASE WHEN DATEDIFF(DAY,fa_notaCreDeb.no_fecha,@FechaCorte) < 0  THEN round(sum(fa_notaCreDeb_det.sc_total) - isnull(COBRO.dc_ValorPago,0),2) ELSE 0 END AS X_VENCER,
@@ -56,6 +57,8 @@ FROM     fa_notaCreDeb INNER JOIN
 				  ) as Cobro on fa_notaCreDeb.IdEmpresa = COBRO.IdEmpresa AND fa_notaCreDeb.IdSucursal = COBRO.IdSucursal AND fa_notaCreDeb.IdBodega = COBRO.IdBodega_Cbte AND fa_notaCreDeb.IdNota = COBRO.IdCbte_vta_nota AND fa_notaCreDeb.CodDocumentoTipo = COBRO.dc_TipoDocumento
 where fa_notaCreDeb.IdEmpresa = @IdEmpresa and fa_notaCreDeb.IdCliente = @IdCliente 
 AND fa_notaCreDeb.Estado = 'A' 
-group by fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota,fa_notaCreDeb.CodDocumentoTipo, fa_notaCreDeb.Serie1 + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, 
+group by fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota,fa_notaCreDeb.CodDocumentoTipo, 
+isnull(fa_notaCreDeb.Serie1 + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa, fa_notaCreDeb.CodNota),
+fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, 
                   tb_sucursal.Su_Descripcion, fa_notaCreDeb.IdCliente, tb_persona.pe_nombreCompleto, tb_persona.pe_cedulaRuc,COBRO.dc_ValorPago,fa_notaCreDeb.sc_observacion
 having round(sum(fa_notaCreDeb_det.sc_total) - isnull(COBRO.dc_ValorPago,0),2) >  0

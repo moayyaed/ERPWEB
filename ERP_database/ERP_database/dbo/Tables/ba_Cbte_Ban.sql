@@ -6,6 +6,7 @@
     [IdPeriodo]                INT           NOT NULL,
     [IdBanco]                  INT           NOT NULL,
     [cb_Fecha]                 DATE          NOT NULL,
+    [cb_FechaCheque]           DATE          NULL,
     [cb_Observacion]           VARCHAR (MAX) NULL,
     [cb_Valor]                 FLOAT (53)    NOT NULL,
     [cb_Cheque]                VARCHAR (50)  NULL,
@@ -43,6 +44,8 @@
     CONSTRAINT [FK_ba_Cbte_Ban_tb_persona] FOREIGN KEY ([IdPersona_Girado_a]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
     CONSTRAINT [FK_ba_Cbte_Ban_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

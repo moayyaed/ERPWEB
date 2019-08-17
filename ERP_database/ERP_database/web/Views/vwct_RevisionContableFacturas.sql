@@ -1,21 +1,22 @@
-﻿CREATE view [web].[vwct_RevisionContableFacturas]
-as
-SELECT        dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa, 0) AS ct_IdEmpresa, 
-                         ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte, 0) AS ct_IdTipoCbte, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, 0) AS ct_IdCbteCble, dbo.fa_cliente_contactos.Nombres, 
-                         dbo.fa_factura.vt_tipoDoc + '-' + dbo.fa_factura.vt_serie1 + '-' + dbo.fa_factura.vt_serie2 + '-' + dbo.fa_factura.vt_NumFactura AS Referencia, dbo.fa_factura.vt_fecha, fa_factura_resumen.Total AS TotalModulo, 
-                         ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS TotalContabilidad, fa_factura_resumen.Total - ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS Diferencia
-FROM            dbo.fa_factura INNER JOIN
-                         dbo.fa_cliente ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
-                         dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente INNER JOIN
-                         dbo.fa_factura_resumen ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_resumen.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_resumen.IdSucursal AND 
-                         dbo.fa_factura.IdBodega = dbo.fa_factura_resumen.IdBodega AND dbo.fa_factura.IdCbteVta = dbo.fa_factura_resumen.IdCbteVta LEFT OUTER JOIN
-                         dbo.fa_factura_x_ct_cbtecble ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_x_ct_cbtecble.vt_IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_x_ct_cbtecble.vt_IdSucursal AND 
-                         dbo.fa_factura.IdBodega = dbo.fa_factura_x_ct_cbtecble.vt_IdBodega AND dbo.fa_factura.IdCbteVta = dbo.fa_factura_x_ct_cbtecble.vt_IdCbteVta LEFT OUTER JOIN
-                         dbo.ct_cbtecble_det ON dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte = dbo.ct_cbtecble_det.IdTipoCbte AND 
-                         dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble AND dbo.fa_cliente.IdCtaCble_cxc_Credito = ISNULL(dbo.ct_cbtecble_det.IdCtaCble, dbo.fa_cliente.IdCtaCble_cxc_Credito)
-WHERE        (dbo.fa_factura.Estado = 'A')
-GROUP BY dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa, dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte, dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, fa_factura_resumen.Total, dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, 
-                         dbo.fa_factura.IdCbteVta, dbo.fa_cliente_contactos.Nombres, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.vt_fecha
+﻿CREATE VIEW [web].[vwct_RevisionContableFacturas]
+AS
+SELECT dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa, 0) AS ct_IdEmpresa, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte, 0) 
+                  AS ct_IdTipoCbte, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, 0) AS ct_IdCbteCble, tb_persona.pe_nombreCompleto Nombres, 
+                  dbo.fa_factura.vt_tipoDoc + '-' + dbo.fa_factura.vt_serie1 + '-' + dbo.fa_factura.vt_serie2 + '-' + dbo.fa_factura.vt_NumFactura AS Referencia, dbo.fa_factura.vt_fecha, dbo.fa_factura_resumen.Total AS TotalModulo, 
+                  ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS TotalContabilidad, dbo.fa_factura_resumen.Total - ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS Diferencia
+FROM     dbo.fa_factura INNER JOIN
+                  dbo.fa_cliente ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
+                  dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente INNER JOIN
+                  dbo.fa_factura_resumen ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_resumen.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_resumen.IdSucursal AND dbo.fa_factura.IdBodega = dbo.fa_factura_resumen.IdBodega AND 
+                  dbo.fa_factura.IdCbteVta = dbo.fa_factura_resumen.IdCbteVta INNER JOIN
+                  dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.fa_factura_x_ct_cbtecble ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_x_ct_cbtecble.vt_IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_x_ct_cbtecble.vt_IdSucursal AND 
+                  dbo.fa_factura.IdBodega = dbo.fa_factura_x_ct_cbtecble.vt_IdBodega AND dbo.fa_factura.IdCbteVta = dbo.fa_factura_x_ct_cbtecble.vt_IdCbteVta LEFT OUTER JOIN
+                  dbo.ct_cbtecble_det ON dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte = dbo.ct_cbtecble_det.IdTipoCbte AND 
+                  dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble AND dbo.fa_cliente.IdCtaCble_cxc_Credito = ISNULL(dbo.ct_cbtecble_det.IdCtaCble, dbo.fa_cliente.IdCtaCble_cxc_Credito)
+WHERE  (dbo.fa_factura.Estado = 'A')
+GROUP BY dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa, dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte, dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, dbo.fa_factura_resumen.Total, dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, 
+                  dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, tb_persona.pe_nombreCompleto, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.vt_fecha
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwct_RevisionContableFacturas';
 

@@ -1,44 +1,36 @@
-﻿CREATE view [dbo].[vwcp_conciliacion_Caja_det_x_ValeCaja]
-as
-
-SELECT        dbo.cp_conciliacion_Caja.IdEmpresa, dbo.cp_conciliacion_Caja.IdConciliacion_Caja, dbo.cp_conciliacion_Caja.Fecha, dbo.cp_conciliacion_Caja.IdCaja, 
-                         dbo.cp_conciliacion_Caja.IdEstadoCierre, dbo.cp_conciliacion_Caja.Observacion, dbo.cp_conciliacion_Caja.IdEmpresa_op, 
-                         dbo.cp_conciliacion_Caja.IdOrdenPago_op, dbo.cp_conciliacion_Caja.IdCtaCble, dbo.cp_conciliacion_Caja_det_x_ValeCaja.Secuencia, 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja, 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja, dbo.caj_Caja_Movimiento.cm_Signo, vwtb_persona_beneficiario.pe_nombreCompleto cm_beneficiario, 
-                         dbo.caj_Caja_Movimiento.IdTipoMovi, dbo.caj_Caja_Movimiento.cm_observacion, dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.Estado, 
-                         dbo.caj_Caja_Movimiento_det.Secuencia AS Secuencia_DetcajMovi, dbo.caj_Caja_Movimiento.cm_valor AS cr_Valor, 
+﻿CREATE VIEW dbo.vwcp_conciliacion_Caja_det_x_ValeCaja
+AS
+SELECT        dbo.cp_conciliacion_Caja.IdEmpresa, dbo.cp_conciliacion_Caja.IdConciliacion_Caja, dbo.cp_conciliacion_Caja.Fecha, dbo.cp_conciliacion_Caja.IdCaja, dbo.cp_conciliacion_Caja.IdEstadoCierre, 
+                         dbo.cp_conciliacion_Caja.Observacion, dbo.cp_conciliacion_Caja.IdEmpresa_op, dbo.cp_conciliacion_Caja.IdOrdenPago_op, dbo.cp_conciliacion_Caja.IdCtaCble, dbo.cp_conciliacion_Caja_det_x_ValeCaja.Secuencia, 
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja, 
+                         dbo.caj_Caja_Movimiento.cm_Signo, dbo.vwtb_persona_beneficiario.pe_nombreCompleto AS cm_beneficiario, dbo.caj_Caja_Movimiento.IdTipoMovi, dbo.caj_Caja_Movimiento.cm_observacion, 
+                         dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.Estado, dbo.caj_Caja_Movimiento_det.Secuencia AS Secuencia_DetcajMovi, dbo.caj_Caja_Movimiento.cm_valor AS cr_Valor, 
                          dbo.caj_Caja_Movimiento_Tipo.tm_descripcion AS nom_TipoMovi, dbo.caj_Caja.ca_Descripcion AS nom_Caja, dbo.cp_catalogo.Nombre AS nom_EstadoCierre, 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCtaCble AS IdCtaCble_ValeCaja, dbo.caj_Caja_Movimiento.IdTipo_Persona, dbo.caj_Caja_Movimiento.IdEntidad, 
-                         dbo.caj_Caja_Movimiento.IdPersona, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto_sub_centro_costo, 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo, 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo_grupo, dbo.vwtb_persona_beneficiario.IdBeneficiario
-                           
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCtaCble AS IdCtaCble_ValeCaja, dbo.caj_Caja_Movimiento.IdTipo_Persona, dbo.caj_Caja_Movimiento.IdEntidad, dbo.caj_Caja_Movimiento.IdPersona, 
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto_sub_centro_costo, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo, 
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo_grupo, dbo.vwtb_persona_beneficiario.IdBeneficiario, dbo.ct_punto_cargo.nom_punto_cargo
 FROM            dbo.cp_catalogo_tipo INNER JOIN
                          dbo.cp_catalogo ON dbo.cp_catalogo_tipo.IdCatalogo_tipo = dbo.cp_catalogo.IdCatalogo_tipo INNER JOIN
                          dbo.cp_conciliacion_Caja INNER JOIN
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja ON dbo.cp_conciliacion_Caja.IdEmpresa = dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa AND 
                          dbo.cp_conciliacion_Caja.IdConciliacion_Caja = dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdConciliacion_Caja INNER JOIN
                          dbo.caj_Caja_Movimiento ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja = dbo.caj_Caja_Movimiento.IdEmpresa AND 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja = dbo.caj_Caja_Movimiento.IdCbteCble AND 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja = dbo.caj_Caja_Movimiento.IdTipocbte INNER JOIN
-                         dbo.caj_Caja_Movimiento_det ON dbo.caj_Caja_Movimiento.IdEmpresa = dbo.caj_Caja_Movimiento_det.IdEmpresa AND 
-                         dbo.caj_Caja_Movimiento.IdCbteCble = dbo.caj_Caja_Movimiento_det.IdCbteCble AND 
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja = dbo.caj_Caja_Movimiento.IdCbteCble AND dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja = dbo.caj_Caja_Movimiento.IdTipocbte INNER JOIN
+                         dbo.caj_Caja_Movimiento_det ON dbo.caj_Caja_Movimiento.IdEmpresa = dbo.caj_Caja_Movimiento_det.IdEmpresa AND dbo.caj_Caja_Movimiento.IdCbteCble = dbo.caj_Caja_Movimiento_det.IdCbteCble AND 
                          dbo.caj_Caja_Movimiento.IdTipocbte = dbo.caj_Caja_Movimiento_det.IdTipocbte INNER JOIN
                          dbo.caj_Caja_Movimiento_Tipo ON dbo.caj_Caja_Movimiento.IdTipoMovi = dbo.caj_Caja_Movimiento_Tipo.IdTipoMovi INNER JOIN
                          dbo.caj_Caja ON dbo.cp_conciliacion_Caja.IdEmpresa = dbo.caj_Caja.IdEmpresa AND dbo.cp_conciliacion_Caja.IdCaja = dbo.caj_Caja.IdCaja ON 
                          dbo.cp_catalogo.IdCatalogo = dbo.cp_conciliacion_Caja.IdEstadoCierre INNER JOIN
-                         dbo.vwtb_persona_beneficiario ON dbo.caj_Caja_Movimiento.IdTipo_Persona = dbo.vwtb_persona_beneficiario.IdTipo_Persona AND 
-                         dbo.caj_Caja_Movimiento.IdEntidad = dbo.vwtb_persona_beneficiario.IdEntidad AND 
-                         dbo.caj_Caja_Movimiento.IdPersona = dbo.vwtb_persona_beneficiario.IdPersona AND 
-                         dbo.caj_Caja_Movimiento.IdEmpresa = dbo.vwtb_persona_beneficiario.IdEmpresa
+                         dbo.vwtb_persona_beneficiario ON dbo.caj_Caja_Movimiento.IdTipo_Persona = dbo.vwtb_persona_beneficiario.IdTipo_Persona AND dbo.caj_Caja_Movimiento.IdEntidad = dbo.vwtb_persona_beneficiario.IdEntidad AND 
+                         dbo.caj_Caja_Movimiento.IdPersona = dbo.vwtb_persona_beneficiario.IdPersona AND dbo.caj_Caja_Movimiento.IdEmpresa = dbo.vwtb_persona_beneficiario.IdEmpresa LEFT OUTER JOIN
+                         dbo.ct_punto_cargo ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa = dbo.ct_punto_cargo.IdEmpresa AND dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo = dbo.ct_punto_cargo.IdPunto_cargo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[78] 4[5] 2[5] 3) )"
+         Configuration = "(H (1[56] 4[5] 2[17] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -168,11 +160,13 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 0
                Left = 234
-        ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+
+
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'       Bottom = 129
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        Bottom = 129
                Right = 443
             End
             DisplayFlags = 280
@@ -194,6 +188,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'       Bot
                Left = 294
                Bottom = 318
                Right = 526
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ct_punto_cargo"
+            Begin Extent = 
+               Top = 348
+               Left = 361
+               Bottom = 478
+               Right = 570
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -263,6 +267,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'       Bot
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+
+
 
 
 GO

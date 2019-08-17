@@ -1,12 +1,11 @@
-﻿/*where dbo.ba_Cbte_Ban.Estado = 'A'*/
-CREATE VIEW web.VWBAN_005
+﻿CREATE VIEW [web].[VWBAN_005]
 AS
-SELECT        dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdCbteCble, dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.ValorEnLetras, dbo.tb_ciudad.Descripcion_Ciudad, dbo.ba_Cbte_Ban.cb_Valor, 
-                         dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Cheque, CAST(dbo.ba_Cbte_Ban.cb_Cheque AS numeric) AS cb_Cheque_numero, dbo.ba_Cbte_Ban.Estado, dbo.ba_Cbte_Ban.IdBanco, dbo.ba_Cbte_Ban.cb_Observacion, 
-                         dbo.seg_usuario.Nombre AS NombreUsuario
-FROM            dbo.ba_Cbte_Ban INNER JOIN
-                         dbo.tb_ciudad ON dbo.ba_Cbte_Ban.cb_ciudadChq = dbo.tb_ciudad.IdCiudad LEFT OUTER JOIN
-                         dbo.seg_usuario ON dbo.ba_Cbte_Ban.IdUsuario = dbo.seg_usuario.IdUsuario
+SELECT dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdCbteCble, dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.ValorEnLetras, dbo.tb_ciudad.Descripcion_Ciudad, dbo.ba_Cbte_Ban.cb_Valor, 
+                  ISNULL(dbo.ba_Cbte_Ban.cb_FechaCheque, dbo.ba_Cbte_Ban.cb_Fecha) cb_Fecha, dbo.ba_Cbte_Ban.cb_Cheque, CAST(dbo.ba_Cbte_Ban.cb_Cheque AS numeric) AS cb_Cheque_numero, dbo.ba_Cbte_Ban.Estado, dbo.ba_Cbte_Ban.IdBanco, dbo.ba_Cbte_Ban.cb_Observacion, 
+                  dbo.seg_usuario.Nombre AS NombreUsuario
+FROM     dbo.ba_Cbte_Ban INNER JOIN
+                  dbo.tb_ciudad ON dbo.ba_Cbte_Ban.cb_ciudadChq = dbo.tb_ciudad.IdCiudad LEFT OUTER JOIN
+                  dbo.seg_usuario ON dbo.ba_Cbte_Ban.IdUsuario = dbo.seg_usuario.IdUsuario
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWBAN_005';
 

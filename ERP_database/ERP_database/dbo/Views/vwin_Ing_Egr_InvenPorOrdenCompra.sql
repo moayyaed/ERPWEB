@@ -2,7 +2,8 @@
 AS
 SELECT        dbo.in_Ing_Egr_Inven.IdEmpresa, dbo.in_Ing_Egr_Inven.IdSucursal, dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven.IdNumMovi, dbo.in_movi_inven_tipo.tm_descripcion, dbo.tb_persona.pe_nombreCompleto, 
                          dbo.in_Ing_Egr_Inven.signo, dbo.in_Ing_Egr_Inven.cm_fecha, dbo.in_Ing_Egr_Inven.cm_observacion, dbo.in_Ing_Egr_Inven.Estado, dbo.in_Ing_Egr_Inven.IdBodega, dbo.tb_bodega.bo_Descripcion, 
-                         dbo.tb_sucursal.Su_Descripcion, dbo.in_Ing_Egr_Inven.CodMoviInven, dbo.in_Motivo_Inven.Desc_mov_inv, dbo.in_Ing_Egr_Inven.IdMotivo_Inv
+                         dbo.tb_sucursal.Su_Descripcion, dbo.in_Ing_Egr_Inven.CodMoviInven, dbo.in_Motivo_Inven.Desc_mov_inv, dbo.in_Ing_Egr_Inven.IdMotivo_Inv, dbo.in_Ing_Egr_Inven.IdEstadoAproba, 
+                         dbo.in_Catalogo.Nombre AS EstadoAprobacion
 FROM            dbo.in_Motivo_Inven INNER JOIN
                          dbo.tb_persona INNER JOIN
                          dbo.cp_proveedor ON dbo.tb_persona.IdPersona = dbo.cp_proveedor.IdPersona INNER JOIN
@@ -11,6 +12,7 @@ FROM            dbo.in_Motivo_Inven INNER JOIN
                          dbo.cp_proveedor.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND dbo.cp_proveedor.IdProveedor = dbo.in_Ing_Egr_Inven.IdResponsable INNER JOIN
                          dbo.in_movi_inven_tipo ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_movi_inven_tipo.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo = dbo.in_movi_inven_tipo.IdMovi_inven_tipo ON 
                          dbo.in_Motivo_Inven.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND dbo.in_Motivo_Inven.IdMotivo_Inv = dbo.in_Ing_Egr_Inven.IdMotivo_Inv LEFT OUTER JOIN
+                         dbo.in_Catalogo ON dbo.in_Ing_Egr_Inven.IdEstadoAproba = dbo.in_Catalogo.IdCatalogo LEFT OUTER JOIN
                          dbo.tb_sucursal INNER JOIN
                          dbo.tb_bodega ON dbo.tb_sucursal.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.tb_bodega.IdSucursal ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.tb_bodega.IdEmpresa AND 
                          dbo.in_Ing_Egr_Inven.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.in_Ing_Egr_Inven.IdBodega = dbo.tb_bodega.IdBodega
@@ -19,16 +21,27 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'      End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
+            End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "in_Motivo_Inven"
+         Begin Table = "tb_bodega"
             Begin Extent = 
-               Top = 198
-               Left = 678
-               Bottom = 328
-               Right = 870
+               Top = 2
+               Left = 471
+               Bottom = 132
+               Right = 732
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "in_Catalogo"
+            Begin Extent = 
+               Top = 358
+               Left = 631
+               Bottom = 488
+               Right = 810
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -40,8 +53,11 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'      End
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 16
+      Begin ColumnWidths = 19
          Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -80,13 +96,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Ing_Egr_InvenPorOrdenCompra';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[42] 4[28] 2[12] 3) )"
+         Configuration = "(H (1[61] 4[5] 2[19] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -152,22 +170,12 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_sucursal"
+         Begin Table = "in_Motivo_Inven"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 268
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_bodega"
-            Begin Extent = 
-               Top = 2
-               Left = 471
-               Bottom = 132
-               Right = 732
+               Top = 198
+               Left = 678
+               Bottom = 328
+               Right = 870
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -200,7 +208,7 @@ Begin DesignProperties =
                Right = 563
             End
             DisplayFlags = 280
-            TopColumn = 8
+            TopColumn = 14
          End
          Begin Table = "com_parametro"
             Begin Extent = 
@@ -218,5 +226,16 @@ Begin DesignProperties =
                Left = 81
                Bottom = 745
                Right = 296
-      ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Ing_Egr_InvenPorOrdenCompra';
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_sucursal"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 268', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Ing_Egr_InvenPorOrdenCompra';
+
+
 

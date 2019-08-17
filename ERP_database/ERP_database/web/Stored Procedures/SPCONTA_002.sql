@@ -1,5 +1,5 @@
 ﻿--exec web.SPCONTA_002 1,1,1,'2110501','2019/01/01','2019/12/31',0,99999,0,99999
-CREATE PROCEDURE [web].[SPCONTA_002]
+CREATE PROC [web].[SPCONTA_002]
 (
 @IdEmpresa int,
 @IdSucursalIni int,
@@ -26,8 +26,8 @@ select @Cont =  count(*) from ct_cbtecble_det inner join ct_cbtecble
 on ct_cbtecble_det.IdEmpresa = ct_cbtecble.IdEmpresa and ct_cbtecble_det.IdTipoCbte = ct_cbtecble.IdTipoCbte and ct_cbtecble_det.IdCbteCble = ct_cbtecble.IdCbteCble
 where ct_cbtecble_det.IdEmpresa = @IdEmpresa and ct_cbtecble.cb_Fecha between @FechaIni and @FechaFin and ct_cbtecble_det.IdCtaCble = @IdCtaCble
 and ct_cbtecble.IdSucursal between @IdSucursalIni and @IdSucursalFin
-and ct_cbtecble_det.IdPunto_cargo_grupo between @IdGrupoIni and @IdGrupoFin
-and ct_cbtecble_det.IdPunto_cargo between @IdPunto_cargoIni and @IdPunto_cargoFin
+and isnull(ct_cbtecble_det.IdPunto_cargo_grupo,0) between @IdGrupoIni and @IdGrupoFin
+and isnull(ct_cbtecble_det.IdPunto_cargo,0) between @IdPunto_cargoIni and @IdPunto_cargoFin
 
 SET @Cont = ISNULL(@Cont,0)
 
@@ -63,8 +63,8 @@ FROM            ct_cbtecble INNER JOIN
 						 ct_punto_cargo_grupo as pg on pg.IdEmpresa = ct_cbtecble_det.IdEmpresa and pg.IdPunto_cargo_grupo = ct_cbtecble_det.IdPunto_cargo_grupo
 where ct_cbtecble_det.IdEmpresa = @IdEmpresa and ct_cbtecble.cb_Fecha between @FechaIni and @FechaFin and ct_cbtecble_det.IdCtaCble = @IdCtaCble
 and ct_cbtecble.IdSucursal between @IdSucursalIni and @IdSucursalFin
-and ct_cbtecble_det.IdPunto_cargo_grupo between @IdGrupoIni and @IdGrupoFin
-and ct_cbtecble_det.IdPunto_cargo between @IdPunto_cargoIni and @IdPunto_cargoFin
+and isnull(ct_cbtecble_det.IdPunto_cargo_grupo,0) between @IdGrupoIni and @IdGrupoFin
+and isnull(ct_cbtecble_det.IdPunto_cargo,0) between @IdPunto_cargoIni and @IdPunto_cargoFin
 --ORDER BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, ct_cbtecble.cb_Fecha, ct_cbtecble_det.IdTipoCbte, ct_cbtecble_det.IdCbteCble, ct_cbtecble_det.secuencia
 UNION ALL
 SELECT pc.IdEmpresa, 0 IdTipoCbte, 0 IdCbteCble, 0 secuencia, pc.IdCtaCble,pc.IdCtaCble+' - '+ pc.pc_Cuenta pc_Cuenta, 0 dc_Valor, 

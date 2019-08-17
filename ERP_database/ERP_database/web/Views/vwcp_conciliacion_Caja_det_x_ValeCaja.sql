@@ -3,12 +3,14 @@ AS
 SELECT        dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.Secuencia, 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja, 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCtaCble, dbo.caj_Caja_Movimiento.cm_valor, dbo.caj_Caja_Movimiento_Tipo.IdTipoMovi, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, 
-                         dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.cm_observacion
+                         dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.cm_observacion, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo_grupo, 
+                         dbo.ct_punto_cargo.nom_punto_cargo
 FROM            dbo.cp_conciliacion_Caja_det_x_ValeCaja INNER JOIN
                          dbo.caj_Caja_Movimiento ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja = dbo.caj_Caja_Movimiento.IdEmpresa AND 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja = dbo.caj_Caja_Movimiento.IdCbteCble AND dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja = dbo.caj_Caja_Movimiento.IdTipocbte INNER JOIN
                          dbo.tb_persona ON dbo.caj_Caja_Movimiento.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                         dbo.caj_Caja_Movimiento_Tipo ON dbo.caj_Caja_Movimiento.IdEmpresa = dbo.caj_Caja_Movimiento_Tipo.IdEmpresa AND dbo.caj_Caja_Movimiento.IdTipoMovi = dbo.caj_Caja_Movimiento_Tipo.IdTipoMovi
+                         dbo.caj_Caja_Movimiento_Tipo ON dbo.caj_Caja_Movimiento.IdEmpresa = dbo.caj_Caja_Movimiento_Tipo.IdEmpresa AND dbo.caj_Caja_Movimiento.IdTipoMovi = dbo.caj_Caja_Movimiento_Tipo.IdTipoMovi LEFT OUTER JOIN
+                         dbo.ct_punto_cargo ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa = dbo.ct_punto_cargo.IdEmpresa AND dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo = dbo.ct_punto_cargo.IdPunto_cargo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
@@ -121,6 +123,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "ct_punto_cargo"
+            Begin Extent = 
+               Top = 6
+               Left = 616
+               Bottom = 136
+               Right = 825
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -128,7 +140,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 14
          Width = 284
          Width = 1500
          Width = 1500
@@ -136,6 +148,17 @@ Begin DesignProperties =
          Width = 1500
          Width = 1500
          Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1500
          Width = 1500
          Width = 1500
       End
@@ -152,17 +175,15 @@ Begin DesignProperties =
          SortOrder = 1410
          GroupBy = 1350
          Filter = 1350
-         Or ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
-
-
-GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 1350
+         Or = 1350
          Or = 1350
          Or = 1350
       End
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+
+
 
 
 GO
