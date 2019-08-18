@@ -19,9 +19,9 @@ namespace Core.Erp.Data
         public int IdBodega { get; set; }
         public decimal IdCbteVta { get; set; }
         public string vt_tipoDoc { get; set; }
-        public double vt_Subtotal { get; set; }
-        public double vt_iva { get; set; }
-        public double vt_total { get; set; }
+        public decimal vt_Subtotal { get; set; }
+        public decimal vt_iva { get; set; }
+        public decimal vt_total { get; set; }
         public string Nombres { get; set; }
         public System.DateTime vt_fecha { get; set; }
         public System.DateTime vt_fech_venc { get; set; }

@@ -41,8 +41,6 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public double? vt_Subtotal { get; set; }
         public double? vt_iva { get; set; }
         public DateTime? vt_fech_venc { get; set; }
-        public double dc_ValorRetFu { get; set; }
-        public double dc_ValorRetIva { get; set; }
         public string ESRetenIVA { get; set; }
         public string ESRetenFTE { get; set; }
         public string tc_descripcion { get; set; }

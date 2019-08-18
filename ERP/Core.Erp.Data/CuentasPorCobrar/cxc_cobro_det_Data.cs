@@ -34,8 +34,6 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  vt_Subtotal = q.vt_Subtotal,
                                  vt_iva = q.vt_iva,
                                  vt_fech_venc = q.vt_fech_venc,
-                                 dc_ValorRetFu = q.dc_ValorRetFu,
-                                 dc_ValorRetIva = q.dc_ValorRetIva,
                                  NomCliente = q.NomCliente
                              }).ToList();
 

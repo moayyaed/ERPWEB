@@ -82,10 +82,7 @@ FROM     fa_notaCreDeb INNER JOIN
 				  GROUP BY d.IdEmpresa, d.IdSucursal, d.IdBodega_Cbte, d.IdCbte_vta_nota, d.dc_TipoDocumento
 				  ) as CobroRet on fa_notaCreDeb.IdEmpresa = CobroRet.IdEmpresa AND fa_notaCreDeb.IdSucursal = CobroRet.IdSucursal AND fa_notaCreDeb.IdBodega = CobroRet.IdBodega_Cbte AND fa_notaCreDeb.IdNota = CobroRet.IdCbte_vta_nota AND fa_notaCreDeb.CodDocumentoTipo = CobroRet.dc_TipoDocumento
 				  left join web.tb_FiltroReportes as f on fa_notaCreDeb.IdEmpresa = f.IdEmpresa and fa_notaCreDeb.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario left join
-				  (
-				  select fa_notaCreDeb_det.IdEmpresa, fa_notaCreDeb_det.IdSucursal, fa_notaCreDeb_det.IdBodega, fa_notaCreDeb_det.IdNota, sum(fa_notaCreDeb_det.sc_total) Total from fa_notaCreDeb_det
-				  group by fa_notaCreDeb_det.IdEmpresa, fa_notaCreDeb_det.IdSucursal, fa_notaCreDeb_det.IdBodega, fa_notaCreDeb_det.IdNota
-				  ) as d on fa_notaCreDeb.IdEmpresa = D.IdEmpresa AND fa_notaCreDeb.IdSucursal = D.IdSucursal AND fa_notaCreDeb.IdBodega = D.IdBodega AND fa_notaCreDeb.IdNota = D.IdNota LEFT JOIN
+				  fa_notaCreDeb_resumen as d on fa_notaCreDeb.IdEmpresa = D.IdEmpresa AND fa_notaCreDeb.IdSucursal = D.IdSucursal AND fa_notaCreDeb.IdBodega = D.IdBodega AND fa_notaCreDeb.IdNota = D.IdNota LEFT JOIN
 				  fa_cliente_contactos AS CON ON fa_cliente.IdEmpresa = CON.IdEmpresa AND fa_cliente.IdCliente = CON.IdCliente
 where fa_notaCreDeb.IdEmpresa = @IdEmpresa and fa_notaCreDeb.IdCliente between @IdClienteIni and @IdClienteFin and fa_notaCreDeb.IdVendedor between @IdVendedorIni and @IdVendedorFin
 AND fa_notaCreDeb.Estado = 'A' AND 

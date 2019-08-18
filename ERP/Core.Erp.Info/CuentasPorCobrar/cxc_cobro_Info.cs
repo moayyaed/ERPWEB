@@ -61,9 +61,9 @@ namespace Core.Erp.Info.CuentasPorCobrar
         //public double cr_saldo { get; set; }
         public int IdBodega { get; set; }
         public decimal IdEntidad { get; set; }
-        public double vt_Subtotal { get; set; }
-        public double vt_Iva { get; set; }
-        public double vt_Total { get; set; }
+        public decimal vt_Subtotal { get; set; }
+        public decimal vt_Iva { get; set; }
+        public decimal vt_Total { get; set; }
         public string vt_NumFactura { get; set; }        
         public decimal IdCbteVta { get; set; }
         public List<cxc_cobro_det_Info> lst_det { get; set; }

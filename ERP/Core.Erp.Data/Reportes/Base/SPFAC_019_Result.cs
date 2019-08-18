@@ -26,7 +26,7 @@ namespace Core.Erp.Data.Reportes.Base
         public string pe_cedulaRuc { get; set; }
         public Nullable<int> IdVendedor { get; set; }
         public string Ve_Vendedor { get; set; }
-        public Nullable<double> Total { get; set; }
+        public Nullable<decimal> Total { get; set; }
         public Nullable<int> DiasVencido { get; set; }
         public double TotalCobrado { get; set; }
         public Nullable<double> Saldo { get; set; }

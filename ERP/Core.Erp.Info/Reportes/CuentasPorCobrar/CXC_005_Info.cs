@@ -18,9 +18,9 @@ namespace Core.Erp.Info.Reportes.CuentasPorCobrar
         public string NomCliente { get; set; }
         public System.DateTime vt_fecha { get; set; }
         public System.DateTime vt_fech_venc { get; set; }
-        public Nullable<double> Subtotal { get; set; }
-        public Nullable<double> IVA { get; set; }
-        public Nullable<double> Total { get; set; }
+        public Nullable<decimal> Subtotal { get; set; }
+        public Nullable<decimal> IVA { get; set; }
+        public Nullable<decimal> Total { get; set; }
         public double Cobrado { get; set; }
         public double NotaCredito { get; set; }
         public Nullable<double> Saldo { get; set; }

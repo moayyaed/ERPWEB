@@ -32,8 +32,6 @@ namespace Core.Erp.Data
         public Nullable<double> vt_Subtotal { get; set; }
         public Nullable<double> vt_iva { get; set; }
         public System.DateTime vt_fech_venc { get; set; }
-        public double dc_ValorRetFu { get; set; }
-        public double dc_ValorRetIva { get; set; }
         public string CodCliente { get; set; }
         public string NomCliente { get; set; }
         public string em_nombre { get; set; }

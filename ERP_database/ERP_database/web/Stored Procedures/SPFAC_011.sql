@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [web].[SPFAC_011]
+﻿
+CREATE PROCEDURE [web].[SPFAC_011]
 (
 @IdEmpresa int, @IdClienteIni numeric, @IdClienteFin numeric, @FechaIni date, @FechaFin date, @MostrarAnulados bit
 )
@@ -37,11 +38,7 @@ FROM (
 	FROM            fa_notaCreDeb INNER JOIN
 							 fa_cliente ON fa_notaCreDeb.IdEmpresa = fa_cliente.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente.IdCliente INNER JOIN
 							 tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona LEFT OUTER JOIN
-								 (SELECT        d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdNota, SUM(d.sc_total) AS Total
-								   FROM            fa_notaCreDeb_det AS d INNER JOIN
-															 fa_notaCreDeb AS c ON d.IdEmpresa = c.IdEmpresa AND d.IdSucursal = c.IdSucursal AND d.IdBodega = c.IdBodega AND d.IdNota = c.IdNota
-							WHERE c.IdEmpresa = @IdEmpresa and c.IdCliente between @IdClienteIni and @IdClienteFin and c.no_fecha < @FechaIni and c.Estado = 'A'
-								   GROUP BY d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdNota) AS det ON fa_notaCreDeb.IdNota = det.IdNota AND fa_notaCreDeb.IdBodega = det.IdBodega AND fa_notaCreDeb.IdSucursal = det.IdSucursal AND 
+								fa_notaCreDeb_resumen AS det ON fa_notaCreDeb.IdNota = det.IdNota AND fa_notaCreDeb.IdBodega = det.IdBodega AND fa_notaCreDeb.IdSucursal = det.IdSucursal AND 
 							 fa_notaCreDeb.IdEmpresa = det.IdEmpresa
 	WHERE fa_notaCreDeb.IdEmpresa = @IdEmpresa and fa_notaCreDeb.IdCliente between @IdClienteIni and @IdClienteFin and fa_notaCreDeb.no_fecha < @FechaIni and fa_notaCreDeb.Estado = 'A'
 	UNION ALL

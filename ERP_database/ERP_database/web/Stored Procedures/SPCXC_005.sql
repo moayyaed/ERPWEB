@@ -1,4 +1,5 @@
-﻿--exec [web].[SPCXC_005] 1,1,9999,1,9999,1,9999,'2019/08/05',0
+﻿
+--exec [web].[SPCXC_005] 1,1,9999,1,9999,1,9999,'2019/08/05',0
 CREATE PROCEDURE [web].[SPCXC_005]
 (
 @IdEmpresa int,
@@ -53,16 +54,14 @@ CASE WHEN C.NaturalezaNota = 'SRI' THEN C.Serie1+'-'+C.Serie2+'-'+C.NumNota_Impr
 ELSE ISNULL(C.CodNota,CAST(C.IdNota as varchar(20))) END, 
 
 c.IdCliente, tb_persona.pe_nombreCompleto AS NomCliente, 
- c.no_fecha, c.no_fecha_venc, d.Subtotal, d.IVA, D.Total, isnull(cobro.ValorPago,0) as Cobrado, ISNULL(NC.ValorPago,0) as NotaCredito, ROUND(D.Total - ISNULL(NC.ValorPago,0) -  ISNULL(cobro.ValorPago,0),2) AS Saldo, S.Su_Descripcion,
+ c.no_fecha, c.no_fecha_venc, d.SubtotalConDscto Subtotal, d.ValorIVA IVA, D.Total, isnull(cobro.ValorPago,0) as Cobrado, ISNULL(NC.ValorPago,0) as NotaCredito, ROUND(D.Total - ISNULL(NC.ValorPago,0) -  ISNULL(cobro.ValorPago,0),2) AS Saldo, S.Su_Descripcion,
  fa_cliente.Idtipo_cliente, fa_cliente_tipo.Descripcion_tip_cliente
 FROM           
           fa_notaCreDeb AS c INNER JOIN
                          fa_cliente ON c.IdEmpresa = fa_cliente.IdEmpresa AND c.IdCliente = fa_cliente.IdCliente INNER JOIN
                          tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona inner join
 						 fa_cliente_tipo on fa_cliente_tipo.IdEmpresa = fa_cliente.IdEmpresa and fa_cliente_tipo.Idtipo_cliente = fa_cliente.Idtipo_cliente LEFT OUTER JOIN
-                             (SELECT        IdEmpresa, IdSucursal, IdBodega, IdNota, SUM(sc_subtotal) AS Subtotal, SUM(sc_iva) AS IVA, SUM(sc_total) AS Total
-                               FROM            fa_notaCreDeb_det
-                               GROUP BY IdEmpresa, IdSucursal, IdBodega, IdNota) AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdNota = d.IdNota
+                             fa_notaCreDeb_resumen AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdNota = d.IdNota
 							   INNER JOIN tb_sucursal AS S ON C.IdEmpresa = S.IdEmpresa AND C.IdSucursal = S.IdSucursal
 
 LEFT OUTER JOIN(
