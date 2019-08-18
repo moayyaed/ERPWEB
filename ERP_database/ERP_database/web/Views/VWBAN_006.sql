@@ -1,10 +1,10 @@
 ﻿CREATE VIEW [web].[VWBAN_006]
 AS
 SELECT dbo.ct_cbtecble_det.IdEmpresa, dbo.ct_cbtecble_det.IdTipoCbte, dbo.ct_cbtecble_det.IdCbteCble, dbo.ct_cbtecble_det.secuencia, dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.ValorEnLetras, dbo.tb_ciudad.Descripcion_Ciudad, 
-                  dbo.ba_Cbte_Ban.cb_Valor, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_plancta.pc_Cuenta, dbo.ct_cbtecble_det.dc_Valor, 
+                  dbo.ba_Cbte_Ban.cb_Valor, isnull(ba_Cbte_Ban.cb_FechaCheque,dbo.ba_Cbte_Ban.cb_Fecha)cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_plancta.pc_Cuenta, dbo.ct_cbtecble_det.dc_Valor, 
                   CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ct_cbtecble_det.dc_Valor ELSE 0 END AS dc_Valor_Debe, CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, 
-                  isnull(ba_Cbte_Ban.cb_FechaCheque, dbo.ba_Cbte_Ban.cb_Cheque) cb_Cheque, CAST(dbo.ba_Cbte_Ban.cb_Cheque AS NUMERIC) AS cb_Cheque_numero, dbo.ba_Cbte_Ban.IdBanco, dbo.seg_usuario.Nombre AS NombreUsuario, dbo.ba_Banco_Cuenta.ba_Num_Cuenta, 
-                  dbo.ba_Banco_Cuenta.ba_Tipo, dbo.ba_Banco_Cuenta.ba_descripcion
+                  dbo.ba_Cbte_Ban.cb_Cheque AS cb_Cheque, CAST(dbo.ba_Cbte_Ban.cb_Cheque AS NUMERIC) AS cb_Cheque_numero, dbo.ba_Cbte_Ban.IdBanco, 
+                  dbo.seg_usuario.Nombre AS NombreUsuario, dbo.ba_Banco_Cuenta.ba_Num_Cuenta, dbo.ba_Banco_Cuenta.ba_Tipo, dbo.ba_Banco_Cuenta.ba_descripcion
 FROM     dbo.ct_plancta INNER JOIN
                   dbo.ct_cbtecble_det ON dbo.ct_plancta.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ct_plancta.IdCtaCble = dbo.ct_cbtecble_det.IdCtaCble INNER JOIN
                   dbo.ba_Cbte_Ban INNER JOIN

@@ -150,6 +150,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
             var lst_nota = bus_nota.get_list(IdEmpresa, false);
+            lst_nota.Add(new fa_TipoNota_Info
+            {
+                No_Descripcion = "Todos",
+                IdTipoNota = 0
+            });
             ViewBag.lst_nota = lst_nota;
 
 
@@ -868,8 +873,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 CreDeb = "C",
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_FAC018(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
             FAC_018_Rpt report = new FAC_018_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -918,8 +923,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             cargar_FAC018(model);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
             ViewBag.Report = report;
             return View(model);
         }

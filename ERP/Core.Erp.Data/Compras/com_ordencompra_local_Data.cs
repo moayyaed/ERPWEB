@@ -237,15 +237,15 @@ namespace Core.Erp.Data.Compras
                         Context.com_ordencompra_local_det.Add(Entity_det);                        
                     }
 
-                    var Descuento = Convert.ToDecimal(info.lst_det.Sum(q=>q.do_Cantidad * q.do_descuento));
-                    var ValorIVA = Convert.ToDecimal(info.lst_det.Sum(q => q.do_iva));
-                    var SubtotalIVASinDscto =  Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
-                    var SubtotalSinIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
-                    var SubtotalIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_subtotal));
-                    var SubtotalSinIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_subtotal));
-                    var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
-                    var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
-                    var Total = SubtotalConDscto + ValorIVA;
+                    var Descuento = Math.Round(Convert.ToDecimal(info.lst_det.Sum(q => q.do_Cantidad * q.do_descuento)), 2, MidpointRounding.AwayFromZero);
+                    var ValorIVA = Math.Round(Convert.ToDecimal(info.lst_det.Sum(q => q.do_iva)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalIVASinDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_Cantidad * q.do_precioCompra)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalSinIVASinDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_Cantidad * q.do_precioCompra)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalIVAConDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_subtotal)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalSinIVAConDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_subtotal)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalSinDscto = Math.Round(SubtotalIVASinDscto + SubtotalSinIVASinDscto, 2, MidpointRounding.AwayFromZero);
+                    var SubtotalConDscto = Math.Round(SubtotalIVAConDscto + SubtotalSinIVAConDscto, 2, MidpointRounding.AwayFromZero);
+                    var Total = Math.Round(SubtotalConDscto + ValorIVA, 2, MidpointRounding.AwayFromZero);
 
                     com_ordencompra_local_resumen Entity_Resumen = new com_ordencompra_local_resumen
                     {
@@ -334,15 +334,15 @@ namespace Core.Erp.Data.Compras
                         Context.com_ordencompra_local_det.Add(Entity_det);
                     }
 
-                    var Descuento = Convert.ToDecimal(info.lst_det.Sum(q => q.do_Cantidad * q.do_descuento));
-                    var ValorIVA = Convert.ToDecimal(info.lst_det.Sum(q => q.do_iva));
-                    var SubtotalIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
-                    var SubtotalSinIVASinDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_Cantidad * q.do_precioCompra));
-                    var SubtotalIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_subtotal));
-                    var SubtotalSinIVAConDscto = Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_subtotal));
-                    var SubtotalSinDscto = SubtotalIVASinDscto + SubtotalSinIVASinDscto;
-                    var SubtotalConDscto = SubtotalIVAConDscto + SubtotalSinIVAConDscto;
-                    var Total = SubtotalConDscto + ValorIVA;
+                    var Descuento = Math.Round(Convert.ToDecimal(info.lst_det.Sum(q => q.do_Cantidad * q.do_descuento)), 2, MidpointRounding.AwayFromZero);
+                    var ValorIVA = Math.Round(Convert.ToDecimal(info.lst_det.Sum(q => q.do_iva)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalIVASinDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_Cantidad * q.do_precioCompra)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalSinIVASinDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_Cantidad * q.do_precioCompra)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalIVAConDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva != 0).Sum(q => q.do_subtotal)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalSinIVAConDscto = Math.Round(Convert.ToDecimal(info.lst_det.Where(q => q.Por_Iva == 0).Sum(q => q.do_subtotal)), 2, MidpointRounding.AwayFromZero);
+                    var SubtotalSinDscto = Math.Round(SubtotalIVASinDscto + SubtotalSinIVASinDscto, 2, MidpointRounding.AwayFromZero);
+                    var SubtotalConDscto = Math.Round(SubtotalIVAConDscto + SubtotalSinIVAConDscto, 2, MidpointRounding.AwayFromZero);
+                    var Total = Math.Round(SubtotalConDscto + ValorIVA, 2, MidpointRounding.AwayFromZero);
 
 
                     com_ordencompra_local_resumen Entity_Resumen = new com_ordencompra_local_resumen

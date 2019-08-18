@@ -82,7 +82,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     if (info.co_observacion == null)
                         info.co_observacion = "";
 
-                    info.info_comrobante.cb_Observacion ="Prov: "+ prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;                    
+                    info.info_comrobante.cb_Observacion ="PROV: "+ prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;                    
                 }
                 else
                     info.info_comrobante.cb_Observacion = info.co_observacion;
@@ -129,7 +129,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         if (prov != null)
                         {
-                            info.info_retencion.observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " Retencion# ";                            
+                            info.info_retencion.observacion = "PROV: " + prov.info_persona.pe_nombreCompleto + " FAC: " + info.co_serie + "-" + info.co_factura + " RET: ";                            
                         }
                         
                         info.info_retencion.Fecha_Transac = Convert.ToDateTime(info.Fecha_Transac);
@@ -174,7 +174,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     if (info.co_observacion == null)
                         info.co_observacion = "";
 
-                    info.info_comrobante.cb_Observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
+                    info.info_comrobante.cb_Observacion = "PROV: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
                 }
                 else
                     info.info_comrobante.cb_Observacion = info.co_observacion;
@@ -237,7 +237,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         if (prov != null)
                         {
-                            info.info_retencion.observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " Retencion# ";
+                            info.info_retencion.observacion = "PROV: " + prov.info_persona.pe_nombreCompleto + " FAC: " + info.co_serie + "-" + info.co_factura + " RET: ";
                         }
 
                         //info.info_retencion.observacion = "Retencion de factura #" + info.co_serie + '-' + info.co_factura;

@@ -147,7 +147,7 @@ namespace Core.Erp.Data.Contabilidad
                         cb_Fecha = info.cb_Fecha.Date,
                         IdSucursal = info.IdSucursal,
                         cb_Observacion = info.cb_Observacion,
-                        cb_Valor = info.lst_ct_cbtecble_det.Where(q=> q.dc_Valor > 0).Sum(q=>q.dc_Valor),
+                        cb_Valor = Math.Round(info.lst_ct_cbtecble_det.Where(q=> q.dc_Valor > 0).Sum(q=>q.dc_Valor),2,MidpointRounding.AwayFromZero),
                         CodCbteCble = info.CodCbteCble,
                         IdCbteCble = info.IdCbteCble=get_id(info.IdEmpresa, info.IdTipoCbte),
                         IdPeriodo = info.IdPeriodo = Convert.ToInt32(info.cb_Fecha.Year.ToString()+ info.cb_Fecha.Month.ToString("00")),
@@ -166,7 +166,7 @@ namespace Core.Erp.Data.Contabilidad
                                 IdCbteCble = Entity.IdCbteCble,
                                 IdTipoCbte = Entity.IdTipoCbte,                                
                                 dc_Observacion = item.dc_Observacion,
-                                dc_Valor = item.dc_Valor,
+                                dc_Valor = Math.Round(item.dc_Valor, 2, MidpointRounding.AwayFromZero),
                                 IdCtaCble = item.IdCtaCble,                                
                                 secuencia = secuencia++,
                                 dc_para_conciliar = item.dc_para_conciliar,
@@ -201,7 +201,7 @@ namespace Core.Erp.Data.Contabilidad
                     Entity.cb_Fecha = info.cb_Fecha.Date;
                     Entity.IdSucursal = info.IdSucursal;
                     Entity.cb_Observacion = info.cb_Observacion;
-                    Entity.cb_Valor = info.lst_ct_cbtecble_det.Where(q => q.dc_Valor > 0).Sum(q => q.dc_Valor);
+                    Entity.cb_Valor = Math.Round(info.lst_ct_cbtecble_det.Where(q => q.dc_Valor > 0).Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero);
                     Entity.CodCbteCble = info.CodCbteCble;
                     Entity.IdPeriodo = info.IdPeriodo = Convert.ToInt32(info.cb_Fecha.ToString("yyyyMM"));
 
@@ -219,7 +219,7 @@ namespace Core.Erp.Data.Contabilidad
                             IdCbteCble = Entity.IdCbteCble,
                             IdTipoCbte = Entity.IdTipoCbte,
                             dc_Observacion = item.dc_Observacion,
-                            dc_Valor = item.dc_Valor,
+                            dc_Valor = Math.Round(item.dc_Valor,2,MidpointRounding.AwayFromZero),
                             IdCtaCble = item.IdCtaCble,
                             secuencia = secuencia++,
                             dc_para_conciliar = item.dc_para_conciliar,

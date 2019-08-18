@@ -15,7 +15,9 @@ namespace Core.Erp.Data.Reportes.Facturacion
             {
                 
                 decimal IdClienteIni = IdCliente;
-                decimal IdClienteFin = IdCliente == 0 ? 99999999 : IdCliente;
+                decimal IdClienteFin = IdCliente == 0 ? 9999999999 : IdCliente;
+                int IdTipoNotaIni = IdTipoNota;
+                int IdTipoNotaFin = IdTipoNota == 0 ? 9999999 : IdTipoNota;
                 List<FAC_018_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
@@ -24,7 +26,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                             Lista = Context.VWFAC_018.Where(q => q.IdEmpresa == IdEmpresa
                             && IdClienteIni <= q.IdCliente
                             && q.IdCliente <= IdClienteFin
-                            && q.IdTipoNota == IdTipoNota
+                            && IdTipoNotaIni <= q.IdTipoNota
+                            && q.IdTipoNota <= IdTipoNotaFin
                             && fecha_ini <= q.no_fecha
                             && q.no_fecha <= fecha_fin
                             && q.CreDeb == CreDeb

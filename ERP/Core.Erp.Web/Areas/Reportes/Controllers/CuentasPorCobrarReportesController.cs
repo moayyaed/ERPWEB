@@ -62,16 +62,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
             var lst_cliente = bus_cliente.get_list(model.IdEmpresa, false);
-            lst_cliente.Add(new fa_cliente_Info
-             { 
-                IdEmpresa = model.IdEmpresa,
-                IdCliente = 0,
-                Descripcion_tip_cliente = "Todos"
-            });
+            
             ViewBag.lst_cliente = lst_cliente;
 
             fa_cliente_tipo_Bus bus_tipo_cliente = new fa_cliente_tipo_Bus();
             var lst_tipo_cliente = bus_tipo_cliente.get_list(model.IdEmpresa, false);
+            lst_tipo_cliente.Add(new fa_cliente_tipo_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                Idtipo_cliente = 0,
+                Descripcion_tip_cliente = "Todos"
+            });
             ViewBag.lst_tipo_cliente = lst_tipo_cliente;
 
             fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
