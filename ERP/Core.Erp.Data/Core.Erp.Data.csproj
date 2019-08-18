@@ -2508,9 +2508,6 @@
     <Compile Include="vwin_Ing_Egr_Inven.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwin_Ing_Egr_InvenPorOrdenCompra.cs">
-      <DependentUpon>Model_inventario.tt</DependentUpon>
-    </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_det.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
@@ -2527,6 +2524,9 @@
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_PorDespachar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorOrdenCompra.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
     <Compile Include="vwin_Ing_Egr_Inven_PorReversar.cs">

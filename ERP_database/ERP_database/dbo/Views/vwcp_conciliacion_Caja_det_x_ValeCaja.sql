@@ -7,7 +7,7 @@ SELECT        dbo.cp_conciliacion_Caja.IdEmpresa, dbo.cp_conciliacion_Caja.IdCon
                          dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.Estado, dbo.caj_Caja_Movimiento_det.Secuencia AS Secuencia_DetcajMovi, dbo.caj_Caja_Movimiento.cm_valor AS cr_Valor, 
                          dbo.caj_Caja_Movimiento_Tipo.tm_descripcion AS nom_TipoMovi, dbo.caj_Caja.ca_Descripcion AS nom_Caja, dbo.cp_catalogo.Nombre AS nom_EstadoCierre, 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCtaCble AS IdCtaCble_ValeCaja, dbo.caj_Caja_Movimiento.IdTipo_Persona, dbo.caj_Caja_Movimiento.IdEntidad, dbo.caj_Caja_Movimiento.IdPersona, 
-                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto_sub_centro_costo, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo, 
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto, '' IdCentroCosto_sub_centro_costo, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo, 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo_grupo, dbo.vwtb_persona_beneficiario.IdBeneficiario, dbo.ct_punto_cargo.nom_punto_cargo
 FROM            dbo.cp_catalogo_tipo INNER JOIN
                          dbo.cp_catalogo ON dbo.cp_catalogo_tipo.IdCatalogo_tipo = dbo.cp_catalogo.IdCatalogo_tipo INNER JOIN

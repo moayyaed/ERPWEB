@@ -69,6 +69,7 @@ namespace Core.Erp.Info.Inventario
         public Nullable<double> TotalModulo { get; set; }
         public Nullable<double> TotalContabilidad { get; set; }
         public Nullable<double> Diferencia { get; set; }
+        public string co_factura { get; set; }
         #endregion
         public in_Ing_Egr_Inven_Info()
         {

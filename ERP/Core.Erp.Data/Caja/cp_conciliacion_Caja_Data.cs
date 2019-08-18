@@ -14,7 +14,8 @@ namespace Core.Erp.Data.Caja
     {
         cp_orden_pago_Data data_op = new cp_orden_pago_Data();
         ct_cbtecble_Data data_ct = new ct_cbtecble_Data();
-        cp_orden_pago_cancelaciones_Data data_can = new cp_orden_pago_cancelaciones_Data();        
+        cp_orden_pago_cancelaciones_Data data_can = new cp_orden_pago_cancelaciones_Data();
+        caj_Caja_Movimiento_Data data_caj = new caj_Caja_Movimiento_Data();
         public List<cp_conciliacion_Caja_Info> get_list(int IdEmpresa, int IdCaja, DateTime Fecha_ini, DateTime Fecha_fin)
 
         {
@@ -122,8 +123,7 @@ namespace Core.Erp.Data.Caja
                 throw;
             }
         }
-
-
+        
         public decimal get_id(int IdEmpresa)
         {
             try
@@ -163,6 +163,7 @@ namespace Core.Erp.Data.Caja
                 decimal IdCbteCble_OP = 1;
                 decimal IdCancelacion = 1;
                 decimal IdCbteCble_IN = 1;
+                decimal IdSecuenciaCaja = 1;
 
                 cp_parametros Entity_p = Context_cxp.cp_parametros.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
                 caj_parametro Entity_pc = Context.caj_parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
@@ -424,7 +425,8 @@ namespace Core.Erp.Data.Caja
                                 IdPeriodo = Convert.ToInt32(op.Fecha.ToString("yyyyMM")),
                                 IdSucursal = IdSucursal,
                                 cb_FechaTransac = DateTime.Now,
-                                cb_Estado = "A"
+                                cb_Estado = "A",
+                                IdUsuario = info.IdUsuario
                             };
                             Context_ct.ct_cbtecble.Add(diario);
 
@@ -478,7 +480,8 @@ namespace Core.Erp.Data.Caja
                                 cn_total = item.Valor_a_aplicar,
                                 Estado = "A",
                                 PagoLocExt = "LOC",
-                                PagoSujetoRetencion = "NA"
+                                PagoSujetoRetencion = "NA",
+                                IdUsuario = info.IdUsuario
                             };
                             Context_cxp.cp_nota_DebCre.Add(Entity_nc);
                             #endregion
@@ -531,6 +534,7 @@ namespace Core.Erp.Data.Caja
                 #region Vales
                 Secuencia = 1;
                 IdCbteCble_EG = data_ct.get_id(Entity_c.IdEmpresa, IdTipoCbte_EG);
+                IdSecuenciaCaja = data_caj.get_Secuencia(info.IdEmpresa, info.IdCaja, "-");
                 foreach (var item in info.lst_det_vale)
                 {
                     if (item.IdCbteCble_movcaja == 0)
@@ -558,6 +562,9 @@ namespace Core.Erp.Data.Caja
                             IdCbteCble = diario.IdCbteCble,
                             secuencia = 1,
                             IdCtaCble = item.IdCtaCble,
+                            IdCentroCosto = item.IdCentroCosto,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
+                            IdPunto_cargo = item.IdPunto_cargo_vales,
                             dc_Valor = Math.Round(Convert.ToDouble(item.valor), 2, MidpointRounding.AwayFromZero),
                         };
 
@@ -578,6 +585,7 @@ namespace Core.Erp.Data.Caja
                             IdEmpresa = diario.IdEmpresa,
                             IdTipocbte = diario.IdTipoCbte,
                             IdCbteCble = diario.IdCbteCble,
+                            SecuenciaCaja = IdSecuenciaCaja++,
                             CodMoviCaja = "Caja # "+info.IdConciliacion_Caja,
                             cm_Signo = "-",
                             cm_valor = item.valor,
@@ -619,6 +627,87 @@ namespace Core.Erp.Data.Caja
                         IdPunto_cargo = item.IdPunto_cargo_vales
                     };
                     Context.cp_conciliacion_Caja_det_x_ValeCaja.Add(Entity_d);
+                }
+                #endregion
+
+                #region Ingreso por reposicion
+                if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
+                {
+                    IdSecuenciaCaja = data_caj.get_Secuencia(info.IdCaja, info.IdCaja, "+");
+                    IdCbteCble_IN = data_ct.get_id(info.IdEmpresa, IdTipoCbte_IN);
+                    ct_cbtecble repo = new ct_cbtecble
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdTipoCbte = IdTipoCbte_IN,
+                        IdCbteCble = IdCbteCble_IN,
+                        cb_Fecha = info.FechaOP,
+                        cb_Observacion = "Caja # " + info.IdConciliacion_Caja + " Reposición",
+                        IdPeriodo = Convert.ToInt32(info.FechaOP.ToString("yyyyMM")),
+                        IdSucursal = IdSucursal,
+                        cb_FechaTransac = DateTime.Now,
+                        cb_Estado = "A",
+                        cb_Valor = info.lst_det_ct.Sum(q => q.dc_Valor_debe),
+                        IdUsuario = info.IdUsuario
+                    };
+                    Context_ct.ct_cbtecble.Add(repo);
+
+                    ct_cbtecble_det Debe = new ct_cbtecble_det
+                    {
+                        IdEmpresa = repo.IdEmpresa,
+                        IdTipoCbte = repo.IdTipoCbte,
+                        IdCbteCble = repo.IdCbteCble,
+                        secuencia = 1,
+                        IdCtaCble = info.IdCtaCble,
+                        dc_Valor = Math.Round(Convert.ToDouble(repo.cb_Valor), 2, MidpointRounding.AwayFromZero),
+                    };
+
+                    ct_cbtecble_det Haber = new ct_cbtecble_det
+                    {
+                        IdEmpresa = repo.IdEmpresa,
+                        IdTipoCbte = repo.IdTipoCbte,
+                        IdCbteCble = repo.IdCbteCble,
+                        secuencia = 2,
+                        IdCtaCble = info.IdCtaCble,
+                        dc_Valor = Math.Round(Convert.ToDouble(repo.cb_Valor), 2, MidpointRounding.AwayFromZero) * -1,
+                    };
+                    Context_ct.ct_cbtecble_det.Add(Debe);
+                    Context_ct.ct_cbtecble_det.Add(Haber);
+
+                    caj_Caja_Movimiento Entity_caj = new caj_Caja_Movimiento
+                    {
+                        IdEmpresa = repo.IdEmpresa,
+                        IdTipocbte = repo.IdTipoCbte,
+                        IdCbteCble = repo.IdCbteCble,
+                        SecuenciaCaja = IdSecuenciaCaja,
+                        CodMoviCaja = "Caja # " + info.IdConciliacion_Caja,
+                        cm_Signo = "+",
+                        cm_valor = repo.cb_Valor,
+                        IdTipoMovi = Convert.ToInt32(Entity_pc.IdTipo_movi_ing_x_reposicion),
+                        cm_observacion = repo.cb_Observacion,
+                        IdCaja = info.IdCaja,
+                        IdPeriodo = Convert.ToInt32(repo.cb_Fecha.ToString("yyyyMM")),
+                        cm_fecha = repo.cb_Fecha,
+                        IdTipo_Persona = info.IdTipoPersona,
+                        IdEntidad = (decimal)info.IdEntidad,
+                        IdPersona = info.IdPersona,
+                        Estado = "A",
+                        IdUsuario = info.IdUsuario,
+                        Fecha_Transac = DateTime.Now
+                    };
+                    Context.caj_Caja_Movimiento.Add(Entity_caj);
+                    caj_Caja_Movimiento_det Entity_caj_det = new caj_Caja_Movimiento_det
+                    {
+                        IdEmpresa = repo.IdEmpresa,
+                        IdTipocbte = repo.IdTipoCbte,
+                        IdCbteCble = repo.IdCbteCble,
+                        Secuencia = 1,
+                        IdCobro_tipo = "EFEC",
+                        cr_Valor = repo.cb_Valor
+                    };
+                    Context.caj_Caja_Movimiento_det.Add(Entity_caj_det);
+                    info.IdEmpresa_mov_caj = repo.IdEmpresa;
+                    info.IdTipoCbte_mov_caj = repo.IdTipoCbte;
+                    info.IdCbteCble_mov_caj = repo.IdCbteCble;
                 }
                 #endregion
 
@@ -671,7 +760,6 @@ namespace Core.Erp.Data.Caja
                             Valor = item.cm_valor
                         });
                     }
-                    //AQUI PONES LO DE LOS VALES :*
                     Context.SaveChanges();
                 }
                 
@@ -708,6 +796,7 @@ namespace Core.Erp.Data.Caja
                 decimal IdCbteCble_OP = 1;
                 decimal IdCancelacion = 1;
                 decimal IdCbteCble_IN = 1;
+                decimal IdSecuenciaCaja = 1;
 
                 cp_parametros Entity_p = Context_cxp.cp_parametros.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
                 caj_parametro Entity_pc = Context.caj_parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
@@ -759,7 +848,9 @@ namespace Core.Erp.Data.Caja
                                 Fecha = Convert.ToDateTime(info.Fecha_fin).Date,
                                 IdEstadoAprobacion = cl_enumeradores.eEstadoAprobacionOrdenPago.APRO.ToString(),
                                 IdFormaPago = cl_enumeradores.eFormaPagoOrdenPago.EFEC.ToString(),
-                                Estado = "A"
+                                Estado = "A",
+                                IdUsuario = info.IdUsuario,
+                                Fecha_Transac = DateTime.Now,
                             };
                             item.IdEmpresa_OP = op.IdEmpresa;
                             item.IdOrdenPago_OP = op.IdOrdenPago;
@@ -794,7 +885,8 @@ namespace Core.Erp.Data.Caja
                                 IdPeriodo = Convert.ToInt32(op.Fecha.ToString("yyyyMM")),
                                 IdSucursal = IdSucursal,
                                 cb_FechaTransac = DateTime.Now,
-                                cb_Estado = "A"
+                                cb_Estado = "A",
+                                IdUsuario = info.IdUsuario
                             };
                             Context_ct.ct_cbtecble.Add(diario);
 
@@ -848,7 +940,8 @@ namespace Core.Erp.Data.Caja
                                 cn_total = item.Valor_a_aplicar,
                                 Estado = "A",
                                 PagoLocExt = "LOC",
-                                PagoSujetoRetencion = "NA"
+                                PagoSujetoRetencion = "NA",
+                                IdUsuario = info.IdUsuario
                             };
                             Context_cxp.cp_nota_DebCre.Add(Entity_nc);
                             #endregion
@@ -909,6 +1002,7 @@ namespace Core.Erp.Data.Caja
 
                 Secuencia = 1;
                 IdCbteCble_EG = data_ct.get_id(info.IdEmpresa, IdTipoCbte_EG);
+                IdSecuenciaCaja = data_caj.get_Secuencia(info.IdEmpresa, info.IdCaja, "-");
                 foreach (var item in info.lst_det_vale)
                 {
                     if (item.IdCbteCble_movcaja == 0)
@@ -936,6 +1030,9 @@ namespace Core.Erp.Data.Caja
                             IdCbteCble = diario.IdCbteCble,
                             secuencia = 1,
                             IdCtaCble = item.IdCtaCble,
+                            IdPunto_cargo = item.IdPunto_cargo_vales,
+                            IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
+                            IdCentroCosto = item.IdCentroCosto,
                             dc_Valor = Math.Round(Convert.ToDouble(item.valor), 2, MidpointRounding.AwayFromZero),
                         };
 
@@ -956,6 +1053,7 @@ namespace Core.Erp.Data.Caja
                             IdEmpresa = diario.IdEmpresa,
                             IdTipocbte = diario.IdTipoCbte,
                             IdCbteCble = diario.IdCbteCble,
+                            SecuenciaCaja = IdSecuenciaCaja++,
                             CodMoviCaja = "Caja # " + info.IdConciliacion_Caja,
                             cm_Signo = "-",
                             cm_valor = item.valor,
@@ -1108,7 +1206,8 @@ namespace Core.Erp.Data.Caja
                         IdEstadoAprobacion = Entity_op_tipo.IdEstadoAprobacion,
                         IdFormaPago = cl_enumeradores.eFormaPagoOrdenPago.CHEQUE.ToString(),
                         Estado = "A",
-                        IdUsuario = info.IdUsuario
+                        IdUsuario = info.IdUsuario,
+                        Fecha_Transac = DateTime.Now
                     };
                     info.IdEmpresa_op = op.IdEmpresa;
                     info.IdOrdenPago_op = op.IdOrdenPago;
@@ -1168,6 +1267,7 @@ namespace Core.Erp.Data.Caja
                 #region Ingreso por reposicion
                 if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
                 {
+                    IdSecuenciaCaja = data_caj.get_Secuencia(info.IdCaja, info.IdCaja, "+");
                     IdCbteCble_IN = data_ct.get_id(info.IdEmpresa, IdTipoCbte_IN);
                     ct_cbtecble repo = new ct_cbtecble
                     {
@@ -1212,6 +1312,7 @@ namespace Core.Erp.Data.Caja
                         IdEmpresa = repo.IdEmpresa,
                         IdTipocbte = repo.IdTipoCbte,
                         IdCbteCble = repo.IdCbteCble,
+                        SecuenciaCaja = IdSecuenciaCaja,
                         CodMoviCaja = "Caja # " + info.IdConciliacion_Caja,
                         cm_Signo = "+",
                         cm_valor = repo.cb_Valor,
@@ -1266,6 +1367,7 @@ namespace Core.Erp.Data.Caja
                 Entity.Total_Ing = info.Total_Ing;
 
                 Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
+                Entity.FechaModificacion = DateTime.Now;
                 #endregion
 
                 Context_ct.SaveChanges();
@@ -1289,7 +1391,6 @@ namespace Core.Erp.Data.Caja
                             Valor = item.cm_valor
                         });
                     }
-                    //AQUI PONES LO DE LOS VALES :*
                     Context.SaveChanges();
                 }
 

@@ -55,9 +55,13 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
 
-            if (Convert.ToString(e.GetValue("IdEstadoAproba")) == "APRO" && Convert.ToString(e.GetValue("Estado")) == "A")
+            if (Convert.ToString(e.GetValue("IdEstadoAproba")) == "APRO" && Convert.ToString(e.GetValue("Estado")) == "A" && string.IsNullOrEmpty(Convert.ToString(e.GetValue("co_factura"))))
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+            if (Convert.ToString(e.GetValue("IdEstadoAproba")) == "APRO" && Convert.ToString(e.GetValue("Estado")) == "A" && !string.IsNullOrEmpty(Convert.ToString(e.GetValue("co_factura"))))
+            {
+                e.Row.ForeColor = System.Drawing.Color.Green;
             }
         };
         settings.Columns.Add(c =>
@@ -65,7 +69,7 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) != "APRO")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) != "APRO" && string.IsNullOrEmpty(Convert.ToString(DataBinder.Eval(tc.DataItem, "co_factura"))))
                 {
                     ViewContext.Writer.Write(
                 Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") }) + "&nbsp;" +
@@ -74,7 +78,7 @@
                     );
                 }
                 else
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) == "APRO")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) == "APRO" && string.IsNullOrEmpty(Convert.ToString(DataBinder.Eval(tc.DataItem, "co_factura"))))
                 {
                     ViewContext.Writer.Write(
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
@@ -92,19 +96,20 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
-        settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("CodMoviInven", "#Orden").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(7);
+        settings.Columns.Add("CodMoviInven", "#Orden").Width = System.Web.UI.WebControls.Unit.Percentage(7);
         settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(15);
         settings.Columns.Add(column =>
         {
             column.FieldName = "cm_fecha";
             column.Caption = "Fecha";
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(7);
         });
         settings.Columns.Add("pe_nombreCompleto", "Proovedor").Width = System.Web.UI.WebControls.Unit.Percentage(15);
-        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("co_factura", "Factura").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
@@ -115,7 +120,7 @@
 
             });
         });
-        settings.Columns.Add("EstadoAprobacion", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        settings.Columns.Add("IdEstadoAproba", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(7);
         settings.Columns.Add(column =>
         {
             column.SetDataItemTemplateContent(c =>

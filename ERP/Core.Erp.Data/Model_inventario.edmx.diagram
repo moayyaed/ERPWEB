@@ -140,7 +140,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo6" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo7" />
         <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega" Width="1.5" PointX="5.375" PointY="15.75" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_InvenPorOrdenCompra" Width="1.5" PointX="27.375" PointY="12.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorOrdenCompra" Width="1.5" PointX="27.375" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -38,6 +38,7 @@ namespace Core.Erp.Info.Facturacion
         public string Nombres { get; set; }
         public Nullable<double> sc_total { get; set; }
         public Nullable<double> sc_saldo { get; set; }
+        public fa_notaCreDeb_resumen_Info info_resumen { get; set; }
 
         #region Campos de auditoria
         public string IdUsuario { get; set; }

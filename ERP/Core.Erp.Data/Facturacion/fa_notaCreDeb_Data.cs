@@ -256,7 +256,22 @@ namespace Core.Erp.Data.Facturacion
                         ValorIVA = ValorIVA,
                         Total = Total
                     };
-
+                    info.info_resumen = new fa_notaCreDeb_resumen_Info
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
+                        IdBodega = info.IdBodega,
+                        IdCbteVta = info.IdNota,
+                        SubtotalIVASinDscto = SubtotalIVASinDscto,
+                        SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
+                        SubtotalSinDscto = SubtotalSinDscto,
+                        Descuento = Descuento,
+                        SubtotalIVAConDscto = SubtotalIVAConDscto,
+                        SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                        SubtotalConDscto = SubtotalConDscto,
+                        ValorIVA = ValorIVA,
+                        Total = Total
+                    };
                     db_f.fa_notaCreDeb_resumen.Add(Entity_Resumen);
                     #endregion
 
@@ -501,11 +516,26 @@ namespace Core.Erp.Data.Facturacion
                         ValorIVA = ValorIVA,
                         Total = Total
                     };
-
-                    db_f.fa_notaCreDeb_resumen.Add(Entity_Resumen);
-
+                    info.info_resumen = new fa_notaCreDeb_resumen_Info
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
+                        IdBodega = info.IdBodega,
+                        IdCbteVta = info.IdNota,
+                        SubtotalIVASinDscto = SubtotalIVASinDscto,
+                        SubtotalSinIVASinDscto = SubtotalSinIVASinDscto,
+                        SubtotalSinDscto = SubtotalSinDscto,
+                        Descuento = Descuento,
+                        SubtotalIVAConDscto = SubtotalIVAConDscto,
+                        SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
+                        SubtotalConDscto = SubtotalConDscto,
+                        ValorIVA = ValorIVA,
+                        Total = Total
+                    };
                     var notaDebCred = db_f.fa_notaCreDeb_resumen.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdNota == info.IdNota).FirstOrDefault();
-                    db_f.fa_notaCreDeb_resumen.Remove(notaDebCred);
+                    if(notaDebCred != null)
+                        db_f.fa_notaCreDeb_resumen.Remove(notaDebCred);
+
                     db_f.fa_notaCreDeb_resumen.Add(Entity_Resumen);
                     #endregion
 
@@ -740,6 +770,7 @@ namespace Core.Erp.Data.Facturacion
             {
 
                 string IdCtaCble_IVA = string.Empty;
+                double descuadre = 0;
                 using (Entities_general Context = new Entities_general())
                 {
                     var porcentajes = (from q in info.lst_det
@@ -776,23 +807,10 @@ namespace Core.Erp.Data.Facturacion
                     lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>()
                 };
                 #endregion
+
                 int secuencia = 1;
-
-                #region IVA
-                if (!string.IsNullOrEmpty(IdCtaCble_IVA))
-                    diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
-                    {
-                        IdEmpresa = diario.IdEmpresa,
-                        IdTipoCbte = diario.IdTipoCbte,
-                        IdCbteCble = diario.IdCbteCble,
-                        secuencia = secuencia++,
-                        IdCtaCble = IdCtaCble_IVA,
-                        dc_Valor = Math.Round(info.lst_det.Where(q => q.vt_por_iva > 0).Sum(q => q.sc_iva), 2, MidpointRounding.AwayFromZero) * (info.CreDeb.Trim() == "C" ? 1 : -1)
-                    });
-                #endregion
-
                 #region Cuenta tipo nota
-                var lstTipoNota = info.lst_det.GroupBy(q => new { q.IdCentroCosto, q.IdPunto_cargo_grupo, q.IdPunto_Cargo }).Select(q => new { IdCentroCosto = q.Key.IdCentroCosto, IdPunto_cargo_grupo = q.Key.IdPunto_cargo_grupo, IdPunto_Cargo = q.Key.IdPunto_Cargo, Subtotal = q.Sum(g=> g.sc_subtotal) });
+                var lstTipoNota = info.lst_det.GroupBy(q => new { q.IdCentroCosto, q.IdPunto_cargo_grupo, q.IdPunto_Cargo }).Select(q => new { IdCentroCosto = q.Key.IdCentroCosto, IdPunto_cargo_grupo = q.Key.IdPunto_cargo_grupo, IdPunto_Cargo = q.Key.IdPunto_Cargo, Subtotal = q.Sum(g => g.sc_subtotal) });
 
                 foreach (var item in lstTipoNota)
                 {
@@ -813,9 +831,28 @@ namespace Core.Erp.Data.Facturacion
                         });
                     }
                 }
+                descuadre = (double)Math.Round(info.info_resumen.SubtotalConDscto - (decimal)Math.Abs(diario.lst_ct_cbtecble_det.Sum(q=> q.dc_Valor)), 2, MidpointRounding.AwayFromZero);
+                if (descuadre > 0)
+                    diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (descuadre * (info.CreDeb.Trim() == "C" ? 1 : -1));
+                else
+                    if(descuadre < 0)
+                        diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (Math.Abs(descuadre) * (info.CreDeb.Trim() == "C" ? -1 : 1));
 
                 #endregion
 
+                #region IVA
+                if (!string.IsNullOrEmpty(IdCtaCble_IVA))
+                    diario.lst_ct_cbtecble_det.Add(new ct_cbtecble_det_Info
+                    {
+                        IdEmpresa = diario.IdEmpresa,
+                        IdTipoCbte = diario.IdTipoCbte,
+                        IdCbteCble = diario.IdCbteCble,
+                        secuencia = secuencia++,
+                        IdCtaCble = IdCtaCble_IVA,
+                        dc_Valor = Convert.ToDouble(info.info_resumen.ValorIVA * (info.CreDeb.Trim() == "C" ? 1 : -1))
+                    });
+                #endregion
+                
                 #region Cuenta cliente
                 if (!string.IsNullOrEmpty(IdCtaCble_cliente))
                 {
@@ -826,7 +863,7 @@ namespace Core.Erp.Data.Facturacion
                         IdCbteCble = diario.IdCbteCble,
                         secuencia = secuencia++,
                         IdCtaCble = IdCtaCble_cliente,
-                        dc_Valor = Math.Round(Math.Abs(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor)), 2, MidpointRounding.AwayFromZero) * (info.CreDeb.Trim() == "C" ? -1 : 1),
+                        dc_Valor = Convert.ToDouble(info.info_resumen.Total) * (info.CreDeb.Trim() == "C" ? -1 : 1),
                         dc_para_conciliar = false
                     });
                 }
@@ -837,7 +874,7 @@ namespace Core.Erp.Data.Facturacion
 
                 diario.lst_ct_cbtecble_det.RemoveAll(q => q.dc_Valor == 0);
 
-                double descuadre = Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero);
+                descuadre = Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero);
                 if (descuadre < -0.02 || 0.02 <= descuadre)
                     return null;
 

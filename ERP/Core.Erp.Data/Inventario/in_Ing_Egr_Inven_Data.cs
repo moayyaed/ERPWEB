@@ -971,74 +971,41 @@ namespace Core.Erp.Data.Inventario
                 fecha_ini = fecha_ini.Date;
                 fecha_fin = fecha_fin.Date;
                 int IdSucursalIni = IdSucursal;
-                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+                int IdSucursalFin = IdSucursal == 0 ? 999999 : IdSucursal;
                 int IdBodegaIni = IdBodega;
-                int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
+                int IdBodegaFin = IdBodega == 0 ? 999999 : IdBodega;
                 List<in_Ing_Egr_Inven_Info> Lista;
                 using (Entities_inventario Context = new Entities_inventario())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.vwin_Ing_Egr_InvenPorOrdenCompra                                 
-                                 where q.IdEmpresa == IdEmpresa
-                                 && IdSucursalIni <= q.IdSucursal
-                                 && q.IdSucursal <= IdSucursalFin
-                                 && IdBodegaIni <= q.IdBodega
-                                 && q.IdBodega <= IdBodegaFin
-                                 && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
-                                 orderby new { q.IdNumMovi } descending
-                                 select new in_Ing_Egr_Inven_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdSucursal = q.IdSucursal,
-                                     IdMovi_inven_tipo = q.IdMovi_inven_tipo,
-                                     IdBodega = q.IdBodega,
-                                     IdNumMovi = q.IdNumMovi,
-                                     tm_descripcion = q.tm_descripcion,
-                                     pe_nombreCompleto = q.pe_nombreCompleto,
-                                     Estado = q.Estado,
-                                     signo = q.signo,
-                                     nom_bodega = q.bo_Descripcion,
-                                     Su_Descripcion = q.Su_Descripcion,
-                                     cm_observacion = q.cm_observacion,
-                                     CodMoviInven = q.CodMoviInven,
-                                     cm_fecha = q.cm_fecha,
-                                     Desc_mov_inv = q.Desc_mov_inv,
-                                     EstadoBool = q.Estado == "A" ? true : false,
-                                     IdEstadoAproba = q.IdEstadoAproba,
-                                     EstadoAprobacion = q.EstadoAprobacion
-                                 }).ToList();
-
-                    else
-                        Lista = (from q in Context.vwin_Ing_Egr_InvenPorOrdenCompra
-                                 where q.IdEmpresa == IdEmpresa
-                                 && IdSucursalIni <= q.IdSucursal
-                                 && q.IdSucursal <= IdSucursalFin
-                                 && IdBodegaIni <= q.IdBodega
-                                 && q.IdBodega <= IdBodegaFin
-                                 && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
-                                 && q.Estado == "A"
-                                 orderby new { q.IdNumMovi } descending
-                                 select new in_Ing_Egr_Inven_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdSucursal = q.IdSucursal,
-                                     IdMovi_inven_tipo = q.IdMovi_inven_tipo,
-                                     IdBodega = q.IdBodega,
-                                     IdNumMovi = q.IdNumMovi,
-                                     tm_descripcion = q.tm_descripcion,
-                                     pe_nombreCompleto = q.pe_nombreCompleto,
-                                     Estado = q.Estado,
-                                     signo = q.signo,
-                                     nom_bodega = q.bo_Descripcion,
-                                     Su_Descripcion = q.Su_Descripcion,
-                                     cm_observacion = q.cm_observacion,
-                                     CodMoviInven = q.CodMoviInven,
-                                     cm_fecha = q.cm_fecha,
-                                     Desc_mov_inv = q.Desc_mov_inv,
-                                     EstadoBool = q.Estado == "A" ? true : false,
-                                     IdEstadoAproba = q.IdEstadoAproba,
-                                     EstadoAprobacion = q.EstadoAprobacion
-                                 }).ToList();
+                    Lista = Context.vwin_Ing_Egr_Inven_PorOrdenCompra.Where(q => q.IdEmpresa == IdEmpresa
+                             && IdSucursalIni <= q.IdSucursal
+                             && q.IdSucursal <= IdSucursalFin
+                             && IdBodegaIni <= q.IdBodega
+                             && q.IdBodega <= IdBodegaFin
+                             && fecha_ini <= q.cm_fecha && q.cm_fecha <= fecha_fin
+                             && q.Estado == (mostrar_anulados ? q.Estado : "A")).OrderByDescending(q => q.IdNumMovi).Select(q =>
+                              new in_Ing_Egr_Inven_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdMovi_inven_tipo = q.IdMovi_inven_tipo,
+                                 IdBodega = q.IdBodega,
+                                 IdNumMovi = q.IdNumMovi,
+                                 tm_descripcion = q.tm_descripcion,
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 Estado = q.Estado,
+                                 signo = q.signo,
+                                 nom_bodega = q.bo_Descripcion,
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 cm_observacion = q.cm_observacion,
+                                 CodMoviInven = q.CodMoviInven,
+                                 cm_fecha = q.cm_fecha,
+                                 Desc_mov_inv = q.Desc_mov_inv,
+                                 EstadoBool = q.Estado == "A" ? true : false,
+                                 IdEstadoAproba = q.IdEstadoAproba,
+                                 EstadoAprobacion = q.EstadoAprobacion,
+                                  co_factura = q.co_factura
+                             }).ToList();
                 }
                 return Lista;
             }
