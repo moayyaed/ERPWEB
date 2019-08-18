@@ -458,7 +458,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                Idtipo_cliente = Convert.ToInt32(SessionFixed.Idtipo_cliente)
+                Idtipo_cliente = 0
             };
 
             cargar_combos(model.IdEmpresa);
