@@ -642,7 +642,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                              && q.IdSucursal >= IdSucursal_ini
                              && q.IdSucursal <= IdSucursal_fin
                              && q.Saldo_OG > 0
-                             orderby q.co_fechaOg descending
+                             orderby
+                             q.nom_proveedor ascending,
+                             q.co_fechaOg ascending
                              select new cp_orden_giro_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
