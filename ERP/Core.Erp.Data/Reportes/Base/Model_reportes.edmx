@@ -619,6 +619,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_001' no tiene definida ningu
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
           <Property Name="SecuenciaCaja" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="nom_punto_cargo_grupo" Type="varchar(max)" />
+          <Property Name="nom_punto_cargo" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_002' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2687,6 +2690,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_018' no tiene definida ningu
 advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_020' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWFAC_020">
           <Key>
+            
+            
+            
+            
             <PropertyRef Name="Secuencia" />
             <PropertyRef Name="IdProducto" />
             <PropertyRef Name="pr_codigo" />
@@ -2710,10 +2717,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWFAC_020' no tiene definida ningu
           <Property Name="fa_IdSucursal" Type="int" />
           <Property Name="fa_IdBodega" Type="int" />
           <Property Name="fa_IdCbteVta" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="gi_IdEmpresa" Type="int" />
-          <Property Name="gi_IdSucursal" Type="int" />
-          <Property Name="gi_IdBodega" Type="int" />
-          <Property Name="gi_IdGuiaRemision" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="gi_IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="gi_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="gi_IdBodega" Type="int" Nullable="false" />
+          <Property Name="gi_IdGuiaRemision" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
@@ -5378,7 +5385,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCAJ_001].[pe_nombreCompleto] AS [pe_nombreCompleto], 
     [VWCAJ_001].[Nombre] AS [Nombre], 
     [VWCAJ_001].[Su_Descripcion] AS [Su_Descripcion], 
-    [VWCAJ_001].[SecuenciaCaja] AS [SecuenciaCaja]
+    [VWCAJ_001].[SecuenciaCaja] AS [SecuenciaCaja], 
+    [VWCAJ_001].[cc_Descripcion] AS [cc_Descripcion], 
+    [VWCAJ_001].[nom_punto_cargo_grupo] AS [nom_punto_cargo_grupo], 
+    [VWCAJ_001].[nom_punto_cargo] AS [nom_punto_cargo]
     FROM [web].[VWCAJ_001] AS [VWCAJ_001]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCAJ_002" EntityType="Self.VWCAJ_002" store:Type="Views" store:Schema="web">
@@ -8228,54 +8238,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="NombreProceso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="VWCAJ_001">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdTipoCbte" />
-            <PropertyRef Name="IdCbteCble" />
-            <PropertyRef Name="secuencia" />
-            <PropertyRef Name="pc_Cuenta" />
-            <PropertyRef Name="dc_Valor" />
-            <PropertyRef Name="dc_Valor_Debe" />
-            <PropertyRef Name="tc_descripcion" />
-            <PropertyRef Name="cr_Valor" />
-            <PropertyRef Name="cm_Signo" />
-            <PropertyRef Name="IdTipoMovi" />
-            <PropertyRef Name="tm_descripcion" />
-            <PropertyRef Name="IdCaja" />
-            <PropertyRef Name="ca_Descripcion" />
-            <PropertyRef Name="cm_fecha" />
-            <PropertyRef Name="Estado" />
-            <PropertyRef Name="tc_TipoCbte" />
-            <PropertyRef Name="IdCtaCble" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="SecuenciaCaja" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="secuencia" Type="Int32" Nullable="false" />
-          <Property Name="pc_Cuenta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dc_Valor" Type="Double" Nullable="false" />
-          <Property Name="dc_Valor_Debe" Type="Double" Nullable="false" />
-          <Property Name="dc_Valor_Haber" Type="Double" />
-          <Property Name="tc_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cr_Valor" Type="Double" Nullable="false" />
-          <Property Name="cm_Signo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="IdTipoMovi" Type="Int32" Nullable="false" />
-          <Property Name="tm_descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdCaja" Type="Int32" Nullable="false" />
-          <Property Name="ca_Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tc_TipoCbte" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SecuenciaCaja" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="VWCAJ_002">
           <Key>
@@ -11729,7 +11691,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySet Name="VWBAN_003" EntityType="Self.VWBAN_003" />
           <EntitySet Name="VWBAN_005" EntityType="Self.VWBAN_005" />
           <EntitySet Name="VWBAN_010" EntityType="Self.VWBAN_010" />
-          <EntitySet Name="VWCAJ_001" EntityType="Self.VWCAJ_001" />
           <EntitySet Name="VWCAJ_002" EntityType="Self.VWCAJ_002" />
           <EntitySet Name="VWCAJ_002_ingresos" EntityType="Self.VWCAJ_002_ingresos" />
           <EntitySet Name="VWCAJ_002_ValesNoConciliados" EntityType="Self.VWCAJ_002_ValesNoConciliados" />
@@ -12235,6 +12196,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           </FunctionImport>
           <EntitySet Name="VWBAN_006" EntityType="Model_reportes.VWBAN_006" />
           <EntitySet Name="VWBAN_007" EntityType="Model_reportes.VWBAN_007" />
+          <EntitySet Name="VWCAJ_001" EntityType="Model_reportes.VWCAJ_001" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13157,10 +13119,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="fa_IdSucursal" Type="Int32" />
           <Property Name="fa_IdBodega" Type="Int32" />
           <Property Name="fa_IdCbteVta" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="gi_IdEmpresa" Type="Int32" />
-          <Property Name="gi_IdSucursal" Type="Int32" />
-          <Property Name="gi_IdBodega" Type="Int32" />
-          <Property Name="gi_IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="gi_IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="gi_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="gi_IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="gi_IdGuiaRemision" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
           <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
@@ -13661,6 +13623,57 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IdCatalogo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="VWCAJ_001">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="secuencia" />
+            <PropertyRef Name="pc_Cuenta" />
+            <PropertyRef Name="dc_Valor" />
+            <PropertyRef Name="dc_Valor_Debe" />
+            <PropertyRef Name="tc_descripcion" />
+            <PropertyRef Name="cr_Valor" />
+            <PropertyRef Name="cm_Signo" />
+            <PropertyRef Name="IdTipoMovi" />
+            <PropertyRef Name="tm_descripcion" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="ca_Descripcion" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="tc_TipoCbte" />
+            <PropertyRef Name="IdCtaCble" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="SecuenciaCaja" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencia" Type="Int32" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dc_Valor" Type="Double" Nullable="false" />
+          <Property Name="dc_Valor_Debe" Type="Double" Nullable="false" />
+          <Property Name="dc_Valor_Haber" Type="Double" />
+          <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cr_Valor" Type="Double" Nullable="false" />
+          <Property Name="cm_Signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdTipoMovi" Type="Int32" Nullable="false" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdCaja" Type="Int32" Nullable="false" />
+          <Property Name="ca_Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="tc_TipoCbte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SecuenciaCaja" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="cc_Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo_grupo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13927,36 +13940,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="NombreProceso" ColumnName="NombreProceso" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VWCAJ_001">
-            <EntityTypeMapping TypeName="Model_reportes.VWCAJ_001">
-              <MappingFragment StoreEntitySet="VWCAJ_001">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
-                <ScalarProperty Name="dc_Valor_Debe" ColumnName="dc_Valor_Debe" />
-                <ScalarProperty Name="dc_Valor_Haber" ColumnName="dc_Valor_Haber" />
-                <ScalarProperty Name="tc_descripcion" ColumnName="tc_descripcion" />
-                <ScalarProperty Name="cr_Valor" ColumnName="cr_Valor" />
-                <ScalarProperty Name="cm_Signo" ColumnName="cm_Signo" />
-                <ScalarProperty Name="IdTipoMovi" ColumnName="IdTipoMovi" />
-                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
-                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
-                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
-                <ScalarProperty Name="ca_Descripcion" ColumnName="ca_Descripcion" />
-                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="tc_TipoCbte" ColumnName="tc_TipoCbte" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="SecuenciaCaja" ColumnName="SecuenciaCaja" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -17762,6 +17745,39 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdRow" ColumnName="IdRow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWCAJ_001">
+            <EntityTypeMapping TypeName="Model_reportes.VWCAJ_001">
+              <MappingFragment StoreEntitySet="VWCAJ_001">
+                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
+                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="SecuenciaCaja" ColumnName="SecuenciaCaja" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="tc_TipoCbte" ColumnName="tc_TipoCbte" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="ca_Descripcion" ColumnName="ca_Descripcion" />
+                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
+                <ScalarProperty Name="IdTipoMovi" ColumnName="IdTipoMovi" />
+                <ScalarProperty Name="cm_Signo" ColumnName="cm_Signo" />
+                <ScalarProperty Name="cr_Valor" ColumnName="cr_Valor" />
+                <ScalarProperty Name="tc_descripcion" ColumnName="tc_descripcion" />
+                <ScalarProperty Name="dc_Valor_Haber" ColumnName="dc_Valor_Haber" />
+                <ScalarProperty Name="dc_Valor_Debe" ColumnName="dc_Valor_Debe" />
+                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

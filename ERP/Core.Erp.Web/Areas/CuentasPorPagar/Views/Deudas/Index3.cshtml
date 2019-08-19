@@ -1,22 +1,44 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info
 <script type="text/javascript">
+    var selectedIDs;
+    var TotalRows;
 
-    
-   
-
-
-
-     var selectedIDs;
     function OnBeginCallback(s, e) {
         //Pass all selected keys to GridView callback action
         e.customArgs["selectedIDs"] = selectedIDs;
     }
     function OnSelectionChanged(s, e) {
         s.GetSelectedFieldValues("SecuencialID", GetSelectedFieldValuesCallback);
+        s.GetSelectedFieldValues("Saldo_OG", GetSelectedFieldValuesCallback_Total);
     }
+
     function GetSelectedFieldValuesCallback(values) {
-        //Capture all selected keys
         selectedIDs = values.join(',');
+    }
+
+    function GetSelectedFieldValuesCallback_Total(values) {
+        TotalRows = values.join(',');
+
+        var datos = {
+            TotalRows: TotalRows
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SumarValorItems","Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#TotalRows").html("Total: $"+data);
+                
+            },
+            error: function (error) {
+            }
+        });
+        
     }
 
     function guardar() {
@@ -98,7 +120,6 @@
     function cerrar() {
         $("#fac_con_saldo").modal("hide");
     };
-    
 </script>
 
 @{
@@ -140,7 +161,6 @@
             </div>
         </div>
     </div>
-
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" onclick="guardar()" id="btn_guardar">Guardar</button>
         </div>
@@ -154,8 +174,9 @@
 
                     <div class="modal-header">
                         <h4 class="modal-title">Facturas con saldos</h4>
-                    </div>
-                    <div class="modal-body">
+                        <label id="TotalRows"></label>
+                    </div>                    
+                    <div class="modal-body">                        
                         @Html.Action("GridViewPartial_facturas_con_saldos")
                     </div>
                     <div class="modal-footer">

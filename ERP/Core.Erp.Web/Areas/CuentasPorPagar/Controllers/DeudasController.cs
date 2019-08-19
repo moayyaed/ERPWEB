@@ -1000,6 +1000,21 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             return Json("", JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult SumarValorItems(string TotalRows)
+        {
+            double Total = 0;
+            if (TotalRows != null && TotalRows!="")
+            {
+                string[] array = TotalRows.Split(',');
+                foreach (var item in array)
+                {
+                    Total = Math.Round( (Total + Convert.ToDouble(item)) , 2);
+                }
+            }
+            return Json(Total, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Detalle de inventario

@@ -43,7 +43,16 @@
             column.Visible = false;
         });
 */
-        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial","Proveedor").GroupIndex = 0;
+        //settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial","Proveedor").GroupIndex = 0;
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "info_proveedor.info_persona.pe_razonSocial";
+            column.Caption = "Proveedor";
+            column.Width = Unit.Percentage(5);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.GroupIndex = 0;
+            column.Visible = false;
+        });
         settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
         settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(20);
         settings.Columns.Add(column =>
@@ -87,7 +96,7 @@
         {
             column.FieldName = "Saldo_OG";
             column.Caption = "Saldo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;

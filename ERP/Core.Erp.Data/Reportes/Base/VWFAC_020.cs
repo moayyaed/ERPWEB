@@ -18,10 +18,10 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<int> fa_IdSucursal { get; set; }
         public Nullable<int> fa_IdBodega { get; set; }
         public Nullable<decimal> fa_IdCbteVta { get; set; }
-        public Nullable<int> gi_IdEmpresa { get; set; }
-        public Nullable<int> gi_IdSucursal { get; set; }
-        public Nullable<int> gi_IdBodega { get; set; }
-        public Nullable<decimal> gi_IdGuiaRemision { get; set; }
+        public int gi_IdEmpresa { get; set; }
+        public int gi_IdSucursal { get; set; }
+        public int gi_IdBodega { get; set; }
+        public decimal gi_IdGuiaRemision { get; set; }
         public int Secuencia { get; set; }
         public decimal IdProducto { get; set; }
         public string pr_codigo { get; set; }

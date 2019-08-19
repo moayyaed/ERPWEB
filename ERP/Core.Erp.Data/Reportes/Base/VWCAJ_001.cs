@@ -38,5 +38,8 @@ namespace Core.Erp.Data.Reportes.Base
         public string Nombre { get; set; }
         public string Su_Descripcion { get; set; }
         public decimal SecuenciaCaja { get; set; }
+        public string cc_Descripcion { get; set; }
+        public string nom_punto_cargo_grupo { get; set; }
+        public string nom_punto_cargo { get; set; }
     }
 }
