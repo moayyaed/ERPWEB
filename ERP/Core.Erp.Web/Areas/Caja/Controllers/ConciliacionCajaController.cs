@@ -166,7 +166,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 Fecha_ini = DateTime.Now.Date.AddDays(-(int)DateTime.Now.Date.DayOfWeek+1),
                 Fecha_fin = (DateTime.Now.Date.AddDays(-(int)DateTime.Now.Date.DayOfWeek+1)).AddDays(5).AddSeconds(-1),
                 FechaOP = DateTime.Now,
-                IdEstadoCierre = cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString(),
+                IdEstadoCierre = cl_enumeradores.eEstadoCierreCaja.EST_CIE_ABI.ToString(),
                 lst_det_fact = new List<cp_conciliacion_Caja_det_Info>(),
                 lst_det_ing = new List<cp_conciliacion_Caja_det_Ing_Caja_Info>(),
                 lst_det_vale = new List<cp_conciliacion_Caja_det_x_ValeCaja_Info>(),

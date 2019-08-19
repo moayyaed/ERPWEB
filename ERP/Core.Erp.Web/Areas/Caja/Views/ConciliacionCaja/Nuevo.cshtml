@@ -584,13 +584,13 @@
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_op">
                 <div class="row">
-                    <div class="col-md-8">
+                    @*<div class="col-md-8">
                         <div class="form-group">
                             <label for="IdTipoFlujo">Flujo</label>
                             @Html.Partial("_CmbFlujo_ConciliacionCaja", Model.IdTipoFlujo)
                             @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="FechaOP">Hasta*</label>
@@ -633,7 +633,7 @@
                     </div>
                 </div>
 
-                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+                @*@Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })*@
 
             </div>
         </div>
