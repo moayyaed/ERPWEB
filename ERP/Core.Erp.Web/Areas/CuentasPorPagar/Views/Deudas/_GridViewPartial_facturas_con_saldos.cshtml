@@ -87,7 +87,7 @@
         {
             column.FieldName = "Saldo_OG";
             column.Caption = "Saldo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(15);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -101,9 +101,21 @@
         settings.Columns.Add("Tipo_Vcto", "Estado").Width = Unit.Percentage(5);*/
         settings.Columns.Add("Dias_Vencidos", "D").Width = Unit.Percentage(5);
 
-        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo_OG").DisplayFormat = "c";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo_OG").DisplayFormat = "Total {0:c2}";
         settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count,"info_proveedor.info_persona.pe_razonSocial");
         settings.Settings.ShowGroupPanel = true;
+
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
