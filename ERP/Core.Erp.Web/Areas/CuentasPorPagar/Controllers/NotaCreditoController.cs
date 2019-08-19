@@ -351,11 +351,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             string[] array = Ids.Split(',');
             var output = array.GroupBy(q => q).ToList();
             var model = List_op.get_list(IdTransaccionSession);
+            List_op_det.set_list(new List<cp_orden_pago_cancelaciones_Info>(), IdTransaccionSession);
             foreach (var item in output)
             {
                 if (item.Key != "")
                 {
-                    List_op_det.set_list(new List<cp_orden_pago_cancelaciones_Info>(), IdTransaccionSession);
+                    
+                    
                     var lista_tmp = model.Where(v => v.IdOrdenPago_op == Convert.ToDecimal(item.Key));
                     var info_add = lista_tmp.FirstOrDefault();
                     info_add.MontoAplicado = (double)info_add.MontoAplicado;

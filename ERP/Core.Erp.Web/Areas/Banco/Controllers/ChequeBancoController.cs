@@ -572,6 +572,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
             if (list.Where(q => q.IdOrdenPago_op == info_det.IdOrdenPago_op).Count() == 0)
                 list.Add(info_det);
+            set_list(list, IdTransaccionSession);
         }
         public void UpdateRow(cp_orden_pago_cancelaciones_Info info_det, decimal IdTransaccionSession)
         {
