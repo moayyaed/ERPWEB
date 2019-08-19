@@ -51,7 +51,8 @@
         {
             column.FieldName = "pe_nombreCompleto";
             column.Caption = "Beneficiario";
-            column.Width = Unit.Percentage(25);
+            column.VisibleIndex = 1;
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -59,8 +60,9 @@
         {
             column.FieldName = "IdPersona";
             column.Caption = "Beneficiario";
-            column.Width = Unit.Percentage(25);
+            column.Width = Unit.Percentage(20);
             column.Visible = false;
+            column.VisibleIndex = 1;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
             {
@@ -73,6 +75,7 @@
             column.FieldName = "fecha";
             column.Caption = "Fecha";
             column.Width = Unit.Percentage(10);
+            column.VisibleIndex = 2;
             column.EditorProperties().DateEdit(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -85,7 +88,8 @@
         {
             column.FieldName = "idTipoMovi";
             column.Caption = "Tipo";
-            column.Width = Unit.Percentage(15);
+            column.VisibleIndex = 3;
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -102,6 +106,7 @@
         {
             column.FieldName = "valor";
             column.Caption = "Valor";
+            column.VisibleIndex = 4;
             column.Width = Unit.Percentage(10);
             column.EditorProperties().SpinEdit(p =>
             {
@@ -115,8 +120,31 @@
 
         settings.Columns.Add(column =>
         {
+            column.FieldName = "IdCentroCosto_vales";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 5;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_ConciliacionCaja", DataBinder.Eval(c.DataItem, "IdCentroCosto_vales"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.VisibleIndex = 5;
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "IdPunto_cargo_grupo_vales";
             column.Caption = "Grupo";
+            column.VisibleIndex = 6;
             column.Width = Unit.Percentage(10);
             column.EditorProperties().ComboBox(p =>
             {
@@ -148,6 +176,7 @@
         {
             column.FieldName = "nom_punto_cargo";
             column.Caption = "Punto de cargo";
+            column.VisibleIndex = 7;
             column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -156,6 +185,7 @@
         {
             column.FieldName = "Observacion";
             column.Caption = "Observación";
+            column.VisibleIndex = 8;
             column.Width = Unit.Percentage(10);
             column.EditorProperties().Memo(p =>
             {

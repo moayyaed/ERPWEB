@@ -35,6 +35,8 @@ namespace Core.Erp.Data.Caja
                                  IdPersona = q.IdPersona,
                                  Observacion = q.cm_observacion,
                                  pe_nombreCompleto = q.pe_nombreCompleto,
+                                 IdCentroCosto_vales = q.IdCentroCosto,
+                                 cc_Descripcion = q.cc_Descripcion,
                                  IdPunto_cargo_vales = q.IdPunto_cargo,
                                  IdPunto_cargo_grupo_vales = q.IdPunto_cargo_grupo,
                                  nom_punto_cargo = q.nom_punto_cargo,

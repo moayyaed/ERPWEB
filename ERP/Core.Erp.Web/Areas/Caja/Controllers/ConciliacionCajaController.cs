@@ -37,6 +37,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
 
         cp_conciliacion_Caja_det_x_Ingresar_List List_x_Cruzar = new cp_conciliacion_Caja_det_x_Ingresar_List();
 
@@ -48,6 +49,24 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         {
             decimal model = new decimal();
             return PartialView("_CmbFlujo_ConciliacionCaja", model);
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda centro de costo
+
+        public ActionResult CmbCentroCosto_ConciliacionCaja()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_ConciliacionCaja", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demanda_cc(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demanda_cc(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
 
@@ -147,7 +166,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 Fecha_ini = DateTime.Now.Date.AddDays(-(int)DateTime.Now.Date.DayOfWeek+1),
                 Fecha_fin = (DateTime.Now.Date.AddDays(-(int)DateTime.Now.Date.DayOfWeek+1)).AddDays(5).AddSeconds(-1),
                 FechaOP = DateTime.Now,
-                IdEstadoCierre = cl_enumeradores.eEstadoCierreCaja.EST_CIE_ABI.ToString(),
+                IdEstadoCierre = cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString(),
                 lst_det_fact = new List<cp_conciliacion_Caja_det_Info>(),
                 lst_det_ing = new List<cp_conciliacion_Caja_det_Ing_Caja_Info>(),
                 lst_det_vale = new List<cp_conciliacion_Caja_det_x_ValeCaja_Info>(),
@@ -725,6 +744,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         caj_Caja_Movimiento_Bus bus_mov = new caj_Caja_Movimiento_Bus();
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
 
         caj_Caja_Movimiento_Tipo_Bus bus_tipo_movi = new caj_Caja_Movimiento_Tipo_Bus();
         public List<cp_conciliacion_Caja_det_x_ValeCaja_Info> get_list(decimal IdTransaccionSession)
@@ -766,6 +786,20 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 }
             }
 
+            #region Centro de costo
+            info_det.IdCentroCosto_vales = info_det.IdCentroCosto_vales;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto_vales))
+                info_det.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto_vales);
+                if (cc != null)
+                {
+                    info_det.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
+
             list.Add(info_det);
         }
 
@@ -790,6 +824,20 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             edited_info.idTipoMovi = info_det.idTipoMovi;
             edited_info.fecha = info_det.fecha;
             edited_info.se_modifico = true;
+
+            #region Centro de costo
+            edited_info.IdCentroCosto_vales = info_det.IdCentroCosto_vales;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto_vales))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto_vales);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
 
             #region Punto Cargo
             edited_info.IdPunto_cargo_vales = info_det.IdPunto_cargo_vales;

@@ -14,7 +14,7 @@ namespace Core.Erp.Info.Caja
         public string IdCtaCble { get; set; }
         public Nullable<int> IdPunto_cargo_vales { get; set; }
         public Nullable<int> IdPunto_cargo_grupo_vales { get; set; }
-        public string IdCentroCosto { get; set; }
+        public string IdCentroCosto_vales { get; set; }
         public string IdCentroCosto_sub_centro_costo { get; set; }
 
         #region Campos que no existen en la tabla
@@ -35,6 +35,7 @@ namespace Core.Erp.Info.Caja
         public string IdTipo_Persona { get; set; }
         public decimal IdEntidad { get; set; }
         public string nom_punto_cargo { get; set; }
+        public string cc_Descripcion { get; set; }
         #endregion
 
     }

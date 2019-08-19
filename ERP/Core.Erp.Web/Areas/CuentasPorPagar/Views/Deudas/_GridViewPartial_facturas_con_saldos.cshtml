@@ -43,6 +43,7 @@
             column.Visible = false;
         });
 */
+        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial","Proveedor").GroupIndex = 0;
         settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
         settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(20);
         settings.Columns.Add(column =>
@@ -66,7 +67,7 @@
             });
             column.ReadOnly = false;
         });
-        
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_total";
@@ -99,6 +100,10 @@
         /*
         settings.Columns.Add("Tipo_Vcto", "Estado").Width = Unit.Percentage(5);*/
         settings.Columns.Add("Dias_Vencidos", "D").Width = Unit.Percentage(5);
+
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo_OG").DisplayFormat = "c";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count,"info_proveedor.info_persona.pe_razonSocial");
+        settings.Settings.ShowGroupPanel = true;
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";

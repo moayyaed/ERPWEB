@@ -12,6 +12,8 @@
 
 <script type="text/javascript">
     $(function () {
+        MostrarOcultarOP();
+
         $("#IdPeriodo").change(function () {
             GetPeriodo();
             GetSaldoAnterior();
@@ -33,7 +35,7 @@
         GetIdCtaCbleCaja();
         GetSaldoAnterior();
         GetIngresos();
-        $("#link_op").hide();
+        //$("#link_op").hide();
     });
 
     function MostrarOcultarOP() {

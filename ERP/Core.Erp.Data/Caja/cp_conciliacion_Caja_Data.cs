@@ -562,7 +562,7 @@ namespace Core.Erp.Data.Caja
                             IdCbteCble = diario.IdCbteCble,
                             secuencia = 1,
                             IdCtaCble = item.IdCtaCble,
-                            IdCentroCosto = item.IdCentroCosto,
+                            IdCentroCosto = item.IdCentroCosto_vales,
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
                             IdPunto_cargo = item.IdPunto_cargo_vales,
                             dc_Valor = Math.Round(Convert.ToDouble(item.valor), 2, MidpointRounding.AwayFromZero),
@@ -623,6 +623,7 @@ namespace Core.Erp.Data.Caja
                         IdTipocbte_movcaja = item.IdTipocbte_movcaja,
                         IdCbteCble_movcaja = item.IdCbteCble_movcaja,
                         IdCtaCble = item.IdCtaCble,
+                        IdCentroCosto = item.IdCentroCosto_vales,
                         IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
                         IdPunto_cargo = item.IdPunto_cargo_vales
                     };
@@ -1032,7 +1033,7 @@ namespace Core.Erp.Data.Caja
                             IdCtaCble = item.IdCtaCble,
                             IdPunto_cargo = item.IdPunto_cargo_vales,
                             IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
-                            IdCentroCosto = item.IdCentroCosto,
+                            IdCentroCosto = item.IdCentroCosto_vales,
                             dc_Valor = Math.Round(Convert.ToDouble(item.valor), 2, MidpointRounding.AwayFromZero),
                         };
 
@@ -1153,6 +1154,7 @@ namespace Core.Erp.Data.Caja
                         IdTipocbte_movcaja = item.IdTipocbte_movcaja,
                         IdCbteCble_movcaja = item.IdCbteCble_movcaja,
                         IdCtaCble = item.IdCtaCble,
+                        IdCentroCosto = item.IdCentroCosto_vales,
                         IdPunto_cargo_grupo = item.IdPunto_cargo_grupo_vales,
                         IdPunto_cargo = item.IdPunto_cargo_vales
                     };
