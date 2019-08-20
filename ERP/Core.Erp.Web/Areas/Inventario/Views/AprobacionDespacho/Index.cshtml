@@ -83,6 +83,11 @@
 
     function DespacharMovimiento(SecuencialID)
     {
+        var IdEmpresa = SecuencialID.substring(0, 2);
+        var IdSucursal = SecuencialID.substring(2, 4);
+        var IdMovi_inven_tipo = SecuencialID.substring(4, 6);
+        var IdNumMovi = SecuencialID.substring(6, 14);
+
         var datos = {
             SecuencialID: SecuencialID
         }
@@ -99,6 +104,10 @@
                 if (data.length > 0) {
                     alert(data);
                     GridView_aprobacion_despacho.PerformCallback();
+
+                    var location = GetPathServer();
+                    var win = window.open(location + "/Reportes/InventarioReportes/INV_002?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursal=" + IdSucursal + "&IdMovi_inven_tipo=" + IdMovi_inven_tipo + "&IdNumMovi=" + IdNumMovi, '_blank');
+                    win.focus();
                 } else {
                     alert("No se ha podido despachar el movimiento de inventario");
                 }

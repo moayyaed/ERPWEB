@@ -82,7 +82,8 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     if (info.co_observacion == null)
                         info.co_observacion = "";
 
-                    info.info_comrobante.cb_Observacion ="PROV: "+ prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;                    
+                    info.info_comrobante.cb_Observacion ="PROV: "+ prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
+                    info.co_observacion = " PROV: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
                 }
                 else
                     info.info_comrobante.cb_Observacion = info.co_observacion;
@@ -175,6 +176,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.co_observacion = "";
 
                     info.info_comrobante.cb_Observacion = "PROV: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
+                    //info.co_observacion = " PROV: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.co_observacion;
                 }
                 else
                     info.info_comrobante.cb_Observacion = info.co_observacion;

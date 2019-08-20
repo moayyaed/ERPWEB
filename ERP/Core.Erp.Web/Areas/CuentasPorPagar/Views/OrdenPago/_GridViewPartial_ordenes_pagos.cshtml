@@ -78,7 +78,7 @@
             c.SetDataItemTemplateContent(tc =>
             {
 
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" || Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoCancelacion")) != "CANCELADA")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "EstadoCancelacion")) != "CANCELADA")
                 {
                     ViewContext.Writer.Write(
                     Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdOrdenPago = DataBinder.Eval(tc.DataItem, "IdOrdenPago") }) + "&nbsp;" +

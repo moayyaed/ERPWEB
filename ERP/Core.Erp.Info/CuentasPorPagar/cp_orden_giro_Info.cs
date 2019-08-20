@@ -88,6 +88,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public cp_orden_giro_pagos_sri_Info info_forma_pago { get; set; }
         public cp_retencion_Info info_retencion { get; set; }
         public int TieneRetencion { get; set; }
+        public bool Agrupar { get; set; }
         public cp_orden_giro_Info()
 
         {

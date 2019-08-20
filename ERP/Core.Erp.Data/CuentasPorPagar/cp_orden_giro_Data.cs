@@ -643,7 +643,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                              && q.IdSucursal <= IdSucursal_fin
                              && q.Saldo_OG > 0
                              orderby
-                             q.nom_proveedor ascending,
                              q.co_fechaOg ascending
                              select new cp_orden_giro_Info
                              {
@@ -667,7 +666,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  Total_Pagado = q.Total_Pagado,
                                  Saldo_OG = q.Saldo_OG,
                                  Fecha_Transac = q.co_FechaFactura_vct,
-                                 nom_tipo_Documento = q.nom_tipo_Documento,                                 
+                                 nom_tipo_Documento = q.nom_tipo_Documento,
                                  info_proveedor = new cp_proveedor_Info
                                  {
                                      IdPersona = q.IdPersona,
@@ -678,8 +677,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                          pe_nombreCompleto = q.nom_proveedor
                                      }
                                  },
-                                 IdSucursal = q.IdSucursal
-
+                                 IdSucursal = q.IdSucursal,
+                                 Agrupar = true
                              }).ToList();
 
                     Lista.ForEach(item =>

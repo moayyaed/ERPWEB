@@ -719,7 +719,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
                 Session["list_ordenes_giro"] = lst;
                 retorno = "S";
-            
+
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
 

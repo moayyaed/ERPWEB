@@ -63,7 +63,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWIMP_002_gastos" Width="1.5" PointX="28.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWIMP_003" Width="1.5" PointX="28.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_001" Width="1.5" PointX="28.75" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_reportes.VWINV_002" Width="1.5" PointX="28.75" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_007" Width="1.5" PointX="30.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_008" Width="1.5" PointX="30.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_011" Width="1.5" PointX="30.75" PointY="14.75" IsExpanded="true" />
@@ -108,6 +107,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWBAN_006" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_007" Width="1.5" PointX="11.375" PointY="5.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCAJ_001" Width="1.5" PointX="39.375" PointY="32.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWINV_002" Width="1.5" PointX="39.375" PointY="39.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

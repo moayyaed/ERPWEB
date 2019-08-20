@@ -42,32 +42,46 @@
             column.Width = System.Web.UI.WebControls.Unit.Percentage(2);
             column.Visible = false;
         });
-*/
-        //settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial","Proveedor").GroupIndex = 0;
-        settings.Columns.Add(column =>
+        */
+        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 0;      
+
+        settings.Columns.Add(c =>
         {
-            column.FieldName = "info_proveedor.info_persona.pe_razonSocial";
-            column.Caption = "Proveedor";
-            column.Width = Unit.Percentage(5);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.GroupIndex = 0;
-            column.Visible = false;
+            c.Caption = "";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "Dias_Vencidos")) < 0)
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-bookmark\" style=\"color: red\"></span>");
+                }
+                else if(Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "Dias_Vencidos")) == 0)
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-bookmark\" style=\"color: green\"></span>");
+                }
+                else
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-bookmark\" style=\"color: yellow\"></span>");
+                }
+
+                c.Width = Unit.Percentage(3);
+            });
         });
+
         settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
-        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(20);
+        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(18);
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_observacion";
             column.Caption = "Observación";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(17);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.ReadOnly = false;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_fechaOg";
-            column.Caption = "Fecha";
-            column.Width = Unit.Percentage(10);
+            column.Caption = "Fecha OG";
+            column.Width = Unit.Percentage(9);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -76,12 +90,24 @@
             });
             column.ReadOnly = false;
         });
-
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha_Transac";
+            column.Caption = "Fecha Venc";
+            column.Width = Unit.Percentage(9);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+            column.ReadOnly = false;
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_total";
             column.Caption = "Total";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -96,7 +122,7 @@
         {
             column.FieldName = "Saldo_OG";
             column.Caption = "Saldo";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -128,18 +154,6 @@
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
-
-        settings.PreRender = (sender, e) =>
-        {
-            MVCxGridView gridView = (MVCxGridView)sender;
-            gridView.ExpandAll();
-        };
-
-        settings.BeforeGetCallbackResult = (sender, e) =>
-        {
-            MVCxGridView gridView = (MVCxGridView)sender;
-            gridView.ExpandAll();
-        };
     });
 
     if (ViewData["EditError"] != null)
