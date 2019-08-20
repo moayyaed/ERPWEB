@@ -677,8 +677,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                          pe_nombreCompleto = q.nom_proveedor
                                      }
                                  },
-                                 IdSucursal = q.IdSucursal,
-                                 Agrupar = true
+                                 IdSucursal = q.IdSucursal
                              }).ToList();
 
                     Lista.ForEach(item =>

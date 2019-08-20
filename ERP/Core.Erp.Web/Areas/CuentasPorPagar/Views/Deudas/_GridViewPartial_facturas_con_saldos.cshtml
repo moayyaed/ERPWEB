@@ -16,7 +16,6 @@
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = false;
 
-
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
@@ -33,6 +32,7 @@
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowSelectCheckbox = true;
         settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
         /*
         settings.Columns.Add(column =>
         {
@@ -43,7 +43,7 @@
             column.Visible = false;
         });
         */
-        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 0;      
+        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 0;
 
         settings.Columns.Add(c =>
         {

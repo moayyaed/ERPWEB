@@ -50,7 +50,8 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  tm_descripcion = q.tm_descripcion,
                                  NomUsuario = q.NomUsuario,
                                  IdResponsable = q.IdResponsable,
-                                 pe_nombreCompleto = q.pe_nombreCompleto
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 FechaDespacho = q.FechaDespacho
                              }).ToList();
                 }
                 return Lista;
