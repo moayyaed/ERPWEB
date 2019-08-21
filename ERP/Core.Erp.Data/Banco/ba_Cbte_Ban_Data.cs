@@ -196,6 +196,7 @@ namespace Core.Erp.Data.Banco
                         IdPunto_cargo = item.IdPunto_cargo,
                         IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
                         IdCentroCosto = item.IdCentroCosto,
+                        dc_Observacion = item.dc_Observacion
                     });
                 }
                 #endregion
@@ -437,6 +438,7 @@ namespace Core.Erp.Data.Banco
                         IdPunto_cargo = item.IdPunto_cargo,
                         IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
                         IdCentroCosto = item.IdCentroCosto,
+                        dc_Observacion = item.dc_Observacion
                     });
                 }
                 #endregion
