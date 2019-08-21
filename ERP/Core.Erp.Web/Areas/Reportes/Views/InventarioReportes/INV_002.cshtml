@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "INV_002";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
@@ -7,8 +6,25 @@
     }
     Layout = "~/Areas/Reportes/Views/Shared/_Layout.cshtml";
 }
+
 @using (Html.BeginForm())
 {
+    if (@ViewBag.Aprobar == "S")
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-1">
+                    <input type="hidden" id="SecuencialID" name="SecuencialID" value="@ViewBag.SecuencialID"/>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary form-control" id="btn_aprobar" onclick="AprobarMovimiento();" title="Aprobar">
+                            Aprobar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     Html.DevExpress().WebDocumentViewer(settings =>
     {
         settings.MobileMode = false;
@@ -17,3 +33,30 @@
     }).Bind(Model).GetHtml();
 }
 
+<script type="text/javascript">
+    function AprobarMovimiento() {
+        var datos = {
+            SecuencialID: $("#SecuencialID").val()
+            }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AprobarMovimiento", "AprobacionMovimientoInventario", new { Area = "Inventario"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert(data);
+                    location.reload();
+                } else {
+                    alert("No se ha podido aprobar el movimiento de inventario");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

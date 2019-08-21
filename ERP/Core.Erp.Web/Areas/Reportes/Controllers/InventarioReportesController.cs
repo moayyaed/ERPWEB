@@ -175,7 +175,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_002(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0, string Aprobar="")
         {
             INV_002_Rpt model = new INV_002_Rpt();
-            ViewBag.Aprobar = Aprobar;
+            in_Ing_Egr_Inven_Bus bus_ing_egr = new in_Ing_Egr_Inven_Bus();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_002");
@@ -191,6 +191,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.p_IdNumMovi.Value = IdNumMovi;
             model.usuario = SessionFixed.IdUsuario;
             model.empresa = SessionFixed.NomEmpresa;
+
+            var info = bus_ing_egr.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal,IdMovi_inven_tipo, IdNumMovi);
+            ViewBag.Aprobar = (info== null)? "" : ((info.IdEstadoAproba == ""))? "S" : "";
+            ViewBag.SecuencialID = Convert.ToInt32(SessionFixed.IdEmpresa).ToString("00") + IdSucursal.ToString("00") + IdMovi_inven_tipo.ToString("00") + IdNumMovi.ToString("00000000");
+
             if (IdNumMovi == 0)
                 model.RequestParameters = false;
             return View(model);
@@ -637,7 +642,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 fecha_ini = new DateTime(DateTime.Now.Year, 1, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, 12, 31)
+                fecha_fin = new DateTime(DateTime.Now.Year, 12, 31),
+                IdBodega = 0
             };
 
             cargar_combos(model);

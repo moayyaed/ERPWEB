@@ -55,6 +55,8 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };
+        
+        settings.Columns.Add("CodMoviInven", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(8);
         settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(15);
         settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add(column =>
@@ -65,7 +67,7 @@
             column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
         });
         settings.Columns.Add("tm_descripcion", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
-        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(22);
+        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
         settings.Columns.Add(column =>
         {

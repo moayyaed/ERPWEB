@@ -367,8 +367,8 @@
             // xrTableCell1
             // 
             this.xrTableCell1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "ForeColor", "Iif([Estado]=\'I\',\'Red\', Iif(IsNull([FechaAR]),\'Black\' , \'Green\') )"),
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Estado]=\'I\',\'ANULADO\', Iif(IsNull([FechaAR]),\'\' , \'DESPACHADO\') )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Estado]=\'I\',\'ANULADO\', Iif(IsNull([FechaDespacho]),\'\' , \'DESPACHADO\') )"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "ForeColor", "Iif([Estado]=\'I\',\'Red\', Iif(IsNull([FechaDespacho]),\'Black\' , \'Green\') )")});
             this.xrTableCell1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold);
             this.xrTableCell1.ForeColor = System.Drawing.Color.Red;
             this.xrTableCell1.Name = "xrTableCell1";
