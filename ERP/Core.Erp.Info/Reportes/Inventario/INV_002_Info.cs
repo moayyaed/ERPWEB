@@ -37,5 +37,7 @@ namespace Core.Erp.Info.Reportes.Inventario
         public Nullable<decimal> IdResponsable { get; set; }
         public string pe_nombreCompleto { get; set; }
         public Nullable<System.DateTime> FechaDespacho { get; set; }
+        public Nullable<System.DateTime> Fecha_Transac { get; set; }
+        public Nullable<System.DateTime> FechaAR { get; set; }
     }
 }

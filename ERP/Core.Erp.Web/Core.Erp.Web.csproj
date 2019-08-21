@@ -1288,6 +1288,12 @@
     <Compile Include="Reportes\Inventario\INV_019_Rpt.Designer.cs">
       <DependentUpon>INV_019_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Inventario\INV_020_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_020_Rpt.Designer.cs">
+      <DependentUpon>INV_020_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Presupuesto\PRE_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10241,6 +10247,7 @@
     <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_CmbCuenta_Inven.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_CmbPuntoCargoConciliacion.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_CmbCentroCosto_ConciliacionCaja.cshtml" />
+    <Content Include="Areas\Reportes\Views\InventarioReportes\INV_020.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10747,6 +10754,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_019_Rpt.resx">
       <DependentUpon>INV_019_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_020_Rpt.resx">
+      <DependentUpon>INV_020_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Presupuesto\PRE_001_Rpt.resx">
       <DependentUpon>PRE_001_Rpt.cs</DependentUpon>

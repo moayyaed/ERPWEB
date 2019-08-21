@@ -1,27 +1,28 @@
-﻿using Core.Erp.Info.Reportes.Inventario;
+﻿using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Info.Reportes.Inventario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Erp.Data.Reportes.Base;
+
 namespace Core.Erp.Data.Reportes.Inventario
 {
-    public class INV_002_Data
+    public class INV_020_Data
     {
-        public List<INV_002_Info> get_list(int IdEmpresa, int idSucursal, int IdMovi_inven_tipo, decimal IdNumMovi)
+        public List<INV_020_Info> get_list(int IdEmpresa, int idSucursal, int IdMovi_inven_tipo, decimal IdNumMovi)
         {
             try
             {
-                List<INV_002_Info> Lista;
-                using (Entities_reportes  Context = new Entities_reportes())
+                List<INV_020_Info> Lista;
+                using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.VWINV_002
+                    Lista = (from q in Context.VWINV_020
                              where q.IdEmpresa == IdEmpresa
                              && q.IdSucursal == idSucursal
                              && q.IdMovi_inven_tipo == IdMovi_inven_tipo
                              && q.IdNumMovi == IdNumMovi
-                             select new INV_002_Info
+                             select new INV_020_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,
@@ -36,7 +37,6 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  IdUnidadMedida_sinConversion = q.IdUnidadMedida_sinConversion,
                                  Descripcion = q.Descripcion,
                                  dm_cantidad_sinConversion = q.dm_cantidad_sinConversion,
-                                 mv_costo_sinConversion = q.mv_costo_sinConversion,
                                  cm_observacion = q.cm_observacion,
                                  CodMoviInven = q.CodMoviInven,
                                  cm_fecha = q.cm_fecha,

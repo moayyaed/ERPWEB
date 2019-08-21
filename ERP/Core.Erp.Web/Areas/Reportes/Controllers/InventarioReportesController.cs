@@ -50,6 +50,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
             var resultado = bus_bodega.get_list(IdEmpresa, IdSucursal, false);
 
+            resultado.Add(new tb_bodega_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdBodega = 0,
+                bo_Descripcion = "TODAS"
+            });
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult cargar_lineas(int IdEmpresa = 0, string IdCategoria = "")
@@ -1226,6 +1233,31 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
+            return View(model);
+        }
+
+        public ActionResult INV_020(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
+        {
+            INV_020_Rpt model = new INV_020_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_020");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            /*
+            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            model.p_IdSucursal.Value = IdSucursal;
+            model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
+            model.p_IdNumMovi.Value = IdNumMovi;
+            model.usuario = Session["IdUsuario"].ToString();
+            model.empresa = Session["nom_empresa"].ToString();
+            if (IdNumMovi == 0)
+                model.RequestParameters = false;
+                */
             return View(model);
         }
     }

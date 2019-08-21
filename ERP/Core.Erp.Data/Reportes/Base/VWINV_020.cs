@@ -12,7 +12,7 @@ namespace Core.Erp.Data.Reportes.Base
     using System;
     using System.Collections.Generic;
     
-    public partial class VWINV_002
+    public partial class VWINV_020
     {
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
@@ -27,7 +27,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string IdUnidadMedida_sinConversion { get; set; }
         public string Descripcion { get; set; }
         public Nullable<double> dm_cantidad_sinConversion { get; set; }
-        public double mv_costo_sinConversion { get; set; }
         public string cm_observacion { get; set; }
         public string CodMoviInven { get; set; }
         public System.DateTime cm_fecha { get; set; }
