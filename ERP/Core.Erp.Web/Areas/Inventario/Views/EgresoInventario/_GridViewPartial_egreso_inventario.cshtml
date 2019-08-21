@@ -80,7 +80,7 @@
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
-                else if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) == "APRO" && Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                else if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) == "APRO" && Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaDespacho")) == null)
                 {
                     ViewContext.Writer.Write(
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
@@ -125,9 +125,19 @@
         settings.Columns.Add("EstadoAprobacion", "Aprobación").Width = System.Web.UI.WebControls.Unit.Percentage(8);
         settings.Columns.Add(column =>
         {
+            column.FieldName = "E";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_002", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(c.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(c.DataItem, "IdNumMovi") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "D";
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_020", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(c.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(c.DataItem, "IdNumMovi") }, Request.Url.Scheme) + "');\"></span>");
             });
             column.Width = Unit.Percentage(5);
         });

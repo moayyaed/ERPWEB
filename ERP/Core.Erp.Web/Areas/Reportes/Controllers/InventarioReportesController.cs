@@ -172,9 +172,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
 
-        public ActionResult INV_002(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0)
+        public ActionResult INV_002(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0, string Aprobar="")
         {
             INV_002_Rpt model = new INV_002_Rpt();
+            ViewBag.Aprobar = Aprobar;
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_002");
@@ -184,12 +185,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 model.LoadLayout(RootReporte);
             }
             #endregion
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
             model.p_IdNumMovi.Value = IdNumMovi;
-            model.usuario = Session["IdUsuario"].ToString();
-            model.empresa = Session["nom_empresa"].ToString();
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa;
             if (IdNumMovi == 0)
                 model.RequestParameters = false;
             return View(model);
@@ -1248,16 +1249,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 model.LoadLayout(RootReporte);
             }
             #endregion
-            /*
-            model.p_IdEmpresa.Value = Convert.ToInt32(Session["IdEmpresa"]);
+            
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.p_IdSucursal.Value = IdSucursal;
             model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
             model.p_IdNumMovi.Value = IdNumMovi;
-            model.usuario = Session["IdUsuario"].ToString();
-            model.empresa = Session["nom_empresa"].ToString();
+            model.usuario = SessionFixed.IdUsuario;
+            model.empresa = SessionFixed.NomEmpresa;
             if (IdNumMovi == 0)
                 model.RequestParameters = false;
-                */
+                
             return View(model);
         }
     }
