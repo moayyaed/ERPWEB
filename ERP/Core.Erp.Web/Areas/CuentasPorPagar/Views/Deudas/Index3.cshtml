@@ -6,6 +6,7 @@
     function OnBeginCallback(s, e) {
         //Pass all selected keys to GridView callback action
         e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs["value"] = $("#Agrupar").val();
     }
     function OnSelectionChanged(s, e) {
         s.GetSelectedFieldValues("SecuencialID", GetSelectedFieldValuesCallback);
@@ -96,7 +97,8 @@
         selectedIDs = "";
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val()
+            IdSucursal: $("#IdSucursal").val(),
+            Agrupar: $("#Agrupar").val()
         }
         $.ajax({
             type: 'POST',
@@ -120,6 +122,19 @@
     function cerrar() {
         $("#fac_con_saldo").modal("hide");
     };
+
+    function AgruparXProveedor() {
+        var Agrupar = $("#Agrupar").val();
+
+        if (Agrupar == "1") {
+            $("#Agrupar").val("0");
+        }
+        else {
+            $("#Agrupar").val("1");
+        }
+
+        fac_con_saldo();
+    }
 </script>
 
 @{
@@ -144,8 +159,7 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <div class="form-group">
-                    <label>               </label>
+                <div class="form-group">                    
                     <button type="button" class="btn btn-primary form-control" onclick="fac_con_saldo()" title="Buscar deudas">
                         <i class="fa fa-search"></i>
                     </button>
@@ -171,12 +185,21 @@
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
-
                     <div class="modal-header">
                         <h4 class="modal-title">Facturas con saldos</h4>
                         <label id="TotalRows"></label>
-                    </div>                    
-                    <div class="modal-body">                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-1">
+                                <input type="hidden" id="Agrupar" name="Agrupar" value="@ViewBag.Agrupar"/>
+                                <button type="button" class="btn btn-primary form-control" id="ride" onclick="AgruparXProveedor();" title="Agrupar">
+                                 Agrupar por proveedor
+                                </button>
+                            </div>
+                        </div>
+                    </div>        
+                    <div class="modal-body">
                         @Html.Action("GridViewPartial_facturas_con_saldos")
                     </div>
                     <div class="modal-footer">
@@ -187,10 +210,3 @@
 
             </div>
         </div>
-
-
-
-
-<script type="text/javascript">
-    
-</script>

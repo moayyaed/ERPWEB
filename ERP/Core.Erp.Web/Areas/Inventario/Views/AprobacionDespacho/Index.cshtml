@@ -106,7 +106,7 @@
                     GridView_aprobacion_despacho.PerformCallback();
 
                     var location = GetPathServer();
-                    var win = window.open(location + "/Reportes/InventarioReportes/INV_002?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursal=" + IdSucursal + "&IdMovi_inven_tipo=" + IdMovi_inven_tipo + "&IdNumMovi=" + IdNumMovi, '_blank');
+                    var win = window.open(location + "/Reportes/InventarioReportes/INV_020?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdSucursal=" + IdSucursal + "&IdMovi_inven_tipo=" + IdMovi_inven_tipo + "&IdNumMovi=" + IdNumMovi, '_blank');
                     win.focus();
                 } else {
                     alert("No se ha podido despachar el movimiento de inventario");

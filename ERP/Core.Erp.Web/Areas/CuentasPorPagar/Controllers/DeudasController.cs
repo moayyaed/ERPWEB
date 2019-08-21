@@ -711,14 +711,23 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0)
+        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0, string Agrupar="")
         {
-
             string retorno = string.Empty;
-            var lst  = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa, IdSucursal);
+            var lst = new List<cp_orden_giro_Info>();
+            ViewBag.Agrupar = Agrupar;
 
-                Session["list_ordenes_giro"] = lst;
-                retorno = "S";
+            if (Agrupar=="1")
+            {
+                lst = bus_orden_giro.get_lst_orden_giro_x_pagar_agrupado(IdEmpresa, IdSucursal);
+            }
+            else
+            {
+                lst = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa, IdSucursal);
+            }
+
+            Session["list_ordenes_giro"] = lst;
+            retorno = "S";
 
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }

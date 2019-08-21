@@ -689,7 +689,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     {
                         info_det.pr_descripcion = producto.pr_descripcion_combo;
                     }
-                                        
+                           
+                                 
                     if (ModelState.IsValid)
                         detalle_info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 }
@@ -820,8 +821,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             fa_guia_remision_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
 
             edited_info.IdProducto = info_det.IdProducto;
-            edited_info.pr_descripcion = info_det.pr_descripcion;
-            edited_info.gi_cantidad = info_det.gi_cantidad;
+            edited_info.pr_descripcion = info_det.pr_descripcion;            
             edited_info.gi_precio = info_det.gi_precio;
             edited_info.gi_por_desc = info_det.gi_por_desc;
             edited_info.gi_detallexItems = info_det.gi_detallexItems;
@@ -829,6 +829,19 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
             edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
             edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
+
+            if (edited_info.IdProforma > 0 && edited_info.Saldo != null)
+            {
+                if(info_det.gi_cantidad <= edited_info.Saldo)
+                {
+                    edited_info.gi_cantidad = info_det.gi_cantidad;
+                }
+            }
+            else
+            {
+                edited_info.gi_cantidad = info_det.gi_cantidad;
+            }
+            
 
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)

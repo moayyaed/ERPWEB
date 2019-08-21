@@ -52,6 +52,19 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
+        public List<cp_orden_giro_Info> get_lst_orden_giro_x_pagar_agrupado(int IdEmpresa, int IdSucursal)
+        {
+            try
+            {
+                return data.get_lst_orden_giro_x_pagar_agrupado(IdEmpresa, IdSucursal);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<cp_orden_giro_Info> get_lst_orden_giro_x_pagar(int IdEmpresa, int IdSucursal)
         {
             try

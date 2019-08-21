@@ -4,8 +4,11 @@
     {
         settings.Name = "GridViewPartial_facturas_con_saldos";
         settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_facturas_con_saldos" };
-
         settings.KeyFieldName = "SecuencialID";
+
+        settings.SettingsBehavior.AllowGroup = true;
+        settings.Settings.ShowGroupPanel = true;
+
         //Configuración click derecho
         settings.SettingsContextMenu.Enabled = true;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
@@ -43,7 +46,7 @@
             column.Visible = false;
         });
         */
-        settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 0;
+        //settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 0;
 
         settings.Columns.Add(c =>
         {
@@ -136,21 +139,31 @@
         settings.Columns.Add("Tipo_Vcto", "Estado").Width = Unit.Percentage(5);*/
         settings.Columns.Add("Dias_Vencidos", "D").Width = Unit.Percentage(5);
 
-        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo_OG").DisplayFormat = "Total {0:c2}";
-        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count,"info_proveedor.info_persona.pe_razonSocial");
-        settings.Settings.ShowGroupPanel = true;
-
         settings.PreRender = (sender, e) =>
         {
             MVCxGridView gridView = (MVCxGridView)sender;
             gridView.ExpandAll();
         };
 
+        if (ViewBag.Agrupar == "1")
+        {
+            settings.Columns.Add("Proveedor");
+        }
+
         settings.BeforeGetCallbackResult = (sender, e) =>
         {
             MVCxGridView gridView = (MVCxGridView)sender;
+
+            if (ViewBag.Agrupar == "1")
+            {
+                gridView.GroupBy(gridView.Columns["Proveedor"], 0);
+            }
+
             gridView.ExpandAll();
         };
+
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo_OG").DisplayFormat = "Total {0:c2}";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count, "info_proveedor.info_persona.pe_razonSocial");
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
