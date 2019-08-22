@@ -32,10 +32,11 @@ namespace Core.Erp.Web.Reportes.Inventario
             DateTime fecha_ini = string.IsNullOrEmpty(p_fecha_ini.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_ini.Value);
             DateTime fecha_fin = string.IsNullOrEmpty(p_fecha_fin.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             string IdCentroCosto = string.IsNullOrEmpty(p_IdCentroCosto.Value.ToString()) ? "" : Convert.ToString(p_IdCentroCosto.Value);
+            string signo = string.IsNullOrEmpty(p_signo.Value.ToString()) ? "" : Convert.ToString(p_signo.Value);
             int IdMovi_inven_tipo = string.IsNullOrEmpty(p_IdMovi_Inven_Tipo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdMovi_Inven_Tipo.Value);
             INV_008_Bus bus_rpt = new INV_008_Bus();
 
-            List<INV_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, IdProducto, fecha_ini, fecha_fin, IdCentroCosto, IdMovi_inven_tipo);
+            List<INV_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, IdProducto, fecha_ini, fecha_fin, IdCentroCosto, signo, IdMovi_inven_tipo);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

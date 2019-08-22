@@ -226,7 +226,7 @@
             this.xrTableCell24.StylePriority.UsePadding = false;
             this.xrTableCell24.StylePriority.UseTextAlignment = false;
             this.xrTableCell24.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell24.Weight = 1.0202854549486422D;
+            this.xrTableCell24.Weight = 1.9239668239210448D;
             // 
             // xrTableCell25
             // 
@@ -240,7 +240,7 @@
             this.xrTableCell25.StylePriority.UsePadding = false;
             this.xrTableCell25.StylePriority.UseTextAlignment = false;
             this.xrTableCell25.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell25.Weight = 3.8187826143642525D;
+            this.xrTableCell25.Weight = 2.91510124539185D;
             // 
             // xrTableCell28
             // 
@@ -628,13 +628,13 @@
             // 
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.Text = "Vendedor";
-            this.xrTableCell9.Weight = 1.1845244097267038D;
+            this.xrTableCell9.Weight = 2.233674565676822D;
             // 
             // xrTableCell10
             // 
             this.xrTableCell10.Name = "xrTableCell10";
             this.xrTableCell10.Text = "Producto";
-            this.xrTableCell10.Weight = 4.4335054788595309D;
+            this.xrTableCell10.Weight = 3.3843553229094128D;
             // 
             // xrTableCell12
             // 
@@ -657,7 +657,7 @@
             // xrTableCell14
             // 
             this.xrTableCell14.Name = "xrTableCell14";
-            this.xrTableCell14.Text = "Dsct. Tot.";
+            this.xrTableCell14.Text = "Dsct.";
             this.xrTableCell14.Weight = 0.84608885368278575D;
             // 
             // xrTableCell15
@@ -985,7 +985,7 @@
             this.lbl_usuario.StylePriority.UsePadding = false;
             this.lbl_usuario.StylePriority.UseTextAlignment = false;
             this.lbl_usuario.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.lbl_usuario.Weight = 0.74666658688116883D;
+            this.lbl_usuario.Weight = 1.4080004481646904D;
             // 
             // xrTableCell49
             // 
@@ -999,7 +999,7 @@
             this.xrTableCell49.StylePriority.UseTextAlignment = false;
             this.xrTableCell49.Text = "Fecha de impresión:";
             this.xrTableCell49.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell49.Weight = 4.394667007127D;
+            this.xrTableCell49.Weight = 3.7333331458434786D;
             // 
             // lbl_fecha
             // 

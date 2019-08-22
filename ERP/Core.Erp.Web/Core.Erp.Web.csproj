@@ -10248,6 +10248,7 @@
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_CmbPuntoCargoConciliacion.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_CmbCentroCosto_ConciliacionCaja.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_020.cshtml" />
+    <Content Include="Areas\Reportes\Views\InventarioReportes\_CmbCentroCosto_Inventario.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

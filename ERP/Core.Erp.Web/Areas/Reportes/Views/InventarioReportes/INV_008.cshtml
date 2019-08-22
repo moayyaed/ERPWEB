@@ -129,90 +129,128 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="IdCentroCosto">centro costo</label>
-                            @Html.DropDownListFor(q => q.IdCentroCosto, new SelectList(ViewBag.lst_centro, "IdCentroCosto", "cc_Descripcion"), new { @class = "form-control"})
+                            <label for="IdCentroCosto">Centro costo</label>
+                            @Html.Partial("_CmbCentroCosto_Inventario", Model.IdCentroCosto)
                             @Html.ValidationMessageFor(q => q.IdCentroCosto, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-
-
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="IdMovi_inven_tipo">Tipo movimiento</label>
-                            @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_movi, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
+                            <label for="IdMovi_inven_tipo">Movimiento</label>
+                            @Html.DropDownListFor(q => q.tipo_movi, new SelectList(ViewBag.lst_TipoMov, "Key", "Value"), new { @class = "form-control", @id= "tipo_movi" })
+                            @Html.ValidationMessageFor(q => q.tipo_movi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdMovi_inven_tipo">Movimiento</label>
+                            @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_movi, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo" })
                             @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /.box-body -->
-        </div>
-        </div>
-
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">@ViewBag.Title</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fa fa-times"></i>
-                </button>
+                    <!-- /.box-body -->
+                </div>
             </div>
-        </div>
-        <div class="box-body">
-            @Html.DevExpress().WebDocumentViewer(settings =>
-   {
-       settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
-       settings.MobileMode = false;
-       settings.Name = "webDocumentViewer";
-   }).Bind(ViewBag.Report).GetHtml()
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            [@Session["IdEmpresa"]] @Session["nom_empresa"]
-        </div>
-        <!-- /.box-footer-->
-    </div>
-}
-    <script type="text/javascript">
-    $(function () {
-       
-   $("#IdSucursal").change(function () {
-            cargar_bodega();
-        });
 
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@ViewBag.Title</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @Html.DevExpress().WebDocumentViewer(settings =>
+                    {
+                        settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+                        settings.MobileMode = false;
+                        settings.Name = "webDocumentViewer";
+                    }).Bind(ViewBag.Report).GetHtml()
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    [@Session["IdEmpresa"]] @Session["nom_empresa"]
+                </div>
+                <!-- /.box-footer-->
+            </div>
+            }
+<script type="text/javascript">
+$(function () {
+
+    $("#IdSucursal").change(function () {
         cargar_bodega();
     });
 
+    $("#tipo_movi").change(function () {
+        cargar_tipo_movimiento();
+    });
+});
 
-    function cargar_bodega() {
-        $("#IdBodega").empty();
 
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val()
+function cargar_bodega() {
+    $("#IdBodega").empty();
+
+    var datos = {
+        IdEmpresa: $("#IdEmpresa").val(),
+        IdSucursal: $("#IdSucursal").val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_bodega", "InventarioReportes", new { Area = "Reportes" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+        },
+        error: function (error) {
         }
+    });
+};
 
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_bodega", "InventarioReportes", new { Area = "Reportes" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-                });
-            },
-            error: function (error) {
-            }
-        });
-    };
-    </script>
+function cargar_tipo_movimiento() {
+    $("#IdMovi_inven_tipo").empty();
+
+    var datos = {
+        IdEmpresa: $("#IdEmpresa").val(),
+        Signo:  $("#tipo_movi").val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_tipo_movimiento", "InventarioReportes", new { Area = "Reportes" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdMovi_inven_tipo").append("<option value=" + row.IdMovi_inven_tipo + ">" + row.tm_descripcion + "</option>");
+            });
+        },
+        error: function (error) {
+        }
+    });
+};
+</script>
