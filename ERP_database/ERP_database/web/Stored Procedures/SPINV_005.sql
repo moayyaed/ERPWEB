@@ -188,7 +188,7 @@ SELECT * FROM (
 
 						tb_persona.pe_nombreCompleto AS nom_proveedor, in_Producto.pr_codigo, 
 						in_Producto.pr_descripcion + ' '+pre.nom_presentacion + ' ' + ISNULL(in_Producto.lote_num_lote,'') + ' ' + (iif(in_Producto.lote_fecha_vcto is null,'',CONVERT(varchar(10), in_Producto.lote_fecha_vcto, 103))) pr_descripcion, 
-						in_UnidadMedida.IdUnidadMedida, in_UnidadMedida.Descripcion as nom_unidad_consumo, in_UnidadMedida.cod_alterno as cod_unidad_consumo, [web].[in_SPINV_005].[IdProductoPadre]
+						in_UnidadMedida.cod_alterno IdUnidadMedida, in_UnidadMedida.Descripcion as nom_unidad_consumo, in_UnidadMedida.cod_alterno as cod_unidad_consumo, [web].[in_SPINV_005].[IdProductoPadre]
 FROM            fa_factura INNER JOIN
                          fa_factura_x_in_Ing_Egr_Inven ON fa_factura.IdEmpresa = fa_factura_x_in_Ing_Egr_Inven.IdEmpresa_fa AND fa_factura.IdSucursal = fa_factura_x_in_Ing_Egr_Inven.IdSucursal_fa AND 
                          fa_factura.IdBodega = fa_factura_x_in_Ing_Egr_Inven.IdBodega_fa AND fa_factura.IdCbteVta = fa_factura_x_in_Ing_Egr_Inven.IdCbteVta_fa AND fa_factura.IdEmpresa = fa_factura_x_in_Ing_Egr_Inven.IdEmpresa_fa AND 
@@ -250,7 +250,7 @@ FROM            fa_factura INNER JOIN
 
 						in_Producto.pr_descripcion + ' '+pre.nom_presentacion + ' ' + ISNULL(in_Producto.lote_num_lote,'') + ' ' + (iif(in_Producto.lote_fecha_vcto is null,'',CONVERT(varchar(10), in_Producto.lote_fecha_vcto, 103))) pr_descripcion, 
 
-						in_UnidadMedida.IdUnidadMedida, in_UnidadMedida.Descripcion as nom_unidad_consumo, in_UnidadMedida.cod_alterno as cod_unidad_consumo, [web].[in_SPINV_005].[IdProductoPadre]
+						in_UnidadMedida.cod_alterno IdUnidadMedida, in_UnidadMedida.Descripcion as nom_unidad_consumo, in_UnidadMedida.cod_alterno as cod_unidad_consumo, [web].[in_SPINV_005].[IdProductoPadre]
 						FROM            in_Producto INNER JOIN
 						[web].[in_SPINV_005] ON in_Producto.IdEmpresa = [web].[in_SPINV_005].IdEmpresa AND in_Producto.IdProducto = [web].[in_SPINV_005].IdProducto INNER JOIN
 						tb_sucursal INNER JOIN

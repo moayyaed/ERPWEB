@@ -1,33 +1,34 @@
 ﻿CREATE VIEW web.VWINV_002
 AS
-SELECT        dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia, 
-                         dbo.in_Ing_Egr_Inven_det.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_Producto.pr_codigo, dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion, 
-                         dbo.in_UnidadMedida.Descripcion, ABS(dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion) AS dm_cantidad_sinConversion, dbo.in_Ing_Egr_Inven_det.mv_costo AS mv_costo_sinConversion, 
-                         dbo.in_Ing_Egr_Inven.cm_observacion, dbo.in_Ing_Egr_Inven.CodMoviInven, dbo.in_Ing_Egr_Inven.cm_fecha, dbo.in_Ing_Egr_Inven.Estado, dbo.in_Motivo_Inven.IdMotivo_Inv, dbo.in_Motivo_Inven.Desc_mov_inv, 
-                         dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto, dbo.in_presentacion.nom_presentacion, dbo.in_Ing_Egr_Inven.signo, dbo.in_movi_inven_tipo.tm_descripcion, dbo.seg_usuario.Nombre AS NomUsuario, 
-                         dbo.in_Ing_Egr_Inven.IdResponsable, dbo.tb_persona.pe_nombreCompleto, dbo.in_Ing_Egr_Inven.FechaDespacho, dbo.in_Ing_Egr_Inven.Fecha_Transac, dbo.in_Ing_Egr_Inven.FechaAR
-FROM            dbo.in_movi_inven_tipo INNER JOIN
-                         dbo.tb_bodega INNER JOIN
-                         dbo.in_Ing_Egr_Inven INNER JOIN
-                         dbo.tb_sucursal ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdSucursal = dbo.tb_sucursal.IdSucursal ON dbo.tb_bodega.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND 
-                         dbo.tb_bodega.IdSucursal = dbo.in_Ing_Egr_Inven.IdSucursal AND dbo.tb_bodega.IdBodega = dbo.in_Ing_Egr_Inven.IdBodega ON dbo.in_movi_inven_tipo.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND 
-                         dbo.in_movi_inven_tipo.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo INNER JOIN
-                         dbo.in_Ing_Egr_Inven_det ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdSucursal = dbo.in_Ing_Egr_Inven_det.IdSucursal AND 
-                         dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo AND dbo.in_Ing_Egr_Inven.IdNumMovi = dbo.in_Ing_Egr_Inven_det.IdNumMovi INNER JOIN
-                         dbo.in_Producto ON dbo.in_Ing_Egr_Inven_det.IdProducto = dbo.in_Producto.IdProducto AND dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_Producto.IdEmpresa INNER JOIN
-                         dbo.in_UnidadMedida ON dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion = dbo.in_UnidadMedida.IdUnidadMedida INNER JOIN
-                         dbo.in_Motivo_Inven ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Motivo_Inven.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdMotivo_Inv = dbo.in_Motivo_Inven.IdMotivo_Inv INNER JOIN
-                         dbo.in_presentacion ON dbo.in_Producto.IdEmpresa = dbo.in_presentacion.IdEmpresa AND dbo.in_Producto.IdPresentacion = dbo.in_presentacion.IdPresentacion LEFT OUTER JOIN
-                         dbo.tb_persona ON dbo.in_Ing_Egr_Inven.IdResponsable = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                         dbo.seg_usuario ON dbo.in_Ing_Egr_Inven.IdUsuario = dbo.seg_usuario.IdUsuario
-WHERE        (dbo.in_Ing_Egr_Inven.signo = '-')
+SELECT dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia, 
+                  dbo.in_Ing_Egr_Inven_det.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_Producto.pr_codigo, dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion, 
+                  dbo.in_UnidadMedida.Descripcion, ABS(dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion) AS dm_cantidad_sinConversion, dbo.in_Ing_Egr_Inven_det.mv_costo AS mv_costo_sinConversion, dbo.in_Ing_Egr_Inven.cm_observacion, 
+                  dbo.in_Ing_Egr_Inven.CodMoviInven, dbo.in_Ing_Egr_Inven.cm_fecha, dbo.in_Ing_Egr_Inven.Estado, dbo.in_Motivo_Inven.IdMotivo_Inv, dbo.in_Motivo_Inven.Desc_mov_inv, dbo.in_Producto.lote_num_lote, 
+                  dbo.in_Producto.lote_fecha_vcto, dbo.in_presentacion.nom_presentacion, dbo.in_Ing_Egr_Inven.signo, dbo.in_movi_inven_tipo.tm_descripcion, dbo.seg_usuario.Nombre AS NomUsuario, dbo.in_Ing_Egr_Inven.IdResponsable, 
+                  dbo.tb_persona.pe_nombreCompleto, dbo.in_Ing_Egr_Inven.FechaDespacho, dbo.in_Ing_Egr_Inven.Fecha_Transac, dbo.in_Ing_Egr_Inven.FechaAR, dbo.in_linea.nom_linea
+FROM     dbo.in_movi_inven_tipo INNER JOIN
+                  dbo.tb_bodega INNER JOIN
+                  dbo.in_Ing_Egr_Inven INNER JOIN
+                  dbo.tb_sucursal ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdSucursal = dbo.tb_sucursal.IdSucursal ON dbo.tb_bodega.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND 
+                  dbo.tb_bodega.IdSucursal = dbo.in_Ing_Egr_Inven.IdSucursal AND dbo.tb_bodega.IdBodega = dbo.in_Ing_Egr_Inven.IdBodega ON dbo.in_movi_inven_tipo.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND 
+                  dbo.in_movi_inven_tipo.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo INNER JOIN
+                  dbo.in_Ing_Egr_Inven_det ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdSucursal = dbo.in_Ing_Egr_Inven_det.IdSucursal AND 
+                  dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo AND dbo.in_Ing_Egr_Inven.IdNumMovi = dbo.in_Ing_Egr_Inven_det.IdNumMovi INNER JOIN
+                  dbo.in_Producto ON dbo.in_Ing_Egr_Inven_det.IdProducto = dbo.in_Producto.IdProducto AND dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_Producto.IdEmpresa INNER JOIN
+                  dbo.in_UnidadMedida ON dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion = dbo.in_UnidadMedida.IdUnidadMedida INNER JOIN
+                  dbo.in_Motivo_Inven ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Motivo_Inven.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdMotivo_Inv = dbo.in_Motivo_Inven.IdMotivo_Inv INNER JOIN
+                  dbo.in_presentacion ON dbo.in_Producto.IdEmpresa = dbo.in_presentacion.IdEmpresa AND dbo.in_Producto.IdPresentacion = dbo.in_presentacion.IdPresentacion INNER JOIN
+                  dbo.in_linea ON dbo.in_Producto.IdEmpresa = dbo.in_linea.IdEmpresa AND dbo.in_Producto.IdLinea = dbo.in_linea.IdLinea AND dbo.in_Producto.IdCategoria = dbo.in_linea.IdCategoria LEFT OUTER JOIN
+                  dbo.tb_persona ON dbo.in_Ing_Egr_Inven.IdResponsable = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.seg_usuario ON dbo.in_Ing_Egr_Inven.IdUsuario = dbo.seg_usuario.IdUsuario
+WHERE  (dbo.in_Ing_Egr_Inven.signo = '-')
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[50] 4[6] 2[25] 3) )"
+         Configuration = "(H (1[76] 4[3] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -89,8 +90,8 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -207
-         Left = -192
+         Top = -600
+         Left = -18
       End
       Begin Tables = 
          Begin Table = "in_movi_inven_tipo"
@@ -141,14 +142,14 @@ Begin DesignProperties =
                Right = 357
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 2
          End
          Begin Table = "in_Producto"
             Begin Extent = 
-               Top = 847
-               Left = 48
-               Bottom = 1010
-               Right = 323
+               Top = 783
+               Left = 881
+               Bottom = 1197
+               Right = 1156
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -159,6 +160,8 @@ Begin DesignProperties =
                Left = 48
                Bottom = 1178
                Righ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_002';
+
+
 
 
 
@@ -211,6 +214,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N't = 256
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "in_linea"
+            Begin Extent = 
+               Top = 801
+               Left = 1433
+               Bottom = 1042
+               Right = 1641
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -258,14 +271,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N't = 256
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -273,6 +286,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N't = 256
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_002';
+
+
 
 
 

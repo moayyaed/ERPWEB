@@ -24,6 +24,10 @@
     [CostoEgreso]     FLOAT (53)    NOT NULL,
     [CantidadFinal]   FLOAT (53)    NOT NULL,
     [CostoFinal]      FLOAT (53)    NOT NULL,
+    [Su_Descripcion]  VARCHAR (MAX) NULL,
+    [bo_Bodega]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_in_SPINV_009] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdUsuario] ASC, [IdProducto] ASC, [IdSucursal] ASC, [IdBodega] ASC)
 );
+
+
 

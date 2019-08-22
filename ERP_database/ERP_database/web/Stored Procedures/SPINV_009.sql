@@ -1,5 +1,4 @@
-﻿
---web.SPINV_009 2,'admin',1,8,1,8,1,9,1,99999,1,99999,1,99999
+﻿--web.SPINV_009 2,'admin',1,8,1,8,1,9,1,99999,1,99999,1,99999
 CREATE PROCEDURE [web].[SPINV_009]
 (
 @IdEmpresa int,
@@ -19,7 +18,9 @@ CREATE PROCEDURE [web].[SPINV_009]
 @ConsiderarSinAprobar bit,
 @MostrarSinMovimiento bit,
 @FechaIni date,
-@FechaFin date
+@FechaFin date,
+@IdProductoIni numeric,
+@IdProductoFin numeric
 )
 AS
 DELETE [web].[in_SPINV_009] WHERE IdUsuario = @IdUsuario
@@ -49,10 +50,12 @@ INSERT INTO [web].[in_SPINV_009]
            ,[CantidadEgreso]
            ,[CostoEgreso]
            ,[CantidadFinal]
-           ,[CostoFinal])
+           ,[CostoFinal]
+		   ,[Su_Descripcion]
+		   ,[bo_Bodega])
 select pxb.IdEmpresa, @IdUsuario, pxb.IdProducto, pxb.IdSucursal, pxb.IdBodega, p.IdCategoria, p.IdLinea, p.IdGrupo, p.IdSubGrupo,
-p.pr_codigo, p.pr_descripcion, p.IdUnidadMedida_Consumo, u.Descripcion, c.ca_Categoria, l.nom_linea, g.nom_grupo, sg.nom_subgrupo,
-0,0,0,0,0,0,0,0
+p.pr_codigo, p.pr_descripcion, u.cod_alterno, u.Descripcion, c.ca_Categoria, l.nom_linea, g.nom_grupo, sg.nom_subgrupo,
+0,0,0,0,0,0,0,0, s.Su_Descripcion,b.bo_Descripcion
 from 
 in_producto_x_tb_bodega as pxb inner join 
 in_Producto as p on pxb.IdEmpresa = p.IdEmpresa and pxb.IdProducto = p.IdProducto inner join
@@ -65,6 +68,7 @@ in_categorias as c on c.IdEmpresa = l.IdEmpresa and c.IdCategoria = l.IdCategori
 in_UnidadMedida as u on p.IdUnidadMedida_Consumo = u.IdUnidadMedida
 where pxb.IdEmpresa = @IdEmpresa and pxb.IdSucursal between @IdSucursalIni and @IdSucursalFin and pxb.IdBodega between @IdBodegaIni and @IdBodegaFin
 and p.IdCategoria between @IdCategoriaIni and @IdCategoriaFin and p.IdLinea between @IdLineaIni and @IdLineaFin and p.IdGrupo between @IdGrupoIni and @IdGrupoFin and p.IdSubGrupo between @IdSubGrupoIni and @IdSubGrupoFin
+and pxb.IdProducto between @IdProductoIni and @IdProductoFin
 
 
 PRINT 'INSERTO SALDO INICIAL'
