@@ -233,7 +233,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 {
                     item.Seleccionado = (intTipoArray.Where(q => q == item.IdTipoNota).Count() > 0 ? true : false);
                 }
-            ViewBag.lst_sucursal = lst_nota;
+            ViewBag.lst_nota = lst_nota;
         }
 
         private void cargar_marca_check(int IdEmpresa , int[] intArray)
@@ -940,6 +940,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             }
             #endregion
             report.IntArray = model.IntArray;
+            report.IntTipoArray = model.IntTipoArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente;

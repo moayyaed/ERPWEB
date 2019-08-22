@@ -666,7 +666,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Fecha_Transac]")});
             this.xrTableCell8.Name = "xrTableCell8";
             this.xrTableCell8.Text = "xrTableCell8";
-            this.xrTableCell8.TextFormatString = "{0:dd-MM-yy}";
+            this.xrTableCell8.TextFormatString = "{0:dd/MM/yyyy hh:mm:ss}";
             this.xrTableCell8.Weight = 3.1547015380859373D;
             // 
             // xrTableRow18
@@ -691,7 +691,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FechaAR]")});
             this.xrTableCell32.Name = "xrTableCell32";
             this.xrTableCell32.Text = "xrTableCell32";
-            this.xrTableCell32.TextFormatString = "{0:dd-MM-yy}";
+            this.xrTableCell32.TextFormatString = "{0:dd/MM/yyyy hh:mm:ss}";
             this.xrTableCell32.Weight = 3.1547015380859373D;
             // 
             // xrTableRow17
@@ -716,7 +716,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FechaDespacho]")});
             this.xrTableCell10.Name = "xrTableCell10";
             this.xrTableCell10.Text = "xrTableCell10";
-            this.xrTableCell10.TextFormatString = "{0:dd-MM-yy}";
+            this.xrTableCell10.TextFormatString = "{0:dd/MM/yyyy hh:mm:ss}";
             this.xrTableCell10.Weight = 3.1547015380859373D;
             // 
             // xrTable7

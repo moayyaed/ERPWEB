@@ -18,6 +18,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
         public string usuario { get; set; }
         public string empresa { get; set; }
         public int[] IntArray { get; set; }
+        public int[] IntTipoArray { get; set; }
         List<FAC_018_Info> lst_rpt = new List<FAC_018_Info>();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         public FAC_018_Rpt()
@@ -46,7 +47,11 @@ namespace Core.Erp.Web.Reportes.Facturacion
             tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
             Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, "");
 
-            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdCliente, Naturaleza, IdTipoNota, fecha_ini, fecha_fin, CreDeb, mostrar_anulados));
+            foreach (var item in IntTipoArray)
+            {
+                lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdCliente, Naturaleza, item, fecha_ini, fecha_fin, CreDeb, mostrar_anulados));
+            }
+            
             lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
 
             #region Grupo

@@ -31,11 +31,12 @@ namespace Core.Erp.Data.Reportes.Base
         public string NumDocumentoReemplazo { get; set; }
         public Nullable<decimal> Subtotal0 { get; set; }
         public Nullable<decimal> SubtotalIVA { get; set; }
-        public Nullable<decimal> ValorIva { get; set; }
+        public Nullable<decimal> ValorIVA { get; set; }
         public Nullable<decimal> Total { get; set; }
         public string Estado { get; set; }
         public string NomEstado { get; set; }
         public int Orden { get; set; }
         public string CreDeb { get; set; }
+        public string NaturalezaNota { get; set; }
     }
 }

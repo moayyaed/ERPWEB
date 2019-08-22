@@ -27,6 +27,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                     && q.IdTipoNota == IdTipoNota
                     && fecha_ini <= q.no_fecha
                     && q.no_fecha <= fecha_fin
+                    && q.NaturalezaNota == (string.IsNullOrEmpty(Naturaleza) ? q.NaturalezaNota : Naturaleza)
                     && q.Estado == (mostrar_anulados== true ? "A" : q.Estado)
                     ).Select(q => new FAC_018_Info
                     {
@@ -51,8 +52,9 @@ namespace Core.Erp.Data.Reportes.Facturacion
                         Su_Descripcion = q.Su_Descripcion,
                         Total = q.Total,
                         ValorAplicado = q.ValorAplicado,
-                        ValorIva = q.ValorIva,
-                        CreDeb = q.CreDeb
+                        ValorIva = q.ValorIVA,
+                        CreDeb = q.CreDeb,
+                        NaturalezaNota = q.NaturalezaNota
                     }).ToList();
                     }
                 return Lista;

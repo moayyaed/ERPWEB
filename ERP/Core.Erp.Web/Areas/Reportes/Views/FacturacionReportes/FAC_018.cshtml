@@ -137,11 +137,19 @@
                        }).GetHtml()
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdCliente">Cliente</label>
                             @Html.Partial("_CmbCliente_Facturacion", Model.IdCliente)
                             @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger", @id = "IdCliente" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Naturaleza">Naturaleza</label>
+                            @Html.DropDownListFor(q => q.Naturaleza, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.Naturaleza, "", new { @class = "form", @role = "text-danger" })
                         </div>
                     </div>
 
@@ -177,7 +185,7 @@
                                ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
                                @Html.DevExpress().Button(buttonSettings =>
                                {
-                                   buttonSettings.Name = "buttonClose";
+                                   buttonSettings.Name = "buttonCloseTipo";
                                    buttonSettings.Text = "Close";
                                    buttonSettings.Style.Add("float", "right");
                                    buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBoxTipo.HideDropDown(); }";
@@ -194,23 +202,15 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdNivel">Crédito/Débito</label>
                             @Html.DropDownListFor(q => q.CreDeb, new SelectList(ViewBag.lst_cre, "Key", "Value"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.CreDeb, "", new { @class = "form", @role = "text-danger" })
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="Naturaleza">Naturaleza</label>
-                            @Html.DropDownListFor(q => q.IdTipoNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "form", @role = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-2">
