@@ -46,23 +46,16 @@
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="cod_bodega" Type="varchar" MaxLength="50" />
-          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="cod_punto_emision" Type="char" MaxLength="3" />
-          <Property Name="bo_manejaFacturacion" Type="nchar" MaxLength="1" />
-          <Property Name="bo_EsBodega" Type="nchar" MaxLength="1" />
+          <Property Name="bo_Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="bo_EsBodega" Type="bit" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltMod" Type="datetime" />
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
-          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
-          <Property Name="ip" Type="varchar" MaxLength="25" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="IdEstadoAproba_x_Ing_Egr_Inven" Type="varchar" MaxLength="15" />
-          <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" />
           <Property Name="IdCtaCtble_Inve" Type="varchar" MaxLength="20" />
-          <Property Name="IdCtaCtble_Costo" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="tb_Catalogo">
           <Key>
@@ -1294,7 +1287,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
         <EntityContainer Name="Entities_general" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tb_banco" EntityType="Model_general.tb_banco" />
           <EntitySet Name="tb_banco_procesos_bancarios_x_empresa" EntityType="Model_general.tb_banco_procesos_bancarios_x_empresa" />
-          <EntitySet Name="tb_bodega" EntityType="Model_general.tb_bodega" />
           <EntitySet Name="tb_Catalogo" EntityType="Model_general.tb_Catalogo" />
           <EntitySet Name="tb_CatalogoTipo" EntityType="Model_general.tb_CatalogoTipo" />
           <EntitySet Name="tb_ciudad" EntityType="Model_general.tb_ciudad" />
@@ -1436,10 +1428,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_sis_reporte_x_tb_empresa" EntitySet="tb_sis_reporte_x_tb_empresa" />
           </AssociationSet>
           <EntitySet Name="tb_sucursal" EntityType="Model_general.tb_sucursal" />
-          <AssociationSet Name="FK_tb_bodega_tb_sucursal" Association="Model_general.FK_tb_bodega_tb_sucursal">
-            <End Role="tb_sucursal" EntitySet="tb_sucursal" />
-            <End Role="tb_bodega" EntitySet="tb_bodega" />
-          </AssociationSet>
           <AssociationSet Name="FK_tb_sucursal_tb_empresa" Association="Model_general.FK_tb_sucursal_tb_empresa">
             <End Role="tb_empresa" EntitySet="tb_empresa" />
             <End Role="tb_sucursal" EntitySet="tb_sucursal" />
@@ -1453,6 +1441,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           </AssociationSet>
           <EntitySet Name="tb_FiltroReportes" EntityType="Model_general.tb_FiltroReportes" />
           <EntitySet Name="tb_LogError" EntityType="Model_general.tb_LogError" />
+          <EntitySet Name="tb_bodega" EntityType="Model_general.tb_bodega" />
+          <AssociationSet Name="FK_tb_bodega_tb_sucursal" Association="Model_general.FK_tb_bodega_tb_sucursal">
+            <End Role="tb_sucursal" EntitySet="tb_sucursal" />
+            <End Role="tb_bodega" EntitySet="tb_bodega" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -1487,35 +1480,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NombreProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tb_banco" Relationship="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" FromRole="tb_banco_procesos_bancarios_x_empresa" ToRole="tb_banco" />
-        </EntityType>
-        <EntityType Name="tb_bodega">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="cod_bodega" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="cod_punto_emision" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="bo_manejaFacturacion" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="bo_EsBodega" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IdEstadoAproba_x_Ing_Egr_Inven" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCtble_Inve" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCtble_Costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tb_sucursal" Relationship="Model_general.FK_tb_bodega_tb_sucursal" FromRole="tb_bodega" ToRole="tb_sucursal" />
         </EntityType>
         <EntityType Name="tb_Catalogo">
           <Key>
@@ -2412,24 +2376,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="IdCtaCble_cxp" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble_vtaIVA0" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble_vtaIVA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tb_bodega" Relationship="Model_general.FK_tb_bodega_tb_sucursal" FromRole="tb_sucursal" ToRole="tb_bodega" />
           <NavigationProperty Name="tb_empresa" Relationship="Model_general.FK_tb_sucursal_tb_empresa" FromRole="tb_sucursal" ToRole="tb_empresa" />
           <NavigationProperty Name="tb_sucursal_FormaPago_x_fa_NivelDescuento" Relationship="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" FromRole="tb_sucursal" ToRole="tb_sucursal_FormaPago_x_fa_NivelDescuento" />
+          <NavigationProperty Name="tb_bodega" Relationship="Model_general.FK_tb_bodega_tb_sucursal" FromRole="tb_sucursal" ToRole="tb_bodega" />
         </EntityType>
-        <Association Name="FK_tb_bodega_tb_sucursal">
-          <End Type="Model_general.tb_sucursal" Role="tb_sucursal" Multiplicity="1" />
-          <End Type="Model_general.tb_bodega" Role="tb_bodega" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_sucursal">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-            </Principal>
-            <Dependent Role="tb_bodega">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tb_sucursal_tb_empresa">
           <End Type="Model_general.tb_empresa" Role="tb_empresa" Multiplicity="1" />
           <End Type="Model_general.tb_sucursal" Role="tb_sucursal" Multiplicity="*" />
@@ -2531,6 +2481,42 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="Metodo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="InnerException" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tb_bodega">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="cod_bodega" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bo_EsBodega" Type="Boolean" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdCtaCtble_Inve" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_sucursal" Relationship="Model_general.FK_tb_bodega_tb_sucursal" FromRole="tb_bodega" ToRole="tb_sucursal" />
+        </EntityType>
+        <Association Name="FK_tb_bodega_tb_sucursal">
+          <End Type="Model_general.tb_sucursal" Role="tb_sucursal" Multiplicity="1" />
+          <End Type="Model_general.tb_bodega" Role="tb_bodega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sucursal">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+            </Principal>
+            <Dependent Role="tb_bodega">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2565,33 +2551,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
                 <ScalarProperty Name="IdProceso_bancario_tipo" ColumnName="IdProceso_bancario_tipo" />
                 <ScalarProperty Name="IdProceso" ColumnName="IdProceso" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_bodega">
-            <EntityTypeMapping TypeName="Model_general.tb_bodega">
-              <MappingFragment StoreEntitySet="tb_bodega">
-                <ScalarProperty Name="IdCtaCtble_Costo" ColumnName="IdCtaCtble_Costo" />
-                <ScalarProperty Name="IdCtaCtble_Inve" ColumnName="IdCtaCtble_Inve" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="IdEstadoAproba_x_Ing_Egr_Inven" ColumnName="IdEstadoAproba_x_Ing_Egr_Inven" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="bo_EsBodega" ColumnName="bo_EsBodega" />
-                <ScalarProperty Name="bo_manejaFacturacion" ColumnName="bo_manejaFacturacion" />
-                <ScalarProperty Name="cod_punto_emision" ColumnName="cod_punto_emision" />
-                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
-                <ScalarProperty Name="cod_bodega" ColumnName="cod_bodega" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3195,6 +3154,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdError" ColumnName="IdError" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_bodega">
+            <EntityTypeMapping TypeName="Model_general.tb_bodega">
+              <MappingFragment StoreEntitySet="tb_bodega">
+                <ScalarProperty Name="IdCtaCtble_Inve" ColumnName="IdCtaCtble_Inve" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="bo_EsBodega" ColumnName="bo_EsBodega" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="cod_bodega" ColumnName="cod_bodega" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

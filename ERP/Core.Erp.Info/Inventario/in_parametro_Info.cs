@@ -27,6 +27,8 @@ namespace Core.Erp.Info.Inventario
         public string IdCatalogoEstadoAjuste { get; set; }
         public Nullable<int> IdMotivo_Inv_ajuste_ing { get; set; }
         public Nullable<int> IdMotivo_Inv_ajuste_egr { get; set; }
-        public bool? ValidarCtaCbleTransacciones { get; set; }
+        public Nullable<bool> ValidarCtaCbleTransacciones { get; set; }
+        public Nullable<int> IdMotivo_Inv_egreso { get; set; }
+        public Nullable<int> IdMotivo_Inv_ingreso { get; set; }
     }
 }
