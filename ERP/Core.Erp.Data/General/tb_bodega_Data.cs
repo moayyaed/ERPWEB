@@ -31,9 +31,7 @@ namespace Core.Erp.Data.General
                                      IdBodega = q.IdBodega,
                                      cod_bodega = q.cod_bodega,
                                      bo_Descripcion = q.bo_Descripcion,
-                                     cod_punto_emision = q.cod_punto_emision,
                                      Estado = q.Estado,
-
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -48,7 +46,6 @@ namespace Core.Erp.Data.General
                                      IdBodega = q.IdBodega,
                                      cod_bodega = q.cod_bodega,
                                      bo_Descripcion = q.bo_Descripcion,
-                                     cod_punto_emision = q.cod_punto_emision,
                                      Estado = q.Estado,
 
                                      EstadoBool = q.Estado == "A" ? true : false
@@ -82,7 +79,6 @@ namespace Core.Erp.Data.General
                                      IdBodega = q.IdBodega,
                                      cod_bodega = q.cod_bodega,
                                      bo_Descripcion = q.bo_Descripcion,
-                                     cod_punto_emision = q.cod_punto_emision,
                                      Estado = q.Estado,
 
                                      EstadoBool = q.Estado == "A" ? true : false
@@ -98,7 +94,6 @@ namespace Core.Erp.Data.General
                                      IdBodega = q.IdBodega,
                                      cod_bodega = q.cod_bodega,
                                      bo_Descripcion = q.bo_Descripcion,
-                                     cod_punto_emision = q.cod_punto_emision,
                                      Estado = q.Estado,
 
                                      EstadoBool = q.Estado == "A" ? true : false
@@ -131,11 +126,8 @@ namespace Core.Erp.Data.General
                         IdBodega = Entity.IdBodega,
                         cod_bodega = Entity.cod_bodega,
                         bo_Descripcion = Entity.bo_Descripcion,
-                        cod_punto_emision = Entity.cod_punto_emision,
-                        bo_EsBodega_bool = Entity.bo_EsBodega == "S" ? true : false,
-                        bo_manejaFacturacion_bool = Entity.bo_manejaFacturacion == "S" ? true : false,
+                        bo_EsBodega = Entity.bo_EsBodega,
                         Estado = Entity.Estado,
-                        IdCtaCtble_Costo = Entity.IdCtaCtble_Costo,
                         IdCtaCtble_Inve = Entity.IdCtaCtble_Inve
                     };
                 }
@@ -187,13 +179,9 @@ namespace Core.Erp.Data.General
                         IdSucursal = info.IdSucursal,
                         IdBodega = info.IdBodega = get_id(info.IdEmpresa, info.IdSucursal),
                         cod_bodega = info.cod_bodega,
-                        cod_punto_emision = info.cod_punto_emision,
                         bo_Descripcion = info.bo_Descripcion,
-                        bo_EsBodega = info.bo_EsBodega_bool == true ? "S" : "N",
-                        bo_manejaFacturacion = info.bo_manejaFacturacion_bool == true ? "S" : "N",
-                        IdCtaCtble_Costo = info.IdCtaCtble_Costo,
+                        bo_EsBodega = info.bo_EsBodega,
                         IdCtaCtble_Inve = info.IdCtaCtble_Inve,
-                        IdEstadoAproba_x_Ing_Egr_Inven = info.IdEstadoAproba_x_Ing_Egr_Inven,
                         Estado = info.Estado = "A",
                     };
                     Context.tb_bodega.Add(Entity);
@@ -218,13 +206,9 @@ namespace Core.Erp.Data.General
                     tb_bodega Entity = Context.tb_bodega.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega);
                     if (Entity == null) return false;
                     Entity.cod_bodega = info.cod_bodega;
-                    Entity.cod_punto_emision = info.cod_punto_emision;
                     Entity.bo_Descripcion = info.bo_Descripcion;
-                    Entity.bo_EsBodega = info.bo_EsBodega_bool == true ? "S" : "N";
-                    Entity.bo_manejaFacturacion = info.bo_manejaFacturacion_bool == true ? "S" : "N";
-                    Entity.IdCtaCtble_Costo = info.IdCtaCtble_Costo;
+                    Entity.bo_EsBodega = info.bo_EsBodega;
                     Entity.IdCtaCtble_Inve = info.IdCtaCtble_Inve;
-                    Entity.IdEstadoAproba_x_Ing_Egr_Inven = info.IdEstadoAproba_x_Ing_Egr_Inven;
                     Context.SaveChanges();
                 }
 

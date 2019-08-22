@@ -41,7 +41,9 @@ namespace Core.Erp.Data.Inventario
                         IdMovi_inven_tipo_ajuste_egr = Entity.IdMovi_inven_tipo_ajuste_egr,
                         IdMovi_inven_tipo_ajuste_ing = Entity.IdMovi_inven_tipo_ajuste_ing,
                         IdCatalogoEstadoAjuste = Entity.IdCatalogoEstadoAjuste,
-                        ValidarCtaCbleTransacciones = Entity.ValidarCtaCbleTransacciones
+                        ValidarCtaCbleTransacciones = Entity.ValidarCtaCbleTransacciones,
+                        IdMotivo_Inv_ingreso = Entity.IdMotivo_Inv_ingreso,
+                        IdMotivo_Inv_egreso = Entity.IdMotivo_Inv_egreso,
                     };
                 }
 
@@ -88,7 +90,9 @@ namespace Core.Erp.Data.Inventario
                             IdMovi_inven_tipo_ajuste_egr = info.IdMovi_inven_tipo_ajuste_egr,
                             IdMovi_inven_tipo_ajuste_ing = info.IdMovi_inven_tipo_ajuste_ing,
                             IdCatalogoEstadoAjuste = info.IdCatalogoEstadoAjuste,
-                            ValidarCtaCbleTransacciones = info.ValidarCtaCbleTransacciones
+                            ValidarCtaCbleTransacciones = info.ValidarCtaCbleTransacciones,
+                            IdMotivo_Inv_ingreso = info.IdMotivo_Inv_ingreso,
+                            IdMotivo_Inv_egreso = info.IdMotivo_Inv_egreso,
                         };
                         Context.in_parametro.Add(Entity);
                     }
@@ -117,6 +121,8 @@ namespace Core.Erp.Data.Inventario
                         Entity.IdMovi_inven_tipo_ajuste_ing = info.IdMovi_inven_tipo_ajuste_ing;
                         Entity.IdCatalogoEstadoAjuste = info.IdCatalogoEstadoAjuste;
                         Entity.ValidarCtaCbleTransacciones = info.ValidarCtaCbleTransacciones;
+                        Entity.IdMotivo_Inv_ingreso = info.IdMotivo_Inv_ingreso;
+                        Entity.IdMotivo_Inv_egreso = info.IdMotivo_Inv_egreso;
                     }
                     Context.SaveChanges();
                 }

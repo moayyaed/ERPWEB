@@ -153,7 +153,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 IdEmpresa = IdEmpresa,
                 cm_fecha = DateTime.Now,
                 signo = "+",
-                IdMovi_inven_tipo = i_param.P_IdMovi_inven_tipo_default_ing
+                IdMovi_inven_tipo = i_param.P_IdMovi_inven_tipo_default_ing,
+                IdMotivo_Inv = i_param.IdMotivo_Inv_ingreso
             };
             List_in_Ing_Egr_Inven_det.set_list(new List<in_Ing_Egr_Inven_det_Info>(), model.IdTransaccionSession);
             cargar_combos(model);

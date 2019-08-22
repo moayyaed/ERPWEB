@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public tb_sucursal()
         {
-            this.tb_bodega = new HashSet<tb_bodega>();
             this.tb_sucursal_FormaPago_x_fa_NivelDescuento = new HashSet<tb_sucursal_FormaPago_x_fa_NivelDescuento>();
+            this.tb_bodega = new HashSet<tb_bodega>();
         }
     
         public int IdEmpresa { get; set; }
@@ -42,8 +42,8 @@ namespace Core.Erp.Data
         public string IdCtaCble_vtaIVA0 { get; set; }
         public string IdCtaCble_vtaIVA { get; set; }
     
-        public virtual ICollection<tb_bodega> tb_bodega { get; set; }
         public virtual tb_empresa tb_empresa { get; set; }
         public virtual ICollection<tb_sucursal_FormaPago_x_fa_NivelDescuento> tb_sucursal_FormaPago_x_fa_NivelDescuento { get; set; }
+        public virtual ICollection<tb_bodega> tb_bodega { get; set; }
     }
 }

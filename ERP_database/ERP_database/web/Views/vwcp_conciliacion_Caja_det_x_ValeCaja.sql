@@ -4,12 +4,14 @@ SELECT        dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa, dbo.cp_concilia
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja, 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCtaCble, dbo.caj_Caja_Movimiento.cm_valor, dbo.caj_Caja_Movimiento_Tipo.IdTipoMovi, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, 
                          dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.cm_observacion, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo_grupo, 
-                         dbo.ct_punto_cargo.nom_punto_cargo
+                         dbo.ct_punto_cargo.nom_punto_cargo, dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto, dbo.ct_CentroCosto.cc_Descripcion
 FROM            dbo.cp_conciliacion_Caja_det_x_ValeCaja INNER JOIN
                          dbo.caj_Caja_Movimiento ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa_movcaja = dbo.caj_Caja_Movimiento.IdEmpresa AND 
                          dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCbteCble_movcaja = dbo.caj_Caja_Movimiento.IdCbteCble AND dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdTipocbte_movcaja = dbo.caj_Caja_Movimiento.IdTipocbte INNER JOIN
                          dbo.tb_persona ON dbo.caj_Caja_Movimiento.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
                          dbo.caj_Caja_Movimiento_Tipo ON dbo.caj_Caja_Movimiento.IdEmpresa = dbo.caj_Caja_Movimiento_Tipo.IdEmpresa AND dbo.caj_Caja_Movimiento.IdTipoMovi = dbo.caj_Caja_Movimiento_Tipo.IdTipoMovi LEFT OUTER JOIN
+                         dbo.ct_CentroCosto ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa = dbo.ct_CentroCosto.IdEmpresa AND 
+                         dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdCentroCosto = dbo.ct_CentroCosto.IdCentroCosto LEFT OUTER JOIN
                          dbo.ct_punto_cargo ON dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdEmpresa = dbo.ct_punto_cargo.IdEmpresa AND dbo.cp_conciliacion_Caja_det_x_ValeCaja.IdPunto_cargo = dbo.ct_punto_cargo.IdPunto_cargo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -91,7 +93,7 @@ Begin DesignProperties =
                Right = 301
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 6
          End
          Begin Table = "caj_Caja_Movimiento"
             Begin Extent = 
@@ -125,13 +127,23 @@ Begin DesignProperties =
          End
          Begin Table = "ct_punto_cargo"
             Begin Extent = 
-               Top = 6
-               Left = 616
-               Bottom = 136
-               Right = 825
+               Top = 0
+               Left = 551
+               Bottom = 130
+               Right = 760
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "ct_CentroCosto"
+            Begin Extent = 
+               Top = 27
+               Left = 663
+               Bottom = 157
+               Right = 872
+            End
+            DisplayFlags = 280
+            TopColumn = 3
          End
       End
    End
@@ -140,25 +152,31 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 14
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+      Begin ColumnWidths = 18
+', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+
+
 
 
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1500
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
       End
@@ -182,6 +200,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1500
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcp_conciliacion_Caja_det_x_ValeCaja';
+
+
 
 
 

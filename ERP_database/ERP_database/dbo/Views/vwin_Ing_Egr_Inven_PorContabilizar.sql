@@ -1,8 +1,8 @@
-﻿CREATE VIEW dbo.vwin_Ing_Egr_Inven_PorContabilizar
+﻿CREATE VIEW [dbo].[vwin_Ing_Egr_Inven_PorContabilizar]
 AS
 SELECT dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia, 
                   dbo.in_Ing_Egr_Inven_det.IdEmpresa_inv, dbo.in_Ing_Egr_Inven_det.IdSucursal_inv, dbo.in_Ing_Egr_Inven_det.IdBodega_inv, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo_inv, dbo.in_Ing_Egr_Inven_det.IdNumMovi_inv, 
-                  dbo.in_Ing_Egr_Inven_det.secuencia_inv, dbo.in_categorias.IdCtaCtble_Inve, dbo.in_categorias.IdCtaCtble_Costo, dbo.in_Motivo_Inven.IdCtaCble AS IdCtaCble_Motivo, dbo.in_parametro.P_IdCtaCble_transitoria_transf_inven, 
+                  dbo.in_Ing_Egr_Inven_det.secuencia_inv, dbo.in_producto_x_tb_bodega.IdCtaCble_Inven IdCtaCtble_Inve, dbo.in_categorias.IdCtaCtble_Costo, dbo.in_Motivo_Inven.IdCtaCble AS IdCtaCble_Motivo, dbo.in_parametro.P_IdCtaCble_transitoria_transf_inven, 
                   dbo.in_Ing_Egr_Inven_det.dm_cantidad * dbo.in_Ing_Egr_Inven_det.mv_costo AS Valor, dbo.in_Ing_Egr_Inven.Estado, CASE WHEN dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_parametro.IdMovi_inven_tipo_egresoBodegaOrigen OR
                   dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_parametro.IdMovi_inven_tipo_ingresoBodegaDestino THEN CAST(1 AS bit) ELSE CAST(0 AS bit) END AS EsTransferencia, dbo.in_Ing_Egr_Inven_det.IdCentroCosto, 
                   in_Motivo_Inven_1.IdCtaCble AS IdCtaCble_MotivoDet, dbo.in_producto_x_tb_bodega.IdCtaCble_Costo AS IdCtaCble_CostoProducto

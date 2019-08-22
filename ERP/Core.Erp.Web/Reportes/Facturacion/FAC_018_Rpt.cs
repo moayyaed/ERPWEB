@@ -39,13 +39,14 @@ namespace Core.Erp.Web.Reportes.Facturacion
             DateTime fecha_fin = string.IsNullOrEmpty(p_fecha_fin.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
             string CreDeb = string.IsNullOrEmpty(p_CreDeb.Value.ToString()) ? "" : Convert.ToString(p_CreDeb.Value);
+            string Naturaleza = string.IsNullOrEmpty(p_Naturaleza.Value.ToString()) ? "" : Convert.ToString(p_Naturaleza.Value);
             FAC_018_Bus bus_rpt = new FAC_018_Bus();
             string Sucursal = "";
 
             tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
             Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, "");
 
-            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdCliente, IdTipoNota, fecha_ini, fecha_fin, CreDeb, mostrar_anulados));
+            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdCliente, Naturaleza, IdTipoNota, fecha_ini, fecha_fin, CreDeb, mostrar_anulados));
             lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
 
             #region Grupo

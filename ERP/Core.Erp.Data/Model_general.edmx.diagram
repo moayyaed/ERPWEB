@@ -7,7 +7,6 @@
       <Diagram DiagramId="2c704904d89445798a8f6a1aacf9107a" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="Model_general.tb_banco" Width="1.5" PointX="0.75" PointY="7.125" />
         <EntityTypeShape EntityType="Model_general.tb_banco_procesos_bancarios_x_empresa" Width="1.5" PointX="3" PointY="14.5" />
-        <EntityTypeShape EntityType="Model_general.tb_bodega" Width="1.5" PointX="15.25" PointY="12.375" />
         <EntityTypeShape EntityType="Model_general.tb_Catalogo" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_general.tb_CatalogoTipo" Width="1.5" PointX="1.5" PointY="19.75" />
         <EntityTypeShape EntityType="Model_general.tb_ciudad" Width="1.5" PointX="12.5" PointY="5.75" />
@@ -70,7 +69,6 @@
         <AssociationConnector Association="Model_general.FK_tb_sis_reporte_x_tb_empresa_tb_empresa" />
         <AssociationConnector Association="Model_general.FK_tb_sis_reporte_x_tb_empresa_tb_sis_reporte" />
         <EntityTypeShape EntityType="Model_general.tb_sucursal" Width="1.5" PointX="13" PointY="12.125" />
-        <AssociationConnector Association="Model_general.FK_tb_bodega_tb_sucursal" />
         <AssociationConnector Association="Model_general.FK_tb_sucursal_tb_empresa" />
         <EntityTypeShape EntityType="Model_general.vwtb_comprobantes_no_autorizados" Width="1.5" PointX="19.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_general.tb_ColaImpresionDirecta" Width="1.5" PointX="8.375" PointY="20.75" />
@@ -78,6 +76,8 @@
         <AssociationConnector Association="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" />
         <EntityTypeShape EntityType="Model_general.tb_FiltroReportes" Width="1.5" PointX="19.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_general.tb_LogError" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_general.tb_bodega" Width="1.5" PointX="15.25" PointY="24" />
+        <AssociationConnector Association="Model_general.FK_tb_bodega_tb_sucursal" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

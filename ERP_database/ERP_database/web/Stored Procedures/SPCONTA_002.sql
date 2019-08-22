@@ -52,7 +52,7 @@ CASE WHEN @SignoOperacion < 0 THEN
 
 ) OVER(partition by ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble 
 ORDER BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble,ct_cbtecble.cb_Fecha, ct_cbtecble_det.dc_Valor desc, ct_cbtecble_det.IdTipoCbte, ct_cbtecble_det.IdCbteCble, ct_cbtecble_det.secuencia) as Saldo,
-ct_cbtecble.cb_Fecha, ct_cbtecble.cb_Observacion, ct_cbtecble.cb_Estado, ct_cbtecble_tipo.tc_TipoCbte, m.IdMes, m.smes, ct_cbtecble.IdSucursal, Su_Descripcion, pc.nom_punto_cargo, pg.nom_punto_cargo_grupo
+ct_cbtecble.cb_Fecha, isnull(ct_cbtecble.cb_Observacion,'') +' '+ isnull(ct_cbtecble_det.dc_Observacion,'') cb_Observacion, ct_cbtecble.cb_Estado, ct_cbtecble_tipo.tc_TipoCbte, m.IdMes, m.smes, ct_cbtecble.IdSucursal, Su_Descripcion, pc.nom_punto_cargo, pg.nom_punto_cargo_grupo
 FROM            ct_cbtecble INNER JOIN
                          ct_cbtecble_det ON ct_cbtecble.IdEmpresa = ct_cbtecble_det.IdEmpresa AND ct_cbtecble.IdTipoCbte = ct_cbtecble_det.IdTipoCbte AND ct_cbtecble.IdCbteCble = ct_cbtecble_det.IdCbteCble INNER JOIN
                          ct_plancta ON ct_cbtecble_det.IdEmpresa = ct_plancta.IdEmpresa AND ct_cbtecble_det.IdCtaCble = ct_plancta.IdCtaCble INNER JOIN

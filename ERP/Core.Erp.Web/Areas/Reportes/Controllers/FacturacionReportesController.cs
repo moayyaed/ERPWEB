@@ -148,6 +148,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
+            Dictionary<string, string> lst_naturaleza = new Dictionary<string, string>();
+            lst_naturaleza.Add("", "TODOS");
+            lst_naturaleza.Add("INT", "INTERNA");
+            lst_naturaleza.Add("SRI", "SRI");
+            ViewBag.lst_naturaleza = lst_naturaleza;
+
+
             fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
             var lst_nota = bus_nota.get_list(IdEmpresa, false);
             lst_nota.Add(new fa_TipoNota_Info
@@ -211,6 +218,22 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                     item.Seleccionado = (intArray.Where(q => q == item.IdSucursal).Count() > 0 ? true : false);
                 }
             ViewBag.lst_sucursal = lst_sucursal;
+        }
+
+        private void cargar_tiponota_check(int IdEmpresa, int[] intTipoArray)
+        {
+            fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
+            var lst_nota = bus_nota.get_list(IdEmpresa, false);
+            if (intTipoArray == null || intTipoArray.Count() == 0)
+            {
+                lst_nota.FirstOrDefault().Seleccionado = true;
+            }
+            else
+                foreach (var item in lst_nota)
+                {
+                    item.Seleccionado = (intTipoArray.Where(q => q == item.IdTipoNota).Count() > 0 ? true : false);
+                }
+            ViewBag.lst_sucursal = lst_nota;
         }
 
         private void cargar_marca_check(int IdEmpresa , int[] intArray)
@@ -871,10 +894,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdCliente = 0,
                 CreDeb = "C",
-                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                IntTipoArray = new int[] {},
+                Naturaleza = ""
             };
             cargar_FAC018(model);
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_tiponota_check(model.IdEmpresa, model.IntTipoArray);
             FAC_018_Rpt report = new FAC_018_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -893,6 +919,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_CreDeb.Value = model.CreDeb;
+            report.p_Naturaleza.Value = model.Naturaleza;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
@@ -920,11 +947,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_CreDeb.Value = model.CreDeb;
+            report.p_Naturaleza.Value = model.Naturaleza;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_FAC018(model);
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);            
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            cargar_tiponota_check(model.IdEmpresa, model.IntTipoArray);
             ViewBag.Report = report;
             return View(model);
         }

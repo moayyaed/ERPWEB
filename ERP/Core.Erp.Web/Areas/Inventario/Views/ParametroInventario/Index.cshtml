@@ -50,6 +50,14 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Motivo para ingreso</label>
+                                    @Html.DropDownListFor(q => q.IdMotivo_Inv_ingreso, new SelectList(ViewBag.lst_motivo_ing, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdMotivo_Inv_ingreso, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="IdMovi_inven_tipo_Cambio">Tipo movimiento para cambios</label>
                                     @Html.DropDownListFor(q => q.IdMovi_inven_tipo_Cambio, new SelectList(ViewBag.lst_tipo_movimiento_egr, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_Cambio, "", new { @class = "text-danger" })
@@ -82,7 +90,7 @@
                                     @Html.DropDownListFor(q => q.IdMotivo_Inv_ajuste_ing, new SelectList(ViewBag.lst_motivo_ing, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_ajuste_ing, "", new { @class = "text-danger" })
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
@@ -100,6 +108,14 @@
                                     @Html.ValidationMessageFor(q => q.P_IdMovi_inven_tipo_default_egr, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DiasTransaccionesAFuturo">Motivo para egreso</label>
+                                    @Html.DropDownListFor(q => q.IdMotivo_Inv_egreso, new SelectList(ViewBag.lst_motivo_egr, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdMotivo_Inv_egreso, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <hr />
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="IdMovi_inven_tipo_Consignacion">Tipo movimiento para consignación</label>
@@ -135,6 +151,7 @@
                                     @Html.ValidationMessageFor(q => q.IdMotivo_Inv_ajuste_egr, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="DiasTransaccionesAFuturo">Estado de ajuste</label>

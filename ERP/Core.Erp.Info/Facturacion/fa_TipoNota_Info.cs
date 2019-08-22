@@ -33,6 +33,8 @@ namespace Core.Erp.Info.Facturacion
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string MotiAnula { get; set; }
-        
+
+        public bool Seleccionado { get; set; }
+
     }
 }
