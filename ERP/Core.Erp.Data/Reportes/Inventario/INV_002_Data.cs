@@ -53,7 +53,8 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  pe_nombreCompleto = q.pe_nombreCompleto,
                                  FechaDespacho = q.FechaDespacho,
                                  Fecha_Transac = q.Fecha_Transac,
-                                 FechaAR = q.FechaAR
+                                 FechaAR = q.FechaAR,
+                                 nom_linea = q.nom_linea
                              }).ToList();
                 }
                 return Lista;

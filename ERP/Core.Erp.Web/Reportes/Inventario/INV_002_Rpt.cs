@@ -14,6 +14,7 @@ namespace Core.Erp.Web.Reportes.Inventario
     {
         public string usuario { get; set; }
         public string empresa { get; set; }
+        List<INV_002_Info> lst_rpt = new List<INV_002_Info>();
         public INV_002_Rpt()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             decimal IdNumMovi = p_IdNumMovi.Value == null ? 0 : Convert.ToDecimal(p_IdNumMovi.Value);
 
             INV_002_Bus bus_rpt = new INV_002_Bus();
-            List<INV_002_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdMovi_inven_tipo, IdNumMovi);
+            lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdMovi_inven_tipo, IdNumMovi);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
@@ -42,6 +43,11 @@ namespace Core.Erp.Web.Reportes.Inventario
                 ImageConverter obj = new ImageConverter();
                 logo.Image = (Image)obj.ConvertFrom(emp.em_logo);
             }
+        }
+
+        private void xrSubreport1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            ((XRSubreport)sender).ReportSource.DataSource = lst_rpt;
         }
     }
 }
