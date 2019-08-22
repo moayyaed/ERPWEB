@@ -33,5 +33,7 @@ namespace Core.Erp.Info.Reportes.Inventario
         public double CostoEgreso { get; set; }
         public double CantidadFinal { get; set; }
         public double CostoFinal { get; set; }
+        public string Su_Descripcion { get; set; }
+        public string bo_Bodega { get; set; }
     }
 }

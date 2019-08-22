@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.Inventario
 {
     public class INV_009_Data
     {
-        public List<INV_009_Info> GetList(int IdEmpresa, string IdUsuario, int IdSucursal, int IdBodega, int IdCategoria, int IdLinea, int IdGrupo, int IdSubgrupo, bool considerarSinAprobar, bool mostrarSinMovimiento, DateTime fecha_ini, DateTime fecha_fin)
+        public List<INV_009_Info> GetList(int IdEmpresa, string IdUsuario, int IdSucursal, int IdBodega, decimal IdProducto, int IdCategoria, int IdLinea, int IdGrupo, int IdSubgrupo, bool considerarSinAprobar, bool mostrarSinMovimiento, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
@@ -35,11 +35,13 @@ namespace Core.Erp.Data.Reportes.Inventario
                 int IdSubgrupoIni = IdSubgrupo;
                 int IdSubgrupoFin = IdSubgrupo == 0 ? 9999 : IdSubgrupo;
 
+                decimal IdProductoIni = IdProducto;
+                decimal IdProductoFin = IdProducto == 0 ? 99999999 : IdProducto;
 
                 List<INV_009_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPINV_009(IdEmpresa, IdUsuario, IdSucursalIni, IdSucursalFin, IdBodegaIni, IdBodegaFin, IdCategoriaIni, IdCategoriaFin, IdLineaIni, IdLineaFin, IdGrupoIni, IdGrupoFin, IdSubgrupoIni, IdSubgrupoFin, considerarSinAprobar, mostrarSinMovimiento, fecha_ini, fecha_fin).Select(q => new INV_009_Info
+                    Lista = Context.SPINV_009(IdEmpresa, IdUsuario, IdSucursalIni, IdSucursalFin, IdBodegaIni, IdBodegaFin, IdCategoriaIni, IdCategoriaFin, IdLineaIni, IdLineaFin, IdGrupoIni, IdGrupoFin, IdSubgrupoIni, IdSubgrupoFin, considerarSinAprobar, mostrarSinMovimiento, fecha_ini, fecha_fin, IdProductoIni, IdProductoFin).Select(q => new INV_009_Info
                     {
                         CantidadEgreso = q.CantidadEgreso,
                         CantidadFinal = q.CantidadFinal,
@@ -65,9 +67,9 @@ namespace Core.Erp.Data.Reportes.Inventario
                         NomUnidadMedida = q.NomUnidadMedida,
                         pr_codigo = q.pr_codigo,
                         pr_descripcion = q.pr_descripcion,
-                        IdSubGrupo = q.IdSubGrupo
-
-
+                        IdSubGrupo = q.IdSubGrupo,
+                        Su_Descripcion = q.Su_Descripcion,
+                        bo_Bodega = q.bo_Bodega
 
                     }).ToList();
                 }
