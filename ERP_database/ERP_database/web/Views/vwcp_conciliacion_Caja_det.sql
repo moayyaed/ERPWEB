@@ -1,25 +1,47 @@
-﻿CREATE VIEW web.vwcp_conciliacion_Caja_det
+﻿CREATE VIEW [web].[vwcp_conciliacion_Caja_det]
 AS
-SELECT        dbo.cp_conciliacion_Caja_det.IdEmpresa, dbo.cp_conciliacion_Caja_det.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det.Secuencia, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, 
-                         dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja_det.Tipo_documento, ISNULL(SUM(dbo.cp_orden_pago_cancelaciones.MontoAplicado), 0) 
-                         AS MontoAplicado, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_FechaFactura, 
-                         dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.co_valorpagar, 
-                         ISNULL(dbo.cp_orden_giro.co_total - ISNULL(SUM(dbo.cp_orden_pago_cancelaciones.MontoAplicado), 0), 0) AS SaldoOG, dbo.cp_conciliacion_Caja_det.Valor_a_aplicar, dbo.cp_conciliacion_Caja_det.IdEmpresa_OP, 
-                         dbo.cp_conciliacion_Caja_det.IdOrdenPago_OP, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_total
-FROM            dbo.cp_orden_pago_cancelaciones INNER JOIN
-                         dbo.cp_orden_pago_det ON dbo.cp_orden_pago_cancelaciones.IdEmpresa_op = dbo.cp_orden_pago_det.IdEmpresa AND dbo.cp_orden_pago_cancelaciones.IdOrdenPago_op = dbo.cp_orden_pago_det.IdOrdenPago AND 
-                         dbo.cp_orden_pago_cancelaciones.Secuencia_op = dbo.cp_orden_pago_det.Secuencia RIGHT OUTER JOIN
-                         dbo.cp_orden_giro INNER JOIN
-                         dbo.cp_proveedor ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_orden_giro.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
-                         dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                         dbo.cp_conciliacion_Caja_det ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro AND dbo.cp_orden_giro.IdCbteCble_Ogiro = dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro AND 
-                         dbo.cp_orden_giro.IdTipoCbte_Ogiro = dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.cp_orden_giro.IdEmpresa AND 
-                         dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.cp_orden_giro.IdCbteCble_Ogiro AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.cp_orden_giro.IdTipoCbte_Ogiro
-GROUP BY dbo.cp_conciliacion_Caja_det.IdEmpresa, dbo.cp_conciliacion_Caja_det.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det.Secuencia, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, 
-                         dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja_det.Tipo_documento, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, 
-                         dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_baseImponible, 
-                         dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.co_valorpagar, dbo.cp_orden_giro.co_total, dbo.cp_conciliacion_Caja_det.Valor_a_aplicar, dbo.cp_conciliacion_Caja_det.IdEmpresa_OP, 
-                         dbo.cp_conciliacion_Caja_det.IdOrdenPago_OP, dbo.cp_orden_giro.co_factura
+SELECT dbo.cp_conciliacion_Caja_det.IdEmpresa, dbo.cp_conciliacion_Caja_det.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det.Secuencia, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, 
+                  dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja_det.Tipo_documento, ISNULL(SUM(dbo.cp_orden_pago_cancelaciones.MontoAplicado), 0) AS MontoAplicado, dbo.tb_persona.IdPersona, 
+                  dbo.tb_persona.pe_nombreCompleto, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_observacion, 
+                  dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.co_valorpagar, ISNULL(dbo.cp_orden_giro.co_total - ISNULL(SUM(dbo.cp_orden_pago_cancelaciones.MontoAplicado), 0), 0) AS SaldoOG, 
+                  dbo.cp_conciliacion_Caja_det.Valor_a_aplicar, dbo.cp_conciliacion_Caja_det.IdEmpresa_OP, dbo.cp_conciliacion_Caja_det.IdOrdenPago_OP, dbo.cp_orden_giro.co_serie + '-' + dbo.cp_orden_giro.co_factura co_factura, 
+                  dbo.cp_orden_giro.co_total
+FROM     dbo.cp_orden_pago_cancelaciones INNER JOIN
+                  dbo.cp_orden_pago_det ON dbo.cp_orden_pago_cancelaciones.IdEmpresa_op = dbo.cp_orden_pago_det.IdEmpresa AND dbo.cp_orden_pago_cancelaciones.IdOrdenPago_op = dbo.cp_orden_pago_det.IdOrdenPago AND 
+                  dbo.cp_orden_pago_cancelaciones.Secuencia_op = dbo.cp_orden_pago_det.Secuencia RIGHT OUTER JOIN
+                  dbo.cp_orden_giro INNER JOIN
+                  dbo.cp_proveedor ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_orden_giro.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                  dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                  dbo.cp_conciliacion_Caja_det ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro AND dbo.cp_orden_giro.IdCbteCble_Ogiro = dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro AND 
+                  dbo.cp_orden_giro.IdTipoCbte_Ogiro = dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.cp_orden_giro.IdEmpresa AND 
+                  dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.cp_orden_giro.IdCbteCble_Ogiro AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.cp_orden_giro.IdTipoCbte_Ogiro
+GROUP BY dbo.cp_conciliacion_Caja_det.IdEmpresa, dbo.cp_conciliacion_Caja_det.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det.Secuencia, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, 
+                  dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja_det.Tipo_documento, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.IdSucursal, 
+                  dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.co_valorpagar, 
+                  dbo.cp_orden_giro.co_total, dbo.cp_conciliacion_Caja_det.Valor_a_aplicar, dbo.cp_conciliacion_Caja_det.IdEmpresa_OP, dbo.cp_conciliacion_Caja_det.IdOrdenPago_OP, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_serie
+UNION ALL
+SELECT dbo.cp_conciliacion_Caja_det.IdEmpresa, dbo.cp_conciliacion_Caja_det.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det.Secuencia, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, 
+                  dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja_det.Tipo_documento, ISNULL(SUM(dbo.cp_orden_pago_cancelaciones.MontoAplicado), 0) AS MontoAplicado, dbo.tb_persona.IdPersona, 
+                  dbo.tb_persona.pe_nombreCompleto, dbo.cp_nota_DebCre.IdProveedor, dbo.cp_nota_DebCre.IdSucursal, dbo.cp_nota_DebCre.cn_Por_iva, dbo.cp_nota_DebCre.cn_fecha, dbo.cp_nota_DebCre.cn_observacion, 
+                  dbo.cp_nota_DebCre.cn_baseImponible, dbo.cp_nota_DebCre.cn_valoriva, dbo.cp_nota_DebCre.cn_total, ISNULL(dbo.cp_nota_DebCre.cn_total - ISNULL(SUM(dbo.cp_orden_pago_cancelaciones.MontoAplicado), 0), 0) AS SaldoOG, 
+                  dbo.cp_conciliacion_Caja_det.Valor_a_aplicar, dbo.cp_conciliacion_Caja_det.IdEmpresa_OP, dbo.cp_conciliacion_Caja_det.IdOrdenPago_OP, CASE WHEN isnull(cp_nota_DebCre.IdTipoNota, 'T_TIP_NOTA_INT') 
+                  = 'T_TIP_NOTA_INT' THEN ISNULL(dbo.cp_nota_DebCre.cod_nota, CAST(cp_nota_DebCre.IdCbteCble_Nota AS VARCHAR(20))) 
+                  ELSE cp_nota_DebCre.cn_serie1 + '-' + cp_nota_DebCre.cn_serie2 + '-' + cp_nota_DebCre.cn_Nota END AS co_factura, dbo.cp_nota_DebCre.cn_total
+FROM     dbo.cp_conciliacion_Caja_det INNER JOIN
+                  dbo.cp_nota_DebCre INNER JOIN
+                  dbo.tb_persona INNER JOIN
+                  dbo.cp_proveedor ON dbo.tb_persona.IdPersona = dbo.cp_proveedor.IdPersona ON dbo.cp_nota_DebCre.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_nota_DebCre.IdProveedor = dbo.cp_proveedor.IdProveedor ON 
+                  dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro = dbo.cp_nota_DebCre.IdEmpresa AND dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro = dbo.cp_nota_DebCre.IdCbteCble_Nota AND 
+                  dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro = dbo.cp_nota_DebCre.IdTipoCbte_Nota LEFT OUTER JOIN
+                  dbo.cp_orden_pago_cancelaciones INNER JOIN
+                  dbo.cp_orden_pago_det ON dbo.cp_orden_pago_cancelaciones.IdEmpresa_op = dbo.cp_orden_pago_det.IdEmpresa AND dbo.cp_orden_pago_cancelaciones.IdOrdenPago_op = dbo.cp_orden_pago_det.IdOrdenPago AND 
+                  dbo.cp_orden_pago_cancelaciones.Secuencia_op = dbo.cp_orden_pago_det.Secuencia ON dbo.cp_nota_DebCre.IdEmpresa = dbo.cp_orden_pago_det.IdEmpresa_cxp AND 
+                  dbo.cp_nota_DebCre.IdCbteCble_Nota = dbo.cp_orden_pago_det.IdCbteCble_cxp AND dbo.cp_nota_DebCre.IdTipoCbte_Nota = dbo.cp_orden_pago_det.IdTipoCbte_cxp
+GROUP BY dbo.cp_conciliacion_Caja_det.IdEmpresa, dbo.cp_conciliacion_Caja_det.IdConciliacion_Caja, dbo.cp_conciliacion_Caja_det.Secuencia, dbo.cp_conciliacion_Caja_det.IdEmpresa_OGiro, dbo.cp_conciliacion_Caja_det.IdCbteCble_Ogiro, 
+                  dbo.cp_conciliacion_Caja_det.IdTipoCbte_Ogiro, dbo.cp_conciliacion_Caja_det.Tipo_documento, dbo.tb_persona.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.cp_nota_DebCre.IdProveedor, dbo.cp_nota_DebCre.IdSucursal, 
+                  dbo.cp_nota_DebCre.cn_Por_iva, dbo.cp_nota_DebCre.cn_fecha, dbo.cp_nota_DebCre.cn_observacion, dbo.cp_nota_DebCre.cn_baseImponible, dbo.cp_nota_DebCre.cn_valoriva, dbo.cp_nota_DebCre.cn_total, 
+                  dbo.cp_conciliacion_Caja_det.Valor_a_aplicar, dbo.cp_conciliacion_Caja_det.IdEmpresa_OP, dbo.cp_conciliacion_Caja_det.IdOrdenPago_OP, cp_nota_DebCre.IdTipoNota, cp_nota_DebCre.cod_nota, cp_nota_DebCre.IdCbteCble_Nota, 
+                  cp_nota_DebCre.cn_serie1, cp_nota_DebCre.cn_serie2, cp_nota_DebCre.cn_Nota
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
