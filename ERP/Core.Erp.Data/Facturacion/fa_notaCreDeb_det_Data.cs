@@ -142,10 +142,6 @@ namespace Core.Erp.Data.Facturacion
                                  }).ToList();
 
                 }
-                Lista.ForEach(V =>
-                {
-                    V.pr_descripcion = V.pr_descripcion + " " + V.nom_presentacion + " - " + V.lote_num_lote + " - " + (V.lote_fecha_vcto != null ? Convert.ToDateTime(V.lote_fecha_vcto).ToString("dd/MM/yyyy") : "");
-                });
                 return Lista;
             }
             catch (Exception)

@@ -33,9 +33,12 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : Convert.ToString(p_IdUsuario.Value);
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
 
+            tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
+            string Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
+            
             CONTA_005_Bus bus_rpt = new CONTA_005_Bus();
             List<CONTA_005_Info> lst_rpt = bus_rpt.GetList(IdEmpresa,IdPunto_cargo_grupo, IdUsuario, fechaIni, fechaFin, mostrarSaldo0);
-
+            lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
