@@ -193,40 +193,143 @@
 }
 
 <script type="text/javascript">
-    $(function () {
+$(function () {
+    cargar_bodega();
+    cargar_lineas();
 
-   $("#IdSucursal").change(function () {
-            cargar_bodega();
-        });
-
+    $("#IdSucursal").change(function () {
         cargar_bodega();
     });
+    $("#IdCategoria").change(function () {
+        cargar_lineas();
+    });
+
+    $("#IdLinea").change(function () {
+        cargar_grupos();
+    });
+    $("#IdGrupo").change(function () {
+        cargar_subgrupos();
+    });
+
+});
 
 
-    function cargar_bodega() {
-        $("#IdBodega").empty();
+function cargar_bodega() {
+    $("#IdBodega").empty();
 
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val()
+    var datos = {
+        IdEmpresa: $("#IdEmpresa").val(),
+        IdSucursal: $("#IdSucursal").val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_bodega", "InventarioReportes", new { Area = "Reportes" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+        },
+        error: function (error) {
         }
+    });
+};
 
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_bodega", "InventarioReportes", new { Area = "Reportes" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
-                });
-            },
-            error: function (error) {
-            }
-        });
-    };
+function cargar_lineas() {
+    $("#IdLinea").empty();
+
+    var datos = {
+        IdCategoria: $("#IdCategoria").val(),
+        IdEmpresa: $("#IdEmpresa").val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_lineas", "InventarioReportes", new { Area = "Reportes" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdLinea").append("<option value=" + row.IdLinea + ">" + row.nom_linea + "</option>");
+            });
+            $("#IdLinea").val("0");
+            cargar_grupos();
+        },
+        error: function (error) {
+        }
+    });
+};
+
+
+function cargar_grupos() {
+    $("#IdGrupo").empty();
+
+    var datos = {
+        IdCategoria: $("#IdCategoria").val(),
+        IdLinea: $("#IdLinea").val(),
+        IdEmpresa: $("#IdEmpresa").val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_grupos", "InventarioReportes", new { Area = "Reportes" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+
+            $.each(data, function (i, row) {
+                $("#IdGrupo").append("<option value=" + row.IdGrupo + ">" + row.nom_grupo + "</option>");
+            });
+            $("#IdGrupo").val("0");
+            cargar_subgrupos();
+        },
+        error: function (error) {
+        }
+    });
+};
+
+
+function cargar_subgrupos() {
+    $("#IdSubGrupo").empty();
+
+    var datos = {
+        IdCategoria: $("#IdCategoria").val(),
+        IdLinea: $("#IdLinea").val(),
+        IdGrupo: $("#IdGrupo").val(),
+        IdEmpresa: $("#IdEmpresa").val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("cargar_subgrupos", "InventarioReportes", new { Area = "Reportes" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdSubGrupo").append("<option value=" + row.IdSubgrupo + ">" + row.nom_subgrupo + "</option>");
+            });
+            $("#IdSubGrupo").val("0");
+        },
+        error: function (error) {
+        }
+    });
+};
 </script>

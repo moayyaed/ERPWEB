@@ -28,6 +28,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             int IdEmpresa = string.IsNullOrEmpty(p_IdEmpresa.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             int IdBodega = string.IsNullOrEmpty(p_IdBodega.Value.ToString()) ? 0 : Convert.ToInt32(p_IdBodega.Value);
+            decimal IdProducto = string.IsNullOrEmpty(p_IdProducto.Value.ToString()) ? 0 : Convert.ToInt32(p_IdProducto.Value);
             int IdCategoria = string.IsNullOrEmpty(p_IdCategoria.Value.ToString()) ? 0 : Convert.ToInt32(p_IdCategoria.Value);
             int IdLinea = string.IsNullOrEmpty(p_IdLinea.Value.ToString()) ? 0 : Convert.ToInt32(p_IdLinea.Value);
             int IdGrupo = string.IsNullOrEmpty(p_IdGrupo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdGrupo.Value);
@@ -39,7 +40,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : Convert.ToString(p_IdUsuario.Value);
             INV_009_Bus bus_rpt = new INV_009_Bus();
 
-            List<INV_009_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdUsuario,  IdSucursal, IdBodega, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, considerarSinAprobar, mostrarSinMovimiento , fecha_ini, fecha_fin);
+            List<INV_009_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdUsuario,  IdSucursal, IdBodega, IdProducto, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, considerarSinAprobar, mostrarSinMovimiento , fecha_ini, fecha_fin);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
