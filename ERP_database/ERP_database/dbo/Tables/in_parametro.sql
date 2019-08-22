@@ -23,12 +23,16 @@
     [IdMotivo_Inv_ajuste_ing]                           INT          NULL,
     [IdMotivo_Inv_ajuste_egr]                           INT          NULL,
     [ValidarCtaCbleTransacciones]                       BIT          NULL,
+    [IdMotivo_Inv_egreso]                               INT          NULL,
+    [IdMotivo_Inv_ingreso]                              INT          NULL,
     CONSTRAINT [PK_in_parametro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC),
     CONSTRAINT [FK_in_parametro_ct_plancta2] FOREIGN KEY ([IdEmpresa], [P_IdCtaCble_transitoria_transf_inven]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_in_parametro_in_Catalogo2] FOREIGN KEY ([IdCatalogoEstadoAjuste]) REFERENCES [dbo].[in_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_in_parametro_in_Catalogo3] FOREIGN KEY ([IdCatalogoEstadoAjuste]) REFERENCES [dbo].[in_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_in_parametro_in_Motivo_Inven] FOREIGN KEY ([IdEmpresa], [IdMotivo_Inv_ajuste_ing]) REFERENCES [dbo].[in_Motivo_Inven] ([IdEmpresa], [IdMotivo_Inv]),
     CONSTRAINT [FK_in_parametro_in_Motivo_Inven1] FOREIGN KEY ([IdEmpresa], [IdMotivo_Inv_ajuste_egr]) REFERENCES [dbo].[in_Motivo_Inven] ([IdEmpresa], [IdMotivo_Inv]),
+    CONSTRAINT [FK_in_parametro_in_Motivo_Inven2] FOREIGN KEY ([IdEmpresa], [IdMotivo_Inv_egreso]) REFERENCES [dbo].[in_Motivo_Inven] ([IdEmpresa], [IdMotivo_Inv]),
+    CONSTRAINT [FK_in_parametro_in_Motivo_Inven3] FOREIGN KEY ([IdEmpresa], [IdMotivo_Inv_ingreso]) REFERENCES [dbo].[in_Motivo_Inven] ([IdEmpresa], [IdMotivo_Inv]),
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo] FOREIGN KEY ([IdEmpresa], [IdMovi_inven_tipo_Cambio]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo]),
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo1] FOREIGN KEY ([IdEmpresa], [IdMovi_inven_tipo_elaboracion_egr]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo]),
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo10] FOREIGN KEY ([IdEmpresa], [P_IdMovi_inven_tipo_default_ing]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo]),
@@ -42,6 +46,8 @@
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo6] FOREIGN KEY ([IdEmpresa], [IdMovi_Inven_tipo_x_Dev_Inv_x_Ing]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo]),
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo7] FOREIGN KEY ([IdEmpresa], [IdMovi_Inven_tipo_x_Dev_Inv_x_Erg]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo])
 );
+
+
 
 
 

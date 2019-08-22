@@ -65,6 +65,7 @@
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
+            this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
             this.xrTable5 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow6 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell11 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -139,7 +140,7 @@
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell51 = new DevExpress.XtraReports.UI.XRTableCell();
             this.p_CreDeb = new DevExpress.XtraReports.Parameters.Parameter();
-            this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
+            this.p_Naturaleza = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -388,6 +389,13 @@
             this.xrTable3});
             this.PageHeader.HeightF = 125F;
             this.PageHeader.Name = "PageHeader";
+            // 
+            // lbl_imagen
+            // 
+            this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.lbl_imagen.Name = "lbl_imagen";
+            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
+            this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
             // 
             // xrTable5
             // 
@@ -1185,12 +1193,10 @@
             this.p_CreDeb.Name = "p_CreDeb";
             this.p_CreDeb.Visible = false;
             // 
-            // lbl_imagen
+            // p_Naturaleza
             // 
-            this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
-            this.lbl_imagen.Name = "lbl_imagen";
-            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
-            this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
+            this.p_Naturaleza.Name = "p_Naturaleza";
+            this.p_Naturaleza.Visible = false;
             // 
             // FAC_018_Rpt
             // 
@@ -1220,7 +1226,8 @@
             this.p_mostrar_anulados,
             this.p_fecha_ini,
             this.p_fecha_fin,
-            this.p_CreDeb});
+            this.p_CreDeb,
+            this.p_Naturaleza});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_018_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -1338,5 +1345,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
         public DevExpress.XtraReports.Parameters.Parameter p_CreDeb;
         private DevExpress.XtraReports.UI.XRPictureBox lbl_imagen;
+        public DevExpress.XtraReports.Parameters.Parameter p_Naturaleza;
     }
 }

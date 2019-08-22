@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPCXP_008] 2,'3/10/2019',2,2,1,9999999
+﻿--exec [web].[SPCXP_008] 2,'3/10/2019',2,2,1,9999999
 CREATE PROCEDURE [web].[SPCXP_008]
   @idempresa int ,
   @fecha datetime ,
@@ -24,7 +23,7 @@ Select
         , ISNULL(b.MontoAplicado, 0) AS MontoAplicado, round((round(A.Valor_a_pagar,2) - round(ISNULL(b.MontoAplicado, 0),2)),2)  as Saldo
         , A.Observacion,
          A.Ruc_Proveedor, A.representante_legal, A.Tipo_cbte, A.co_plazo Plazo_fact, 
-          A.co_fechaOg,  co_FechaFactura_vct, A.Dias_Vcto,@fecha as Fecha_corte,
+          A.co_fechaOg,  co_FechaFactura_vct, A.Dias_Vcto *-1 Dias_Vcto,@fecha as Fecha_corte,
         (Case when datediff(day,co_FechaFactura_vct,@fecha) <=0 then (A.Valor_a_pagar - ISNULL(b.MontoAplicado, 0)) else 0 end) x_Vencer,
 		(Case when datediff(day,co_FechaFactura_vct,@fecha) >0 then (A.Valor_a_pagar - ISNULL(b.MontoAplicado, 0)) else 0 end) Vencido,
         (Case when datediff(day,co_FechaFactura_vct,@fecha) >=1  and datediff(day,co_FechaFactura_vct,@fecha) <=30 then (A.Valor_a_pagar - ISNULL(b.MontoAplicado, 0)) else 0 end) Vencido_1_30,

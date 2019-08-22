@@ -1,7 +1,7 @@
-﻿CREATE VIEW web.VWFAC_020
+﻿CREATE VIEW [web].[VWFAC_020]
 AS
 SELECT dbo.fa_factura_x_fa_guia_remision.fa_IdEmpresa, dbo.fa_factura_x_fa_guia_remision.fa_IdSucursal, dbo.fa_factura_x_fa_guia_remision.fa_IdBodega, dbo.fa_factura_x_fa_guia_remision.fa_IdCbteVta, 
-                  dbo.fa_factura_x_fa_guia_remision.gi_IdEmpresa, dbo.fa_factura_x_fa_guia_remision.gi_IdSucursal, dbo.fa_factura_x_fa_guia_remision.gi_IdBodega, dbo.fa_factura_x_fa_guia_remision.gi_IdGuiaRemision, 
+                  dbo.fa_guia_remision.IdEmpresa gi_IdEmpresa, dbo.fa_guia_remision.IdSucursal gi_IdSucursal, dbo.fa_guia_remision.IdBodega gi_IdBodega, dbo.fa_guia_remision.IdGuiaRemision gi_IdGuiaRemision, 
                   dbo.fa_guia_remision_det.Secuencia, dbo.fa_guia_remision_det.IdProducto, dbo.in_Producto.pr_codigo, dbo.in_Producto.pr_descripcion, dbo.fa_guia_remision_det.gi_cantidad, dbo.fa_guia_remision_det.gi_detallexItems, 
                   dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, dbo.fa_guia_remision.CodDocumentoTipo, 
                   dbo.fa_guia_remision.Serie1 + '-' + dbo.fa_guia_remision.Serie2 + '-' + dbo.fa_guia_remision.NumGuia_Preimpresa AS NumGuia_Preimpresa, dbo.fa_guia_remision.CodGuiaRemision, dbo.fa_guia_remision.NUAutorizacion, 

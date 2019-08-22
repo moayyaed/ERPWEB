@@ -37,6 +37,36 @@
         }
         return actualValues;
     }
+
+    /*TIPO*/
+    var textSeparatorTipo = ";";
+    function updateTipoText() {
+        var selectedTipoItems = IntTipoArray.GetSelectedItems();
+        checkComboBoxTipo.SetText(getSelectedItemsTipoText(selectedTipoItems));
+    }
+    function synchronizeListBoxTipoValues(dropDown, args) {
+        IntTipoArray.UnselectAll();
+        var texts = dropDown.GetText().split(textSeparatorTipo);
+        var values = getValuesByTexts(texts);
+        IntTipoArray.SelectValues(values);
+        updateTipoText(); // for remove non-existing texts
+    }
+    function getSelectedItemsTipoText(items) {
+        var texts = [];
+        for (var i = 0; i < items.length; i++)
+            texts.push(items[i].text);
+        return texts.join(textSeparatorTipo);
+    }
+    function getValuesByTexts(texts) {
+        var actualValues = [];
+        var item;
+        for (var i = 0; i < texts.length; i++) {
+            item = IntTipoArray.FindItemByText(texts[i]);
+            if (item != null)
+                actualValues.push(item.value);
+        }
+        return actualValues;
+    }
 </script>
 
 @using (Html.BeginForm("FAC_018", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -118,6 +148,47 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdNivel">Tipo nota</label>
+                            @Html.DevExpress().DropDownEditFor(q => q.IntTipoArray, settings =>
+                       {
+                           settings.Name = "checkComboBoxTipo";
+                           settings.Width = Unit.Percentage(100);
+
+                           settings.SetDropDownWindowTemplateContent(c =>
+                           {
+                               @Html.DevExpress().ListBox(listBoxSettings =>
+                               {
+                                   listBoxSettings.Name = "IntTipoArray";
+                                   listBoxSettings.ControlStyle.Border.BorderWidth = 0;
+                                   listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
+
+                                   listBoxSettings.Height = Unit.Pixel(350);
+                                   listBoxSettings.Width = Unit.Percentage(100);
+
+                                   listBoxSettings.Properties.EnableSelectAll = true;
+                                   listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
+                                   listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
+                                   foreach (var item in ViewBag.lst_nota)
+                                   {
+                                       listBoxSettings.Properties.Items.Add(item.No_Descripcion, item.IdTipoNota).Selected = item.Seleccionado;
+                                   }
+                                   listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateTipoText";
+                                   listBoxSettings.Properties.ClientSideEvents.Init = "updateTipoText";
+                               }).Render();
+                               ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
+                               @Html.DevExpress().Button(buttonSettings =>
+                               {
+                                   buttonSettings.Name = "buttonClose";
+                                   buttonSettings.Text = "Close";
+                                   buttonSettings.Style.Add("float", "right");
+                                   buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBoxTipo.HideDropDown(); }";
+                                   buttonSettings.Height = 26;
+                               }).Render();
+                               ViewContext.Writer.Write("</div>");
+                           });
+                           settings.Properties.AnimationType = AnimationType.None;
+                           settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxTipoValues";
+                           settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxTipoValues";
+                       }).GetHtml()
                             @*@Html.DropDownListFor(q => q.IdTipoNota, new SelectList(ViewBag.lst_nota, "IdTipoNota", "No_Descripcion"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "form", @role = "text-danger" })*@
                         </div>
@@ -135,6 +206,13 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Naturaleza">Naturaleza</label>
+                            @Html.DropDownListFor(q => q.IdTipoNota, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "form", @role = "text-danger" })
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
