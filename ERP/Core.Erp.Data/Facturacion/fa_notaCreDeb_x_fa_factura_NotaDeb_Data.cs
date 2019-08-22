@@ -25,6 +25,7 @@ namespace Core.Erp.Data.Facturacion
                              && q.IdCliente == IdCliente
                              && q.Saldo > 0
                              && q.Estado == "A"
+                             orderby q.vt_fecha
                              select new fa_notaCreDeb_x_fa_factura_NotaDeb_Info
                              {
                                  IdEmpresa_fac_nd_doc_mod = q.IdEmpresa,
@@ -47,6 +48,7 @@ namespace Core.Erp.Data.Facturacion
                                  && q.IdSucursal == IdSucursal
                                  && q.IdCliente == IdCliente
                                  && q.Estado == "A"
+                                 orderby q.vt_fecha
                                  select new fa_notaCreDeb_x_fa_factura_NotaDeb_Info
                                  {
                                      IdEmpresa_fac_nd_doc_mod = q.IdEmpresa,

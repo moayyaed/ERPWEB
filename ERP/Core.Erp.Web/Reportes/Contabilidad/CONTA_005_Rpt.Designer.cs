@@ -539,6 +539,8 @@
             // 
             // lbl_sucursal
             // 
+            this.lbl_sucursal.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Su_Descripcion]")});
             this.lbl_sucursal.Font = new System.Drawing.Font("Verdana", 8F);
             this.lbl_sucursal.Name = "lbl_sucursal";
             this.lbl_sucursal.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 125, 0, 0, 100F);

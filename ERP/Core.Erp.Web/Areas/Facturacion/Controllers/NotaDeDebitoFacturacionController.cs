@@ -310,6 +310,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 lst_det.AddRange(bus_det.get_list(item.IdEmpresa_fac_nd_doc_mod, item.IdSucursal_fac_nd_doc_mod, item.IdBodega_fac_nd_doc_mod, item.IdCbteVta_fac_nd_doc_mod, item.vt_tipoDoc));
             }
+            int Secuencia = 1;
+            lst_det.ForEach(q => q.Secuencia = Secuencia++);
             List_det.set_list(lst_det, IdTransaccionSession);
             var model = list;
             return PartialView("_GridViewPartial_CruceND", model);

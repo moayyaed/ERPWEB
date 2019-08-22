@@ -18,5 +18,6 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public double Debitos { get; set; }
         public double Creditos { get; set; }
         public double SaldoFinal { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }
