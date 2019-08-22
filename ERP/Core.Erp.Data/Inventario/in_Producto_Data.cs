@@ -1012,7 +1012,7 @@ namespace Core.Erp.Data.Inventario
                                 pr_codigo = p.pr_codigo,
                                 stock = p.Stock ?? 0
                             })
-                             .OrderBy(p => p.IdProducto)
+                             .OrderByDescending(p => p.stock)
                              .Skip(skip)
                              .Take(take)
                              .ToList();

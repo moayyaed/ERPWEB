@@ -566,29 +566,12 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             };
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
-        public void armar_diario(string IdCtaCble = "", decimal IdTransaccionFixed = 0)
+        public JsonResult SetValorCierre(decimal IdTransaccionSession = 0)
         {
-            var lst_vale = list_vale.get_list(IdTransaccionFixed);
-            var lst_fact = list_det.get_list(IdTransaccionFixed);
+            var lst_vale = list_vale.get_list(IdTransaccionSession);
+            var lst_fact = list_det.get_list(IdTransaccionSession);
             var valor = Convert.ToDouble(lst_fact.Count == 0 ? 0 : lst_fact.Sum(q => q.Valor_a_aplicar)) + Convert.ToDouble(lst_vale.Count == 0 ? 0 : lst_vale.Sum(q => q.valor));
-
-            list_ct.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionFixed);
-
-            //Debe
-            list_ct.AddRow(new ct_cbtecble_det_Info
-            {
-                IdCtaCble = IdCtaCble,
-                dc_Valor = Math.Abs(valor),
-                dc_Valor_debe = Math.Abs(valor),
-
-            }, IdTransaccionFixed);
-            //Haber
-            list_ct.AddRow(new ct_cbtecble_det_Info
-            {
-                IdCtaCble = IdCtaCble,
-                dc_Valor = Math.Abs(valor) * -1,
-                dc_Valor_haber = Math.Abs(valor),
-            }, IdTransaccionFixed);
+            return Json(Math.Round(valor,2,MidpointRounding.AwayFromZero),JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AgregarCajaMovimiento(string Ids = "", decimal IdTransaccionSession = 0)

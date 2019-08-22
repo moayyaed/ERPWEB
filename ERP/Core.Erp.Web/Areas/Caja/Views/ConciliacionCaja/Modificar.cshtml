@@ -35,7 +35,9 @@
         $("#link_ingresos").click(function () {
             GridView_conciliacion_ingresos.PerformCallback();
         });
-
+        $("#ValorOP").change(function () {
+            $("#ValorReposicion").val($("#ValorOP").val());
+        });
     });
 
     function MostrarOcultarOP() {
@@ -46,7 +48,7 @@
         } else {
             $("#link_op").show();
             $("#link_op").click();
-            armar_diario();
+            SetValorCierre();
         }
     }
 
@@ -301,28 +303,26 @@
         });
     }
 
-    function armar_diario() {
+    function SetValorCierre() {
         var datos = {
-            IdCtaCble: $("#IdCtaCble").val(),
-            IdTransaccionFixed: $("#IdTransaccionSession").val()
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("armar_diario", "ConciliacionCaja",new { Area = "Caja"})',
+            url: '@Url.Action("SetValorCierre", "ConciliacionCaja",new { Area = "Caja"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                $("#ValorOP").val(data);
+                $("#ValorReposicion").val(data);
             },
             error: function (error) {
             }
-
         });
-        FechaOP.SetDate(new Date());
-        GridView_comprobante_detalle.PerformCallback();
     }
 </script>
 
@@ -567,7 +567,7 @@
                             @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
                         </div>
                     </div>*@
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="FechaOP">Hasta*</label>
                             @Html.DevExpress().DateEditFor(q => q.FechaOP, settings =>
@@ -580,6 +580,20 @@
                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                            }).GetHtml()
                             @Html.ValidationMessageFor(q => q.FechaOP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="ValorOP">Valor OP*</label>
+                            @Html.TextBoxFor(q => q.ValorOP, new { @id = "ValorOP", @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.ValorOP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="ValorReposicion">Valor reposición*</label>
+                            @Html.TextBoxFor(q => q.ValorReposicion, new { @id = "ValorReposicion", @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.ValorReposicion, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
