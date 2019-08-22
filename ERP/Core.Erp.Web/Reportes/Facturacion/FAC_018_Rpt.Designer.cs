@@ -135,8 +135,6 @@
             this.xrTableCell51 = new DevExpress.XtraReports.UI.XRTableCell();
             this.p_CreDeb = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_Naturaleza = new DevExpress.XtraReports.Parameters.Parameter();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
-            this.SubReporte_resumen = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrTableRow14 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell36 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -144,6 +142,8 @@
             this.xrTableCell48 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell49 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell52 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
+            this.SubReporte_resumen = new DevExpress.XtraReports.UI.XRSubreport();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -1150,19 +1150,6 @@
             this.p_Naturaleza.Name = "p_Naturaleza";
             this.p_Naturaleza.Visible = false;
             // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Facturacion.FAC_018_Info);
-            this.objectDataSource1.Name = "objectDataSource1";
-            // 
-            // SubReporte_resumen
-            // 
-            this.SubReporte_resumen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 47.87499F);
-            this.SubReporte_resumen.Name = "SubReporte_resumen";
-            this.SubReporte_resumen.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_018_resumen_Rpt();
-            this.SubReporte_resumen.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.SubReporte_resumen.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.SubReporte_resumen_BeforePrint);
-            // 
             // xrTableRow14
             // 
             this.xrTableRow14.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
@@ -1186,7 +1173,8 @@
             // xrTableCell36
             // 
             this.xrTableCell36.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_Naturaleza]==\'INT\',\'INTERNA\',\'SRI\' )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_Naturaleza]==\'\',\'TODAS\',Iif([Parameters].[p_Naturaleza]==\'INT" +
+                    "\',\'INTERNA\',\'SRI\' ) )")});
             this.xrTableCell36.Name = "xrTableCell36";
             this.xrTableCell36.Text = "xrTableCell36";
             this.xrTableCell36.Weight = 1.4638604240758952D;
@@ -1232,6 +1220,19 @@
             this.xrTableCell52.Text = "xrTableCell52";
             this.xrTableCell52.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell52.Weight = 1.0832578452358037D;
+            // 
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Facturacion.FAC_018_Info);
+            this.objectDataSource1.Name = "objectDataSource1";
+            // 
+            // SubReporte_resumen
+            // 
+            this.SubReporte_resumen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 47.87499F);
+            this.SubReporte_resumen.Name = "SubReporte_resumen";
+            this.SubReporte_resumen.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_018_resumen_Rpt();
+            this.SubReporte_resumen.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.SubReporte_resumen.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.SubReporte_resumen_BeforePrint);
             // 
             // FAC_018_Rpt
             // 

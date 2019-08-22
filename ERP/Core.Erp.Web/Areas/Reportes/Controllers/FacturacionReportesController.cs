@@ -226,7 +226,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_nota = bus_nota.get_list(IdEmpresa, false);
             if (intTipoArray == null || intTipoArray.Count() == 0)
             {
-                lst_nota.FirstOrDefault().Seleccionado = true;
+                
             }
             else
                 foreach (var item in lst_nota)
@@ -912,6 +912,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             }
             #endregion
             report.IntArray = model.IntArray;
+            report.IntTipoArray = model.IntTipoArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente;
@@ -943,12 +944,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.IntTipoArray = model.IntTipoArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdCliente.Value = (model.IdCliente== null? 0 : model.IdCliente);
             report.p_IdTipoNota.Value = model.IdTipoNota;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_CreDeb.Value = model.CreDeb;
-            report.p_Naturaleza.Value = model.Naturaleza;
+            report.p_Naturaleza.Value = (model.Naturaleza==null? "" : model.Naturaleza);
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
