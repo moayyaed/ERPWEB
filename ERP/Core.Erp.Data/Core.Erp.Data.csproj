@@ -2743,9 +2743,6 @@
     <Compile Include="vwtb_banco_procesos_bancarios_x_empresa.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwtb_bodega_x_sucursal.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
     <Compile Include="vwtb_Ciudad.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>

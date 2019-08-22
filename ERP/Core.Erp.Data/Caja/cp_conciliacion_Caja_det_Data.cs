@@ -47,7 +47,10 @@ namespace Core.Erp.Data.Caja
                                  Saldo_OG = q.SaldoOG
                              }).ToList();
                 }
-
+                Lista.ForEach(q =>
+                {
+                    q.IdSecuencia = q.IdEmpresa.ToString("00") + q.IdTipoCbte_Ogiro.ToString("00") + q.IdCbteCble_Ogiro.ToString("0000000000");
+                });
                 return Lista;
             }
             catch (Exception)
@@ -67,7 +70,6 @@ namespace Core.Erp.Data.Caja
                     Lista = (from q in Context.vwcp_orden_giro_x_pagar
                              where q.IdEmpresa == IdEmpresa
                              && q.IdSucursal == IdSucursal
-                             && q.cod_Documento != "N/D"
                              && q.Saldo_OG > 0
                              select new cp_conciliacion_Caja_det_Info
                              {
@@ -91,7 +93,11 @@ namespace Core.Erp.Data.Caja
                                  Tipo_documento = q.cod_Documento
                              }).ToList();
 
-                    Lista.ForEach(q => q.Valor_a_aplicar = Convert.ToDecimal(q.Saldo_OG));
+                    Lista.ForEach(q => {
+                        q.IdSecuencia = q.IdEmpresa.ToString("00")+q.IdTipoCbte_Ogiro.ToString("00")+q.IdCbteCble_Ogiro.ToString("0000000000");
+                        q.Valor_a_aplicar = Convert.ToDecimal(q.Saldo_OG);
+                    });
+
                 }
 
                 return Lista;

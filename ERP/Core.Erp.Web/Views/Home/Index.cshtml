@@ -17,6 +17,6 @@
         settings.Name = "treeViewMenuInicio";
         settings.EnableHotTrack = true;
         var Nodes = new List<Core.Erp.Info.SeguridadAcceso.seg_Menu_x_Empresa_x_Usuario_Info>();
-        Core.Erp.Web.Areas.SeguridadAcceso.Controllers.MenuPorEmpresaPorUsuarioController.CreateTreeViewNodesRecursive(Nodes, settings.Nodes, 0, (Core.Erp.Web.Helps.SessionFixed.IdEmpresa == null ? 0 : Convert.ToInt32(Core.Erp.Web.Helps.SessionFixed.IdEmpresa)), (Core.Erp.Web.Helps.SessionFixed.IdUsuario == null ? "" : Core.Erp.Web.Helps.SessionFixed.IdUsuario.ToString()));
+        Core.Erp.Web.Areas.SeguridadAcceso.Controllers.MenuPorEmpresaPorUsuarioController.CreateTreeViewNodesRecursive(Nodes, settings.Nodes, 0, (Core.Erp.Web.Helps.SessionFixed.IdEmpresa == null ? 0 : Convert.ToInt32(Core.Erp.Web.Helps.SessionFixed.IdEmpresa)), string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) ? "" : Core.Erp.Web.Helps.SessionFixed.IdUsuario);
 
     }).GetHtml()

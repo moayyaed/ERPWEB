@@ -293,6 +293,10 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         
         private bool validar(cp_conciliacion_Caja_Info i_validar, ref string msg)
         {
+            i_validar.IdUsuario = SessionFixed.IdUsuario;
+            i_validar.IdUsuarioModificacion = SessionFixed.IdUsuario;
+
+
             i_validar.lst_det_ct = list_ct.get_list(i_validar.IdTransaccionSession);
 
             i_validar.lst_det_ing = list_ing.get_list(i_validar.IdTransaccionSession);
@@ -477,7 +481,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
-                    var info_det = lst_x_cruzar.Where(q => q.IdCbteCble_Ogiro == Convert.ToInt32(item)).FirstOrDefault();
+                    var info_det = lst_x_cruzar.Where(q => q.IdSecuencia == item).FirstOrDefault();
                     if(info_det != null)
                         list_det.AddRow(info_det, IdTransaccionFixed);
                 }

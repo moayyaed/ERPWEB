@@ -638,26 +638,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_TarjetaCredito_x_cp_proveedor
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwtb_bodega_x_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vwtb_bodega_x_sucursal">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="bo_Descripcion" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="Estado" />
-          </Key>
-          <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdSucursal" Type="int" Nullable="false" />
-          <Property Name="IdBodega" Type="int" Nullable="false" />
-          <Property Name="cod_bodega" Type="varchar" MaxLength="50" />
-          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="cod_punto_emision" Type="char" MaxLength="3" />
-          <Property Name="bo_manejaFacturacion" Type="nchar" MaxLength="1" />
-          <Property Name="codigo" Type="varchar" MaxLength="10" />
-          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
-        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_comprobantes_no_autorizados">
@@ -1134,20 +1114,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
     [vwtb_TarjetaCredito_x_cp_proveedor].[IdTransaccion] AS [IdTransaccion]
     FROM [dbo].[vwtb_TarjetaCredito_x_cp_proveedor] AS [vwtb_TarjetaCredito_x_cp_proveedor]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vwtb_bodega_x_sucursal" EntityType="Self.vwtb_bodega_x_sucursal" store:Type="Views" store:Schema="web">
-            <DefiningQuery>SELECT 
-    [vwtb_bodega_x_sucursal].[IdEmpresa] AS [IdEmpresa], 
-    [vwtb_bodega_x_sucursal].[IdSucursal] AS [IdSucursal], 
-    [vwtb_bodega_x_sucursal].[IdBodega] AS [IdBodega], 
-    [vwtb_bodega_x_sucursal].[cod_bodega] AS [cod_bodega], 
-    [vwtb_bodega_x_sucursal].[bo_Descripcion] AS [bo_Descripcion], 
-    [vwtb_bodega_x_sucursal].[cod_punto_emision] AS [cod_punto_emision], 
-    [vwtb_bodega_x_sucursal].[bo_manejaFacturacion] AS [bo_manejaFacturacion], 
-    [vwtb_bodega_x_sucursal].[codigo] AS [codigo], 
-    [vwtb_bodega_x_sucursal].[Su_Descripcion] AS [Su_Descripcion], 
-    [vwtb_bodega_x_sucursal].[Estado] AS [Estado]
-    FROM [web].[vwtb_bodega_x_sucursal] AS [vwtb_bodega_x_sucursal]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vwtb_comprobantes_no_autorizados" EntityType="Self.vwtb_comprobantes_no_autorizados" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [vwtb_comprobantes_no_autorizados].[IdEmpresa] AS [IdEmpresa], 
@@ -1400,7 +1366,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_sis_reporte" EntitySet="tb_sis_reporte" />
             <End Role="tb_sis_reporte_x_seg_usuario" EntitySet="tb_sis_reporte_x_seg_usuario" />
           </AssociationSet>
-          <EntitySet Name="vwtb_bodega_x_sucursal" EntityType="Model_general.vwtb_bodega_x_sucursal" />
           <EntitySet Name="vwtb_banco_procesos_bancarios_x_empresa" EntityType="Model_general.vwtb_banco_procesos_bancarios_x_empresa" />
           <EntitySet Name="tb_persona_tipo" EntityType="Model_general.tb_persona_tipo" />
           <EntitySet Name="vwtb_TarjetaCredito_x_cp_proveedor" EntityType="Model_general.vwtb_TarjetaCredito_x_cp_proveedor" />
@@ -2168,26 +2133,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwtb_bodega_x_sucursal">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="bo_Descripcion" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="Estado" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="cod_bodega" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="cod_punto_emision" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="bo_manejaFacturacion" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="vwtb_banco_procesos_bancarios_x_empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2955,22 +2900,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="IdUsuarioAut" ColumnName="IdUsuarioAut" />
                 <ScalarProperty Name="IdUsuarioLog" ColumnName="IdUsuarioLog" />
                 <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwtb_bodega_x_sucursal">
-            <EntityTypeMapping TypeName="Model_general.vwtb_bodega_x_sucursal">
-              <MappingFragment StoreEntitySet="vwtb_bodega_x_sucursal">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
-                <ScalarProperty Name="bo_manejaFacturacion" ColumnName="bo_manejaFacturacion" />
-                <ScalarProperty Name="cod_punto_emision" ColumnName="cod_punto_emision" />
-                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
-                <ScalarProperty Name="cod_bodega" ColumnName="cod_bodega" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

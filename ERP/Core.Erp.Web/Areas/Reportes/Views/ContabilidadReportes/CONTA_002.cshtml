@@ -294,7 +294,6 @@
 
 <script type="text/javascript">
     $(function () {
-        CargarPuntoCargo();
         $("#IdPunto_cargo_grupo").change(function () {
             CargarPuntoCargo();
         });
@@ -320,6 +319,7 @@
             success: function (data) {
                 $.each(data, function (i, row) {
                     $("#IdPunto_cargo").append("<option value=" + row.IdPunto_cargo + ">" + row.nom_punto_cargo + "</option>");
+                    $("#IdPunto_cargo").val("0");
                 });
             },
             error: function (error) {

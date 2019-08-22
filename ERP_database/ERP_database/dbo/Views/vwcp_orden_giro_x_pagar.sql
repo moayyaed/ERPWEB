@@ -1,7 +1,7 @@
 ﻿CREATE VIEW [dbo].[vwcp_orden_giro_x_pagar]
 AS
-SELECT OG.IdEmpresa, OG.IdCbteCble_Ogiro, OG.IdTipoCbte_Ogiro, OG.IdOrden_giro_Tipo, OG.IdProveedor, OG.co_serie, OG.co_factura + '/' + CAST(OG.IdCbteCble_Ogiro AS varchar(20)) AS co_factura, OG.co_FechaFactura, 
-                  OG.co_observacion, OG.IdSucursal, OG.co_fechaOg, OG.co_subtotal_iva, OG.co_subtotal_siniva, OG.co_baseImponible, OG.co_Por_iva, OG.co_valoriva, OG.co_total, isnull(OG.co_total - isnull(ret.re_valor_retencion, 0), 0) co_valorpagar, 
+SELECT OG.IdEmpresa, OG.IdCbteCble_Ogiro, OG.IdTipoCbte_Ogiro, OG.IdOrden_giro_Tipo, OG.IdProveedor, OG.co_serie, OG.co_serie + '-' + OG.co_factura AS co_factura, OG.co_FechaFactura, OG.co_observacion, OG.IdSucursal, 
+                  OG.co_fechaOg, OG.co_subtotal_iva, OG.co_subtotal_siniva, OG.co_baseImponible, OG.co_Por_iva, OG.co_valoriva, OG.co_total, isnull(OG.co_total - isnull(ret.re_valor_retencion, 0), 0) co_valorpagar, 
                   ROUND(ISNULL(OP.Total_Cancelado_OP, 0), 2) AS Total_Pagado, ROUND(ROUND(isnull(OG.co_total - isnull(ret.re_valor_retencion, 0), 0), 2) - ROUND(ISNULL(OP.Total_Cancelado_OP, 0), 2), 2) AS Saldo_OG, 
                   dbo.cp_TipoDocumento.Descripcion AS nom_tipo_Documento, tb_persona.pe_nombreCompleto AS nom_proveedor, dbo.ct_cbtecble_tipo.CodTipoCbte, dbo.ct_cbtecble_tipo.tc_TipoCbte, dbo.cp_orden_pago_tipo_x_empresa.IdTipo_op, 
                   dbo.cp_orden_pago_tipo_x_empresa.IdEstadoAprobacion, cast(isnull(a.Fecha_vcto_cuota, OG.co_FechaFactura_vct) AS datetime) co_FechaFactura_vct, NULL IdTipoFlujo, '' AS nom_flujo, dbo.tb_persona.IdPersona, 
