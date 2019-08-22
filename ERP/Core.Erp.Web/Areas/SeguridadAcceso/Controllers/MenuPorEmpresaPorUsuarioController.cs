@@ -34,7 +34,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         {
 
             //var rows = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario, parentID);
-            var rows = seg_Menu_x_Empresa_x_Usuario_Lista.get_list().Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario && q.info_menu.IdMenuPadre == parentID).ToList();
+            var rows = seg_Menu_x_Empresa_x_Usuario_Lista.get_list().Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario.ToLower() == IdUsuario.ToLower() && q.info_menu.IdMenuPadre == parentID).ToList();
 
             foreach (seg_Menu_x_Empresa_x_Usuario_Info row in rows)
             {

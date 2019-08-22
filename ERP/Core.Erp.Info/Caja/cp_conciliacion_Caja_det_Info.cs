@@ -32,6 +32,7 @@ namespace Core.Erp.Info.Caja
         public double co_total { get; set; }
         public double co_valorpagar { get; set; }
         public Nullable<double> Saldo_OG { get; set; }
+        public string IdSecuencia { get; set; }
         #endregion
 
     }

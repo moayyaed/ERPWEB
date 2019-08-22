@@ -64,7 +64,7 @@
         e.customArgs['IdCajaConciliacion'] = $('#IdCaja').val();
         }
     function OnSelectionChanged(s, e) {
-        s.GetSelectedFieldValues("IdCbteCble_Ogiro", GetSelectedFieldValuesCallback);
+        s.GetSelectedFieldValues("IdSecuencia", GetSelectedFieldValuesCallback);
         }
     function GetSelectedFieldValuesCallback(values) {
             //Capture all selected keys
@@ -145,9 +145,30 @@
     }
     function MostrarModal() {
         selectedIDs = "";
-        GridView_conciliacion_facturas_x_cruzar.PerformCallback();
-        GridView_conciliacion_facturas_x_cruzar.UnselectRows();
-        $("#FacturasModal").modal("show");
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListFacturas_PorIngresar", "ConciliacionCaja", new { Area = "Caja" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridView_conciliacion_facturas_x_cruzar.PerformCallback();
+                GridView_conciliacion_facturas_x_cruzar.UnselectRows();
+                $("#FacturasModal").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddFacturas() {
