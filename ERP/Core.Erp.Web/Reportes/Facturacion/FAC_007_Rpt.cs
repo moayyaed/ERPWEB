@@ -39,7 +39,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
             var empresa = bus_empresa.get_info(IdEmpresa);
             lbl_empresa.Text = empresa.em_nombre;
             lbl_direccion.Text = empresa.em_direccion;
-            lbl_telefono.Text = empresa.em_telefonos;
+            lbl_Contribuyente.Text = empresa.ContribuyenteEspecial;
             lbl_correo.Text = empresa.em_Email;
             lbl_ruc.Text = empresa.em_ruc;
 
