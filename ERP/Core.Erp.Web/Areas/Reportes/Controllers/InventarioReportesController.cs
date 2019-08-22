@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Reportes.Controllers
 {
@@ -42,6 +43,24 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         #endregion
 
+        #region Metodos ComboBox bajo demanda centro de costo
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+
+        public ActionResult CmbCentroCosto_Inventario()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_Inventario", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaCC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
 
         #region json
 
@@ -103,6 +122,20 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult cargar_tipo_movimiento(int IdEmpresa = 0, string Signo = "")
+        {
+            in_movi_inven_tipo_Bus bus_tipo_mov = new in_movi_inven_tipo_Bus();
+            var resultado = bus_tipo_mov.get_list(IdEmpresa, Signo, false);
+
+            resultado.Add(new in_movi_inven_tipo_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdMovi_inven_tipo = 0,
+                tm_descripcion = "TODOS"
+            });
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region GRids
@@ -354,6 +387,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
             var lst_bodega = bus_bodega.get_list(IdEmpresa, IdSucursal, false);
+            lst_bodega.Add(new tb_bodega_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdBodega = 0,
+                bo_Descripcion = "TODAS"
+            });
+
             ViewBag.lst_bodega = lst_bodega;
 
             ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
@@ -362,6 +402,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             in_movi_inven_tipo_Bus bus_movi = new in_movi_inven_tipo_Bus();
             var lst_movi = bus_movi.get_list(IdEmpresa, "", false);
+            lst_movi.Add(new in_movi_inven_tipo_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdMovi_inven_tipo = 0,
+                tm_descripcion = "TODAS"
+            });
             ViewBag.lst_movi = lst_movi;
             
 
@@ -419,6 +465,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.lst_marca = lst_marca;
 
             Dictionary<string, string> lst_TipoMov = new Dictionary<string, string>();
+            lst_TipoMov.Add("", "TODOS");
             lst_TipoMov.Add("+", "INGRESOS");
             lst_TipoMov.Add("-", "EGRESOS");
             ViewBag.lst_TipoMov = lst_TipoMov;
@@ -643,6 +690,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 fecha_ini = new DateTime(DateTime.Now.Year, 1, 1),
                 fecha_fin = new DateTime(DateTime.Now.Year, 12, 31),
+                tipo_movi= "",
                 IdBodega = 0
             };
 
@@ -693,6 +741,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdCentroCosto.Value = model.IdCentroCosto;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_signo.Value = model.tipo_movi;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
@@ -875,7 +924,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                tipo_movi = ""
+                tipo_movi = "",
+                IdMovi_inven_tipo = 0
+                
             };
 
             cargar_combos(model);

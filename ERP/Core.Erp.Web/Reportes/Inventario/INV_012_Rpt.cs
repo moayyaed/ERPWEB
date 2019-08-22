@@ -34,7 +34,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             decimal IdNumMovi = string.IsNullOrEmpty(p_IdNumMovi.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdNumMovi.Value);
 
             INV_012_Bus bus_rpt = new INV_012_Bus();
-            List<INV_012_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, tipo_movi, IdNumMovi, fechaIni, fechaFin);
+            List<INV_012_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdBodega, tipo_movi, IdMovi_inven_tipo, IdNumMovi, fechaIni, fechaFin);
             this.DataSource = lst_rpt;
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
