@@ -321,20 +321,14 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                     msg = "Seleccione el beneficiario";
                     return false;
                 }
-                if (i_validar.lst_det_ct.Count == 0)
+                if (i_validar.ValorOP == 0)
                 {
-                    msg = "Debe ingresar registros en el detalle del diario";
+                    msg = "El valor de la orden de pago no puede ser 0";
                     return false;
                 }
-                if (i_validar.lst_det_ct.Sum(q => q.dc_Valor) != 0)
+                if (i_validar.ValorOP == 0)
                 {
-                    msg = "La suma del detalle del diario debe ser 0";
-                    return false;
-                }
-
-                if (i_validar.lst_det_ct.Where(q => q.dc_Valor == 0).Count() > 0)
-                {
-                    msg = "Existen detalles con valor 0 en el debe o haber";
+                    msg = "El valor de la reposición de caja no puede ser 0";
                     return false;
                 }
                 var persona = bus_persona.get_info(i_validar.IdEmpresa, i_validar.IdTipoPersona, (decimal)i_validar.IdEntidad);

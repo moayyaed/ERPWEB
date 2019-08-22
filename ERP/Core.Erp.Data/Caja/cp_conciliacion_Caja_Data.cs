@@ -706,7 +706,8 @@ namespace Core.Erp.Data.Caja
                         IdFormaPago = cl_enumeradores.eFormaPagoOrdenPago.EFEC.ToString(),
                         Fecha_Pago = op.Fecha
                     });
-                    
+                    Entity_c.IdEmpresa_op = op.IdEmpresa;
+                    Entity_c.IdOrdenPago_op = op.IdOrdenPago;
                     #endregion
                 }
                 #endregion
@@ -789,6 +790,10 @@ namespace Core.Erp.Data.Caja
                     info.IdEmpresa_mov_caj = repo.IdEmpresa;
                     info.IdTipoCbte_mov_caj = repo.IdTipoCbte;
                     info.IdCbteCble_mov_caj = repo.IdCbteCble;
+
+                    Entity_c.IdEmpresa_mov_caj = repo.IdEmpresa;
+                    Entity_c.IdTipoCbte_mov_caj = repo.IdTipoCbte;
+                    Entity_c.IdCbteCble_mov_caj = repo.IdCbteCble;
                 }
                 #endregion
 
