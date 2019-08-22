@@ -180,7 +180,7 @@ namespace Core.Erp.Data.Inventario
                     if(!string.IsNullOrEmpty(MensajeExiste))
                         Mensaje = "Productos que no pertenecen a la bodega: "+MensajeExiste+" ";
                     if(!string.IsNullOrEmpty(MensajeCta))
-                        Mensaje += "Productos sin cuenta contable: " + MensajeExiste + " ";
+                        Mensaje += "Productos sin cuenta contable: " + MensajeCta + " ";
                 }
                 return Mensaje;
             }
