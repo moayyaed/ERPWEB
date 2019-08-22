@@ -1168,6 +1168,12 @@
     <Compile Include="Reportes\Inventario\INV_001_Rpt.Designer.cs">
       <DependentUpon>INV_001_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Inventario\INV_002_sum_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_002_sum_Rpt.Designer.cs">
+      <DependentUpon>INV_002_sum_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Inventario\INV_004_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10695,6 +10701,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_001_Rpt.resx">
       <DependentUpon>INV_001_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_002_sum_Rpt.resx">
+      <DependentUpon>INV_002_sum_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_004_Rpt.resx">
       <DependentUpon>INV_004_Rpt.cs</DependentUpon>

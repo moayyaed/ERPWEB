@@ -45,5 +45,6 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<System.DateTime> FechaDespacho { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public Nullable<System.DateTime> FechaAR { get; set; }
+        public string nom_linea { get; set; }
     }
 }

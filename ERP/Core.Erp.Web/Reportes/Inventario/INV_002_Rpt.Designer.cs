@@ -127,6 +127,7 @@
             this.lbl_fecha = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
+            this.xrSubreport1 = new DevExpress.XtraReports.UI.XRSubreport();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -678,6 +679,7 @@
             // ReportFooter
             // 
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrSubreport1,
             this.xrTable10,
             this.xrTable8,
             this.xrTable5,
@@ -725,7 +727,7 @@
             this.xrTableRow15,
             this.xrTableRow18,
             this.xrTableRow17});
-            this.xrTable8.SizeF = new System.Drawing.SizeF(400.0004F, 60F);
+            this.xrTable8.SizeF = new System.Drawing.SizeF(305.0004F, 60F);
             this.xrTable8.StylePriority.UseFont = false;
             this.xrTable8.StylePriority.UsePadding = false;
             this.xrTable8.StylePriority.UseTextAlignment = false;
@@ -754,7 +756,7 @@
             this.xrTableCell41.Name = "xrTableCell41";
             this.xrTableCell41.Text = "xrTableCell8";
             this.xrTableCell41.TextFormatString = "{0:dd/MM/yyyy hh:mm:ss}";
-            this.xrTableCell41.Weight = 3.5687566601841096D;
+            this.xrTableCell41.Weight = 2.1946207931596939D;
             // 
             // xrTableRow18
             // 
@@ -779,7 +781,7 @@
             this.xrTableCell43.Name = "xrTableCell43";
             this.xrTableCell43.Text = "xrTableCell32";
             this.xrTableCell43.TextFormatString = "{0:dd/MM/yyyy hh:mm:ss}";
-            this.xrTableCell43.Weight = 3.5687566601841096D;
+            this.xrTableCell43.Weight = 2.1946207931596939D;
             // 
             // xrTableRow17
             // 
@@ -804,7 +806,7 @@
             this.xrTableCell47.Name = "xrTableCell47";
             this.xrTableCell47.Text = "xrTableCell10";
             this.xrTableCell47.TextFormatString = "{0:dd/MM/yyyy hh:mm:ss}";
-            this.xrTableCell47.Weight = 3.5687564394719957D;
+            this.xrTableCell47.Weight = 2.1946205724475796D;
             // 
             // xrTable5
             // 
@@ -1093,6 +1095,14 @@
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrPageInfo2.TextFormatString = "Página {0} de {1}";
             // 
+            // xrSubreport1
+            // 
+            this.xrSubreport1.LocationFloat = new DevExpress.Utils.PointFloat(364.1667F, 37.00002F);
+            this.xrSubreport1.Name = "xrSubreport1";
+            this.xrSubreport1.ReportSource = new Core.Erp.Web.Reportes.Inventario.INV_002_sum_Rpt();
+            this.xrSubreport1.SizeF = new System.Drawing.SizeF(305.8333F, 23F);
+            this.xrSubreport1.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrSubreport1_BeforePrint);
+            // 
             // INV_002_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1228,5 +1238,6 @@
         private DevExpress.XtraReports.UI.XRTable xrTable10;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow19;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell48;
+        private DevExpress.XtraReports.UI.XRSubreport xrSubreport1;
     }
 }
