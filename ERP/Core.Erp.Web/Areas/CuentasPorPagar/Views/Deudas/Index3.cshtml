@@ -68,7 +68,8 @@
 
     function seleccionar_aprobacion() {
         var datos = {
-            Ids: selectedIDs
+            Ids: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $("#btn_guardar").disabled = true;
         $.ajax({
@@ -98,7 +99,8 @@
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdSucursal: $("#IdSucursal").val(),
-            Agrupar: $("#Agrupar").val()
+            Agrupar: $("#Agrupar").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $.ajax({
             type: 'POST',
@@ -149,6 +151,7 @@
 @using (Html.BeginForm("Index3", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-5">

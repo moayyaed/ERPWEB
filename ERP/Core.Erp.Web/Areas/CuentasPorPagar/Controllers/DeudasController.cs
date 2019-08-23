@@ -59,6 +59,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_retencion_det_lst List_cp_retencion_det = new cp_retencion_det_lst();
         cp_retencion_Bus bus_retencion = new cp_retencion_Bus();
         cp_orden_giro_det_PorIngresar_List List_det_PorIngresar = new cp_orden_giro_det_PorIngresar_List();
+        cp_orden_giro_det_PorIngresar_Seleccionadas_List List_det_PorIngresar_Seleccionadas = new cp_orden_giro_det_PorIngresar_Seleccionadas_List();
         cp_codigo_SRI_Bus bus_sri = new cp_codigo_SRI_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
@@ -182,11 +183,20 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Aprobacion de facturas por proveedor
         public ActionResult Index3()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cp_orden_giro_Info model = new cp_orden_giro_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
             };
+
             Session["list_facturas_seleccionadas"] = null;
             cargar_combos_consulta_fact_con_saldo();
 
@@ -711,10 +721,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0, string Agrupar="")
+        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0, string Agrupar="", decimal IdTransaccionSession=0)
         {
             string retorno = string.Empty;
             var lst = new List<cp_orden_giro_Info>();
+            var nueva_lista = new List<cp_orden_giro_Info>();
             ViewBag.Agrupar = Agrupar;
 
             if (Agrupar=="1")
@@ -726,7 +737,36 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 lst = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa, IdSucursal);
             }
 
-            Session["list_ordenes_giro"] = lst;
+            var lista_seleccionada = List_det_PorIngresar_Seleccionadas.get_list(IdTransaccionSession);
+            //            Session["list_ordenes_giro"] = lst;
+
+            var count = 0;
+            foreach (var item1 in lst)
+            {
+                if (lista_seleccionada.Count()>0)
+                {
+                    count = 0;
+                    foreach (var item2 in lista_seleccionada)
+                    {
+                        if (item1.SecuencialID == item2.SecuencialID)
+                        {
+                            count++;                            
+                        }
+                    }
+
+                    if (count==0)
+                    {
+                        nueva_lista.Add(item1);
+                    }
+                }
+                else
+                {
+                    nueva_lista = lst;
+                }
+                
+            }
+
+            Session["list_ordenes_giro"] = nueva_lista;
             retorno = "S";
 
             return Json(retorno, JsonRequestBehavior.AllowGet);
@@ -900,7 +940,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             Session["list_facturas_seleccionadas"] = null;
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        public JsonResult seleccionar_aprobacion(string Ids)
+        public JsonResult seleccionar_aprobacion(string Ids, decimal IdTransaccionSession)
         {
             if (Ids != null)
             {
@@ -948,6 +988,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     }
                 }
                 Session["list_facturas_seleccionadas"] = list_facturas_seleccionadas;
+                List_det_PorIngresar_Seleccionadas.set_list(list_facturas_seleccionadas, IdTransaccionSession);
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -1333,6 +1374,26 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         public void set_list(List<cp_orden_giro_det_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
+    public class cp_orden_giro_det_PorIngresar_Seleccionadas_List
+    {
+        string Variable = "cp_orden_giro_det_PorIngresar_Seleccionadas";
+        public List<cp_orden_giro_aprobacion_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_orden_giro_aprobacion_Info> list = new List<cp_orden_giro_aprobacion_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_orden_giro_aprobacion_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_orden_giro_aprobacion_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }

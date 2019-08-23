@@ -14,6 +14,7 @@ namespace Core.Erp.Bus.Caja
         caj_Caja_Movimiento_Data odata = new caj_Caja_Movimiento_Data();
         ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
         caj_Caja_Data odata_caja = new caj_Caja_Data();
+        tb_persona_Bus bus_persona = new tb_persona_Bus();
         public List<caj_Caja_Movimiento_Info> get_list(int IdEmpresa, int IdCaja, string cm_signo, bool mostrar_anulados, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
@@ -44,10 +45,22 @@ namespace Core.Erp.Bus.Caja
         {
             try
             {
+                var beneficiario = bus_persona.get_info(info.IdEmpresa, info.IdTipo_Persona, info.IdEntidad);               
                 var caja = odata_caja.get_info(info.IdEmpresa, info.IdCaja);
                 //Como necesito que exista un diario para que el movimiento herede sus PK, armo un diario en base a lo que ingresen en la pantalla
                 info.info_ct_cbtecble = odata_ct.armar_info(info.lst_ct_cbtecble_det, info.IdEmpresa, caja.IdSucursal, info.IdTipocbte, info.IdCbteCble, info.cm_observacion, info.cm_fecha);
                 info.info_ct_cbtecble.IdUsuario = info.IdUsuario;
+
+                if (beneficiario != null)
+                {
+                    if (info.cm_observacion == null)
+                        info.cm_observacion = "";
+
+                    info.info_ct_cbtecble.cb_Observacion = info.info_ct_cbtecble.cb_Observacion  = "BENEF: " + beneficiario.pe_nombreCompleto + " OBS: " + info.cm_observacion;
+                    info.cm_observacion = info.cm_observacion = " BENEF: " + beneficiario.pe_nombreCompleto + " OBS: " + info.cm_observacion;
+                }
+                else
+                    info.info_ct_cbtecble.cb_Observacion = info.info_ct_cbtecble.cb_Observacion = info.cm_observacion;
 
                 //Guardo el diario
                 if (odata_ct.guardarDB(info.info_ct_cbtecble))
