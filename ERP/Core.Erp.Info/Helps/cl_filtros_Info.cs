@@ -241,6 +241,7 @@ namespace Core.Erp.Info.Helps
         public int IdTipoNota { get; set; }
         public string CreDeb { get; set; }
         public string Naturaleza { get; set; }
+        public int DiasVencidos { get; set; }
         public cl_filtros_facturacion_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);

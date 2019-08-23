@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 {
     public class CXC_010_Data
     {
-        public List<CXC_010_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCliente, int Idtipo_cliente, DateTime fechaCorte, bool MostrarSoloCarteraVencida)
+        public List<CXC_010_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCliente, int Idtipo_cliente, DateTime fechaCorte, bool MostrarSoloCarteraVencida, int DiasVencimiento)
         {
             try
             {
@@ -23,6 +23,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                 decimal Idtipo_clienteFin = Idtipo_cliente == 0 ? 9999999 : Idtipo_cliente;
 
                 fechaCorte = fechaCorte.Date;
+
+                int DiasVencimientoIni = DiasVencimiento;
+                int DiasVencimientoFin = DiasVencimiento == 0 ? 999999999 : DiasVencimiento;
 
                 List<CXC_010_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())

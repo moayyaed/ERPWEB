@@ -104,7 +104,7 @@
             this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(145.7499F, 122.2083F);
             this.xrLabel2.Name = "xrLabel2";
             this.xrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel2.SizeF = new System.Drawing.SizeF(82.29167F, 23F);
+            this.xrLabel2.SizeF = new System.Drawing.SizeF(135.4167F, 22.99998F);
             this.xrLabel2.StylePriority.UseFont = false;
             this.xrLabel2.TextFormatString = "{0:dd-MM-yy}";
             // 

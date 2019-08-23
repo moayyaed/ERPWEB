@@ -459,7 +459,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                Idtipo_cliente = 0
+                Idtipo_cliente = 0,
+                DiasVencidos = 0
             };
 
             cargar_combos(model.IdEmpresa);
@@ -478,6 +479,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.p_DiasVencimiento.Value = model.DiasVencidos;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
@@ -504,6 +506,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_Idtipo_cliente.Value = model.Idtipo_cliente == 0 ? 0 : model.Idtipo_cliente;
             report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.p_IdSucursal.Value = model.DiasVencidos;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_combos(model.IdEmpresa);

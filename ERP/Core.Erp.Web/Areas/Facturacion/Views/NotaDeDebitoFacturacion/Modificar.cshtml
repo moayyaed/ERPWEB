@@ -185,10 +185,36 @@
     }
     function OnSelectionChanged(s, e) {
         s.GetSelectedFieldValues("secuencial", GetSelectedFieldValuesCallback);
+        s.GetSelectedFieldValues("Saldo", GetSelectedFieldValuesCallback_Saldo);
     }
     function GetSelectedFieldValuesCallback(values) {
         //Capture all selected keys
         selectedIDs = values.join(',');
+    }
+
+    function GetSelectedFieldValuesCallback_Saldo(values) {
+        TotalRows = values.join(',');
+
+        var datos = {
+            TotalRows: TotalRows
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SumarValorItems", "NotaDeDebitoFacturacion", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#TotalRows").html("Total: $"+data);
+
+            },
+            error: function (error) {
+            }
+        });
+
     }
 
     function MostrarModalDocumentos() {
@@ -353,6 +379,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Documentos por aplicar</h4>
+                    <label id="TotalRows"></label>
                 </div>
                 <div class="modal-body">
                     @Html.Action("GridViewPartial_CruceND_x_cruzar")

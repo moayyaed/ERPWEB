@@ -78,6 +78,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Descripcion">Dias Vencimiento*</label>
+                            @Html.TextBoxFor(q => q.DiasVencidos, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.DiasVencidos, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
