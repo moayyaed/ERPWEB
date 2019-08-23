@@ -138,7 +138,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.Fecha_Autorizacion = info.fecha_autorizacion;
                         info.info_retencion.Descripcion = info.Descripcion;
                         info.info_retencion.Estado = "A";
-                        info.info_retencion.fecha = info.co_fechaOg;
+                        info.info_retencion.fecha = info.FechaRetencion;
                         info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                         info.info_retencion.IdUsuario = info.IdUsuario;
                         if (prov != null)
@@ -177,7 +177,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info.info_comrobante.IdEmpresa = info.IdEmpresa;
                 info.info_comrobante.IdTipoCbte = info.IdTipoCbte_Ogiro;
                 info.info_comrobante.IdCbteCble = info.IdCbteCble_Ogiro;
-                info.info_comrobante.cb_Fecha = (DateTime)info.co_FechaContabilizacion;
+                info.info_comrobante.cb_Fecha = (DateTime)info.FechaRetencion;
                 info.info_comrobante.IdSucursal = info.IdSucursal;
                 info.info_comrobante.cb_Estado = "A";
                 info.info_comrobante.IdPeriodo = Convert.ToInt32(info.info_comrobante.cb_Fecha.Year.ToString() + info.info_comrobante.cb_Fecha.Month.ToString().PadLeft(2, '0'));
@@ -235,7 +235,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                         info.info_retencion.IdSucursal = info.IdSucursal;
                         info.info_retencion.Descripcion = info.Descripcion;
                         info.info_retencion.Estado = "A";
-                        info.info_retencion.fecha = info.co_fechaOg;
+                        info.info_retencion.fecha = info.FechaRetencion;
                         info.info_retencion.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                         //if (info.info_retencion.serie1 == null)
                         //{

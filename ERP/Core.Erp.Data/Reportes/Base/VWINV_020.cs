@@ -43,6 +43,8 @@ namespace Core.Erp.Data.Reportes.Base
         public string pe_nombreCompleto { get; set; }
         public Nullable<System.DateTime> FechaDespacho { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
+        public string IdUsuarioDespacho { get; set; }
+        public string UsuarioDespacho { get; set; }
         public Nullable<System.DateTime> FechaAR { get; set; }
     }
 }

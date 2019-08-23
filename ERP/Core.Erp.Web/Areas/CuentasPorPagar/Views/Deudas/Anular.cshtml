@@ -102,6 +102,7 @@
                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){FechaRetencion.SetValue(s.GetValue());}";
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaContabilizacion, "", new { @class = "text-danger" })
                     </div>
@@ -324,7 +325,26 @@
                                                 @Html.ValidationMessageFor(q => q.info_retencion.NumRetencion, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-
+                                        <div class="col-md-2" id="FechaRetencion">
+                                            <div class="form-group">
+                                                <label for="FechaRetencion">Fecha*</label>
+                                                <div class="input-group date">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    @Html.DevExpress().DateEditFor(q => q.FechaRetencion, settings =>
+                                                   {
+                                                       settings.Name = "FechaRetencion";
+                                                       settings.Properties.UseMaskBehavior = true;
+                                                       settings.Properties.EditFormat = EditFormat.Date;
+                                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                   }).GetHtml()
+                                                    @Html.ValidationMessageFor(q => q.FechaRetencion, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">

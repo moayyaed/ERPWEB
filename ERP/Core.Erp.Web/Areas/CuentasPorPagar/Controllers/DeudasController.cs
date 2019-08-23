@@ -325,6 +325,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 co_FechaFactura = DateTime.Now.Date,
                 co_FechaContabilizacion = DateTime.Now.Date,
                 co_FechaFactura_vct = DateTime.Now.Date,
+                FechaRetencion = DateTime.Now.Date,
                 PaisPago = "593",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoServicio = cl_enumeradores.eTipoServicioCXP.SERVI.ToString(),
@@ -474,10 +475,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_retencion.IdRetencion == 0)
             {
                 model.TieneRetencion = 0;
+                model.FechaRetencion = Convert.ToDateTime(model.co_FechaContabilizacion);
             }
             else
             {
                 model.TieneRetencion = 1;
+                model.FechaRetencion = model.info_retencion.fecha;
             }
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
