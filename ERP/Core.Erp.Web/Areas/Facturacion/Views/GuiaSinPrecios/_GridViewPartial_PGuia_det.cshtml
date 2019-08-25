@@ -1,0 +1,126 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_PGuia_det";
+        settings.CallbackRouteValues = new { Controller = "GuiaSinPrecios", Action = "GridViewPartial_PGuia_det", Area = "Facturacion"};
+        settings.KeyFieldName = "SecuencialUnico";
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdProforma";
+            column.Caption = "# Proforma";
+            column.Width = Unit.Percentage(7);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumCotizacion";
+            column.Caption = "# Cotizacion";
+            column.Width = Unit.Percentage(7);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumOPr";
+            column.Caption = "# Orden Pedido";
+            column.Width = Unit.Percentage(7);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pr_descripcion";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pd_cantidad";
+            column.Caption = "Cantidad";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Saldo";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_precio";
+            column.Caption = "Precio";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_por_desc";
+            column.Caption = "% Desc. uni.";
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_Subtotal";
+            column.Caption = "Subtotal";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_Iva";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_Total";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(6);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "gi_detallexItems";
+            column.Caption = "Detalle adicional";
+            column.Width = Unit.Percentage(10);
+            column.Visible = true;
+            column.EditorProperties().Memo(q =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_Pf";
+    });
+}
+@grid.Bind(Model).GetHtml()

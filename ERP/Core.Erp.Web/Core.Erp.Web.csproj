@@ -339,6 +339,7 @@
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FormaPagoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaRemisionController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\GuiaSinPreciosController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\MotivoTrasladoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NivelDescuentoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NotaDeCreditoFacturacionController.cs" />
@@ -10255,6 +10256,18 @@
     <Content Include="Areas\Caja\Views\ConciliacionCaja\_CmbCentroCosto_ConciliacionCaja.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_020.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\_CmbCentroCosto_Inventario.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_CmbCentroCosto_Guia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_CmbCliente_Guia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_CmbProducto_Guia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_GridViewPartial_Facturas_x_guia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_GridViewPartial_FacturasSinGuia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_GridViewPartial_guias_remision.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_GridViewPartial_guias_remision_det.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\_GridViewPartial_PGuia_det.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Anular.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Nuevo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
