@@ -18,13 +18,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #endregion
 
         #region Vistas
-        public ActionResult Index()
+        public ActionResult Index(int IdSucursal = 0, int IdBodega = 0)
         {
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdBodega = 0
+                IdSucursal = IdSucursal == 0 ? Convert.ToInt32(SessionFixed.IdSucursal) : IdSucursal,
+                IdBodega = IdBodega
             };
 
             CargarCombosConsulta(model);

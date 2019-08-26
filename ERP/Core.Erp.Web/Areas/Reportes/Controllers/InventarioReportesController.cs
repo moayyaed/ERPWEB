@@ -23,6 +23,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         in_Producto_List List_decimal = new in_Producto_List();
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
+        in_Ing_Egr_Inven_Bus bus_ing_egr = new in_Ing_Egr_Inven_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
 
         #region Metodos ComboBox bajo demanda
@@ -213,31 +214,38 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
         public ActionResult INV_002(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0, string Aprobar="")
         {
-            INV_002_Rpt model = new INV_002_Rpt();
-            in_Ing_Egr_Inven_Bus bus_ing_egr = new in_Ing_Egr_Inven_Bus();
+            INV_002_Rpt rpt = new INV_002_Rpt();
+            
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_002");
             if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                model.LoadLayout(RootReporte);
+                rpt.LoadLayout(RootReporte);
             }
             #endregion
-            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
-            model.p_IdSucursal.Value = IdSucursal;
-            model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
-            model.p_IdNumMovi.Value = IdNumMovi;
-            model.usuario = SessionFixed.IdUsuario;
-            model.empresa = SessionFixed.NomEmpresa;
+            rpt.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            rpt.p_IdSucursal.Value = IdSucursal;
+            rpt.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
+            rpt.p_IdNumMovi.Value = IdNumMovi;
+            rpt.usuario = SessionFixed.IdUsuario;
+            rpt.empresa = SessionFixed.NomEmpresa;
 
-            var info = bus_ing_egr.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal,IdMovi_inven_tipo, IdNumMovi);
-            ViewBag.Aprobar = (info== null)? "" : ((info.IdEstadoAproba == "") || info.IdEstadoAproba == "XAPRO") ? "S" : "";
+            in_Ing_Egr_Inven_Info model = bus_ing_egr.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal,IdMovi_inven_tipo, IdNumMovi);
+            ViewBag.Aprobar = (model == null)? "" : ((model.IdEstadoAproba == "") || model.IdEstadoAproba == "XAPRO") ? "S" : "";
             ViewBag.SecuencialID = Convert.ToInt32(SessionFixed.IdEmpresa).ToString("00") + IdSucursal.ToString("00") + IdMovi_inven_tipo.ToString("00") + IdNumMovi.ToString("00000000");
-
-            if (IdNumMovi == 0)
-                model.RequestParameters = false;
+            
+            ViewBag.Reporte = rpt;
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult INV_002(in_Ing_Egr_Inven_Info model)
+        {
+            bus_ing_egr.aprobarDB(model);
+
+            return RedirectToAction("Index", "AprobacionMovimientoInventario",new { Area = "Inventario", IdSucursal = model.IdSucursal, IdBodega = model.IdBodega});
         }
 
         public ActionResult INV_003()

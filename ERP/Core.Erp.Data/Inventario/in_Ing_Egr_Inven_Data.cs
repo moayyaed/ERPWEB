@@ -1120,6 +1120,9 @@ namespace Core.Erp.Data.Inventario
                     in_Ing_Egr_Inven Entity = Context.in_Ing_Egr_Inven.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdMovi_inven_tipo == info.IdMovi_inven_tipo && q.IdNumMovi == info.IdNumMovi);
                     if (Entity == null) return false;
 
+                    if (Entity.IdEstadoAproba == "APRO")
+                        return false;
+
                     Entity.IdUsuarioAR = info.IdUsuarioAR;
                     Entity.IdEstadoAproba = info.IdEstadoAproba = "APRO";
                     Entity.FechaAR = DateTime.Now;
