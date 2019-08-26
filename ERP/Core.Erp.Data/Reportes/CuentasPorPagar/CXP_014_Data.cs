@@ -78,7 +78,14 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                        pe_razonSocial = q.pe_razonSocial,
                        ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
                        Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
-                       Su_Descripcion = q.Su_Descripcion
+                       Su_Descripcion = q.Su_Descripcion,
+                       Tarifa = q.Tarifa,
+                       codigoSRI = q.codigoSRI,
+                       DescripcionCodigo = q.DescripcionCodigo,
+                       FacturaRetencion = q.FacturaRetencion,
+                       co_subtotal = q.co_subtotal,
+                       TieneRetencion = q.TieneRetencion,
+                       NumRetencion = q.NumRetencion
                    }).ToList();
                     }
                    else
@@ -141,7 +148,14 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                        pe_razonSocial = q.pe_razonSocial,
                        ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
                        Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
-                       Su_Descripcion = q.Su_Descripcion
+                       Su_Descripcion = q.Su_Descripcion,
+                       Tarifa = q.Tarifa,
+                       codigoSRI = q.codigoSRI,
+                       DescripcionCodigo = q.DescripcionCodigo,
+                       FacturaRetencion = q.FacturaRetencion,
+                       co_subtotal = q.co_subtotal,
+                       TieneRetencion = q.TieneRetencion,
+                       NumRetencion = q.NumRetencion
                    }).ToList();
                     }
                 }

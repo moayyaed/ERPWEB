@@ -21,7 +21,10 @@ namespace Core.Erp.Data.Reportes.Base
             : base("name=Entities_reportes")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -66,7 +69,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWCXP_011> VWCXP_011 { get; set; }
         public virtual DbSet<VWCXP_012> VWCXP_012 { get; set; }
         public virtual DbSet<VWCXP_013> VWCXP_013 { get; set; }
-        public virtual DbSet<VWCXP_014> VWCXP_014 { get; set; }
         public virtual DbSet<VWCXP_017> VWCXP_017 { get; set; }
         public virtual DbSet<VWFAC_001> VWFAC_001 { get; set; }
         public virtual DbSet<VWFAC_003> VWFAC_003 { get; set; }
@@ -131,6 +133,7 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWINV_002> VWINV_002 { get; set; }
         public virtual DbSet<VWINV_020> VWINV_020 { get; set; }
         public virtual DbSet<VWINV_008> VWINV_008 { get; set; }
+        public virtual DbSet<VWCXP_014> VWCXP_014 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

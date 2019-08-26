@@ -487,7 +487,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdProveedor = 0,
-                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                Check1 = true,
+                Check2 = true,
+                Check3 = true
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_014_Rpt report = new CXP_014_Rpt();
@@ -507,6 +510,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_AgruparTarifa.Value = model.Check1;
+            report.p_AgruparCodigo.Value = model.Check2;
+            report.p_AgruparRetencion.Value = model.Check3;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
@@ -533,6 +539,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_AgruparTarifa.Value = model.Check1;
+            report.p_AgruparCodigo.Value = model.Check2;
+            report.p_AgruparRetencion.Value = model.Check3;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);

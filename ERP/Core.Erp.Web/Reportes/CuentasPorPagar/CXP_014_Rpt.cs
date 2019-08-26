@@ -37,6 +37,23 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             string IdTipoServicio = p_IdTipoServicio.Value == null ? "" : Convert.ToString(p_IdTipoServicio.Value);
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
 
+            if (Convert.ToBoolean(p_AgruparTarifa.Value))
+                Detail.SortFields.Add(new GroupField("Tarifa", XRColumnSortOrder.None));
+            else
+                Detail.SortFields.Add(new GroupField("Tarifa", XRColumnSortOrder.Ascending));
+
+            if (Convert.ToBoolean(p_AgruparTarifa.Value))
+                Detail.SortFields.Add(new GroupField("FacturaRetencion", XRColumnSortOrder.None));
+            else
+                Detail.SortFields.Add(new GroupField("FacturaRetencion", XRColumnSortOrder.Ascending));
+
+            if (Convert.ToBoolean(p_AgruparTarifa.Value))
+                Detail.SortFields.Add(new GroupField("DescripcionCodigo", XRColumnSortOrder.None));
+            else
+                Detail.SortFields.Add(new GroupField("DescripcionCodigo", XRColumnSortOrder.Ascending));
+
+            
+
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
             //lbl_empresa.Text = emp.RazonSocial;
@@ -48,7 +65,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             }
 
             CXP_014_Bus bus_rpt = new CXP_014_Bus();
-            List<CXP_014_Info> lst_rpt = new List<CXP_014_Info>();            
+            List<CXP_014_Info> lst_rpt = new List<CXP_014_Info>();
 
             if (IntArray != null)
             {
@@ -60,26 +77,76 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
 
             this.DataSource = lst_rpt;
 
-            ListaAgrupada = (from q in lst_rpt
-                             group q by new
-                             {
-                                 q.IdSucursal,
-                                 q.Su_Descripcion
-                             } into Resumen
-                             select new CXP_014_Info
-                             {
-                                 IdSucursal = Resumen.Key.IdSucursal,
-                                 Su_Descripcion = Resumen.Key.Su_Descripcion,
-                                 co_subtotal_iva = Resumen.Sum(q => q.co_subtotal_iva),
-                                 co_subtotal_siniva = Resumen.Sum(q => q.co_subtotal_siniva),
-                                 co_valoriva = Resumen.Sum(q => q.co_valoriva),
-                                 co_total = Resumen.Sum(q => q.co_total)
-                             }).ToList();
+            #region Total por tarifa
+            ListaAgrupada.AddRange(lst_rpt.GroupBy(q => new { q.Tarifa }).Select(q => new CXP_014_Info
+            {
+                Grupo = 1,
+                DescripcionAgrupacion = q.Key.Tarifa,
+                co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                co_subtotal = q.Sum(g => g.co_subtotal),
+                co_valoriva = q.Sum(g => g.co_valoriva),
+                co_total = q.Sum(g => g.co_total),
+                CantidadAgrupacion = q.Count()
+            }).ToList());
+            #endregion
+
+            #region Total por código
+            ListaAgrupada.AddRange(lst_rpt.GroupBy(q => new { q.DescripcionCodigo }).Select(q => new CXP_014_Info
+            {
+                Grupo = 2,
+                DescripcionAgrupacion = q.Key.DescripcionCodigo,
+                co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                co_subtotal = q.Sum(g => g.co_subtotal),
+                co_valoriva = q.Sum(g => g.co_valoriva),
+                co_total = q.Sum(g => g.co_total),
+                CantidadAgrupacion = q.Count()
+            }).ToList());
+            #endregion
+
+            #region Total por retención
+            ListaAgrupada.AddRange(lst_rpt.GroupBy(q => new { q.FacturaRetencion }).Select(q => new CXP_014_Info
+            {
+                Grupo = 3,
+                DescripcionAgrupacion = q.Key.FacturaRetencion,
+                co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                co_subtotal = q.Sum(g => g.co_subtotal),
+                co_valoriva = q.Sum(g => g.co_valoriva),
+                co_total = q.Sum(g => g.co_total),
+                CantidadAgrupacion = q.Count()
+            }).ToList());
+            #endregion
         }
 
         private void SubReporte_Resumen_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
             ((XRSubreport)sender).ReportSource.DataSource = ListaAgrupada;
+        }
+
+        private void GroupTarifa_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (!Convert.ToBoolean(p_AgruparTarifa.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupCodigo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (!Convert.ToBoolean(p_AgruparCodigo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupRetencion_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (!Convert.ToBoolean(p_AgruparRetencion.Value))
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

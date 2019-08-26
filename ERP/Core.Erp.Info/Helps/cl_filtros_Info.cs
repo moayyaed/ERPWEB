@@ -43,6 +43,10 @@ namespace Core.Erp.Info.Helps
         public bool no_mostrar_saldo_en_0 { get; set; }
         public string IdTipoServicio { get; set; }
 
+        public bool Check1 { get; set; }
+        public bool Check2 { get; set; }
+        public bool Check3 { get; set; }
+
         public int[] IntArray { get; set; }
         public bool mostrarSaldo0 { get; set; }
         #endregion

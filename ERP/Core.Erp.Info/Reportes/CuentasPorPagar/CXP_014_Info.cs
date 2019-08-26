@@ -16,6 +16,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public System.DateTime co_fechaOg { get; set; }
         public string co_serie { get; set; }
         public string co_factura { get; set; }
+        public string NumRetencion { get; set; }
         public System.DateTime co_FechaFactura { get; set; }
         public Nullable<System.DateTime> co_FechaContabilizacion { get; set; }
         public System.DateTime co_FechaFactura_vct { get; set; }
@@ -32,7 +33,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public Nullable<int> IdIden_credito { get; set; }
         public Nullable<int> IdCod_101 { get; set; }
         public double co_valorpagar { get; set; }
-        public Nullable<decimal> IdTipoFlujo { get; set; }
+        public Nullable<int> IdTipoFlujo { get; set; }
         public string IdTipoServicio { get; set; }
         public string Estado { get; set; }
         public int IdSucursal { get; set; }
@@ -57,7 +58,15 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string pe_nombreCompleto { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string Descripcion { get; set; }
-
         public string Su_Descripcion { get; set; }
+        public string Tarifa { get; set; }
+        public string codigoSRI { get; set; }
+        public string DescripcionCodigo { get; set; }
+        public string FacturaRetencion { get; set; }
+        public double co_subtotal { get; set; }
+        public Nullable<bool> TieneRetencion { get; set; }
+        public int CantidadAgrupacion { get; set; }
+        public string DescripcionAgrupacion { get; set; }
+        public int Grupo { get; set; }
     }
 }
