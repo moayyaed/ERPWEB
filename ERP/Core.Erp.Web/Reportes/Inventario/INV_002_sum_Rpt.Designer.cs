@@ -197,7 +197,7 @@
             // xrTableCell6
             // 
             this.xrTableCell6.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum(Abs([mv_costo_sinConversion]*[mv_costo_sinConversion]))")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Abs(sumSum([dm_cantidad_sinConversion]*[mv_costo_sinConversion]))")});
             this.xrTableCell6.Name = "xrTableCell6";
             this.xrTableCell6.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 5, 0, 100F);
             this.xrTableCell6.StylePriority.UsePadding = false;
@@ -282,7 +282,7 @@
             // 
             this.xrTableCell9.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell9.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum(Abs([mv_costo_sinConversion]*[mv_costo_sinConversion]))")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Abs(sumSum([dm_cantidad_sinConversion]*[mv_costo_sinConversion]))")});
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 5, 0, 100F);
             this.xrTableCell9.StylePriority.UseBorders = false;
