@@ -11,11 +11,11 @@ namespace Core.Erp.Bus.Reportes.Banco
     public class BAN_008_Bus
     {
         BAN_008_Data odata = new BAN_008_Data();
-        public List<BAN_008_Info> GetList(int IdEmpresa, DateTime fecha_ini, DateTime fecha_fin, int IdBanco)
+        public List<BAN_008_Info> GetList(int IdEmpresa, DateTime fecha_ini, DateTime fecha_fin, int IdBanco, int IdTipoCbte)
         {
             try
             {
-                return odata.GetList(IdEmpresa, fecha_ini, fecha_fin, IdBanco);
+                return odata.GetList(IdEmpresa, fecha_ini, fecha_fin, IdBanco, IdTipoCbte);
             }
             catch (Exception)
             {

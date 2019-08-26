@@ -9,14 +9,17 @@ namespace Core.Erp.Data.Reportes.Banco
 {
     public class BAN_008_Data
     {
-        public List<BAN_008_Info> GetList(int IdEmpresa, DateTime fecha_ini, DateTime fecha_fin , int IdBanco)
+        public List<BAN_008_Info> GetList(int IdEmpresa, DateTime fecha_ini, DateTime fecha_fin , int IdBanco, int IdTipoCbte)
         {
             try
             {
+                int IdTipoCbte_ini = IdTipoCbte;
+                int IdTipoCbte_fin = IdTipoCbte == 0 ? 999999 : IdTipoCbte;
+
                 List<BAN_008_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPBAN_008(IdEmpresa, fecha_ini, fecha_fin, IdBanco).Select(q => new BAN_008_Info
+                    Lista = Context.SPBAN_008(IdEmpresa, fecha_ini, fecha_fin, IdBanco, IdTipoCbte_ini, IdTipoCbte_fin).Select(q => new BAN_008_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdBanco = q.IdBanco,

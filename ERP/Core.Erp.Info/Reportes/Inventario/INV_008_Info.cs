@@ -31,5 +31,6 @@ namespace Core.Erp.Info.Reportes.Inventario
         public string Estado { get; set; }
         public int IdBodega { get; set; }
         public decimal IdProducto { get; set; }
+        public string cc_Descripcion { get; set; }
     }
 }

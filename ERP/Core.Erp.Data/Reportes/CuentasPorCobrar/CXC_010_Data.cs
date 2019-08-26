@@ -24,13 +24,10 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 
                 fechaCorte = fechaCorte.Date;
 
-                int DiasVencimientoIni = DiasVencimiento;
-                int DiasVencimientoFin = DiasVencimiento == 0 ? 999999999 : DiasVencimiento;
-
                 List<CXC_010_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCXC_010(IdEmpresa, IdSucursalIni, IdSucursalFin, IdClienteIni, IdClienteFin, Idtipo_clienteIni, Idtipo_clienteFin, fechaCorte, MostrarSoloCarteraVencida)
+                    Lista = (from q in Context.SPCXC_010(IdEmpresa, IdSucursalIni, IdSucursalFin, IdClienteIni, IdClienteFin, Idtipo_clienteIni, Idtipo_clienteFin, fechaCorte, MostrarSoloCarteraVencida, DiasVencimiento)
                              select new CXC_010_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

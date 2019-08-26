@@ -36,6 +36,7 @@ namespace Core.Erp.Web.Reportes.Banco
             DateTime fecha_fin = string.IsNullOrEmpty(p_fecha_fin.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             int IdBanco = string.IsNullOrEmpty(p_IdBanco.Value.ToString()) ? 0 : Convert.ToInt32(p_IdBanco.Value);
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
+            int IdTipoCbte = string.IsNullOrEmpty(p_IdTipoCbte.Value.ToString()) ? 0 : Convert.ToInt32(p_IdTipoCbte.Value);
             BAN_008_Bus bus_rpt = new BAN_008_Bus();
             List<BAN_008_Info> lst_rpt = new List<BAN_008_Info>();
             //List<BAN_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, fecha_ini, fecha_fin, IdBanco);
@@ -46,7 +47,7 @@ namespace Core.Erp.Web.Reportes.Banco
             {
                 foreach (var item in sucursal)
                 {
-                    lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, fecha_ini, fecha_fin, item.IdBanco));
+                    lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, fecha_ini, fecha_fin, item.IdBanco, IdTipoCbte));
 
                 }
             }

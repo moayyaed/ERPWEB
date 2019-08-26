@@ -66,8 +66,8 @@ namespace Core.Erp.Data.Reportes.Inventario
                         pr_descripcion = q.pr_descripcion,
                         Secuencia = q.Secuencia,
                         Su_Descripcion = q.Su_Descripcion,
-                        tm_descripcion = q.tm_descripcion
-
+                        tm_descripcion = q.tm_descripcion,
+                        cc_Descripcion = q.cc_Descripcion
                     }).ToList();
                 }
                 return Lista;

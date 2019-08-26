@@ -126,6 +126,7 @@
             this.xrTableRow12 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell24 = new DevExpress.XtraReports.UI.XRTableCell();
             this.GroupFooter2 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.p_IdTipoCbte = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).BeginInit();
@@ -1076,6 +1077,11 @@
             this.GroupFooter2.HeightF = 20F;
             this.GroupFooter2.Name = "GroupFooter2";
             // 
+            // p_IdTipoCbte
+            // 
+            this.p_IdTipoCbte.Name = "p_IdTipoCbte";
+            this.p_IdTipoCbte.Visible = false;
+            // 
             // BAN_008_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1102,7 +1108,8 @@
             this.p_fecha_ini,
             this.p_fecha_fin,
             this.p_IdBanco,
-            this.p_IdSucursal});
+            this.p_IdSucursal,
+            this.p_IdTipoCbte});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.BAN_008_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).EndInit();
@@ -1219,5 +1226,6 @@
         private DevExpress.XtraReports.UI.XRTable xrTable11;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow12;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell24;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdTipoCbte;
     }
 }

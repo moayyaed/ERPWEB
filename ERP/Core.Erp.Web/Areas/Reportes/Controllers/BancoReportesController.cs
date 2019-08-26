@@ -1,6 +1,8 @@
 ﻿using Core.Erp.Bus.Banco;
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.Banco;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;
@@ -250,6 +252,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             tb_sucursal_Bus bus_suc = new tb_sucursal_Bus();
             var lst_suc = bus_suc.get_list(IdEmpresa, false);
             ViewBag.lst_suc = lst_suc;
+
+            ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus bus_tipoCbte = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus();
+            var lst_TipoCbte = bus_tipoCbte.GetList(IdEmpresa);
+            lst_TipoCbte.Add(new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Info
+            {
+                IdTipoCbteCble = 0,
+                CodTipoCbteBan = "TODOS"
+
+            });
+            ViewBag.lst_TipoCbte = lst_TipoCbte;
         }
         public ActionResult BAN_007()
         {
@@ -296,7 +308,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_banco_Info model = new cl_filtros_banco_Info
             {
                 IdEmpresa = IdEmpresa,
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTipoCbte = 0
             };
             cargar_banco(model.IdEmpresa);
             BAN_008_Rpt report = new BAN_008_Rpt();
@@ -312,6 +325,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdTipoCbte.Value = model.IdTipoCbte;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
@@ -334,6 +348,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdTipoCbte.Value = model.IdTipoCbte;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             cargar_banco(model.IdEmpresa);

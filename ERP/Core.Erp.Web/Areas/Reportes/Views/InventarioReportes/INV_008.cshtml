@@ -142,7 +142,7 @@
                 <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="IdMovi_inven_tipo">Movimiento</label>
+                            <label for="IdMovi_inven_tipo">Tipo</label>
                             @Html.DropDownListFor(q => q.tipo_movi, new SelectList(ViewBag.lst_TipoMov, "Key", "Value"), new { @class = "form-control", @id= "tipo_movi" })
                             @Html.ValidationMessageFor(q => q.tipo_movi, "", new { @class = "text-danger" })
                         </div>

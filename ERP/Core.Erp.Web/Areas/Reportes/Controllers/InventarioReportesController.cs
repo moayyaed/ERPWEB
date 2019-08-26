@@ -186,30 +186,38 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
         public ActionResult INV_001(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0, string Aprobar = "")
         {
-            INV_001_Rpt model = new INV_001_Rpt();
-            in_Ing_Egr_Inven_Bus bus_ing_egr = new in_Ing_Egr_Inven_Bus();
+            INV_001_Rpt rpt = new INV_001_Rpt();
+
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_001");
             if (reporte != null)
             {
                 System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
-                model.LoadLayout(RootReporte);
+                rpt.LoadLayout(RootReporte);
             }
             #endregion
-            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
-            model.p_IdSucursal.Value = IdSucursal;
-            model.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
-            model.p_IdNumMovi.Value = IdNumMovi;
-            model.usuario = SessionFixed.IdUsuario;
-            model.empresa = SessionFixed.NomEmpresa;
+            rpt.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            rpt.p_IdSucursal.Value = IdSucursal;
+            rpt.p_IdMovi_inven_tipo.Value = IdMovi_inven_tipo;
+            rpt.p_IdNumMovi.Value = IdNumMovi;
+            rpt.usuario = SessionFixed.IdUsuario;
+            rpt.empresa = SessionFixed.NomEmpresa;
 
-            var info = bus_ing_egr.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal, IdMovi_inven_tipo, IdNumMovi);
-            ViewBag.Aprobar = (info == null) ? "" : ((info.IdEstadoAproba == "" || info.IdEstadoAproba == "XAPRO")) ? "S" : "";
+            in_Ing_Egr_Inven_Info model = bus_ing_egr.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal, IdMovi_inven_tipo, IdNumMovi);
+            ViewBag.Aprobar = (model == null) ? "" : ((model.IdEstadoAproba == "") || model.IdEstadoAproba == "XAPRO") ? "S" : "";
             ViewBag.SecuencialID = Convert.ToInt32(SessionFixed.IdEmpresa).ToString("00") + IdSucursal.ToString("00") + IdMovi_inven_tipo.ToString("00") + IdNumMovi.ToString("00000000");
 
-            model.RequestParameters = false;
+            ViewBag.Reporte = rpt;
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult INV_001(in_Ing_Egr_Inven_Info model)
+        {
+            bus_ing_egr.aprobarDB(model);
+
+            return RedirectToAction("Index", "AprobacionMovimientoInventario", new { Area = "Inventario", IdSucursal = model.IdSucursal, IdBodega = model.IdBodega });
         }
 
         public ActionResult INV_002(int IdSucursal = 0, int IdMovi_inven_tipo = 0, decimal IdNumMovi = 0, string Aprobar="")
@@ -705,7 +713,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 fecha_ini = new DateTime(DateTime.Now.Year, 1, 1),
                 fecha_fin = new DateTime(DateTime.Now.Year, 12, 31),
                 tipo_movi= "",
-                IdBodega = 0
+                IdBodega = 0,
+                IdProducto=0,
+                IdCentroCosto=""
             };
 
             cargar_combos(model);
@@ -752,7 +762,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdBodega.Value = model.IdBodega;
             report.p_IdProducto.Value = model.IdProducto;
             report.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
-            report.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report.p_IdCentroCosto.Value = (model.IdCentroCosto==null) ? "" : model.IdCentroCosto;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_signo.Value = model.tipo_movi;
