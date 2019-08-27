@@ -72,7 +72,6 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual DbSet<vwfa_cliente_contactos> vwfa_cliente_contactos { get; set; }
         public virtual DbSet<vwfa_factura_ParaContabilizar> vwfa_factura_ParaContabilizar { get; set; }
         public virtual DbSet<vwfa_factura_sin_automatico> vwfa_factura_sin_automatico { get; set; }
-        public virtual DbSet<vwfa_factura_sin_guia> vwfa_factura_sin_guia { get; set; }
         public virtual DbSet<vwfa_proforma> vwfa_proforma { get; set; }
         public virtual DbSet<vwfa_proforma_det> vwfa_proforma_det { get; set; }
         public virtual DbSet<vwfa_proforma_det_por_facturar> vwfa_proforma_det_por_facturar { get; set; }
@@ -81,11 +80,12 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual DbSet<vwfa_cliente_consulta> vwfa_cliente_consulta { get; set; }
         public virtual DbSet<vwfa_factura> vwfa_factura { get; set; }
         public virtual DbSet<vwfa_factura_det> vwfa_factura_det { get; set; }
+        public virtual DbSet<vwfa_factura_x_fa_guia_remision> vwfa_factura_x_fa_guia_remision { get; set; }
         public virtual DbSet<vwfa_guia_remision> vwfa_guia_remision { get; set; }
         public virtual DbSet<vwfa_notaCreDeb> vwfa_notaCreDeb { get; set; }
         public virtual DbSet<vwfa_notaCreDeb_det> vwfa_notaCreDeb_det { get; set; }
         public virtual DbSet<vwfa_notaCreDeb_x_fa_factura_NotaDeb> vwfa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
-        public virtual DbSet<vwfa_factura_x_fa_guia_remision> vwfa_factura_x_fa_guia_remision { get; set; }
+        public virtual DbSet<vwfa_factura_sin_guia> vwfa_factura_sin_guia { get; set; }
         public virtual DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)

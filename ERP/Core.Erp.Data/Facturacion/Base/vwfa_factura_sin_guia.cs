@@ -15,13 +15,12 @@ namespace Core.Erp.Data.Facturacion.Base
     public partial class vwfa_factura_sin_guia
     {
         public int IdEmpresa { get; set; }
-        public decimal IdCliente { get; set; }
-        public string pe_cedulaRuc { get; set; }
-        public string pe_apellido { get; set; }
-        public string pe_nombre { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public decimal IdCbteVta { get; set; }
+        public string CodCbteVta { get; set; }
+        public decimal IdCliente { get; set; }
+        public string vt_tipoDoc { get; set; }
         public string vt_serie1 { get; set; }
         public string vt_serie2 { get; set; }
         public string vt_NumFactura { get; set; }
