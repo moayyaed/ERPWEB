@@ -742,6 +742,159 @@
     <Compile Include="Facturacion\Base\vwfa_factura_ParaContabilizar.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\fa_CambioProductoDet.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_CambioProductoDet_x_in_devolucion_inven.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_catalogo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_catalogo_tipo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_cliente.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_cliente_contactos.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_cliente_tipo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_cliente_x_fa_Vendedor_x_sucursal.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_cuotas_x_doc.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_det_x_in_Ing_Egr_Inven_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_resumen.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_x_ct_cbtecble.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_x_cxc_cobro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_x_fa_guia_remision.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_x_in_Ing_Egr_Inven.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_formaPago.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_guia_remision.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_guia_remision_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_guia_remision_det_x_factura.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_MotivoTraslado.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_NivelDescuento.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_notaCreDeb.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_notaCreDeb_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_notaCreDeb_resumen.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_notaCreDeb_x_ct_cbtecble.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_notaCreDeb_x_cxc_cobro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_notaCreDeb_x_fa_factura_NotaDeb.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_parametro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_proforma.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_proforma_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_PuntoVta.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_TerminoPago.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_TerminoPago_Distribucion.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_TipoNota.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_Vendedor.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\Model_facturacion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\Model_facturacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\Model_facturacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_CambioProducto.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_CambioProductoDet.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_CambioProductoDet_facturas.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_CambioProductoDet_FacturasConMovimiento.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_cliente_consulta.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_cliente_contactos.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_factura.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_factura_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\vwfa_factura_ParaContabilizar.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\vwfa_factura_sin_automatico.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
