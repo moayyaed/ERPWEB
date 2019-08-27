@@ -7,7 +7,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
     public class CXP_009_Data
     {
-        public List<CXP_009_Info> get_list(int IdEmpresa,int IdSucursal, DateTime FechaIni, DateTime FechaFin, bool mostrar_anulados)
+        public List<CXP_009_Info> get_list(int IdEmpresa,int IdSucursal, DateTime FechaIni, DateTime FechaFin, bool mostrar_anulados, string TipoRetencion)
         {
             try
             {
@@ -27,6 +27,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  && q.IdSucursal <= IdSucursalFin
                                  && FechaIni <= q.fecha_retencion && q.fecha_retencion <= FechaFin
                                  && q.Estado == "I"
+                                 && q.es_Documento_Electronico == (string.IsNullOrEmpty(TipoRetencion) ? q.es_Documento_Electronico : (TipoRetencion == "M" ? false : true))
                                  select new CXP_009_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -73,6 +74,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  && q.IdSucursal <= IdSucursalFin
                                  && FechaIni <= q.fecha_retencion && q.fecha_retencion <= FechaFin
                                  && q.Estado == "A"
+                                 && q.es_Documento_Electronico == (string.IsNullOrEmpty(TipoRetencion) ? q.es_Documento_Electronico : (TipoRetencion == "M" ? false : true))
                                  select new CXP_009_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
@@ -108,7 +110,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      IdCbteCbleRet = q.IdCbteCbleRet,
                                      IdSucursal = q.IdSucursal,
                                      Su_Descripcion = q.Su_Descripcion,
-                                     es_Documento_Electronico = q.es_Documento_Electronico
+                                     es_Documento_Electronico = q.es_Documento_Electronico,
+
                                  }).ToList();
                     }
                 }

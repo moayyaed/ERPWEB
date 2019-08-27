@@ -11,11 +11,11 @@ namespace Core.Erp.Bus.Reportes.CuentasPorPagar
     public class CXP_009_Bus
     {
         CXP_009_Data odata = new CXP_009_Data();
-        public List<CXP_009_Info> get_list(int IdEmpresa, int IdSucursal,DateTime FechaIni, DateTime FechaFin, bool mostrar_anulados)
+        public List<CXP_009_Info> get_list(int IdEmpresa, int IdSucursal, DateTime FechaIni, DateTime FechaFin, bool mostrar_anulados, string TipoRetencion)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdSucursal, FechaIni, FechaFin, mostrar_anulados);
+                return odata.get_list(IdEmpresa, IdSucursal, FechaIni, FechaFin, mostrar_anulados, TipoRetencion);
             }
             catch (Exception)
             {

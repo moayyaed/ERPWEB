@@ -34,7 +34,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             DateTime Fecha_fin = string.IsNullOrEmpty(p_Fecha_fin.Value.ToString()) ? DateTime.Now.Date : Convert.ToDateTime(p_Fecha_fin.Value).Date;
             int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
-
+            string TipoRetencion = string.IsNullOrEmpty(p_TipoRetencion.Value.ToString()) ? "" : p_TipoRetencion.Value.ToString();
             CXP_009_Bus bus_rpt = new CXP_009_Bus();
             List<CXP_009_Info> lst_rpt = new List<CXP_009_Info>();
 
@@ -42,7 +42,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             {
                 foreach (var item in IntArray)
                 {            
-                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, item, Fecha_ini, Fecha_fin, mostrar_anulados));
+                    lst_rpt.AddRange(bus_rpt.get_list(IdEmpresa, item, Fecha_ini, Fecha_fin, mostrar_anulados,TipoRetencion));
                 }
             }
 

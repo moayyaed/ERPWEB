@@ -311,7 +311,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                CodDocumentoTipo = ""
             };
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CXP_009_Rpt report = new CXP_009_Rpt();
@@ -330,6 +331,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_Fecha_ini.Value = model.fecha_ini;
             report.p_Fecha_fin.Value = model.fecha_fin;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
+            report.p_TipoRetencion.Value = model.CodDocumentoTipo;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
@@ -355,6 +357,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_Fecha_ini.Value = model.fecha_ini;
             report.p_Fecha_fin.Value = model.fecha_fin;
             report.p_mostrar_anulados.Value = model.mostrarAnulados;
+            report.p_TipoRetencion.Value = model.CodDocumentoTipo;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
