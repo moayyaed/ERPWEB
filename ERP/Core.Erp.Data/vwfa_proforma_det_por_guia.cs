@@ -43,5 +43,8 @@ namespace Core.Erp.Data
         public Nullable<decimal> NumOPr { get; set; }
         public string pd_DetalleAdicional { get; set; }
         public double Saldo { get; set; }
+        public int IdVendedor { get; set; }
+        public string IdCatalogo_FormaPago { get; set; }
+        public string IdTerminoPago { get; set; }
     }
 }

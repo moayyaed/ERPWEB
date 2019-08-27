@@ -262,14 +262,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
             PrecioFinal = Precio - DescUnitario;
-            subtotal = Math.Round(Convert.ToDouble(Cantidad * PrecioFinal),2);
+            subtotal = Math.Round(Convert.ToDouble(Cantidad * PrecioFinal),2, MidpointRounding.AwayFromZero);
 
             var impuesto = bus_impuesto.get_info(IdCodImpuesto);
             if (impuesto != null)
                 iva_porc = impuesto.porcentaje;
 
-            iva = Math.Round((subtotal * (iva_porc / 100)),2);
-            total = Math.Round((subtotal + iva),2);
+            iva = Math.Round((subtotal * (iva_porc / 100)),2, MidpointRounding.AwayFromZero);
+            total = Math.Round((subtotal + iva),2, MidpointRounding.AwayFromZero);
 
             return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
         }

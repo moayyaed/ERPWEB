@@ -42,13 +42,13 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
                 $("#myform").submit();
                 GridViewPartial_guias_remision_det.PerformCallback();
                 GridViewPartial_Facturas_x_guia.PerformCallback();
                 selectedIDs = "";
                 $("#OpModal").modal("hide");
 
+                
             },
             error: function (error) {
             }
@@ -156,7 +156,35 @@
         GridViewPartial_PGuia_det.PerformCallback();
         GridViewPartial_PGuia_det.UnselectRows();
         GridViewPartial_guias_remision_det.PerformCallback();
-        $("#ProformasModal").modal("hide");
+        $("#ProformasModal").modal("hide"); 
+        
+        SetDatosFactura();
+    }
+
+    function SetDatosFactura() {
+        var datos = {
+            IdCliente: IdCliente.GetValue(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetDatosFactura", "GuiaRemision", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                $("#IdVendedor").val(data.IdVendedor);
+                $("#IdTerminoPago").val(data.IdTerminoPago);
+                $("#IdCatalogo_FormaPago").val(data.IdCatalogo_FormaPago);
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function CrearModificarCliente() {
@@ -478,7 +506,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="IdTerminoPago">Termino pago*</label>
-                                @Html.DropDownListFor(q => q.vt_tipo_venta, new SelectList(ViewBag.lst_pago, "IdTerminoPago", "nom_TerminoPago"), new { @class = "form-control", @id = "vt_tipo_venta" })
+                                @Html.DropDownListFor(q => q.vt_tipo_venta, new SelectList(ViewBag.lst_pago, "IdTerminoPago", "nom_TerminoPago"), new { @class = "form-control", @id = "IdTerminoPago" })
                                 @Html.ValidationMessageFor(q => q.vt_tipo_venta, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -610,13 +638,25 @@ function MostrarModal() {
 }
 
 function MostrarDatosFactura() {
-    if (GenerarFactura.GetChecked() == true) {
-        $("#link_datos_factura").show();
-        $("#link_datos_factura").click();
-    }
-    else {
+    if($("#IdCbteVta").val() > 0){
+        $("#DivGenerarFactura").hide();
+
         $("#link_datos_factura").hide();
         $("#link_detalle_guia").click();
+    }
+    else{
+        $("#DivGenerarFactura").show();
+
+        if (GenerarFactura.GetChecked() == true) {
+            $("#link_datos_factura").show();
+            $("#link_datos_factura").click();
+
+            SetDatosFactura();
+        }
+        else {
+            $("#link_datos_factura").hide();
+            $("#link_detalle_guia").click();
+        }
     }
 }
 

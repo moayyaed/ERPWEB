@@ -138,6 +138,7 @@
             success: function (data) {
                 $("#pf_atencion_a").val(data.info_persona.pe_nombreCompleto);
                 $("#IdVendedor").val(data.IdVendedor);
+                $("#IdTerminoPago").val(data.IdTerminoPago);
             },
             error: function (error) {
                 alert(error);

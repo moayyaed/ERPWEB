@@ -119,7 +119,10 @@ namespace Core.Erp.Data.Facturacion
                                  gi_Iva_item = q.pd_iva,
                                  gi_Total_item = q.pd_total,
                                  Saldo = q.Saldo,
-                                 pd_cantidad = q.pd_cantidad
+                                 pd_cantidad = q.pd_cantidad,
+                                 IdVendedor = q.IdVendedor,
+                                IdCatalogo_FormaPago = q.IdCatalogo_FormaPago,
+                                IdTerminoPago = q.IdTerminoPago
                              }).ToList();
                 }
                 Lista.ForEach(V =>

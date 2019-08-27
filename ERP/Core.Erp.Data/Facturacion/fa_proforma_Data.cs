@@ -280,5 +280,44 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public fa_proforma_Info get_info_ultima_proforma(int IdEmpresa, int IdSucursal, decimal IdCliente)
+        {
+            try
+            {
+                fa_proforma_Info info = new fa_proforma_Info();
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_proforma Entity = Context.fa_proforma.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdCliente == IdCliente).LastOrDefault();
+                    if (Entity == null) return null;
+                    info = new fa_proforma_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdSucursal = Entity.IdSucursal,
+                        IdProforma = Entity.IdProforma,
+                        IdCliente = Entity.IdCliente,
+                        IdTerminoPago = Entity.IdTerminoPago,
+                        pf_plazo = Entity.pf_plazo,
+                        pf_codigo = Entity.pf_codigo,
+                        pf_observacion = Entity.pf_observacion,
+                        pf_fecha = Entity.pf_fecha,
+                        pf_fecha_vcto = Entity.pf_fecha_vcto,
+                        estado = Entity.estado,
+                        IdBodega = Entity.IdBodega,
+                        IdVendedor = Entity.IdVendedor,
+                        pr_dias_entrega = Entity.pr_dias_entrega,
+                        IdNivel = Entity.IdNivel,
+                        IdCatalogo_FormaPago = Entity.IdCatalogo_FormaPago
+                    };
+
+                }
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

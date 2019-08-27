@@ -477,6 +477,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
             fa_cliente_Info resultado = bus_cliente.get_info(IdEmpresa, IdCliente);
+            fa_cliente_x_fa_Vendedor_x_sucursal_Info info_vendedor = bus_v_x_c.get_info(IdEmpresa, IdCliente, IdSucursal);
+            //var ultima_proforma = bus_proforma.get_info_ultima_proforma(IdEmpresa, IdSucursal, IdCliente);
+            string IdTerminoPago = "";
+            int IdVendedor = 1;
+
             if (resultado == null)
             {
                 resultado = new fa_cliente_Info
@@ -485,14 +490,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 };
             }else
             {
-                var vendedor = bus_v_x_c.get_info(IdEmpresa, IdCliente, IdSucursal);
-                if (vendedor != null)
-                    resultado.IdVendedor = vendedor.IdVendedor;
-                else
-                    resultado.IdVendedor = 1;
+                if(info_vendedor != null)
+                    IdVendedor = info_vendedor.IdVendedor;
+
+                IdTerminoPago = resultado.IdTipoCredito;
             }
 
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            return Json(new { IdVendedor = IdVendedor, IdTerminoPago = IdTerminoPago } , JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Get_NivelDescuento_x_FormaPago(int IdEmpresa = 0, int IdSucursal = 0, string IdCatalogo_FormaPago = "")
@@ -526,14 +530,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
             PrecioFinal = Precio - DescUnitario;
-            subtotal = Convert.ToDouble(Cantidad * PrecioFinal);
+            subtotal = Math.Round(Convert.ToDouble(Cantidad * PrecioFinal), 2, MidpointRounding.AwayFromZero);
 
             var impuesto = bus_impuesto.get_info(IdCodImpuesto);
             if (impuesto != null)
                 iva_porc = impuesto.porcentaje;
 
-            iva = subtotal * (iva_porc / 100);
-            total = subtotal + iva;
+            iva = Math.Round(subtotal * (iva_porc / 100),2, MidpointRounding.AwayFromZero);
+            total = Math.Round((subtotal + iva), 2 , MidpointRounding.AwayFromZero);
 
             return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
         }
