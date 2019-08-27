@@ -64,6 +64,13 @@
 
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="oc_observacion">#OP</label>
+                    @Html.TextBoxFor(q => q.oc_codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.oc_codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
@@ -71,15 +78,6 @@
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdEstadoAprobacion_cat">Estado de aprobación*</label>
-                    @Html.DropDownListFor(q => q.IdEstadoAprobacion_cat, new SelectList(ViewBag.lst_apro, "IdCatalogocompra", "Nombre"), new { @class = "form-control", @id = "IdEstadoAprobacion_cat", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.IdEstadoAprobacion_cat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdEstado_cierre">Estado de cierre*</label>
@@ -188,14 +186,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="oc_observacion">#OP</label>
-                    @Html.TextBoxFor(q => q.oc_codigo, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.oc_codigo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="oc_observacion">Observación</label>
                     @Html.TextBoxFor(q => q.oc_observacion, new { @class = "form-control" })
