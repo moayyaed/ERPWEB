@@ -464,6 +464,18 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return PartialView("_GridViewPartial_egr_inv_det", model);
         }
         #endregion
+
+        #region Json
+        public JsonResult SetPrecioProductoEgreso(int IdSucursal=0, int IdBodega=0, decimal IdProducto = 0)
+        {
+            in_producto_x_tb_bodega_Costo_Historico_Bus bus_producto_costo = new in_producto_x_tb_bodega_Costo_Historico_Bus();
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var fecha = DateTime.Now.Date;
+            var resultado = bus_producto_costo.get_ultimo_costo(IdEmpresa, IdSucursal, IdBodega, IdProducto, fecha);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 
 }

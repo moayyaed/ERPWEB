@@ -1279,7 +1279,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_proforma_det_por_guia' no tie
             <PropertyRef Name="pd_total" />
             <PropertyRef Name="anulado" />
             <PropertyRef Name="IdCliente" />
-            
+            <PropertyRef Name="Saldo" />
             <PropertyRef Name="IdVendedor" />
             <PropertyRef Name="IdTerminoPago" />
           </Key>
@@ -3658,7 +3658,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             <End Role="fa_proforma_det" EntitySet="fa_proforma_det" />
           </AssociationSet>
           <EntitySet Name="fa_notaCreDeb_x_fa_factura_NotaDeb" EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" />
-          <EntitySet Name="vwfa_proforma_det_por_guia" EntityType="Model_facturacion.vwfa_proforma_det_por_guia" />
           <EntitySet Name="vwfa_notaCreDeb_x_fa_factura_NotaDeb" EntityType="Model_facturacion.vwfa_notaCreDeb_x_fa_factura_NotaDeb" />
           <EntitySet Name="fa_notaCreDeb" EntityType="Model_facturacion.fa_notaCreDeb" />
           <AssociationSet Name="FK_fa_notaCreDeb_det_fa_notaCreDeb" Association="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb">
@@ -3740,6 +3739,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySet Name="vwfa_notaCreDeb" EntityType="Model_facturacion.vwfa_notaCreDeb" />
           <EntitySet Name="fa_factura_resumen" EntityType="Model_facturacion.fa_factura_resumen" />
           <EntitySet Name="fa_notaCreDeb_resumen" EntityType="Model_facturacion.fa_notaCreDeb_resumen" />
+          <EntitySet Name="vwfa_proforma_det_por_guia" EntityType="Model_facturacion.vwfa_proforma_det_por_guia" />
           </EntityContainer>
         <EntityType Name="vwfa_cliente_contactos">
           <Key>
@@ -5900,6 +5900,62 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="PorIva" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="vwfa_proforma_det_por_guia">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdProforma" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pd_cantidad" />
+            <PropertyRef Name="pd_precio" />
+            <PropertyRef Name="pd_por_descuento_uni" />
+            <PropertyRef Name="pd_descuento_uni" />
+            <PropertyRef Name="pd_precio_final" />
+            <PropertyRef Name="pd_subtotal" />
+            <PropertyRef Name="IdCod_Impuesto" />
+            <PropertyRef Name="pd_por_iva" />
+            <PropertyRef Name="pd_iva" />
+            <PropertyRef Name="pd_total" />
+            <PropertyRef Name="anulado" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Saldo" />
+            <PropertyRef Name="IdVendedor" />
+            <PropertyRef Name="IdTerminoPago" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdProforma" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pd_cantidad" Type="Double" Nullable="false" />
+          <Property Name="pd_precio" Type="Double" Nullable="false" />
+          <Property Name="pd_por_descuento_uni" Type="Double" Nullable="false" />
+          <Property Name="pd_descuento_uni" Type="Double" Nullable="false" />
+          <Property Name="pd_precio_final" Type="Double" Nullable="false" />
+          <Property Name="pd_subtotal" Type="Double" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pd_por_iva" Type="Double" Nullable="false" />
+          <Property Name="pd_iva" Type="Double" Nullable="false" />
+          <Property Name="pd_total" Type="Double" Nullable="false" />
+          <Property Name="anulado" Type="Boolean" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="nom_presentacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="lote_num_lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="se_distribuye" Type="Boolean" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdCentroCosto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cc_Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NumCotizacion" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NumOPr" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="pd_DetalleAdicional" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Saldo" Type="Double" Nullable="false" />
+          <Property Name="IdVendedor" Type="Int32" Nullable="false" />
+          <Property Name="IdCatalogo_FormaPago" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdTerminoPago" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6951,6 +7007,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+		  
           <EntitySetMapping Name="vwfa_proforma_det_por_guia">
             <EntityTypeMapping TypeName="Model_facturacion.vwfa_proforma_det_por_guia">
               <MappingFragment StoreEntitySet="vwfa_proforma_det_por_guia">
@@ -7235,6 +7292,44 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
                 <ScalarProperty Name="SubtotalIVASinDscto" ColumnName="SubtotalIVASinDscto" />
                 <ScalarProperty Name="IdNota" ColumnName="IdNota" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_proforma_det_por_guia">
+            <EntityTypeMapping TypeName="Model_facturacion.vwfa_proforma_det_por_guia">
+              <MappingFragment StoreEntitySet="vwfa_proforma_det_por_guia">
+                <ScalarProperty Name="IdTerminoPago" ColumnName="IdTerminoPago" />
+                <ScalarProperty Name="IdCatalogo_FormaPago" ColumnName="IdCatalogo_FormaPago" />
+                <ScalarProperty Name="IdVendedor" ColumnName="IdVendedor" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="pd_DetalleAdicional" ColumnName="pd_DetalleAdicional" />
+                <ScalarProperty Name="NumOPr" ColumnName="NumOPr" />
+                <ScalarProperty Name="NumCotizacion" ColumnName="NumCotizacion" />
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
+                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
+                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="anulado" ColumnName="anulado" />
+                <ScalarProperty Name="pd_total" ColumnName="pd_total" />
+                <ScalarProperty Name="pd_iva" ColumnName="pd_iva" />
+                <ScalarProperty Name="pd_por_iva" ColumnName="pd_por_iva" />
+                <ScalarProperty Name="IdCod_Impuesto" ColumnName="IdCod_Impuesto" />
+                <ScalarProperty Name="pd_subtotal" ColumnName="pd_subtotal" />
+                <ScalarProperty Name="pd_precio_final" ColumnName="pd_precio_final" />
+                <ScalarProperty Name="pd_descuento_uni" ColumnName="pd_descuento_uni" />
+                <ScalarProperty Name="pd_por_descuento_uni" ColumnName="pd_por_descuento_uni" />
+                <ScalarProperty Name="pd_precio" ColumnName="pd_precio" />
+                <ScalarProperty Name="pd_cantidad" ColumnName="pd_cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProforma" ColumnName="IdProforma" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

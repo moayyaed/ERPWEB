@@ -76,6 +76,17 @@ namespace Core.Erp.Bus.Facturacion
             }
         }
 
+        public fa_proforma_Info get_info_ultima_proforma(int IdEmpresa, int IdSucursal, decimal IdCliente)
+        {
+            try
+            {
+                return odata.get_info_ultima_proforma(IdEmpresa, IdSucursal, IdCliente);
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
     }
 }

@@ -44,6 +44,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         fa_TerminoPago_Bus bus_termino_pago = new fa_TerminoPago_Bus();
+        fa_cliente_x_fa_Vendedor_x_sucursal_Bus bus_cliente_vendedor = new fa_cliente_x_fa_Vendedor_x_sucursal_Bus();
 
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -206,6 +207,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            var info_sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
@@ -214,7 +216,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
             fa_guia_remision_Info model = new fa_guia_remision_Info
             {
-
                 gi_fecha = DateTime.Now,
                 gi_FechaFinTraslado = DateTime.Now,
                 gi_FechaInicioTraslado = DateTime.Now,
@@ -223,7 +224,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 lst_detalle = new List<fa_guia_remision_det_Info>(),
                 lst_detalle_x_factura = new List<fa_factura_x_fa_guia_remision_Info>(),
-                GenerarFactura = false
+                GenerarFactura = false,
+                Direccion_Origen = (info_sucursal == null) ? "" : info_sucursal.Su_Direccion
             };
             detalle_info.set_list(model.lst_detalle, model.IdTransaccionSession);
             List_rel.set_list(model.lst_detalle_x_factura, model.IdTransaccionSession);
@@ -303,6 +305,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+
+            if (model.IdCbteVta != null && model.IdCbteVta != 0)
+            {
                 ViewBag.MostrarBoton = false;
             }
             #endregion
@@ -451,14 +458,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         public JsonResult seleccionar_aprobacion(string Ids, int IdSucursal=0, int IdPuntoVta=0, decimal IdTransaccionSession = 0)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);            
+
             fa_PuntoVta_Info punto_venta = new fa_PuntoVta_Info();
             punto_venta = bus_punto_venta.get_info(IdEmpresa, IdSucursal, IdPuntoVta);
 
             if (Ids != null)
             {
-                var facturas_x_seleccionar = Session["fa_factura_Info"] as List<fa_factura_Info>;                
-                
+                var facturas_x_seleccionar = Session["fa_factura_Info"] as List<fa_factura_Info>;
+
                 string[] array = Ids.Split(',');
                 var output = array.GroupBy(q => q).ToList();
                 var lst_det = detalle_info.get_list(IdTransaccionSession);
@@ -474,32 +482,34 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                             lst_det.AddRange(lst_tmp);
                         }
 
-                        if (facturas_x_seleccionar.Where(q => q.IdCbteVta == Convert.ToDecimal(item.Key)).Count() >0)
+                        if (facturas_x_seleccionar.Where(q => q.IdCbteVta == Convert.ToDecimal(item.Key)).Count() > 0)
                         {
 
                             var factura = facturas_x_seleccionar.Where(q => q.IdCbteVta == Convert.ToDecimal(item.Key)).FirstOrDefault();
                             if (factura != null)
                             {
-                                if(lst_rel.Where(q => q.IdCbteVta == Convert.ToDecimal(item.Key)).Count()==0)
+                                if (lst_rel.Where(q => q.IdCbteVta == Convert.ToDecimal(item.Key)).Count() == 0)
                                     lst_rel.Add(new fa_factura_x_fa_guia_remision_Info
-                                {
-                                    IdEmpresa=factura.IdEmpresa,
-                                    IdSucursal=factura.IdSucursal,
-                                    IdBodega=factura.IdBodega,
-                                    IdCbteVta=factura.IdCbteVta,
-                                    vt_serie1=factura.vt_serie1,
-                                    vt_serie2=factura.vt_serie2,
-                                    vt_NumFactura=factura.vt_NumFactura,
-                                    vt_tipoDoc="FAC"
-                                });
-                                
+                                    {
+                                        IdEmpresa = factura.IdEmpresa,
+                                        IdSucursal = factura.IdSucursal,
+                                        IdBodega = factura.IdBodega,
+                                        IdCbteVta = factura.IdCbteVta,
+                                        vt_serie1 = factura.vt_serie1,
+                                        vt_serie2 = factura.vt_serie2,
+                                        vt_NumFactura = factura.vt_NumFactura,
+                                        vt_tipoDoc = "FAC"
+                                    });
+
                             }
 
                         }
                     }
                 }
+
                 List_rel.set_list(lst_rel, IdTransaccionSession);
                 detalle_info.set_list(lst_det, IdTransaccionSession);
+            
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -631,14 +641,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             DescUnitario = Convert.ToDouble(Precio * (PorcentajeDesc / 100));
             PrecioFinal = Precio - DescUnitario;
-            subtotal = Convert.ToDouble(Cantidad * PrecioFinal);
+            subtotal = Math.Round((Convert.ToDouble(Cantidad * PrecioFinal)),2 , MidpointRounding.AwayFromZero);
 
             var impuesto = bus_impuesto.get_info(IdCodImpuesto);
             if (impuesto != null)
                 iva_porc = impuesto.porcentaje;
 
-            iva = subtotal * (iva_porc / 100);
-            total = subtotal + iva;
+            iva = Math.Round((subtotal * (iva_porc / 100)),2, MidpointRounding.AwayFromZero);
+            total = Math.Round((subtotal + iva),2,MidpointRounding.AwayFromZero);
 
             return Json(new { subtotal = subtotal, iva = iva, total = total }, JsonRequestBehavior.AllowGet);
         }
@@ -652,6 +662,35 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
 
             return Json(retorno, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult SetDatosFactura(int IdCliente = 0, int IdSucursal = 0, decimal IdTransaccionSession = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdVendedor = 0;
+            string IdTerminoPago = "";
+            string IdCatalogo_FormaPago = "";
+
+            var lst_det = detalle_info.get_list(IdTransaccionSession);
+
+            var lst_con_proformas = lst_det.Where(q => q.IdProforma != null || q.IdProforma != 0).ToList();
+            if (lst_con_proformas.Count() > 0)
+            {
+                IdVendedor = (lst_con_proformas == null) ? 0 : lst_con_proformas.FirstOrDefault().IdVendedor;
+                IdTerminoPago = (lst_con_proformas == null) ? "" : lst_con_proformas.FirstOrDefault().IdTerminoPago;
+                IdCatalogo_FormaPago = (lst_con_proformas == null) ? "" : lst_con_proformas.FirstOrDefault().IdCatalogo_FormaPago;
+            }
+            else
+            {
+                var info_cliente = bus_cliente.get_info(IdEmpresa,IdCliente);
+                var info_cliente_vendedor = bus_cliente_vendedor.get_info(IdEmpresa, IdCliente, IdSucursal);
+                IdVendedor = (info_cliente_vendedor == null) ? 0 : info_cliente_vendedor.IdVendedor;
+                IdTerminoPago = (info_cliente == null) ? "" : info_cliente.IdTipoCredito;
+                IdCatalogo_FormaPago = "CRE";
+            }
+
+            
+
+            return Json(new { IdVendedor = IdVendedor, IdTerminoPago = IdTerminoPago, IdCatalogo_FormaPago = IdCatalogo_FormaPago }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -820,28 +859,30 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             fa_guia_remision_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
 
-            edited_info.IdProducto = info_det.IdProducto;
-            edited_info.pr_descripcion = info_det.pr_descripcion;            
-            edited_info.gi_precio = info_det.gi_precio;
-            edited_info.gi_por_desc = info_det.gi_por_desc;
-            edited_info.gi_detallexItems = info_det.gi_detallexItems;
-            edited_info.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_Subtotal = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
-            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;
-
-            if (edited_info.IdProforma > 0 && edited_info.Saldo != null)
+            if (edited_info.IdProforma ==0 || edited_info.IdProforma==null)
             {
-                if(info_det.gi_cantidad <= edited_info.Saldo)
-                {
-                    edited_info.gi_cantidad = info_det.gi_cantidad;
-                }
+                edited_info.IdProducto = info_det.IdProducto;
+                edited_info.pr_descripcion = info_det.pr_descripcion;
+                edited_info.gi_precio = info_det.gi_precio;
+                edited_info.gi_por_desc = info_det.gi_por_desc;
+                edited_info.gi_cantidad = info_det.gi_cantidad;
             }
             else
             {
-                edited_info.gi_cantidad = info_det.gi_cantidad;
+                if (edited_info.IdProforma > 0 && edited_info.Saldo != null)
+                {
+                    if (info_det.gi_cantidad <= edited_info.Saldo)
+                    {
+                        edited_info.gi_cantidad = info_det.gi_cantidad;
+                    }
+                }
             }
             
+            edited_info.gi_detallexItems = info_det.gi_detallexItems;
+            edited_info.gi_descuentoUni = Math.Round(edited_info.gi_precio * (edited_info.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_PrecioFinal = Math.Round(edited_info.gi_precio - edited_info.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Subtotal = Math.Round(edited_info.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+            edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;           
 
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)

@@ -84,7 +84,6 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_proforma_det" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="26.125" PointY="39.5" />
-        <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma_det_por_guia" Width="1.5" PointX="2.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb" Width="1.5" PointX="23.875" PointY="14" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_det_fa_notaCreDeb" />
@@ -112,6 +111,7 @@
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_factura_resumen" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_resumen" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_proforma_det_por_guia" Width="1.5" PointX="0.75" PointY="21.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

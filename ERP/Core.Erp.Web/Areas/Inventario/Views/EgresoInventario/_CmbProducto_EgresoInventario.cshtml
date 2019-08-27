@@ -23,7 +23,7 @@
         settings.Properties.Columns.Add("nom_categoria", "Categoria", 20);
         settings.Properties.Columns.Add("Stock", "Stock", 20);
         settings.Properties.FilterMinLength = 3;
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){ OnSelectedProductoChanged(s,e); SetPrecioProducto(s,e) }";
     })
      .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_list_bajo_demanda,
       new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_info_bajo_demanda).Bind((Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_Ing_Egr_Inven_det_Info>)) ? "" : (Model == 0 ? "" : Model));

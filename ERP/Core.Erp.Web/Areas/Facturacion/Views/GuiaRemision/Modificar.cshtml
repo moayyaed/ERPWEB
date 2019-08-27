@@ -39,6 +39,7 @@
                 selectedIDs = "";
                 $("#OpModal").modal("hide");
 
+
             },
             error: function (error) {
             }
@@ -535,17 +536,52 @@
     }
 
     function MostrarDatosFactura() {
-        if (GenerarFactura.GetChecked() == true) {
-            $("#link_datos_factura").show();
-            $("#link_datos_factura").click();
-        }
-        else {
+        if($("#IdCbteVta").val() > 0){
+            $("#DivGenerarFactura").hide();
+
             $("#link_datos_factura").hide();
             $("#link_detalle_guia").click();
-            
+        }
+        else{
+            $("#DivGenerarFactura").show();
+
+            if (GenerarFactura.GetChecked() == true) {
+                $("#link_datos_factura").show();
+                $("#link_datos_factura").click();
+
+                SetDatosFactura();
+            }
+            else {
+                $("#link_datos_factura").hide();
+                $("#link_detalle_guia").click();
+            }
         }
     }
 
+    function SetDatosFactura() {
+        var datos = {
+            IdCliente: IdCliente.GetValue(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetDatosFactura", "GuiaRemision", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdVendedor").val(data.IdVendedor);
+                $("#IdTerminoPago").val(data.IdTerminoPago);
+                $("#IdCatalogo_FormaPago").val(data.IdCatalogo_FormaPago);
+            },
+            error: function (error) {
+            }
+        });
+    }
     function CargarFacturas() {
         var datos = {
             IdCliente: IdCliente.GetValue()
@@ -623,7 +659,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 if (data != null) {
-                    $("#Direccion_Origen").val(data.Direccion_emp);
+                    //$("#Direccion_Origen").val(data.Direccion_emp);
                     $("#Direccion_Destino").val(data.Direccion);
                 }
             },

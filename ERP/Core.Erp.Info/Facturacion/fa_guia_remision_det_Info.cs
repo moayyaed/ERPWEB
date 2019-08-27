@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Info.Facturacion
 {
-   public class fa_guia_remision_det_Info
+    public class fa_guia_remision_det_Info
     {
         public double pd_cantidad { get; set; }
 
@@ -40,7 +40,7 @@ namespace Core.Erp.Info.Facturacion
 
         #endregion Campos que no estan en la tabla
         public Nullable<decimal> IdCbteVta { get; set; }
-        public Nullable<int> Secuencia_fact { get; set; }        
+        public Nullable<int> Secuencia_fact { get; set; }
         public Nullable<int> IdEmpresa_fact { get; set; }
         public Nullable<int> IdSucursal_fact { get; set; }
         public Nullable<int> IdBodega_fact { get; set; }
@@ -52,6 +52,9 @@ namespace Core.Erp.Info.Facturacion
         public double gi_Iva_item { get; set; }
         public double gi_Total_item { get; set; }
         public double? Saldo { get; set; }
+        public int IdVendedor { get; set; }
+        public string  IdCatalogo_FormaPago { get; set; }
+        public string IdTerminoPago { get; set; }
         //public string ca_Categoria { get; set; }
         //public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         //public string lote_num_lote { get; set; }

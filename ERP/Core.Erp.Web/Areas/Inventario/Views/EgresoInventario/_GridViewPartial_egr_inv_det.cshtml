@@ -34,7 +34,7 @@
         //Funcion para inicializar fila al presionar nuevo
         settings.InitNewRow = (s, e) =>
         {
-            e.NewValues["IdMotivo_Inv_det"] = 0; 
+            e.NewValues["IdMotivo_Inv_det"] = 0;
             e.NewValues["IdProducto"] = 0;
             e.NewValues["IdUnidadMedida_sinConversion"] = "UNID";
             e.NewValues["dm_cantidad_sinConversion"] = "1";
@@ -80,7 +80,7 @@
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
-        
+
 
         settings.Columns.Add(column =>
         {
@@ -111,7 +111,7 @@
             column.FieldName = "mv_costo_sinConversion";
             column.Caption = "Costo";
             column.Width = Unit.Percentage(7);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.ReadOnly = true;
         });
 
         settings.Columns.Add(column =>
@@ -168,4 +168,27 @@
             }
         });
     }
+
+    function SetPrecioProducto(s, e) {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdBodega: $("#IdBodega").val(),
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetPrecioProductoEgreso", "EgresoInventario",new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_egr_inv_det.GetEditor('mv_costo_sinConversion').SetValue(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>

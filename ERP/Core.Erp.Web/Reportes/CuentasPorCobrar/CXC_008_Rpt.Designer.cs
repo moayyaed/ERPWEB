@@ -35,7 +35,6 @@
             this.xrTableRow4 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell11 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -47,7 +46,6 @@
             this.xrTableRow9 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell27 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell28 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell33 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell34 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -130,7 +128,6 @@
             this.xrTableRow4.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell7,
             this.xrTableCell8,
-            this.xrTableCell14,
             this.xrTableCell9,
             this.xrTableCell11,
             this.xrTableCell12});
@@ -153,22 +150,13 @@
             this.xrTableCell8.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell8.Weight = 1.0865514244790622D;
             // 
-            // xrTableCell14
-            // 
-            this.xrTableCell14.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FechaLiquidacion]")});
-            this.xrTableCell14.Name = "xrTableCell14";
-            this.xrTableCell14.Text = "xrTableCell14";
-            this.xrTableCell14.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell14.Weight = 1.1504660568306659D;
-            // 
             // xrTableCell9
             // 
             this.xrTableCell9.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[tc_descripcion]")});
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.Text = "Tipo cobro";
-            this.xrTableCell9.Weight = 1.2782958332469052D;
+            this.xrTableCell9.Weight = 2.4287618900775714D;
             // 
             // xrTableCell11
             // 
@@ -244,7 +232,6 @@
             this.xrTableRow9.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell27,
             this.xrTableCell28,
-            this.xrTableCell13,
             this.xrTableCell33,
             this.xrTableCell34,
             this.xrTableCell6});
@@ -263,17 +250,11 @@
             this.xrTableCell28.Text = "Fecha cobro";
             this.xrTableCell28.Weight = 1.0865514244790622D;
             // 
-            // xrTableCell13
-            // 
-            this.xrTableCell13.Name = "xrTableCell13";
-            this.xrTableCell13.Text = "Fecha de liquid.";
-            this.xrTableCell13.Weight = 1.1504660568306659D;
-            // 
             // xrTableCell33
             // 
             this.xrTableCell33.Name = "xrTableCell33";
             this.xrTableCell33.Text = "Tipo cobro";
-            this.xrTableCell33.Weight = 1.2782958332469052D;
+            this.xrTableCell33.Weight = 2.4287618900775714D;
             // 
             // xrTableCell34
             // 
@@ -752,8 +733,6 @@
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow5;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell16;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell17;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell14;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell13;
         private DevExpress.XtraReports.UI.XRPictureBox lbl_imagen;
     }
 }
