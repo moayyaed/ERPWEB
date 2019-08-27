@@ -1,10 +1,8 @@
-﻿using Core.Erp.Info.Reportes.CuentasPorPagar;
+﻿using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Info.Reportes.CuentasPorPagar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Erp.Data.Reportes.Base;
 namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
     public class CXP_009_Data
