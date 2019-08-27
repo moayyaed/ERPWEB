@@ -10,7 +10,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 {
     public class CXC_004_Data
     {
-        public List<CXC_004_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCliente, int Idtipo_cliente, DateTime FechaIni, DateTime FechaFin, bool MostrarSaldo0)
+        public List<CXC_004_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCliente, DateTime FechaIni, DateTime FechaFin, bool MostrarSaldo0)
         {
             try
             {
@@ -29,6 +29,22 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                     Lista = (from q in Context.SPCXC_004(IdEmpresa, IdSucursalIni, IdSucursalFin, IdClienteIni, IdClienteFin, FechaIni, FechaFin, MostrarSaldo0)
                              select new CXC_004_Info
                              {
+                                IdEmpresa = q.IdEmpresa,
+                                IdSucursal= q.IdSucursal,
+                                IdBodega = q.IdBodega,
+                                IdCliente=q.IdCliente,
+                                IdCbteVta =q.IdCbteVta,
+                                vt_NumFactura = q.vt_NumFactura,
+                                vt_fecha =q.vt_fecha,
+                                vt_fech_venc= q.vt_fech_venc,
+                                pe_nombreCompleto =q.pe_nombreCompleto,
+                                Su_Descripcion=q.Su_Descripcion,
+                                Total=q.Total,
+                                Saldo=q.Saldo,
+                                Debe=q.Debe,
+                                Haber=q.Haber,
+                                Dias=q.Dias,
+                                vt_tipoDoc = q.vt_tipoDoc
 
                              }).ToList();
                 }
