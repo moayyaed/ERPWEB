@@ -29,9 +29,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         #region Metodos ComboBox bajo demanda
         public ActionResult CmbProducto_Inventario()
         {
-            SessionFixed.IdProducto_padre_dist = (!string.IsNullOrEmpty(Request.Params["IdProductoPadre"])) ? Request.Params["IdProductoPadre"].ToString() : "-1";
-
-            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info();
+            decimal model = new decimal();
             return PartialView("_CmbProducto_Inventario", model);
         }
         public List<in_Producto_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)

@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.Contabilidad;
+﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.Contabilidad;
 using Core.Erp.Data.CuentasPorCobrar;
 using Core.Erp.Data.General;
 using Core.Erp.Data.Inventario;
@@ -280,6 +281,9 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
 
                 #region Resumen
+                if (info.info_resumen.ValorIVA > 0)
+                    info.info_resumen.PorIva = (decimal)info.lst_det.Where(q => q.vt_iva > 0).FirstOrDefault().vt_por_iva;
+
                 db_f.fa_factura_resumen.Add(new fa_factura_resumen
                 {
                     IdEmpresa = info.IdEmpresa,
@@ -298,7 +302,8 @@ namespace Core.Erp.Data.Facturacion
                     Descuento = info.info_resumen.Descuento,
                     ValorEfectivo = info.info_resumen.ValorEfectivo,
                     ValorIVA = info.info_resumen.ValorIVA,
-                    Cambio = info.info_resumen.Cambio
+                    Cambio = info.info_resumen.Cambio,
+                    PorIva = info.info_resumen.PorIva
                 });
                 #endregion
 
@@ -873,6 +878,9 @@ namespace Core.Erp.Data.Facturacion
                 if(resu != null)
                     db_f.fa_factura_resumen.Remove(resu);
 
+                if (info.info_resumen.ValorIVA > 0)
+                    info.info_resumen.PorIva = (decimal)info.lst_det.Where(q => q.vt_iva > 0).FirstOrDefault().vt_por_iva;
+
                 db_f.fa_factura_resumen.Add(new fa_factura_resumen
                 {
                     IdEmpresa = info.IdEmpresa,
@@ -891,7 +899,8 @@ namespace Core.Erp.Data.Facturacion
                     Descuento = info.info_resumen.Descuento,
                     ValorEfectivo = info.info_resumen.ValorEfectivo,
                     ValorIVA = info.info_resumen.ValorIVA,
-                    Cambio = info.info_resumen.Cambio
+                    Cambio = info.info_resumen.Cambio,
+                    PorIva = info.info_resumen.PorIva
                 });
                 #endregion
 

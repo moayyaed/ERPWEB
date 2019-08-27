@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.General;
+﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;

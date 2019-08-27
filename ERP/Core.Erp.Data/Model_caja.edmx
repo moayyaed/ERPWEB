@@ -234,6 +234,12 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_por_concilia
           <Property Name="IdTipo_Persona" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IdEntidad" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdPunto_cargo_grupo" Type="int" />
+          <Property Name="IdPunto_cargo" Type="int" />
+          <Property Name="IdCentroCosto" Type="varchar" MaxLength="200" />
+          <Property Name="nom_punto_cargo_grupo" Type="varchar(max)" />
+          <Property Name="nom_punto_cargo" Type="varchar(max)" />
+          <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_ValesNoConciliados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -332,8 +338,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det' no tie
             <PropertyRef Name="co_valorpagar" />
             <PropertyRef Name="SaldoOG" />
             <PropertyRef Name="Valor_a_aplicar" />
-            <PropertyRef Name="co_factura" />
             <PropertyRef Name="co_total" />
+            <PropertyRef Name="co_factura" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdConciliacion_Caja" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -357,7 +363,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det' no tie
           <Property Name="Valor_a_aplicar" Type="money" Nullable="false" />
           <Property Name="IdEmpresa_OP" Type="int" />
           <Property Name="IdOrdenPago_OP" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="co_factura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="co_factura" Type="varchar" MaxLength="61" Nullable="false" />
           <Property Name="co_total" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
@@ -583,7 +589,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
     [vwcaj_Caja_Movimiento_por_conciliar].[pe_nombreCompleto] AS [pe_nombreCompleto], 
     [vwcaj_Caja_Movimiento_por_conciliar].[IdTipo_Persona] AS [IdTipo_Persona], 
     [vwcaj_Caja_Movimiento_por_conciliar].[IdEntidad] AS [IdEntidad], 
-    [vwcaj_Caja_Movimiento_por_conciliar].[IdPersona] AS [IdPersona]
+    [vwcaj_Caja_Movimiento_por_conciliar].[IdPersona] AS [IdPersona], 
+    [vwcaj_Caja_Movimiento_por_conciliar].[IdPunto_cargo_grupo] AS [IdPunto_cargo_grupo], 
+    [vwcaj_Caja_Movimiento_por_conciliar].[IdPunto_cargo] AS [IdPunto_cargo], 
+    [vwcaj_Caja_Movimiento_por_conciliar].[IdCentroCosto] AS [IdCentroCosto], 
+    [vwcaj_Caja_Movimiento_por_conciliar].[nom_punto_cargo_grupo] AS [nom_punto_cargo_grupo], 
+    [vwcaj_Caja_Movimiento_por_conciliar].[nom_punto_cargo] AS [nom_punto_cargo], 
+    [vwcaj_Caja_Movimiento_por_conciliar].[cc_Descripcion] AS [cc_Descripcion]
     FROM [dbo].[vwcaj_Caja_Movimiento_por_conciliar] AS [vwcaj_Caja_Movimiento_por_conciliar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcaj_Caja_Movimiento_ValesNoConciliados" EntityType="Self.vwcaj_Caja_Movimiento_ValesNoConciliados" store:Type="Views" store:Schema="dbo">
@@ -772,7 +784,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <EntitySet Name="vwcaj_Caja_Movimiento_x_Conciliar" EntityType="Self.vwcaj_Caja_Movimiento_x_Conciliar" />
           <EntitySet Name="caj_parametro" EntityType="Model_caja.caj_parametro" />
           <EntitySet Name="caj_Caja_Movimiento_Tipo" EntityType="Model_caja.caj_Caja_Movimiento_Tipo" />
-          <EntitySet Name="vwcaj_Caja_Movimiento_por_conciliar" EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" />
           <EntitySet Name="vwcaj_Caja_Movimiento_ValesNoConciliados" EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" />
           <EntitySet Name="caj_Caja_Movimiento" EntityType="Model_caja.caj_Caja_Movimiento" />
           <AssociationSet Name="FK_caj_Caja_Movimiento_caj_Caja_Movimiento_Tipo" Association="Model_caja.FK_caj_Caja_Movimiento_caj_Caja_Movimiento_Tipo">
@@ -828,6 +839,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
             <End Role="cp_conciliacion_Caja_det_x_ValeCaja" EntitySet="cp_conciliacion_Caja_det_x_ValeCaja" />
           </AssociationSet>
           <EntitySet Name="vwcp_conciliacion_Caja_det_x_ValeCaja" EntityType="Model_caja.vwcp_conciliacion_Caja_det_x_ValeCaja" />
+          <EntitySet Name="vwcaj_Caja_Movimiento_por_conciliar" EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" />
         </EntityContainer>
         <EntityType Name="caj_parametro">
           <Key>
@@ -865,35 +877,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <Property Name="MotivoAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="SeDeposita" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="caj_Caja_Movimiento" Relationship="Model_caja.FK_caj_Caja_Movimiento_caj_Caja_Movimiento_Tipo" FromRole="caj_Caja_Movimiento_Tipo" ToRole="caj_Caja_Movimiento" />
-        </EntityType>
-        <EntityType Name="vwcaj_Caja_Movimiento_por_conciliar">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdTipocbte" />
-            <PropertyRef Name="IdCbteCble" />
-            <PropertyRef Name="IdCaja" />
-            <PropertyRef Name="IdTipoMovi" />
-            <PropertyRef Name="tm_descripcion" />
-            <PropertyRef Name="cm_valor" />
-            <PropertyRef Name="cm_fecha" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="IdTipo_Persona" />
-            <PropertyRef Name="IdEntidad" />
-            <PropertyRef Name="IdPersona" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipocbte" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdCaja" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoMovi" Type="Int32" Nullable="false" />
-          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="cm_valor" Type="Double" Nullable="false" />
-          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="vwcaj_Caja_Movimiento_ValesNoConciliados">
           <Key>
@@ -1266,7 +1249,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <Property Name="Valor_a_aplicar" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="IdEmpresa_OP" Type="Int32" />
           <Property Name="IdOrdenPago_OP" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="61" FixedLength="false" Unicode="false" />
           <Property Name="co_total" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="cp_conciliacion_Caja_det_x_ValeCaja">
@@ -1352,6 +1335,41 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
           <Property Name="IdCentroCosto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="cc_Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vwcaj_Caja_Movimiento_por_conciliar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipocbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="IdTipoMovi" />
+            <PropertyRef Name="tm_descripcion" />
+            <PropertyRef Name="cm_valor" />
+            <PropertyRef Name="cm_fecha" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdTipo_Persona" />
+            <PropertyRef Name="IdEntidad" />
+            <PropertyRef Name="IdPersona" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipocbte" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdCaja" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoMovi" Type="Int32" Nullable="false" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cm_valor" Type="Double" Nullable="false" />
+          <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
+          <Property Name="IdPunto_cargo" Type="Int32" />
+          <Property Name="IdCentroCosto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo_grupo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cc_Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1420,25 +1438,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
                 <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
                 <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
                 <ScalarProperty Name="IdTipoMovi" ColumnName="IdTipoMovi" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwcaj_Caja_Movimiento_por_conciliar">
-            <EntityTypeMapping TypeName="Model_caja.vwcaj_Caja_Movimiento_por_conciliar">
-              <MappingFragment StoreEntitySet="vwcaj_Caja_Movimiento_por_conciliar">
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
-                <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
-                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
-                <ScalarProperty Name="cm_valor" ColumnName="cm_valor" />
-                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
-                <ScalarProperty Name="IdTipoMovi" ColumnName="IdTipoMovi" />
-                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="IdTipocbte" ColumnName="IdTipocbte" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1668,6 +1667,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeC
                 <ScalarProperty Name="IdEmpresa_movcaja" ColumnName="IdEmpresa_movcaja" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcaj_Caja_Movimiento_por_conciliar">
+            <EntityTypeMapping TypeName="Model_caja.vwcaj_Caja_Movimiento_por_conciliar">
+              <MappingFragment StoreEntitySet="vwcaj_Caja_Movimiento_por_conciliar">
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
+                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="cm_fecha" ColumnName="cm_fecha" />
+                <ScalarProperty Name="cm_observacion" ColumnName="cm_observacion" />
+                <ScalarProperty Name="cm_valor" ColumnName="cm_valor" />
+                <ScalarProperty Name="tm_descripcion" ColumnName="tm_descripcion" />
+                <ScalarProperty Name="IdTipoMovi" ColumnName="IdTipoMovi" />
+                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipocbte" ColumnName="IdTipocbte" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

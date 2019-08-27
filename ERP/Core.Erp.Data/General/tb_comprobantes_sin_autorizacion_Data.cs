@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.Helps;
+using Core.Erp.Data.Facturacion.Base;
+
 namespace Core.Erp.Data.General
 {
    public class tb_comprobantes_sin_autorizacion_Data

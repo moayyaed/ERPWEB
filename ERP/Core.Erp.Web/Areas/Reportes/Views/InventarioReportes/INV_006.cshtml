@@ -46,7 +46,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdProducto">Producto </label>
-                            @Html.Partial("_CmbProducto_Inventario", Model)
+                            @Html.Partial("_CmbProducto_Inventario", Model.IdProducto)
                             @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                         </div>
                     </div>

@@ -9,18 +9,18 @@ namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_010_Data
     {
-        public List<FAC_010_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin, string IdCatalogo_FormaPago)
+        public List<FAC_010_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin, bool MostrarAnulados)
         {
             try
             {
                 int IdSucursalIni = IdSucursal;
-                int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
-                var fecha_inicio = fecha_ini.Date;
-                var fecha_fin_ = fecha_fin.Date;
+                int IdSucursalFin = IdSucursal == 0 ? 999999 : IdSucursal;
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
                 List<FAC_010_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPFAC_010(IdEmpresa, IdSucursalIni, IdSucursalFin, fecha_inicio, fecha_fin_, IdCatalogo_FormaPago)
+                    Lista = (from q in Context.SPFAC_010(IdEmpresa, IdSucursalIni, IdSucursalFin, fecha_ini, fecha_fin, MostrarAnulados)
                              select new FAC_010_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -45,7 +45,10 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  ValorIVA = q.ValorIVA,
                                  Total = q.Total,
                                  FacturasAnuladas = q.FacturasAnuladas,
-                                 FacturasEmitidas = q.FacturasEmitidas
+                                 nom_FormaPago = q.nom_FormaPago,
+                                 pe_cedulaRuc = q.pe_cedulaRuc,
+                                 Tarifa = q.Tarifa,
+                                 vt_Observacion = q.vt_Observacion
                                  
                              }).ToList();
                 }

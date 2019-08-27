@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.General;
+﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Caja;
 using Core.Erp.Info.General;
 using System;

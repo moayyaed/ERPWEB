@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.Helps;
 using DevExpress.Web;
+using Core.Erp.Data.Facturacion.Base;
 
 namespace Core.Erp.Data.General
 {

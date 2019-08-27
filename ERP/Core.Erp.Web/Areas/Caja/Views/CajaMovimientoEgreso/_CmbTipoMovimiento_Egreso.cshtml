@@ -4,7 +4,7 @@
     {
         settings.Name = "IdTipoMovi";
         settings.Width = Unit.Percentage(100);
-        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1000);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
         settings.CallbackRouteValues = new { Controller = "CajaMovimientoEgreso", Action = "CmbTipoMovimiento_Egreso", Area = "Caja" };
         settings.Properties.CallbackPageSize = 15;
@@ -14,7 +14,8 @@
         settings.Properties.ValueField = "IdTipoMovi";
         settings.Properties.ValueType = typeof(int);
         settings.Properties.Columns.Add("IdTipoMovi", "ID", 10);
-        settings.Properties.Columns.Add("tm_descripcion", "Descripción", 90);
+        settings.Properties.Columns.Add("tm_descripcion", "Descripción", 70);
+        settings.Properties.Columns.Add("IdCtaCble", "Cuenta", 20);
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
         settings.Properties.NullText = "== Seleccione ==";
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
