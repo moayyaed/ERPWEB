@@ -63,6 +63,9 @@
     @Html.HiddenFor(q => q.IdOrdenPago)
     @Html.HiddenFor(q => q.IdEstadoAprobacion)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa_cxp)
+    @Html.HiddenFor(q => q.IdTipoCbte_cxp)
+    @Html.HiddenFor(q => q.IdCbteCble_cxp)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -194,36 +197,17 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_datos_generales" aria-controls="informacion_general" role="tab" data-toggle="tab">Datos deuda a cancelar</a>
-            </li>
-
-            <li>
                 <a href="#tab_asiento_contable" aria-controls="contabilidad" role="tab" data-toggle="tab">Asiento contable</a>
             </li>
-
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="co_observacion">Detalle de deuda a cancelar</label>
-                                @Html.Action("GridViewPartial_detalle_op")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_asiento_contable">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_asiento_contable">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="co_observacion">Diario contable</label>
                                 @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
-
                             </div>
                         </div>
                     </div>
@@ -244,40 +228,36 @@
 
 <script>
 
-                $("#Valor_a_pagar").change(function () {
-                    armar_diario();
-                });
+$("#Valor_a_pagar").change(function () {
+    armar_diario();
+});
 
-                function armar_diario() {
+function armar_diario() {
+    var datos = {
+        IdTipo_op: IdTipo_op.GetValue(),
+        IdEntidad: IdEntidad.GetValue(),
+        Valor_a_pagar: $("#Valor_a_pagar").val(),
+        observacion: $("#observacion").val(),
+        IdEmpresa: $("#IdEmpresa").val(),
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdTipo_Persona: $("#IdTipo_Persona").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("armar_diario", "OrdenPago", new { Area = "CuentasPorPagar" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            /*GridViewPartial_detalle_op.PerformCallback();*/
+            GridView_comprobante_detalle.PerformCallback();
+        },
+        error: function (error) {
+        }
+    });
 
-                    var datos = {
-                        IdTipo_op: IdTipo_op.GetValue(),
-                        IdEntidad: IdEntidad.GetValue(),
-                        Valor_a_pagar: $("#Valor_a_pagar").val(),
-                        observacion: $("#observacion").val(),
-                        IdEmpresa: $("#IdEmpresa").val(),
-                        IdTransaccionSession: $("#IdTransaccionSession").val(),
-                        IdTipo_Persona: $("#IdTipo_Persona").val()
-                    }
-                    $.ajax({
-                        type: 'POST',
-                        data: JSON.stringify(datos),
-                        url: '@Url.Action("armar_diario", "OrdenPago", new { Area = "CuentasPorPagar" })',
-                        async: false,
-                        bDeferRender: true,
-                        bProcessing: true,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-                            GridViewPartial_detalle_op.PerformCallback();
-                            GridView_comprobante_detalle.PerformCallback();
-                        },
-                        error: function (error) {
-                        }
-                    });
-
-                };
-
-
-
-            </script>
+};
+</script>

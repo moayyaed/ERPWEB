@@ -214,19 +214,34 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 else
                     info.info_comprobante.cb_Observacion = info.Observacion;
 
-                
 
-                if (oData.modificarDB(info))
+                if (info.IdTipo_op!= "FACT_PROVEE")
                 {
-                    bus_contabilidad.modificarDB(info.info_comprobante);
-
-                    foreach (var item in info.detalle)
+                    if (oData.modificarDB(info))
                     {
-                        item.IdEmpresa = info.IdEmpresa;
-                        item.IdOrdenPago = info.IdOrdenPago;
-                        odata_detalle.modificarDB(item);
+                        bus_contabilidad.modificarDB(info.info_comprobante);
 
+                        foreach (var item in info.detalle)
+                        {
+                            item.IdEmpresa = info.IdEmpresa;
+                            item.IdOrdenPago = info.IdOrdenPago;
+                            odata_detalle.modificarDB(item);
+
+                        }
                     }
+                }
+                else
+                {
+                    if(oData.modificarDB(info))
+                    {
+                        foreach (var item in info.detalle)
+                        {
+                            item.IdEmpresa = info.IdEmpresa;
+                            item.IdOrdenPago = info.IdOrdenPago;
+                            odata_detalle.modificarDB(item);
+
+                        }
+                    }                    
                 }
                 return true;
             }
@@ -263,28 +278,44 @@ namespace Core.Erp.Bus.CuentasPorPagar
             try
             {
                 string mensaje = "";
-
+                info.detalle = new List<cp_orden_pago_det_Info> {
+                    new cp_orden_pago_det_Info
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdOrdenPago = info.IdOrdenPago,
+                        IdEmpresa_cxp = info.IdEmpresa_cxp,
+                        IdTipoCbte_cxp = info.IdTipoCbte_cxp,
+                        IdCbteCble_cxp = info.IdCbteCble_cxp,
+                        Fecha_Pago = info.Fecha,
+                        Referencia = info.Observacion,
+                        Valor_a_pagar = info.Valor_a_pagar
+                    }
+                };
                 if (info.detalle == null)
                     mensaje = "No existe detalle de pago";
                 if (info.detalle.Count() == 0)
                     mensaje = "No existe detalle de pago";
 
-                if (info.info_comprobante.lst_ct_cbtecble_det == null)
-                    mensaje = "No existe diario contable";
-                if (info.info_comprobante.lst_ct_cbtecble_det.Count() == 0)
-                    mensaje = "No existe diario contable";
-
-                if (Math.Round(info.info_comprobante.lst_ct_cbtecble_det.Sum(v=>v.dc_Valor), 2)!=0)                    
-                    mensaje = "El diario contable esta descudrado";
-                if (info.IdEstadoAprobacion == null)
-                    mensaje = "Falta esta aprovación en tipo OP";
-                if (info.detalle == null)
-                    mensaje = "Falta tipo comprobante contable en tipo OP";
-                foreach (var item in info.info_comprobante.lst_ct_cbtecble_det)
+                if (info.IdTipo_op != "FACT_PROVEE")
                 {
-                    if (item.IdCtaCble==null | item.IdCtaCble == "")
-                        mensaje = "Falta cuenta contable";
+                    if (info.info_comprobante.lst_ct_cbtecble_det == null)
+                        mensaje = "No existe diario contable";
+
+                    if (info.info_comprobante.lst_ct_cbtecble_det.Count() == 0)
+                        mensaje = "No existe diario contable";
+
+                    if (Math.Round(info.info_comprobante.lst_ct_cbtecble_det.Sum(v => v.dc_Valor), 2) != 0)
+                        mensaje = "El diario contable esta descuadrado";
+
+                    foreach (var item in info.info_comprobante.lst_ct_cbtecble_det)
+                    {
+                        if (item.IdCtaCble == null | item.IdCtaCble == "")
+                            mensaje = "Falta cuenta contable";
+                    }
                 }
+                
+                if (info.IdEstadoAprobacion == null)
+                    mensaje = "Falta parametrizar el estado de aprobación en la OP";              
 
                 return mensaje;
             }

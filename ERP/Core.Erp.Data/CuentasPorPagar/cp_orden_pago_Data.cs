@@ -160,6 +160,10 @@ namespace Core.Erp.Data.CuentasPorPagar
                 {
                     if (info.detalle.Count > 0)
                     {
+                        info.IdEmpresa_cxp = info.IdEmpresa;
+                        info.IdTipoCbte_cxp = Convert.ToInt32(info.detalle.FirstOrDefault().IdTipoCbte_cxp);
+                        info.IdCbteCble_cxp = Convert.ToDecimal(info.detalle.FirstOrDefault().IdCbteCble_cxp);
+
                         info.info_comprobante.IdTipoCbte =Convert.ToInt32( info.detalle.FirstOrDefault().IdTipoCbte_cxp);
                         info.info_comprobante.IdCbteCble =Convert.ToDecimal( info.detalle.FirstOrDefault().IdCbteCble_cxp);
                     }

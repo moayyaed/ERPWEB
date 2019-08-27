@@ -68,6 +68,9 @@
     @Html.HiddenFor(q => q.info_comprobante.IdTipoCbte)
     @Html.HiddenFor(q => q.info_comprobante.IdCbteCble)
     @Html.HiddenFor(q => q.IdTipo_op)
+    @Html.HiddenFor(q => q.IdEmpresa_cxp)
+    @Html.HiddenFor(q => q.IdTipoCbte_cxp)
+    @Html.HiddenFor(q => q.IdCbteCble_cxp)
 
     <div class="row">
         <div class="col-md-12">
@@ -184,7 +187,7 @@
                         //Boton para seleccionar ningun registro
                         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
                         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
+                        settings.ReadOnly = true;
                     }).BindList(ViewBag.lst_forma_pago).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdFormaPago, "", new { @class = "text-danger" })
                 </div>
@@ -212,29 +215,11 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_datos_generales" aria-controls="informacion_general" role="tab" data-toggle="tab">Datos deuda a cancelar</a>
-            </li>
-
-            <li>
                 <a href="#tab_asiento_contable" aria-controls="contabilidad" role="tab" data-toggle="tab">Asiento contable</a>
             </li>
-
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="co_observacion">Detalle de deuda a cancelar</label>
-                                @Html.Action("GridViewPartial_detalle_op")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_asiento_contable">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_asiento_contable">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -288,7 +273,7 @@
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        GridViewPartial_detalle_op.PerformCallback();
+                        /*GridViewPartial_detalle_op.PerformCallback();*/
                         GridView_comprobante_detalle.PerformCallback();
                     },
                     error: function (error) {

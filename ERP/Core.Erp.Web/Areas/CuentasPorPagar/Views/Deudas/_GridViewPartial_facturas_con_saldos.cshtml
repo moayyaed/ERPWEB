@@ -57,7 +57,7 @@
                 {
                     ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-bookmark\" style=\"color: red\"></span>");
                 }
-                else if(Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "Dias_Vencidos")) == 0)
+                else if(Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "Dias_Vencidos")) >10)
                 {
                     ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-bookmark\" style=\"color: green\"></span>");
                 }

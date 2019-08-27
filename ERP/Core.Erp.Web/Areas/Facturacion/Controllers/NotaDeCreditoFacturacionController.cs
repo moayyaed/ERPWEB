@@ -517,6 +517,20 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     return false;
                 }
             }
+
+
+            if (i_validar.lst_cruce.Count > 0)
+            {
+                var ValorNC = i_validar.lst_det.Sum(q => q.sc_total);
+                var ValorDocumentos = i_validar.lst_cruce.Sum(q=>q.vt_total);
+
+                if(ValorNC != ValorDocumentos)
+                {
+                    msg = "El valor de la nota de crédito debe ser igual a la suma de los documentos";
+                    return false;
+                }                
+            }
+
             return true;
         }
         #endregion

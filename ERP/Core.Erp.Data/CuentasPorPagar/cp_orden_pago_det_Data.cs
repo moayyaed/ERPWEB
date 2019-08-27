@@ -140,6 +140,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                     if (Entity != null)
                     {
                         Entity.Valor_a_pagar = info.Valor_a_pagar;
+                        Entity.Referencia = info.Referencia;
+                        Entity.Fecha_Pago = info.Fecha_Pago;
+
                         Context.SaveChanges();
                     }
                 }

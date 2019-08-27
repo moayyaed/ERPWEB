@@ -34,6 +34,10 @@ namespace Core.Erp.Info.CuentasPorPagar
         public bool EstadoBool { get; set; }
 
         public string ReferenciaGen { get; set; }
+
+        public Nullable<int> IdEmpresa_cxp { get; set; }
+        public Nullable<int> IdTipoCbte_cxp { get; set; }
+        public Nullable<decimal> IdCbteCble_cxp { get; set; }
         #region Campos auditoria
         public string IdUsuario { get; set; }
         public string IdUsuarioUltAnu { get; set; }

@@ -308,14 +308,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            if (model.IdTipo_op==cl_enumeradores.eTipoOrdenPago.FACT_PROVEE.ToString())
-            {
-                mensaje = "No se puede modificar una orden de pago de tipo factura por proveedor";
-                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-                cargar_combos(model.IdEmpresa);
-                ViewBag.mensaje = mensaje;
-                return View(model);
-            }
 
             if (!validar(model, ref mensaje))
             {
@@ -410,52 +402,56 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
        
         public JsonResult armar_diario(string IdTipo_op = "", string IdTipo_Persona = "" ,decimal IdEntidad = 0, double Valor_a_pagar = 0, string observacion="",int IdEmpresa = 0, decimal IdTransaccionSession = 0)
         {
-            info_param_op = bus_orden_pago_tipo.get_info(IdEmpresa, IdTipo_op);
-
-            comprobante_contable_fp.delete_detail_New_details(info_param_op, IdEntidad, Valor_a_pagar, observacion, IdTransaccionSession);
-            // añadir detalle 
-            cp_orden_pago_det_Info info_detalle = new cp_orden_pago_det_Info();
-            info_detalle.Valor_a_pagar = Valor_a_pagar;
-            info_detalle.Referencia = observacion;
-            info_detalle.IdEstadoAprobacion = info_param_op.IdEstadoAprobacion;
-
-            lst_detalle_op.Add(info_detalle);
-
-            lis_cp_orden_pago_det_Info.set_list(lst_detalle_op, IdTransaccionSession);
-
-            list_ct_cbtecble_det.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
-
-            string CtaCbleDebe = string.Empty;
-            string CtaCbleHaber = string.Empty;
-
-            var tipo = bus_orden_pago_tipo.get_info(IdEmpresa, IdTipo_op);
-            if (IdTipo_Persona == "PROVEE")
+            if (IdTipo_op != "FACT_PROVEE")
             {
-                var pro = bus_proveedor.get_info(IdEmpresa, IdEntidad);
-                if(pro != null)
-                    CtaCbleHaber = pro.IdCtaCble_CXP;
-            }
-            if (!string.IsNullOrEmpty(tipo.IdCtaCble_Credito))
-                CtaCbleHaber = tipo.IdCtaCble_Credito;
+                info_param_op = bus_orden_pago_tipo.get_info(IdEmpresa, IdTipo_op);
 
-            var list = lis_cp_orden_pago_det_Info.get_list(IdTransaccionSession);
-            foreach (var item in list)
-            {
-                //Debe
+                comprobante_contable_fp.delete_detail_New_details(info_param_op, IdEntidad, Valor_a_pagar, observacion, IdTransaccionSession);
+                // añadir detalle 
+                cp_orden_pago_det_Info info_detalle = new cp_orden_pago_det_Info();
+                info_detalle.Valor_a_pagar = Valor_a_pagar;
+                info_detalle.Referencia = observacion;
+                info_detalle.IdEstadoAprobacion = info_param_op.IdEstadoAprobacion;
+
+                lst_detalle_op.Add(info_detalle);
+
+                lis_cp_orden_pago_det_Info.set_list(lst_detalle_op, IdTransaccionSession);
+
+                list_ct_cbtecble_det.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
+
+                string CtaCbleDebe = string.Empty;
+                string CtaCbleHaber = string.Empty;
+
+                var tipo = bus_orden_pago_tipo.get_info(IdEmpresa, IdTipo_op);
+                if (IdTipo_Persona == "PROVEE")
+                {
+                    var pro = bus_proveedor.get_info(IdEmpresa, IdEntidad);
+                    if (pro != null)
+                        CtaCbleHaber = pro.IdCtaCble_CXP;
+                }
+                if (!string.IsNullOrEmpty(tipo.IdCtaCble_Credito))
+                    CtaCbleHaber = tipo.IdCtaCble_Credito;
+
+                var list = lis_cp_orden_pago_det_Info.get_list(IdTransaccionSession);
+                foreach (var item in list)
+                {
+                    //Debe
+                    list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
+                    {
+                        IdCtaCble = tipo == null ? "" : tipo.IdCtaCble,
+                        dc_Valor = Math.Round(item.Valor_a_pagar, 2, MidpointRounding.AwayFromZero),
+                        dc_Valor_debe = Math.Round(item.Valor_a_pagar, 2, MidpointRounding.AwayFromZero)
+                    }, IdTransaccionSession);
+                }
                 list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
                 {
-                    IdCtaCble = tipo == null ? "" : tipo.IdCtaCble,
-                    dc_Valor = Math.Round(item.Valor_a_pagar, 2, MidpointRounding.AwayFromZero),
-                    dc_Valor_debe = Math.Round(item.Valor_a_pagar, 2, MidpointRounding.AwayFromZero)
+                    IdCtaCble = string.IsNullOrEmpty(CtaCbleHaber) ? (tipo == null ? "" : tipo.IdCtaCble_Credito) : CtaCbleHaber,
+                    dc_Valor = Math.Round(list.Sum(q => q.Valor_a_pagar), 2, MidpointRounding.AwayFromZero) * -1,
+                    dc_Valor_haber = Math.Round(list.Sum(q => q.Valor_a_pagar), 2, MidpointRounding.AwayFromZero),
+                    dc_para_conciliar = true
                 }, IdTransaccionSession);
-            }
-            list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
-            {
-                IdCtaCble = string.IsNullOrEmpty(CtaCbleHaber) ? (tipo == null ? ""  : tipo.IdCtaCble_Credito) : CtaCbleHaber,
-                dc_Valor = Math.Round(list.Sum(q => q.Valor_a_pagar), 2, MidpointRounding.AwayFromZero) * -1,
-                dc_Valor_haber = Math.Round(list.Sum(q => q.Valor_a_pagar), 2, MidpointRounding.AwayFromZero),
-                dc_para_conciliar = true
-            }, IdTransaccionSession);
+            }            
+
             return Json("", JsonRequestBehavior.AllowGet);
         }
 

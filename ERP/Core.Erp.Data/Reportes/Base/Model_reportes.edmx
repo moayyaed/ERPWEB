@@ -760,6 +760,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCOMP_001' no tiene definida ning
             <PropertyRef Name="SubtotalIVA" />
             <PropertyRef Name="Subtotal0" />
             <PropertyRef Name="DescuentoTotal" />
+            <PropertyRef Name="Expr1" />
+            <PropertyRef Name="oc_fechaVencimiento" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -797,6 +799,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCOMP_001' no tiene definida ning
           <Property Name="NombreUsuario" Type="varchar" MaxLength="50" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="FechaAprobacion" Type="datetime" />
+          <Property Name="Expr1" Type="int" Nullable="false" />
+          <Property Name="oc_codigo" Type="varchar" MaxLength="50" />
+          <Property Name="oc_fechaVencimiento" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCONTA_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1822,8 +1827,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXP_014' no tiene definida ningu
           <Property Name="IdProveedor" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="co_fechaOg" Type="datetime" Nullable="false" />
           <Property Name="co_serie" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="co_factura" Type="varchar" MaxLength="61" Nullable="false" />
-          <Property Name="NumRetencion" Type="varchar" MaxLength="28" />
+          <Property Name="co_factura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumRetencion" Type="varchar" MaxLength="24" />
           <Property Name="co_FechaFactura" Type="datetime" Nullable="false" />
           <Property Name="co_FechaContabilizacion" Type="datetime" />
           <Property Name="co_FechaFactura_vct" Type="datetime" Nullable="false" />
@@ -5568,7 +5573,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCOMP_001].[DescuentoTotal] AS [DescuentoTotal], 
     [VWCOMP_001].[NombreUsuario] AS [NombreUsuario], 
     [VWCOMP_001].[Fecha_Transac] AS [Fecha_Transac], 
-    [VWCOMP_001].[FechaAprobacion] AS [FechaAprobacion]
+    [VWCOMP_001].[FechaAprobacion] AS [FechaAprobacion], 
+    [VWCOMP_001].[Expr1] AS [Expr1], 
+    [VWCOMP_001].[oc_codigo] AS [oc_codigo], 
+    [VWCOMP_001].[oc_fechaVencimiento] AS [oc_fechaVencimiento]
     FROM [web].[VWCOMP_001] AS [VWCOMP_001]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCONTA_001" EntityType="Self.VWCONTA_001" store:Type="Views" store:Schema="web">
@@ -11993,7 +12001,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySet Name="VWFAC_002" EntityType="Model_reportes.VWFAC_002" />
           <EntitySet Name="VWFAC_007" EntityType="Model_reportes.VWFAC_007" />
           <EntitySet Name="VWFAC_020" EntityType="Model_reportes.VWFAC_020" />
-          <EntitySet Name="VWCOMP_001" EntityType="Model_reportes.VWCOMP_001" />
           <FunctionImport Name="SPCXP_015" ReturnType="Collection(Model_reportes.SPCXP_015_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
@@ -12155,6 +12162,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           </FunctionImport>
           <EntitySet Name="VWINV_008" EntityType="Model_reportes.VWINV_008" />
           <EntitySet Name="VWCXP_014" EntityType="Model_reportes.VWCXP_014" />
+          <EntitySet Name="VWCOMP_001" EntityType="Model_reportes.VWCOMP_001" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12984,74 +12992,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Su_Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="VWCOMP_001">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdOrdenCompra" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="Tipo" />
-            <PropertyRef Name="SecuenciaTipo" />
-            <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="oc_fecha" />
-            <PropertyRef Name="Estado" />
-            <PropertyRef Name="NombreTerminoPago" />
-            <PropertyRef Name="IdProveedor" />
-            <PropertyRef Name="NombreProveedor" />
-            <PropertyRef Name="RucProveedor" />
-            <PropertyRef Name="NombreComprador" />
-            <PropertyRef Name="NomUnidadMedida" />
-            <PropertyRef Name="do_Cantidad" />
-            <PropertyRef Name="do_precioCompra" />
-            <PropertyRef Name="do_porc_des" />
-            <PropertyRef Name="do_descuento" />
-            <PropertyRef Name="do_precioFinal" />
-            <PropertyRef Name="do_subtotal" />
-            <PropertyRef Name="do_iva" />
-            <PropertyRef Name="do_total" />
-            <PropertyRef Name="Por_Iva" />
-            <PropertyRef Name="SubtotalIVA" />
-            <PropertyRef Name="Subtotal0" />
-            <PropertyRef Name="DescuentoTotal" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdOrdenCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="oc_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="NombreTerminoPago" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="oc_plazo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="NombreProveedor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TelefonosProveedor" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
-          <Property Name="DireccionProveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="RucProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NombreComprador" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NombreProducto" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="NomUnidadMedida" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="do_Cantidad" Type="Double" Nullable="false" />
-          <Property Name="do_precioCompra" Type="Double" Nullable="false" />
-          <Property Name="do_porc_des" Type="Double" Nullable="false" />
-          <Property Name="do_descuento" Type="Double" Nullable="false" />
-          <Property Name="do_precioFinal" Type="Double" Nullable="false" />
-          <Property Name="do_subtotal" Type="Double" Nullable="false" />
-          <Property Name="do_iva" Type="Double" Nullable="false" />
-          <Property Name="do_total" Type="Double" Nullable="false" />
-          <Property Name="Por_Iva" Type="Double" Nullable="false" />
-          <Property Name="SubtotalIVA" Type="Double" Nullable="false" />
-          <Property Name="Subtotal0" Type="Double" Nullable="false" />
-          <Property Name="DescuentoTotal" Type="Double" Nullable="false" />
-          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
-        </EntityType>
         <ComplexType Name="SPCXP_015_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Int32" Name="IdTipoCbte_Ogiro" Nullable="false" />
@@ -13829,8 +13769,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="co_fechaOg" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="co_serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="61" FixedLength="false" Unicode="false" />
-          <Property Name="NumRetencion" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NumRetencion" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
           <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="co_FechaContabilizacion" Type="DateTime" Precision="3" />
           <Property Name="co_FechaFactura_vct" Type="DateTime" Nullable="false" Precision="3" />
@@ -13879,6 +13819,79 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="FacturaRetencion" Type="String" Nullable="false" MaxLength="22" FixedLength="false" Unicode="false" />
           <Property Name="co_subtotal" Type="Double" Nullable="false" />
           <Property Name="TieneRetencion" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VWCOMP_001">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="NombreTerminoPago" />
+            <PropertyRef Name="IdProveedor" />
+            <PropertyRef Name="NombreProveedor" />
+            <PropertyRef Name="RucProveedor" />
+            <PropertyRef Name="NombreComprador" />
+            <PropertyRef Name="NomUnidadMedida" />
+            <PropertyRef Name="do_Cantidad" />
+            <PropertyRef Name="do_precioCompra" />
+            <PropertyRef Name="do_porc_des" />
+            <PropertyRef Name="do_descuento" />
+            <PropertyRef Name="do_precioFinal" />
+            <PropertyRef Name="do_subtotal" />
+            <PropertyRef Name="do_iva" />
+            <PropertyRef Name="do_total" />
+            <PropertyRef Name="Por_Iva" />
+            <PropertyRef Name="SubtotalIVA" />
+            <PropertyRef Name="Subtotal0" />
+            <PropertyRef Name="DescuentoTotal" />
+            <PropertyRef Name="Expr1" />
+            <PropertyRef Name="oc_fechaVencimiento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="oc_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NombreTerminoPago" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="oc_plazo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NombreProveedor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TelefonosProveedor" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionProveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="RucProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreComprador" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreProducto" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NomUnidadMedida" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="do_Cantidad" Type="Double" Nullable="false" />
+          <Property Name="do_precioCompra" Type="Double" Nullable="false" />
+          <Property Name="do_porc_des" Type="Double" Nullable="false" />
+          <Property Name="do_descuento" Type="Double" Nullable="false" />
+          <Property Name="do_precioFinal" Type="Double" Nullable="false" />
+          <Property Name="do_subtotal" Type="Double" Nullable="false" />
+          <Property Name="do_iva" Type="Double" Nullable="false" />
+          <Property Name="do_total" Type="Double" Nullable="false" />
+          <Property Name="Por_Iva" Type="Double" Nullable="false" />
+          <Property Name="SubtotalIVA" Type="Double" Nullable="false" />
+          <Property Name="Subtotal0" Type="Double" Nullable="false" />
+          <Property Name="DescuentoTotal" Type="Double" Nullable="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
+          <Property Name="oc_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="oc_fechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -17267,48 +17280,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VWCOMP_001">
-            <EntityTypeMapping TypeName="Model_reportes.VWCOMP_001">
-              <MappingFragment StoreEntitySet="VWCOMP_001">
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
-                <ScalarProperty Name="DescuentoTotal" ColumnName="DescuentoTotal" />
-                <ScalarProperty Name="Subtotal0" ColumnName="Subtotal0" />
-                <ScalarProperty Name="SubtotalIVA" ColumnName="SubtotalIVA" />
-                <ScalarProperty Name="Por_Iva" ColumnName="Por_Iva" />
-                <ScalarProperty Name="do_total" ColumnName="do_total" />
-                <ScalarProperty Name="do_iva" ColumnName="do_iva" />
-                <ScalarProperty Name="do_subtotal" ColumnName="do_subtotal" />
-                <ScalarProperty Name="do_precioFinal" ColumnName="do_precioFinal" />
-                <ScalarProperty Name="do_descuento" ColumnName="do_descuento" />
-                <ScalarProperty Name="do_porc_des" ColumnName="do_porc_des" />
-                <ScalarProperty Name="do_precioCompra" ColumnName="do_precioCompra" />
-                <ScalarProperty Name="do_Cantidad" ColumnName="do_Cantidad" />
-                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
-                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
-                <ScalarProperty Name="NombreComprador" ColumnName="NombreComprador" />
-                <ScalarProperty Name="RucProveedor" ColumnName="RucProveedor" />
-                <ScalarProperty Name="DireccionProveedor" ColumnName="DireccionProveedor" />
-                <ScalarProperty Name="TelefonosProveedor" ColumnName="TelefonosProveedor" />
-                <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="oc_plazo" ColumnName="oc_plazo" />
-                <ScalarProperty Name="NombreTerminoPago" ColumnName="NombreTerminoPago" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
-                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPCXP_015" FunctionName="Model_reportes.Store.SPCXP_015">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_reportes.SPCXP_015_Result">
@@ -18036,6 +18007,51 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdOrden_giro_Tipo" ColumnName="IdOrden_giro_Tipo" />
                 <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWCOMP_001">
+            <EntityTypeMapping TypeName="Model_reportes.VWCOMP_001">
+              <MappingFragment StoreEntitySet="VWCOMP_001">
+                <ScalarProperty Name="oc_fechaVencimiento" ColumnName="oc_fechaVencimiento" />
+                <ScalarProperty Name="oc_codigo" ColumnName="oc_codigo" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="DescuentoTotal" ColumnName="DescuentoTotal" />
+                <ScalarProperty Name="Subtotal0" ColumnName="Subtotal0" />
+                <ScalarProperty Name="SubtotalIVA" ColumnName="SubtotalIVA" />
+                <ScalarProperty Name="Por_Iva" ColumnName="Por_Iva" />
+                <ScalarProperty Name="do_total" ColumnName="do_total" />
+                <ScalarProperty Name="do_iva" ColumnName="do_iva" />
+                <ScalarProperty Name="do_subtotal" ColumnName="do_subtotal" />
+                <ScalarProperty Name="do_precioFinal" ColumnName="do_precioFinal" />
+                <ScalarProperty Name="do_descuento" ColumnName="do_descuento" />
+                <ScalarProperty Name="do_porc_des" ColumnName="do_porc_des" />
+                <ScalarProperty Name="do_precioCompra" ColumnName="do_precioCompra" />
+                <ScalarProperty Name="do_Cantidad" ColumnName="do_Cantidad" />
+                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="NombreComprador" ColumnName="NombreComprador" />
+                <ScalarProperty Name="RucProveedor" ColumnName="RucProveedor" />
+                <ScalarProperty Name="DireccionProveedor" ColumnName="DireccionProveedor" />
+                <ScalarProperty Name="TelefonosProveedor" ColumnName="TelefonosProveedor" />
+                <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="oc_plazo" ColumnName="oc_plazo" />
+                <ScalarProperty Name="NombreTerminoPago" ColumnName="NombreTerminoPago" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
+                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
