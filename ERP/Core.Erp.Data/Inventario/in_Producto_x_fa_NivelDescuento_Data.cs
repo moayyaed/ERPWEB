@@ -1,4 +1,5 @@
-﻿using Core.Erp.Info.Inventario;
+﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
 using System.Linq;

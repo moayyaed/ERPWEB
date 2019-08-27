@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Data.Compras.Base;
+using Core.Erp.Data.Facturacion.Base;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;

@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.Contabilidad;
+﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.Contabilidad;
 using Core.Erp.Data.CuentasPorCobrar;
 using Core.Erp.Data.General;
 using Core.Erp.Data.Inventario;

@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.Inventario;
+﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.Inventario;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.Inventario;
 using System;
