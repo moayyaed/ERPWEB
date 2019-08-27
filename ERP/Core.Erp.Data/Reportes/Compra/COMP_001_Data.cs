@@ -57,7 +57,9 @@ namespace Core.Erp.Data.Reportes
                         TelefonosProveedor = q.TelefonosProveedor,
                         NombreUsuario = q.NombreUsuario,
                         FechaAprobacion = q.FechaAprobacion,
-                        Fecha_Transac = q.Fecha_Transac
+                        Fecha_Transac = q.Fecha_Transac,
+                        oc_codigo = q.oc_codigo,
+                        oc_fechaVencimiento = q.oc_fechaVencimiento
                     }).ToList();
                 }
                 return Lista;

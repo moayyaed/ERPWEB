@@ -33,5 +33,6 @@ namespace Core.Erp.Data.Compras.Base
         public string TerminoPago { get; set; }
         public int oc_plazo { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public string oc_codigo { get; set; }
     }
 }

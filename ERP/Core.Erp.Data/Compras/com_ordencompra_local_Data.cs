@@ -49,8 +49,8 @@ namespace Core.Erp.Data.Compras
                                      pe_nombreCompleto = q.pe_nombreCompleto,
                                      pr_codigo = q.Codigo,
                                      Nombre = q.pe_nombreCompleto,
-                                     Su_Descripcion = q.Su_Descripcion
-
+                                     Su_Descripcion = q.Su_Descripcion,
+                                     oc_codigo = q.oc_codigo
                                  }).ToList();
                     else
                         Lista = (from q in Context.vwcom_ordencompra_local
@@ -78,7 +78,9 @@ namespace Core.Erp.Data.Compras
                                      EstadoBool = q.Estado == "A" ? true : false,
                                      pe_nombreCompleto = q.pe_nombreCompleto,
                                      pr_codigo = q.Codigo,
-                                     Nombre = q.pe_nombreCompleto
+                                     Nombre = q.pe_nombreCompleto,
+                                     Su_Descripcion = q.Su_Descripcion,
+                                     oc_codigo = q.oc_codigo
 
                                  }).ToList();
                 }
@@ -119,6 +121,7 @@ namespace Core.Erp.Data.Compras
                         oc_observacion = Entity.oc_observacion,
                         oc_fecha = Entity.oc_fecha,
                         oc_fechaVencimiento = Entity.oc_fechaVencimiento,
+                        oc_codigo = Entity.oc_codigo
                     };
                 }
                 return info;
@@ -202,7 +205,7 @@ namespace Core.Erp.Data.Compras
                         oc_observacion = info.oc_observacion,
                         oc_fecha = info.oc_fecha,
                         oc_fechaVencimiento = info.oc_fechaVencimiento,
-
+                        oc_codigo = info.oc_codigo,
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
                     };
@@ -299,7 +302,7 @@ namespace Core.Erp.Data.Compras
                     Entity.oc_observacion = info.oc_observacion;
                     Entity.oc_fecha = info.oc_fecha;
                     Entity.oc_fechaVencimiento = info.oc_fechaVencimiento;
-
+                    Entity.oc_codigo = info.oc_codigo;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
 
@@ -495,8 +498,8 @@ namespace Core.Erp.Data.Compras
                             Su_Descripcion = q.Su_Descripcion,
                             pe_nombreCompleto = q.pe_nombreCompleto,
                             TerminoPago = q.TerminoPago,
-                            Total = q.Total
-                            
+                            Total = q.Total,
+                            oc_codigo = q.oc_codigo
 
                     }).ToList();
                 }

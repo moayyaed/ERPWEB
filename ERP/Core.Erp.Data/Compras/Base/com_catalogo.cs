@@ -17,9 +17,9 @@ namespace Core.Erp.Data.Compras.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public com_catalogo()
         {
-            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
             this.com_parametro = new HashSet<com_parametro>();
             this.com_parametro1 = new HashSet<com_parametro>();
+            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
         }
     
         public string IdCatalogocompra { get; set; }
@@ -41,10 +41,10 @@ namespace Core.Erp.Data.Compras.Base
     
         public virtual com_catalogo_tipo com_catalogo_tipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<com_parametro> com_parametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<com_parametro> com_parametro1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
     }
 }

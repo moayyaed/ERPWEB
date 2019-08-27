@@ -44,5 +44,8 @@ namespace Core.Erp.Info.Reportes.Compra
         public string NombreUsuario { get; set; }
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public Nullable<System.DateTime> FechaAprobacion { get; set; }
+        public int Expr1 { get; set; }
+        public string oc_codigo { get; set; }
+        public System.DateTime oc_fechaVencimiento { get; set; }
     }
 }

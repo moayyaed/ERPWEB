@@ -29,6 +29,7 @@ namespace Core.Erp.Data.Compras.Base
         public int IdTerminoPago { get; set; }
         public int oc_plazo { get; set; }
         public System.DateTime oc_fecha { get; set; }
+        public string oc_codigo { get; set; }
         public string oc_observacion { get; set; }
         public string Estado { get; set; }
         public string IdEstadoAprobacion_cat { get; set; }

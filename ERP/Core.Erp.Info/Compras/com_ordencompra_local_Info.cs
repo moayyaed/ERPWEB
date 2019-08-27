@@ -44,6 +44,7 @@ namespace Core.Erp.Info.Compras
         public string IdEstado_cierre { get; set; }
         [Required(ErrorMessage = ("el campo comprador es obligatorio"))]
         public decimal IdComprador { get; set; }
+        public string oc_codigo { get; set; }
 
         //campos que no existen en la tabla
         public string pr_codigo { get; set; }

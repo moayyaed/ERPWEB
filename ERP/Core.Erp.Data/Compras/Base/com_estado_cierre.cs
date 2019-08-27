@@ -17,8 +17,8 @@ namespace Core.Erp.Data.Compras.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public com_estado_cierre()
         {
-            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
             this.com_parametro = new HashSet<com_parametro>();
+            this.com_ordencompra_local = new HashSet<com_ordencompra_local>();
         }
     
         public string IdEstado_cierre { get; set; }
@@ -32,8 +32,8 @@ namespace Core.Erp.Data.Compras.Base
         public string MotivoAnulacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<com_parametro> com_parametro { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<com_ordencompra_local> com_ordencompra_local { get; set; }
     }
 }
