@@ -3,12 +3,10 @@ using Core.Erp.Info.Facturacion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Erp.Data.Facturacion
 {
-   public class fa_guia_remision_det_Data
+    public class fa_guia_remision_det_Data
     {
         public List<fa_guia_remision_det_Info> get_list(int IdEmpresa, decimal IdGuiaRemision)
         {
