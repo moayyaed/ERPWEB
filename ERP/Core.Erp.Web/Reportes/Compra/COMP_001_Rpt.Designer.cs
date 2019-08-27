@@ -252,7 +252,6 @@
             this.xrTableCell34.StylePriority.UsePadding = false;
             this.xrTableCell34.StylePriority.UseTextAlignment = false;
             this.xrTableCell34.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
-            this.xrTableCell34.TextFormatString = "{0:n6}";
             this.xrTableCell34.Weight = 0.63297738211609422D;
             // 
             // xrTableCell35

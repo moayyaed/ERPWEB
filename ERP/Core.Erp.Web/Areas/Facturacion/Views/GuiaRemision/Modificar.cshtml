@@ -574,7 +574,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 $("#IdVendedor").val(data.IdVendedor);
                 $("#IdTerminoPago").val(data.IdTerminoPago);
                 $("#IdCatalogo_FormaPago").val(data.IdCatalogo_FormaPago);
@@ -660,7 +659,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 if (data != null) {
-                    $("#Direccion_Origen").val(data.Direccion_emp);
+                    //$("#Direccion_Origen").val(data.Direccion_emp);
                     $("#Direccion_Destino").val(data.Direccion);
                 }
             },

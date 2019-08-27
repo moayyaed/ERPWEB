@@ -207,6 +207,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            var info_sucursal = bus_sucursal.get_info(IdEmpresa, IdSucursal);
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
@@ -215,7 +216,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
             fa_guia_remision_Info model = new fa_guia_remision_Info
             {
-
                 gi_fecha = DateTime.Now,
                 gi_FechaFinTraslado = DateTime.Now,
                 gi_FechaInicioTraslado = DateTime.Now,
@@ -224,7 +224,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 lst_detalle = new List<fa_guia_remision_det_Info>(),
                 lst_detalle_x_factura = new List<fa_factura_x_fa_guia_remision_Info>(),
-                GenerarFactura = false
+                GenerarFactura = false,
+                Direccion_Origen = (info_sucursal == null) ? "" : info_sucursal.Su_Direccion
             };
             detalle_info.set_list(model.lst_detalle, model.IdTransaccionSession);
             List_rel.set_list(model.lst_detalle_x_factura, model.IdTransaccionSession);

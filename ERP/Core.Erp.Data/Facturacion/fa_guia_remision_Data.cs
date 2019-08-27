@@ -352,7 +352,7 @@ namespace Core.Erp.Data.Facturacion
                                 IdCod_Impuesto_Iva = item.IdCod_Impuesto,
                                 vt_iva = item.gi_Iva,
                                 vt_total = item.gi_Total,
-
+                                vt_detallexItems = item.gi_detallexItems,
                                 IdEmpresa_pf = item.IdEmpresa_pf,
                                 IdSucursal_pf = item.IdSucursal_pf,
                                 IdProforma = item.IdProforma,
@@ -606,6 +606,7 @@ namespace Core.Erp.Data.Facturacion
                                 IdCod_Impuesto_Iva = item.IdCod_Impuesto,
                                 vt_iva = item.gi_Iva,
                                 vt_total = item.gi_Total,
+                                vt_detallexItems = item.gi_detallexItems,
 
                                 IdEmpresa_pf = item.IdEmpresa_pf,
                                 IdSucursal_pf = item.IdSucursal_pf,
