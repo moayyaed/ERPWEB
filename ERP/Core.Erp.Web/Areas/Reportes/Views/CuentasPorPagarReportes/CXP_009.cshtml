@@ -149,9 +149,15 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <div class="checkbox">
-                            <label for="mostrarAnulados">@Html.CheckBoxFor(q => q.mostrarAnulados) Mostrar anulados</label>
-                        </div>
+                        <label for="CodDocumentoTipo">Tipo</label>
+                        @Html.DevExpress().ComboBoxFor(q => q.CodDocumentoTipo, setting =>
+               {
+                   setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   setting.Properties.Items.Add("TODOS", "");
+                   setting.Properties.Items.Add("MANUALES", "M");
+                   setting.Properties.Items.Add("ELECTRONICOS", "E");
+               }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.CodDocumentoTipo, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
