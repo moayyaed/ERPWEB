@@ -15,10 +15,10 @@ namespace Core.Erp.Data.Reportes.Base
     public partial class VWCXP_009
     {
         public int IdEmpresa { get; set; }
+        public int IdTipoCbte_Ogiro { get; set; }
+        public decimal IdCbteCble_Ogiro { get; set; }
         public decimal IdRetencion { get; set; }
         public int Idsecuencia { get; set; }
-        public decimal IdCbteCble_Ogiro { get; set; }
-        public int IdTipoCbte_Ogiro { get; set; }
         public string IdOrden_giro_Tipo { get; set; }
         public decimal IdProveedor { get; set; }
         public string nom_proveedor { get; set; }
@@ -30,7 +30,7 @@ namespace Core.Erp.Data.Reportes.Base
         public System.DateTime co_FechaFactura { get; set; }
         public string Estado { get; set; }
         public string TipoDocumento { get; set; }
-        public System.DateTime fecha_retencion { get; set; }
+        public Nullable<System.DateTime> fecha_retencion { get; set; }
         public Nullable<int> ejercicio_fiscal { get; set; }
         public string Impuesto { get; set; }
         public double base_retencion { get; set; }

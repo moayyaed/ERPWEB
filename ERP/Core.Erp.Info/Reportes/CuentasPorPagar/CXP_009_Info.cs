@@ -24,7 +24,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public Nullable<System.DateTime> co_FechaFactura { get; set; }
         public string Estado { get; set; }
         public string TipoDocumento { get; set; }
-        public System.DateTime fecha_retencion { get; set; }
+        public Nullable<System.DateTime> fecha_retencion { get; set; }
         public Nullable<int> ejercicio_fiscal { get; set; }
         public string Impuesto { get; set; }
         public double base_retencion { get; set; }
@@ -41,5 +41,6 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string co_observacion { get; set; }
         public Nullable<int> IdSucursal { get; set; }
         public string Su_Descripcion { get; set; }
+        public bool? es_Documento_Electronico { get; set; }
     }
 }

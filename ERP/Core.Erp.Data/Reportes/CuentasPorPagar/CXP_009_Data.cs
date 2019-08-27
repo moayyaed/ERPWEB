@@ -63,7 +63,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      co_observacion = q.co_observacion,
                                      IdCbteCbleRet = q.IdCbteCbleRet,
                                      IdSucursal = q.IdSucursal,
-                                     Su_Descripcion = q.Su_Descripcion
+                                     Su_Descripcion = q.Su_Descripcion,
+                                     es_Documento_Electronico = q.es_Documento_Electronico
                                  }).ToList();
                     }
                     else
@@ -108,7 +109,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      co_observacion = q.co_observacion,
                                      IdCbteCbleRet = q.IdCbteCbleRet,
                                      IdSucursal = q.IdSucursal,
-                                     Su_Descripcion = q.Su_Descripcion
+                                     Su_Descripcion = q.Su_Descripcion,
+                                     es_Documento_Electronico = q.es_Documento_Electronico
                                  }).ToList();
                     }
                 }
