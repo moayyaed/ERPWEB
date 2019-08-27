@@ -770,7 +770,7 @@ namespace Core.Erp.Data.Facturacion
             {
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    var Entity = Context.fa_guia_remision.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCbteVta == IdGuiaRemision).FirstOrDefault();
+                    var Entity = Context.fa_guia_remision.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdGuiaRemision == IdGuiaRemision).FirstOrDefault();
                     if (Entity != null)
                     {
                         Entity.aprobada_enviar_sri = true;
