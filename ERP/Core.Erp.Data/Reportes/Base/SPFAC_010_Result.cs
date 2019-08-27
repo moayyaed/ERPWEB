@@ -34,7 +34,10 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<decimal> SubtotalSinIVAConDscto { get; set; }
         public Nullable<decimal> ValorIVA { get; set; }
         public Nullable<decimal> Total { get; set; }
-        public int FacturasEmitidas { get; set; }
         public int FacturasAnuladas { get; set; }
+        public string nom_FormaPago { get; set; }
+        public string pe_cedulaRuc { get; set; }
+        public string vt_Observacion { get; set; }
+        public string Tarifa { get; set; }
     }
 }

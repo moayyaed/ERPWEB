@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_x_Conciliar" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_caja.caj_parametro" Width="1.5" PointX="10.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_caja.caj_Caja_Movimiento_Tipo" Width="1.5" PointX="0.75" PointY="12.375" />
-        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" Width="1.5" PointX="7.375" PointY="5.75" />
         <EntityTypeShape EntityType="Model_caja.caj_Caja_Movimiento" Width="1.5" PointX="3" PointY="8.625" />
         <AssociationConnector Association="Model_caja.FK_caj_Caja_Movimiento_caj_Caja_Movimiento_Tipo" />
@@ -32,6 +31,7 @@
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_caj_Caja_Movimiento" />
         <AssociationConnector Association="Model_caja.FK_cp_conciliacion_Caja_det_x_ValeCaja_cp_conciliacion_Caja" />
         <EntityTypeShape EntityType="Model_caja.vwcp_conciliacion_Caja_det_x_ValeCaja" Width="1.5" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

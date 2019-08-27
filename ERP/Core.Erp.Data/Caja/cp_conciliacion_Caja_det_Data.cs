@@ -135,7 +135,12 @@ namespace Core.Erp.Data.Caja
                                  pe_nombreCompleto = q.pe_nombreCompleto,
                                  IdTipo_Persona = q.IdTipo_Persona,
                                  IdEntidad = q.IdEntidad,
-                                 IdPersona = q.IdPersona
+                                 IdPersona = q.IdPersona,
+                                 IdPunto_cargo_grupo_vales = q.IdPunto_cargo_grupo,
+                                 IdPunto_cargo_vales = q.IdPunto_cargo,
+                                 IdCentroCosto_vales = q.IdCentroCosto,
+                                 nom_punto_cargo = q.nom_punto_cargo,
+                                 cc_Descripcion = q.cc_Descripcion
                              }).ToList();
                 }
 

@@ -115,17 +115,7 @@
                             @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="mostrarAnulados"></label>
-                            @Html.DevExpress().CheckBoxFor(q => q.Check1, settings =>
-                           {
-                               settings.Name = "Check1";
-                               settings.Text = "Grupo tarifa";
-                           }).GetHtml()
-                            @Html.ValidationMessageFor(q => q.Check1, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="row">
@@ -198,23 +188,23 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="mostrarAnulados"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.Check1, settings =>
+                           {
+                               settings.Name = "Check1";
+                               settings.Text = "Grupo tarifa";
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.Check1, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="mostrarAnulados"></label>
                             @Html.DevExpress().CheckBoxFor(q => q.Check2, settings =>
                            {
                                settings.Name = "Check2";
                                settings.Text = "Grupo código";
                            }).GetHtml()
                             @Html.ValidationMessageFor(q => q.Check2, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="mostrarAnulados"></label>
-                            @Html.DevExpress().CheckBoxFor(q => q.Check3, settings =>
-                           {
-                               settings.Name = "Check3";
-                               settings.Text = "Grupo tiene retención";
-                           }).GetHtml()
-                            @Html.ValidationMessageFor(q => q.Check3, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

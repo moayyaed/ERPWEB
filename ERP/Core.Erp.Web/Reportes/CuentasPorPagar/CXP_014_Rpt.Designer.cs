@@ -55,7 +55,6 @@
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
-            this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
             this.xrTable3 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow6 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -69,6 +68,7 @@
             this.xrTableCell20 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell22 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
             this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -118,14 +118,7 @@
             this.xrTable9 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell39 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.GroupRetencion = new DevExpress.XtraReports.UI.GroupHeaderBand();
-            this.xrTable10 = new DevExpress.XtraReports.UI.XRTable();
-            this.xrTableRow11 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.xrTableCell40 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
-            this.p_AgruparTarifa = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_AgruparCodigo = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_AgruparRetencion = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -136,7 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xrTable10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
@@ -361,13 +353,6 @@
             this.PageHeader.HeightF = 20F;
             this.PageHeader.Name = "PageHeader";
             // 
-            // lbl_imagen
-            // 
-            this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
-            this.lbl_imagen.Name = "lbl_imagen";
-            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
-            this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
-            // 
             // xrTable3
             // 
             this.xrTable3.Borders = DevExpress.XtraPrinting.BorderSide.None;
@@ -508,6 +493,13 @@
             this.xrTableCell18.StylePriority.UseBorders = false;
             this.xrTableCell18.Text = "Total";
             this.xrTableCell18.Weight = 0.29912818654379147D;
+            // 
+            // lbl_imagen
+            // 
+            this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.lbl_imagen.Name = "lbl_imagen";
+            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
+            this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
             // 
             // xrTable2
             // 
@@ -923,7 +915,7 @@
             this.GroupHeader1.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("Su_Descripcion", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupHeader1.HeightF = 20F;
-            this.GroupHeader1.Level = 3;
+            this.GroupHeader1.Level = 2;
             this.GroupHeader1.Name = "GroupHeader1";
             // 
             // xrTable6
@@ -964,9 +956,8 @@
             this.GroupTarifa.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("Tarifa", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupTarifa.HeightF = 20F;
-            this.GroupTarifa.Level = 2;
+            this.GroupTarifa.Level = 1;
             this.GroupTarifa.Name = "GroupTarifa";
-            this.GroupTarifa.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.GroupTarifa_BeforePrint);
             // 
             // xrTable7
             // 
@@ -1008,9 +999,7 @@
             this.GroupCodigo.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("DescripcionCodigo", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupCodigo.HeightF = 20F;
-            this.GroupCodigo.Level = 1;
             this.GroupCodigo.Name = "GroupCodigo";
-            this.GroupCodigo.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.GroupCodigo_BeforePrint);
             // 
             // xrTable9
             // 
@@ -1045,49 +1034,6 @@
             this.xrTableCell39.Text = "xrTableCell34";
             this.xrTableCell39.Weight = 1D;
             // 
-            // GroupRetencion
-            // 
-            this.GroupRetencion.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.xrTable10});
-            this.GroupRetencion.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
-            new DevExpress.XtraReports.UI.GroupField("TieneRetencion", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
-            this.GroupRetencion.HeightF = 20F;
-            this.GroupRetencion.Name = "GroupRetencion";
-            this.GroupRetencion.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.GroupRetencion_BeforePrint);
-            // 
-            // xrTable10
-            // 
-            this.xrTable10.BorderWidth = 0F;
-            this.xrTable10.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
-            this.xrTable10.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
-            this.xrTable10.Name = "xrTable10";
-            this.xrTable10.Padding = new DevExpress.XtraPrinting.PaddingInfo(50, 0, 0, 0, 100F);
-            this.xrTable10.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
-            this.xrTableRow11});
-            this.xrTable10.SizeF = new System.Drawing.SizeF(1113F, 20F);
-            this.xrTable10.StylePriority.UseBorderWidth = false;
-            this.xrTable10.StylePriority.UseFont = false;
-            this.xrTable10.StylePriority.UsePadding = false;
-            this.xrTable10.StylePriority.UseTextAlignment = false;
-            this.xrTable10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // xrTableRow11
-            // 
-            this.xrTableRow11.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.xrTableCell40});
-            this.xrTableRow11.Name = "xrTableRow11";
-            this.xrTableRow11.Weight = 1D;
-            // 
-            // xrTableCell40
-            // 
-            this.xrTableCell40.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FacturaRetencion]")});
-            this.xrTableCell40.Name = "xrTableCell40";
-            this.xrTableCell40.Padding = new DevExpress.XtraPrinting.PaddingInfo(25, 0, 0, 0, 100F);
-            this.xrTableCell40.StylePriority.UsePadding = false;
-            this.xrTableCell40.Text = "xrTableCell34";
-            this.xrTableCell40.Weight = 1D;
-            // 
             // ReportHeader
             // 
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -1096,21 +1042,6 @@
             this.lbl_imagen});
             this.ReportHeader.HeightF = 125F;
             this.ReportHeader.Name = "ReportHeader";
-            // 
-            // p_AgruparTarifa
-            // 
-            this.p_AgruparTarifa.Name = "p_AgruparTarifa";
-            this.p_AgruparTarifa.Visible = false;
-            // 
-            // p_AgruparCodigo
-            // 
-            this.p_AgruparCodigo.Name = "p_AgruparCodigo";
-            this.p_AgruparCodigo.Visible = false;
-            // 
-            // p_AgruparRetencion
-            // 
-            this.p_AgruparRetencion.Name = "p_AgruparRetencion";
-            this.p_AgruparRetencion.Visible = false;
             // 
             // CXP_014_Rpt
             // 
@@ -1124,7 +1055,6 @@
             this.GroupHeader1,
             this.GroupTarifa,
             this.GroupCodigo,
-            this.GroupRetencion,
             this.ReportHeader});
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
@@ -1141,10 +1071,7 @@
             this.p_fecha_ini,
             this.p_fecha_fin,
             this.p_IdTipoServicio,
-            this.p_mostrar_anulados,
-            this.p_AgruparTarifa,
-            this.p_AgruparCodigo,
-            this.p_AgruparRetencion});
+            this.p_mostrar_anulados});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXP_014_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
@@ -1157,7 +1084,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xrTable10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }
@@ -1242,19 +1168,12 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell37;
         private DevExpress.XtraReports.UI.GroupHeaderBand GroupTarifa;
         private DevExpress.XtraReports.UI.GroupHeaderBand GroupCodigo;
-        private DevExpress.XtraReports.UI.GroupHeaderBand GroupRetencion;
         private DevExpress.XtraReports.UI.XRTable xrTable7;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow9;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell38;
         private DevExpress.XtraReports.UI.XRTable xrTable9;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow10;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell39;
-        private DevExpress.XtraReports.UI.XRTable xrTable10;
-        private DevExpress.XtraReports.UI.XRTableRow xrTableRow11;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell40;
         private DevExpress.XtraReports.UI.ReportHeaderBand ReportHeader;
-        public DevExpress.XtraReports.Parameters.Parameter p_AgruparTarifa;
-        public DevExpress.XtraReports.Parameters.Parameter p_AgruparCodigo;
-        public DevExpress.XtraReports.Parameters.Parameter p_AgruparRetencion;
     }
 }

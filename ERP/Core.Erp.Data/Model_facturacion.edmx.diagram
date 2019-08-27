@@ -33,7 +33,6 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_NivelDescuento" Width="1.5" PointX="5.25" PointY="44.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_TipoNota" Width="1.5" PointX="21.375" PointY="1" />
         <EntityTypeShape EntityType="Model_facturacion.fa_factura_x_cxc_cobro" Width="1.5" PointX="29.125" PointY="30.875" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_factura_resumen" Width="1.5" PointX="21.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_sin_automatico" Width="1.5" PointX="13.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_cliente_consulta" Width="1.5" PointX="5.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_parametro" Width="1.5" PointX="23.875" PointY="36.5" />
@@ -111,7 +110,8 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_cliente" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb_det" Width="1.5" PointX="14.375" PointY="20.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_notaCreDeb" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_resumen" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_factura_resumen" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_resumen" Width="1.5" PointX="7.375" PointY="13.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

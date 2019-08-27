@@ -36,24 +36,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             DateTime fechaFin = p_fecha_fin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             string IdTipoServicio = p_IdTipoServicio.Value == null ? "" : Convert.ToString(p_IdTipoServicio.Value);
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
-
-            if (Convert.ToBoolean(p_AgruparTarifa.Value))
-                Detail.SortFields.Add(new GroupField("Tarifa", XRColumnSortOrder.None));
-            else
-                Detail.SortFields.Add(new GroupField("Tarifa", XRColumnSortOrder.Ascending));
-
-            if (Convert.ToBoolean(p_AgruparTarifa.Value))
-                Detail.SortFields.Add(new GroupField("FacturaRetencion", XRColumnSortOrder.None));
-            else
-                Detail.SortFields.Add(new GroupField("FacturaRetencion", XRColumnSortOrder.Ascending));
-
-            if (Convert.ToBoolean(p_AgruparTarifa.Value))
-                Detail.SortFields.Add(new GroupField("DescripcionCodigo", XRColumnSortOrder.None));
-            else
-                Detail.SortFields.Add(new GroupField("DescripcionCodigo", XRColumnSortOrder.Ascending));
-
             
-
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
             //lbl_empresa.Text = emp.RazonSocial;
@@ -125,28 +108,6 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             ((XRSubreport)sender).ReportSource.DataSource = ListaAgrupada;
         }
 
-        private void GroupTarifa_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-        {
-            if (!Convert.ToBoolean(p_AgruparTarifa.Value))
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void GroupCodigo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-        {
-            if (!Convert.ToBoolean(p_AgruparCodigo.Value))
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void GroupRetencion_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-        {
-            if (!Convert.ToBoolean(p_AgruparRetencion.Value))
-            {
-                e.Cancel = true;
-            }
-        }
+       
     }
 }

@@ -314,6 +314,7 @@
           <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ValorEfectivo" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Cambio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PorIva" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="fa_factura_x_ct_cbtecble">
           <Key>
@@ -624,6 +625,7 @@
           <Property Name="SubtotalConDscto" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ValorIVA" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PorIva" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="fa_notaCreDeb_x_ct_cbtecble">
           <Key>
@@ -877,7 +879,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_CambioProducto' no tiene defi
           <Property Name="IdMovi_inven_tipo" Type="int" />
           <Property Name="IdNumMovi" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
-          <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="bo_Descripcion" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_CambioProductoDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1278,6 +1280,8 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_proforma_det_por_guia' no tie
             <PropertyRef Name="anulado" />
             <PropertyRef Name="IdCliente" />
             
+            <PropertyRef Name="IdVendedor" />
+            <PropertyRef Name="IdTerminoPago" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -1308,6 +1312,9 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_proforma_det_por_guia' no tie
           <Property Name="NumOPr" Type="numeric" Precision="18" Scale="0" />
           <Property Name="pd_DetalleAdicional" Type="varchar(max)" />
           <Property Name="Saldo" Type="float" Nullable="false" />
+          <Property Name="IdVendedor" Type="int" Nullable="false" />
+          <Property Name="IdCatalogo_FormaPago" Type="varchar" MaxLength="15" />
+          <Property Name="IdTerminoPago" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwfa_PuntoVta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2736,7 +2743,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
     [vwfa_proforma_det_por_guia].[NumCotizacion] AS [NumCotizacion], 
     [vwfa_proforma_det_por_guia].[NumOPr] AS [NumOPr], 
     [vwfa_proforma_det_por_guia].[pd_DetalleAdicional] AS [pd_DetalleAdicional], 
-    [vwfa_proforma_det_por_guia].[Saldo] AS [Saldo]
+    [vwfa_proforma_det_por_guia].[Saldo] AS [Saldo], 
+    [vwfa_proforma_det_por_guia].[IdVendedor] AS [IdVendedor], 
+    [vwfa_proforma_det_por_guia].[IdCatalogo_FormaPago] AS [IdCatalogo_FormaPago], 
+    [vwfa_proforma_det_por_guia].[IdTerminoPago] AS [IdTerminoPago]
     FROM [dbo].[vwfa_proforma_det_por_guia] AS [vwfa_proforma_det_por_guia]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwfa_PuntoVta" EntityType="Self.vwfa_PuntoVta" store:Type="Views" store:Schema="dbo">
@@ -3519,7 +3529,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             <Parameter Name="IdBodega" Mode="In" Type="Int32" />
             <Parameter Name="IdCbteVta" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <EntitySet Name="fa_factura_resumen" EntityType="Model_facturacion.fa_factura_resumen" />
           <EntitySet Name="vwfa_factura_sin_automatico" EntityType="Model_facturacion.vwfa_factura_sin_automatico" />
           <EntitySet Name="vwfa_cliente_consulta" EntityType="Model_facturacion.vwfa_cliente_consulta" />
           <EntitySet Name="fa_parametro" EntityType="Model_facturacion.fa_parametro" />
@@ -3729,6 +3738,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           </AssociationSet>
           <EntitySet Name="vwfa_notaCreDeb_det" EntityType="Model_facturacion.vwfa_notaCreDeb_det" />
           <EntitySet Name="vwfa_notaCreDeb" EntityType="Model_facturacion.vwfa_notaCreDeb" />
+          <EntitySet Name="fa_factura_resumen" EntityType="Model_facturacion.fa_factura_resumen" />
           <EntitySet Name="fa_notaCreDeb_resumen" EntityType="Model_facturacion.fa_notaCreDeb_resumen" />
           </EntityContainer>
         <EntityType Name="vwfa_cliente_contactos">
@@ -3956,29 +3966,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="fa_factura" Relationship="Model_facturacion.FK_fa_factura_x_cxc_cobro_fa_factura" FromRole="fa_factura_x_cxc_cobro" ToRole="fa_factura" />
         </EntityType>
-        <EntityType Name="fa_factura_resumen">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdCbteVta" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="SubtotalIVASinDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SubtotalSinIVASinDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SubtotalSinDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SubtotalIVAConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SubtotalSinIVAConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SubtotalConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ValorIVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ValorEfectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Cambio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-        </EntityType>
         <EntityType Name="vwfa_factura_sin_automatico">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4149,7 +4136,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="IdMovi_inven_tipo" Type="Int32" />
           <Property Name="IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="bo_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="bo_Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vwfa_CambioProductoDet">
           <Key>
@@ -5286,6 +5273,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             <PropertyRef Name="pd_total" />
             <PropertyRef Name="anulado" />
             <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="IdVendedor" />
+            <PropertyRef Name="IdTerminoPago" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
@@ -5316,6 +5305,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="NumOPr" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="pd_DetalleAdicional" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Saldo" Type="Double" Nullable="false" />
+          <Property Name="IdVendedor" Type="Int32" Nullable="false" />
+          <Property Name="IdCatalogo_FormaPago" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdTerminoPago" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vwfa_notaCreDeb_x_fa_factura_NotaDeb">
           <Key>
@@ -5862,6 +5854,30 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="ct_IdTipoCbte" Type="Int32" />
           <Property Name="ct_IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="fa_factura_resumen">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="SubtotalIVASinDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalSinIVASinDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalSinDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalIVAConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalSinIVAConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ValorIVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ValorEfectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cambio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PorIva" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="fa_notaCreDeb_resumen">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5882,6 +5898,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <Property Name="SubtotalConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="ValorIVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PorIva" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6274,27 +6291,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPFAC_EliminarCobroEfectivo" FunctionName="Model_facturacion.Store.SPFAC_EliminarCobroEfectivo" />
-          <EntitySetMapping Name="fa_factura_resumen">
-            <EntityTypeMapping TypeName="Model_facturacion.fa_factura_resumen">
-              <MappingFragment StoreEntitySet="fa_factura_resumen">
-                <ScalarProperty Name="Cambio" ColumnName="Cambio" />
-                <ScalarProperty Name="ValorEfectivo" ColumnName="ValorEfectivo" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="ValorIVA" ColumnName="ValorIVA" />
-                <ScalarProperty Name="SubtotalConDscto" ColumnName="SubtotalConDscto" />
-                <ScalarProperty Name="SubtotalSinIVAConDscto" ColumnName="SubtotalSinIVAConDscto" />
-                <ScalarProperty Name="SubtotalIVAConDscto" ColumnName="SubtotalIVAConDscto" />
-                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
-                <ScalarProperty Name="SubtotalSinDscto" ColumnName="SubtotalSinDscto" />
-                <ScalarProperty Name="SubtotalSinIVASinDscto" ColumnName="SubtotalSinIVASinDscto" />
-                <ScalarProperty Name="SubtotalIVASinDscto" ColumnName="SubtotalIVASinDscto" />
-                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwfa_factura_sin_automatico">
             <EntityTypeMapping TypeName="Model_facturacion.vwfa_factura_sin_automatico">
               <MappingFragment StoreEntitySet="vwfa_factura_sin_automatico">
@@ -6958,6 +6954,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
           <EntitySetMapping Name="vwfa_proforma_det_por_guia">
             <EntityTypeMapping TypeName="Model_facturacion.vwfa_proforma_det_por_guia">
               <MappingFragment StoreEntitySet="vwfa_proforma_det_por_guia">
+                <ScalarProperty Name="IdTerminoPago" ColumnName="IdTerminoPago" />
+                <ScalarProperty Name="IdCatalogo_FormaPago" ColumnName="IdCatalogo_FormaPago" />
+                <ScalarProperty Name="IdVendedor" ColumnName="IdVendedor" />
                 <ScalarProperty Name="Saldo" ColumnName="Saldo" />
                 <ScalarProperty Name="pd_DetalleAdicional" ColumnName="pd_DetalleAdicional" />
                 <ScalarProperty Name="NumOPr" ColumnName="NumOPr" />
@@ -7199,9 +7198,32 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwfa_notaCreDeb_x_fa_factura_NotaD
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="fa_factura_resumen">
+            <EntityTypeMapping TypeName="Model_facturacion.fa_factura_resumen">
+              <MappingFragment StoreEntitySet="fa_factura_resumen">
+                <ScalarProperty Name="PorIva" ColumnName="PorIva" />
+                <ScalarProperty Name="Cambio" ColumnName="Cambio" />
+                <ScalarProperty Name="ValorEfectivo" ColumnName="ValorEfectivo" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ValorIVA" ColumnName="ValorIVA" />
+                <ScalarProperty Name="SubtotalConDscto" ColumnName="SubtotalConDscto" />
+                <ScalarProperty Name="SubtotalSinIVAConDscto" ColumnName="SubtotalSinIVAConDscto" />
+                <ScalarProperty Name="SubtotalIVAConDscto" ColumnName="SubtotalIVAConDscto" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="SubtotalSinDscto" ColumnName="SubtotalSinDscto" />
+                <ScalarProperty Name="SubtotalSinIVASinDscto" ColumnName="SubtotalSinIVASinDscto" />
+                <ScalarProperty Name="SubtotalIVASinDscto" ColumnName="SubtotalIVASinDscto" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="fa_notaCreDeb_resumen">
             <EntityTypeMapping TypeName="Model_facturacion.fa_notaCreDeb_resumen">
               <MappingFragment StoreEntitySet="fa_notaCreDeb_resumen">
+                <ScalarProperty Name="PorIva" ColumnName="PorIva" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="ValorIVA" ColumnName="ValorIVA" />
                 <ScalarProperty Name="SubtotalConDscto" ColumnName="SubtotalConDscto" />

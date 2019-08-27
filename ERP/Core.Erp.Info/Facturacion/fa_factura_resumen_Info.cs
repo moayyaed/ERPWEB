@@ -18,5 +18,6 @@
         public decimal ValorEfectivo { get; set; }
         public decimal Cambio { get; set; }
         public string mensaje { get; set; }
+        public decimal? PorIva { get; set; }
     }
 }

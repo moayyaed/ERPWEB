@@ -310,7 +310,8 @@ namespace Core.Erp.Data.Caja
                         Lista.Add(new caj_Caja_Movimiento_Tipo_Info
                         {
                             IdTipoMovi = q.IdTipoMovi,
-                            tm_descripcion = q.tm_descripcion
+                            tm_descripcion = q.tm_descripcion,
+                            IdCtaCble = q.IdCtaCble
                         });
                     }
                 }

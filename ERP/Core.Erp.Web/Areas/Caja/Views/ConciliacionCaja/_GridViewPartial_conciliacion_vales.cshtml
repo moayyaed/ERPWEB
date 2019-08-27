@@ -96,9 +96,11 @@
                 p.ValueField = "IdTipoMovi";
                 p.TextField = "tm_descripcion";
                 p.DropDownStyle = DropDownStyle.DropDownList;
+                p.DropDownWidth = Unit.Pixel(1000);
                 p.ValueType = typeof(int);
-                p.BindList(new Core.Erp.Bus.Caja.caj_Caja_Movimiento_Tipo_Bus().get_list(Convert.ToInt32(Session["IdEmpresa"]),"-", false,false));
-                p.Columns.Add("tm_descripcion", "Tipo").Width = Unit.Percentage(100);
+                p.BindList(new Core.Erp.Bus.Caja.caj_Caja_Movimiento_Tipo_Bus().get_list(Convert.ToInt32(Core.Erp.Web.Helps.SessionFixed.IdEmpresa),"-", false,false));
+                p.Columns.Add("tm_descripcion", "Tipo").Width = Unit.Percentage(80);
+                p.Columns.Add("IdCtaCble", "Cuenta").Width = Unit.Percentage(20);
             });
         });
 

@@ -241,6 +241,10 @@ namespace Core.Erp.Data.Facturacion
                     var SubtotalConDscto = Math.Round(SubtotalIVAConDscto + SubtotalSinIVAConDscto, 2, MidpointRounding.AwayFromZero);
                     var Total = Math.Round(SubtotalConDscto + ValorIVA, 2, MidpointRounding.AwayFromZero);
 
+                    decimal PorIva = 0;
+                    if (ValorIVA > 0)
+                        PorIva = (decimal)info.lst_det.Where(q => q.sc_iva > 0).FirstOrDefault().vt_por_iva;
+
                     fa_notaCreDeb_resumen Entity_Resumen = new fa_notaCreDeb_resumen
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -255,7 +259,8 @@ namespace Core.Erp.Data.Facturacion
                         SubtotalSinIVAConDscto = SubtotalSinIVAConDscto,
                         SubtotalConDscto = SubtotalConDscto,
                         ValorIVA = ValorIVA,
-                        Total = Total
+                        Total = Total,
+                        PorIva = PorIva
                     };
                     info.info_resumen = new fa_notaCreDeb_resumen_Info
                     {
@@ -501,6 +506,9 @@ namespace Core.Erp.Data.Facturacion
                     var SubtotalConDscto = Math.Round(SubtotalIVAConDscto + SubtotalSinIVAConDscto,2,MidpointRounding.AwayFromZero);
                     var Total = Math.Round(SubtotalConDscto + ValorIVA,2,MidpointRounding.AwayFromZero);
 
+                    decimal PorIva = 0;
+                    if (ValorIVA > 0)
+                        PorIva = (decimal)info.lst_det.Where(q => q.sc_iva > 0).FirstOrDefault().vt_por_iva;
                     fa_notaCreDeb_resumen Entity_Resumen = new fa_notaCreDeb_resumen
                     {
                         IdEmpresa = info.IdEmpresa,
