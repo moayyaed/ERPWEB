@@ -35,5 +35,6 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<double> Saldo { get; set; }
         public Nullable<int> IdClaseProveedor { get; set; }
         public string descripcion_clas_prove { get; set; }
+        public Nullable<int> DiasVcto { get; set; }
     }
 }

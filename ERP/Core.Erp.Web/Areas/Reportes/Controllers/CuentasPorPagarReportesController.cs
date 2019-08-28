@@ -553,7 +553,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdProveedor = 0
+                IdProveedor = 0,
             };
             cargar_combos(true);
             CXP_015_Rpt report = new CXP_015_Rpt();
@@ -572,6 +572,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_corte.Value = model.fecha_fin;
             report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.p_MostrarObservacion.Value = model.Check1;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
@@ -597,6 +598,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_corte.Value = model.fecha_fin;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
+            report.p_MostrarObservacion.Value = model.Check1;
             cargar_combos(true);
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;

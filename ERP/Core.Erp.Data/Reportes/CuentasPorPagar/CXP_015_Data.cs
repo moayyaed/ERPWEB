@@ -48,7 +48,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         ValorNC = q.ValorNC,
                         ValorRetencion = q.ValorRetencion,
                         descripcion_clas_prove = q.descripcion_clas_prove,
-                        IdClaseProveedor = q.IdClaseProveedor
+                        IdClaseProveedor = q.IdClaseProveedor,
+                        DiasVcto = q.DiasVcto
                     }).ToList();
                 }
                 return Lista;

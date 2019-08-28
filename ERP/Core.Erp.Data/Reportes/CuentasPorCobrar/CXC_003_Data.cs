@@ -33,17 +33,23 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                  IdSucursal = q.IdSucursal,
                                  IdBodega = q.IdBodega,
                                  IdCbteVta = q.IdCbteVta,
-                                 vt_fecha = q.vt_fecha,
                                  vt_NumFactura = q.vt_NumFactura,
-                                 vt_tipoDoc = q.vt_tipoDoc,
                                  pe_nombreCompleto = q.pe_nombreCompleto,
-                                 IdCliente = q.IdCliente,
-                                 ValorRteFTE = q.ValorRteFTE,
-                                 ValorRteIVA = q.ValorRteIVA,
-                                 PorcentajeRetIVA = q.PorcentajeRetIVA,
+                                 pe_cedulaRuc = q.pe_cedulaRuc,
                                  cr_fecha = q.cr_fecha,
-                                 PorcentajeRetFTE = q.PorcentajeRetFTE,
-                                 TotalRTE = q.TotalRTE
+                                 cr_NumDocumento = q.cr_NumDocumento,
+                                 IdCobro_tipo = q.IdCobro_tipo,
+                                 IdMotivo_tipo_cobro = q.IdMotivo_tipo_cobro,
+                                 PorcentajeRet = q.PorcentajeRet,
+                                 Base = q.Base,
+                                 ESRetenIVA = q.ESRetenIVA,
+                                 ESRetenFTE = q.ESRetenFTE,
+                                 cr_EsElectronico = q.cr_EsElectronico,
+                                 tc_descripcion = q.tc_descripcion,
+                                 TipoRetencion = q.TipoRetencion,
+                                 IdCliente = q.IdCliente,
+                                 vt_fecha = q.vt_fecha,
+                                 dc_ValorPago = q.dc_ValorPago
                              }).ToList();
                 }
                 return Lista;

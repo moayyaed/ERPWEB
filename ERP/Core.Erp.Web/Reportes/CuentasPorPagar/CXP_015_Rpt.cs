@@ -32,6 +32,16 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             int IdClaseProveedor = string.IsNullOrEmpty(p_IdClaseProveedor.Value.ToString()) ? 0 : Convert.ToInt32(p_IdClaseProveedor.Value);
 
+            if (Convert.ToBoolean(p_MostrarObservacion.Value))
+            {
+                CeldaObservacion.WordWrap = true;
+                CeldaObservacion.CanGrow = true;
+            }
+            else
+            {
+                CeldaObservacion.WordWrap = false;
+                CeldaObservacion.CanGrow = false;
+            }
 
             CXP_015_Bus bus_rpt = new CXP_015_Bus();
             List<CXP_015_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0, IdClaseProveedor);

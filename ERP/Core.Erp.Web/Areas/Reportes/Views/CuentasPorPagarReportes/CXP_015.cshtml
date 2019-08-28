@@ -79,15 +79,26 @@
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <div class="checkbox">
-                                @Html.DevExpress().CheckBoxFor(q => q.mostrarSaldo0, settings =>
+                            <label for="mostrarSaldo0"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarSaldo0, settings =>
                            {
                                settings.Name = "mostrarSaldo0";
                                settings.Text = "Mostrar saldo 0";
 
                            }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.mostrarSaldo0, "", new { @class = "text-danger" })
-                            </div>
+                            @Html.ValidationMessageFor(q => q.mostrarSaldo0, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Check1"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.Check1, settings =>
+                           {
+                               settings.Name = "Check1";
+                               settings.Text = "Mostrar observación completa";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.Check1, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
