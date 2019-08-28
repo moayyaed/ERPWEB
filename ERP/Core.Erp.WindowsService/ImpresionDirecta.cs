@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.General;
 using Core.Erp.Web.Reportes.Facturacion;
+using Core.Erp.Web.Reportes.Inventario;
 using DevExpress.XtraPrinting;
 using System;
 using System.IO;
@@ -150,6 +151,38 @@ namespace Core.Erp.WindowsService
                                 tool013.Print();
                             else
                                 tool013.Print(Impresion.IPImpresora);
+
+                        }
+                        break;
+                    case "INV_020":
+                        INV_020_Rpt INV_020 = new INV_020_Rpt();
+
+                        #region Cargo diseño desde base                        
+                        if (reporte != null)
+                        {
+                            System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                            INV_020.LoadLayout(RootReporte);
+                        }
+                        #endregion
+
+                        #region Parametros
+                        if (!string.IsNullOrEmpty(Impresion.Parametros))
+                        {
+                            INV_020.p_IdEmpresa.Value = Impresion.IdEmpresa;
+                            INV_020.p_IdSucursal.Value = IdSucursal;
+                            INV_020.p_IdMovi_inven_tipo.Value = IdBodega;
+                            INV_020.p_IdNumMovi.Value = IdCbteVta;
+                            INV_020.PrinterName = Impresion.IPImpresora;
+                            INV_020.CreateDocument();
+                        }
+                        #endregion
+                        PrintToolBase tool020 = new PrintToolBase(INV_020.PrintingSystem);
+                        for (int i = 0; i < Impresion.NumCopias; i++)
+                        {
+                            if (string.IsNullOrEmpty(Impresion.IPImpresora))
+                                tool020.Print();
+                            else
+                                tool020.Print(Impresion.IPImpresora);
 
                         }
                         break;

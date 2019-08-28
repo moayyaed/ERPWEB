@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Core.Erp.Bus.General;
+using Core.Erp.Info.General;
+using Core.Erp.Bus.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Inventario.Controllers
 {
@@ -15,7 +17,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
     {
         #region Variables
         in_Ing_Egr_Inven_Bus bus_inv = new in_Ing_Egr_Inven_Bus();
-            tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+        tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+        tb_ColaImpresionDirecta_Bus bus_ColaImpresion = new tb_ColaImpresionDirecta_Bus();
         #endregion
         #region Index
         public ActionResult Index()
@@ -69,13 +72,31 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             int IdMovi_inven_tipo = Convert.ToInt32(SecuencialID.Substring(4, 2));
             int IdNumMovi = Convert.ToInt32(SecuencialID.Substring(6, 8));
 
+            seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
+            var usuario = bus_usuario.get_info(SessionFixed.IdUsuario);
+
             var model = bus_inv.get_info(IdEmpresa, IdSucursal, IdMovi_inven_tipo, IdNumMovi);
             model.IdUsuarioDespacho = SessionFixed.IdUsuario;
 
             if (model != null)
             {
                 if (bus_inv.DespacharDB(model))
+                {
                     resultado = "Despacho exitoso";
+
+                    bus_ColaImpresion.GuardarDB(new tb_ColaImpresionDirecta_Info
+                    {
+                        IdEmpresa = IdEmpresa,
+                        CodReporte = "INV_020",
+                        IPImpresora = usuario.IPImpresora,
+                        IPUsuario = usuario.IPMaquina,
+                        NombreEmpresa = SessionFixed.NomEmpresa,
+                        Usuario = SessionFixed.IdUsuario,
+                        //Nunca enviar IdEmpresa en Parametros
+                        Parametros = IdSucursal + "," + IdMovi_inven_tipo + "," + IdNumMovi,
+                        NumCopias = 2
+                    });
+                }                    
             }
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
