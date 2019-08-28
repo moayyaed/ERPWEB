@@ -96,7 +96,7 @@
         });
 
         settings.Columns.Add("IdCbteVta", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("CodCbteVta", "Código").Width = Unit.Percentage(5);
+        settings.Columns.Add("CodCbteVta", "Código").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "vt_fecha";
@@ -106,33 +106,14 @@
         });
         settings.Columns.Add("NomContacto", "Cliente").Width = Unit.Percentage(20);
         settings.Columns.Add("vt_NumFactura", "# Factura").Width = Unit.Percentage(10);
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "vt_Subtotal0";
-            column.Caption = "Subtotal sin IVA";
-            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
-            column.Width = Unit.Percentage(7);
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "vt_SubtotalIVA";
-            column.Caption = "Subtotal IVA";
-            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
-            column.Width = Unit.Percentage(7);
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "vt_iva";
-            column.Caption = "I.V.A.";
-            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
-            column.Width = Unit.Percentage(7);
-        });
+        settings.Columns.Add("Ve_Vendedor", "Vendedor").Width = Unit.Percentage(10);
+        
         settings.Columns.Add(column =>
         {
             column.FieldName = "vt_total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:c2}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(8);
         });
         settings.Columns.Add(column =>
         {
@@ -175,9 +156,11 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        /*
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_Subtotal0").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_SubtotalIVA").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_iva").DisplayFormat = "{0:n2}";
+*/
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_total").DisplayFormat = "{0:n2}";
         settings.Settings.ShowFooter = true;
     });

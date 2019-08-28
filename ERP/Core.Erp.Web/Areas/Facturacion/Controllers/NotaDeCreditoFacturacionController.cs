@@ -457,10 +457,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return false;
             }
 
-            decimal valorAplicado = Convert.ToDecimal(i_validar.lst_cruce.Sum(q => q.Valor_Aplicado));
-            decimal valorDevuelto = Convert.ToDecimal(i_validar.lst_det.Sum(q => q.sc_total));
-            decimal diferencia = valorDevuelto - valorAplicado;
-            if (Convert.ToDecimal( i_validar.lst_det.Sum(q=>q.sc_total)) <Convert.ToDecimal(  i_validar.lst_cruce.Sum(q=>q.Valor_Aplicado))&&diferencia>1)
+            if (i_validar.lst_cruce.Count > 0 && (Math.Round(Convert.ToDecimal( i_validar.lst_det.Sum(q=>q.sc_total)) - Convert.ToDecimal(i_validar.lst_cruce.Sum(q=>q.Valor_Aplicado)),2,MidpointRounding.AwayFromZero) != 0))
             {
                 msg = "El valor aplicado en facturas es mayor al valor total de la nota de crédito";
                 return false;
@@ -516,19 +513,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     msg = "No puede devolver una cantidad mayor a la facturado, Facturado["+item.sc_cantidad_factura+"]:  intenta devolver ["+item.sc_cantidad+"]  produdcto ["+ item.pr_descripcion+"]"  ;
                     return false;
                 }
-            }
-
-
-            if (i_validar.lst_cruce.Count > 0)
-            {
-                var ValorNC = i_validar.lst_det.Sum(q => q.sc_total);
-                var ValorDocumentos = i_validar.lst_cruce.Sum(q=>q.vt_total);
-
-                if(ValorNC != ValorDocumentos)
-                {
-                    msg = "El valor de la nota de crédito debe ser igual a la suma de los documentos";
-                    return false;
-                }                
             }
 
             return true;

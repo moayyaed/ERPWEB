@@ -10349,6 +10349,7 @@
     <Folder Include="Content\imagenes\activofijo\" />
     <Folder Include="Content\imagenes\empleados\" />
     <Folder Include="Content\imagenes\productos\" />
+    <Folder Include="Content\imagenes\Sistema\" />
     <Folder Include="Content\videos\" />
   </ItemGroup>
   <ItemGroup>
