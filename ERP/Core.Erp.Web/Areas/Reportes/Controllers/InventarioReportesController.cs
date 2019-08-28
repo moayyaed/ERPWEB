@@ -1270,7 +1270,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
             };
 
-            cargar_combos(model);
             INV_019_Rpt report = new INV_019_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -1284,19 +1283,19 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
-            report.p_Tipo.Value = model.IdMovi_inven_tipo;
+            report.p_Tipo.Value = model.tipo_movi;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model);
             ViewBag.Report = report;
             return View(model);
         }
 
         [HttpPost]
         public ActionResult INV_019(cl_filtros_inventario_Info model)
-        {
-            cargar_combos(model);
+        {            
             INV_019_Rpt report = new INV_019_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -1310,11 +1309,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
-            report.p_Tipo.Value = model.IdMovi_inven_tipo;
+            report.p_Tipo.Value = model.tipo_movi;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
+            cargar_combos(model);
             ViewBag.Report = report;
             return View(model);
         }
