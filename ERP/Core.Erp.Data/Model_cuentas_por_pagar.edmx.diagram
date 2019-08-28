@@ -48,7 +48,6 @@
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_x_pagar" Width="1.5" PointX="11.75" PointY="14.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_pago" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro" Width="1.5" PointX="18.75" PointY="4.75" />
-        <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc_x_cruzar" Width="1.5" PointX="20.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_giro_det_ing_x_oc" Width="1.5" PointX="12.75" PointY="54.625" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc" Width="1.5" PointX="21.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_pago_tipo_x_empresa" Width="1.5" PointX="3" PointY="1" />
@@ -94,6 +93,7 @@
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_TipoDocumento" Width="1.5" PointX="10.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc_x_cruzar" Width="1.5" PointX="18.375" PointY="16.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

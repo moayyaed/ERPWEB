@@ -33,9 +33,10 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
+        settings.Columns.Add("SecuenciaTipo", "#Orden").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(30);
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
         });

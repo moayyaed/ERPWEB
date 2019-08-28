@@ -40,6 +40,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public decimal IdProveedor { get; set; }
         public string pc_Cuenta { get; set; }
         public string IdCtaCble_oc { get; set; }
+        public Nullable<decimal> SecuenciaTipo { get; set; }
         #endregion
     }
 }
