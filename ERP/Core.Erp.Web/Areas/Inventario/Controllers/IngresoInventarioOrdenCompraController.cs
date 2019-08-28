@@ -378,7 +378,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                             IdPunto_cargo_grupo = info_det.IdPunto_cargo_grupo,
                             cc_Descripcion = info_det.cc_Descripcion,                            
                         };
-                        ObservacionOC = "OC# "+info_det.IdOrdenCompra+" " + info_det.oc_observacion;
+                        ObservacionOC = "OC# "+info_det.SecuenciaTipo+" " + info_det.oc_observacion;
                         List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);
                     }
                 }

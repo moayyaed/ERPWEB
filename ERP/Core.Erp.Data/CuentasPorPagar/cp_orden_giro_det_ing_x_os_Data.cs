@@ -40,8 +40,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdCod_Impuesto = q.IdCod_Impuesto,
                                  IdProveedor = q.IdProveedor,
                                  IdProducto = q.IdProducto,
-                                 pe_nombreCompleto = q.pe_nombreCompleto
-
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 SecuenciaTipo = q.SecuenciaTipo
                              }).ToList();
 
                     Lista.ForEach(q => q.IdGeneradoOS = (q.IdEmpresa.ToString("000") + q.oc_IdSucursal.ToString("000") + q.oc_IdOrdenCompra.ToString("000000") + q.oc_Secuencia.ToString("000000") ));

@@ -485,6 +485,7 @@ namespace Core.Erp.Data.Compras
                         && q.oc_fecha >= fecha_ini
                         && q.oc_fecha <= fecha_fin
                         && q.IdEstadoAprobacion_cat == "xAPRO"
+                        && q.Tipo == "OC"
                         && q.Estado == "A").Select(q => new com_ordencompra_local_Info
                         {
                             IdEmpresa = q.IdEmpresa,

@@ -1004,7 +1004,8 @@ namespace Core.Erp.Data.Inventario
                                  EstadoBool = q.Estado == "A" ? true : false,
                                  IdEstadoAproba = q.IdEstadoAproba,
                                  EstadoAprobacion = q.EstadoAprobacion,
-                                  co_factura = q.co_factura
+                                 co_factura = q.co_factura
+                                 
                              }).ToList();
                 }
                 return Lista;
@@ -1043,7 +1044,7 @@ namespace Core.Erp.Data.Inventario
                                      CodMoviInven = q.CodMoviInven,
                                      cm_fecha = q.cm_fecha,
                                      tm_descripcion = t.tm_descripcion,
-
+                                     
                                      EstadoBool = q.Estado == "A" ? true : false
 
                                  }).ToList();                    

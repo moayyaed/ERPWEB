@@ -34,6 +34,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string pe_nombreCompleto { get; set; }
         public string NomUnidadMedida { get; set; }
         public decimal IdProveedor { get; set; }
+        public decimal SecuenciaTipo { get; set; }
         #endregion
     }
 }

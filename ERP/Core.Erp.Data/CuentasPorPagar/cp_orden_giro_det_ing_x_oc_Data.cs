@@ -46,8 +46,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  NomUnidadMedida = q.NomUnidadMedida,
                                  IdProveedor = q.IdProveedor,
                                  IdProducto = q.IdProducto,
-                                 pc_Cuenta = q.pc_Cuenta
-
+                                 pc_Cuenta = q.pc_Cuenta,
+                                 SecuenciaTipo = q.SecuenciaTipo
                              }).ToList();
 
                     Lista.ForEach(q => q.IdGenerado = (q.IdEmpresa.ToString("000") + q.inv_IdSucursal.ToString("000") + q.inv_IdMovi_inven_tipo.ToString("000000") + q.inv_IdNumMovi.ToString("000000") + q.inv_Secuencia.ToString("000000") ));
