@@ -265,7 +265,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdLinea = 0,
                 IdGrupo = 0,
-                IdSubGrupo = 0
+                IdSubGrupo = 0,
+                considerarSinAprobar = false
             };
 
             cargar_combos(model);
@@ -292,9 +293,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_stock_0.Value = model.mostrar_saldos_en_0;
             report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
             report.p_AgruparPorID.Value = model.mostrar_detallado;
+            report.p_ConsiderarNoAprobados.Value = model.considerarSinAprobar;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-
+            
             ViewBag.Report = report;
             return View(model);
         }
@@ -324,6 +326,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
             report.p_IdMarca.Value = model.IdMarca;
             report.p_AgruparPorID.Value = model.mostrar_detallado;
+            report.p_ConsiderarNoAprobados.Value = model.considerarSinAprobar;
             cargar_combos(model);
 
             report.usuario = SessionFixed.IdUsuario;

@@ -70,6 +70,8 @@
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_ClasificacionEBIT" Width="1.5" PointX="16.375" PointY="4.875" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

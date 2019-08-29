@@ -133,6 +133,7 @@
     <Compile Include="Contabilidad\ct_CentroCostoNivel_Info.cs" />
     <Compile Include="Contabilidad\ct_CentroCosto_Info.cs" />
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Info.cs" />
+    <Compile Include="Contabilidad\ct_ClasificacionEBIT_Info.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Info.cs" />
     <Compile Include="Contabilidad\ct_parametro_Info.cs" />
     <Compile Include="Contabilidad\ct_periodo_Info.cs" />

@@ -107,6 +107,7 @@
     <Compile Include="Contabilidad\ct_CentroCostoNivel_Bus.cs" />
     <Compile Include="Contabilidad\ct_CentroCosto_Bus.cs" />
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Bus.cs" />
+    <Compile Include="Contabilidad\ct_ClasificacionEBIT_Bus.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Bus.cs" />
     <Compile Include="Contabilidad\ct_parametro_Bus.cs" />
     <Compile Include="Contabilidad\ct_periodo_Bus.cs" />

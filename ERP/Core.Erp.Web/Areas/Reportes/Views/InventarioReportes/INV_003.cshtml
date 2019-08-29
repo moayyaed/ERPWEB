@@ -52,6 +52,11 @@
                                settings.Text = "Mostrar saldo 0";
                            }).GetHtml()
                             @Html.ValidationMessageFor(q => q.mostrar_saldos_en_0, "", new { @class = "text-danger" })
+                            @Html.DevExpress().CheckBoxFor(q => q.considerarSinAprobar, settings =>
+                           {
+                               settings.Name = "considerarSinAprobar";
+                               settings.Text = "Considerar sin aprobar";
+                           }).GetHtml()
                         </div>
                     </div>
                     <div class="col-md-2">

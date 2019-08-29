@@ -33,6 +33,7 @@ namespace Core.Erp.Data
         public string IdUsuarioAnulacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public string MotivoAnulacion { get; set; }
+        public bool Estado { get; set; }
     
         public virtual ICollection<ct_cbtecble_det> ct_cbtecble_det { get; set; }
         public virtual ICollection<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }

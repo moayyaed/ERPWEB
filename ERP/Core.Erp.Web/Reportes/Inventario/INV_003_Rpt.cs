@@ -36,6 +36,8 @@ namespace Core.Erp.Web.Reportes.Inventario
             bool mostrar_stock_0 = p_mostrar_stock_0.Value == null ? false : Convert.ToBoolean(p_mostrar_stock_0.Value);
             int IdMarca = string.IsNullOrEmpty(p_IdMarca.Value.ToString()) ? 0 : Convert.ToInt32(p_IdMarca.Value);
             bool AgruparPorID = p_AgruparPorID.Value == null ? false : Convert.ToBoolean(p_AgruparPorID.Value);
+            bool ConsiderarNoAprobados = p_ConsiderarNoAprobados.Value == null ? false : Convert.ToBoolean(p_ConsiderarNoAprobados.Value);
+
             INV_003_Bus bus_rpt = new INV_003_Bus();
 
             Detail.SortFields.Clear();
@@ -60,7 +62,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             }else
                 Detail.SortFields.Add(new GroupField("pr_descripcion", XRColumnSortOrder.Ascending));
 
-            List<INV_003_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdProducto, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0, IdMarca);
+            List<INV_003_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdProducto, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0, IdMarca, ConsiderarNoAprobados);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

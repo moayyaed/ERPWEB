@@ -4979,6 +4979,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Parameter Name="mostrar_stock_0" Type="bit" Mode="In" />
           <Parameter Name="IdMarcaIni" Type="int" Mode="In" />
           <Parameter Name="IdMarcaFin" Type="int" Mode="In" />
+          <Parameter Name="ConsiderarNoAprobados" Type="bit" Mode="In" />
         </Function>
         <Function Name="SPINV_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -11826,23 +11827,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="SPINV_003" ReturnType="Collection(Model_reportes.SPINV_003_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal_ini" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal_fin" Mode="In" Type="Int32" />
-            <Parameter Name="IdBodega_ini" Mode="In" Type="Int32" />
-            <Parameter Name="IdBodega_fin" Mode="In" Type="Int32" />
-            <Parameter Name="IdProducto_ini" Mode="In" Type="Decimal" />
-            <Parameter Name="IdProducto_fin" Mode="In" Type="Decimal" />
-            <Parameter Name="IdCategoria" Mode="In" Type="String" />
-            <Parameter Name="IdLinea" Mode="In" Type="Int32" />
-            <Parameter Name="IdGrupo" Mode="In" Type="Int32" />
-            <Parameter Name="IdSubGrupo" Mode="In" Type="Int32" />
-            <Parameter Name="fecha_corte" Mode="In" Type="DateTime" />
-            <Parameter Name="mostrar_stock_0" Mode="In" Type="Boolean" />
-            <Parameter Name="IdMarcaIni" Mode="In" Type="Int32" />
-            <Parameter Name="IdMarcaFin" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SPINV_004" ReturnType="Collection(Model_reportes.SPINV_004_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
@@ -12135,6 +12119,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
             <Parameter Name="IdClaseProveedorIni" Mode="In" Type="Int32" />
             <Parameter Name="IdClaseProveedorFin" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPINV_003" ReturnType="Collection(Model_reportes.SPINV_003_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursal_ini" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursal_fin" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodega_ini" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodega_fin" Mode="In" Type="Int32" />
+            <Parameter Name="IdProducto_ini" Mode="In" Type="Decimal" />
+            <Parameter Name="IdProducto_fin" Mode="In" Type="Decimal" />
+            <Parameter Name="IdCategoria" Mode="In" Type="String" />
+            <Parameter Name="IdLinea" Mode="In" Type="Int32" />
+            <Parameter Name="IdGrupo" Mode="In" Type="Int32" />
+            <Parameter Name="IdSubGrupo" Mode="In" Type="Int32" />
+            <Parameter Name="fecha_corte" Mode="In" Type="DateTime" />
+            <Parameter Name="mostrar_stock_0" Mode="In" Type="Boolean" />
+            <Parameter Name="IdMarcaIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdMarcaFin" Mode="In" Type="Int32" />
+            <Parameter Name="ConsiderarNoAprobados" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
@@ -12443,33 +12445,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Int32" Name="MES" Nullable="true" />
           <Property Type="String" Name="NomMes" Nullable="true" MaxLength="13" />
           <Property Type="Double" Name="vt_total" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SPINV_003_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="Int32" Name="IdBodega" Nullable="false" />
-          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Double" Name="Stock" Nullable="false" />
-          <Property Type="Double" Name="Costo_promedio" Nullable="false" />
-          <Property Type="Double" Name="Costo_total" Nullable="false" />
-          <Property Type="String" Name="Su_Descripcion" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="bo_Descripcion" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="pr_codigo" Nullable="false" MaxLength="40" />
-          <Property Type="String" Name="pr_descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="lote_num_lote" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="lote_fecha_vcto" Nullable="true" Precision="23" />
-          <Property Type="String" Name="IdCategoria" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="ca_Categoria" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="IdLinea" Nullable="true" />
-          <Property Type="String" Name="nom_linea" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="IdGrupo" Nullable="true" />
-          <Property Type="String" Name="nom_grupo" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="IdSubgrupo" Nullable="true" />
-          <Property Type="String" Name="nom_subgrupo" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="IdPresentacion" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="nom_presentacion" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="IdMarca" Nullable="false" />
-          <Property Type="String" Name="NomMarca" Nullable="true" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="SPINV_004_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13991,6 +13966,33 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Int32" Name="IdClaseProveedor" Nullable="true" />
           <Property Type="String" Name="descripcion_clas_prove" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="DiasVcto" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPINV_003_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Stock" Nullable="false" />
+          <Property Type="Double" Name="Costo_promedio" Nullable="false" />
+          <Property Type="Double" Name="Costo_total" Nullable="false" />
+          <Property Type="String" Name="Su_Descripcion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="bo_Descripcion" Nullable="true" />
+          <Property Type="String" Name="pr_codigo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="pr_descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="lote_num_lote" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="lote_fecha_vcto" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IdCategoria" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="ca_Categoria" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IdLinea" Nullable="true" />
+          <Property Type="String" Name="nom_linea" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="true" />
+          <Property Type="String" Name="nom_grupo" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="IdSubgrupo" Nullable="true" />
+          <Property Type="String" Name="nom_subgrupo" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="IdPresentacion" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="nom_presentacion" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="IdMarca" Nullable="false" />
+          <Property Type="String" Name="NomMarca" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -16828,37 +16830,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPINV_003" FunctionName="Model_reportes.Store.SPINV_003">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPINV_003_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="Costo_promedio" ColumnName="Costo_promedio" />
-                <ScalarProperty Name="Costo_total" ColumnName="Costo_total" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
-                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
-                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
-                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
-                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
-                <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
-                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
-                <ScalarProperty Name="nom_grupo" ColumnName="nom_grupo" />
-                <ScalarProperty Name="IdSubgrupo" ColumnName="IdSubgrupo" />
-                <ScalarProperty Name="nom_subgrupo" ColumnName="nom_subgrupo" />
-                <ScalarProperty Name="IdPresentacion" ColumnName="IdPresentacion" />
-                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
-                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
-                <ScalarProperty Name="NomMarca" ColumnName="NomMarca" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPINV_004" FunctionName="Model_reportes.Store.SPINV_004">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_reportes.SPINV_004_Result">
@@ -18193,6 +18164,37 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdClaseProveedor" ColumnName="IdClaseProveedor" />
                 <ScalarProperty Name="descripcion_clas_prove" ColumnName="descripcion_clas_prove" />
                 <ScalarProperty Name="DiasVcto" ColumnName="DiasVcto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPINV_003" FunctionName="Model_reportes.Store.SPINV_003">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPINV_003_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Costo_promedio" ColumnName="Costo_promedio" />
+                <ScalarProperty Name="Costo_total" ColumnName="Costo_total" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="lote_num_lote" ColumnName="lote_num_lote" />
+                <ScalarProperty Name="lote_fecha_vcto" ColumnName="lote_fecha_vcto" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
+                <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="nom_grupo" ColumnName="nom_grupo" />
+                <ScalarProperty Name="IdSubgrupo" ColumnName="IdSubgrupo" />
+                <ScalarProperty Name="nom_subgrupo" ColumnName="nom_subgrupo" />
+                <ScalarProperty Name="IdPresentacion" ColumnName="IdPresentacion" />
+                <ScalarProperty Name="nom_presentacion" ColumnName="nom_presentacion" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="NomMarca" ColumnName="NomMarca" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

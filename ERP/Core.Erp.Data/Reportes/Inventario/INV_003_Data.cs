@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.Inventario
 {
    public class INV_003_Data
     {
-        public List<INV_003_Info> get_list(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdProducto, string IdCategoria, int IdLinea, int IdGrupo, int IdSubgrupo, DateTime fecha_corte, bool mostrar_stock_0, int IdMarca)
+        public List<INV_003_Info> get_list(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdProducto, string IdCategoria, int IdLinea, int IdGrupo, int IdSubgrupo, DateTime fecha_corte, bool mostrar_stock_0, int IdMarca, bool ConsiderarNoAprobados)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                 using (Entities_reportes Context = new Entities_reportes())
                 {
                     
-                    Lista = (from q in Context.SPINV_003(IdEmpresa, IdSucursal_ini, IdSucursal_fin, IdBodega_ini, IdBodega_fin, IdProducto_ini, IdProducto_fin, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0,IdMarca_ini,IdMarca_fin)
+                    Lista = (from q in Context.SPINV_003(IdEmpresa, IdSucursal_ini, IdSucursal_fin, IdBodega_ini, IdBodega_fin, IdProducto_ini, IdProducto_fin, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0,IdMarca_ini,IdMarca_fin, ConsiderarNoAprobados)
                              select new INV_003_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

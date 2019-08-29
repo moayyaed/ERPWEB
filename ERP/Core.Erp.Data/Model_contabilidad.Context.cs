@@ -21,10 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_contabilidad")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -66,6 +63,7 @@ namespace Core.Erp.Data
         public DbSet<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
         public DbSet<ct_punto_cargo_grupo> ct_punto_cargo_grupo { get; set; }
+        public DbSet<ct_ClasificacionEBIT> ct_ClasificacionEBIT { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

@@ -162,6 +162,7 @@
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.p_mostrar_agrupados = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_AgruparPorID = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_ConsiderarNoAprobados = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -1468,6 +1469,11 @@
             this.p_AgruparPorID.Name = "p_AgruparPorID";
             this.p_AgruparPorID.Visible = false;
             // 
+            // p_ConsiderarNoAprobados
+            // 
+            this.p_ConsiderarNoAprobados.Name = "p_ConsiderarNoAprobados";
+            this.p_ConsiderarNoAprobados.Visible = false;
+            // 
             // INV_003_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1505,7 +1511,8 @@
             this.p_mostrar_stock_0,
             this.p_IdMarca,
             this.p_mostrar_agrupados,
-            this.p_AgruparPorID});
+            this.p_AgruparPorID,
+            this.p_ConsiderarNoAprobados});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.INV_003_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
@@ -1649,5 +1656,6 @@
         private DevExpress.XtraReports.UI.XRPictureBox lbl_imagen;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell61;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell60;
+        public DevExpress.XtraReports.Parameters.Parameter p_ConsiderarNoAprobados;
     }
 }

@@ -322,6 +322,7 @@
     <Compile Include="Contabilidad\ct_CentroCostoNivel_Data.cs" />
     <Compile Include="Contabilidad\ct_CentroCosto_Data.cs" />
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Data.cs" />
+    <Compile Include="Contabilidad\ct_ClasificacionEBIT_Data.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Data.cs" />
     <Compile Include="Contabilidad\ct_parametro_Data.cs" />
     <Compile Include="Contabilidad\ct_periodo_Data.cs" />
@@ -478,6 +479,9 @@
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="ct_CierrePorModuloPorSucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_ClasificacionEBIT.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="ct_grupocble.cs">

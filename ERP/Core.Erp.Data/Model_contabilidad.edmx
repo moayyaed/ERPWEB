@@ -141,7 +141,7 @@
           <Property Name="tc_TipoCbte" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tc_Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="tc_Interno" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="tc_Nemonico" Type="nchar" MaxLength="10" />
+          <Property Name="tc_Nemonico" Type="varchar" MaxLength="50" />
           <Property Name="IdTipoCbte_Anul" Type="int" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_Transac" Type="datetime" />
@@ -202,6 +202,16 @@
           <Property Name="FechaFin" Type="date" Nullable="false" />
           <Property Name="Cerrado" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ct_ClasificacionEBIT">
+          <Key>
+            <PropertyRef Name="IdClasificacionEBIT" />
+          </Key>
+          <Property Name="IdClasificacionEBIT" Type="int" Nullable="false" />
+          <Property Name="ebit_Codigo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ebit_Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="AplicaEBIT" Type="bit" Nullable="false" />
+          <Property Name="AplicaEBITDA" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="ct_grupocble">
           <Key>
             <PropertyRef Name="IdGrupoCble" />
@@ -253,6 +263,7 @@
           <Property Name="pc_Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="pc_EsMovimiento" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="pc_clave_corta" Type="varchar" MaxLength="15" />
+          <Property Name="IdClasificacionEBIT" Type="int" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="50" />
@@ -307,7 +318,7 @@
           <Property Name="IdPunto_cargo_grupo" Type="int" Nullable="false" />
           <Property Name="cod_Punto_cargo_grupo" Type="varchar" MaxLength="50" />
           <Property Name="nom_punto_cargo_grupo" Type="varchar(max)" Nullable="false" />
-          <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
           <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
           <Property Name="FechaCreacion" Type="datetime" />
           <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
@@ -510,7 +521,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_anio_fiscal_x_cuenta_utilidad
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdanioFiscal" Type="int" Nullable="false" />
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
-          <Property Name="pc_Cuenta" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdNivelCta" Type="int" Nullable="false" />
           <Property Name="IdGrupoCble" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="IdTipoCtaCble" Type="int" />
@@ -573,7 +584,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble' no tiene definida n
           <Property Name="cb_Observacion" Type="varchar(max)" />
           <Property Name="cb_Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="tc_TipoCbte" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="tc_TipoCbte" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwct_cbtecble_con_ctacble_acreedora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -737,7 +748,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="ct_IdEmpresa" Type="int" Nullable="false" />
           <Property Name="ct_IdTipoCbte" Type="int" Nullable="false" />
           <Property Name="ct_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Nombres" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Referencia" Type="varchar" MaxLength="49" />
           <Property Name="vt_fecha" Type="datetime" Nullable="false" />
           <Property Name="TotalModulo" Type="numeric" Precision="18" Scale="2" Nullable="false" />
@@ -1098,6 +1109,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
+          <End Role="ct_ClasificacionEBIT" Type="Self.ct_ClasificacionEBIT" Multiplicity="0..1" />
+          <End Role="ct_plancta" Type="Self.ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_ClasificacionEBIT">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ct_plancta_ct_grupocble">
           <End Role="ct_grupocble" Type="Self.ct_grupocble" Multiplicity="1" />
           <End Role="ct_plancta" Type="Self.ct_plancta" Multiplicity="*" />
@@ -1177,6 +1200,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ct_CentroCosto" EntityType="Self.ct_CentroCosto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_CentroCostoNivel" EntityType="Self.ct_CentroCostoNivel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_CierrePorModuloPorSucursal" EntityType="Self.ct_CierrePorModuloPorSucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ct_ClasificacionEBIT" EntityType="Self.ct_ClasificacionEBIT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_grupocble" EntityType="Self.ct_grupocble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_parametro" EntityType="Self.ct_parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_periodo" EntityType="Self.ct_periodo" Schema="dbo" store:Type="Tables" />
@@ -1437,6 +1461,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_anio_fiscal" EntitySet="ct_anio_fiscal" />
             <End Role="ct_periodo" EntitySet="ct_periodo" />
           </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Self.FK_ct_plancta_ct_ClasificacionEBIT">
+            <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
           <AssociationSet Name="FK_ct_plancta_ct_grupocble" Association="Self.FK_ct_plancta_ct_grupocble">
             <End Role="ct_grupocble" EntitySet="ct_grupocble" />
             <End Role="ct_plancta" EntitySet="ct_plancta" />
@@ -1499,7 +1527,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="tc_TipoCbte" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="tc_Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="tc_Interno" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="tc_Nemonico" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="tc_Nemonico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdTipoCbte_Anul" Type="Int32" Nullable="false" />
           <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
@@ -1749,6 +1777,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
             <End Role="ct_punto_cargo" EntitySet="ct_punto_cargo" />
           </AssociationSet>
+          <EntitySet Name="ct_ClasificacionEBIT" EntityType="Model_contabilidad.ct_ClasificacionEBIT" />
+          <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT">
+            <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -1820,6 +1853,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta" FromRole="ct_plancta" ToRole="ct_cbtecble_Plantilla_det" />
           <NavigationProperty Name="ct_anio_fiscal_x_cuenta_utilidad" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" FromRole="ct_plancta" ToRole="ct_anio_fiscal_x_cuenta_utilidad" />
           <NavigationProperty Name="ct_anio_fiscal_x_cuenta_utilidad1" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" FromRole="ct_plancta" ToRole="ct_anio_fiscal_x_cuenta_utilidad" />
+          <Property Name="IdClasificacionEBIT" Type="Int32" />
+          <NavigationProperty Name="ct_ClasificacionEBIT" Relationship="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" FromRole="ct_plancta" ToRole="ct_ClasificacionEBIT" />
           </EntityType>
         <Association Name="FK_ct_plancta_ct_grupocble">
           <End Type="Model_contabilidad.ct_grupocble" Role="ct_grupocble" Multiplicity="1" />
@@ -1975,7 +2010,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="cb_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cb_Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="tc_TipoCbte" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="tc_TipoCbte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vwct_RevisionContableFacturas">
           <Key>
@@ -1998,7 +2033,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="ct_IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="ct_IdTipoCbte" Type="Int32" Nullable="false" />
           <Property Name="ct_IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Referencia" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
           <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalModulo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
@@ -2551,7 +2586,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdanioFiscal" Type="Int32" Nullable="false" />
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IdNivelCta" Type="Int32" Nullable="false" />
           <Property Name="IdGrupoCble" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="IdTipoCtaCble" Type="Int32" />
@@ -2697,6 +2732,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <NavigationProperty Name="ct_cbtecble_det" Relationship="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_cbtecble_det" />
           <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_cbtecble_Plantilla_det" />
           <NavigationProperty Name="ct_punto_cargo" Relationship="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_punto_cargo" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal">
           <End Type="Model_contabilidad.ct_anio_fiscal" Role="ct_anio_fiscal" Multiplicity="1" />
@@ -2822,6 +2858,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ct_ClasificacionEBIT">
+          <Key>
+            <PropertyRef Name="IdClasificacionEBIT" />
+          </Key>
+          <Property Name="IdClasificacionEBIT" Type="Int32" Nullable="false" />
+          <Property Name="ebit_Codigo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ebit_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AplicaEBIT" Type="Boolean" Nullable="false" />
+          <Property Name="AplicaEBITDA" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ct_plancta" Relationship="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" FromRole="ct_ClasificacionEBIT" ToRole="ct_plancta" />
+        </EntityType>
+        <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
+          <End Type="Model_contabilidad.ct_ClasificacionEBIT" Role="ct_ClasificacionEBIT" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_ClasificacionEBIT">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2941,6 +3000,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ct_plancta">
             <EntityTypeMapping TypeName="Model_contabilidad.ct_plancta">
               <MappingFragment StoreEntitySet="ct_plancta">
+                <ScalarProperty Name="IdClasificacionEBIT" ColumnName="IdClasificacionEBIT" />
                 <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
                 <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
                 <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
@@ -3482,6 +3542,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySetMapping Name="ct_punto_cargo_grupo">
             <EntityTypeMapping TypeName="Model_contabilidad.ct_punto_cargo_grupo">
               <MappingFragment StoreEntitySet="ct_punto_cargo_grupo">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
                 <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
                 <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
@@ -3489,11 +3550,21 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
                 <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
                 <ScalarProperty Name="cod_Punto_cargo_grupo" ColumnName="cod_Punto_cargo_grupo" />
                 <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ct_ClasificacionEBIT">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_ClasificacionEBIT">
+              <MappingFragment StoreEntitySet="ct_ClasificacionEBIT">
+                <ScalarProperty Name="AplicaEBITDA" ColumnName="AplicaEBITDA" />
+                <ScalarProperty Name="AplicaEBIT" ColumnName="AplicaEBIT" />
+                <ScalarProperty Name="ebit_Descripcion" ColumnName="ebit_Descripcion" />
+                <ScalarProperty Name="ebit_Codigo" ColumnName="ebit_Codigo" />
+                <ScalarProperty Name="IdClasificacionEBIT" ColumnName="IdClasificacionEBIT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
