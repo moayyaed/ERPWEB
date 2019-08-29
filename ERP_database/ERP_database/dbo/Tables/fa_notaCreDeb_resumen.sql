@@ -12,6 +12,9 @@
     [SubtotalConDscto]       NUMERIC (18, 2) NOT NULL,
     [ValorIVA]               NUMERIC (18, 2) NOT NULL,
     [Total]                  NUMERIC (18, 2) NOT NULL,
+    [PorIva]                 NUMERIC (18, 2) NULL,
     CONSTRAINT [PK_fa_notaCreDeb_resumen] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdNota] ASC)
 );
+
+
 

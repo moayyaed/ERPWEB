@@ -1,5 +1,4 @@
-﻿
---EXEC web.SPINV_003 2,2,2,1,1,0,99999,'3',29,0,0,'09/09/2019',0,0,9999
+﻿--EXEC web.SPINV_003 2,2,2,1,1,0,99999,'3',29,0,0,'09/09/2019',0,0,9999
 CREATE PROCEDURE [web].[SPINV_003]
 (
 @IdEmpresa int,
@@ -16,7 +15,8 @@ CREATE PROCEDURE [web].[SPINV_003]
 @fecha_corte datetime,
 @mostrar_stock_0 bit,
 @IdMarcaIni int,
-@IdMarcaFin int
+@IdMarcaFin int,
+@ConsiderarNoAprobados bit
 )
 AS
 BEGIN
@@ -62,6 +62,35 @@ BEGIN --FILTRO POR CATEGORIZACION
 END
 
 BEGIN --ACTUALIZO STOCK Y COSTO A LA FECHA
+if(@ConsiderarNoAprobados = 1)
+BEGIN
+	UPDATE web.in_SPINV_003 SET Stock = ROUND(A.cantidad,2), Costo_total = A.costo_total, Costo_promedio = IIF(A.cantidad = 0, 0 ,A.costo_total / A.cantidad)
+	FROM(
+	SELECT det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdProducto, sum(dm_cantidad) cantidad, sum(dm_cantidad * mv_costo) costo_total
+	FROM in_Ing_Egr_Inven cab inner join
+	in_Ing_Egr_Inven_det det 
+	on cab.IdEmpresa = det.IdEmpresa
+	and cab.IdSucursal = det.IdSucursal
+	and cab.IdBodega = det.IdBodega
+	and cab.IdMovi_inven_tipo = det.IdMovi_inven_tipo
+	and cab.IdNumMovi = det.IdNumMovi
+	inner join web.in_SPINV_003 sp
+	on sp.IdEmpresa = det.IdEmpresa
+	and sp.IdSucursal = det.IdSucursal
+	and sp.IdBodega = det.IdBodega
+	and sp.IdProducto = det.IdProducto INNER JOIN
+	in_Motivo_Inven AS mot on mot.IdEmpresa = cab.IdEmpresa
+	and mot.IdMotivo_Inv = cab.IdMotivo_Inv and mot.Genera_Movi_Inven = 'S'
+	AND CAB.Estado = 'A'
+	WHERE cab.cm_fecha <= @fecha_corte
+	group by det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdProducto
+	) A
+	WHERE web.in_SPINV_003.IdEmpresa = A.IdEmpresa
+	AND web.in_SPINV_003.IdSucursal = A.IdSucursal
+	AND web.in_SPINV_003.IdBodega = A.IdBodega
+	and web.in_SPINV_003.IdProducto = A.IdProducto
+END
+ELSE
 	UPDATE web.in_SPINV_003 SET Stock = ROUND(A.cantidad,2), Costo_total = A.costo_total, Costo_promedio = IIF(A.cantidad = 0, 0 ,A.costo_total / A.cantidad)
 	FROM(
 	SELECT det.IdEmpresa, det.IdSucursal, det.IdBodega, det.IdProducto, sum(dm_cantidad) cantidad, sum(dm_cantidad * mv_costo) costo_total

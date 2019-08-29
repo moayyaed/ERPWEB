@@ -1,11 +1,12 @@
-﻿
--- exec [web].[SPBAN_008] 1,'01/01/2019','31/12/2019',1
+﻿-- exec [web].[SPBAN_008] 1,'01/01/2019','31/12/2019',1
 CREATE PROCEDURE [web].[SPBAN_008]
 (
 @IdEmpresa int,
 @FechaIni date,
 @FechaFin date,
-@IdBanco int
+@IdBanco int,
+@IdTipoCbteIni int,
+@IdTipoCbteFin int
 )
 AS
 DECLARE @i_SaldoInicial numeric(18,2),
@@ -55,7 +56,7 @@ where r.idempresa = c.idempresa
 and r.idtipocbte = c.idtipocbte
 and r.idcbtecble = c.idcbtecble
 and cr.cb_Fecha <= cast(@FechaFin as date)
-)
+) and d.IdTipoCbte between @IdTipoCbteIni and @IdTipoCbteFin
 UNION ALL
 SELECT @IdEmpresa, 0, 0, 0, @i_SaldoInicial, 'SALDO INICIAL',NULL,NULL,DATEADD(DAY,-1, @FechaIni), @i_SaldoInicial,
 'INGRESOS',@i_SaldoInicial,1,'S.I.', @i_ba_descripcion, @IdBanco, 'A',0,NULL, 'S.I','',1,'',null
@@ -82,4 +83,4 @@ where r.idempresa = c.idempresa
 and r.idtipocbte = c.idtipocbte
 and r.idcbtecble = c.idcbtecble
 and cr.cb_Fecha between @FechaIni and @FechaFin
-)
+) and d.IdTipoCbte between @IdTipoCbteIni and @IdTipoCbteFin

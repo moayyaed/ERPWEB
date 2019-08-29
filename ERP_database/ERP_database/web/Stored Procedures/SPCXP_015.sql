@@ -13,11 +13,11 @@ CREATE PROCEDURE [web].[SPCXP_015]
 )
 AS
 select * from (
-select og.IdEmpresa, og.IdTipoCbte_Ogiro, og.IdCbteCble_Ogiro, og.IdSucursal, su.Su_Descripcion, og.co_factura, og.IdProveedor, per.pe_nombreCompleto, 
+select og.IdEmpresa, og.IdTipoCbte_Ogiro, og.IdCbteCble_Ogiro, og.IdSucursal, su.Su_Descripcion, og.co_serie+'-'+ og.co_factura co_factura, og.IdProveedor, per.pe_nombreCompleto, 
 og.co_observacion, og.co_FechaFactura, og.co_FechaFactura_vct, tp.Codigo, og.co_subtotal_iva, og.co_subtotal_siniva, og.co_valoriva, og.co_total, 
 isnull(ret.re_valor_retencion,0)ValorRetencion, isnull(ValorNC,0)ValorNC, isnull(ab.ValorAbono,0)ValorAbono, 
 round(og.co_total - isnull(ret.re_valor_retencion,0) - isnull(ValorNC,0) - isnull(ab.ValorAbono,0),2) as Saldo,
-pro.IdClaseProveedor, cl.descripcion_clas_prove
+pro.IdClaseProveedor, cl.descripcion_clas_prove, datediff(day,cast(GETDATE() as Date),og.co_FechaFactura_vct) DiasVcto
 from cp_orden_giro as og inner join
 cp_proveedor as pro on og.IdEmpresa = pro.IdEmpresa and og.IdProveedor = pro.IdProveedor inner join
 tb_persona as per on pro.IdPersona = per.IdPersona left join
@@ -72,7 +72,7 @@ select og.IdEmpresa, og.IdTipoCbte_Nota, og.IdCbteCble_Nota, og.IdSucursal, su.S
 og.cn_observacion, og.cn_fecha, og.cn_Fecha_vcto, 'ND', og.cn_subtotal_iva, og.cn_subtotal_siniva, og.cn_valoriva, og.cn_total, 
 0 ValorRetencion, isnull(ValorNC,0)ValorNC, isnull(ab.ValorAbono,0)ValorAbono, 
 round(og.cn_total - isnull(ValorNC,0) - isnull(ab.ValorAbono,0),2) as Saldo,
-pro.IdClaseProveedor, cl.descripcion_clas_prove
+pro.IdClaseProveedor, cl.descripcion_clas_prove, datediff(day,cast(GETDATE() as Date),og.cn_Fecha_vcto) DiasVcto
 from cp_nota_DebCre as og inner join
 cp_proveedor as pro on og.IdEmpresa = pro.IdEmpresa and og.IdProveedor = pro.IdProveedor inner join
 tb_persona as per on pro.IdPersona = per.IdPersona left join
@@ -115,7 +115,7 @@ UNION ALL
 SELECT ISNULL(D.IdEmpresa_cxp,0) IdEmpresa, ISNULL(D.IdTipoCbte_cxp,0) IdTipoCbte, ISNULL(D.IdCbteCble_cxp,0) IdCbteCble, C.IdSucursal, su.Su_Descripcion, cast(c.IdOrdenPago as varchar(20)),
 c.IdEntidad, pe_nombreCompleto, c.Observacion, c.Fecha, c.Fecha, 'OP', 0,D.Valor_a_pagar,0,D.Valor_a_pagar,0,
 isnull(ValorNC,0), isnull(ValorAbono,0), round(D.Valor_a_pagar - isnull(ValorNC,0) - isnull(ValorAbono,0),2) Saldo,
-pro.IdClaseProveedor, cl.descripcion_clas_prove
+pro.IdClaseProveedor, cl.descripcion_clas_prove,datediff(day,cast(GETDATE() as Date),c.Fecha) DiasVcto
 FROM cp_orden_pago_det AS D INNER JOIN
 cp_orden_pago AS C ON C.IdEmpresa = D.IdEmpresa AND C.IdOrdenPago = D.IdOrdenPago LEFT JOIN
 cp_proveedor AS PRO ON PRO.IdEmpresa = C.IdEmpresa AND PRO.IdProveedor = C.IdEntidad AND C.IdTipo_Persona = 'PROVEE' INNER JOIN

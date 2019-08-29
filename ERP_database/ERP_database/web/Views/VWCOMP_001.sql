@@ -3,10 +3,11 @@ AS
 SELECT        d.IdEmpresa, d.IdSucursal, d.IdOrdenCompra, d.Secuencia, c.Tipo, c.SecuenciaTipo, d.IdProducto, su.Su_Descripcion, c.oc_fecha, c.oc_observacion, c.Estado, term.Descripcion AS NombreTerminoPago, 
                          CAST(c.oc_plazo AS varchar(20)) + ' días' AS oc_plazo, c.IdProveedor, per.pe_nombreCompleto AS NombreProveedor, CASE WHEN prov.pr_telefonos IS NULL 
                          THEN '' ELSE prov.pr_telefonos END + CASE WHEN prov.pr_telefonos IS NOT NULL AND prov.pr_celular IS NOT NULL THEN '-' ELSE '' END + CASE WHEN prov.pr_celular IS NULL 
-                         THEN '' ELSE prov.pr_celular END AS TelefonosProveedor, prov.pr_direccion AS DireccionProveedor, per.pe_cedulaRuc AS RucProveedor, com.Descripcion AS NombreComprador, pro.pr_descripcion AS NombreProducto, 
-                         uni.Descripcion AS NomUnidadMedida, d.do_Cantidad, d.do_precioCompra, d.do_porc_des, d.do_descuento, d.do_precioFinal, d.do_subtotal, d.do_iva, d.do_subtotal + d.do_iva AS do_total, d.Por_Iva, 
-                         CASE WHEN d .Por_Iva > 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS SubtotalIVA, CASE WHEN d .Por_Iva = 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS Subtotal0, 
-                         d.do_Cantidad * d.do_descuento AS DescuentoTotal, dbo.seg_usuario.Nombre AS NombreUsuario, c.Fecha_Transac, c.FechaAprobacion
+                         THEN '' ELSE prov.pr_celular END AS TelefonosProveedor, prov.pr_direccion AS DireccionProveedor, per.pe_cedulaRuc AS RucProveedor, com.Descripcion AS NombreComprador, 
+                         pro.pr_descripcion AS NombreProducto, uni.Descripcion AS NomUnidadMedida, d.do_Cantidad, d.do_precioCompra, d.do_porc_des, d.do_descuento, d.do_precioFinal, d.do_subtotal, d.do_iva, 
+                         d.do_subtotal + d.do_iva AS do_total, d.Por_Iva, CASE WHEN d .Por_Iva > 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS SubtotalIVA, 
+                         CASE WHEN d .Por_Iva = 0 THEN d .do_Cantidad * d .do_precioCompra ELSE 0 END AS Subtotal0, d.do_Cantidad * d.do_descuento AS DescuentoTotal, dbo.seg_usuario.Nombre AS NombreUsuario, 
+                         c.Fecha_Transac, c.FechaAprobacion, c.oc_plazo AS Expr1, c.oc_codigo, c.oc_fechaVencimiento
 FROM            dbo.com_ordencompra_local AS c INNER JOIN
                          dbo.com_ordencompra_local_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdOrdenCompra = d.IdOrdenCompra INNER JOIN
                          dbo.com_comprador AS com ON c.IdEmpresa = com.IdEmpresa AND c.IdComprador = com.IdComprador INNER JOIN
@@ -22,7 +23,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
          Begin Table = "term"
             Begin Extent = 
                Top = 666
@@ -124,6 +125,8 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
@@ -192,7 +195,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -192
+         Top = 0
          Left = -6
       End
       Begin Tables = 
@@ -265,7 +268,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
-    ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
+       ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCOMP_001';
+
+
 
 
 

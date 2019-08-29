@@ -1,12 +1,16 @@
-﻿CREATE VIEW [dbo].[vwcp_orden_giro_det_ing_x_oc_x_cruzar]
+﻿CREATE VIEW dbo.vwcp_orden_giro_det_ing_x_oc_x_cruzar
 AS
 SELECT dbo.in_Ing_Egr_Inven_det.IdEmpresa AS inv_IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal AS inv_IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo AS inv_IdMovi_inven_tipo, 
                   dbo.in_Ing_Egr_Inven_det.IdNumMovi AS inv_IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia AS inv_Secuencia, dbo.in_Ing_Egr_Inven_det.IdSucursal_oc AS oc_IdSucursal, 
                   dbo.in_Ing_Egr_Inven_det.IdOrdenCompra AS oc_IdOrdenCompra, dbo.in_Ing_Egr_Inven_det.Secuencia_oc AS oc_Secuencia, dbo.in_Producto.pr_descripcion, ISNULL(dbo.in_producto_x_tb_bodega.IdCtaCble_Inven, 
                   dbo.tb_bodega.IdCtaCtble_Inve) AS IdCtaCtble_Inve, dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion, dbo.com_ordencompra_local_det.do_precioCompra, dbo.com_ordencompra_local_det.do_porc_des, 
-                  dbo.com_ordencompra_local_det.do_descuento, dbo.com_ordencompra_local_det.do_precioFinal, dbo.com_ordencompra_local_det.do_subtotal, dbo.com_ordencompra_local_det.do_iva, dbo.com_ordencompra_local_det.do_total, 
-                  dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local_det.Por_Iva, dbo.com_ordencompra_local_det.IdCod_Impuesto, dbo.in_UnidadMedida.Descripcion AS NomUnidadMedida, 
-                  dbo.com_ordencompra_local.IdProveedor, dbo.com_ordencompra_local_det.IdProducto, isnull( ct_plancta_1.pc_Cuenta,dbo.ct_plancta.pc_Cuenta)pc_Cuenta
+                  dbo.com_ordencompra_local_det.do_descuento, dbo.com_ordencompra_local_det.do_precioFinal, 
+                  dbo.com_ordencompra_local_det.do_precioFinal * dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion AS do_subtotal, 
+                  (dbo.com_ordencompra_local_det.do_precioFinal * dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion) * (dbo.com_ordencompra_local_det.Por_Iva / 100) AS do_iva, 
+                  dbo.com_ordencompra_local_det.do_precioFinal * dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion + (dbo.com_ordencompra_local_det.do_precioFinal * dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion) 
+                  * (dbo.com_ordencompra_local_det.Por_Iva / 100) AS do_total, dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local_det.Por_Iva, dbo.com_ordencompra_local_det.IdCod_Impuesto, 
+                  dbo.in_UnidadMedida.Descripcion AS NomUnidadMedida, dbo.com_ordencompra_local.IdProveedor, dbo.com_ordencompra_local_det.IdProducto, ISNULL(ct_plancta_1.pc_Cuenta, dbo.ct_plancta.pc_Cuenta) 
+                  AS pc_Cuenta, dbo.com_ordencompra_local.SecuenciaTipo
 FROM     dbo.in_producto_x_tb_bodega LEFT OUTER JOIN
                   dbo.ct_plancta AS ct_plancta_1 ON dbo.in_producto_x_tb_bodega.IdEmpresa = ct_plancta_1.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdCtaCble_Inven = ct_plancta_1.IdCtaCble RIGHT OUTER JOIN
                   dbo.com_ordencompra_local_det INNER JOIN
@@ -20,17 +24,39 @@ FROM     dbo.in_producto_x_tb_bodega LEFT OUTER JOIN
                   dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_Ing_Egr_Inven_det.IdProducto LEFT OUTER JOIN
                   dbo.ct_plancta INNER JOIN
                   dbo.tb_bodega ON dbo.ct_plancta.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.ct_plancta.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.ct_plancta.IdCtaCble = dbo.tb_bodega.IdCtaCtble_Inve ON 
-                  dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.in_Ing_Egr_Inven_det.IdBodega = dbo.tb_bodega.IdBodega AND dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.tb_bodega.IdEmpresa LEFT OUTER JOIN
-                  dbo.cp_orden_giro_det_ing_x_oc ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.cp_orden_giro_det_ing_x_oc.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.cp_orden_giro_det_ing_x_oc.inv_IdSucursal AND 
-                  dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = dbo.cp_orden_giro_det_ing_x_oc.inv_IdMovi_inven_tipo AND dbo.in_Ing_Egr_Inven_det.IdNumMovi = dbo.cp_orden_giro_det_ing_x_oc.inv_IdNumMovi AND 
-                  dbo.in_Ing_Egr_Inven_det.Secuencia = dbo.cp_orden_giro_det_ing_x_oc.inv_Secuencia
+                  dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.in_Ing_Egr_Inven_det.IdBodega = dbo.tb_bodega.IdBodega AND 
+                  dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.tb_bodega.IdEmpresa LEFT OUTER JOIN
+                  dbo.cp_orden_giro_det_ing_x_oc ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.cp_orden_giro_det_ing_x_oc.IdEmpresa AND 
+                  dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.cp_orden_giro_det_ing_x_oc.inv_IdSucursal AND dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = dbo.cp_orden_giro_det_ing_x_oc.inv_IdMovi_inven_tipo AND 
+                  dbo.in_Ing_Egr_Inven_det.IdNumMovi = dbo.cp_orden_giro_det_ing_x_oc.inv_IdNumMovi AND dbo.in_Ing_Egr_Inven_det.Secuencia = dbo.cp_orden_giro_det_ing_x_oc.inv_Secuencia
 WHERE  (dbo.cp_orden_giro_det_ing_x_oc.IdEmpresa IS NULL)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_oc_x_cruzar';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Right = 256
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
+               Right = 256
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ct_plancta"
+            Begin Extent = 
+               Top = 919
+               Left = 563
+               Bottom = 1082
+               Right = 774
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_bodega"
+            Begin Extent = 
+               Top = 847
+               Left = 48
+               Bottom = 1010
+               Right = 360
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -68,14 +94,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Right 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -83,6 +109,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Right 
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_oc_x_cruzar';
+
+
 
 
 
@@ -155,26 +183,26 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -600
+         Top = -360
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "ct_plancta"
+         Begin Table = "in_producto_x_tb_bodega"
             Begin Extent = 
-               Top = 919
-               Left = 563
-               Bottom = 1082
-               Right = 774
+               Top = 607
+               Left = 48
+               Bottom = 770
+               Right = 294
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_bodega"
+         Begin Table = "ct_plancta_1"
             Begin Extent = 
-               Top = 847
+               Top = 775
                Left = 48
-               Bottom = 1010
-               Right = 360
+               Bottom = 938
+               Right = 259
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -191,10 +219,10 @@ Begin DesignProperties =
          End
          Begin Table = "in_Ing_Egr_Inven_det"
             Begin Extent = 
-               Top = 175
-               Left = 48
-               Bottom = 338
-               Right = 357
+               Top = 48
+               Left = 619
+               Bottom = 211
+               Right = 928
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -207,7 +235,7 @@ Begin DesignProperties =
                Right = 305
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 1
          End
          Begin Table = "in_Producto"
             Begin Extent = 
@@ -223,8 +251,9 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 679
                Left = 48
-               Bottom = 842
-           ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_oc_x_cruzar';
+               Bottom = 842', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_oc_x_cruzar';
+
+
 
 
 

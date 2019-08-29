@@ -1,12 +1,12 @@
-﻿CREATE VIEW EntidadRegulatoria.[vwfe_guia_remision_x_factura]
+﻿CREATE VIEW EntidadRegulatoria.vwfe_guia_remision_x_factura
 AS
-SELECT        dbo.fa_guia_remision.IdEmpresa, dbo.fa_guia_remision.IdSucursal, dbo.fa_guia_remision.IdBodega, dbo.fa_guia_remision.IdGuiaRemision, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, 
-                         dbo.fa_factura.vt_NumFactura, dbo.fa_factura.Fecha_Autorizacion, dbo.fa_factura.vt_autorizacion
+SELECT        dbo.fa_guia_remision.IdEmpresa, dbo.fa_guia_remision.IdSucursal, dbo.fa_guia_remision.IdBodega, dbo.fa_guia_remision.IdGuiaRemision, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.vt_serie1, 
+                         dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.Fecha_Autorizacion, dbo.fa_factura.vt_autorizacion
 FROM            dbo.fa_factura_x_fa_guia_remision INNER JOIN
-                         dbo.fa_guia_remision ON dbo.fa_factura_x_fa_guia_remision.gi_IdEmpresa = dbo.fa_guia_remision.IdEmpresa AND dbo.fa_factura_x_fa_guia_remision.gi_IdSucursal = dbo.fa_guia_remision.IdSucursal AND 
-                         dbo.fa_factura_x_fa_guia_remision.gi_IdBodega = dbo.fa_guia_remision.IdBodega AND dbo.fa_factura_x_fa_guia_remision.gi_IdGuiaRemision = dbo.fa_guia_remision.IdGuiaRemision INNER JOIN
                          dbo.fa_factura ON dbo.fa_factura_x_fa_guia_remision.fa_IdEmpresa = dbo.fa_factura.IdEmpresa AND dbo.fa_factura_x_fa_guia_remision.fa_IdSucursal = dbo.fa_factura.IdSucursal AND 
-                         dbo.fa_factura_x_fa_guia_remision.fa_IdBodega = dbo.fa_factura.IdBodega AND dbo.fa_factura_x_fa_guia_remision.fa_IdCbteVta = dbo.fa_factura.IdCbteVta
+                         dbo.fa_factura_x_fa_guia_remision.fa_IdBodega = dbo.fa_factura.IdBodega AND dbo.fa_factura_x_fa_guia_remision.fa_IdCbteVta = dbo.fa_factura.IdCbteVta INNER JOIN
+                         dbo.fa_guia_remision ON dbo.fa_factura_x_fa_guia_remision.gi_IdEmpresa = dbo.fa_guia_remision.IdEmpresa AND dbo.fa_factura_x_fa_guia_remision.gi_IdSucursal = dbo.fa_guia_remision.IdSucursal AND 
+                         dbo.fa_factura_x_fa_guia_remision.gi_IdBodega = dbo.fa_guia_remision.IdBodega AND dbo.fa_factura_x_fa_guia_remision.gi_IdGuiaRemision = dbo.fa_guia_remision.IdGuiaRemision
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'EntidadRegulatoria', @level1type = N'VIEW', @level1name = N'vwfe_guia_remision_x_factura';
 

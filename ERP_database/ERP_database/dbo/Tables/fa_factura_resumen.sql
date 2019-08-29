@@ -14,6 +14,9 @@
     [Total]                  NUMERIC (18, 2) NOT NULL,
     [ValorEfectivo]          NUMERIC (18, 2) NOT NULL,
     [Cambio]                 NUMERIC (18, 2) NOT NULL,
+    [PorIva]                 NUMERIC (18, 2) NULL,
     CONSTRAINT [PK_fa_factura_resumen] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdCbteVta] ASC)
 );
+
+
 

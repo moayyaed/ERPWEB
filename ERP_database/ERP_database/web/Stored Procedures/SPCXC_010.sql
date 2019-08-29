@@ -8,7 +8,8 @@ CREATE PROCEDURE [web].[SPCXC_010]
 	@IdTipoClienteIni as numeric,
 	@IdTipoClienteFin as numeric,
 	@fechaCorte as datetime,
-	@MostrarSoloCarteraVencida bit
+	@MostrarSoloCarteraVencida bit,
+	@DiasVencidos int
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -140,7 +141,5 @@ and Facturas_y_notas_deb.vt_tipoDoc=Cobros_x_fac.dc_TipoDocumento
 where 
     Facturas_y_notas_deb.IdEmpresa = @IdEmpresa 
 	and round(Facturas_y_notas_deb.Valor_Original,2) - round(isnull(Cobros_x_fac.dc_ValorPago,0),2) > 0
-	and iif(@MostrarSoloCarteraVencida = 1,DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte), 0) >= 0
-
-
+	and iif(@MostrarSoloCarteraVencida = 1,DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte), @DiasVencidos) >= @DiasVencidos
 END

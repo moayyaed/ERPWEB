@@ -1,27 +1,27 @@
 ﻿CREATE VIEW dbo.vwcp_orden_giro_det_ing_x_os_x_cruzar
 AS
-SELECT        dbo.com_ordencompra_local_det.IdEmpresa, dbo.com_ordencompra_local_det.IdSucursal, dbo.com_ordencompra_local_det.IdOrdenCompra, dbo.com_ordencompra_local_det.Secuencia, dbo.com_ordencompra_local.Tipo, 
-                         dbo.com_ordencompra_local.SecuenciaTipo, dbo.com_ordencompra_local_det.IdProducto, dbo.in_Producto.pr_descripcion, dbo.com_ordencompra_local_det.do_Cantidad, dbo.com_ordencompra_local_det.do_precioFinal, 
-                         dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local.IdProveedor, dbo.tb_persona.pe_nombreCompleto, dbo.com_ordencompra_local.oc_observacion, dbo.com_ordencompra_local.oc_fecha, 
-                         dbo.com_ordencompra_local_det.do_precioCompra, dbo.com_ordencompra_local_det.do_porc_des, dbo.com_ordencompra_local_det.do_descuento, dbo.com_ordencompra_local_det.do_subtotal, 
-                         dbo.com_ordencompra_local_det.do_total, dbo.com_ordencompra_local_det.do_observacion, dbo.com_ordencompra_local_det.Por_Iva, dbo.com_ordencompra_local_det.do_iva, 
-                         dbo.com_ordencompra_local_det.IdCod_Impuesto
-FROM            dbo.com_ordencompra_local INNER JOIN
-                         dbo.com_ordencompra_local_det ON dbo.com_ordencompra_local.IdEmpresa = dbo.com_ordencompra_local_det.IdEmpresa AND dbo.com_ordencompra_local.IdSucursal = dbo.com_ordencompra_local_det.IdSucursal AND 
-                         dbo.com_ordencompra_local.IdOrdenCompra = dbo.com_ordencompra_local_det.IdOrdenCompra INNER JOIN
-                         dbo.in_Producto ON dbo.com_ordencompra_local_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.com_ordencompra_local_det.IdProducto = dbo.in_Producto.IdProducto INNER JOIN
-                         dbo.cp_proveedor ON dbo.com_ordencompra_local.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.com_ordencompra_local.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
-                         dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                         dbo.cp_orden_giro_det_ing_x_os ON dbo.cp_orden_giro_det_ing_x_os.IdEmpresa = dbo.com_ordencompra_local_det.IdEmpresa AND 
-                         dbo.cp_orden_giro_det_ing_x_os.oc_IdSucursal = dbo.com_ordencompra_local_det.IdSucursal AND dbo.cp_orden_giro_det_ing_x_os.oc_IdOrdenCompra = dbo.com_ordencompra_local_det.IdOrdenCompra AND 
-                         dbo.cp_orden_giro_det_ing_x_os.oc_Secuencia = dbo.com_ordencompra_local_det.Secuencia
-WHERE        (dbo.com_ordencompra_local.Tipo = 'OS') AND (dbo.cp_orden_giro_det_ing_x_os.IdEmpresa IS NULL) AND (dbo.com_ordencompra_local.IdEstadoAprobacion_cat = 'APRO')
+SELECT dbo.com_ordencompra_local_det.IdEmpresa, dbo.com_ordencompra_local_det.IdSucursal, dbo.com_ordencompra_local_det.IdOrdenCompra, dbo.com_ordencompra_local_det.Secuencia, 
+                  dbo.com_ordencompra_local.Tipo, dbo.com_ordencompra_local.SecuenciaTipo, dbo.com_ordencompra_local_det.IdProducto, dbo.in_Producto.pr_descripcion, dbo.com_ordencompra_local_det.do_Cantidad, 
+                  dbo.com_ordencompra_local_det.do_precioFinal, dbo.com_ordencompra_local_det.IdUnidadMedida, dbo.com_ordencompra_local.IdProveedor, dbo.tb_persona.pe_nombreCompleto, 
+                  dbo.com_ordencompra_local.oc_observacion, dbo.com_ordencompra_local.oc_fecha, dbo.com_ordencompra_local_det.do_precioCompra, dbo.com_ordencompra_local_det.do_porc_des, 
+                  dbo.com_ordencompra_local_det.do_descuento, dbo.com_ordencompra_local_det.do_subtotal, dbo.com_ordencompra_local_det.do_total, dbo.com_ordencompra_local_det.do_observacion, 
+                  dbo.com_ordencompra_local_det.Por_Iva, dbo.com_ordencompra_local_det.do_iva, dbo.com_ordencompra_local_det.IdCod_Impuesto
+FROM     dbo.com_ordencompra_local INNER JOIN
+                  dbo.com_ordencompra_local_det ON dbo.com_ordencompra_local.IdEmpresa = dbo.com_ordencompra_local_det.IdEmpresa AND 
+                  dbo.com_ordencompra_local.IdSucursal = dbo.com_ordencompra_local_det.IdSucursal AND dbo.com_ordencompra_local.IdOrdenCompra = dbo.com_ordencompra_local_det.IdOrdenCompra INNER JOIN
+                  dbo.in_Producto ON dbo.com_ordencompra_local_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.com_ordencompra_local_det.IdProducto = dbo.in_Producto.IdProducto INNER JOIN
+                  dbo.cp_proveedor ON dbo.com_ordencompra_local.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.com_ordencompra_local.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                  dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.cp_orden_giro_det_ing_x_os ON dbo.cp_orden_giro_det_ing_x_os.IdEmpresa = dbo.com_ordencompra_local_det.IdEmpresa AND 
+                  dbo.cp_orden_giro_det_ing_x_os.oc_IdSucursal = dbo.com_ordencompra_local_det.IdSucursal AND dbo.cp_orden_giro_det_ing_x_os.oc_IdOrdenCompra = dbo.com_ordencompra_local_det.IdOrdenCompra AND 
+                  dbo.cp_orden_giro_det_ing_x_os.oc_Secuencia = dbo.com_ordencompra_local_det.Secuencia
+WHERE  (dbo.com_ordencompra_local.Tipo = 'OS') AND (dbo.cp_orden_giro_det_ing_x_os.IdEmpresa IS NULL)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_os_x_cruzar';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'dth = 284
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'idth = 284
          Width = 1500
          Width = 1500
          Width = 1500
@@ -30,20 +30,36 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'dth = 284
          Width = 1500
          Width = 1500
          Width = 1500
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 3312
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -51,6 +67,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'dth = 284
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_os_x_cruzar';
+
+
 
 
 GO
@@ -192,6 +210,8 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
-         Wi', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_os_x_cruzar';
+      Begin ColumnWidths = 25
+         W', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_det_ing_x_os_x_cruzar';
+
+
 

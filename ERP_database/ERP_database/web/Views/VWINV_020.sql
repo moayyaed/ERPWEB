@@ -4,8 +4,9 @@ SELECT        dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSuc
                          dbo.in_Ing_Egr_Inven_det.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_Producto.pr_codigo, dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion, 
                          dbo.in_UnidadMedida.Descripcion, ABS(dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion) AS dm_cantidad_sinConversion, dbo.in_Ing_Egr_Inven.cm_observacion, dbo.in_Ing_Egr_Inven.CodMoviInven, 
                          dbo.in_Ing_Egr_Inven.cm_fecha, dbo.in_Ing_Egr_Inven.Estado, dbo.in_Motivo_Inven.IdMotivo_Inv, dbo.in_Motivo_Inven.Desc_mov_inv, dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto, 
-                         dbo.in_presentacion.nom_presentacion, dbo.in_Ing_Egr_Inven.signo, dbo.in_movi_inven_tipo.tm_descripcion, dbo.seg_usuario.Nombre AS NomUsuario, dbo.in_Ing_Egr_Inven.IdResponsable, 
-                         dbo.tb_persona.pe_nombreCompleto, dbo.in_Ing_Egr_Inven.FechaDespacho, dbo.in_Ing_Egr_Inven.Fecha_Transac, dbo.in_Ing_Egr_Inven.FechaAR
+                         dbo.in_presentacion.nom_presentacion, dbo.in_Ing_Egr_Inven.signo, dbo.in_movi_inven_tipo.tm_descripcion, seg_usuario_1.Nombre AS NomUsuario, dbo.in_Ing_Egr_Inven.IdResponsable, 
+                         dbo.tb_persona.pe_nombreCompleto, dbo.in_Ing_Egr_Inven.FechaDespacho, dbo.in_Ing_Egr_Inven.Fecha_Transac, dbo.in_Ing_Egr_Inven.IdUsuarioDespacho, seg_usuario_3.Nombre AS UsuarioDespacho, 
+                         dbo.in_Ing_Egr_Inven.FechaAR
 FROM            dbo.in_movi_inven_tipo INNER JOIN
                          dbo.tb_bodega INNER JOIN
                          dbo.in_Ing_Egr_Inven INNER JOIN
@@ -18,15 +19,16 @@ FROM            dbo.in_movi_inven_tipo INNER JOIN
                          dbo.in_UnidadMedida ON dbo.in_Ing_Egr_Inven_det.IdUnidadMedida_sinConversion = dbo.in_UnidadMedida.IdUnidadMedida INNER JOIN
                          dbo.in_Motivo_Inven ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Motivo_Inven.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdMotivo_Inv = dbo.in_Motivo_Inven.IdMotivo_Inv INNER JOIN
                          dbo.in_presentacion ON dbo.in_Producto.IdEmpresa = dbo.in_presentacion.IdEmpresa AND dbo.in_Producto.IdPresentacion = dbo.in_presentacion.IdPresentacion LEFT OUTER JOIN
+                         dbo.seg_usuario AS seg_usuario_3 ON dbo.in_Ing_Egr_Inven.IdUsuarioDespacho = seg_usuario_3.IdUsuario LEFT OUTER JOIN
                          dbo.tb_persona ON dbo.in_Ing_Egr_Inven.IdResponsable = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                         dbo.seg_usuario ON dbo.in_Ing_Egr_Inven.IdUsuario = dbo.seg_usuario.IdUsuario
+                         dbo.seg_usuario AS seg_usuario_1 ON dbo.in_Ing_Egr_Inven.IdUsuario = seg_usuario_1.IdUsuario
 WHERE        (dbo.in_Ing_Egr_Inven.signo = '-')
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_020';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'70
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'470
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -51,6 +53,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'70
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "seg_usuario_3"
+            Begin Extent = 
+               Top = 181
+               Left = 758
+               Bottom = 311
+               Right = 1006
+            End
+            DisplayFlags = 280
+            TopColumn = 7
+         End
          Begin Table = "tb_persona"
             Begin Extent = 
                Top = 930
@@ -61,7 +73,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'70
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "seg_usuario"
+         Begin Table = "seg_usuario_1"
             Begin Extent = 
                Top = 1062
                Left = 38
@@ -78,8 +90,36 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'70
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 37
          Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -111,13 +151,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_020';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[55] 4[7] 2[21] 3) )"
+         Configuration = "(H (1[44] 4[5] 2[27] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -211,7 +253,7 @@ Begin DesignProperties =
                Right = 719
             End
             DisplayFlags = 280
-            TopColumn = 9
+            TopColumn = 11
          End
          Begin Table = "tb_sucursal"
             Begin Extent = 
@@ -248,5 +290,7 @@ Begin DesignProperties =
                Top = 6
                Left = 291
                Bottom = 136
-               Right = 4', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_020';
+               Right = ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_020';
+
+
 

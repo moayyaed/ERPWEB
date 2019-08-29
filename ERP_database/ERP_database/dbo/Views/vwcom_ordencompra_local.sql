@@ -1,9 +1,9 @@
 ﻿CREATE VIEW dbo.vwcom_ordencompra_local
 AS
-SELECT        c.IdEmpresa, c.IdSucursal, c.IdOrdenCompra, c.Tipo, c.SecuenciaTipo, s.codigo + '-' + CAST(c.IdOrdenCompra AS VARCHAR(18)) AS Codigo, s.Su_Descripcion, c.oc_fecha, per.pe_nombreCompleto, c.IdEstadoAprobacion_cat, 
-                         CASE WHEN c.IdEstadoAprobacion_cat = 'APRO' THEN 'Aprobado' WHEN c.IdEstadoAprobacion_cat = 'XAPRO' THEN 'Por Aprobar' ELSE 'Anulado' END AS EstadoAprobacion, c.oc_observacion, com.Descripcion, 
-                         c.IdEstado_cierre, CASE WHEN c.IdEstado_cierre = 'ABI' THEN 'Abierta' WHEN c.IdEstado_cierre = 'CERR' THEN 'Cerrada' ELSE 'Pendiente' END AS EstadoCierre, c.Estado, tp.Descripcion AS TerminoPago, c.oc_plazo, 
-                         dbo.com_ordencompra_local_resumen.Total
+SELECT        c.IdEmpresa, c.IdSucursal, c.IdOrdenCompra, c.Tipo, c.SecuenciaTipo, s.codigo + '-' + CAST(c.IdOrdenCompra AS VARCHAR(18)) AS Codigo, s.Su_Descripcion, c.oc_fecha, per.pe_nombreCompleto, 
+                         c.IdEstadoAprobacion_cat, CASE WHEN c.IdEstadoAprobacion_cat = 'APRO' THEN 'Aprobado' WHEN c.IdEstadoAprobacion_cat = 'XAPRO' THEN 'Por Aprobar' ELSE 'Anulado' END AS EstadoAprobacion, 
+                         c.oc_observacion, com.Descripcion, c.IdEstado_cierre, CASE WHEN c.IdEstado_cierre = 'ABI' THEN 'Abierta' WHEN c.IdEstado_cierre = 'CERR' THEN 'Cerrada' ELSE 'Pendiente' END AS EstadoCierre, c.Estado, 
+                         tp.Descripcion AS TerminoPago, c.oc_plazo, dbo.com_ordencompra_local_resumen.Total, c.oc_codigo
 FROM            dbo.com_ordencompra_local AS c LEFT OUTER JOIN
                          dbo.tb_sucursal AS s ON c.IdEmpresa = s.IdEmpresa AND c.IdSucursal = s.IdSucursal LEFT OUTER JOIN
                          dbo.cp_proveedor AS pro ON c.IdEmpresa = pro.IdEmpresa AND c.IdProveedor = pro.IdProveedor INNER JOIN
@@ -18,7 +18,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[29] 4[27] 2[21] 3) )"
+         Configuration = "(H (1[48] 4[9] 2[21] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -84,36 +84,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "c"
-            Begin Extent = 
-               Top = 0
-               Left = 595
-               Bottom = 649
-               Right = 828
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "s"
-            Begin Extent = 
-               Top = 0
-               Left = 0
-               Bottom = 129
-               Right = 246
-            End
-            DisplayFlags = 280
-            TopColumn = 6
-         End
-         Begin Table = "pro"
-            Begin Extent = 
-               Top = 0
-               Left = 0
-               Bottom = 129
-               Right = 248
-            End
-            DisplayFlags = 280
-            TopColumn = 17
-         End
          Begin Table = "per"
             Begin Extent = 
                Top = 1350
@@ -124,12 +94,32 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "com"
+         Begin Table = "com_ordencompra_local_resumen"
             Begin Extent = 
-               Top = 798
-               Left = 38
-               Bottom = 927
-               Right = 263
+               Top = 11
+               Left = 940
+               Bottom = 185
+               Right = 1159
+            End
+            DisplayFlags = 280
+            TopColumn = 6
+         End
+         Begin Table = "s"
+            Begin Extent = 
+               Top = 0
+               Left = 0
+               Bottom = 129
+               Right = 246
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "pro"
+            Begin Extent = 
+               Top = 0
+               Left = 0
+               Bottom = 129
+               Right = 248
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -144,15 +134,27 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "com_ordencompra_local_resumen"
+         Begin Table = "com"
             Begin Extent = 
-               Top = 11
-               Left = 940
-               Bottom = 185
-               Right = 1159
+               Top = 798
+               Left = 38
+               Bottom = 927
+               Right = 263
             End
             DisplayFlags = 280
-       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+            TopColumn = 0
+         End
+         Begin Table = "c"
+            Begin Extent = 
+               Top = 0
+               Left = 595
+               Bottom = 649
+               Right = 828
+            End
+            DisplayFlags = 280
+         ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+
+
 
 
 
@@ -166,7 +168,7 @@ Begin DesignProperties =
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     TopColumn = 6
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   TopColumn = 0
          End
       End
    End
@@ -218,6 +220,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     TopCo
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcom_ordencompra_local';
+
+
 
 
 
