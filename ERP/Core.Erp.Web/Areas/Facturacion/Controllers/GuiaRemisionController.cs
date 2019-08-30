@@ -419,7 +419,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         //}
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.GUIA.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
@@ -515,7 +515,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         public JsonResult get_direcciones(decimal IdCliente = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             fa_cliente_contactos_Info resultado = new fa_cliente_contactos_Info();
 
             fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
@@ -535,7 +535,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public JsonResult Get_placa(int Idtransportista = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var resultado = bus_transportista.get_info(IdEmpresa, Idtransportista);
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
@@ -584,7 +584,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public JsonResult CargarPuntosDeVenta_Factura(int IdSucursal = 0)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var resultado = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, cl_enumeradores.eTipoDocumento.FACT.ToString());
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
@@ -717,7 +717,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] fa_guia_remision_det_Info info_det)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             decimal IdCliente = Convert.ToDecimal(SessionFixed.IdEntidad);
 
             if (info_det != null)
@@ -823,9 +823,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             List<fa_guia_remision_det_Info> list = get_list(IdTransaccionSession);
             info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
 
-            info_det.gi_descuentoUni = Math.Round(info_det.gi_precio * (info_det.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
-            info_det.gi_PrecioFinal = Math.Round(info_det.gi_precio - info_det.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
-            info_det.gi_Subtotal = Math.Round(info_det.gi_cantidad * info_det.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+            info_det.gi_descuentoUni = info_det.gi_precio * (info_det.gi_por_desc / 100);
+            info_det.gi_PrecioFinal = info_det.gi_precio - info_det.gi_descuentoUni;
+            info_det.gi_Subtotal = info_det.gi_cantidad * info_det.gi_PrecioFinal;
 
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
             if (impuesto != null)
@@ -833,8 +833,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             else
                 info_det.gi_por_iva = 0;
 
-            info_det.gi_Iva = Math.Round(info_det.gi_Subtotal * (info_det.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
-            info_det.gi_Total = Math.Round(info_det.gi_Subtotal + info_det.gi_Iva, 2, MidpointRounding.AwayFromZero);
+            info_det.gi_Iva = info_det.gi_Subtotal * (info_det.gi_por_iva / 100);
+            info_det.gi_Total = info_det.gi_Subtotal + info_det.gi_Iva;
 
             info_det.gi_Subtotal = info_det.gi_Subtotal;
             info_det.gi_Iva_item = info_det.gi_Iva;
@@ -879,9 +879,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             
             edited_info.gi_detallexItems = info_det.gi_detallexItems;
-            edited_info.gi_descuentoUni = Math.Round(edited_info.gi_precio * (edited_info.gi_por_desc / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_PrecioFinal = Math.Round(edited_info.gi_precio - edited_info.gi_descuentoUni, 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_Subtotal = Math.Round(edited_info.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_descuentoUni = edited_info.gi_precio * (edited_info.gi_por_desc / 100);
+            edited_info.gi_PrecioFinal = edited_info.gi_precio - edited_info.gi_descuentoUni;
+            edited_info.gi_Subtotal = edited_info.gi_cantidad * edited_info.gi_PrecioFinal;
             edited_info.IdCod_Impuesto = info_det.IdCod_Impuesto;           
 
             var impuesto = bus_impuesto.get_info(info_det.IdCod_Impuesto);
@@ -890,12 +890,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             else
                 edited_info.gi_por_iva = 0;
             
-            edited_info.gi_Iva = Math.Round(edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_Total = Math.Round(edited_info.gi_Subtotal + edited_info.gi_Iva, 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Iva = edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100);
+            edited_info.gi_Total = edited_info.gi_Subtotal + edited_info.gi_Iva;
 
-            edited_info.gi_Subtotal_item = Math.Round(info_det.gi_cantidad * edited_info.gi_PrecioFinal, 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_Iva_item = Math.Round(edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100), 2, MidpointRounding.AwayFromZero);
-            edited_info.gi_Total_item = Math.Round(edited_info.gi_Subtotal + edited_info.gi_Iva, 2, MidpointRounding.AwayFromZero);
+            edited_info.gi_Subtotal_item = info_det.gi_cantidad * edited_info.gi_PrecioFinal;
+            edited_info.gi_Iva_item = edited_info.gi_Subtotal * (edited_info.gi_por_iva / 100);
+            edited_info.gi_Total_item = edited_info.gi_Subtotal + edited_info.gi_Iva;
 
             #region Centro de costo
             edited_info.IdCentroCosto = info_det.IdCentroCosto;

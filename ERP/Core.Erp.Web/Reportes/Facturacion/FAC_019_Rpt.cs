@@ -35,6 +35,9 @@ namespace Core.Erp.Web.Reportes.Facturacion
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : Convert.ToString(p_IdUsuario.Value);
 
+            tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
+            lblSucursal.Text = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
+
             FAC_019_Bus bus_rpt = new FAC_019_Bus();
             List<FAC_019_Info> lst_rpt = bus_rpt.GetList(IdEmpresa,IdCliente, IdVendedor, fechaIni,fechaCorte, mostrarSoloVencido, mostrarSaldo0, IdUsuario);
             this.DataSource = lst_rpt;
