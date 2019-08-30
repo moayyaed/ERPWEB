@@ -778,6 +778,13 @@ namespace Core.Erp.Data.Facturacion
                     {
                         Entity.aprobada_enviar_sri = true;
                         Context.SaveChanges();
+
+                        var Factura = Context.fa_factura.Where(q => q.IdEmpresa == Entity.IdEmpresa && q.IdSucursal == Entity.IdSucursal && q.IdBodega == Entity.IdBodega && q.IdCbteVta == Entity.IdCbteVta).FirstOrDefault();
+                        if (Factura != null)
+                        {
+                            Factura.aprobada_enviar_sri = true;
+                            Context.SaveChanges();
+                        }
                     }
                 }
 
