@@ -253,17 +253,21 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     cargar_combos(model);
                     ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (!validar(model, ref mensaje))
                 {
                     cargar_combos(model);
                     ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (!bus_guia.guardarDB(model))
                 {
+                    ViewBag.mensaje = "Ha ocurrido un problema, comuniquese con sistemas";
                     cargar_combos(model);
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
 
@@ -329,19 +333,23 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 string mensaje = bus_guia.validar(model);
                 if (!validar(model, ref mensaje))
                 {
+                    ViewBag.mensaje = "Ha ocurrido un problema, comuniquese con sistemas";
                     cargar_combos(model);
-                    ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (mensaje != "")
                 {
+                    ViewBag.mensaje = "Ha ocurrido un problema, comuniquese con sistemas";
                     cargar_combos(model);
-                    ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (!bus_guia.modificarDB(model))
                 {
+                    ViewBag.mensaje = "Ha ocurrido un problema, comuniquese con sistemas";
                     cargar_combos(model);
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
 
@@ -393,7 +401,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 if (!bus_guia.anularDB(model))
                 {
+                    ViewBag.mensaje = "Ha ocurrido un problema, comuniquese con sistemas";
                     cargar_combos(model);
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 Session["fa_guia_remision_det_Info"] = null;

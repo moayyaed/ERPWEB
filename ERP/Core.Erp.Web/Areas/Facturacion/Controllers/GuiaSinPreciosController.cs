@@ -249,16 +249,19 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     cargar_combos(model);
                     ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (!validar(model, ref mensaje))
                 {
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     cargar_combos(model);
                     ViewBag.mensaje = mensaje;
                     return View(model);
                 }
                 if (!bus_guia.guardarDB(model))
                 {
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     cargar_combos(model);
                     return View(model);
                 }
@@ -322,17 +325,20 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 {
                     cargar_combos(model);
                     ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (mensaje != "")
                 {
                     cargar_combos(model);
                     ViewBag.mensaje = mensaje;
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
                 if (!bus_guia.modificarDB(model))
                 {
                     cargar_combos(model);
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     return View(model);
                 }
 
@@ -384,6 +390,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 if (!bus_guia.anularDB(model))
                 {
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     cargar_combos(model);
                     return View(model);
                 }
