@@ -174,7 +174,8 @@ namespace Core.Erp.Data.Facturacion
                         esta_impresa = Entity.esta_impresa,
                         valor_abono = Entity.valor_abono,
                         IdNivel = Entity.IdNivel,
-                        IdCatalogo_FormaPago = Entity.IdCatalogo_FormaPago,                     
+                        IdCatalogo_FormaPago = Entity.IdCatalogo_FormaPago,
+                        IdContacto = (Entity.IdContacto == null ? 0 : Entity.IdContacto)
                     };
 
                     info.info_resumen = Context.fa_factura_resumen.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCbteVta == IdCbteVta).Select(q=> new fa_factura_resumen_Info
@@ -276,6 +277,7 @@ namespace Core.Erp.Data.Facturacion
                     valor_abono = info.valor_abono,
                     IdUsuario = info.IdUsuario,
                     IdNivel = info.IdNivel,
+                    IdContacto = (info.IdContacto ==0 ? null : info.IdContacto)
 
                 };
                 #endregion
@@ -868,6 +870,7 @@ namespace Core.Erp.Data.Facturacion
                 Entity.IdNivel = info.IdNivel;
                 Entity.IdUsuarioUltModi = info.IdUsuarioUltModi;
                 Entity.Fecha_UltMod = DateTime.Now;
+                Entity.IdContacto = (info.IdContacto == 0 ? null : info.IdContacto);
 
                 #endregion
                 var cliente = db_f.fa_cliente.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).FirstOrDefault();

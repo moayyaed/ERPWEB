@@ -36,7 +36,7 @@ namespace Core.Erp.Data.Facturacion
                                  nom_ciudad = q.Descripcion_Ciudad,
                                  nom_parroquia = q.nom_parroquia
                              }).ToList();
-                    Lista.ForEach(q => q.Nombres_combo = q.Direccion + " - " + q.nom_ciudad + " - " + q.Telefono + " " + q.Nombres);
+                    Lista.ForEach(q => q.Nombres_combo = q.nom_ciudad + " - " + q.Direccion + " - " + q.Celular + " " + q.Telefono);
                 }
                 return Lista;
             }

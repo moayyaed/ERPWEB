@@ -168,5 +168,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         #endregion
+
+        #region Json
+        public JsonResult cargar_lista_contactos(decimal IdCliente = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            List<fa_cliente_contactos_Info> lst_cliente_contactos = bus_cliente_contactos.get_list(IdEmpresa, IdCliente);
+
+            return Json(lst_cliente_contactos, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

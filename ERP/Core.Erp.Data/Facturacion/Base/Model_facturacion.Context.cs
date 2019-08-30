@@ -37,7 +37,6 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual DbSet<fa_cliente_tipo> fa_cliente_tipo { get; set; }
         public virtual DbSet<fa_cliente_x_fa_Vendedor_x_sucursal> fa_cliente_x_fa_Vendedor_x_sucursal { get; set; }
         public virtual DbSet<fa_cuotas_x_doc> fa_cuotas_x_doc { get; set; }
-        public virtual DbSet<fa_factura> fa_factura { get; set; }
         public virtual DbSet<fa_factura_det> fa_factura_det { get; set; }
         public virtual DbSet<fa_factura_det_x_in_Ing_Egr_Inven_det> fa_factura_det_x_in_Ing_Egr_Inven_det { get; set; }
         public virtual DbSet<fa_factura_resumen> fa_factura_resumen { get; set; }
@@ -46,19 +45,16 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual DbSet<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         public virtual DbSet<fa_factura_x_in_Ing_Egr_Inven> fa_factura_x_in_Ing_Egr_Inven { get; set; }
         public virtual DbSet<fa_formaPago> fa_formaPago { get; set; }
-        public virtual DbSet<fa_guia_remision> fa_guia_remision { get; set; }
         public virtual DbSet<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public virtual DbSet<fa_guia_remision_det_x_factura> fa_guia_remision_det_x_factura { get; set; }
         public virtual DbSet<fa_MotivoTraslado> fa_MotivoTraslado { get; set; }
         public virtual DbSet<fa_NivelDescuento> fa_NivelDescuento { get; set; }
-        public virtual DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public virtual DbSet<fa_notaCreDeb_det> fa_notaCreDeb_det { get; set; }
         public virtual DbSet<fa_notaCreDeb_resumen> fa_notaCreDeb_resumen { get; set; }
         public virtual DbSet<fa_notaCreDeb_x_ct_cbtecble> fa_notaCreDeb_x_ct_cbtecble { get; set; }
         public virtual DbSet<fa_notaCreDeb_x_cxc_cobro> fa_notaCreDeb_x_cxc_cobro { get; set; }
         public virtual DbSet<fa_notaCreDeb_x_fa_factura_NotaDeb> fa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
         public virtual DbSet<fa_parametro> fa_parametro { get; set; }
-        public virtual DbSet<fa_proforma> fa_proforma { get; set; }
         public virtual DbSet<fa_proforma_det> fa_proforma_det { get; set; }
         public virtual DbSet<fa_PuntoVta> fa_PuntoVta { get; set; }
         public virtual DbSet<fa_TerminoPago> fa_TerminoPago { get; set; }
@@ -87,6 +83,10 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual DbSet<vwfa_notaCreDeb_x_fa_factura_NotaDeb> vwfa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
         public virtual DbSet<vwfa_factura_sin_guia> vwfa_factura_sin_guia { get; set; }
         public virtual DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
+        public virtual DbSet<fa_factura> fa_factura { get; set; }
+        public virtual DbSet<fa_guia_remision> fa_guia_remision { get; set; }
+        public virtual DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
+        public virtual DbSet<fa_proforma> fa_proforma { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

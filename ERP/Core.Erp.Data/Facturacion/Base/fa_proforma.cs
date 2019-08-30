@@ -24,6 +24,7 @@ namespace Core.Erp.Data.Facturacion.Base
         public int IdSucursal { get; set; }
         public decimal IdProforma { get; set; }
         public decimal IdCliente { get; set; }
+        public Nullable<int> IdContacto { get; set; }
         public string IdTerminoPago { get; set; }
         public int pf_plazo { get; set; }
         public string pf_codigo { get; set; }
@@ -45,6 +46,7 @@ namespace Core.Erp.Data.Facturacion.Base
         public string IdCatalogo_FormaPago { get; set; }
     
         public virtual fa_cliente fa_cliente { get; set; }
+        public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
         public virtual fa_NivelDescuento fa_NivelDescuento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_proforma_det> fa_proforma_det { get; set; }

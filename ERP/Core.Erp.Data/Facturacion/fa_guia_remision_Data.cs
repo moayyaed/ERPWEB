@@ -106,8 +106,9 @@ namespace Core.Erp.Data.Facturacion
                         Estado = Entity.Estado,
                         IdMotivoTraslado = Entity.IdMotivoTraslado,
                         IdCbteVta = Entity.IdCbteVta,
-                        IdPuntoVta = Entity.IdPuntoVta
-                                             
+                        IdPuntoVta = Entity.IdPuntoVta,
+                        IdContacto = (Entity.IdContacto == null ? 0 : Entity.IdContacto)
+
                         //GenerarFactura = (Entity.IdCbteVta != null || Entity.IdCbteVta != 0) ? true : false
                     };
                 }
@@ -180,7 +181,8 @@ namespace Core.Erp.Data.Facturacion
                         Estado = info.Estado= true,
                         IdUsuarioCreacion=info.IdUsuarioCreacion,
                         FechaCreacion=info.FechaCreacion = DateTime.Now,
-                        IdCbteVta = info.IdCbteVta
+                        IdCbteVta = info.IdCbteVta,
+                        IdContacto = (info.IdContacto == 0 ? null : info.IdContacto)
                     };                    
 
                     foreach (var item in info.lst_detalle)
@@ -319,7 +321,7 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.IdCliente = info.IdCliente;
                         info_fact.IdVendedor = info.IdVendedor;
                         info_fact.vt_plazo = termino_pago.Dias_Vct; /**depende de la termino de pago*/
-                        info_fact.vt_Observacion = string.IsNullOrEmpty(info.gi_Observacion) ? "" : info.gi_Observacion;
+                        info_fact.vt_Observacion = string.IsNullOrEmpty(info.ObservacionFactura) ? "" : info.ObservacionFactura;
                         info_fact.IdCatalogo_FormaPago = info.IdCatalogo_FormaPago;
                         info_fact.vt_tipo_venta = info.vt_tipo_venta;
                         info_fact.IdCaja = info.IdCaja; /*depende del punto de venta*/
@@ -479,6 +481,7 @@ namespace Core.Erp.Data.Facturacion
                         Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
                         Entity.gi_Observacion = info.gi_Observacion;
                         Entity.IdCbteVta = info.IdCbteVta;
+                        Entity.IdContacto = (info.IdContacto == 0 ? null : info.IdContacto);
 
                     foreach (var item in info.lst_detalle)
                     {
@@ -573,7 +576,7 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.IdCliente = info.IdCliente;
                         info_fact.IdVendedor = info.IdVendedor;
                         info_fact.vt_plazo = termino_pago.Dias_Vct; /**depende de la termino de pago*/
-                        info_fact.vt_Observacion = string.IsNullOrEmpty(info.gi_Observacion) ? "" : info.gi_Observacion;
+                        info_fact.vt_Observacion = string.IsNullOrEmpty(info.ObservacionFactura) ? "" : info.ObservacionFactura;
                         info_fact.IdCatalogo_FormaPago = info.IdCatalogo_FormaPago;
                         info_fact.vt_tipo_venta = info.vt_tipo_venta;
                         info_fact.IdCaja = info.IdCaja; /*depende del punto de venta*/

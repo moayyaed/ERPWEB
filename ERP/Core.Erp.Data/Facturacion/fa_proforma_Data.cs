@@ -77,7 +77,8 @@ namespace Core.Erp.Data.Facturacion
                         IdVendedor = Entity.IdVendedor,
                         pr_dias_entrega = Entity.pr_dias_entrega,
                         IdNivel = Entity.IdNivel,
-                        IdCatalogo_FormaPago= Entity.IdCatalogo_FormaPago
+                        IdCatalogo_FormaPago= Entity.IdCatalogo_FormaPago,
+                        IdContacto = (Entity.IdContacto == null ? 0 : Entity.IdContacto)
                     };
 
                 }
@@ -141,7 +142,8 @@ namespace Core.Erp.Data.Facturacion
                         IdCatalogo_FormaPago = info.IdCatalogo_FormaPago,
 
                         IdUsuario_creacion = info.IdUsuario_creacion,
-                        fecha_creacion = DateTime.Now
+                        fecha_creacion = DateTime.Now,
+                        IdContacto = (info.IdContacto == 0 ? null : info.IdContacto)
                     });
 
                     foreach (var item in info.lst_det)
@@ -206,6 +208,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.IdUsuario_modificacion = info.IdUsuario_modificacion;
                     Entity.fecha_modificacion = DateTime.Now;
                     Entity.IdCatalogo_FormaPago = info.IdCatalogo_FormaPago;
+                    Entity.IdContacto = (info.IdContacto == 0 ? null : info.IdContacto);
 
                     var lst = Context.fa_proforma_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdProforma == info.IdProforma);
                     Context.fa_proforma_det.RemoveRange(lst);

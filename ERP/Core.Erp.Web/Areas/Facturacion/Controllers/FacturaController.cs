@@ -61,6 +61,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_catalogo_Bus bus_catalogo = new fa_catalogo_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -168,6 +169,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             var lst_formapago = bus_catalogo.get_list((int)cl_enumeradores.eTipoCatalogoFact.FormaDePago, false);            
             ViewBag.lst_formapago = lst_formapago;
+
+            var lst_cliente_contactos = bus_cliente_contactos.get_list(model.IdEmpresa, model.IdCliente);
+            ViewBag.lst_cliente_contactos = lst_cliente_contactos;
         }
         private bool validar(fa_factura_Info i_validar, ref string msg)
         {
@@ -540,16 +544,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 List_det.UpdateRow(linea, IdTransaccionSession);
             }
             return Json(linea, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult cargar_contactos(decimal IdCliente = 0)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            fa_cliente_contactos_Info info_contacto = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
-            var resultado = info_contacto.Direccion + " " + info_contacto.Correo + " " + info_contacto.Telefono + " " + info_contacto.Celular;
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {

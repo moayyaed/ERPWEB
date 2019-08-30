@@ -30,6 +30,7 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo cliente es obligatorio")]
         [Range(1,int.MaxValue, ErrorMessage = "El campo cliente es obligatorio")]
         public decimal IdCliente { get; set; }
+        public Nullable<int> IdContacto { get; set; }
         [Required(ErrorMessage = "El campo vendedor es obligatorio")]
         [Range(1, int.MaxValue, ErrorMessage = "El campo vendedor es obligatorio")]
         public int IdVendedor { get; set; }

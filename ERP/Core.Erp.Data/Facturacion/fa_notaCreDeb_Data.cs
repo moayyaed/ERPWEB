@@ -94,7 +94,8 @@ namespace Core.Erp.Data.Facturacion
                         Estado = Entity.Estado,
                         NaturalezaNota = Entity.NaturalezaNota,
                         IdCtaCble_TipoNota = Entity.IdCtaCble_TipoNota,
-                        IdVendedor = Entity.IdVendedor
+                        IdVendedor = Entity.IdVendedor,
+                        IdContacto = (Entity.IdContacto == null ? 0 : Entity.IdContacto)
                     };
                 }
 
@@ -197,7 +198,8 @@ namespace Core.Erp.Data.Facturacion
                         IdCtaCble_TipoNota = info.IdCtaCble_TipoNota,
 
                         IdVendedor = info.IdVendedor,
-                        IdUsuario = info.IdUsuario
+                        IdUsuario = info.IdUsuario,
+                        IdContacto = (info.IdContacto == 0 ? null : info.IdContacto)
                     };
                     #endregion
 
@@ -460,6 +462,7 @@ namespace Core.Erp.Data.Facturacion
                     entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     entity.Fecha_UltMod = DateTime.Now;
                     entity.IdVendedor = info.IdVendedor;
+                    entity.IdContacto = (info.IdContacto == 0 ? null : info.IdContacto);
 
                     #endregion
 
@@ -778,7 +781,9 @@ namespace Core.Erp.Data.Facturacion
         {
             try
             {
-
+                fa_cliente_Data data_cliente = new fa_cliente_Data();
+                var info_cliente = data_cliente.get_info(info.IdEmpresa, info.IdCliente);
+                var Observacion = "";
                 string IdCtaCble_IVA = string.Empty;
                 double descuadre = 0;
                 using (Entities_general Context = new Entities_general())
@@ -800,6 +805,11 @@ namespace Core.Erp.Data.Facturacion
                     }
                 }
 
+                if (info_cliente!= null)
+                {
+                    Observacion = "CLI: " + info_cliente.info_persona.pe_nombreCompleto + " "+ (info.CreDeb=="C" ? "NC: ": "ND: " ) + (info.NaturalezaNota == "SRI" ? (info.Serie1+"-"+info.Serie2 + "-" +info.NumNota_Impresa) : (info.CodNota == null ? info.IdNota.ToString("000000000") : info.CodNota) + " OBS: "+ (string.IsNullOrEmpty(info.sc_observacion) ? "" : info.sc_observacion) );
+                }
+
                 #region Cabecera
                 ct_cbtecble_Info diario = new ct_cbtecble_Info
                 {
@@ -811,7 +821,8 @@ namespace Core.Erp.Data.Facturacion
                     IdPeriodo = Convert.ToInt32(info.no_fecha.ToString("yyyyMM")),
                     IdUsuario = info.IdUsuario,
                     IdUsuarioUltModi = info.IdUsuarioUltMod,
-                    cb_Observacion = info.CodDocumentoTipo + (info.NaturalezaNota == "SRI" ? ("-" + info.Serie1 + "-" + info.Serie2 + "-" + info.NumNota_Impresa) : info.IdNota.ToString("000000000")) + info.sc_observacion,
+                    //cb_Observacion = info.CodDocumentoTipo + (info.NaturalezaNota == "SRI" ? ("-" + info.Serie1 + "-" + info.Serie2 + "-" + info.NumNota_Impresa) : info.IdNota.ToString("000000000")) + info.sc_observacion,
+                    cb_Observacion = Observacion,
                     CodCbteCble = info.CodDocumentoTipo + (info.NaturalezaNota == "SRI" ? info.NumNota_Impresa : info.IdNota.ToString("000000000")),
                     cb_Valor = 0,
                     lst_ct_cbtecble_det = new List<ct_cbtecble_det_Info>()

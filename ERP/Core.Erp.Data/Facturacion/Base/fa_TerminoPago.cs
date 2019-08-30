@@ -18,8 +18,8 @@ namespace Core.Erp.Data.Facturacion.Base
         public fa_TerminoPago()
         {
             this.fa_cliente = new HashSet<fa_cliente>();
-            this.fa_proforma = new HashSet<fa_proforma>();
             this.fa_TerminoPago_Distribucion = new HashSet<fa_TerminoPago_Distribucion>();
+            this.fa_proforma = new HashSet<fa_proforma>();
         }
     
         public string IdTerminoPago { get; set; }
@@ -31,8 +31,8 @@ namespace Core.Erp.Data.Facturacion.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_cliente> fa_cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<fa_proforma> fa_proforma { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_TerminoPago_Distribucion> fa_TerminoPago_Distribucion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<fa_proforma> fa_proforma { get; set; }
     }
 }

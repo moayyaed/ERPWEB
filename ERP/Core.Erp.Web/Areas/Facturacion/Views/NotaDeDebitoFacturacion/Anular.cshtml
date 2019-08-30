@@ -12,7 +12,6 @@
     $(function () {
         CargarPuntosDeVenta();
         SetNaturalezaNota();
-        cargar_contactos();
 
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
@@ -45,7 +44,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                cargar_contactos();
             },
             error: function (error) {
                 alert(error);
@@ -53,32 +51,31 @@
         });
     }
 
-    function cargar_contactos() {
-        var codigo = IdCliente.GetValue();
+function cargar_lista_contactos() {
+    var Id = IdCliente.GetValue();
 
-        if (codigo > 0)
-        {
-            var datos = {
-                IdCliente: codigo
+    if (Id > 0)
+    {
+        var datos = {
+            IdCliente: Id
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_lista_contactos", "ClienteContactos", new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres_combo + "</option>");
+                });
+            },
+            error: function (error) {
             }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
-                async: false,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#DatosCliente").val(data);
-                },
-                error: function (error) {
-                }
-            });
-        }
-        else{
-            $("#DatosCliente").val("");
-        }
+        });
     }
+}
 
     function CargarPuntosDeVenta() {
         $("#IdPuntoVta").empty();
@@ -352,10 +349,11 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="DatosCliente">Información adicional</label>
-                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
+                    <label for="IdPuntoVta">Contactos</label>
+                    @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_cliente_contactos, "IdContacto", "Nombres_combo"), new { @class = "form-control", @id = "IdContacto" })
+                    @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>  
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="sc_observacion">Observación</label>
