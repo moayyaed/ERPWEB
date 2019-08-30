@@ -66,7 +66,7 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if ( (Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "IdCbteVta")) ==0 || DataBinder.Eval(tc.DataItem, "IdCbteVta") == null) && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
+                if ((Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "IdCbteVta")) == 0 || DataBinder.Eval(tc.DataItem, "IdCbteVta") == null) && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && string.IsNullOrEmpty(Convert.ToString(DataBinder.Eval(tc.DataItem, "NUAutorizacion"))))
                 {
                     ViewContext.Writer.Write(
                     Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") }) + "&nbsp;");

@@ -51,15 +51,23 @@
                     @Html.ValidationMessageFor(m => m.codigoSRI, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="co_codigoBase">Código base*</label>
                     @Html.TextBoxFor(q => q.co_codigoBase, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.co_codigoBase, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Sustenta"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Sustenta,
+                         settings =>
+                         {
+                             settings.Name = "Sustenta";
+                             settings.Text = "Sustenta crédito tributario";
+                         }).GetHtml()
+                    @Html.ValidationMessageFor(m => m.Sustenta, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

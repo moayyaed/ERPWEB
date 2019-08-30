@@ -1040,7 +1040,7 @@
             this.xrTableCell10.Borders = DevExpress.XtraPrinting.BorderSide.Right;
             this.xrTableCell10.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Fecha_Autorizacion]")});
-            this.xrTableCell10.Font = new System.Drawing.Font("Verdana", 9F);
+            this.xrTableCell10.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell10.Name = "xrTableCell10";
             this.xrTableCell10.StylePriority.UseBorders = false;
             this.xrTableCell10.StylePriority.UseFont = false;
@@ -1068,8 +1068,10 @@
             // xrTableCell12
             // 
             this.xrTableCell12.Borders = DevExpress.XtraPrinting.BorderSide.Right;
+            this.xrTableCell12.Font = new System.Drawing.Font("Verdana", 9F);
             this.xrTableCell12.Name = "xrTableCell12";
             this.xrTableCell12.StylePriority.UseBorders = false;
+            this.xrTableCell12.StylePriority.UseFont = false;
             this.xrTableCell12.Text = "PRODUCCIÓN";
             this.xrTableCell12.Weight = 1.8332590683454013D;
             // 
@@ -1213,7 +1215,7 @@
             // lbl_direccion
             // 
             this.lbl_direccion.Borders = DevExpress.XtraPrinting.BorderSide.Right;
-            this.lbl_direccion.Font = new System.Drawing.Font("Verdana", 9F);
+            this.lbl_direccion.Font = new System.Drawing.Font("Verdana", 8F);
             this.lbl_direccion.Name = "lbl_direccion";
             this.lbl_direccion.StylePriority.UseBorders = false;
             this.lbl_direccion.StylePriority.UseFont = false;
@@ -1244,7 +1246,7 @@
             this.lbl_direccion_sucursal.Borders = DevExpress.XtraPrinting.BorderSide.Right;
             this.lbl_direccion_sucursal.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Su_Direccion]")});
-            this.lbl_direccion_sucursal.Font = new System.Drawing.Font("Verdana", 9F);
+            this.lbl_direccion_sucursal.Font = new System.Drawing.Font("Verdana", 8F);
             this.lbl_direccion_sucursal.Name = "lbl_direccion_sucursal";
             this.lbl_direccion_sucursal.StylePriority.UseBorders = false;
             this.lbl_direccion_sucursal.StylePriority.UseFont = false;

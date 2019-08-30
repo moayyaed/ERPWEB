@@ -71,7 +71,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 if (!string.IsNullOrEmpty(model.info_codigo_ctacble.IdCtaCble))
                 {
-                    model.info_codigo_ctacble.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+                    model.info_codigo_ctacble.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     model.info_codigo_ctacble.idCodigo_SRI = model.IdCodigo_SRI;
                     bus_codigo_ctacble.guardarDB(model.info_codigo_ctacble);
                 }                
@@ -87,11 +87,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 return RedirectToAction("Index", new { IdTipoSRI = model.IdTipoSRI });
             }
-            model.info_codigo_ctacble = bus_codigo_ctacble.get_info(IdCodigo_SRI, Convert.ToInt32(Session["IdEmpresa"]));
+            model.info_codigo_ctacble = bus_codigo_ctacble.get_info(IdCodigo_SRI, Convert.ToInt32(SessionFixed.IdEmpresa));
             if (model.info_codigo_ctacble == null)
                 model.info_codigo_ctacble = new cp_codigo_SRI_x_CtaCble_Info
                 {
-                    IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                     idCodigo_SRI = model.IdCodigo_SRI
                 };
             ViewBag.IdTipoSRI = model.IdTipoSRI;
@@ -121,11 +121,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 return RedirectToAction("Index", new { IdTipoSRI = IdTipoSRI });
             }
-            model.info_codigo_ctacble = bus_codigo_ctacble.get_info(IdCodigo_SRI, Convert.ToInt32(Session["IdEmpresa"]));
+            model.info_codigo_ctacble = bus_codigo_ctacble.get_info(IdCodigo_SRI, Convert.ToInt32(SessionFixed.IdEmpresa));
             if(model.info_codigo_ctacble == null)
                 model.info_codigo_ctacble = new cp_codigo_SRI_x_CtaCble_Info
                 {
-                    IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                     idCodigo_SRI = model.IdCodigo_SRI
                 };
             ViewBag.IdTipoSRI = IdTipoSRI;
