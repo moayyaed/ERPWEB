@@ -16,10 +16,6 @@
         <EntityTypeShape EntityType="Model_contabilidad.ct_parametro" Width="1.5" PointX="5.25" PointY="18.375" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo1" />
-        <EntityTypeShape EntityType="Model_contabilidad.ct_plancta" Width="1.5" PointX="3.75" PointY="22.75" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_grupocble" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_cbtecble" Width="1.5" PointX="5.25" PointY="12" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_ct_cbtecble_tipo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_ct_periodo" />
@@ -43,13 +39,11 @@
         <EntityTypeShape EntityType="Model_contabilidad.ct_cbtecble_det" Width="1.5" PointX="18.875" PointY="16.375" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_cbtecble" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_CentroCosto" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_plancta" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_cbtecble_Plantilla" Width="1.5" PointX="5.25" PointY="6.875" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_cbtecble_Plantilla_det" Width="1.5" PointX="21.875" PointY="13.875" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_ct_cbtecble_tipo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_cbtecble_Plantilla" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_CentroCosto" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta" />
         <EntityTypeShape EntityType="Model_contabilidad.vwct_cbtecble_Plantilla_det" Width="1.5" PointX="12.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_contabilidad.vwct_periodo" Width="1.5" PointX="14.375" PointY="17.75" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_anio_fiscal_x_tb_sucursal" Width="1.5" PointX="17.25" PointY="21.25" />
@@ -61,17 +55,23 @@
         <EntityTypeShape EntityType="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Width="1.5" PointX="10" PointY="17.125" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_punto_cargo" Width="1.5" PointX="16.625" PointY="24.375" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_tb_sucursal_ct_anio_fiscal_x_cuenta_utilidad" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_ClasificacionEBIT" Width="1.5" PointX="16.375" PointY="4.875" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_punto_cargo_grupo" Width="1.5" PointX="14.375" PointY="22.25" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_plancta" Width="1.5" PointX="21.625" PointY="18.75" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_plancta" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_grupocble" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

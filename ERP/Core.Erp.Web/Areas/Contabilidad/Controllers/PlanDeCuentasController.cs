@@ -48,6 +48,15 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ct_grupocble_Bus bus_grupo_contable = new ct_grupocble_Bus();
             var lst_grupo_contabe = bus_grupo_contable.get_list(false);
             ViewBag.lst_grupo_contabe = lst_grupo_contabe;
+
+            ct_ClasificacionEBIT_Bus bus_clasificacion = new ct_ClasificacionEBIT_Bus();
+            var lst_clasificacion_EBIT = bus_clasificacion.GetList();
+            lst_clasificacion_EBIT.Add(new ct_ClasificacionEBIT_Info
+            {
+                IdClasificacionEBIT=0,
+                ebit_Descripcion =""
+            });
+            ViewBag.lst_clasificacion_EBIT = lst_clasificacion_EBIT;
         }
         #endregion
 
@@ -68,7 +77,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         #endregion
 
-
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
@@ -76,6 +84,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             {
                 IdEmpresa = IdEmpresa
             };
+            model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
@@ -98,6 +107,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public ActionResult Modificar(int IdEmpresa = 0, string IdCtaCble = "")
         {   
             ct_plancta_Info model = bus_plancta.get_info(IdEmpresa, IdCtaCble);
+            model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos(model.IdEmpresa);
@@ -116,6 +126,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public ActionResult Anular(int IdEmpresa = 0, string IdCtaCble = "")
         {
             ct_plancta_Info model = bus_plancta.get_info(IdEmpresa, IdCtaCble);
+            model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos(model.IdEmpresa);

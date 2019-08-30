@@ -21,7 +21,9 @@ namespace Core.Erp.Info.Contabilidad
         public bool EstadoBool { get; set; }
         public string pc_EsMovimiento { get; set; }
         public string pc_clave_corta { get; set; }
-        
+        public Nullable<int> IdClasificacionEBIT { get; set; }
+
+
 
         #region Campos de auditoria
         public Nullable<System.DateTime> Fecha_Transac { get; set; }

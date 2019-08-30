@@ -40,7 +40,7 @@ namespace Core.Erp.Bus.Contabilidad
             {
                 return odata.get_info_bajo_demanda(args, IdEmpresa);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

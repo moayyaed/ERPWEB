@@ -73,6 +73,13 @@
                     @Html.ValidationMessageFor(q => q.pc_Naturaleza, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="pc_Naturaleza">Clasificacion EBIT</label>
+                    @Html.DropDownListFor(q => q.IdClasificacionEBIT, new SelectList(ViewBag.lst_clasificacion_EBIT, "IdClasificacionEBIT", "ebit_Descripcion"), new { @class = "form-control", @id = "IdClasificacionEBIT" })
+                    @Html.ValidationMessageFor(q => q.IdClasificacionEBIT, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
 

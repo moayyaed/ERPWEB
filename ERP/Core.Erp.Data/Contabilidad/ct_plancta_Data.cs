@@ -231,7 +231,8 @@ namespace Core.Erp.Data.Contabilidad
                         pc_Estado = Entity.pc_Estado,
                         pc_EsMovimiento = Entity.pc_EsMovimiento,
                         pc_clave_corta = Entity.pc_clave_corta,
-                        pc_EsMovimiento_bool = Entity.pc_EsMovimiento == "S" ? true : false,
+                        IdClasificacionEBIT = Entity.IdClasificacionEBIT,
+                        pc_EsMovimiento_bool = Entity.pc_EsMovimiento == "S" ? true : false
                     };
                 }
 
@@ -264,7 +265,8 @@ namespace Core.Erp.Data.Contabilidad
                         IdGrupoCble = info.IdGrupoCble,
                         pc_Estado = info.pc_Estado = "A",
                         pc_Naturaleza = info.pc_Naturaleza,
-                        pc_EsMovimiento = info.pc_EsMovimiento_bool == true ? "S" : "N"
+                        pc_EsMovimiento = info.pc_EsMovimiento_bool == true ? "S" : "N",
+                        IdClasificacionEBIT = (info.IdClasificacionEBIT== 0 ? null : info.IdClasificacionEBIT)
                     };
                     Context.ct_plancta.Add(Entity);
                     Context.SaveChanges();
@@ -272,7 +274,7 @@ namespace Core.Erp.Data.Contabilidad
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -290,12 +292,14 @@ namespace Core.Erp.Data.Contabilidad
                     Entity.pc_Cuenta = info.pc_Cuenta;
                     Entity.pc_clave_corta = info.pc_clave_corta;
                     Entity.pc_EsMovimiento = info.pc_EsMovimiento_bool == true ? "S" : "N";
+                    Entity.IdClasificacionEBIT = (info.IdClasificacionEBIT == 0 ? null : info.IdClasificacionEBIT);
+
                     Context.SaveChanges();
                 }
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
