@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.General;
 using Core.Erp.Info.General;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 namespace Core.Erp.Bus.General
@@ -64,6 +65,32 @@ namespace Core.Erp.Bus.General
             try
             {
                 return odata.anularDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<tb_ciudad_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            try
+            {
+                return odata.get_list_bajo_demanda(args);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public tb_ciudad_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            try
+            {
+                return odata.get_info_bajo_demanda(args);
             }
             catch (Exception)
             {

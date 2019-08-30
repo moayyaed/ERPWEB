@@ -335,6 +335,7 @@
     <Compile Include="Areas\Facturacion\Controllers\CambioProductoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\CatalogoFacturacionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\CatalogoTipoFacturacionController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\ClienteContactosController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
@@ -10270,6 +10271,14 @@
     <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Nuevo.cshtml" />
     <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Anular.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\_GridViewPartial_ClienteContactos.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\Nuevo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\_CmbCiudad.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\_CmbParroquia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\Anular.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteContactos\_CmbCliente.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

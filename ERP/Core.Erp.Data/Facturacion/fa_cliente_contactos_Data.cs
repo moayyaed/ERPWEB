@@ -81,6 +81,28 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public int get_id(int IdEmpresa, decimal IdCliente)
+        {
+            try
+            {
+                int ID = 1;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    var lst = from q in Context.fa_cliente_contactos
+                              where q.IdEmpresa == IdEmpresa && q.IdCliente == IdCliente
+                              select q;
+                    if (lst.Count() > 0)
+                        ID = lst.Max(q => q.IdContacto) + 1;
+                }
+                return ID;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(List<fa_cliente_contactos_Info> Lista)
         {
             try
@@ -145,7 +167,7 @@ namespace Core.Erp.Data.Facturacion
                             {
                                 IdEmpresa = info.IdEmpresa,
                                 IdCliente = info.IdCliente,
-                                IdContacto = 1,
+                                IdContacto = get_id(info.IdEmpresa, info.IdCliente),
                                 IdCiudad = info.IdCiudad,
                                 IdParroquia = info.IdParroquia,
                                 Celular = info.Celular,
@@ -171,6 +193,54 @@ namespace Core.Erp.Data.Facturacion
                     }
                 return true;
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool modificarDB(fa_cliente_contactos_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_cliente_contactos Entity = Context.fa_cliente_contactos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdContacto == info.IdContacto);
+                    if (Entity == null) return false;
+
+                    Entity.Nombres = info.Nombres;
+                    Entity.Telefono = info.Telefono;
+                    Entity.Celular = info.Celular;
+                    Entity.Correo = info.Correo;
+                    Entity.Direccion = info.Direccion;
+                    Entity.IdCiudad = info.IdCiudad;
+                    Entity.IdParroquia = info.IdParroquia;
+
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool anularDB(fa_cliente_contactos_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_cliente_contactos Entity = Context.fa_cliente_contactos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdContacto == info.IdContacto);
+                    if (Entity == null) return false;
+
+                    Context.SaveChanges();
+                }
+                return true;
             }
             catch (Exception)
             {

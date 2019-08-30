@@ -47,5 +47,31 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public bool modificarDB(fa_cliente_contactos_Info info)
+        {
+            try
+            {
+                return odata.modificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool anularDB(fa_cliente_contactos_Info info)
+        {
+            try
+            {
+                return odata.anularDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
