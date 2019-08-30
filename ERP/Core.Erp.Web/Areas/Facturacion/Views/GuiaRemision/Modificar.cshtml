@@ -199,10 +199,11 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="DatosCliente">Información adicional</label>
-                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
+                    <label for="IdPuntoVta">Contactos</label>
+                    @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_cliente_contactos, "IdContacto", "Nombres_combo"), new { @class = "form-control", @id = "IdContacto" })
+                    @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
                 </div>
-            </div> 
+            </div>
             <div class="col-md-3" id="datos_punto_venta1">
                 <div class="form-group">
                     <label for="vt_serie1">Establecimiento*</label>
@@ -528,7 +529,6 @@
         GetUltimoDocumento_Factura();
         get_direccion();
         get_placa();
-        cargar_contactos();
         MostrarBotonesSRI();
 
         $("#IdSucursal").change(function () {
@@ -773,33 +773,6 @@
         });
     }
 
-    function cargar_contactos() {
-        var codigo = IdCliente.GetValue();
-
-        if (codigo > 0) 
-        {
-            var datos = {
-                IdCliente: codigo
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("cargar_contactos", "GuiaRemision",new { Area = "Facturacion"})',
-                async: false,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#DatosCliente").val(data);
-                },
-                error: function (error) {
-                }
-            });
-        }
-        else{
-            $("#DatosCliente").val("");
-        }
-    }
-
     function SetCodigo() {
         var datos = {
             IdTransaccionSession: $("#IdTransaccionSession").val()
@@ -848,6 +821,32 @@
             error: function (error) {
             }
         });
+    }
+
+    function cargar_lista_contactos() {
+        var Id = IdCliente.GetValue();
+
+        if (Id > 0)
+        {
+            var datos = {
+                IdCliente: Id
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_lista_contactos", "ClienteContactos", new { Area = "Facturacion"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $.each(data, function (i, row) {
+                        $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres_combo + "</option>");
+                    });
+                },
+                error: function (error) {
+                }
+            });
+        }
     }
 </script>
 

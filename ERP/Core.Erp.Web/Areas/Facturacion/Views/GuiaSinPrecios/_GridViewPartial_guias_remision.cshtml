@@ -56,6 +56,10 @@
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
+            if (!string.IsNullOrEmpty(Convert.ToString(e.GetValue("NUAutorizacion"))) && Convert.ToBoolean(e.GetValue("Estado")) == true)
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
         };
         settings.Columns.Add(c =>
         {

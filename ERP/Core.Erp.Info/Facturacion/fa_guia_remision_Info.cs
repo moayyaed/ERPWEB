@@ -35,7 +35,7 @@ namespace Core.Erp.Info.Facturacion
         [Range(1, int.MaxValue, ErrorMessage = "El campo transportista es obligatorio")]
         public decimal IdCliente { get; set; }
         [Required(ErrorMessage = "El campo contacto es obligatorio")]
-
+        public Nullable<int> IdContacto { get; set; }
         public decimal IdTransportista { get; set; }
         public System.DateTime gi_fecha { get; set; }
         public Nullable<decimal> gi_plazo { get; set; }

@@ -16,6 +16,7 @@ namespace Core.Erp.Info.Facturacion
         public decimal IdProforma { get; set; }
         [Required(ErrorMessage = "El campo ciente es obligatorio")]
         public decimal IdCliente { get; set; }
+        public Nullable<int> IdContacto { get; set; }
         [Required(ErrorMessage = "El campo termino pago es obligatorio")]
         public string IdTerminoPago { get; set; }
         [Required(ErrorMessage = "El campo plazo es obligatorio")]

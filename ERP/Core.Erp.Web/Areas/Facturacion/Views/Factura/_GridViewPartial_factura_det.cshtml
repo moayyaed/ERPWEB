@@ -311,7 +311,7 @@
             success: function (data) {
                 GridView_factura_det.GetEditor('vt_Precio').SetValue(data.precio);
                 GridView_factura_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCodImpuesto);
-                GridView_factura_det.GetEditor('vt_DescUnitario').SetValue(data.PorcentajeDesc);
+                GridView_factura_det.GetEditor('vt_PorDescUnitario').SetValue(data.PorcentajeDesc);
             },
             error: function (error) {
             }

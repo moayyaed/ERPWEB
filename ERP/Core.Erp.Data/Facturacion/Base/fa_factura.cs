@@ -37,6 +37,7 @@ namespace Core.Erp.Data.Facturacion.Base
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public string vt_autorizacion { get; set; }
         public decimal IdCliente { get; set; }
+        public Nullable<int> IdContacto { get; set; }
         public int IdVendedor { get; set; }
         public int IdNivel { get; set; }
         public string IdCatalogo_FormaPago { get; set; }
@@ -63,6 +64,7 @@ namespace Core.Erp.Data.Facturacion.Base
     
         public virtual fa_catalogo fa_catalogo { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }
+        public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_cuotas_x_doc> fa_cuotas_x_doc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

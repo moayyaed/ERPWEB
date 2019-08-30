@@ -23,6 +23,7 @@ namespace Core.Erp.Info.Facturacion
         public string NumAutorizacion { get; set; }
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public decimal IdCliente { get; set; }
+        public Nullable<int> IdContacto { get; set; }
         public System.DateTime no_fecha { get; set; }
         public System.DateTime no_fecha_venc { get; set; }
         public int IdTipoNota { get; set; }

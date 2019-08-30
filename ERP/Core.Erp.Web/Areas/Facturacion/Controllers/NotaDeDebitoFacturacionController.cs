@@ -50,7 +50,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
-
+        fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
         fa_notaCreDeb_List Lista_Factura = new fa_notaCreDeb_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -158,15 +158,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
         #region Json
-        public JsonResult cargar_contactos(decimal IdCliente = 0)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            fa_cliente_contactos_Info info_contacto = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
-            var resultado = info_contacto.Direccion + " " + info_contacto.Correo + " " + info_contacto.Telefono + " " + info_contacto.Celular;
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
         public JsonResult CargarPuntosDeVenta(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -436,6 +427,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
             var lst_vendedor = bus_vendedor.get_list(model.IdEmpresa, false);
             ViewBag.lst_vendedor = lst_vendedor;
+
+            var lst_cliente_contactos = bus_cliente_contactos.get_list(model.IdEmpresa, model.IdCliente);
+            ViewBag.lst_cliente_contactos = lst_cliente_contactos;
         }
         private bool validar(fa_notaCreDeb_Info i_validar, ref string msg)
         {

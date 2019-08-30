@@ -45,9 +45,9 @@ namespace Core.Erp.Data.Facturacion.Base
         public Nullable<decimal> IdProforma { get; set; }
         public Nullable<int> Secuencia_pf { get; set; }
     
-        public virtual fa_guia_remision fa_guia_remision { get; set; }
         public virtual fa_proforma_det fa_proforma_det { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_guia_remision_det_x_factura> fa_guia_remision_det_x_factura { get; set; }
+        public virtual fa_guia_remision fa_guia_remision { get; set; }
     }
 }

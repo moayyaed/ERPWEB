@@ -46,6 +46,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
+        fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -164,25 +165,28 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
         }
-        private void cargar_combos(int IdEmpresa)
+        private void cargar_combos(fa_proforma_Info model)
         {
-            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
 
-            var lst_bodega = bus_bodega.get_list(IdEmpresa, false);
+            var lst_bodega = bus_bodega.get_list(model.IdEmpresa, false);
             ViewBag.lst_bodega = lst_bodega;
 
-            var lst_vendedor = bus_vendedor.get_list(IdEmpresa, false);
+            var lst_vendedor = bus_vendedor.get_list(model.IdEmpresa, false);
             ViewBag.lst_vendedor = lst_vendedor;
 
             var lst_pago = bus_pago.get_list(false);
             ViewBag.lst_pago = lst_pago;
 
-            var lst_NivelDescuento = bus_nivel.GetList(IdEmpresa, false);
+            var lst_NivelDescuento = bus_nivel.GetList(model.IdEmpresa, false);
             ViewBag.lst_NivelDescuento = lst_NivelDescuento;
 
             var lst_formapago = bus_catalogo.get_list((int)cl_enumeradores.eTipoCatalogoFact.FormaDePago, false);
             ViewBag.lst_formapago = lst_formapago;
+
+            var lst_cliente_contactos = bus_cliente_contactos.get_list(model.IdEmpresa, model.IdCliente);
+            ViewBag.lst_cliente_contactos = lst_cliente_contactos;
         }
         #endregion
         #region acciones
@@ -204,7 +208,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
             };
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
             return View(model);
         }
 
@@ -217,7 +221,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 ViewBag.mensaje = mensaje;
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             }
             model.IdUsuario_creacion = Session["IdUsuario"].ToString();
@@ -225,7 +229,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 ViewBag.mensaje = mensaje;
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             };
            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
@@ -246,7 +250,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdProforma);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
@@ -269,7 +273,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             }
             model.IdUsuario_modificacion = Session["IdUsuario"].ToString();
@@ -277,7 +281,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (!bus_proforma.modificarDB(model))
             {
                 ViewBag.mensaje = mensaje;
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             };
 
@@ -299,7 +303,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdProforma);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
@@ -322,7 +326,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             }
             model.IdUsuario_modificacion = Session["IdUsuario"].ToString();
@@ -330,7 +334,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (!bus_proforma.modificarDB(model))
             {
                 ViewBag.mensaje = mensaje;
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             };
 
@@ -351,7 +355,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdProforma);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.pf_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
@@ -370,7 +374,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             if (!bus_proforma.anularDB(model))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 return View(model);
             };
             return RedirectToAction("Index");
@@ -507,16 +511,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var IdNivel = info_NivelDescuento_x_FormaPago == null ? 0 : info_NivelDescuento_x_FormaPago.IdNivel;
 
             return Json(IdNivel, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult cargar_info_adicional(decimal IdCliente = 0)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            fa_cliente_Info info_cliente = bus_cliente.get_info(IdEmpresa, IdCliente);
-            fa_cliente_contactos_Info info_contacto = bus_contacto.get_info(IdEmpresa, IdCliente, info_cliente.IdContacto);
-            var resultado = info_contacto.Direccion + " " + info_contacto.Correo + " " + info_contacto.Telefono + " " + info_contacto.Celular;
-
-            return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CalcularValores(int Cantidad = 0, double Precio = 0, string IdCodImpuesto = "", double PorcentajeDesc = 0)
