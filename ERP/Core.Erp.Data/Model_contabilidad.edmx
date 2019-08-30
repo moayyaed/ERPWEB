@@ -1740,7 +1740,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="vwct_cbtecble_det" EntityType="Model_contabilidad.vwct_cbtecble_det" />
           <EntitySet Name="ct_anio_fiscal_x_cuenta_utilidad" EntityType="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" />
           <EntitySet Name="ct_punto_cargo" EntityType="Model_contabilidad.ct_punto_cargo" />
-          <EntitySet Name="ct_punto_cargo_grupo" EntityType="Model_contabilidad.ct_punto_cargo_grupo" />
           <AssociationSet Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal" Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal">
             <End Role="ct_anio_fiscal" EntitySet="ct_anio_fiscal" />
             <End Role="ct_anio_fiscal_x_cuenta_utilidad" EntitySet="ct_anio_fiscal_x_cuenta_utilidad" />
@@ -1761,13 +1760,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_punto_cargo" EntitySet="ct_punto_cargo" />
             <End Role="ct_cbtecble_det" EntitySet="ct_cbtecble_det" />
           </AssociationSet>
-          <AssociationSet Name="FK_ct_cbtecble_det_ct_punto_cargo_grupo" Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo">
-            <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
-            <End Role="ct_cbtecble_det" EntitySet="ct_cbtecble_det" />
-          </AssociationSet>
           <AssociationSet Name="FK_ct_cbtecble_Plantilla_det_ct_punto_cargo" Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo">
             <End Role="ct_punto_cargo" EntitySet="ct_punto_cargo" />
             <End Role="ct_cbtecble_Plantilla_det" EntitySet="ct_cbtecble_Plantilla_det" />
+          </AssociationSet>
+          <EntitySet Name="ct_ClasificacionEBIT" EntityType="Model_contabilidad.ct_ClasificacionEBIT" />
+          <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT">
+            <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <EntitySet Name="ct_punto_cargo_grupo" EntityType="Model_contabilidad.ct_punto_cargo_grupo" />
+          <AssociationSet Name="FK_ct_cbtecble_det_ct_punto_cargo_grupo" Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo">
+            <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
+            <End Role="ct_cbtecble_det" EntitySet="ct_cbtecble_det" />
           </AssociationSet>
           <AssociationSet Name="FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo">
             <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
@@ -1776,11 +1781,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <AssociationSet Name="FK_ct_punto_cargo_ct_punto_cargo_grupo" Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo">
             <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
             <End Role="ct_punto_cargo" EntitySet="ct_punto_cargo" />
-          </AssociationSet>
-          <EntitySet Name="ct_ClasificacionEBIT" EntityType="Model_contabilidad.ct_ClasificacionEBIT" />
-          <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT">
-            <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ct_parametro">
@@ -2712,28 +2712,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo" FromRole="ct_punto_cargo" ToRole="ct_cbtecble_Plantilla_det" />
           <NavigationProperty Name="ct_punto_cargo_grupo" Relationship="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" FromRole="ct_punto_cargo" ToRole="ct_punto_cargo_grupo" />
         </EntityType>
-        <EntityType Name="ct_punto_cargo_grupo">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdPunto_cargo_grupo" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdPunto_cargo_grupo" Type="Int32" Nullable="false" />
-          <Property Name="cod_Punto_cargo_grupo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="nom_punto_cargo_grupo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ct_cbtecble_det" Relationship="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_cbtecble_det" />
-          <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_cbtecble_Plantilla_det" />
-          <NavigationProperty Name="ct_punto_cargo" Relationship="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_punto_cargo" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-        </EntityType>
         <Association Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal">
           <End Type="Model_contabilidad.ct_anio_fiscal" Role="ct_anio_fiscal" Multiplicity="1" />
           <End Type="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Role="ct_anio_fiscal_x_cuenta_utilidad" Multiplicity="*" />
@@ -2802,20 +2780,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ct_cbtecble_det_ct_punto_cargo_grupo">
-          <End Type="Model_contabilidad.ct_punto_cargo_grupo" Role="ct_punto_cargo_grupo" Multiplicity="0..1" />
-          <End Type="Model_contabilidad.ct_cbtecble_det" Role="ct_cbtecble_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_punto_cargo_grupo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdPunto_cargo_grupo" />
-            </Principal>
-            <Dependent Role="ct_cbtecble_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdPunto_cargo_grupo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ct_cbtecble_Plantilla_det_ct_punto_cargo">
           <End Type="Model_contabilidad.ct_punto_cargo" Role="ct_punto_cargo" Multiplicity="0..1" />
           <End Type="Model_contabilidad.ct_cbtecble_Plantilla_det" Role="ct_cbtecble_Plantilla_det" Multiplicity="*" />
@@ -2827,6 +2791,64 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <Dependent Role="ct_cbtecble_Plantilla_det">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdPunto_cargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ct_ClasificacionEBIT">
+          <Key>
+            <PropertyRef Name="IdClasificacionEBIT" />
+          </Key>
+          <Property Name="IdClasificacionEBIT" Type="Int32" Nullable="false" />
+          <Property Name="ebit_Codigo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ebit_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AplicaEBIT" Type="Boolean" Nullable="false" />
+          <Property Name="AplicaEBITDA" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ct_plancta" Relationship="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" FromRole="ct_ClasificacionEBIT" ToRole="ct_plancta" />
+        </EntityType>
+        <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
+          <End Type="Model_contabilidad.ct_ClasificacionEBIT" Role="ct_ClasificacionEBIT" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_ClasificacionEBIT">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ct_punto_cargo_grupo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPunto_cargo_grupo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPunto_cargo_grupo" Type="Int32" Nullable="false" />
+          <Property Name="cod_Punto_cargo_grupo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo_grupo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ct_cbtecble_det" Relationship="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_cbtecble_det" />
+          <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_cbtecble_Plantilla_det" />
+          <NavigationProperty Name="ct_punto_cargo" Relationship="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" FromRole="ct_punto_cargo_grupo" ToRole="ct_punto_cargo" />
+        </EntityType>
+        <Association Name="FK_ct_cbtecble_det_ct_punto_cargo_grupo">
+          <End Type="Model_contabilidad.ct_punto_cargo_grupo" Role="ct_punto_cargo_grupo" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_cbtecble_det" Role="ct_cbtecble_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_punto_cargo_grupo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdPunto_cargo_grupo" />
+            </Principal>
+            <Dependent Role="ct_cbtecble_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdPunto_cargo_grupo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2855,29 +2877,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <Dependent Role="ct_punto_cargo">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdPunto_cargo_grupo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ct_ClasificacionEBIT">
-          <Key>
-            <PropertyRef Name="IdClasificacionEBIT" />
-          </Key>
-          <Property Name="IdClasificacionEBIT" Type="Int32" Nullable="false" />
-          <Property Name="ebit_Codigo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ebit_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="AplicaEBIT" Type="Boolean" Nullable="false" />
-          <Property Name="AplicaEBITDA" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ct_plancta" Relationship="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" FromRole="ct_ClasificacionEBIT" ToRole="ct_plancta" />
-        </EntityType>
-        <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
-          <End Type="Model_contabilidad.ct_ClasificacionEBIT" Role="ct_ClasificacionEBIT" Multiplicity="0..1" />
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_ClasificacionEBIT">
-              <PropertyRef Name="IdClasificacionEBIT" />
-            </Principal>
-            <Dependent Role="ct_plancta">
-              <PropertyRef Name="IdClasificacionEBIT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3539,24 +3538,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ct_punto_cargo_grupo">
-            <EntityTypeMapping TypeName="Model_contabilidad.ct_punto_cargo_grupo">
-              <MappingFragment StoreEntitySet="ct_punto_cargo_grupo">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
-                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
-                <ScalarProperty Name="cod_Punto_cargo_grupo" ColumnName="cod_Punto_cargo_grupo" />
-                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ct_ClasificacionEBIT">
             <EntityTypeMapping TypeName="Model_contabilidad.ct_ClasificacionEBIT">
               <MappingFragment StoreEntitySet="ct_ClasificacionEBIT">
@@ -3565,6 +3546,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
                 <ScalarProperty Name="ebit_Descripcion" ColumnName="ebit_Descripcion" />
                 <ScalarProperty Name="ebit_Codigo" ColumnName="ebit_Codigo" />
                 <ScalarProperty Name="IdClasificacionEBIT" ColumnName="IdClasificacionEBIT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ct_punto_cargo_grupo">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_punto_cargo_grupo">
+              <MappingFragment StoreEntitySet="ct_punto_cargo_grupo">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
+                <ScalarProperty Name="cod_Punto_cargo_grupo" ColumnName="cod_Punto_cargo_grupo" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

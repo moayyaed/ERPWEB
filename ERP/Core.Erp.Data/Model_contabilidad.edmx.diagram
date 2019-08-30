@@ -60,18 +60,18 @@
         <EntityTypeShape EntityType="Model_contabilidad.vwct_cbtecble_det" Width="1.5" PointX="21.375" PointY="4.75" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Width="1.5" PointX="10" PointY="17.125" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_punto_cargo" Width="1.5" PointX="16.625" PointY="24.375" />
-        <EntityTypeShape EntityType="Model_contabilidad.ct_punto_cargo_grupo" Width="1.5" PointX="14.375" PointY="24.5" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_anio_fiscal" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_anio_fiscal_x_tb_sucursal_ct_anio_fiscal_x_cuenta_utilidad" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_ClasificacionEBIT" Width="1.5" PointX="16.375" PointY="4.875" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_punto_cargo_grupo" Width="1.5" PointX="14.375" PointY="22.25" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_det_ct_punto_cargo_grupo" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_punto_cargo_grupo" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

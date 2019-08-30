@@ -22,17 +22,17 @@ namespace Core.Erp.Data.Contabilidad
                         {
                             IdEmpresa = q.IdEmpresa,
                             cod_Punto_cargo_grupo = q.cod_Punto_cargo_grupo,
-                            estado = q.estado,
+                            estado = q.Estado,
                             nom_punto_cargo_grupo = q.nom_punto_cargo_grupo,
                             IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
 
                         }).ToList();
                     else
-                        Lista = Context.ct_punto_cargo_grupo.Where(q => q.IdEmpresa == IdEmpresa && q.estado == true).Select(q => new ct_punto_cargo_grupo_Info
+                        Lista = Context.ct_punto_cargo_grupo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == true).Select(q => new ct_punto_cargo_grupo_Info
                         {
                             IdEmpresa = q.IdEmpresa,
                             cod_Punto_cargo_grupo = q.cod_Punto_cargo_grupo,
-                            estado = q.estado,
+                            estado = q.Estado,
                             nom_punto_cargo_grupo = q.nom_punto_cargo_grupo,
                             IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
 
@@ -60,7 +60,7 @@ namespace Core.Erp.Data.Contabilidad
                     {
                         IdEmpresa = Entity.IdEmpresa,
                         cod_Punto_cargo_grupo = Entity.cod_Punto_cargo_grupo,
-                        estado = Entity.estado,
+                        estado = Entity.Estado,
                         nom_punto_cargo_grupo = Entity.nom_punto_cargo_grupo,
                         IdPunto_cargo_grupo = Entity.IdPunto_cargo_grupo
                     };
@@ -107,7 +107,7 @@ namespace Core.Erp.Data.Contabilidad
                         IdEmpresa = info.IdEmpresa,
                         IdPunto_cargo_grupo = info.IdPunto_cargo_grupo=GetId(info.IdEmpresa),
                         cod_Punto_cargo_grupo = info.cod_Punto_cargo_grupo,
-                        estado = true,
+                        Estado = true,
                         nom_punto_cargo_grupo = info.nom_punto_cargo_grupo,
                         IdUsuarioCreacion = info.IdUsuarioCreacion,
                         FechaCreacion = DateTime.Now
@@ -154,7 +154,7 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     ct_punto_cargo_grupo Entity = Context.ct_punto_cargo_grupo.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdPunto_cargo_grupo == info.IdPunto_cargo_grupo).FirstOrDefault();
                     if (Entity == null) return false;
-                    Entity.estado = false;
+                    Entity.Estado = false;
                     Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
                     Entity.FechaAnulacion = DateTime.Now;
                     Context.SaveChanges();
@@ -186,7 +186,7 @@ namespace Core.Erp.Data.Contabilidad
 
                 using (Entities_contabilidad context_g = new Entities_contabilidad())
                 {
-                    Lista = context_g.ct_punto_cargo_grupo.Where(q => q.IdEmpresa == IdEmpresa && q.estado && (q.IdPunto_cargo_grupo + " " + q.nom_punto_cargo_grupo).Contains(filter)).OrderBy(q => q.IdPunto_cargo_grupo).Skip(skip).Take(take).ToList().Select(q => new ct_punto_cargo_grupo_Info
+                    Lista = context_g.ct_punto_cargo_grupo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado && (q.IdPunto_cargo_grupo + " " + q.nom_punto_cargo_grupo).Contains(filter)).OrderBy(q => q.IdPunto_cargo_grupo).Skip(skip).Take(take).ToList().Select(q => new ct_punto_cargo_grupo_Info
                     {
                         IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
                         nom_punto_cargo_grupo = q.nom_punto_cargo_grupo
