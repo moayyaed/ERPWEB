@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Info.General;
+using DevExpress.Web;
+
 namespace Core.Erp.Data.General
 {
    public class tb_ciudad_Data
@@ -186,6 +188,48 @@ namespace Core.Erp.Data.General
             {
                 throw;
             }
+        }
+
+        public List<tb_ciudad_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<tb_ciudad_Info> Lista = new List<tb_ciudad_Info>();
+            Lista = get_list(skip, take, args.Filter);
+            return Lista;
+        }
+
+        public List<tb_ciudad_Info> get_list(int skip, int take, string filter)
+        {
+            try
+            {
+                List<tb_ciudad_Info> Lista;
+
+                using (Entities_general Context = new Entities_general())
+                {
+                    Lista = (from q in Context.tb_ciudad
+                             where (q.IdCiudad.ToString() + " " + q.Descripcion_Ciudad).Contains(filter)
+                                select new tb_ciudad_Info
+                                {
+                                    IdCiudad = q.IdCiudad,
+                                    Descripcion_Ciudad = q.Descripcion_Ciudad
+                                })
+                                .OrderBy(p => p.IdCiudad)
+                                .Skip(skip)
+                                .Take(take)
+                                .ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public tb_ciudad_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return get_info(args.Value == null ? "" : (string)args.Value);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Erp.Info.General;
+using DevExpress.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,6 +206,77 @@ namespace Core.Erp.Data.General
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        public List<tb_parroquia_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, string IdCiudad)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<tb_parroquia_Info> Lista = new List<tb_parroquia_Info>();
+            Lista = get_list(skip, take, args.Filter, IdCiudad);
+            return Lista;
+        }
+        public List<tb_parroquia_Info> get_list(int skip, int take, string filter, string IdCiudad)
+        {
+            try
+            {
+                List<tb_parroquia_Info> Lista;
+
+                using (Entities_general Context = new Entities_general())
+                {
+                    Lista = (from q in Context.tb_parroquia
+                             where q.IdCiudad_Canton == IdCiudad
+                             && (q.IdParroquia.ToString() + " " + q.nom_parroquia).Contains(filter)
+                                select new tb_parroquia_Info
+                                {
+                                    IdParroquia = q.IdParroquia,
+                                    IdCiudad_Canton = q.IdCiudad_Canton,
+                                    nom_parroquia = q.nom_parroquia
+                                })
+                                .OrderBy(p => p.IdParroquia)
+                                .Skip(skip)
+                                .Take(take)
+                                .ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public tb_parroquia_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, string IdCiudad)
+        {
+            return get_info(args.Value == null ? "" : (string)args.Value, IdCiudad);
+        }
+
+        public tb_parroquia_Info get_info(string IdParroquia, string IdCiudad)
+        {
+            try
+            {
+                tb_parroquia_Info info = new tb_parroquia_Info();
+
+                using (Entities_general Context = new Entities_general())
+                {
+                    tb_parroquia Entity = Context.tb_parroquia.FirstOrDefault(q => q.IdCiudad_Canton == IdCiudad && q.IdParroquia == IdParroquia);
+                    if (Entity == null) return null;
+
+                    info = new tb_parroquia_Info
+                    {
+                        IdCiudad_Canton = Entity.IdCiudad_Canton,
+                        IdParroquia = Entity.IdParroquia,
+                        nom_parroquia = Entity.nom_parroquia
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

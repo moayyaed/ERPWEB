@@ -1,0 +1,107 @@
+﻿@model Core.Erp.Info.Facturacion.fa_cliente_contactos_Info
+@{
+    ViewBag.Title = "Anular contacto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script>
+    function OnBeginCallback(s, e) {
+        e.customArgs["IdCiudad"] = IdCiudad.GetValue();
+    }
+</script>
+@using (Html.BeginForm("Anular", "ClienteContactos", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdCliente)
+    @Html.HiddenFor(q => q.IdContacto)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCliente">Cliente*</label>
+                    @Html.Partial("_CmbCliente", Model.IdCliente)
+                    @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="ba_Tipo">Contacto*</label>
+                    @Html.TextBoxFor(q => q.Nombres, new { @class = "form-control", @id = "Nombres" })
+                    @Html.ValidationMessageFor(q => q.Nombres, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ba_Num_Cuenta">Teléfono*</label>
+                    @Html.TextBoxFor(q => q.Telefono, new { @class = "form-control", @id = "Telefono" })
+                    @Html.ValidationMessageFor(q => q.Telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ba_num_digito_cheq">Celular*</label>
+                    @Html.TextBoxFor(q => q.Celular, new { @class = "form-control", @id = "Celular" })
+                    @Html.ValidationMessageFor(q => q.Celular, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ba_descripcion">Correo*</label>
+                    @Html.TextBoxFor(q => q.Correo, new { @class = "form-control", @id = "Correo" })
+                    @Html.ValidationMessageFor(q => q.Correo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ba_descripcion">Ciudad*</label>
+                    @Html.Partial("_CmbCiudad", Model.IdCiudad)
+                    @Html.ValidationMessageFor(q => q.IdCiudad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ba_descripcion">Parroquia*</label>
+                    @Html.Partial("_CmbParroquia", Model.IdParroquia)
+                    @Html.ValidationMessageFor(q => q.IdParroquia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ba_descripcion">Dirección*</label>
+                    @Html.TextBoxFor(q => q.Direccion, new { @class = "form-control", @id = "Direccion" })
+                    @Html.ValidationMessageFor(q => q.Direccion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ClienteContactos", new { Area = "Facturacion" , IdEmpresa = ViewBag.IdEmpresa, IdCliente = ViewBag.IdCliente })">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
