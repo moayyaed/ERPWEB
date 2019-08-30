@@ -154,7 +154,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 PaisPago = "593",
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdTipoCbte_Nota = (int)param.pa_TipoCbte_NC,
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTipoNota = "T_TIP_NOTA_INT"
             };
             List_op.set_list(model.lst_det_canc_op = new List<cp_orden_pago_cancelaciones_Info>(),model.IdTransaccionSession);
             list_ct_cbtecble_det.set_list(new List<ct_cbtecble_det_Info>(), model.IdTransaccionSession);
