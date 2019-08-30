@@ -1,0 +1,109 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_ClasificacionEBIT_Info
+
+@{
+    ViewBag.Title = "Modificar Clasificacion EBIT";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "ClasificacionEBIT", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdClasificacionEBIT, new { @id = "IdClasificacionEBIT" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ebit_Codigo">Código</label>
+                    @Html.TextBoxFor(q => q.ebit_Codigo, new { @class = "form-control", @id = "ebit_Codigo" })
+                    @Html.ValidationMessageFor(q => q.ebit_Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.AplicaEBIT,
+                         settings =>
+                         {
+                             settings.Name = "AplicaEBIT";
+                             settings.Checked = false;
+                             settings.Text = "Aplica EBIT";
+                         }
+                     ).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.AplicaEBITDA,
+                         settings =>
+                         {
+                             settings.Name = "AplicaEBITDA";
+                             settings.Checked = false;
+                             settings.Text = "Aplica EBITDA";
+                         }
+                     ).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ebit_Descripcion">Descripción</label>
+                    @Html.TextBoxFor(q => q.ebit_Descripcion, new { @class = "form-control", @id = "ebit_Descripcion" })
+                    @Html.ValidationMessageFor(q => q.ebit_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "ClasificacionEBIT", new { Area ="Contabilidad" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+    $(function () {
+        actualizar_periodo();
+
+        $("#pe_mes").change(function () {
+            actualizar_periodo();
+        });
+
+        $("#IdanioFiscal").change(function () {
+            actualizar_periodo();
+        });
+        $("#IdPeriodo").change(function () {
+            actualizar_periodo();
+        });
+    });
+
+    function actualizar_periodo() {
+        var mes = $("#pe_mes").val();
+        var anio = $("#IdanioFiscal").val();
+        var dia_inicio = 1;
+        var pad = "00"
+        var mes_format = pad.substring(0, pad.length-mes.length) + mes;
+        
+        var periodo = anio + "-" + mes_format;
+        var fecha_texto_inicio = anio + "/" + mes_format + "/" + dia_inicio;
+
+        //var dia_inicio = Date.parse(fecha_texto_inicio);
+        var fecha_format = new Date(fecha_texto_inicio);
+        var num = fecha_format.getUTCDate();
+        var dia_inicio = anio + "/" + mes_format + "/" + num;
+        var dia_fin = new Date(Date.UTC(anio, mes));
+
+        pe_FechaIni.SetValue(new Date(dia_inicio));
+        pe_FechaFin.SetValue(dia_fin);
+        
+        $("#IdPeriodo").val(anio + mes_format);
+    }
+</script>

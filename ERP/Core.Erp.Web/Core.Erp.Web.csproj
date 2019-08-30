@@ -296,6 +296,7 @@
     <Compile Include="Areas\Contabilidad\Controllers\CentroCostoNivelController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\CierreAnualController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\CierrePorModuloPorSucursalController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\ClasificacionEBITController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ParametroContableController.cs" />
@@ -10264,6 +10265,11 @@
     <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Nuevo.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_004.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_019.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\_GridViewPartial_ClasificacionEBIT.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
