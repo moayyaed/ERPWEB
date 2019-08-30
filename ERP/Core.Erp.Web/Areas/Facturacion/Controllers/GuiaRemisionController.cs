@@ -44,6 +44,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
         fa_TerminoPago_Bus bus_termino_pago = new fa_TerminoPago_Bus();
+        fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
         fa_cliente_x_fa_Vendedor_x_sucursal_Bus bus_cliente_vendedor = new fa_cliente_x_fa_Vendedor_x_sucursal_Bus();
 
         string mensaje = string.Empty;
@@ -669,15 +670,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             int IdVendedor = 0;
             string IdTerminoPago = "";
             string IdCatalogo_FormaPago = "";
-
+            string ObservacionFactura = "";
             var lst_det = detalle_info.get_list(IdTransaccionSession);
 
             var lst_con_proformas = lst_det.Where(q => q.IdProforma != null || q.IdProforma != 0).ToList();
             if (lst_con_proformas.Count() > 0)
             {
+                decimal IdProforma = (lst_con_proformas == null) ? 0 : Convert.ToDecimal(lst_con_proformas.FirstOrDefault().IdProforma);
+                var info_proforma = bus_proforma.get_info(IdEmpresa, IdSucursal, IdProforma);
                 IdVendedor = (lst_con_proformas == null) ? 0 : lst_con_proformas.FirstOrDefault().IdVendedor;
                 IdTerminoPago = (lst_con_proformas == null) ? "" : lst_con_proformas.FirstOrDefault().IdTerminoPago;
                 IdCatalogo_FormaPago = (lst_con_proformas == null) ? "" : lst_con_proformas.FirstOrDefault().IdCatalogo_FormaPago;
+                ObservacionFactura = (info_proforma == null) ? "" : info_proforma.pf_observacion;
             }
             else
             {
@@ -690,7 +694,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             
 
-            return Json(new { IdVendedor = IdVendedor, IdTerminoPago = IdTerminoPago, IdCatalogo_FormaPago = IdCatalogo_FormaPago }, JsonRequestBehavior.AllowGet);
+            return Json(new { IdVendedor = IdVendedor, IdTerminoPago = IdTerminoPago, IdCatalogo_FormaPago = IdCatalogo_FormaPago, ObservacionFactura = ObservacionFactura }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

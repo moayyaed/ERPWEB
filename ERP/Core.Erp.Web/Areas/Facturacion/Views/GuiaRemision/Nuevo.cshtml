@@ -180,6 +180,7 @@
                 $("#IdVendedor").val(data.IdVendedor);
                 $("#IdTerminoPago").val(data.IdTerminoPago);
                 $("#IdCatalogo_FormaPago").val(data.IdCatalogo_FormaPago);
+                $("#ObservacionFactura").val(data.ObservacionFactura);
             },
             error: function (error) {
             }
@@ -539,6 +540,17 @@
                                 <label for="NumNota_Impresa"># Documento*</label>
                                 @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura" })
                                 @Html.ValidationMessageFor(q => q.vt_NumFactura, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="NumNota_Impresa">Observación factura</label>
+                                @Html.TextBoxFor(q => q.ObservacionFactura, new { @class = "form-control", @id = "ObservacionFactura" })
+                                @Html.ValidationMessageFor(q => q.ObservacionFactura, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

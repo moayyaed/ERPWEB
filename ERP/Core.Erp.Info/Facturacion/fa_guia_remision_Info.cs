@@ -91,6 +91,7 @@ namespace Core.Erp.Info.Facturacion
         public int IdCaja { get; set; }
         public DateTime vt_fech_venc { get; set; }
         public string IdCatalogo_FormaPago { get; set; }
+        public string ObservacionFactura { get; set; }
         #endregion
 
 
