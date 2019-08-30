@@ -80,14 +80,18 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 msg = "Existen documentos con valor aplicado 0";
                 return false;
             }
-            string observacion = "Retención./ "+i_validar.vt_NumFactura+" # Ret./"+i_validar.cr_NumDocumento;
+            msg = bus_cobro.ValidarSaldoDocumento(i_validar.IdEmpresa, i_validar.IdSucursal, i_validar.IdBodega, i_validar.IdCbteVta, i_validar.vt_tipoDoc, Math.Round(i_validar.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero), Math.Round(i_validar.cr_TotalCobro, 2, MidpointRounding.AwayFromZero));
+            if (msg.Length > 0)
+                return false;
             
+            string observacion = "Retención./ " + i_validar.vt_NumFactura + " # Ret./" + i_validar.cr_NumDocumento;
             i_validar.cr_observacion = observacion;
             i_validar.cr_fechaCobro = i_validar.cr_fecha;
             i_validar.cr_fechaDocu = i_validar.cr_fecha;            
 
             i_validar.IdBanco = null;
             i_validar.cr_Banco = null;
+
             return true;
         }
 
@@ -176,6 +180,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 model.IdCobro = model.lst_det[0].IdCobro;
                 model.cr_fecha = model.lst_det[0].cr_fecha;
                 model.cr_NumDocumento = model.lst_det[0].cr_NumDocumento;
+                model.cr_TotalCobro = Math.Round(model.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero);
             }
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
@@ -191,6 +196,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             model.lst_det = List_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             if (!validar(model,ref mensaje))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -198,6 +204,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             {
                 if (!bus_cobro.modificarDB(model))
                 {
+                    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                     ViewBag.mensaje = "No se ha podido modificar el registro";
                     return View(model);
                 }
@@ -205,6 +212,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             else
                 if (!bus_cobro.guardarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 ViewBag.mensaje = "No se ha podido guardar el registro";
                 return View(model);
             }

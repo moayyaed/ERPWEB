@@ -113,11 +113,6 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 msg = "No ha seleccionado documentos para realizar la cobranza";
                 return false;
             }
-            //if (Math.Round(i_validar.cr_saldo,2,MidpointRounding.AwayFromZero) < 0)
-            //{
-            //    msg = "El valor aplicado a los documentos es mayor al total a cobrar";
-            //    return false;
-            //}
 
             i_validar.lst_det = list_det.get_list(i_validar.IdTransaccionSession);
             if (i_validar.lst_det.Count == 0)
@@ -212,6 +207,10 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                     msg = "Existen comprobantes de venta con fecha mayor a la fecha del cobro aplicado";
                     return false;
                 }
+
+                msg = bus_cobro.ValidarSaldoDocumento(item.IdEmpresa, item.IdSucursal, item.IdBodega_Cbte ?? 0, item.IdCbte_vta_nota, item.dc_TipoDocumento, item.dc_ValorPago, item.dc_ValorPagoAnterior);
+                if (msg.Length > 0)
+                    return false;
             }
             return true;
         }
@@ -250,6 +249,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (!validar(model,ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }
@@ -257,7 +257,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 
             if (!bus_cobro.guardarDB(model))
             {
-                ViewBag.mensaje = mensaje;
+                ViewBag.mensaje = "Ha ocurrido un problema al guardar, comuníquese con sistemas";
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }
@@ -304,13 +305,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_cobro.modificarDB(model))
             {
-                ViewBag.mensaje = mensaje;
+                ViewBag.mensaje = "Ha ocurrido un error al modificar, comuníquese con sistemas";
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }

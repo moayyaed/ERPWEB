@@ -68,7 +68,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                     Base_Ret = item.total_base_ret,
                     Cod_Sri = item.Key.cod_Impuesto_SRI,
                     descripcion = item.Key.Impuesto + "." + item.Key.por_Retencion_SRI + " " + item.Key.co_descripcion,
-                    Tipo_Retencion = item.Key.Impuesto,
+                    Tipo_Retencion = item.Key.Impuesto == "RTF" ? "Retención de fuente" : "Retención de IVA",
                     Total_Ret = item.total_ret
                 });
             }

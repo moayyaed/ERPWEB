@@ -39,6 +39,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string nom_pc { get; set; }
         public string ip { get; set; }
         public string MotivoAnulacion { get; set; }
+        public bool Sustenta { get; set; }
 
         // no existe
         public cp_codigo_SRI_x_CtaCble_Info info_codigo_ctacble { get; set; }

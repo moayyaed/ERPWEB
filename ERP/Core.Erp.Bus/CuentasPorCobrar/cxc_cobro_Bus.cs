@@ -100,5 +100,17 @@ namespace Core.Erp.Bus.CuentasPorCobrar
                 throw;
             }
         }
+
+        public string ValidarSaldoDocumento(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdCbteVta, string CodDocumentoTipo, double ValorCobrado, double ValorAnterior)
+        {
+            try
+            {
+                return odata.ValidarSaldoDocumento(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodDocumentoTipo, ValorCobrado, ValorAnterior);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

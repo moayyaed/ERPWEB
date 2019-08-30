@@ -24,9 +24,10 @@
           <Property Name="Fecha_UltMod" Type="datetime" />
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
-          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
-          <Property Name="ip" Type="varchar" MaxLength="50" />
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="200" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="200" />
+          <Property Name="ip" Type="varchar" MaxLength="200" />
+          <Property Name="Sustenta" Type="bit" />
         </EntityType>
         <EntityType Name="cp_codigo_SRI_tipo">
           <Key>
@@ -2723,37 +2724,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model_cuentas_por_pagar" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="cp_codigo_SRI">
-          <Key>
-            <PropertyRef Name="IdCodigo_SRI" />
-          </Key>
-          <Property Name="IdCodigo_SRI" Type="Int32" Nullable="false" />
-          <Property Name="codigoSRI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="co_codigoBase" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="co_descripcion" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="co_porRetencion" Type="Double" Nullable="false" />
-          <Property Name="co_f_valides_desde" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="co_f_valides_hasta" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="co_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdTipoSRI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cp_codigo_SRI_tipo" Relationship="Self.FK_cp_codigo_SRI_cp_codigo_SRI_tipo" FromRole="cp_codigo_SRI" ToRole="cp_codigo_SRI_tipo" />
-          <NavigationProperty Name="cp_codigo_SRI_x_CtaCble" Relationship="Self.FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_codigo_SRI_x_CtaCble" />
-          <NavigationProperty Name="cp_retencion_det" Relationship="Self.FK_cp_retencion_det_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_retencion_det" />
-          <NavigationProperty Name="cp_nota_DebCre" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_nota_DebCre" />
-          <NavigationProperty Name="cp_nota_DebCre1" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI1" FromRole="cp_codigo_SRI" ToRole="cp_nota_DebCre" />
-          <NavigationProperty Name="cp_orden_giro" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_orden_giro" />
-          <NavigationProperty Name="cp_orden_giro1" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI1" FromRole="cp_codigo_SRI" ToRole="cp_orden_giro" />
-          <NavigationProperty Name="cp_orden_giro2" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI2" FromRole="cp_codigo_SRI" ToRole="cp_orden_giro" />
-          </EntityType>
         <EntityType Name="cp_codigo_SRI_tipo">
           <Key>
             <PropertyRef Name="IdTipoSRI" />
@@ -2769,7 +2739,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
           <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cp_codigo_SRI" Relationship="Self.FK_cp_codigo_SRI_cp_codigo_SRI_tipo" FromRole="cp_codigo_SRI_tipo" ToRole="cp_codigo_SRI" />
+          <NavigationProperty Name="cp_codigo_SRI" Relationship="Model_cuentas_por_pagar.FK_cp_codigo_SRI_cp_codigo_SRI_tipo" FromRole="cp_codigo_SRI_tipo" ToRole="cp_codigo_SRI" />
         </EntityType>
         <EntityType Name="cp_codigo_SRI_x_CtaCble">
           <Key>
@@ -2783,7 +2753,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="idUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cp_codigo_SRI" Relationship="Self.FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI" FromRole="cp_codigo_SRI_x_CtaCble" ToRole="cp_codigo_SRI" />
+          <NavigationProperty Name="cp_codigo_SRI" Relationship="Model_cuentas_por_pagar.FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI" FromRole="cp_codigo_SRI_x_CtaCble" ToRole="cp_codigo_SRI" />
         </EntityType>
         <EntityType Name="cp_cuotas_x_doc">
           <Key>
@@ -2937,8 +2907,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
           <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cp_codigo_SRI" Relationship="Self.FK_cp_retencion_det_cp_codigo_SRI" FromRole="cp_retencion_det" ToRole="cp_codigo_SRI" />
           <NavigationProperty Name="cp_retencion" Relationship="Model_cuentas_por_pagar.FK_cp_retencion_det_cp_retencion" FromRole="cp_retencion_det" ToRole="cp_retencion" />
+          <NavigationProperty Name="cp_codigo_SRI" Relationship="Model_cuentas_por_pagar.FK_cp_retencion_det_cp_codigo_SRI" FromRole="cp_retencion_det" ToRole="cp_codigo_SRI" />
         </EntityType>
         <EntityType Name="cp_retencion_x_ct_cbtecble">
           <Key>
@@ -2998,42 +2968,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK_cp_codigo_SRI_cp_codigo_SRI_tipo">
-          <End Role="cp_codigo_SRI_tipo" Type="Self.cp_codigo_SRI_tipo" Multiplicity="1" />
-          <End Role="cp_codigo_SRI" Type="Self.cp_codigo_SRI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI_tipo">
-              <PropertyRef Name="IdTipoSRI" />
-            </Principal>
-            <Dependent Role="cp_codigo_SRI">
-              <PropertyRef Name="IdTipoSRI" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI">
-          <End Role="cp_codigo_SRI" Type="Self.cp_codigo_SRI" Multiplicity="1" />
-          <End Role="cp_codigo_SRI_x_CtaCble" Type="Self.cp_codigo_SRI_x_CtaCble" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_codigo_SRI_x_CtaCble">
-              <PropertyRef Name="idCodigo_SRI" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_retencion_det_cp_codigo_SRI">
-          <End Role="cp_codigo_SRI" Type="Self.cp_codigo_SRI" Multiplicity="1" />
-          <End Role="cp_retencion_det" Type="Self.cp_retencion_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_retencion_det">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_cp_cuotas_x_doc_det_cp_cuotas_x_doc1">
           <End Role="cp_cuotas_x_doc" Type="Self.cp_cuotas_x_doc" Multiplicity="1" />
           <End Role="cp_cuotas_x_doc_det" Type="Self.cp_cuotas_x_doc_det" Multiplicity="*" />
@@ -3061,7 +2995,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Entities_cuentas_por_pagar" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="cp_codigo_SRI" EntityType="Self.cp_codigo_SRI" />
           <EntitySet Name="cp_codigo_SRI_tipo" EntityType="Self.cp_codigo_SRI_tipo" />
           <EntitySet Name="cp_codigo_SRI_x_CtaCble" EntityType="Self.cp_codigo_SRI_x_CtaCble" />
           <EntitySet Name="cp_cuotas_x_doc" EntityType="Self.cp_cuotas_x_doc" />
@@ -3077,18 +3010,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <EntitySet Name="cp_retencion_x_ct_cbtecble" EntityType="Self.cp_retencion_x_ct_cbtecble" />
           <EntitySet Name="vwcp_codigo_SRI" EntityType="Self.vwcp_codigo_SRI" />
           <EntitySet Name="vwcp_proveedor_consulta" EntityType="Self.vwcp_proveedor_consulta" />
-          <AssociationSet Name="FK_cp_codigo_SRI_cp_codigo_SRI_tipo" Association="Self.FK_cp_codigo_SRI_cp_codigo_SRI_tipo">
-            <End Role="cp_codigo_SRI_tipo" EntitySet="cp_codigo_SRI_tipo" />
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI" Association="Self.FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_codigo_SRI_x_CtaCble" EntitySet="cp_codigo_SRI_x_CtaCble" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_retencion_det_cp_codigo_SRI" Association="Self.FK_cp_retencion_det_cp_codigo_SRI">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_retencion_det" EntitySet="cp_retencion_det" />
-          </AssociationSet>
           <AssociationSet Name="FK_cp_cuotas_x_doc_det_cp_cuotas_x_doc1" Association="Self.FK_cp_cuotas_x_doc_det_cp_cuotas_x_doc1">
             <End Role="cp_cuotas_x_doc" EntitySet="cp_cuotas_x_doc" />
             <End Role="cp_cuotas_x_doc_det" EntitySet="cp_cuotas_x_doc_det" />
@@ -3191,26 +3112,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <EntitySet Name="vwcp_retencion" EntityType="Model_cuentas_por_pagar.vwcp_retencion" />
           <EntitySet Name="cp_nota_DebCre" EntityType="Model_cuentas_por_pagar.cp_nota_DebCre" />
           <EntitySet Name="cp_orden_giro" EntityType="Model_cuentas_por_pagar.cp_orden_giro" />
-          <AssociationSet Name="FK_cp_nota_DebCre_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_nota_DebCre" EntitySet="cp_nota_DebCre" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_nota_DebCre_cp_codigo_SRI1" Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI1">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_nota_DebCre" EntitySet="cp_nota_DebCre" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI1" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI1">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI2" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI2">
-            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
-            <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
-          </AssociationSet>
           <AssociationSet Name="FK_cp_nota_DebCre_cp_proveedor" Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_proveedor">
             <End Role="cp_proveedor" EntitySet="cp_proveedor" />
             <End Role="cp_nota_DebCre" EntitySet="cp_nota_DebCre" />
@@ -3280,6 +3181,39 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           </AssociationSet>
           <EntitySet Name="cp_TipoDocumento" EntityType="Model_cuentas_por_pagar.cp_TipoDocumento" />
           <EntitySet Name="vwcp_orden_giro_det_ing_x_oc_x_cruzar" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc_x_cruzar" />
+          <EntitySet Name="cp_codigo_SRI" EntityType="Model_cuentas_por_pagar.cp_codigo_SRI" />
+          <AssociationSet Name="FK_cp_codigo_SRI_cp_codigo_SRI_tipo" Association="Model_cuentas_por_pagar.FK_cp_codigo_SRI_cp_codigo_SRI_tipo">
+            <End Role="cp_codigo_SRI_tipo" EntitySet="cp_codigo_SRI_tipo" />
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_codigo_SRI_x_CtaCble" EntitySet="cp_codigo_SRI_x_CtaCble" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_nota_DebCre_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_nota_DebCre" EntitySet="cp_nota_DebCre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_nota_DebCre_cp_codigo_SRI1" Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI1">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_nota_DebCre" EntitySet="cp_nota_DebCre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI1" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI1">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI2" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI2">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_retencion_det_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_retencion_det_cp_codigo_SRI">
+            <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
+            <End Role="cp_retencion_det" EntitySet="cp_retencion_det" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -4369,9 +4303,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="PagoSujetoRetencion" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="fecha_autorizacion" Type="DateTime" Precision="3" />
           <Property Name="cod_nota" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cp_proveedor" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_proveedor" FromRole="cp_nota_DebCre" ToRole="cp_proveedor" />
           <NavigationProperty Name="cp_codigo_SRI" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI" FromRole="cp_nota_DebCre" ToRole="cp_codigo_SRI" />
           <NavigationProperty Name="cp_codigo_SRI1" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI1" FromRole="cp_nota_DebCre" ToRole="cp_codigo_SRI" />
-          <NavigationProperty Name="cp_proveedor" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_proveedor" FromRole="cp_nota_DebCre" ToRole="cp_proveedor" />
         </EntityType>
         <EntityType Name="cp_orden_giro">
           <Key>
@@ -4431,9 +4365,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="aut_doc_Modificar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdTipoMovi" Type="Int32" />
           <Property Name="aprobada_enviar_sri" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="cp_codigo_SRI" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI" FromRole="cp_orden_giro" ToRole="cp_codigo_SRI" />
-          <NavigationProperty Name="cp_codigo_SRI1" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI1" FromRole="cp_orden_giro" ToRole="cp_codigo_SRI" />
-          <NavigationProperty Name="cp_codigo_SRI2" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI2" FromRole="cp_orden_giro" ToRole="cp_codigo_SRI" />
           <NavigationProperty Name="cp_pais_sri" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_pais_sri" FromRole="cp_orden_giro" ToRole="cp_pais_sri" />
           <NavigationProperty Name="cp_proveedor" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_proveedor" FromRole="cp_orden_giro" ToRole="cp_proveedor" />
           <NavigationProperty Name="cp_orden_giro_det" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_det_cp_orden_giro" FromRole="cp_orden_giro" ToRole="cp_orden_giro_det" />
@@ -4442,67 +4373,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <NavigationProperty Name="cp_orden_giro_x_in_Ing_Egr_Inven" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_x_in_Ing_Egr_Inven_cp_orden_giro" FromRole="cp_orden_giro" ToRole="cp_orden_giro_x_in_Ing_Egr_Inven" />
           <NavigationProperty Name="cp_retencion" Relationship="Model_cuentas_por_pagar.FK_cp_retencion_cp_orden_giro" FromRole="cp_orden_giro" ToRole="cp_retencion" />
           <NavigationProperty Name="cp_orden_giro_det_ing_x_os" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_det_ing_x_os_cp_orden_giro" FromRole="cp_orden_giro" ToRole="cp_orden_giro_det_ing_x_os" />
+          <NavigationProperty Name="cp_codigo_SRI" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI" FromRole="cp_orden_giro" ToRole="cp_codigo_SRI" />
+          <NavigationProperty Name="cp_codigo_SRI1" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI1" FromRole="cp_orden_giro" ToRole="cp_codigo_SRI" />
+          <NavigationProperty Name="cp_codigo_SRI2" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI2" FromRole="cp_orden_giro" ToRole="cp_codigo_SRI" />
         </EntityType>
-        <Association Name="FK_cp_nota_DebCre_cp_codigo_SRI">
-          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
-          <End Type="Model_cuentas_por_pagar.cp_nota_DebCre" Role="cp_nota_DebCre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_nota_DebCre">
-              <PropertyRef Name="IdCod_ICE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_nota_DebCre_cp_codigo_SRI1">
-          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
-          <End Type="Model_cuentas_por_pagar.cp_nota_DebCre" Role="cp_nota_DebCre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_nota_DebCre">
-              <PropertyRef Name="IdIden_credito" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_orden_giro_cp_codigo_SRI">
-          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
-          <End Type="Model_cuentas_por_pagar.cp_orden_giro" Role="cp_orden_giro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_orden_giro">
-              <PropertyRef Name="IdCod_ICE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_orden_giro_cp_codigo_SRI1">
-          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
-          <End Type="Model_cuentas_por_pagar.cp_orden_giro" Role="cp_orden_giro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_orden_giro">
-              <PropertyRef Name="IdIden_credito" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_orden_giro_cp_codigo_SRI2">
-          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
-          <End Type="Model_cuentas_por_pagar.cp_orden_giro" Role="cp_orden_giro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_codigo_SRI">
-              <PropertyRef Name="IdCodigo_SRI" />
-            </Principal>
-            <Dependent Role="cp_orden_giro">
-              <PropertyRef Name="IdCod_101" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_cp_nota_DebCre_cp_proveedor">
           <End Type="Model_cuentas_por_pagar.cp_proveedor" Role="cp_proveedor" Multiplicity="1" />
           <End Type="Model_cuentas_por_pagar.cp_nota_DebCre" Role="cp_nota_DebCre" Multiplicity="*" />
@@ -5085,36 +4959,140 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
           <Property Name="pc_Cuenta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="cp_codigo_SRI">
+          <Key>
+            <PropertyRef Name="IdCodigo_SRI" />
+          </Key>
+          <Property Name="IdCodigo_SRI" Type="Int32" Nullable="false" />
+          <Property Name="codigoSRI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_codigoBase" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_descripcion" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="co_porRetencion" Type="Double" Nullable="false" />
+          <Property Name="co_f_valides_desde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="co_f_valides_hasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="co_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoSRI" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="nom_pc" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Sustenta" Type="Boolean" />
+          <NavigationProperty Name="cp_codigo_SRI_tipo" Relationship="Model_cuentas_por_pagar.FK_cp_codigo_SRI_cp_codigo_SRI_tipo" FromRole="cp_codigo_SRI" ToRole="cp_codigo_SRI_tipo" />
+          <NavigationProperty Name="cp_codigo_SRI_x_CtaCble" Relationship="Model_cuentas_por_pagar.FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_codigo_SRI_x_CtaCble" />
+          <NavigationProperty Name="cp_nota_DebCre" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_nota_DebCre" />
+          <NavigationProperty Name="cp_nota_DebCre1" Relationship="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI1" FromRole="cp_codigo_SRI" ToRole="cp_nota_DebCre" />
+          <NavigationProperty Name="cp_orden_giro" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_orden_giro" />
+          <NavigationProperty Name="cp_orden_giro1" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI1" FromRole="cp_codigo_SRI" ToRole="cp_orden_giro" />
+          <NavigationProperty Name="cp_orden_giro2" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI2" FromRole="cp_codigo_SRI" ToRole="cp_orden_giro" />
+          <NavigationProperty Name="cp_retencion_det" Relationship="Model_cuentas_por_pagar.FK_cp_retencion_det_cp_codigo_SRI" FromRole="cp_codigo_SRI" ToRole="cp_retencion_det" />
+        </EntityType>
+        <Association Name="FK_cp_codigo_SRI_cp_codigo_SRI_tipo">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI_tipo" Role="cp_codigo_SRI_tipo" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI_tipo">
+              <PropertyRef Name="IdTipoSRI" />
+            </Principal>
+            <Dependent Role="cp_codigo_SRI">
+              <PropertyRef Name="IdTipoSRI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_codigo_SRI_x_CtaCble_cp_codigo_SRI">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI_x_CtaCble" Role="cp_codigo_SRI_x_CtaCble" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_codigo_SRI_x_CtaCble">
+              <PropertyRef Name="idCodigo_SRI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_nota_DebCre_cp_codigo_SRI">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_pagar.cp_nota_DebCre" Role="cp_nota_DebCre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_nota_DebCre">
+              <PropertyRef Name="IdCod_ICE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_nota_DebCre_cp_codigo_SRI1">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_pagar.cp_nota_DebCre" Role="cp_nota_DebCre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_nota_DebCre">
+              <PropertyRef Name="IdIden_credito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_orden_giro_cp_codigo_SRI">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_pagar.cp_orden_giro" Role="cp_orden_giro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_orden_giro">
+              <PropertyRef Name="IdCod_ICE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_orden_giro_cp_codigo_SRI1">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_pagar.cp_orden_giro" Role="cp_orden_giro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_orden_giro">
+              <PropertyRef Name="IdIden_credito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_orden_giro_cp_codigo_SRI2">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_pagar.cp_orden_giro" Role="cp_orden_giro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_orden_giro">
+              <PropertyRef Name="IdCod_101" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_retencion_det_cp_codigo_SRI">
+          <End Type="Model_cuentas_por_pagar.cp_codigo_SRI" Role="cp_codigo_SRI" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_retencion_det" Role="cp_retencion_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_codigo_SRI">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Principal>
+            <Dependent Role="cp_retencion_det">
+              <PropertyRef Name="IdCodigo_SRI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Model_cuentas_por_pagarStoreContainer" CdmEntityContainer="Entities_cuentas_por_pagar">
-          <EntitySetMapping Name="cp_codigo_SRI">
-            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_codigo_SRI">
-              <MappingFragment StoreEntitySet="cp_codigo_SRI">
-                <ScalarProperty Name="IdCodigo_SRI" ColumnName="IdCodigo_SRI" />
-                <ScalarProperty Name="codigoSRI" ColumnName="codigoSRI" />
-                <ScalarProperty Name="co_codigoBase" ColumnName="co_codigoBase" />
-                <ScalarProperty Name="co_descripcion" ColumnName="co_descripcion" />
-                <ScalarProperty Name="co_porRetencion" ColumnName="co_porRetencion" />
-                <ScalarProperty Name="co_f_valides_desde" ColumnName="co_f_valides_desde" />
-                <ScalarProperty Name="co_f_valides_hasta" ColumnName="co_f_valides_hasta" />
-                <ScalarProperty Name="co_estado" ColumnName="co_estado" />
-                <ScalarProperty Name="IdTipoSRI" ColumnName="IdTipoSRI" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="cp_codigo_SRI_tipo">
             <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_codigo_SRI_tipo">
               <MappingFragment StoreEntitySet="cp_codigo_SRI_tipo">
@@ -6380,6 +6358,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcp_retencion_det' no tiene defin
                 <ScalarProperty Name="inv_IdMovi_inven_tipo" ColumnName="inv_IdMovi_inven_tipo" />
                 <ScalarProperty Name="inv_IdSucursal" ColumnName="inv_IdSucursal" />
                 <ScalarProperty Name="inv_IdEmpresa" ColumnName="inv_IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cp_codigo_SRI">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_codigo_SRI">
+              <MappingFragment StoreEntitySet="cp_codigo_SRI">
+                <ScalarProperty Name="Sustenta" ColumnName="Sustenta" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdTipoSRI" ColumnName="IdTipoSRI" />
+                <ScalarProperty Name="co_estado" ColumnName="co_estado" />
+                <ScalarProperty Name="co_f_valides_hasta" ColumnName="co_f_valides_hasta" />
+                <ScalarProperty Name="co_f_valides_desde" ColumnName="co_f_valides_desde" />
+                <ScalarProperty Name="co_porRetencion" ColumnName="co_porRetencion" />
+                <ScalarProperty Name="co_descripcion" ColumnName="co_descripcion" />
+                <ScalarProperty Name="co_codigoBase" ColumnName="co_codigoBase" />
+                <ScalarProperty Name="codigoSRI" ColumnName="codigoSRI" />
+                <ScalarProperty Name="IdCodigo_SRI" ColumnName="IdCodigo_SRI" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

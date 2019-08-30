@@ -1077,7 +1077,6 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         IdEntidad = Entity.IdCliente,
                         vt_tipoDoc = Entity.vt_tipoDoc,
                         cr_EsElectronico = Entity.cr_EsElectronico
-
                     };
                 }
                 return info;
@@ -1089,6 +1088,31 @@ namespace Core.Erp.Data.CuentasPorCobrar
             }
         }
 
-        
+        public string ValidarSaldoDocumento(int IdEmpresa, int IdSucursal, int IdBodega, decimal IdCbteVta, string CodDocumentoTipo, double ValorCobrado, double ValorAnterior)
+        {
+            try
+            {
+                string Retorno = string.Empty;
+
+                using (Entities_cuentas_por_cobrar db = new Entities_cuentas_por_cobrar())
+                {
+                    var Documento = db.vwcxc_cartera_x_cobrar.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdComprobante == IdCbteVta && q.vt_tipoDoc == CodDocumentoTipo).FirstOrDefault();
+                    if (Documento != null)
+                    {
+                        if (Math.Round((Documento.Saldo ?? 0) + ValorAnterior - ValorCobrado, 2, MidpointRounding.AwayFromZero) < 0)
+                        {
+                            Retorno += ("Está intentando aplicar " + ValorCobrado.ToString("c2") + " al documento " + Documento.vt_NunDocumento + " cuyo saldo es de " + (Documento.Saldo ?? 0 + ValorAnterior).ToString("c2"));
+                        }
+                    }
+                }
+
+                return Retorno;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

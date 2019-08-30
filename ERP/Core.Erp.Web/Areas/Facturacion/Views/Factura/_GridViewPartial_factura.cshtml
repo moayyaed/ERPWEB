@@ -96,7 +96,7 @@
         });
 
         settings.Columns.Add("IdCbteVta", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("CodCbteVta", "Código").Width = Unit.Percentage(10);
+        settings.Columns.Add("CodCbteVta", "Código").Width = Unit.Percentage(7);
         settings.Columns.Add(column =>
         {
             column.FieldName = "vt_fecha";
@@ -105,15 +105,35 @@
             column.Width = Unit.Percentage(7);
         });
         settings.Columns.Add("NomContacto", "Cliente").Width = Unit.Percentage(20);
-        settings.Columns.Add("vt_NumFactura", "# Factura").Width = Unit.Percentage(10);
+        settings.Columns.Add("vt_NumFactura", "# Factura").Width = Unit.Percentage(7);
         settings.Columns.Add("Ve_Vendedor", "Vendedor").Width = Unit.Percentage(10);
-        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_Subtotal0";
+            column.Caption = "S 0%";
+            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_SubtotalIVA";
+            column.Caption = "S 12%";
+            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_iva";
+            column.Caption = "IVA";
+            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
+            column.Width = Unit.Percentage(5);
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "vt_total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:c2}";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Percentage(5);
         });
         settings.Columns.Add(column =>
         {
@@ -128,33 +148,33 @@
 
         settings.Columns.Add(column =>
         {
-            column.Caption = "Módulo";
+            column.Caption = "M";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("FAC_013", "FacturacionReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(c.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(c.DataItem, "IdCbteVta") }, Request.Url.Scheme) + "');\"></span>");
 
             });
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(3);
         });
 
         settings.Columns.Add(column =>
         {
-            column.Caption = "RIDE";
+            column.Caption = "R";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("FAC_007", "FacturacionReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(c.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(c.DataItem, "IdCbteVta") }, Request.Url.Scheme) + "');\"></span>");
             });
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(3);
         });
 
         settings.Columns.Add(column =>
         {
-            column.Caption = "PreImpreso";
+            column.Caption = "P";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("FAC_003", "FacturacionReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(c.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(c.DataItem, "IdCbteVta") }, Request.Url.Scheme) + "');\"></span>");
             });
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(3);
         });
         /*
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_Subtotal0").DisplayFormat = "{0:n2}";

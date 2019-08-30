@@ -17,6 +17,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public Nullable<int> IdBodega_Cbte { get; set; }
         public decimal IdCbte_vta_nota { get; set; }
         public double dc_ValorPago { get; set; }
+        public double dc_ValorPagoAnterior { get; set; }
         public string estado { get; set; }
         public string IdCobro_tipo_det { get; set; }
 

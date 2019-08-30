@@ -28,7 +28,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                      co_codigoBase = q.co_codigoBase,
                                      co_porRetencion = q.co_porRetencion,
                                      co_estado = q.co_estado,
-
+                                     Sustenta = q.Sustenta ?? false,
                                      EstadoBool = q.co_estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -43,7 +43,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                      co_porRetencion = q.co_porRetencion,
                                      co_estado = q.co_estado,
                                      IdTipoSRI = q.IdTipoSRI,
-
+                                     Sustenta = q.Sustenta ?? false,
                                      EstadoBool = q.co_estado == "A" ? true : false
                                  }).ToList();
                 }
@@ -127,7 +127,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         co_estado = Entity.co_estado,
                         IdTipoSRI = Entity.IdTipoSRI,
                         co_f_valides_desde = Entity.co_f_valides_desde,
-                        co_f_valides_hasta = Entity.co_f_valides_hasta,                        
+                        co_f_valides_hasta = Entity.co_f_valides_hasta,
+                        Sustenta = Entity.Sustenta ?? false,
                     };
                 }
                 return info;
@@ -158,6 +159,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdTipoSRI = Entity.IdTipoSRI,
                         co_f_valides_desde = Entity.co_f_valides_desde,
                         co_f_valides_hasta = Entity.co_f_valides_hasta,
+                        Sustenta = Entity.Sustenta ?? false,
                         info_codigo_ctacble = new cp_codigo_SRI_x_CtaCble_Info
                         {
                             IdCtaCble = Context.cp_codigo_SRI_x_CtaCble.Where(q=>q.IdEmpresa == IdEmpresa && q.idCodigo_SRI == IdCodigoSRI).FirstOrDefault() == null ? null : Context.cp_codigo_SRI_x_CtaCble.Where(q => q.IdEmpresa == IdEmpresa && q.idCodigo_SRI == IdCodigoSRI).FirstOrDefault().IdCtaCble
@@ -189,7 +191,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         co_estado = info.co_estado = "A",
                         IdTipoSRI = info.IdTipoSRI,
                         co_f_valides_desde = info.co_f_valides_desde.Date,
-                        co_f_valides_hasta = info.co_f_valides_hasta.Date
+                        co_f_valides_hasta = info.co_f_valides_hasta.Date,
+                        Sustenta = info.Sustenta
                     };
                     Context.cp_codigo_SRI.Add(Entity);
                     Context.SaveChanges();
@@ -213,7 +216,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Entity.co_codigoBase = info.co_codigoBase;
                     Entity.co_descripcion = info.co_descripcion;
                     Entity.co_porRetencion = info.co_porRetencion;
-                    
+                    Entity.Sustenta = info.Sustenta;
                     Context.SaveChanges();
                 }
                 return true;
