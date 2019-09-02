@@ -64,6 +64,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             ListaAgrupada.AddRange(lst_rpt.GroupBy(q => new { q.Tarifa }).Select(q => new CXP_014_Info
             {
                 Grupo = 1,
+                NombreGrupo = "",
                 DescripcionAgrupacion = q.Key.Tarifa,
                 co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
                 co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
@@ -74,24 +75,13 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             }).ToList());
             #endregion
 
-            #region Total por código
-            ListaAgrupada.AddRange(lst_rpt.GroupBy(q => new { q.DescripcionCodigo }).Select(q => new CXP_014_Info
-            {
-                Grupo = 2,
-                DescripcionAgrupacion = q.Key.DescripcionCodigo,
-                co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
-                co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
-                co_subtotal = q.Sum(g => g.co_subtotal),
-                co_valoriva = q.Sum(g => g.co_valoriva),
-                co_total = q.Sum(g => g.co_total),
-                CantidadAgrupacion = q.Count()
-            }).ToList());
-            #endregion
+            
 
             #region Total por retención
             ListaAgrupada.AddRange(lst_rpt.GroupBy(q => new { q.FacturaRetencion }).Select(q => new CXP_014_Info
             {
-                Grupo = 3,
+                Grupo = 2,
+                NombreGrupo = "Tipos de factura",
                 DescripcionAgrupacion = q.Key.FacturaRetencion,
                 co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
                 co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
@@ -101,13 +91,52 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                 CantidadAgrupacion = q.Count()
             }).ToList());
             #endregion
+
+            #region Total por código
+            ListaAgrupada.AddRange(lst_rpt.Where(q => q.Sustenta == true).GroupBy(q => new { q.DescripcionCodigo }).Select(q => new CXP_014_Info
+            {
+                Grupo = 3,
+                NombreGrupo = "Resumen sustenta crédito tributario",
+                DescripcionAgrupacion = q.Key.DescripcionCodigo,
+                co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                co_subtotal = q.Sum(g => g.co_subtotal),
+                co_valoriva = q.Sum(g => g.co_valoriva),
+                co_total = q.Sum(g => g.co_total),
+                CantidadAgrupacion = q.Count(),
+
+                T_co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                T_co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                T_co_subtotal = q.Sum(g => g.co_subtotal),
+                T_co_valoriva = q.Sum(g => g.co_valoriva),
+                T_co_total = q.Sum(g => g.co_total),
+                T_CantidadAgrupacion = q.Count()
+            }).ToList());
+            ListaAgrupada.AddRange(lst_rpt.Where(q => q.Sustenta == false).GroupBy(q => new { q.DescripcionCodigo }).Select(q => new CXP_014_Info
+            {
+                Grupo = 4,
+                NombreGrupo = "Resumen NO sustenta crédito tributario",
+                DescripcionAgrupacion = q.Key.DescripcionCodigo,
+                co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                co_subtotal = q.Sum(g => g.co_subtotal),
+                co_valoriva = q.Sum(g => g.co_valoriva),
+                co_total = q.Sum(g => g.co_total),
+                CantidadAgrupacion = q.Count(),
+
+                T_co_subtotal_siniva = q.Sum(g => g.co_subtotal_siniva),
+                T_co_subtotal_iva = q.Sum(g => g.co_subtotal_iva),
+                T_co_subtotal = q.Sum(g => g.co_subtotal),
+                T_co_valoriva = q.Sum(g => g.co_valoriva),
+                T_co_total = q.Sum(g => g.co_total),
+                T_CantidadAgrupacion = q.Count()
+            }).ToList());
+            #endregion
         }
 
         private void SubReporte_Resumen_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
             ((XRSubreport)sender).ReportSource.DataSource = ListaAgrupada;
         }
-
-       
     }
 }

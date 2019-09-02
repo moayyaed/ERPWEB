@@ -105,10 +105,10 @@
         <EntityTypeShape EntityType="Model_reportes.VWINV_002" Width="1.5" PointX="39.375" PointY="39.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_020" Width="1.5" PointX="3.375" PointY="40.75" />
         <EntityTypeShape EntityType="Model_reportes.VWINV_008" Width="1.5" PointX="41.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWCXP_014" Width="1.5" PointX="41.375" PointY="7.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCOMP_001" Width="1.5" PointX="15.375" PointY="23.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_009" Width="1.5" PointX="9.375" PointY="41.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_003" Width="1.5" PointX="17.375" PointY="22.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWCXP_014" Width="1.5" PointX="41.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

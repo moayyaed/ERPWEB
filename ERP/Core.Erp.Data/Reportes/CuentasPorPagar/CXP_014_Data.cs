@@ -85,7 +85,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                        FacturaRetencion = q.FacturaRetencion,
                        co_subtotal = q.co_subtotal,
                        TieneRetencion = q.TieneRetencion,
-                       NumRetencion = q.NumRetencion
+                       NumRetencion = q.NumRetencion,
+                       Sustenta = q.Sustenta ?? false
                    }).ToList();
                     }
                    else
@@ -155,7 +156,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                        FacturaRetencion = q.FacturaRetencion,
                        co_subtotal = q.co_subtotal,
                        TieneRetencion = q.TieneRetencion,
-                       NumRetencion = q.NumRetencion
+                       NumRetencion = q.NumRetencion,
+                       Sustenta = q.Sustenta ?? false
                    }).ToList();
                     }
                 }

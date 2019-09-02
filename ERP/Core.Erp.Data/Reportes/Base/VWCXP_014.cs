@@ -71,5 +71,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string FacturaRetencion { get; set; }
         public double co_subtotal { get; set; }
         public Nullable<bool> TieneRetencion { get; set; }
+        public Nullable<bool> Sustenta { get; set; }
     }
 }

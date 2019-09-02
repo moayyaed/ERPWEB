@@ -22,13 +22,15 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public System.DateTime co_FechaFactura_vct { get; set; }
         public int co_plazo { get; set; }
         public string co_observacion { get; set; }
+
         public double co_subtotal_iva { get; set; }
         public double co_subtotal_siniva { get; set; }
-        public double co_baseImponible { get; set; }
-        public double co_Por_iva { get; set; }
+        public double co_baseImponible { get; set; }        
         public double co_valoriva { get; set; }
-        public Nullable<int> IdCod_ICE { get; set; }
         public double co_total { get; set; }
+
+        public double co_Por_iva { get; set; }
+        public Nullable<int> IdCod_ICE { get; set; }        
         public string co_vaCoa { get; set; }
         public Nullable<int> IdIden_credito { get; set; }
         public Nullable<int> IdCod_101 { get; set; }
@@ -65,8 +67,20 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string FacturaRetencion { get; set; }
         public double co_subtotal { get; set; }
         public Nullable<bool> TieneRetencion { get; set; }
-        public int CantidadAgrupacion { get; set; }
+        public bool Sustenta { get; set; }
+
+        #region No existen en la vista
+        public double T_co_subtotal_iva { get; set; }
+        public double T_co_subtotal_siniva { get; set; }
+        public double T_co_baseImponible { get; set; }
+        public double T_co_valoriva { get; set; }
+        public double T_co_total { get; set; }
+        public double T_co_subtotal { get; set; }
+        public int T_CantidadAgrupacion { get; set; }
+        public int CantidadAgrupacion { get; set; }        
         public string DescripcionAgrupacion { get; set; }
+        public string NombreGrupo { get; set; }
         public int Grupo { get; set; }
+        #endregion
     }
 }
