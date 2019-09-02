@@ -30,3 +30,18 @@ FROM     cxc_cobro_tipo INNER JOIN
                   tb_sucursal ON tb_sucursal.IdEmpresa = cxc_cobro.IdEmpresa AND tb_sucursal.IdSucursal = cxc_cobro.IdSucursal LEFT OUTER JOIN
                   dbo.cxc_LiquidacionTarjeta_x_cxc_cobro AS com ON dbo.cxc_cobro.IdEmpresa = com.IdEmpresa AND dbo.cxc_cobro.IdSucursal = com.IdSucursal AND dbo.cxc_cobro.IdCobro = com.IdCobro LEFT OUTER JOIN
                   dbo.cxc_LiquidacionTarjeta AS comc ON comc.IdEmpresa = com.IdEmpresa AND comc.IdSucursal = com.IdSucursal AND comc.IdLiquidacion = com.IdLiquidacion
+UNION ALL
+SELECT c.IdEmpresa, caj.IdSucursal, 1, c.IdCbteCble,'INCAJ', C.CodMoviCaja, c.cm_fecha, 0,d.cr_Valor, t.tm_descripcion, c.cm_fecha, c.Estado, c.cm_observacion, c.IdEntidad, per.pe_nombreCompleto, su.Su_Descripcion,
+d.IdCobro_tipo,null
+FROM caj_Caja_Movimiento AS C inner join 
+caj_Caja as caj on c.IdEmpresa = caj.IdEmpresa and c.IdCaja = caj.IdCaja inner join 
+caj_Caja_Movimiento_det as d on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipocbte AND C.IdCbteCble = d.IdCbteCble inner join
+caj_Caja_Movimiento_Tipo as t on c.IdEmpresa = t.IdEmpresa and c.IdTipoMovi = t.IdTipoMovi inner join
+tb_persona as per on c.IdPersona = per.IdPersona inner join 
+tb_sucursal as su on caj.IdEmpresa = su.IdEmpresa and caj.IdSucursal = su.IdSucursal 
+where t.SeDeposita = 1 and t.tm_Signo = '+' and not exists(
+select f.ct_IdEmpresa from cxc_cobro_x_ct_cbtecble as f
+where c.IdEmpresa = f.ct_IdEmpresa
+and c.IdTipocbte = f.ct_IdTipoCbte
+and c.IdCbteCble = f.ct_IdCbteCble
+)

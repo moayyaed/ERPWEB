@@ -18,7 +18,10 @@ namespace Core.Erp.Data.Reportes.Inventario
 
                 int IdBodegaIni = IdBodega;
                 int IdBodegaFin = IdBodega == 0 ? 9999 : IdBodega;
-                
+
+                int IdProductoIni = IdProducto;
+                int IdProductoFin = IdProducto == 0 ? 999999999 : IdProducto;
+
                 List<INV_019_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
@@ -27,6 +30,8 @@ namespace Core.Erp.Data.Reportes.Inventario
                     && q.IdSucursal <= IdSucursalFin
                     && IdBodegaIni <= q.IdBodega
                     && q.IdBodega <= IdBodegaFin
+                    && IdProductoIni <= q.IdProducto
+                    && q.IdProducto <= IdProductoFin
                     && fecha_ini <= q.cm_fecha
                     && q.cm_fecha <= fecha_fin
                     ).Select(q => new INV_019_Info

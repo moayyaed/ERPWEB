@@ -1271,6 +1271,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdBodega = 0,
+                IdProducto=0
             };
 
             INV_019_Rpt report = new INV_019_Rpt();
@@ -1289,6 +1291,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_Tipo.Value = model.tipo_movi;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdProducto.Value = model.IdProducto;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             cargar_combos(model);
@@ -1315,6 +1318,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_Tipo.Value = model.tipo_movi;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdProducto.Value = model.IdProducto;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             cargar_combos(model);

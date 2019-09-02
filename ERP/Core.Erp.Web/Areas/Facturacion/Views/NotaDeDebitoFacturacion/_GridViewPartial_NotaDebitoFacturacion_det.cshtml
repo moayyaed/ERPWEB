@@ -316,6 +316,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                console.log(data);
                 GridView_notaDebito_det.GetEditor('sc_Precio').SetValue(data.precio);
                 GridView_notaDebito_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCodImpuesto);
             },

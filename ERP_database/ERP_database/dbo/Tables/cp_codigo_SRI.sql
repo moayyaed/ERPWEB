@@ -14,10 +14,13 @@
     [Fecha_UltMod]       DATETIME      NULL,
     [IdUsuarioUltAnu]    VARCHAR (20)  NULL,
     [Fecha_UltAnu]       DATETIME      NULL,
-    [nom_pc]             VARCHAR (50)  NULL,
-    [ip]                 VARCHAR (50)  NULL,
     [MotivoAnulacion]    VARCHAR (200) NULL,
+    [nom_pc]             VARCHAR (200) NULL,
+    [ip]                 VARCHAR (200) NULL,
+    [Sustenta]           BIT           NULL,
     CONSTRAINT [PK_cp_codigo_SRI] PRIMARY KEY CLUSTERED ([IdCodigo_SRI] ASC),
     CONSTRAINT [FK_cp_codigo_SRI_cp_codigo_SRI_tipo] FOREIGN KEY ([IdTipoSRI]) REFERENCES [dbo].[cp_codigo_SRI_tipo] ([IdTipoSRI])
 );
+
+
 

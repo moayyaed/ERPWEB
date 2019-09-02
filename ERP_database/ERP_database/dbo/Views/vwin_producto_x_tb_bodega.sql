@@ -12,3 +12,4 @@ FROM     dbo.in_producto_x_tb_bodega INNER JOIN
                   dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria LEFT OUTER JOIN
                   dbo.ct_plancta AS ct_plancta_1 ON dbo.in_producto_x_tb_bodega.IdCtaCble_Inven = ct_plancta_1.IdCtaCble AND dbo.in_producto_x_tb_bodega.IdEmpresa = ct_plancta_1.IdEmpresa LEFT OUTER JOIN
                   dbo.ct_plancta ON dbo.in_producto_x_tb_bodega.IdCtaCble_Costo = dbo.ct_plancta.IdCtaCble AND dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.ct_plancta.IdEmpresa
+where in_producto.Estado = 'A'

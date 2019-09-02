@@ -3,6 +3,7 @@
     [IdSucursal]             INT           NOT NULL,
     [IdProforma]             NUMERIC (18)  NOT NULL,
     [IdCliente]              NUMERIC (18)  NOT NULL,
+    [IdContacto]             INT           NULL,
     [IdTerminoPago]          VARCHAR (20)  NOT NULL,
     [pf_plazo]               INT           NOT NULL,
     [pf_codigo]              VARCHAR (500) NULL,
@@ -24,12 +25,15 @@
     [IdCatalogo_FormaPago]   VARCHAR (15)  NULL,
     CONSTRAINT [PK_fa_proforma] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdProforma] ASC),
     CONSTRAINT [FK_fa_proforma_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
+    CONSTRAINT [FK_fa_proforma_fa_cliente_contactos] FOREIGN KEY ([IdEmpresa], [IdCliente], [IdContacto]) REFERENCES [dbo].[fa_cliente_contactos] ([IdEmpresa], [IdCliente], [IdContacto]),
     CONSTRAINT [FK_fa_proforma_fa_NivelDescuento] FOREIGN KEY ([IdEmpresa], [IdNivel]) REFERENCES [dbo].[fa_NivelDescuento] ([IdEmpresa], [IdNivel]),
     CONSTRAINT [FK_fa_proforma_fa_TerminoPago] FOREIGN KEY ([IdTerminoPago]) REFERENCES [dbo].[fa_TerminoPago] ([IdTerminoPago]),
     CONSTRAINT [FK_fa_proforma_fa_Vendedor] FOREIGN KEY ([IdEmpresa], [IdVendedor]) REFERENCES [dbo].[fa_Vendedor] ([IdEmpresa], [IdVendedor]),
     CONSTRAINT [FK_fa_proforma_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_proforma_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

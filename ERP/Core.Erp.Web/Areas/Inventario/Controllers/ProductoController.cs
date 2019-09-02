@@ -514,6 +514,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     IdCod_Impuesto_Iva = producto.IdCod_Impuesto_Iva;
                 }
             }
+            else
+            {
+                IdCod_Impuesto_Iva = "IVA0";
+            }
 
             return Json(new {precio= producto.precio_1, IdCodImpuesto = IdCod_Impuesto_Iva, PorcentajeDesc = PorDescUnitario }, JsonRequestBehavior.AllowGet);
         }

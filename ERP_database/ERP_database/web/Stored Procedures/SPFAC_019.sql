@@ -1,4 +1,4 @@
-﻿--EXEC web.SPFAC_019 1,0,999999,0,99999,'2019/08/13',0,0,'admin'
+﻿--EXEC web.SPFAC_019 1,0,999999,0,99999,'01/01/2019','30/08/2019',0,0,'admin'
 CREATE PROCEDURE [web].[SPFAC_019]
 (
 @IdEmpresa int,
@@ -34,9 +34,10 @@ FROM     fa_factura INNER JOIN
 				  left join
 				  (
 				  select d.IdEmpresa, d.IdSucursal, d.IdBodega_Cbte, d.IdCbte_vta_nota, d.dc_TipoDocumento, SUM(D.dc_ValorPago)dc_ValorPago
-				  from cxc_cobro_det as d inner join cxc_cobro as c
-				  on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro left join web.tb_FiltroReportes as f on c.IdEmpresa = f.IdEmpresa and c.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario inner join
-				  cxc_cobro_tipo as t on t.IdCobro_tipo = c.IdCobro_tipo
+				  from cxc_cobro_det as d inner join 
+				  cxc_cobro as c on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro left join 
+				  web.tb_FiltroReportes as f on c.IdEmpresa = f.IdEmpresa and c.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario inner join
+				  cxc_cobro_tipo as t on t.IdCobro_tipo = d.IdCobro_tipo
 				  where d.IdEmpresa = @IdEmpresa and c.cr_fecha <= @FechaFin and c.cr_estado = 'A' and t.IdMotivo_tipo_cobro = 'RET'
 				  GROUP BY d.IdEmpresa, d.IdSucursal, d.IdBodega_Cbte, d.IdCbte_vta_nota, d.dc_TipoDocumento
 				  ) as CobroRet on fa_factura.IdEmpresa = CobroRet.IdEmpresa AND fa_factura.IdSucursal = CobroRet.IdSucursal AND fa_factura.IdBodega = CobroRet.IdBodega_Cbte AND fa_factura.IdCbteVta = CobroRet.IdCbte_vta_nota AND fa_factura.vt_tipoDoc = CobroRet.dc_TipoDocumento
@@ -77,7 +78,7 @@ FROM     fa_notaCreDeb INNER JOIN
 				  select d.IdEmpresa, d.IdSucursal, d.IdBodega_Cbte, d.IdCbte_vta_nota, d.dc_TipoDocumento, SUM(D.dc_ValorPago)dc_ValorPago
 				  from cxc_cobro_det as d inner join cxc_cobro as c
 				  on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro left join web.tb_FiltroReportes as f on c.IdEmpresa = f.IdEmpresa and c.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario inner join
-				  cxc_cobro_tipo as t on t.IdCobro_tipo = c.IdCobro_tipo
+				  cxc_cobro_tipo as t on t.IdCobro_tipo = d.IdCobro_tipo
 				  where d.IdEmpresa = @IdEmpresa and c.cr_fecha <= @FechaFin and c.cr_estado = 'A' and t.IdMotivo_tipo_cobro = 'RET'
 				  GROUP BY d.IdEmpresa, d.IdSucursal, d.IdBodega_Cbte, d.IdCbte_vta_nota, d.dc_TipoDocumento
 				  ) as CobroRet on fa_notaCreDeb.IdEmpresa = CobroRet.IdEmpresa AND fa_notaCreDeb.IdSucursal = CobroRet.IdSucursal AND fa_notaCreDeb.IdBodega = CobroRet.IdBodega_Cbte AND fa_notaCreDeb.IdNota = CobroRet.IdCbte_vta_nota AND fa_notaCreDeb.CodDocumentoTipo = CobroRet.dc_TipoDocumento

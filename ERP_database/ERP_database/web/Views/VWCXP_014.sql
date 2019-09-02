@@ -1,17 +1,17 @@
-﻿CREATE VIEW [web].[VWCXP_014]
+﻿CREATE VIEW web.VWCXP_014
 AS
 SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.co_fechaOg, 
-                  dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura AS co_factura, dbo.cp_retencion.serie2 + '-' + dbo.cp_retencion.NumRetencion AS NumRetencion, 
-                  dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_FechaContabilizacion, dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_plazo, dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, 
-                  dbo.cp_orden_giro.co_subtotal_siniva, dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.IdCod_ICE, dbo.cp_orden_giro.co_total, dbo.cp_orden_giro.co_vaCoa, 
-                  dbo.cp_orden_giro.IdIden_credito, dbo.cp_orden_giro.IdCod_101, dbo.cp_orden_giro.co_valorpagar, NULL AS IdTipoFlujo, dbo.cp_orden_giro.IdTipoServicio, dbo.cp_orden_giro.Estado, dbo.cp_orden_giro.IdSucursal, 
-                  dbo.cp_orden_giro.PagoLocExt, dbo.cp_orden_giro.PaisPago, dbo.cp_orden_giro.ConvenioTributacion, dbo.cp_orden_giro.PagoSujetoRetencion, dbo.cp_orden_giro.BseImpNoObjDeIva, dbo.cp_orden_giro.fecha_autorizacion, 
-                  dbo.cp_orden_giro.Num_Autorizacion, dbo.cp_orden_giro.Num_Autorizacion_Imprenta, dbo.cp_orden_giro.cp_es_comprobante_electronico, dbo.cp_orden_giro.Tipodoc_a_Modificar, dbo.cp_orden_giro.estable_a_Modificar, 
-                  dbo.cp_orden_giro.ptoEmi_a_Modificar, dbo.cp_orden_giro.num_docu_Modificar, dbo.cp_orden_giro.aut_doc_Modificar, dbo.cp_orden_giro.IdTipoMovi, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, 
-                  dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, dbo.cp_TipoDocumento.Descripcion, dbo.tb_sucursal.Su_Descripcion, 
+                  dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_retencion.serie2 + '-' + dbo.cp_retencion.NumRetencion AS NumRetencion, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_FechaContabilizacion, 
+                  dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_plazo, dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, dbo.cp_orden_giro.co_baseImponible, 
+                  dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, dbo.cp_orden_giro.IdCod_ICE, dbo.cp_orden_giro.co_total, dbo.cp_orden_giro.co_vaCoa, dbo.cp_orden_giro.IdIden_credito, dbo.cp_orden_giro.IdCod_101, 
+                  dbo.cp_orden_giro.co_valorpagar, NULL AS IdTipoFlujo, dbo.cp_orden_giro.IdTipoServicio, dbo.cp_orden_giro.Estado, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.PagoLocExt, dbo.cp_orden_giro.PaisPago, 
+                  dbo.cp_orden_giro.ConvenioTributacion, dbo.cp_orden_giro.PagoSujetoRetencion, dbo.cp_orden_giro.BseImpNoObjDeIva, dbo.cp_orden_giro.fecha_autorizacion, dbo.cp_orden_giro.Num_Autorizacion, 
+                  dbo.cp_orden_giro.Num_Autorizacion_Imprenta, dbo.cp_orden_giro.cp_es_comprobante_electronico, dbo.cp_orden_giro.Tipodoc_a_Modificar, dbo.cp_orden_giro.estable_a_Modificar, dbo.cp_orden_giro.ptoEmi_a_Modificar, 
+                  dbo.cp_orden_giro.num_docu_Modificar, dbo.cp_orden_giro.aut_doc_Modificar, dbo.cp_orden_giro.IdTipoMovi, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_razonSocial, 
+                  dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, dbo.cp_TipoDocumento.Descripcion, dbo.tb_sucursal.Su_Descripcion, 
                   'Facturas ' + (CASE WHEN cp_orden_giro.co_subtotal_iva > 0 THEN CAST(cp_orden_giro.co_Por_iva AS varchar(2)) + '%' ELSE '0%' END) AS Tarifa, dbo.cp_codigo_SRI.codigoSRI, 
                   dbo.cp_codigo_SRI.codigoSRI + ' - ' + dbo.cp_codigo_SRI.co_descripcion AS DescripcionCodigo, CASE WHEN cp_retencion.IdRetencion IS NULL THEN 'Facturas sin retención' ELSE 'Facturas con retención' END AS FacturaRetencion, 
-                  dbo.cp_orden_giro.co_subtotal_iva + dbo.cp_orden_giro.co_subtotal_siniva AS co_subtotal, CAST(CASE WHEN cp_retencion.IdRetencion IS NULL THEN 0 ELSE 1 END AS bit) AS TieneRetencion
+                  dbo.cp_orden_giro.co_subtotal_iva + dbo.cp_orden_giro.co_subtotal_siniva AS co_subtotal, CAST(CASE WHEN cp_retencion.IdRetencion IS NULL THEN 0 ELSE 1 END AS bit) AS TieneRetencion, dbo.cp_codigo_SRI.Sustenta
 FROM     dbo.cp_orden_giro INNER JOIN
                   dbo.cp_proveedor ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_orden_giro.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
                   dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
@@ -25,7 +25,33 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'n ColumnWidths = 11
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 11
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
          Table = 1176
@@ -43,6 +69,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'n ColumnWi
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_014';
+
+
 
 
 
@@ -169,29 +197,25 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 11
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begi', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_014';
+         Begin Table = "cp_codigo_SRI"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 268
+            End
+            DisplayFlags = 280
+            TopColumn = 15
+         End
+         Begin Table = "cp_retencion"
+            Begin Extent = 
+               Top = 532
+               Left = 48
+               Bottom = 695
+               Right = 278
+           ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_014';
+
+
 
 
 

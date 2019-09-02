@@ -22,10 +22,10 @@ FROM     dbo.fa_factura INNER JOIN
                   fa_factura.vt_tipoDoc = RET.dc_TipoDocumento LEFT JOIN
                       (SELECT d .IdEmpresa, d .IdSucursal, d .IdBodega_Cbte, d .IdCbte_vta_nota, d .dc_TipoDocumento, sum(d .dc_ValorPago) dc_ValorPago
                        FROM      cxc_cobro_det d
-                       WHERE   d .dc_TipoDocumento = 'FACT'
+                       WHERE   d .dc_TipoDocumento = 'FACT' AND (d .estado = 'A')
                        GROUP BY d .IdEmpresa, d .IdSucursal, d .IdBodega_Cbte, d .IdCbte_vta_nota, d .dc_TipoDocumento) AS Cobro ON Cobro.IdEmpresa = fa_factura.IdEmpresa AND COBRO.IdSucursal = fa_factura.IdSucursal AND 
                   COBRO.IdBodega_Cbte = fa_factura.IdBodega AND COBRO.IdCbte_vta_nota = fa_factura.IdCbteVta AND COBRO.dc_TipoDocumento = fa_factura.vt_tipoDoc
-WHERE  (dbo.fa_factura.Estado = 'A')
+WHERE  (dbo.fa_factura.Estado = 'A') --AND fa_factura.IdCliente = 552
 UNION ALL
 SELECT dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaCreDeb.IdBodega, dbo.fa_notaCreDeb.IdNota, dbo.fa_notaCreDeb.CodDocumentoTipo, ISNULL(dbo.fa_notaCreDeb_resumen.SubtotalConDscto, 0) 
                   AS sc_subtotal, ISNULL(dbo.fa_notaCreDeb_resumen.ValorIVA, 0) AS sc_iva, ISNULL(dbo.fa_notaCreDeb_resumen.Total, 0) AS sc_total, dbo.tb_persona.pe_nombreCompleto, dbo.fa_notaCreDeb.no_fecha, 
@@ -50,7 +50,7 @@ FROM     dbo.fa_notaCreDeb INNER JOIN
                   fa_notaCreDeb.IdNota = RET.IdCbte_vta_nota AND fa_notaCreDeb.CodDocumentoTipo = RET.dc_TipoDocumento LEFT JOIN
                       (SELECT d .IdEmpresa, d .IdSucursal, d .IdBodega_Cbte, d .IdCbte_vta_nota, d .dc_TipoDocumento, sum(d .dc_ValorPago) dc_ValorPago
                        FROM      cxc_cobro_det d
-                       WHERE   d .dc_TipoDocumento = 'FACT'
+                       WHERE   d .dc_TipoDocumento = 'FACT' AND D .estado = 'A'
                        GROUP BY d .IdEmpresa, d .IdSucursal, d .IdBodega_Cbte, d .IdCbte_vta_nota, d .dc_TipoDocumento) AS Cobro ON Cobro.IdEmpresa = fa_notaCreDeb.IdEmpresa AND COBRO.IdSucursal = fa_notaCreDeb.IdSucursal AND 
                   COBRO.IdBodega_Cbte = fa_notaCreDeb.IdBodega AND COBRO.IdCbte_vta_nota = fa_notaCreDeb.IdNota AND COBRO.dc_TipoDocumento = fa_notaCreDeb.CodDocumentoTipo
 WHERE  (dbo.fa_notaCreDeb.CreDeb = 'D')

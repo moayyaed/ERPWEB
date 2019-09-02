@@ -191,16 +191,24 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="IdCliente"></label>
-                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();">
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarCliente();" title="Crear/Modificar Cliente">
                         <i class="fa fa-external-link-square"></i>
                     </button>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdPuntoVta">Contactos</label>
                     @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_cliente_contactos, "IdContacto", "Nombres_combo"), new { @class = "form-control", @id = "IdContacto" })
                     @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdCliente"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarContacto();" title="Crear Contactos">
+                        <i class="fa fa-address-book"></i>
+                    </button>
                 </div>
             </div>
             <div class="col-md-3" id="datos_punto_venta1">
@@ -440,7 +448,6 @@
     $(function () {
         CargarPuntosDeVenta_Factura();
         GetUltimoDocumento_Factura();
-        get_direccion();
         get_placa();
         MostrarBotonesSRI();
 
@@ -451,6 +458,10 @@
 
         $("#IdPuntoVta_Fact").change(function () {
             GetUltimoDocumento_Factura();
+        });
+
+        $("#IdContacto").change(function () {
+            SetDireccionDestino();
         });
     });
 
@@ -663,6 +674,9 @@ function cargar_lista_contactos() {
             }
         });
     }
+    else{
+        $("#IdContacto").empty();
+    }
 }
 
     function SetCodigo() {
@@ -709,6 +723,27 @@ function cargar_lista_contactos() {
                     $("#ride").hide();
                     $("#sri").hide();
                 }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function SetDireccionDestino() {
+        var datos = {
+            IdCliente: IdCliente.GetValue(),
+            IdContacto: $("#IdContacto").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetDireccionDestino", "ClienteContactos",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Direccion_Destino").val(data);
+
             },
             error: function (error) {
             }

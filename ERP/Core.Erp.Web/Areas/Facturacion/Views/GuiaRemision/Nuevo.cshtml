@@ -199,7 +199,17 @@
             win.focus();
         }
     }
-
+    function CrearModificarContacto() {
+        var location = GetPathServer();
+        if(IdCliente.GetValue() > 0)
+        {
+            var win = window.open(location + "/Facturacion/ClienteContactos/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdCliente=" + IdCliente.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            alert ("Debe seleccionar un cliente para crear contactos");
+        }
+    }
 
 </script>
 @using (Html.BeginForm("Nuevo", "GuiaRemision", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -259,11 +269,19 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-10">
                     <div class="form-group">
                         <label for="IdPuntoVta">Contactos</label>
                         @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_cliente_contactos, "IdContacto", "Nombres_combo"), new { @class = "form-control", @id = "IdContacto" })
                         @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="IdCliente"></label>
+                        <button type="button" class="btn btn-primary form-control " onclick="CrearModificarContacto();" title="Crear Contactos">
+                            <i class="fa fa-address-book"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3" id="datos_punto_venta1">
@@ -622,6 +640,7 @@ $(function () {
     get_direccion();
     get_placa();
     GetDireccionOrigen();
+    SetDireccionDestino();
 
     $("#IdSucursal").change(function () {
         CargarPuntosDeVenta();
@@ -640,6 +659,10 @@ $(function () {
 
     $("#IdTransportista").change(function () {
         get_placa();
+    });
+
+    $("#IdContacto").change(function () {
+        SetDireccionDestino();
     });
 });
 
@@ -906,6 +929,9 @@ function cargar_lista_contactos() {
             }
         });
     }
+    else{
+        $("#IdContacto").empty();
+    }
 }
 
 function SetCodigo() {
@@ -923,6 +949,27 @@ function SetCodigo() {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             $("#CodGuiaRemision").val(data);
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function SetDireccionDestino() {
+    var datos = {
+        IdCliente: IdCliente.GetValue(),
+        IdContacto: $("#IdContacto").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("GetDireccionDestino", "ClienteContactos",new { Area = "Facturacion"})',
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#Direccion_Destino").val(data);
+
         },
         error: function (error) {
         }

@@ -177,6 +177,23 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(lst_cliente_contactos, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetDireccionDestino(decimal IdCliente = 0, int IdContacto=0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var Direccion = "";
+            var resultado = bus_cliente_contactos.get_info(IdEmpresa, IdCliente, IdContacto);
+
+            if (resultado == null)
+            {
+                Direccion = "";
+            }
+            else
+            {
+                Direccion = resultado.Direccion;
+            }
+            return Json(Direccion, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }
