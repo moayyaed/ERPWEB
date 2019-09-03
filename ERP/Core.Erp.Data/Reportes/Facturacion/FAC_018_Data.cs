@@ -28,7 +28,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                     && fecha_ini <= q.no_fecha
                     && q.no_fecha <= fecha_fin
                     && q.NaturalezaNota == (string.IsNullOrEmpty(Naturaleza) ? q.NaturalezaNota : Naturaleza)
-                    && q.Estado == (mostrar_anulados== true ? "A" : q.Estado)
+                    && q.Estado == (mostrar_anulados== true ? q.Estado : "A")
                     ).Select(q => new FAC_018_Info
                     {
                         IdEmpresa = q.IdEmpresa,
