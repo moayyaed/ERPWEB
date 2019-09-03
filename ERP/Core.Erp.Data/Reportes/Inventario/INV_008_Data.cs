@@ -38,7 +38,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                         && q.IdProducto <= IdProductoFin
                         && fecha_ini <= q.cm_fecha
                         && q.cm_fecha <= fecha_fin
-                        && q.IdCentroCosto.Contains(IdCentroCosto)
+                        && q.IdCentroCosto == (string.IsNullOrEmpty(IdCentroCosto) ? q.IdCentroCosto : IdCentroCosto)
                         && q.cm_tipo_movi == (string.IsNullOrEmpty(signo) ? q.cm_tipo_movi : signo )
                         && IdMovi_inven_tipoIni <= q.IdMovi_inven_tipo
                         && q.IdMovi_inven_tipo <= IdMovi_inven_tipoFin

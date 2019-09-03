@@ -266,7 +266,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdLinea = 0,
                 IdGrupo = 0,
                 IdSubGrupo = 0,
-                considerarSinAprobar = false
+                considerarSinAprobar = false,
+                InventarioFisico = false
             };
 
             cargar_combos(model);
@@ -294,6 +295,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
             report.p_AgruparPorID.Value = model.mostrar_detallado;
             report.p_ConsiderarNoAprobados.Value = model.considerarSinAprobar;
+            report.p_InventarioFisico.Value = model.InventarioFisico;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             
@@ -327,6 +329,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdMarca.Value = model.IdMarca;
             report.p_AgruparPorID.Value = model.mostrar_detallado;
             report.p_ConsiderarNoAprobados.Value = model.considerarSinAprobar;
+            report.p_InventarioFisico.Value = model.InventarioFisico;
             cargar_combos(model);
 
             report.usuario = SessionFixed.IdUsuario;

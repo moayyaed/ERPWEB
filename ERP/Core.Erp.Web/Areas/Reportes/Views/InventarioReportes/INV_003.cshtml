@@ -111,6 +111,15 @@
                             @Html.ValidationMessageFor(q => q.IdMarca, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.DevExpress().CheckBoxFor(q => q.InventarioFisico, settings =>
+                           {
+                               settings.Name = "InventarioFisico";
+                               settings.Text = "Inventario Fisico";
+                           }).GetHtml()
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -180,7 +189,7 @@
 }
 <script>
     $(function () {
-        cargar_bodega();
+        //cargar_bodega();
     });
 
     $("#IdSucursal").change(function () {
