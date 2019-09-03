@@ -34,6 +34,8 @@ namespace Core.Erp.Data.SeguridadAcceso
                                  Lectura = meu.Lectura,
                                  Escritura = meu.Escritura,
                                  Eliminacion = meu.Eliminacion,
+                                 IdMenuPadre = m.IdMenuPadre,
+                                 DescripcionMenu = m.DescripcionMenu,
                                  info_menu = new seg_Menu_Info
                                  {
                                      IdMenu = m.IdMenu,
@@ -58,6 +60,8 @@ namespace Core.Erp.Data.SeguridadAcceso
                                         IdEmpresa = IdEmpresa,
                                         IdUsuario = IdUsuario,
                                         IdMenu = q.IdMenu,
+                                        IdMenuPadre = q.IdMenuPadre,
+                                        DescripcionMenu = q.DescripcionMenu,
                                         info_menu = new seg_Menu_Info
                                         {
                                             IdMenu = q.IdMenu,

@@ -11,6 +11,8 @@ namespace Core.Erp.Info.SeguridadAcceso
         public int IdEmpresa { get; set; }
         public string IdUsuario { get; set; }
         public int IdMenu { get; set; }
+        public int? IdMenuPadre { get; set; }
+        public string DescripcionMenu { get; set; }
         public bool Lectura { get; set; }
         public bool Escritura { get; set; }
         public bool Eliminacion { get; set; }
