@@ -1279,6 +1279,7 @@
     <Compile Include="Reportes\Banco\BAN_011_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_012_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_013_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_014_Data.cs" />
     <Compile Include="Reportes\Base\Model_reportes.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1466,6 +1467,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\VWBAN_013.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Base\VWBAN_014.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\VWCAJ_001.cs">

@@ -673,6 +673,12 @@
     <Compile Include="Reportes\Banco\BAN_013_Rpt.Designer.cs">
       <DependentUpon>BAN_013_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Banco\BAN_014_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_014_Rpt.Designer.cs">
+      <DependentUpon>BAN_014_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Caja\CAJ_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10280,6 +10286,7 @@
     <Content Include="Areas\Facturacion\Views\ClienteContactos\Anular.cshtml" />
     <Content Include="Areas\Facturacion\Views\ClienteContactos\_CmbCliente.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PeriodoContable\_GridViewPartial_Cierre_x_Modulo.cshtml" />
+    <Content Include="Areas\Reportes\Views\BancoReportes\BAN_014.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10477,6 +10484,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_013_Rpt.resx">
       <DependentUpon>BAN_013_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_014_Rpt.resx">
+      <DependentUpon>BAN_014_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Caja\CAJ_001_Rpt.resx">
       <DependentUpon>CAJ_001_Rpt.cs</DependentUpon>

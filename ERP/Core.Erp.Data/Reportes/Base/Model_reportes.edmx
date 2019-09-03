@@ -571,6 +571,43 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWBAN_013' no tiene definida ningu
           <Property Name="IdCbteCble_cxp" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.VWBAN_014' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWBAN_014">
+          <Key>
+            <PropertyRef Name="IdEmpresa_pago" />
+            <PropertyRef Name="IdTipoCbte_pago" />
+            <PropertyRef Name="IdCbteCble_pago" />
+            <PropertyRef Name="TipoPago" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdBanco" />
+            <PropertyRef Name="ba_descripcion" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="MontoAplicado" />
+            <PropertyRef Name="BAN_Fecha" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa_pago" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbte_pago" Type="int" Nullable="false" />
+          <Property Name="IdCbteCble_pago" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TipoPago" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdBanco" Type="int" Nullable="false" />
+          <Property Name="ba_descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="cb_Cheque" Type="varchar" MaxLength="50" />
+          <Property Name="BAN_Observacion" Type="varchar(max)" />
+          <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CXP_Fecha" Type="datetime" />
+          <Property Name="CXP_Documento" Type="varchar" MaxLength="50" />
+          <Property Name="CXP_Observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="MontoAplicado" Type="float" Nullable="false" />
+          <Property Name="BAN_Fecha" Type="date" Nullable="false" />
+          <Property Name="IdCbteCble_cxp" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdTipoCbte_cxp" Type="int" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCAJ_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWCAJ_001">
           <Key>
@@ -5475,6 +5512,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWBAN_013].[BAN_Fecha] AS [BAN_Fecha], 
     [VWBAN_013].[IdCbteCble_cxp] AS [IdCbteCble_cxp]
     FROM [web].[VWBAN_013] AS [VWBAN_013]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VWBAN_014" EntityType="Self.VWBAN_014" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWBAN_014].[IdEmpresa_pago] AS [IdEmpresa_pago], 
+    [VWBAN_014].[IdTipoCbte_pago] AS [IdTipoCbte_pago], 
+    [VWBAN_014].[IdCbteCble_pago] AS [IdCbteCble_pago], 
+    [VWBAN_014].[TipoPago] AS [TipoPago], 
+    [VWBAN_014].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [VWBAN_014].[IdBanco] AS [IdBanco], 
+    [VWBAN_014].[ba_descripcion] AS [ba_descripcion], 
+    [VWBAN_014].[cb_Cheque] AS [cb_Cheque], 
+    [VWBAN_014].[BAN_Observacion] AS [BAN_Observacion], 
+    [VWBAN_014].[IdPersona] AS [IdPersona], 
+    [VWBAN_014].[CXP_Fecha] AS [CXP_Fecha], 
+    [VWBAN_014].[CXP_Documento] AS [CXP_Documento], 
+    [VWBAN_014].[CXP_Observacion] AS [CXP_Observacion], 
+    [VWBAN_014].[MontoAplicado] AS [MontoAplicado], 
+    [VWBAN_014].[BAN_Fecha] AS [BAN_Fecha], 
+    [VWBAN_014].[IdCbteCble_cxp] AS [IdCbteCble_cxp], 
+    [VWBAN_014].[IdTipoCbte_cxp] AS [IdTipoCbte_cxp], 
+    [VWBAN_014].[IdSucursal] AS [IdSucursal], 
+    [VWBAN_014].[Su_Descripcion] AS [Su_Descripcion]
+    FROM [web].[VWBAN_014] AS [VWBAN_014]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCAJ_001" EntityType="Self.VWCAJ_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -12140,6 +12200,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="ConsiderarNoAprobados" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="VWCXP_014" EntityType="Model_reportes.VWCXP_014" />
+          <EntitySet Name="VWBAN_014" EntityType="Model_reportes.VWBAN_014" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13996,6 +14057,41 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="co_subtotal" Type="Double" Nullable="false" />
           <Property Name="TieneRetencion" Type="Boolean" />
           <Property Name="Sustenta" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VWBAN_014">
+          <Key>
+            <PropertyRef Name="IdEmpresa_pago" />
+            <PropertyRef Name="IdTipoCbte_pago" />
+            <PropertyRef Name="IdCbteCble_pago" />
+            <PropertyRef Name="TipoPago" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdBanco" />
+            <PropertyRef Name="ba_descripcion" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="MontoAplicado" />
+            <PropertyRef Name="BAN_Fecha" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa_pago" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_pago" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_pago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TipoPago" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="ba_descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="cb_Cheque" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BAN_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CXP_Fecha" Type="DateTime" Precision="3" />
+          <Property Name="CXP_Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CXP_Observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="MontoAplicado" Type="Double" Nullable="false" />
+          <Property Name="BAN_Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdCbteCble_cxp" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdTipoCbte_cxp" Type="Int32" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -18199,6 +18295,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWBAN_014">
+            <EntityTypeMapping TypeName="Model_reportes.VWBAN_014">
+              <MappingFragment StoreEntitySet="VWBAN_014">
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdTipoCbte_cxp" ColumnName="IdTipoCbte_cxp" />
+                <ScalarProperty Name="IdCbteCble_cxp" ColumnName="IdCbteCble_cxp" />
+                <ScalarProperty Name="BAN_Fecha" ColumnName="BAN_Fecha" />
+                <ScalarProperty Name="MontoAplicado" ColumnName="MontoAplicado" />
+                <ScalarProperty Name="CXP_Observacion" ColumnName="CXP_Observacion" />
+                <ScalarProperty Name="CXP_Documento" ColumnName="CXP_Documento" />
+                <ScalarProperty Name="CXP_Fecha" ColumnName="CXP_Fecha" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="BAN_Observacion" ColumnName="BAN_Observacion" />
+                <ScalarProperty Name="cb_Cheque" ColumnName="cb_Cheque" />
+                <ScalarProperty Name="ba_descripcion" ColumnName="ba_descripcion" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="TipoPago" ColumnName="TipoPago" />
+                <ScalarProperty Name="IdCbteCble_pago" ColumnName="IdCbteCble_pago" />
+                <ScalarProperty Name="IdTipoCbte_pago" ColumnName="IdTipoCbte_pago" />
+                <ScalarProperty Name="IdEmpresa_pago" ColumnName="IdEmpresa_pago" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

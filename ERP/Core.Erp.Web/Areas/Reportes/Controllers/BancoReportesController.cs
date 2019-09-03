@@ -635,5 +635,58 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult BAN_014()
+        {
+            cl_filtros_banco_Info model = new cl_filtros_banco_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdPersona = 0
+            };
+            cargar_banco(model.IdEmpresa);
+            BAN_014_Rpt report = new BAN_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdPersona.Value = model.IdPersona;
+            report.p_IdBanco.Value = model.IdBanco;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult BAN_014(cl_filtros_banco_Info model)
+        {
+            cargar_banco(model.IdEmpresa);
+            BAN_014_Rpt report = new BAN_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdPersona.Value = model.IdPersona == null ? 0 : Convert.ToDecimal(model.IdPersona);
+            report.p_IdBanco.Value = model.IdBanco;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }
