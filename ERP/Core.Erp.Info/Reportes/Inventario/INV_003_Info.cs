@@ -14,7 +14,7 @@ namespace Core.Erp.Info.Reportes.Inventario
         public decimal IdProducto { get; set; }
         public double Stock { get; set; }
         public double Costo_promedio { get; set; }
-        public double Costo_total { get; set; }
+        public Nullable<double> Costo_total { get; set; }
         public string Su_Descripcion { get; set; }
         public string bo_Descripcion { get; set; }
         public string pr_codigo { get; set; }

@@ -146,6 +146,8 @@ namespace Core.Erp.Info.Helps
         public string IdCentroCosto { get; set; }
         public string tipo_movi { get; set; }
         public int[] IntArray { get; set; }
+        public bool InventarioFisico { get; set; }
+
 
         public cl_filtros_inventario_Info()
         {

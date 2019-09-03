@@ -154,10 +154,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             i_validar.IdUsuarioCreacion = SessionFixed.IdUsuario;
             i_validar.IdUsuarioModificacion = SessionFixed.IdUsuario;
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.gi_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
-            {
-                return false;
-            }
+            //if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.gi_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
+            //{
+            //    return false;
+            //}
 
             return true;
         }
