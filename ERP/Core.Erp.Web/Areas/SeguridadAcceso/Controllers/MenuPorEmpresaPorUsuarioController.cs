@@ -18,15 +18,25 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         #region Index
 
         static seg_Menu_x_Empresa_x_Usuario_Bus bus_menu_x_empresa_x_usuario = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Lista_Memoria Lista_menu_usuario = new seg_Menu_x_Empresa_x_Usuario_Lista_Memoria();
+
         public ActionResult Index()
         {
             seg_Menu_x_Empresa_x_Usuario_Info model = new seg_Menu_x_Empresa_x_Usuario_Info();
+
+            Lista_menu_usuario.set_list(new List<seg_Menu_x_Empresa_x_Usuario_Info>());
             cargar_combos();
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(seg_Menu_x_Empresa_x_Usuario_Info model)
         {
+            var lista = bus_menu_x_empresa_x_usuario.get_list(model.IdEmpresa, model.IdUsuario, true);
+            ViewBag.IdEmpresa = model.IdEmpresa;
+            ViewBag.IdUsuario = model.IdUsuario;
+
+            Lista_menu_usuario.set_list(lista);
+
             cargar_combos();
             return View(model);
         }
@@ -57,11 +67,14 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         #endregion
 
         [ValidateInput(false)]
-        public ActionResult TreeListPartial_menu_x_usuario(int IdEmpresa = 0, string IdUsuario = "")
+        public ActionResult TreeListPartial_menu_x_usuario(int IdEmpresa=0, string IdUsuario="")
         {
-            var model = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario,true);
+            //var model = bus_menu_x_empresa_x_usuario.get_list(IdEmpresa, IdUsuario,true);
+            var model = Lista_menu_usuario.get_list();
+
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdUsuario = IdUsuario;
+
             ViewData["selectedIDs"] = Request.Params["selectedIDs"];
             if (ViewData["selectedIDs"] == null)
             {
@@ -81,6 +94,19 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             return PartialView("_TreeListPartial_menu_x_usuario", model);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] seg_Menu_x_Empresa_x_Usuario_Info info)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            info.IdEmpresa = IdEmpresa;
+            if (info != null)
+                Lista_menu_usuario.UpdateRow(info);
+
+            var model = Lista_menu_usuario.get_list();
+
+            return PartialView("_TreeListPartial_menu_x_usuario", model);
+        }
+
         public JsonResult guardar(int IdEmpresa = 0, string IdUsuario = "", string Ids = "")
         {
             string[] array = Ids.Split(',');
@@ -91,13 +117,16 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             {
                 if (!string.IsNullOrEmpty(item.Key))
                 {
-                    seg_Menu_x_Empresa_x_Usuario_Info info = new seg_Menu_x_Empresa_x_Usuario_Info
-                    {
-                        IdEmpresa = IdEmpresa,
-                        IdMenu = Convert.ToInt32(item.Key),
-                        IdUsuario = IdUsuario
-                    };
-                    lista.Add(info);
+                    var lst_menu = Lista_menu_usuario.get_list();
+                    var menu = lst_menu.Where(q=> q.IdMenu == Convert.ToInt32(item.Key)).FirstOrDefault();
+                    //seg_Menu_x_Empresa_x_Usuario_Info info = new seg_Menu_x_Empresa_x_Usuario_Info
+                    //{
+                    //    IdEmpresa = IdEmpresa,
+                    //    IdMenu = Convert.ToInt32(item.Key),
+                    //    IdUsuario = IdUsuario
+                    //};
+                    if(menu!= null)
+                        lista.Add(menu);
                 }
             }
             bus_menu_x_empresa_x_usuario.eliminarDB(IdEmpresa, IdUsuario);
@@ -125,6 +154,34 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         public static void set_list(List<seg_Menu_x_Empresa_x_Usuario_Info> list)
         {
             HttpContext.Current.Session[Variable] = list;
+        }
+    }
+
+    public class seg_Menu_x_Empresa_x_Usuario_Lista_Memoria
+    {
+        static string Variable = "fx_MenuXEmpresaXUsuarioFixed_Lista";
+        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list()
+        {
+            if (HttpContext.Current.Session[Variable] == null)
+            {
+                List<seg_Menu_x_Empresa_x_Usuario_Info> list = new List<seg_Menu_x_Empresa_x_Usuario_Info>();
+
+                HttpContext.Current.Session[Variable] = list;
+            }
+            return (List<seg_Menu_x_Empresa_x_Usuario_Info>)HttpContext.Current.Session[Variable];
+        }
+
+        public void set_list(List<seg_Menu_x_Empresa_x_Usuario_Info> list)
+        {
+            HttpContext.Current.Session[Variable] = list;
+        }
+
+        public void UpdateRow(seg_Menu_x_Empresa_x_Usuario_Info info)
+        {
+            seg_Menu_x_Empresa_x_Usuario_Info edited_info = get_list().Where(q => q.IdMenu == info.IdMenu).FirstOrDefault();
+            edited_info.Lectura = info.Lectura;
+            edited_info.Escritura = info.Escritura;
+            edited_info.Eliminacion = info.Eliminacion;
         }
     }
 }

@@ -28,6 +28,19 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script src="~/Scripts/ScriptsGenerales.js"></script>
 <script type="text/javascript">
+    var selectedIDs_OS;
+    function OnBeginCallback_OS(s, e) {
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs["selectedIDs_OS"] = selectedIDs_OS;
+    }
+    function OnSelectionChanged_OS(s, e) {
+        s.GetSelectedFieldValues("IdGeneradoOS", GetSelectedFieldValuesCallback_OS);
+    }
+    function GetSelectedFieldValuesCallback_OS(values) {
+        //Capture all selected keys
+        selectedIDs_OS = values.join(',');
+    }
+
     function ImprimirRIDE() {
         var location = GetPathServer();
         var win = window.open(location +"/Reportes/CuentasporPagarReportes/CXP_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdRetencion="+@Model.info_retencion.IdRetencion, '_blank');
@@ -77,6 +90,61 @@
             }
         });
     };
+
+    function MostrarModalOS() {
+        selectedIDs_OS = "";
+        var datos = {
+            IdTransaccionSession:$("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdProveedor: IdProveedor.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetList_OrderServicio_PorIngresar", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_ing_inv_os_x_ingresar.PerformCallback();
+                GridViewPartial_ing_inv_os_x_ingresar.UnselectRows();
+                $("#OsModal").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function AddOS() {
+        var datos = {
+            IDs: selectedIDs_OS,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNew_IOS", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+        GridViewPartial_ing_inv_os_x_ingresar.PerformCallback();
+        GridViewPartial_ing_inv_os_x_ingresar.UnselectRows();
+        GridViewPartial_ing_inv_os_det.PerformCallback();
+        $("#OsModal").modal("hide");
+    }
 </script>
 
 @using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -95,6 +163,26 @@
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdTipoCbte);
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdCbteCble);
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdEmpresa);
+
+    <div class="modal fade" id="OsModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ordenes de servicio</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_ing_inv_os_x_ingresar")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddOS();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
     <div class="row">
@@ -504,6 +592,17 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_servicio">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModalOS();" title="Buscar ingreso por orden de servicio">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
