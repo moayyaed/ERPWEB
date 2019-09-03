@@ -554,7 +554,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             #region Punto de cargo
             if (info_det.IdPunto_cargo == null || info_det.IdPunto_cargo == 0)
-                info_det.cc_Descripcion = string.Empty;
+                info_det.nom_punto_cargo = string.Empty;
             else
             {
                 var pc = bus_pc.GetInfo(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.IdPunto_cargo));

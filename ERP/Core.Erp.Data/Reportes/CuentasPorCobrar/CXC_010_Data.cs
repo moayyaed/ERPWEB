@@ -17,7 +17,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                 int IdSucursalFin = IdSucursal == 0 ? 999999 : IdSucursal;
 
                 int IdClienteIni = Convert.ToInt32(IdCliente);
-                int IdClienteFin = IdCliente == 0 ? 9999999 : Convert.ToInt32(IdCliente);
+                int IdClienteFin = IdCliente == 0 ? 999999999 : Convert.ToInt32(IdCliente);
 
                 decimal Idtipo_clienteIni = Idtipo_cliente;
                 decimal Idtipo_clienteFin = Idtipo_cliente == 0 ? 9999999 : Idtipo_cliente;
