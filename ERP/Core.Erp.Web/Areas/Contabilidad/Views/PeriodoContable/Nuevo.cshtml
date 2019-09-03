@@ -12,6 +12,16 @@
 
 @using (Html.BeginForm("Nuevo", "PeriodoContable", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    @Html.HiddenFor(q => q.IdTransaccionSession)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -91,11 +101,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-4">
                 <div class="form-group">
                     @Html.DevExpress().CheckBoxFor(q => q.pe_cerrado_bool,
@@ -109,6 +114,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="modal-body">
+        @Html.Action("GridViewPartial_Cierre_x_Modulo")
     </div>
 
     <div class="box-footer">

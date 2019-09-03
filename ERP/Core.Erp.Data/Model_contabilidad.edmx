@@ -248,6 +248,21 @@
           <Property Name="pe_cerrado" Type="nvarchar" MaxLength="1" Nullable="false" />
           <Property Name="pe_estado" Type="nvarchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="ct_periodo_x_tb_modulo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="IdModulo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdPeriodo" Type="int" Nullable="false" />
+          <Property Name="IdModulo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Cerrado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="IdUsuarioUltModi" Type="varchar" MaxLength="50" />
+          <Property Name="FechaTransac" Type="datetime" />
+          <Property Name="FechaUltModi" Type="datetime" />
+        </EntityType>
         <EntityType Name="ct_plancta">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1109,6 +1124,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ct_periodo_x_tb_modulo_ct_periodo">
+          <End Role="ct_periodo" Type="Self.ct_periodo" Multiplicity="1" />
+          <End Role="ct_periodo_x_tb_modulo" Type="Self.ct_periodo_x_tb_modulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_periodo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdPeriodo" />
+            </Principal>
+            <Dependent Role="ct_periodo_x_tb_modulo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
           <End Role="ct_ClasificacionEBIT" Type="Self.ct_ClasificacionEBIT" Multiplicity="0..1" />
           <End Role="ct_plancta" Type="Self.ct_plancta" Multiplicity="*" />
@@ -1204,6 +1233,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <EntitySet Name="ct_grupocble" EntityType="Self.ct_grupocble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_parametro" EntityType="Self.ct_parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_periodo" EntityType="Self.ct_periodo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ct_periodo_x_tb_modulo" EntityType="Self.ct_periodo_x_tb_modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_plancta" EntityType="Self.ct_plancta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_plancta_nivel" EntityType="Self.ct_plancta_nivel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_punto_cargo" EntityType="Self.ct_punto_cargo" Schema="dbo" store:Type="Tables" />
@@ -1461,6 +1491,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_anio_fiscal" EntitySet="ct_anio_fiscal" />
             <End Role="ct_periodo" EntitySet="ct_periodo" />
           </AssociationSet>
+          <AssociationSet Name="FK_ct_periodo_x_tb_modulo_ct_periodo" Association="Self.FK_ct_periodo_x_tb_modulo_ct_periodo">
+            <End Role="ct_periodo" EntitySet="ct_periodo" />
+            <End Role="ct_periodo_x_tb_modulo" EntitySet="ct_periodo_x_tb_modulo" />
+          </AssociationSet>
           <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Self.FK_ct_plancta_ct_ClasificacionEBIT">
             <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
             <End Role="ct_plancta" EntitySet="ct_plancta" />
@@ -1569,6 +1603,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Property Name="pe_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ct_anio_fiscal" Relationship="Self.FK_ct_periodo_ct_anio_fiscal" FromRole="ct_periodo" ToRole="ct_anio_fiscal" />
           <NavigationProperty Name="ct_cbtecble" Relationship="Model_contabilidad.FK_ct_cbtecble_ct_periodo" FromRole="ct_periodo" ToRole="ct_cbtecble" />
+          <NavigationProperty Name="ct_periodo_x_tb_modulo" Relationship="Model_contabilidad.FK_ct_periodo_x_tb_modulo_ct_periodo" FromRole="ct_periodo" ToRole="ct_periodo_x_tb_modulo" />
         </EntityType>
         <EntityType Name="ct_plancta_nivel">
           <Key>
@@ -1781,6 +1816,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <AssociationSet Name="FK_ct_plancta_ct_plancta_nivel" Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel">
             <End Role="ct_plancta_nivel" EntitySet="ct_plancta_nivel" />
             <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <EntitySet Name="ct_periodo_x_tb_modulo" EntityType="Model_contabilidad.ct_periodo_x_tb_modulo" />
+          <AssociationSet Name="FK_ct_periodo_x_tb_modulo_ct_periodo" Association="Model_contabilidad.FK_ct_periodo_x_tb_modulo_ct_periodo">
+            <End Role="ct_periodo" EntitySet="ct_periodo" />
+            <End Role="ct_periodo_x_tb_modulo" EntitySet="ct_periodo_x_tb_modulo" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ct_parametro">
@@ -2880,6 +2920,36 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ct_periodo_x_tb_modulo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="IdModulo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="IdModulo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cerrado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaTransac" Type="DateTime" Precision="3" />
+          <Property Name="FechaUltModi" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ct_periodo" Relationship="Model_contabilidad.FK_ct_periodo_x_tb_modulo_ct_periodo" FromRole="ct_periodo_x_tb_modulo" ToRole="ct_periodo" />
+        </EntityType>
+        <Association Name="FK_ct_periodo_x_tb_modulo_ct_periodo">
+          <End Type="Model_contabilidad.ct_periodo" Role="ct_periodo" Multiplicity="1" />
+          <End Type="Model_contabilidad.ct_periodo_x_tb_modulo" Role="ct_periodo_x_tb_modulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_periodo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdPeriodo" />
+            </Principal>
+            <Dependent Role="ct_periodo_x_tb_modulo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3563,6 +3633,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
                 <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
                 <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
                 <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ct_periodo_x_tb_modulo">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_periodo_x_tb_modulo">
+              <MappingFragment StoreEntitySet="ct_periodo_x_tb_modulo">
+                <ScalarProperty Name="FechaUltModi" ColumnName="FechaUltModi" />
+                <ScalarProperty Name="FechaTransac" ColumnName="FechaTransac" />
+                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
+                <ScalarProperty Name="IdModulo" ColumnName="IdModulo" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

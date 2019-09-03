@@ -72,6 +72,8 @@
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_grupocble" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_periodo_x_tb_modulo" Width="1.5" PointX="5.25" PointY="22.375" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_periodo_x_tb_modulo_ct_periodo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
