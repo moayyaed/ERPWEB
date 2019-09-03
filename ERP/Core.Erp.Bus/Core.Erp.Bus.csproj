@@ -111,6 +111,7 @@
     <Compile Include="Contabilidad\ct_grupocble_Bus.cs" />
     <Compile Include="Contabilidad\ct_parametro_Bus.cs" />
     <Compile Include="Contabilidad\ct_periodo_Bus.cs" />
+    <Compile Include="Contabilidad\ct_periodo_x_tb_modulo_Bus.cs" />
     <Compile Include="Contabilidad\ct_plancta_Bus.cs" />
     <Compile Include="Contabilidad\ct_plancta_nivel_Bus.cs" />
     <Compile Include="Contabilidad\ct_punto_cargo_Bus.cs" />

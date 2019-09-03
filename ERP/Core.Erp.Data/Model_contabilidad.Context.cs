@@ -64,6 +64,7 @@ namespace Core.Erp.Data
         public DbSet<ct_ClasificacionEBIT> ct_ClasificacionEBIT { get; set; }
         public DbSet<ct_punto_cargo_grupo> ct_punto_cargo_grupo { get; set; }
         public DbSet<ct_plancta> ct_plancta { get; set; }
+        public DbSet<ct_periodo_x_tb_modulo> ct_periodo_x_tb_modulo { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

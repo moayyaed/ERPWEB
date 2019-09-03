@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Contabilidad
 {
     public class ct_periodo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo periodo es obligatorio")]
         public int IdPeriodo { get; set; }
@@ -28,6 +29,8 @@ namespace Core.Erp.Info.Contabilidad
         public string nom_periodo_combo { get; set; }
         public string smes { get; set; }
         public string AnioMes { get; set; }
+        public string IdUsuario { get; set; }
+        public List<ct_periodo_x_tb_modulo_Info> lst_periodo_x_modulo { get; set; }
 
     }
 }

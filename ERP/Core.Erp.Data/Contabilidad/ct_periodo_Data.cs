@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Data.Compras.Base;
 using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
@@ -13,6 +14,7 @@ namespace Core.Erp.Data.Contabilidad
 {
     public class ct_periodo_Data
     {
+        tb_modulo_Data data_modulo = new tb_modulo_Data();
         public List<ct_periodo_Info> get_list(int IdEmpresa, bool mostrar_anulados)
         {
 
@@ -150,6 +152,45 @@ namespace Core.Erp.Data.Contabilidad
                         pe_cerrado = info.pe_cerrado_bool == true ? "S" : "N",
                         pe_estado = info.pe_estado = "A"
                     };
+
+                    if (info.pe_cerrado_bool == true)
+                    {
+                        List<tb_modulo_Info> lst_modulo = data_modulo.get_list();
+
+                        if (lst_modulo.Count() > 0)
+                        {
+                            foreach (var item in lst_modulo)
+                            {
+                                Context.ct_periodo_x_tb_modulo.Add(new ct_periodo_x_tb_modulo
+                                {
+                                    IdEmpresa = info.IdEmpresa,
+                                    IdPeriodo = info.IdPeriodo,
+                                    IdModulo = item.CodModulo,
+                                    IdUsuario = info.IdUsuario,
+                                    FechaTransac = DateTime.Now
+                                });
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (info.lst_periodo_x_modulo.Count() > 0)
+                        {
+                            foreach (var item in info.lst_periodo_x_modulo)
+                            {
+                                Context.ct_periodo_x_tb_modulo.Add(new ct_periodo_x_tb_modulo
+                                {
+                                    IdEmpresa = info.IdEmpresa,
+                                    IdPeriodo = info.IdPeriodo,
+                                    IdModulo = item.IdModulo,
+                                    IdUsuario = info.IdUsuario,
+                                    FechaTransac = DateTime.Now
+                                });
+
+                            }
+                        }
+                    }
+
                     Context.ct_periodo.Add(Entity);
                     Context.SaveChanges();
                 }
@@ -174,6 +215,52 @@ namespace Core.Erp.Data.Contabilidad
                     Entity.pe_FechaFin = info.pe_FechaFin.Date;
                     Entity.pe_FechaIni = info.pe_FechaIni.Date;
                     Entity.pe_cerrado = info.pe_cerrado_bool == true ? "S" : "N";
+
+                    var lst_det = Context.ct_periodo_x_tb_modulo.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdPeriodo == info.IdPeriodo).ToList();
+                    Context.ct_periodo_x_tb_modulo.RemoveRange(lst_det);
+
+                    if (info.pe_cerrado_bool == true)
+                    {
+                        List<tb_modulo_Info> lst_modulo = data_modulo.get_list();
+
+                        if (lst_modulo.Count() > 0)
+                        {
+                            foreach (var item in lst_modulo)
+                            {
+                                Context.ct_periodo_x_tb_modulo.Add(new ct_periodo_x_tb_modulo
+                                {
+                                    IdEmpresa = info.IdEmpresa,
+                                    IdPeriodo = info.IdPeriodo,
+                                    IdModulo = item.CodModulo,
+                                    IdUsuario = info.IdUsuario,
+                                    FechaTransac = DateTime.Now,
+                                    IdUsuarioUltModi = info.IdUsuario,
+                                    FechaUltModi = DateTime.Now
+                                });
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (info.lst_periodo_x_modulo.Count() > 0)
+                        {
+                            foreach (var item in info.lst_periodo_x_modulo)
+                            {
+                                Context.ct_periodo_x_tb_modulo.Add(new ct_periodo_x_tb_modulo
+                                {
+                                    IdEmpresa = info.IdEmpresa,
+                                    IdPeriodo = info.IdPeriodo,
+                                    IdModulo = item.IdModulo,
+                                    IdUsuario = info.IdUsuario,
+                                    FechaTransac = DateTime.Now,
+                                    IdUsuarioUltModi =  item.IdUsuarioUltModi,
+                                    FechaUltModi = DateTime.Now,
+                                });
+
+                            }
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
                 return true;

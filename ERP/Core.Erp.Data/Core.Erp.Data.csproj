@@ -326,6 +326,7 @@
     <Compile Include="Contabilidad\ct_grupocble_Data.cs" />
     <Compile Include="Contabilidad\ct_parametro_Data.cs" />
     <Compile Include="Contabilidad\ct_periodo_Data.cs" />
+    <Compile Include="Contabilidad\ct_periodo_x_tb_modulo_Data.cs" />
     <Compile Include="Contabilidad\ct_plancta_Data.cs" />
     <Compile Include="Contabilidad\ct_plancta_nivel_Data.cs" />
     <Compile Include="Contabilidad\ct_punto_cargo_Data.cs" />
@@ -491,6 +492,9 @@
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="ct_periodo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_periodo_x_tb_modulo.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
     <Compile Include="ct_plancta.cs">
