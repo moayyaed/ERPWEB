@@ -9,7 +9,6 @@
 }
 <script>
     var selectedIDs;
-
     function OnBeginCallback(s, e) {
         //Pass all selected keys to GridView callback action
         e.customArgs["selectedIDs"] = selectedIDs;
@@ -18,7 +17,7 @@
         s.GetSelectedNodeValues("IdMenu", GetSelectedNodeValuesCallback);
     }
     function GetSelectedNodeValuesCallback(values) {
-            selectedIDs = values.join(',');
+        selectedIDs = values.join(',');
     }
 
     function guardar() {
@@ -44,6 +43,7 @@
             }
         });
     }
+
 </script>
 @using (Html.BeginForm("Index", "MenuPorEmpresaPorUsuario", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {

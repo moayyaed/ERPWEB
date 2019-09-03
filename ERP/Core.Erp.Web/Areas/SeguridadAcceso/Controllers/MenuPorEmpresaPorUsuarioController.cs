@@ -103,7 +103,21 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
                 Lista_menu_usuario.UpdateRow(info);
 
             var model = Lista_menu_usuario.get_list();
-
+            ViewData["selectedIDs"] = Request.Params["selectedIDs"];
+            if (ViewData["selectedIDs"] == null)
+            {
+                int x = 0;
+                string selectedIDs = "";
+                foreach (var item in model.Where(q => q.seleccionado == true).ToList())
+                {
+                    if (x == 0)
+                        selectedIDs = item.IdMenu.ToString();
+                    else
+                        selectedIDs += "," + item.IdMenu.ToString();
+                    x++;
+                }
+                ViewData["selectedIDs"] = selectedIDs;
+            }
             return PartialView("_TreeListPartial_menu_x_usuario", model);
         }
 
