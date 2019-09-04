@@ -1,9 +1,7 @@
 ﻿using Core.Erp.Bus.Compras;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.Compras;
-using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;
-using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +10,13 @@ using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.Compras.Controllers
 {
-    public class AprobacionOCController : Controller
+    public class AprobacionOSController : Controller
     {
         #region Index
 
         com_ordencompra_local_Bus bus_ordencompra = new com_ordencompra_local_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-        com_orden_aprobacion_List List_apro = new com_orden_aprobacion_List();
+        com_orden_aprobacion_os_List List_apro = new com_orden_aprobacion_os_List();
 
         public ActionResult Index()
         {
@@ -43,7 +41,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_aprobacion_oc( DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal)
+        public ActionResult GridViewPartial_aprobacion_os(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal)
         {
 
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
@@ -53,8 +51,8 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
             ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
 
-            var model = bus_ordencompra.GetListPorAprobar(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin);
-            return PartialView("_GridViewPartial_aprobacion_oc", model);
+            var model = bus_ordencompra.GetListPorAprobar_OS(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            return PartialView("_GridViewPartial_aprobacion_os", model);
         }
         #endregion
 
@@ -62,9 +60,9 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         {
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, true);
             ViewBag.lst_sucursal = lst_sucursal;
-            
+
         }
-        public JsonResult aprobar(int IdEmpresa = 0, int IdSucursal = 0 , string Ids = "", string MotivoAprobacion = "", string IdUsuarioAprobacion = "")
+        public JsonResult aprobar(int IdEmpresa = 0, int IdSucursal = 0, string Ids = "", string MotivoAprobacion = "", string IdUsuarioAprobacion = "")
         {
             string[] array = Ids.Split(',');
 
@@ -78,7 +76,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
                 return Json(resultado_orden, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult rechazar(int IdEmpresa = 0, string Ids = "", int IdSucursal = 0 , string MotivoAprobacion = "", string IdUsuarioAprobacion = "")
+        public JsonResult rechazar(int IdEmpresa = 0, string Ids = "", int IdSucursal = 0, string MotivoAprobacion = "", string IdUsuarioAprobacion = "")
         {
             string[] array = Ids.Split(',');
 
@@ -94,9 +92,9 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         }
 
     }
-    public class com_orden_aprobacion_List
+    public class com_orden_aprobacion_os_List
     {
-        string variable = "com_ordencompra_local_Info";
+        string variable = "com_ordencompra_local_os_Info";
         public List<com_ordencompra_local_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
@@ -112,5 +110,4 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
             HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
         }
     }
-
 }

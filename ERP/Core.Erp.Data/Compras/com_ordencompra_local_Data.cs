@@ -513,6 +513,47 @@ namespace Core.Erp.Data.Compras
             }
         }
 
+        public List<com_ordencompra_local_Info> GetListPorAprobar_OS(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                List<com_ordencompra_local_Info> List;
+                using (Entities_compras Context = new Entities_compras())
+                {
+                    List = Context.vwcom_ordencompra_local.Where(
+                        q => q.IdEmpresa == IdEmpresa
+                        && q.IdSucursal == IdSucursal
+                        && q.oc_fecha >= fecha_ini
+                        && q.oc_fecha <= fecha_fin
+                        && q.IdEstadoAprobacion_cat == "xAPRO"
+                        && q.Tipo == "OS"
+                        && q.Estado == "A").Select(q => new com_ordencompra_local_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            IdSucursal = q.IdSucursal,
+                            IdOrdenCompra = q.IdOrdenCompra,
+                            SecuenciaTipo = q.SecuenciaTipo,
+                            IdEstadoAprobacion_cat = q.IdEstadoAprobacion_cat,
+                            oc_observacion = q.oc_observacion,
+                            EstadoBool = q.Estado == "A" ? true : false,
+                            oc_fecha = q.oc_fecha,
+                            Su_Descripcion = q.Su_Descripcion,
+                            pe_nombreCompleto = q.pe_nombreCompleto,
+                            TerminoPago = q.TerminoPago,
+                            Total = q.Total,
+                            oc_codigo = q.oc_codigo
+
+                        }).ToList();
+                }
+                return List;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<com_ordencompra_local_Info> get_list_x_ingresar(int IdEmpresa, int IdSucursal, decimal IdResponsable)
         {
             try

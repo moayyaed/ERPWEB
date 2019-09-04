@@ -87,6 +87,18 @@ namespace Core.Erp.Bus.Compras
                 throw;
             }
         }
+        public List<com_ordencompra_local_Info> GetListPorAprobar_OS(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                return odata.GetListPorAprobar_OS(IdEmpresa, IdSucursal, fecha_ini, fecha_fin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool AprobarOC(int IdEmpresa, int IdSucursal, string[] Lista, string MotivoAprobacion, string IdUsuarioAprobacion)
         {
             try

@@ -280,6 +280,7 @@
     <Compile Include="Areas\Caja\Controllers\TipoMovimientoCajaController.cs" />
     <Compile Include="Areas\Compras\ComprasAreaRegistration.cs" />
     <Compile Include="Areas\Compras\Controllers\AprobacionOCController.cs" />
+    <Compile Include="Areas\Compras\Controllers\AprobacionOSController.cs" />
     <Compile Include="Areas\Compras\Controllers\CatalogoComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\CatalogoTipoComprasController.cs" />
     <Compile Include="Areas\Compras\Controllers\CompradorController.cs" />
@@ -10287,6 +10288,8 @@
     <Content Include="Areas\Facturacion\Views\ClienteContactos\_CmbCliente.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PeriodoContable\_GridViewPartial_Cierre_x_Modulo.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_014.cshtml" />
+    <Content Include="Areas\Compras\Views\AprobacionOS\Index.cshtml" />
+    <Content Include="Areas\Compras\Views\AprobacionOS\_GridViewPartial_aprobacion_os.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
