@@ -604,6 +604,7 @@ namespace Core.Erp.Data.Inventario
                         IdSucursal = q.IdSucursal,
                         IdBodega = q.IdBodega,
                         IdProducto = q.IdProducto,
+                        Stock_minimo = q.Stock_minimo,
                         Eliminar = true
                     }).ToList();
 
@@ -628,7 +629,7 @@ namespace Core.Erp.Data.Inventario
                     #region Agregar o modificar
                     foreach (var item in info.lst_producto_x_bodega)
                     {
-                        var prod_x_bos = lst_det_producto_x_bodega.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdSucursal == item.IdSucursal && v.IdBodega == item.IdBodega && v.IdProducto == info.IdProducto).FirstOrDefault();
+                        var prod_x_bos = Context.in_producto_x_tb_bodega.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdSucursal == item.IdSucursal && v.IdBodega == item.IdBodega && v.IdProducto == info.IdProducto).FirstOrDefault();
                         if (prod_x_bos == null)
                         {
                             Context.in_producto_x_tb_bodega.Add(new in_producto_x_tb_bodega

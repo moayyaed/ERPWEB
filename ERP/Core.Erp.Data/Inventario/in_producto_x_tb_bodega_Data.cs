@@ -12,7 +12,7 @@ namespace Core.Erp.Data.Inventario
         public List<in_producto_x_tb_bodega_Info> get_lis(int IdEmpresa, decimal IdProducto)
         {
             List<in_producto_x_tb_bodega_Info> lista=null;
-            int secuancia = 0;
+            int secuancia = 1;
             try
             {
                 using (Entities_inventario Context=new Entities_inventario())
