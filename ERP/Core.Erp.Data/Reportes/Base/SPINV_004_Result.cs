@@ -26,5 +26,8 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<int> IdMarca { get; set; }
         public double Stock_minimo { get; set; }
         public double StockActual { get; set; }
+        public Nullable<double> costo { get; set; }
+        public Nullable<int> IdFecha { get; set; }
+        public Nullable<double> CantidadMinPedir { get; set; }
     }
 }

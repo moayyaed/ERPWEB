@@ -42,7 +42,10 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  NomSucursal = q.NomSucursal,
                                  NomTipo = q.NomTipo,
                                  StockActual = q.StockActual,
-                                 Stock_minimo = q.Stock_minimo
+                                 Stock_minimo = q.Stock_minimo,
+                                 IdFecha = q.IdFecha,
+                                 costo = q.costo,
+                                 CantidadMinPedir = q.CantidadMinPedir
                              }).ToList();
                 }
                 return Lista;
