@@ -31,7 +31,7 @@ namespace Core.Erp.Data.Reportes.Base
         public string NomUnidad { get; set; }
         public double dm_cantidad_sinConversion { get; set; }
         public Nullable<double> mv_costo_sinConversion { get; set; }
-        public Nullable<double> CostoTotal { get; set; }
+        public double CostoTotal { get; set; }
         public string cm_tipo_movi { get; set; }
         public string IdEstadoAproba { get; set; }
         public string CodMoviInven { get; set; }

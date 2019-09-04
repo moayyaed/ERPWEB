@@ -47,7 +47,10 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  cn_subtotal_siniva = q.cn_subtotal_siniva,
                                  num_documento = q.num_documento,
                                  Su_Descripcion =q.Su_Descripcion,
-                                 NomTipoNota = q.NomTipoNota
+                                 NomTipoNota = q.NomTipoNota,
+                                 cc_Descripcion = q.cc_Descripcion,
+                                 nom_punto_cargo_grupo = q.nom_punto_cargo_grupo,
+                                 nom_punto_cargo = q.nom_punto_cargo
 
                              }).ToList();
                 }

@@ -147,7 +147,8 @@ namespace Core.Erp.Info.Helps
         public string tipo_movi { get; set; }
         public int[] IntArray { get; set; }
         public bool InventarioFisico { get; set; }
-
+        public string IdEstadoAproba { get; set; }
+        
 
         public cl_filtros_inventario_Info()
         {

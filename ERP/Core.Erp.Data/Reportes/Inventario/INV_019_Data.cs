@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.Inventario
 {
     public class INV_019_Data
     {
-        public List<INV_019_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, string Tipo, DateTime fecha_ini, DateTime fecha_fin )
+        public List<INV_019_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, string Tipo, string IdEstadoAproba, DateTime fecha_ini, DateTime fecha_fin )
         {
             try
             {
@@ -34,6 +34,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                     && q.IdProducto <= IdProductoFin
                     && fecha_ini <= q.cm_fecha
                     && q.cm_fecha <= fecha_fin
+                    && q.IdEstadoAproba == (IdEstadoAproba =="" ? q.IdEstadoAproba : IdEstadoAproba)
                     ).Select(q => new INV_019_Info
                     {
                         IdEmpresa = q.IdEmpresa,

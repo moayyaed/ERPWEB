@@ -435,7 +435,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 tm_descripcion = "TODAS"
             });
             ViewBag.lst_movi = lst_movi;
-            
+
 
             in_Producto_Bus bus_producto = new in_Producto_Bus();
             var lst_producto = bus_producto.get_list(IdEmpresa, false);
@@ -495,6 +495,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             lst_TipoMov.Add("+", "INGRESOS");
             lst_TipoMov.Add("-", "EGRESOS");
             ViewBag.lst_TipoMov = lst_TipoMov;
+
+            Dictionary<string, string> lst_estado_apro = new Dictionary<string, string>();
+            lst_estado_apro.Add("", "TODOS");
+            lst_estado_apro.Add("APRO", "APROBADOS");
+            lst_estado_apro.Add("XAPRO", "POR APROBAR");
+            ViewBag.lst_estado_apro = lst_estado_apro;
         }
 
         public ActionResult INV_005(bool mostrar_detallado = false)
@@ -1275,7 +1281,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdBodega = 0,
-                IdProducto=0
+                IdProducto=0,
+                IdEstadoAproba = ""
             };
 
             INV_019_Rpt report = new INV_019_Rpt();
@@ -1295,6 +1302,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_IdProducto.Value = model.IdProducto;
+            report.p_IdEstadoAproba.Value = model.IdEstadoAproba;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             cargar_combos(model);
@@ -1322,6 +1330,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_IdProducto.Value = model.IdProducto;
+            report.p_IdEstadoAproba.Value = model.IdEstadoAproba;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             cargar_combos(model);

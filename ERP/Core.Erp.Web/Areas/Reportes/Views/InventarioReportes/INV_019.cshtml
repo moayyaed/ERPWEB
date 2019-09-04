@@ -64,6 +64,13 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
+                            <label for="IdMovi_inven_tipo">Estado</label>
+                            @Html.DropDownListFor(q => q.IdEstadoAproba, new SelectList(ViewBag.lst_estado_apro, "Key", "Value"), new { @class = "form-control", @id = "IdEstadoAproba" })
+                            @Html.ValidationMessageFor(q => q.IdEstadoAproba, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <label for="">Fecha ini*</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">

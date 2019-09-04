@@ -53,8 +53,10 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  IdPresentacion = q.IdPresentacion,
                                  nom_presentacion = q.nom_presentacion,
                                  IdMarca = q.IdMarca,
-                                 NomMarca = q.NomMarca
-                                 
+                                 NomMarca = q.NomMarca,
+                                 IdUnidadMedida = q.IdUnidadMedida,
+                                 NomUnidad = q.NomUnidad
+
                              }).ToList();
                              
                 }

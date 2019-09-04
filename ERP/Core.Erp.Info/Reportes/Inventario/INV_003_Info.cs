@@ -33,5 +33,7 @@ namespace Core.Erp.Info.Reportes.Inventario
         public string nom_presentacion { get; set; }
         public int IdMarca { get; set; }
         public string NomMarca { get; set; }
+        public string IdUnidadMedida { get; set; }
+        public string NomUnidad { get; set; }
     }
 }
