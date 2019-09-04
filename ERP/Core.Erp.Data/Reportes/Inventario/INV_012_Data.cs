@@ -22,6 +22,9 @@ namespace Core.Erp.Data.Reportes.Inventario
                 int IdMovi_inven_tipoIni = IdMovi_inven_tipo;
                 int IdMovi_inven_tipoFin = IdMovi_inven_tipo == 0 ? 999999 : IdMovi_inven_tipo;
 
+                FechaIni = FechaIni.Date;
+                FechaFin = FechaFin.Date;
+
                 List<INV_012_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
