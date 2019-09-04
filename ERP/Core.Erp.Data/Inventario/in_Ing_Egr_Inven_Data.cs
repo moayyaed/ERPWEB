@@ -700,6 +700,7 @@ namespace Core.Erp.Data.Inventario
                         Observacion = ""
                     });
                     db_i.SaveChanges();
+                    db_c.SaveChanges();
                 }
 
                 db_c.Dispose();
@@ -1137,7 +1138,7 @@ namespace Core.Erp.Data.Inventario
                 return true;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
