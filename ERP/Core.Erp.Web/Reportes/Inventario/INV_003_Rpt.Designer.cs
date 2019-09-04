@@ -752,9 +752,11 @@
             this.xrTableCell52.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell52.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Stock])")});
+            this.xrTableCell52.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell52.Name = "xrTableCell52";
             this.xrTableCell52.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell52.StylePriority.UseBorders = false;
+            this.xrTableCell52.StylePriority.UseFont = false;
             this.xrTableCell52.StylePriority.UsePadding = false;
             this.xrTableCell52.StylePriority.UseTextAlignment = false;
             xrSummary1.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
@@ -769,9 +771,11 @@
             this.xrTableCell31.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Costo_promedio])")});
+            this.xrTableCell31.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell31.Name = "xrTableCell31";
             this.xrTableCell31.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell31.StylePriority.UseBorders = false;
+            this.xrTableCell31.StylePriority.UseFont = false;
             this.xrTableCell31.StylePriority.UsePadding = false;
             this.xrTableCell31.StylePriority.UseTextAlignment = false;
             xrSummary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
@@ -785,9 +789,11 @@
             this.lbl_costo3.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.lbl_costo3.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Costo_total])")});
+            this.lbl_costo3.Font = new System.Drawing.Font("Verdana", 7F);
             this.lbl_costo3.Name = "lbl_costo3";
             this.lbl_costo3.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.lbl_costo3.StylePriority.UseBorders = false;
+            this.lbl_costo3.StylePriority.UseFont = false;
             this.lbl_costo3.StylePriority.UsePadding = false;
             this.lbl_costo3.StylePriority.UseTextAlignment = false;
             xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
@@ -907,6 +913,7 @@
             this.xrTableCell76.StylePriority.UseTextAlignment = false;
             this.xrTableCell76.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             this.xrTableCell76.Weight = 2.7370951622537647D;
+            this.xrTableCell76.WordWrap = false;
             // 
             // xrTableCell15
             // 
@@ -1004,8 +1011,7 @@
             // xrTableCell109
             // 
             this.xrTableCell109.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(\'TOTAL \', [Su_Descripcion], \' - \', \'TOTAL\', [bo_Descripcion], \' - \', \'TOTA" +
-                    "L\', [nom_linea], \' - \', \'TOTAL\', [nom_grupo], \' - \', \'TOTAL\', [nom_subgrupo] )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(\'TOTAL \', [bo_Descripcion])")});
             this.xrTableCell109.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
             this.xrTableCell109.Name = "xrTableCell109";
             this.xrTableCell109.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
@@ -1031,9 +1037,11 @@
             this.xrTableCell51.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell51.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Stock])")});
+            this.xrTableCell51.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell51.Name = "xrTableCell51";
             this.xrTableCell51.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell51.StylePriority.UseBorders = false;
+            this.xrTableCell51.StylePriority.UseFont = false;
             this.xrTableCell51.StylePriority.UsePadding = false;
             this.xrTableCell51.StylePriority.UseTextAlignment = false;
             xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
@@ -1048,9 +1056,11 @@
             this.xrTableCell111.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell111.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Costo_promedio])")});
+            this.xrTableCell111.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell111.Name = "xrTableCell111";
             this.xrTableCell111.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell111.StylePriority.UseBorders = false;
+            this.xrTableCell111.StylePriority.UseFont = false;
             this.xrTableCell111.StylePriority.UsePadding = false;
             this.xrTableCell111.StylePriority.UseTextAlignment = false;
             xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
@@ -1064,9 +1074,11 @@
             this.lbl_costo2.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.lbl_costo2.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Costo_total])")});
+            this.lbl_costo2.Font = new System.Drawing.Font("Verdana", 7F);
             this.lbl_costo2.Name = "lbl_costo2";
             this.lbl_costo2.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.lbl_costo2.StylePriority.UseBorders = false;
+            this.lbl_costo2.StylePriority.UseFont = false;
             this.lbl_costo2.StylePriority.UsePadding = false;
             this.lbl_costo2.StylePriority.UseTextAlignment = false;
             xrSummary6.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
@@ -1253,15 +1265,13 @@
             // 
             // xrTableCell42
             // 
-            this.xrTableCell42.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(\'Total \',[ca_Categoria],\' - \',[nom_linea],\' - \', [nom_grupo], \' - \', [nom_" +
-                    "subgrupo] )")});
             this.xrTableCell42.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
             this.xrTableCell42.Name = "xrTableCell42";
             this.xrTableCell42.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell42.StylePriority.UseFont = false;
             this.xrTableCell42.StylePriority.UsePadding = false;
             this.xrTableCell42.StylePriority.UseTextAlignment = false;
+            this.xrTableCell42.Text = "TOTAL CATEGORIZACION";
             this.xrTableCell42.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
             this.xrTableCell42.Weight = 3.0297805242111782D;
             // 
@@ -1281,9 +1291,11 @@
             this.xrTableCell46.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell46.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Stock])")});
+            this.xrTableCell46.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell46.Name = "xrTableCell46";
             this.xrTableCell46.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell46.StylePriority.UseBorders = false;
+            this.xrTableCell46.StylePriority.UseFont = false;
             this.xrTableCell46.StylePriority.UsePadding = false;
             this.xrTableCell46.StylePriority.UseTextAlignment = false;
             xrSummary7.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
@@ -1297,9 +1309,11 @@
             this.xrTableCell44.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell44.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Costo_promedio])")});
+            this.xrTableCell44.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell44.Name = "xrTableCell44";
             this.xrTableCell44.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.xrTableCell44.StylePriority.UseBorders = false;
+            this.xrTableCell44.StylePriority.UseFont = false;
             this.xrTableCell44.StylePriority.UsePadding = false;
             this.xrTableCell44.StylePriority.UseTextAlignment = false;
             xrSummary8.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
@@ -1313,9 +1327,11 @@
             this.lbl_costo1.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.lbl_costo1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Costo_total])")});
+            this.lbl_costo1.Font = new System.Drawing.Font("Verdana", 7F);
             this.lbl_costo1.Name = "lbl_costo1";
             this.lbl_costo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 3, 0, 100F);
             this.lbl_costo1.StylePriority.UseBorders = false;
+            this.lbl_costo1.StylePriority.UseFont = false;
             this.lbl_costo1.StylePriority.UsePadding = false;
             this.lbl_costo1.StylePriority.UseTextAlignment = false;
             xrSummary9.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
