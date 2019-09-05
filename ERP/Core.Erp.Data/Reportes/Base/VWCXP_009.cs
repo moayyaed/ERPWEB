@@ -30,7 +30,7 @@ namespace Core.Erp.Data.Reportes.Base
         public System.DateTime co_FechaFactura { get; set; }
         public string Estado { get; set; }
         public string TipoDocumento { get; set; }
-        public Nullable<System.DateTime> fecha_retencion { get; set; }
+        public System.DateTime fecha_retencion { get; set; }
         public Nullable<int> ejercicio_fiscal { get; set; }
         public string Impuesto { get; set; }
         public double base_retencion { get; set; }

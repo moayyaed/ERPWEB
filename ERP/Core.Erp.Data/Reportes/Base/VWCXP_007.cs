@@ -26,7 +26,7 @@ namespace Core.Erp.Data.Reportes.Base
         public string pe_cedulaRuc { get; set; }
         public string serie_fact { get; set; }
         public string num_factura { get; set; }
-        public Nullable<System.DateTime> co_FechaFactura { get; set; }
+        public System.DateTime co_FechaFactura { get; set; }
         public double subtotal_iva { get; set; }
         public double subtotal_sin_iva { get; set; }
         public double valor_iva { get; set; }
