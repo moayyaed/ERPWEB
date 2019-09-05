@@ -1216,6 +1216,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
           <Parameter Name="IdSucursalInicio" Type="int" Mode="In" />
           <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
         </Function>
+        <Function Name="GenerarDINARDAP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EntidadRegulatoria">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="SucursalIni" Type="int" Mode="In" />
+          <Parameter Name="SucursalFin" Type="int" Mode="In" />
+          <Parameter Name="fechaIni" Type="datetime" Mode="In" />
+          <Parameter Name="fechaFin" Type="datetime" Mode="In" />
+        </Function>
         <EntityContainer Name="Model_contabilidadStoreContainer">
           <EntitySet Name="ct_anio_fiscal" EntityType="Self.ct_anio_fiscal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_anio_fiscal_x_cuenta_utilidad" EntityType="Self.ct_anio_fiscal_x_cuenta_utilidad" Schema="dbo" store:Type="Tables" />
@@ -1822,6 +1829,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             <End Role="ct_periodo" EntitySet="ct_periodo" />
             <End Role="ct_periodo_x_tb_modulo" EntitySet="ct_periodo_x_tb_modulo" />
           </AssociationSet>
+          <FunctionImport Name="GenerarDINARDAP" ReturnType="Collection(Model_contabilidad.GenerarDINARDAP_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="SucursalIni" Mode="In" Type="Int32" />
+            <Parameter Name="SucursalFin" Mode="In" Type="Int32" />
+            <Parameter Name="fechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="ct_parametro">
           <Key>
@@ -2950,6 +2964,53 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GenerarDINARDAP_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Decimal" Name="IdCliente" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="Codigo" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="IdCbteVta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="CodCbteVta" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="vt_tipoDoc" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="vt_serie1" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="vt_serie2" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="vt_NumFactura" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Su_Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="pe_nombreCompleto" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Valor_Original" Nullable="true" />
+          <Property Type="Double" Name="Total_Pagado" Nullable="false" />
+          <Property Type="Double" Name="Valor_x_Vencer" Nullable="true" />
+          <Property Type="Double" Name="x_Vencer_1_30_Dias" Nullable="true" />
+          <Property Type="Double" Name="x_Vencer_31_90_Dias" Nullable="true" />
+          <Property Type="Double" Name="x_Vencer_91_180_Dias" Nullable="true" />
+          <Property Type="Double" Name="x_Vencer_181_360_Dias" Nullable="true" />
+          <Property Type="Double" Name="x_Vencer_Mayor_a_360Dias" Nullable="true" />
+          <Property Type="Double" Name="Valor_Vencido" Nullable="true" />
+          <Property Type="Double" Name="Vencido_1_30_Dias" Nullable="true" />
+          <Property Type="Double" Name="Vencido_31_90_Dias" Nullable="true" />
+          <Property Type="Double" Name="Vencido_91_180_Dias" Nullable="true" />
+          <Property Type="Double" Name="Vencido_181_360_Dias" Nullable="true" />
+          <Property Type="Double" Name="Vencido_Mayor_a_360Dias" Nullable="true" />
+          <Property Type="DateTime" Name="vt_fech_venc" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="vt_fecha" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Idtipo_cliente" Nullable="false" />
+          <Property Type="Int32" Name="Dias_Vencidos" Nullable="true" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="pe_telefonoOfic" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Cod_Provincia" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Cod_Ciudad" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="cod_parroquia" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="pe_Naturaleza" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="pe_sexo" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="IdTipoDocumento" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="25" />
+          <Property Type="Decimal" Name="Plazo" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="cod_entidad_dinardap" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="cr_fechaCobro" Nullable="true" />
+          <Property Type="Int32" Name="Valor_cobrado" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3651,6 +3712,57 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwct_RevisionContableFacturas' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GenerarDINARDAP" FunctionName="Model_contabilidad.Store.GenerarDINARDAP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_contabilidad.GenerarDINARDAP_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="CodCbteVta" ColumnName="CodCbteVta" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="Valor_Original" ColumnName="Valor_Original" />
+                <ScalarProperty Name="Total_Pagado" ColumnName="Total_Pagado" />
+                <ScalarProperty Name="Valor_x_Vencer" ColumnName="Valor_x_Vencer" />
+                <ScalarProperty Name="x_Vencer_1_30_Dias" ColumnName="x_Vencer_1_30_Dias" />
+                <ScalarProperty Name="x_Vencer_31_90_Dias" ColumnName="x_Vencer_31_90_Dias" />
+                <ScalarProperty Name="x_Vencer_91_180_Dias" ColumnName="x_Vencer_91_180_Dias" />
+                <ScalarProperty Name="x_Vencer_181_360_Dias" ColumnName="x_Vencer_181_360_Dias" />
+                <ScalarProperty Name="x_Vencer_Mayor_a_360Dias" ColumnName="x_Vencer_Mayor_a_360Dias" />
+                <ScalarProperty Name="Valor_Vencido" ColumnName="Valor_Vencido" />
+                <ScalarProperty Name="Vencido_1_30_Dias" ColumnName="Vencido_1_30_Dias" />
+                <ScalarProperty Name="Vencido_31_90_Dias" ColumnName="Vencido_31_90_Dias" />
+                <ScalarProperty Name="Vencido_91_180_Dias" ColumnName="Vencido_91_180_Dias" />
+                <ScalarProperty Name="Vencido_181_360_Dias" ColumnName="Vencido_181_360_Dias" />
+                <ScalarProperty Name="Vencido_Mayor_a_360Dias" ColumnName="Vencido_Mayor_a_360Dias" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
+                <ScalarProperty Name="Dias_Vencidos" ColumnName="Dias_Vencidos" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="pe_telefonoOfic" ColumnName="pe_telefonoOfic" />
+                <ScalarProperty Name="Cod_Provincia" ColumnName="Cod_Provincia" />
+                <ScalarProperty Name="Cod_Ciudad" ColumnName="Cod_Ciudad" />
+                <ScalarProperty Name="cod_parroquia" ColumnName="cod_parroquia" />
+                <ScalarProperty Name="pe_Naturaleza" ColumnName="pe_Naturaleza" />
+                <ScalarProperty Name="pe_sexo" ColumnName="pe_sexo" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="Plazo" ColumnName="Plazo" />
+                <ScalarProperty Name="cod_entidad_dinardap" ColumnName="cod_entidad_dinardap" />
+                <ScalarProperty Name="cr_fechaCobro" ColumnName="cr_fechaCobro" />
+                <ScalarProperty Name="Valor_cobrado" ColumnName="Valor_cobrado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

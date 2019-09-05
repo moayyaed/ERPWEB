@@ -332,6 +332,7 @@
     <Compile Include="Contabilidad\ct_punto_cargo_Data.cs" />
     <Compile Include="Contabilidad\ct_punto_cargo_grupo_Data.cs" />
     <Compile Include="Contabilidad\ct_RevisionContable_Data.cs" />
+    <Compile Include="Contabilidad\Dinardap_Data.cs" />
     <Compile Include="cp_codigo_SRI.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
@@ -854,6 +855,9 @@
     <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Data.cs" />
     <Compile Include="General\tb_transportista_Data.cs" />
     <Compile Include="General\tb_visor_video_Data.cs" />
+    <Compile Include="GenerarDINARDAP_Result.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Helps\FilesHelper_Data.cs" />
     <Compile Include="Importacion\imp_catalogo_Data.cs" />
     <Compile Include="Importacion\imp_catalogo_tipo_Data.cs" />
