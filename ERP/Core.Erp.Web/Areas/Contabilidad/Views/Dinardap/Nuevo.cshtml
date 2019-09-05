@@ -120,7 +120,7 @@
                 <div class="form-group">
                     <label for="info_periodo"></label>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-primary" onclick="Descargar();" title="Descargar">Descargar</button>
+                        <button type="submit" class="btn btn-primary" title="Descargar">Descargar</button>
                     </div>
                 </div>
             </div>
@@ -131,25 +131,3 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
-<script type="text/javascript">
-    function Descargar() {
-        var datos = {
-            IntArray : IntArray.GetValue(),
-            IdPeriodo: IdPeriodoIni.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("DescargarDinardap", "Dinardap", new { Area = "Contabilidad"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-
-            },
-            error: function (error) {
-            }
-        });
-    }
-</script>

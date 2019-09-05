@@ -45,12 +45,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             byte[] archivo;
             List<DinardapData_Info> lst_archivo = new List<DinardapData_Info>();
             List<Dinardap_Info> ListInfoDinardap = new List<Dinardap_Info>();
-            //string[] array = IntArray.Split(',');
-
-            if (model.IdPeriodoIni == 0)
-            {
-                ViewBag.mensaje = "El reporte para Dinardap se ejecuta por periodo, selecciona un periodo";
-            }
 
             if (model.IntArray.Count()>0 && model.IdPeriodoIni != 0)
             {
@@ -71,13 +65,14 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         private void cargar_combos()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
             var lst_periodos = bus_periodo.get_list(IdEmpresa, false);
             ViewBag.lst_periodos = lst_periodos;
 
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
             var lst_sucursal = bus_sucursal.get_list(IdEmpresa, false);
-            //lst_sucursal.Where(q => q.IdSucursal == Convert.ToInt32(SessionFixed.IdSucursal)).FirstOrDefault().Seleccionado = true;
+            lst_sucursal.Where(q => q.IdSucursal == IdSucursal).FirstOrDefault().Seleccionado = true;
             ViewBag.lst_sucursal = lst_sucursal;
         }
 
@@ -187,33 +182,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #endregion
 
         #region Archivo
-        public FileResult DescargarDinardap(string IntArray = "", int IdPeriodo = 0)
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            byte[] archivo;
-            List<DinardapData_Info> lst_archivo = new List<DinardapData_Info>();
-            List<Dinardap_Info> ListInfoDinardap = new List<Dinardap_Info>();
-            string[] array = IntArray.Split(',');
-
-            if (IdPeriodo == 0)
-            {
-                ViewBag.mensaje = "El reporte para Dinardap se ejecuta por periodo, selecciona un periodo";
-            }
-
-            if (!string.IsNullOrEmpty(IntArray) && IdPeriodo!=0)
-            {
-                foreach (var item in array)
-                {
-                    lst_archivo.AddRange(bus_dinardap.get_info(IdEmpresa, IdPeriodo, Convert.ToInt32(item)));
-                }
-            }
-
-            var lst_dinardarp = set_dinardap_info(lst_archivo, IdPeriodo);
-
-            archivo = GetArchivo(lst_dinardarp, "Dinardar"+ IdPeriodo);
-            return File(archivo, "application/xml", "Dinardap"+ IdPeriodo + ".txt");
-        }
-
         private byte[] GetMulticash(List<Dinardap_Info> lst_dinardarp, string NombreArchivo)
         {
             try
