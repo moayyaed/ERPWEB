@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.Contabilidad;
+﻿using Core.Erp.Bus.Banco;
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Presupuesto;
 using Core.Erp.Info.Contabilidad;
@@ -32,6 +33,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
+        ba_Conciliacion_det_IngEgr_Bus bus_ConciliacionDet = new ba_Conciliacion_det_IngEgr_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -237,6 +239,14 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cb_Fecha, cl_enumeradores.eModulo.CONTA, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            #region Validacion de conciliación bancaria
+            if (!bus_ConciliacionDet.ValidarComprobanteEnConciliacion(IdEmpresa, IdTipoCbte, IdCbteCble, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;

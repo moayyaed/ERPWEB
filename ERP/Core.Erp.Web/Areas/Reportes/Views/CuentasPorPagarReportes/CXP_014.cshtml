@@ -185,26 +185,15 @@
                             @Html.ValidationMessageFor(q => q.mostrarAnulados, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="mostrarAnulados"></label>
                             @Html.DevExpress().CheckBoxFor(q => q.Check1, settings =>
                            {
                                settings.Name = "Check1";
-                               settings.Text = "Grupo tarifa";
+                               settings.Text = "Agrupar por estado de retención";
                            }).GetHtml()
                             @Html.ValidationMessageFor(q => q.Check1, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="mostrarAnulados"></label>
-                            @Html.DevExpress().CheckBoxFor(q => q.Check2, settings =>
-                           {
-                               settings.Name = "Check2";
-                               settings.Text = "Grupo código";
-                           }).GetHtml()
-                            @Html.ValidationMessageFor(q => q.Check2, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

@@ -89,5 +89,28 @@ namespace Core.Erp.Data.Banco
                 throw;
             }
         }
+
+        public bool ValidarComprobanteEnConciliacion(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble, ref string mensaje)
+        {
+            try
+            {
+                using (Entities_banco db = new Entities_banco())
+                {
+                    var lst = db.ba_Conciliacion_det_IngEgr.Where(q => q.IdEmpresa == IdEmpresa && q.IdTipocbte == IdTipoCbte && q.IdCbteCble == IdCbteCble).ToList();
+                    if (lst.Count > 0)
+                    {
+                        mensaje = "El comprobante se encuentra en una conciliación bancaria y no puede ser modificado";
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

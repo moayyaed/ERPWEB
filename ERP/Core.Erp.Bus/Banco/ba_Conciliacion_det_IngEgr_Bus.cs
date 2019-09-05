@@ -36,5 +36,18 @@ namespace Core.Erp.Bus.Banco
                 throw;
             }
         }
+
+        public bool ValidarComprobanteEnConciliacion(int IdEmpresa, int IdTipoCbte, decimal IdCbteCble, ref string mensaje)
+        {
+            try
+            {
+                return odata.ValidarComprobanteEnConciliacion(IdEmpresa, IdTipoCbte, IdCbteCble, ref mensaje);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

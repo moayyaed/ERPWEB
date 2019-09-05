@@ -81,6 +81,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string DescripcionAgrupacion { get; set; }
         public string NombreGrupo { get; set; }
         public int Grupo { get; set; }
+        public string Agrupacion { get; set; }
         #endregion
     }
 }

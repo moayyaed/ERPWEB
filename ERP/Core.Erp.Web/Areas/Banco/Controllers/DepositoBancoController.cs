@@ -30,7 +30,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Bus bus_det = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Bus();
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List List_ing = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List();
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal();
-
+        ba_Conciliacion_det_IngEgr_Bus bus_ConciliacionDet = new ba_Conciliacion_det_IngEgr_Bus();
         
         ba_Banco_Flujo_Det_List_Deposito List_Flujo = new ba_Banco_Flujo_Det_List_Deposito();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
@@ -255,6 +255,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cb_Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            #region Validacion de conciliación bancaria
+            if (!bus_ConciliacionDet.ValidarComprobanteEnConciliacion(IdEmpresa,IdTipocbte,IdCbteCble, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;

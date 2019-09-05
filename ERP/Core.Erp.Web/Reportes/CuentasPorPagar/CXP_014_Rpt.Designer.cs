@@ -138,6 +138,7 @@
             this.xrTableCell48 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell51 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell52 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.p_AgruparTieneRetencion = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -1017,7 +1018,7 @@
             this.GroupCodigo.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable9});
             this.GroupCodigo.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
-            new DevExpress.XtraReports.UI.GroupField("DescripcionCodigo", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            new DevExpress.XtraReports.UI.GroupField("Agrupacion", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupCodigo.HeightF = 20F;
             this.GroupCodigo.Name = "GroupCodigo";
             // 
@@ -1047,7 +1048,7 @@
             // xrTableCell39
             // 
             this.xrTableCell39.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[DescripcionCodigo]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Agrupacion]")});
             this.xrTableCell39.Name = "xrTableCell39";
             this.xrTableCell39.Padding = new DevExpress.XtraPrinting.PaddingInfo(25, 0, 0, 0, 100F);
             this.xrTableCell39.StylePriority.UsePadding = false;
@@ -1145,7 +1146,7 @@
             this.xrTableCell45.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrTableCell45.CanGrow = false;
             this.xrTableCell45.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(\'Total \',[DescripcionCodigo] )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(\'Total \',[Agrupacion])")});
             this.xrTableCell45.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
             this.xrTableCell45.Name = "xrTableCell45";
             this.xrTableCell45.StylePriority.UseBorders = false;
@@ -1238,6 +1239,11 @@
             this.xrTableCell52.TextFormatString = "{0:n2}";
             this.xrTableCell52.Weight = 0.29912818654379147D;
             // 
+            // p_AgruparTieneRetencion
+            // 
+            this.p_AgruparTieneRetencion.Name = "p_AgruparTieneRetencion";
+            this.p_AgruparTieneRetencion.Visible = false;
+            // 
             // CXP_014_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1267,7 +1273,8 @@
             this.p_fecha_ini,
             this.p_fecha_fin,
             this.p_IdTipoServicio,
-            this.p_mostrar_anulados});
+            this.p_mostrar_anulados,
+            this.p_AgruparTieneRetencion});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXP_014_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
@@ -1386,5 +1393,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell48;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell51;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell52;
+        public DevExpress.XtraReports.Parameters.Parameter p_AgruparTieneRetencion;
     }
 }

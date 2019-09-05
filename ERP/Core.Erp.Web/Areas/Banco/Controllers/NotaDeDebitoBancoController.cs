@@ -38,6 +38,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         cp_orden_pago_cancelaciones_PorCruzar ListPorCruzar = new cp_orden_pago_cancelaciones_PorCruzar();
         ba_parametros_Bus bus_param = new ba_parametros_Bus();
+        ba_Conciliacion_det_IngEgr_Bus bus_ConciliacionDet = new ba_Conciliacion_det_IngEgr_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -334,6 +335,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cb_Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            #region Validacion de conciliación bancaria
+            if (!bus_ConciliacionDet.ValidarComprobanteEnConciliacion(IdEmpresa, IdTipocbte, IdCbteCble, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;

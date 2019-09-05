@@ -36,7 +36,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             DateTime fechaFin = p_fecha_fin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             string IdTipoServicio = p_IdTipoServicio.Value == null ? "" : Convert.ToString(p_IdTipoServicio.Value);
             bool mostrar_anulados = p_mostrar_anulados.Value == null ? false : Convert.ToBoolean(p_mostrar_anulados.Value);
-            
+            bool AgruparTieneRetencion = string.IsNullOrEmpty(p_AgruparTieneRetencion.Value.ToString()) ? false : Convert.ToBoolean(p_AgruparTieneRetencion.Value);
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
             //lbl_empresa.Text = emp.RazonSocial;
@@ -54,7 +54,7 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             {
                 foreach (var item in IntArray)
                 {
-                    lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, item, IdProveedor, fechaIni, fechaFin, IdTipoServicio, mostrar_anulados));
+                    lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, item, IdProveedor, fechaIni, fechaFin, IdTipoServicio, mostrar_anulados,AgruparTieneRetencion));
                 }
             }
 
