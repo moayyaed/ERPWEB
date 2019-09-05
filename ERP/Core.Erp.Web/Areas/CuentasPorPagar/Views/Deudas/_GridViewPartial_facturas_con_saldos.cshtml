@@ -69,7 +69,6 @@
                 c.Width = Unit.Percentage(3);
             });
         });
-
         settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
         settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").Width = Unit.Percentage(18);
         settings.Columns.Add(column =>
@@ -147,23 +146,31 @@
 
         if (ViewBag.Agrupar == "1")
         {
-            settings.Columns.Add("Proveedor");
+            settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 0;
         }
-
+        else
+        {
+            //settings.Columns.Add("co_factura", "co_factura").GroupIndex = 0;
+        }
         settings.BeforeGetCallbackResult = (sender, e) =>
         {
             MVCxGridView gridView = (MVCxGridView)sender;
 
             if (ViewBag.Agrupar == "1")
             {
-                gridView.GroupBy(gridView.Columns["Proveedor"], 0);
+                //gridView.GroupBy(gridView.Columns["Proveedor"], 0);
+                //gridView.GroupBy(gridView.Columns["Proveedor"]);
+            }
+            else
+            {
+                //gridView.GroupBy(gridView.Columns["co_factura"]);
             }
 
             gridView.ExpandAll();
         };
 
         settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo_OG").DisplayFormat = "Total {0:c2}";
-        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count, "info_proveedor.info_persona.pe_razonSocial");
+        //settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count, "info_proveedor.info_persona.pe_razonSocial");
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
         settings.ClientSideEvents.BeginCallback = "OnBeginCallback";

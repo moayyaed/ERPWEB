@@ -199,7 +199,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             Session["list_facturas_seleccionadas"] = null;
             cargar_combos_consulta_fact_con_saldo();
-
             return View(model);
         }
         [HttpPost]

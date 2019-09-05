@@ -606,7 +606,7 @@
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.StylePriority.UseBorders = false;
             this.xrTableCell19.StylePriority.UseFont = false;
-            this.xrTableCell19.Text = "Contribuyenete especial Nro:";
+            this.xrTableCell19.Text = "Contribuyente especial Nro:";
             this.xrTableCell19.Weight = 2.4921399016098134D;
             // 
             // lbl_Contribuyente

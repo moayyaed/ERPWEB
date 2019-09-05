@@ -79,8 +79,8 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(20); 
-        settings.Columns.Add("tc_TipoCbte", "Tipo").Width = Unit.Percentage(20);
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(15); 
+        settings.Columns.Add("tc_TipoCbte", "Tipo").Width = Unit.Percentage(15);
         settings.Columns.Add("IdCbteCble", "ID").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
@@ -89,7 +89,14 @@
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.Width = Unit.Percentage(10);
         });
-        settings.Columns.Add("cb_Observacion", "Descripción").Width = Unit.Percentage(30);
+        settings.Columns.Add("cb_Observacion", "Observación").Width = Unit.Percentage(30);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cb_Valor";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(10);
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
