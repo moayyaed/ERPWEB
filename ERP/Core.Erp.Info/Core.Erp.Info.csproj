@@ -143,6 +143,7 @@
     <Compile Include="Contabilidad\ct_punto_cargo_grupo_Info.cs" />
     <Compile Include="Contabilidad\ct_punto_cargo_Info.cs" />
     <Compile Include="Contabilidad\ct_RevisionContable_Info.cs" />
+    <Compile Include="Contabilidad\Dinardap_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_CatalogoTipo_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Catalogo_Info.cs" />
     <Compile Include="CuentasPorCobrar\cxc_cobro_det_Info.cs" />
