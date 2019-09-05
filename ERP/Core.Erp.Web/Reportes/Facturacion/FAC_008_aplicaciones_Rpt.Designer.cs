@@ -210,7 +210,9 @@
             // 
             // xrTableCell8
             // 
+            this.xrTableCell8.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
             this.xrTableCell8.Name = "xrTableCell8";
+            this.xrTableCell8.StylePriority.UseFont = false;
             this.xrTableCell8.Text = "APLICACIONES";
             this.xrTableCell8.Weight = 4D;
             // 

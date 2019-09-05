@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary2 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary3 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary4 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary5 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.xrTable4 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -75,6 +70,7 @@
             this.xrTableCell25 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell26 = new DevExpress.XtraReports.UI.XRTableCell();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
+            this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
             this.xrTable3 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow9 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell21 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -113,7 +109,6 @@
             this.lbl_fecha = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell50 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
-            this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -489,6 +484,13 @@
             this.PageHeader.HeightF = 170F;
             this.PageHeader.Name = "PageHeader";
             // 
+            // lbl_imagen
+            // 
+            this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.lbl_imagen.Name = "lbl_imagen";
+            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
+            this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
+            // 
             // xrTable3
             // 
             this.xrTable3.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
@@ -567,20 +569,20 @@
             this.Subreport_diario,
             this.Subreporte_apliaciones,
             this.xrTable5});
-            this.ReportFooter.HeightF = 174.5F;
+            this.ReportFooter.HeightF = 165.8332F;
             this.ReportFooter.Name = "ReportFooter";
             // 
             // Subreport_diario
             // 
-            this.Subreport_diario.LocationFloat = new DevExpress.Utils.PointFloat(0F, 109.3334F);
+            this.Subreport_diario.LocationFloat = new DevExpress.Utils.PointFloat(0F, 142.8332F);
             this.Subreport_diario.Name = "Subreport_diario";
             this.Subreport_diario.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_008_diario_Rpt();
-            this.Subreport_diario.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.Subreport_diario.SizeF = new System.Drawing.SizeF(750.9999F, 23F);
             this.Subreport_diario.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.Subreport_diario_BeforePrint);
             // 
             // Subreporte_apliaciones
             // 
-            this.Subreporte_apliaciones.LocationFloat = new DevExpress.Utils.PointFloat(0F, 154.4999F);
+            this.Subreporte_apliaciones.LocationFloat = new DevExpress.Utils.PointFloat(0F, 110.3333F);
             this.Subreporte_apliaciones.Name = "Subreporte_apliaciones";
             this.Subreporte_apliaciones.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_008_aplicaciones_Rpt();
             this.Subreporte_apliaciones.SizeF = new System.Drawing.SizeF(750.9999F, 19.99998F);
@@ -628,10 +630,8 @@
             // xrTableCell49
             // 
             this.xrTableCell49.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([sc_subtotal0])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SubtotalSinIVASinDscto]")});
             this.xrTableCell49.Name = "xrTableCell49";
-            xrSummary1.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell49.Summary = xrSummary1;
             this.xrTableCell49.TextFormatString = "{0:n2}";
             this.xrTableCell49.Weight = 2.2996278908275904D;
             // 
@@ -654,10 +654,8 @@
             // xrTableCell31
             // 
             this.xrTableCell31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([sc_subtotalIVA])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SubtotalIVASinDscto]")});
             this.xrTableCell31.Name = "xrTableCell31";
-            xrSummary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell31.Summary = xrSummary2;
             this.xrTableCell31.TextFormatString = "{0:n2}";
             this.xrTableCell31.Weight = 2.2996278908275904D;
             // 
@@ -680,10 +678,8 @@
             // xrTableCell45
             // 
             this.xrTableCell45.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([DescTotal])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Descuento]")});
             this.xrTableCell45.Name = "xrTableCell45";
-            xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell45.Summary = xrSummary3;
             this.xrTableCell45.TextFormatString = "{0:n2}";
             this.xrTableCell45.Weight = 2.2996278908275904D;
             // 
@@ -706,10 +702,8 @@
             // xrTableCell47
             // 
             this.xrTableCell47.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([sc_iva])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ValorIVA]")});
             this.xrTableCell47.Name = "xrTableCell47";
-            xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell47.Summary = xrSummary4;
             this.xrTableCell47.TextFormatString = "{0:n2}";
             this.xrTableCell47.Weight = 2.2996278908275904D;
             // 
@@ -732,10 +726,8 @@
             // xrTableCell51
             // 
             this.xrTableCell51.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([sc_total])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[T_Total]")});
             this.xrTableCell51.Name = "xrTableCell51";
-            xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell51.Summary = xrSummary5;
             this.xrTableCell51.TextFormatString = "{0:n2}";
             this.xrTableCell51.Weight = 2.2996278908275904D;
             // 
@@ -859,13 +851,6 @@
             this.xrPageInfo2.StylePriority.UseTextAlignment = false;
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrPageInfo2.TextFormatString = "Página {0} de {1}";
-            // 
-            // lbl_imagen
-            // 
-            this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
-            this.lbl_imagen.Name = "lbl_imagen";
-            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
-            this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
             // 
             // FAC_008_Rpt
             // 
