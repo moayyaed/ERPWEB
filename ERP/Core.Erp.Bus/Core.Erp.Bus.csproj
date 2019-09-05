@@ -117,6 +117,7 @@
     <Compile Include="Contabilidad\ct_punto_cargo_Bus.cs" />
     <Compile Include="Contabilidad\ct_punto_cargo_grupo_Bus.cs" />
     <Compile Include="Contabilidad\ct_RevisionContable_Bus.cs" />
+    <Compile Include="Contabilidad\Dinardap_Bus.cs" />
     <Compile Include="CuentasPorCobrar\cxc_CatalogoTipo_Bus.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Catalogo_Bus.cs" />
     <Compile Include="CuentasPorCobrar\cxc_cobro_Bus.cs" />

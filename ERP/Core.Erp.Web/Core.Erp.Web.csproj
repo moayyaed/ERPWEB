@@ -299,6 +299,7 @@
     <Compile Include="Areas\Contabilidad\Controllers\CierrePorModuloPorSucursalController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ClasificacionEBITController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\DinardapController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ParametroContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PeriodoContableController.cs" />
@@ -10290,6 +10291,7 @@
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_014.cshtml" />
     <Content Include="Areas\Compras\Views\AprobacionOS\Index.cshtml" />
     <Content Include="Areas\Compras\Views\AprobacionOS\_GridViewPartial_aprobacion_os.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Dinardap\Nuevo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
