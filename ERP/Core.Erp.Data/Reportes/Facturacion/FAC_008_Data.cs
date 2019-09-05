@@ -61,7 +61,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                   SubtotalIVAConDscto = q.SubtotalIVAConDscto,
                                   SubtotalConDscto = q.SubtotalConDscto,
                                   T_Total = q.T_Total,
-                                  ValorIVA = q.ValorIVA
+                                  ValorIVA = q.ValorIVA,
+                                 Descuento = q.Descuento
 
                              }).ToList();
                 }

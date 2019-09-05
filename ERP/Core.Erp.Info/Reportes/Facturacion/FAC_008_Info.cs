@@ -48,5 +48,6 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public decimal SubtotalConDscto { get; set; }
         public decimal ValorIVA { get; set; }
         public decimal T_Total { get; set; }
+        public decimal Descuento { get; set; }
     }
 }
