@@ -135,9 +135,10 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#pf_atencion_a").val(data.info_persona.pe_nombreCompleto);
+                //$("#pf_atencion_a").val(data.info_persona.pe_nombreCompleto);
                 $("#IdVendedor").val(data.IdVendedor);
                 $("#IdTerminoPago").val(data.IdTerminoPago);
+                get_info_termino_pago();
             },
             error: function (error) {
                 alert(error);

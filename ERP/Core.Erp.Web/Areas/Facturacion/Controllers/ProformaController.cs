@@ -480,10 +480,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
+            fa_TerminoPago_Bus bus_termino = new fa_TerminoPago_Bus();
             fa_cliente_Info resultado = bus_cliente.get_info(IdEmpresa, IdCliente);
             fa_cliente_x_fa_Vendedor_x_sucursal_Info info_vendedor = bus_v_x_c.get_info(IdEmpresa, IdCliente, IdSucursal);
             //var ultima_proforma = bus_proforma.get_info_ultima_proforma(IdEmpresa, IdSucursal, IdCliente);
             string IdTerminoPago = "";
+            int Dias_Vct = 0;
             int IdVendedor = 1;
 
             if (resultado == null)
@@ -498,9 +500,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     IdVendedor = info_vendedor.IdVendedor;
 
                 IdTerminoPago = resultado.IdTipoCredito;
+                var info_termino = bus_termino.get_info(IdTerminoPago);
+
+                if (info_termino != null)
+                    Dias_Vct = info_termino.Dias_Vct;
             }
 
-            return Json(new { IdVendedor = IdVendedor, IdTerminoPago = IdTerminoPago } , JsonRequestBehavior.AllowGet);
+            return Json(new { IdVendedor = IdVendedor, IdTerminoPago = IdTerminoPago, Dias_Vct = Dias_Vct } , JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Get_NivelDescuento_x_FormaPago(int IdEmpresa = 0, int IdSucursal = 0, string IdCatalogo_FormaPago = "")
