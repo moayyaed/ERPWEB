@@ -39,5 +39,14 @@ namespace Core.Erp.Info.Reportes.Facturacion
         public double sc_total { get; set; }
         public string No_Descripcion { get; set; }
         public string nomReporte { get; set; }
+
+        public decimal SubtotalSinIVASinDscto { get; set; }
+        public decimal SubtotalSinIVAConDscto { get; set; }
+        public decimal SubtotalSinDscto { get; set; }
+        public decimal SubtotalIVASinDscto { get; set; }
+        public decimal SubtotalIVAConDscto { get; set; }
+        public decimal SubtotalConDscto { get; set; }
+        public decimal ValorIVA { get; set; }
+        public decimal T_Total { get; set; }
     }
 }

@@ -52,7 +52,16 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  vt_por_iva = q.vt_por_iva,
                                  No_Descripcion = q.No_Descripcion,
                                  sc_observacion = q.sc_observacion,
-                                  sc_total = q.sc_total
+                                  sc_total = q.sc_total,
+
+                                  SubtotalSinIVASinDscto = q.SubtotalSinIVASinDscto,
+                                  SubtotalSinIVAConDscto = q.SubtotalSinIVAConDscto,
+                                  SubtotalSinDscto = q.SubtotalSinDscto,
+                                  SubtotalIVASinDscto = q.SubtotalIVASinDscto,
+                                  SubtotalIVAConDscto = q.SubtotalIVAConDscto,
+                                  SubtotalConDscto = q.SubtotalConDscto,
+                                  T_Total = q.T_Total,
+                                  ValorIVA = q.ValorIVA
 
                              }).ToList();
                 }
