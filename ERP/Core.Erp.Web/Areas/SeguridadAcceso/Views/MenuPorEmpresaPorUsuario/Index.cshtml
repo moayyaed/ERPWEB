@@ -14,6 +14,7 @@
         e.customArgs["selectedIDs"] = selectedIDs;
     }
     function OnSelectionChanged(s, e) {
+        $("#modificado").val("1");
         s.GetSelectedNodeValues("IdMenu", GetSelectedNodeValuesCallback);
     }
     function GetSelectedNodeValuesCallback(values) {
@@ -24,6 +25,7 @@
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdUsuario: $("#IdUsuario").val(),
+            Modificado: $("#modificado").val(),
             IDs: selectedIDs
         }
         $("#btn_guardar").attr("disabled", true);
@@ -47,6 +49,7 @@
 </script>
 @using (Html.BeginForm("Index", "MenuPorEmpresaPorUsuario", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {
+    @Html.HiddenFor(q => q.modificado, new { @id= "modificado" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">

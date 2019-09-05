@@ -20,5 +20,6 @@ namespace Core.Erp.Info.SeguridadAcceso
         //Campos que no existen en la tabla
         public seg_Menu_Info info_menu { get; set; }
         public bool seleccionado { get; set; }
+        public int modificado { get; set; }
     }
 }
