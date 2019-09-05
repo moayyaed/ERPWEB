@@ -1157,7 +1157,7 @@
             // 
             // xrTableCell46
             // 
-            this.xrTableCell46.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell46.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell46.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([co_subtotal_siniva])")});
             this.xrTableCell46.Name = "xrTableCell46";
@@ -1173,7 +1173,7 @@
             // 
             // xrTableCell47
             // 
-            this.xrTableCell47.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell47.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell47.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([co_subtotal_iva])")});
             this.xrTableCell47.Name = "xrTableCell47";
@@ -1190,7 +1190,7 @@
             // 
             // xrTableCell48
             // 
-            this.xrTableCell48.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell48.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell48.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([co_valoriva])")});
             this.xrTableCell48.Name = "xrTableCell48";
@@ -1207,7 +1207,7 @@
             // 
             // xrTableCell51
             // 
-            this.xrTableCell51.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell51.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell51.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([co_subtotal])")});
             this.xrTableCell51.Name = "xrTableCell51";
@@ -1224,7 +1224,7 @@
             // 
             // xrTableCell52
             // 
-            this.xrTableCell52.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell52.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell52.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([co_total])")});
             this.xrTableCell52.Name = "xrTableCell52";
