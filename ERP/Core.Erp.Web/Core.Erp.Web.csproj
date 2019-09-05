@@ -10292,6 +10292,7 @@
     <Content Include="Areas\Compras\Views\AprobacionOS\Index.cshtml" />
     <Content Include="Areas\Compras\Views\AprobacionOS\_GridViewPartial_aprobacion_os.cshtml" />
     <Content Include="Areas\Contabilidad\Views\Dinardap\Nuevo.cshtml" />
+    <Content Include="Areas\Inventario\Views\Producto\_CmbBodega_det.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

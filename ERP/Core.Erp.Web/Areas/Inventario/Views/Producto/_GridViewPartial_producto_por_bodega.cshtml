@@ -66,6 +66,7 @@
             column.Width = Unit.Percentage(35);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
+        /*
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdString";
@@ -87,6 +88,20 @@
                 p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
             });
         });
+*/
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdString";
+            column.Caption = "Bodega";
+            column.Width = Unit.Percentage(35);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbBodega_det", DataBinder.Eval(c.DataItem, "IdString"));
+            });
+        });
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "Stock_minimo";

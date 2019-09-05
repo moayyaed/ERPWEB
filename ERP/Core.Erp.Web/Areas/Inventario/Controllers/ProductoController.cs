@@ -631,7 +631,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult CargarBodega()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);        
-            int IdSucursal = Request.Params["IdSucursal"] != null ? Convert.ToInt32(Request.Params["IdSucursal"].ToString()) : 0;
+            int IdSucursal = Request.Params["FX_IdSucursalProdPorBod"] != null ? Convert.ToInt32(Request.Params["FX_IdSucursalProdPorBod"].ToString()) : 0;
             return GridViewExtension.GetComboBoxCallbackResult(p =>
             {
                 p.TextField = "bo_Descripcion";
