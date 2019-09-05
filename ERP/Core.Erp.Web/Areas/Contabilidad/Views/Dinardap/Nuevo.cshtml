@@ -102,7 +102,7 @@
                     <label for="info_periodo.IdanioFiscal">Periodo*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdPeriodoIni, settings =>
                {
-                   settings.Name = "IdPeriodo";
+                   settings.Name = "IdPeriodoIni";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "[{0}] - {1}-{2}";
                    settings.Properties.Columns.Add("IdanioFiscal", "Año").Width = System.Web.UI.WebControls.Unit.Percentage(20);
@@ -136,7 +136,7 @@
     function Descargar() {
         var datos = {
             IntArray : IntArray.GetValue(),
-            IdPeriodo: $("#IdPeriodo").val()
+            IdPeriodo: IdPeriodoIni.GetValue()
         }
         $.ajax({
             type: 'POST',

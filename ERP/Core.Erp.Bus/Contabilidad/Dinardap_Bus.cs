@@ -13,7 +13,7 @@ namespace Core.Erp.Bus.Contabilidad
     {
         Dinardap_Data oData = new Dinardap_Data();
 
-        public List<CXC_010_Info> get_info(int IdEmpresa, int IdPeriodo, int IdSucursal)
+        public List<DinardapData_Info> get_info(int IdEmpresa, int IdPeriodo, int IdSucursal)
         {
             try
             {
