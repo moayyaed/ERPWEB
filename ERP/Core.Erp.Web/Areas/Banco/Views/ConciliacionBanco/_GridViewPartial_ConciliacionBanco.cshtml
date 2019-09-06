@@ -110,7 +110,7 @@
         {
             column.SetDataItemTemplateContent(c =>
             {
-                if (Convert.ToString(DataBinder.Eval(c.DataItem, "IdEstado_Concil_Cat")) == "CONCILIADO")
+                //if (Convert.ToString(DataBinder.Eval(c.DataItem, "IdEstado_Concil_Cat")) == "CONCILIADO")
                 {
                     ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("BAN_004", "BancoReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdBanco = DataBinder.Eval(c.DataItem, "IdBanco"), IdConciliacion = DataBinder.Eval(c.DataItem, "IdConciliacion") }, Request.Url.Scheme) + "');\"></span>");
                 }

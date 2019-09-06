@@ -91,6 +91,21 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             return bus_sucursal.get_info_bajo_demanda(Convert.ToInt32(SessionFixed.IdEmpresa), args);
         }
+
+        public ActionResult CmbBodega_det()
+        {
+            int model = new int();
+            return PartialView("_CmbBodegaDet", model);
+        }
+        public List<tb_bodega_Info> get_list_bajo_demandaBod(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<tb_bodega_Info> Lista = bus_bodega.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true,0);
+            return Lista;
+        }
+        public tb_bodega_Info get_info_bajo_demandaBod(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_bodega.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
         #endregion
 
         #region vistas

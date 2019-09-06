@@ -10,7 +10,7 @@
         settings.Properties.CallbackPageSize = 15;
         settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
         settings.Properties.TextField = "bo_Descripcion";
-        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.TextFormatString = "{0}";
         settings.Properties.ValueField = "IdString";
         settings.Properties.ValueType = typeof(string);
 
@@ -21,8 +21,8 @@
         settings.Properties.ClientSideEvents.BeginCallback = "BodegaComboBox_BeginCallback";
         //settings.Properties.FilterMinLength =3;
     })
-    .BindList(new Core.Erp.Web.Areas.Contabilidad.Controllers.ComprobanteContableController().get_list_bajo_demandaPC,
-    new Core.Erp.Web.Areas.Contabilidad.Controllers.ComprobanteContableController().get_info_bajo_demandaPC)
-    .Bind(Model.GetType() == typeof(Core.Erp.Info.Contabilidad.ct_cbtecble_Info) || Model.GetType() == typeof(Core.Erp.Info.Contabilidad.ct_cbtecble_det_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Contabilidad.ct_cbtecble_det_Info>) ? "" : (Model));
+    .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_list_bajo_demandaBod,
+    new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_info_bajo_demandaBod)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Inventario.in_producto_x_tb_bodega_Info) || Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Producto_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_producto_x_tb_bodega_Info>) ? "" : (Model));
 }
 @comboBox.GetHtml()

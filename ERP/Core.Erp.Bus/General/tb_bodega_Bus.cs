@@ -126,6 +126,18 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+        public tb_bodega_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_info_bajo_demanda(args, IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public tb_bodega_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa, int IdSucursal)
 
