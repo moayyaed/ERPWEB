@@ -33,5 +33,6 @@ namespace Core.Erp.Data
         public int IdSucursal { get; set; }
         public string Su_Descripcion { get; set; }
         public bool Imprimir_Solo_el_cheque { get; set; }
+        public Nullable<double> ValorBanco { get; set; }
     }
 }

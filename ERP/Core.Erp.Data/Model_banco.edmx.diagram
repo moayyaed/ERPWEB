@@ -20,7 +20,6 @@
         <AssociationConnector Association="Model_banco.FK_ba_Catalogo_ba_CatalogoTipo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_banco.FK_ba_Conciliacion_ba_Catalogo" ManuallyRouted="false" />
         <AssociationConnector Association="Model_banco.FK_ba_Conciliacion_det_IngEgr_ba_Conciliacion" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Model_banco.vwba_Cbte_Ban" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_banco.ba_Banco_Cuenta_x_tb_sucursal" Width="1.5" PointX="3" PointY="20" />
         <EntityTypeShape EntityType="Model_banco.ba_Cbte_Ban_x_ba_TipoFlujo" Width="1.5" PointX="19.625" PointY="8.25" />
         <EntityTypeShape EntityType="Model_banco.ba_TipoFlujo" Width="1.5" PointX="17.375" PointY="1.75" />
@@ -61,6 +60,7 @@
         <AssociationConnector Association="Model_banco.FK_ba_Cbte_Ban_ba_tipo_nota" />
         <AssociationConnector Association="Model_banco.FK_ba_Cbte_Ban_ba_TipoFlujo" />
         <AssociationConnector Association="Model_banco.FK_ba_Cbte_Ban_x_ba_TipoFlujo_ba_Cbte_Ban" />
+        <EntityTypeShape EntityType="Model_banco.vwba_Cbte_Ban" Width="1.5" PointX="15.375" PointY="7.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

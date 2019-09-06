@@ -53,7 +53,8 @@ namespace Core.Erp.Data.Banco
                                  cb_Valor = q.cb_Valor,
                                  Imprimir_Solo_el_cheque = q.Imprimir_Solo_el_cheque,
                                  IdBanco = q.IdBanco,
-                                 EstadoBool = q.Estado == "A" ? true : false
+                                 EstadoBool = q.Estado == "A" ? true : false,
+                                 ValorBanco = q.ValorBanco
                              }).ToList();
                     else
                         Lista = (from q in Context.vwba_Cbte_Ban
@@ -81,7 +82,8 @@ namespace Core.Erp.Data.Banco
                                      cb_Valor = q.cb_Valor,
                                      Imprimir_Solo_el_cheque = q.Imprimir_Solo_el_cheque,
                                      IdBanco = q.IdBanco,
-                                     EstadoBool = q.Estado == "A" ? true : false
+                                     EstadoBool = q.Estado == "A" ? true : false,
+                                     ValorBanco = q.ValorBanco
                                  }).ToList();
                 }
 
@@ -131,7 +133,8 @@ namespace Core.Erp.Data.Banco
                         IdEntidad = Entity.IdEntidad == null ? 0 : Convert.ToDecimal(Entity.IdEntidad),
                         IdTipo_Persona = Entity.IdTipo_Persona,
                         IdSolicitudPago = Entity.IdSolicitudPago,
-                        cb_FechaCheque = Entity.cb_FechaCheque
+                        cb_FechaCheque = Entity.cb_FechaCheque,
+                        
                     };
                 }
 

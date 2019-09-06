@@ -37,7 +37,6 @@ namespace Core.Erp.Data
         public DbSet<vwba_Conciliacion_det_IngEgr> vwba_Conciliacion_det_IngEgr { get; set; }
         public DbSet<vwba_Conciliacion_det_IngEgr_x_conciliar> vwba_Conciliacion_det_IngEgr_x_conciliar { get; set; }
         public DbSet<vwba_Talonario_cheques_x_banco_ID> vwba_Talonario_cheques_x_banco_ID { get; set; }
-        public DbSet<vwba_Cbte_Ban> vwba_Cbte_Ban { get; set; }
         public DbSet<ba_Banco_Cuenta_x_tb_sucursal> ba_Banco_Cuenta_x_tb_sucursal { get; set; }
         public DbSet<ba_Cbte_Ban_x_ba_TipoFlujo> ba_Cbte_Ban_x_ba_TipoFlujo { get; set; }
         public DbSet<ba_TipoFlujo> ba_TipoFlujo { get; set; }
@@ -57,5 +56,6 @@ namespace Core.Erp.Data
         public DbSet<ba_Archivo_Transferencia> ba_Archivo_Transferencia { get; set; }
         public DbSet<ba_parametros> ba_parametros { get; set; }
         public DbSet<ba_Cbte_Ban> ba_Cbte_Ban { get; set; }
+        public DbSet<vwba_Cbte_Ban> vwba_Cbte_Ban { get; set; }
     }
 }

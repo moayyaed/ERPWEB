@@ -58,8 +58,7 @@ namespace Core.Erp.Info.Banco
         public string Su_Descripcion { get; set; }
         public Nullable<decimal> IdSolicitudPago { get; set; }
         public Nullable<bool> Imprimir_Solo_el_cheque { get; set; }
-        
-
+        public Nullable<double> ValorBanco { get; set; }
         public List<ba_Cbte_Ban_x_ba_TipoFlujo_Info> list_det { get; set; }
         public DateTime? cb_FechaCheque { get; set; }
         #endregion

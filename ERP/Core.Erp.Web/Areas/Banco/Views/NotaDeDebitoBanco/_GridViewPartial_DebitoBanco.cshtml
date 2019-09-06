@@ -81,11 +81,8 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(8);
         settings.Columns.Add("IdCbteCble", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("ba_descripcion", "Cuenta").Width = Unit.Percentage(20);
-        settings.Columns.Add("cb_Observacion", "Observación").Width = Unit.Percentage(20);
-        settings.Columns.Add("pe_nombreCompleto", "Beneficiario").Width = Unit.Percentage(20);
         settings.Columns.Add(column =>
         {
             column.FieldName = "cb_Fecha";
@@ -93,12 +90,23 @@
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.Width = Unit.Percentage(10);
         });
+        settings.Columns.Add("ba_descripcion", "Cuenta").Width = Unit.Percentage(20);
+        settings.Columns.Add("cb_Observacion", "Observación").Width = Unit.Percentage(20);
+        settings.Columns.Add("pe_nombreCompleto", "Beneficiario").Width = Unit.Percentage(20);
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "cb_Valor";
             column.Caption = "Valor";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ValorBanco";
+            column.Caption = "V. Banco";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.Width = Unit.Percentage(10);
         });
         settings.Columns.Add(column =>
         {
@@ -117,6 +125,9 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        settings.Settings.ShowFooter = true;
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "cb_Valor").DisplayFormat = "{0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorBanco").DisplayFormat = "{0:n2}";
     });
 }
 @grid.Bind(Model).GetHtml()
