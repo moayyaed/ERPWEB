@@ -196,7 +196,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
             };
-
+            model.Agrupar = 0;
             Session["list_facturas_seleccionadas"] = null;
             cargar_combos_consulta_fact_con_saldo();
             return View(model);
@@ -216,11 +216,31 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model = Session["list_facturas_seleccionadas"] as List<cp_orden_giro_aprobacion_Info>;
             return PartialView("_GridViewPartial_aprobacion_facturas", model);
         }
-        public ActionResult GridViewPartial_facturas_con_saldos()
+        public ActionResult GridViewPartial_facturas_con_saldos(string value)
         {
+            ViewBag.Agrupar = value;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<cp_orden_giro_Info> model = (List<cp_orden_giro_Info>)Session["list_ordenes_giro"];            
-            return PartialView("_GridViewPartial_facturas_con_saldos", model);
+            List<cp_orden_giro_Info> model = (List<cp_orden_giro_Info>)Session["list_ordenes_giro"];
+            List<cp_orden_giro_Info> lst_ordenada = new List<cp_orden_giro_Info>();
+
+            if (model != null)
+            {
+                if (value == "1")
+                {
+                    lst_ordenada = model.OrderBy(q => q.info_proveedor.info_persona.pe_nombreCompleto).ThenBy(q => q.co_fechaOg).ToList();
+                }
+                else
+                {
+                    lst_ordenada = model.OrderByDescending(q => q.co_fechaOg).ToList();
+                }
+            }
+            else
+            {
+                lst_ordenada = new List<cp_orden_giro_Info>();
+            }
+              
+                 
+            return PartialView("_GridViewPartial_facturas_con_saldos", lst_ordenada);
         }
         #endregion
 
@@ -723,22 +743,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0, string Agrupar="", decimal IdTransaccionSession=0)
+        public JsonResult GetListOrdenesPorPagar(int IdEmpresa = 0, int IdSucursal=0, int Agrupar=0, decimal IdTransaccionSession=0)
         {
             string retorno = string.Empty;
             var lst = new List<cp_orden_giro_Info>();
             var nueva_lista = new List<cp_orden_giro_Info>();
             ViewBag.Agrupar = Agrupar;
 
-            if (Agrupar=="1")
-            {
-                lst = bus_orden_giro.get_lst_orden_giro_x_pagar_agrupado(IdEmpresa, IdSucursal);
-            }
-            else
-            {
-                lst = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa, IdSucursal);
-            }
-
+            lst = bus_orden_giro.get_lst_orden_giro_x_pagar(IdEmpresa, IdSucursal);
             var lista_seleccionada = List_det_PorIngresar_Seleccionadas.get_list(IdTransaccionSession);
             //            Session["list_ordenes_giro"] = lst;
 

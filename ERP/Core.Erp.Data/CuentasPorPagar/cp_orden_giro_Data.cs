@@ -642,8 +642,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                              && q.IdSucursal >= IdSucursal_ini
                              && q.IdSucursal <= IdSucursal_fin
                              && q.Saldo_OG > 0
-                             orderby
-                             q.co_fechaOg descending
+                             //orderby
+                             //q.co_fechaOg descending
                              select new cp_orden_giro_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -700,88 +700,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                         item.Tipo_Vcto = "X_VENCER";
                     }
                 });
-                    return Lista;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public List<cp_orden_giro_Info> get_lst_orden_giro_x_pagar_agrupado(int IdEmpresa, int IdSucursal)
-        {
-            try
-            {
-                int IdSucursal_ini = IdSucursal;
-                int IdSucursal_fin = IdSucursal == 0 ? 999999 : IdSucursal;
-                List<cp_orden_giro_Info> Lista = null;
-                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
-                {
-                    Lista = (from q in Context.vwcp_orden_giro_x_pagar
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdSucursal >= IdSucursal_ini
-                             && q.IdSucursal <= IdSucursal_fin
-                             && q.Saldo_OG > 0
-                             orderby
-                             q.nom_proveedor ascending,
-                             q.co_fechaOg ascending
-                             select new cp_orden_giro_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
-                                 IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
-                                 IdOrden_giro_Tipo = q.IdOrden_giro_Tipo,
-                                 IdProveedor = q.IdProveedor,
-                                 co_fechaOg = q.co_fechaOg,
-                                 co_serie = q.co_serie,
-                                 co_factura = q.cod_Documento + "-" + q.co_serie + "-" + q.co_factura,
-                                 co_FechaFactura = q.co_FechaFactura,
-                                 co_observacion = q.co_observacion,
-                                 co_subtotal_iva = q.co_subtotal_iva,
-                                 co_subtotal_siniva = q.co_subtotal_siniva,
-                                 co_baseImponible = q.co_baseImponible,
-                                 co_Por_iva = q.co_Por_iva,
-                                 co_valoriva = q.co_valoriva,
-                                 co_total = q.co_total,
-                                 co_valorpagar = q.co_valorpagar,
-                                 Total_Pagado = q.Total_Pagado,
-                                 Saldo_OG = q.Saldo_OG,
-                                 Fecha_Transac = q.co_FechaFactura_vct,
-                                 nom_tipo_Documento = q.nom_tipo_Documento,
-                                 info_proveedor = new cp_proveedor_Info
-                                 {
-                                     IdPersona = q.IdPersona,
-                                     info_persona = new Info.General.tb_persona_Info
-                                     {
-                                         pe_razonSocial = q.nom_proveedor,
-                                         IdPersona = q.IdPersona,
-                                         pe_nombreCompleto = q.nom_proveedor
-                                     }
-                                 },
-                                 IdSucursal = q.IdSucursal
-                             }).ToList();
-
-                    Lista.ForEach(item =>
-                    {
-                        item.SecuencialID = item.IdEmpresa.ToString("00") + item.IdTipoCbte_Ogiro.ToString("00") + item.IdCbteCble_Ogiro.ToString("000000000");
-                        item.co_FechaFactura_vct = item.Fecha_Transac == null ? DateTime.Now.Date : Convert.ToDateTime(item.Fecha_Transac);
-                        TimeSpan ts = Convert.ToDateTime(item.Fecha_Transac == null ? DateTime.Now.Date : Convert.ToDateTime(item.Fecha_Transac)) - Convert.ToDateTime(DateTime.Now);
-                        int dias = ts.Days;
-                        item.Dias_Vencidos = dias;
-                        if (dias < 0) //Por vencer
-                        {
-                            item.Tipo_Vcto = "VENCIDO";
-                        }
-                        if (dias == 0) //normal
-                        {
-                            item.Tipo_Vcto = "VENCE_HOY";
-                        }
-                        if (dias > 0) // vencido
-                        {
-                            item.Tipo_Vcto = "X_VENCER";
-                        }
-                    });
                     return Lista;
                 }
             }

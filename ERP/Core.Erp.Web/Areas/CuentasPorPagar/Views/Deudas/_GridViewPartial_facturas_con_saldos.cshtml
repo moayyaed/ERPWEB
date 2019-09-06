@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_facturas_con_saldos";
-        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_facturas_con_saldos" };
+        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_facturas_con_saldos", Agrugar = ViewBag.Agrugar };
         settings.KeyFieldName = "SecuencialID";
 
         settings.SettingsBehavior.AllowGroup = true;
@@ -141,6 +141,7 @@
         settings.PreRender = (sender, e) =>
         {
             MVCxGridView gridView = (MVCxGridView)sender;
+
             gridView.ExpandAll();
         };
 
@@ -150,22 +151,23 @@
         }
         else
         {
-            //settings.Columns.Add("co_factura", "co_factura").GroupIndex = 0;
+            settings.Columns.Add("Agrupar").GroupIndex = 0;
         }
+
         settings.BeforeGetCallbackResult = (sender, e) =>
         {
             MVCxGridView gridView = (MVCxGridView)sender;
 
-            if (ViewBag.Agrupar == "1")
-            {
-                //gridView.GroupBy(gridView.Columns["Proveedor"], 0);
-                //gridView.GroupBy(gridView.Columns["Proveedor"]);
-            }
-            else
-            {
-                //gridView.GroupBy(gridView.Columns["co_factura"]);
-            }
-
+            //if (ViewBag.Agrupar == "1")
+            //{
+            //    settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = 1;
+            //    //settings.Columns.Add("co_factura", "co_factura").GroupIndex = -1;
+            //}
+            //else
+            //{
+            //    //settings.Columns.Add("co_factura", "co_factura").GroupIndex = 0;
+            //    settings.Columns.Add("info_proveedor.info_persona.pe_razonSocial", "Proveedor").GroupIndex = -1;
+            //}
             gridView.ExpandAll();
         };
 
