@@ -127,7 +127,7 @@
 
     function AgruparXProveedor() {
         var Agrupar = $("#Agrupar").val();
-
+        
         if (Agrupar == "1") {
             $("#Agrupar").val("0");
         }
@@ -152,6 +152,7 @@
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.Agrupar, new { @class = "form-control", @id = "Agrupar" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-5">
@@ -194,16 +195,15 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-1">
-                                <input type="hidden" id="Agrupar" name="Agrupar" value="@ViewBag.Agrupar"/>
-                                <button type="button" class="btn btn-primary form-control" id="ride" onclick="AgruparXProveedor();" title="Agrupar">
+                            <div class="col-md-2">
+                                 <button type="button" class="btn btn-primary form-control" id="ride" onclick="AgruparXProveedor();" title="Agrupar">
                                  Agrupar por proveedor
                                 </button>
                             </div>
                         </div>
                     </div>        
                     <div class="modal-body">
-                        @Html.Action("GridViewPartial_facturas_con_saldos")
+                        @Html.Action("GridViewPartial_facturas_con_saldos", new { Agrupar = Model.Agrupar })
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="seleccionar_aprobacion();">Aceptar</button>
