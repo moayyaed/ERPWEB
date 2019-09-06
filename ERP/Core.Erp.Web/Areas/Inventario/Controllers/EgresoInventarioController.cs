@@ -382,6 +382,28 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return false;
             }
             #endregion
+
+            #region ValidarCentroCosto
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ct_parametro_Bus bus_parametro = new ct_parametro_Bus();
+            var info_ct_parametro = bus_parametro.get_info(IdEmpresa);
+
+            if (i_validar.lst_in_Ing_Egr_Inven_det.Count > 0)
+            {
+                if (info_ct_parametro.EsCentroCostoObligatorio == true)
+                {
+                    foreach (var item in i_validar.lst_in_Ing_Egr_Inven_det)
+                    {
+                        if (item.IdCentroCosto== "" || item.IdCentroCosto == null)
+                        {
+                            mensaje = "Debe seleccionar el centro de costo para los items del detalle";
+                            return false;
+                        }
+                    }
+                }
+            }
+            #endregion
+
             return true;
         }
         private void cargar_combos(in_Ing_Egr_Inven_Info model)

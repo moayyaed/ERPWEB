@@ -21,6 +21,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         Dinardap_Bus bus_dinardap = new Dinardap_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
         string rutafile = System.IO.Path.GetTempPath();
         #endregion
 
@@ -35,13 +36,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         [HttpPost]
         public FileResult Nuevo(cl_filtros_contabilidad_Info model)
         {
-            string nombre_file = "Dinardap-"+model.IdPeriodoIni.ToString();
-            if (model.IdPeriodoIni.ToString().Length == 6)
-            {
-                nombre_file = "Dinardap-" + model.IdPeriodoIni.ToString().Substring(4, 2) + model.IdPeriodoIni.ToString().Substring(0, 4);
-            }
-
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var info_empresa = bus_empresa.get_info(IdEmpresa);
+            var info_periodo = bus_periodo.get_info(IdEmpresa, model.IdPeriodoIni);
+            var FechaFinPeriodo = info_periodo.pe_FechaFin.ToString().Substring(0, 10).Replace("/","");
+            string nombre_file = info_empresa.em_ruc.ToString() + FechaFinPeriodo.ToString();
+            
             byte[] archivo;
             List<DinardapData_Info> lst_archivo = new List<DinardapData_Info>();
             List<Dinardap_Info> ListInfoDinardap = new List<Dinardap_Info>();
@@ -119,7 +119,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     case "OTRO": InfoDinardap.clase_suje = "N"; InfoDinardap.sexo = ""; InfoDinardap.estado_civil = ""; InfoDinardap.Origen_Ing = ""; break;
                     case "RISE": InfoDinardap.clase_suje = "N"; InfoDinardap.sexo = ""; InfoDinardap.estado_civil = ""; InfoDinardap.Origen_Ing = ""; break;
                 }
-
 
                 InfoDinardap.Provincia = item.Cod_Provincia;
                 InfoDinardap.canton = item.Cod_Ciudad;

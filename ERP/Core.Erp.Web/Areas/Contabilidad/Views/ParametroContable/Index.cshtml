@@ -70,11 +70,33 @@
                     @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="P_Se_Muestra_Todas_las_ctas_en_combos"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.P_Se_Muestra_Todas_las_ctas_en_combos, settings =>
+                            {
+                                settings.Name = "P_Se_Muestra_Todas_las_ctas_en_combos";
+                                settings.Text = "Mostrar cuentas que no son de movimiento en combos";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.P_Se_Muestra_Todas_las_ctas_en_combos, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="col-md-5">
                 <div class="form-group">
                     <div class="checkbox">
                         <label for="P_Se_Muestra_Todas_las_ctas_en_combos">@Html.CheckBoxFor(q => q.P_Se_Muestra_Todas_las_ctas_en_combos) Mostrar cuentas que no son de movimiento en combos </label>
                     </div>
+                </div>
+            </div>*@
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="EsCentroCostoObligatorio"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.EsCentroCostoObligatorio, settings =>
+                            {
+                                settings.Name = "EsCentroCostoObligatorio";
+                                settings.Text = "Es Centro Costo Obligatorio";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.EsCentroCostoObligatorio, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
