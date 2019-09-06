@@ -52,9 +52,6 @@
             this.p_IdCbteVta = new DevExpress.XtraReports.Parameters.Parameter();
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
             this.Subreporte_diario = new DevExpress.XtraReports.UI.XRSubreport();
-            this.xrTable9 = new DevExpress.XtraReports.UI.XRTable();
-            this.xrTableRow17 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.xrTableCell55 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTable7 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow20 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell42 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -141,7 +138,6 @@
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
@@ -316,7 +312,6 @@
             // 
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.Subreporte_diario,
-            this.xrTable9,
             this.xrTable7});
             this.ReportFooter.HeightF = 203.3624F;
             this.ReportFooter.Name = "ReportFooter";
@@ -328,36 +323,6 @@
             this.Subreporte_diario.ReportSource = new Core.Erp.Web.Reportes.Facturacion.FAC_013_diario_Rpt();
             this.Subreporte_diario.SizeF = new System.Drawing.SizeF(100F, 23F);
             this.Subreporte_diario.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.Subreporte_diario_BeforePrint);
-            // 
-            // xrTable9
-            // 
-            this.xrTable9.Font = new System.Drawing.Font("Verdana", 5F, System.Drawing.FontStyle.Bold);
-            this.xrTable9.LocationFloat = new DevExpress.Utils.PointFloat(0F, 181.4103F);
-            this.xrTable9.Name = "xrTable9";
-            this.xrTable9.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
-            this.xrTable9.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
-            this.xrTableRow17});
-            this.xrTable9.SizeF = new System.Drawing.SizeF(750.5F, 21.95206F);
-            this.xrTable9.StylePriority.UseFont = false;
-            this.xrTable9.StylePriority.UsePadding = false;
-            // 
-            // xrTableRow17
-            // 
-            this.xrTableRow17.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.xrTableCell55});
-            this.xrTableRow17.Name = "xrTableRow17";
-            this.xrTableRow17.Weight = 0.72620702935029091D;
-            // 
-            // xrTableCell55
-            // 
-            this.xrTableCell55.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold);
-            this.xrTableCell55.Multiline = true;
-            this.xrTableCell55.Name = "xrTableCell55";
-            this.xrTableCell55.StylePriority.UseFont = false;
-            this.xrTableCell55.Text = "Este documento no tiene válidez tributaria, descargue su comprobante autorizado d" +
-    "esde el portal: www.edoc-ccgye.org.\r\n(Usuario: CI/RUC, Clave: CI/RUC), datos reg" +
-    "istrados en este documento.";
-            this.xrTableCell55.Weight = 3D;
             // 
             // xrTable7
             // 
@@ -1376,7 +1341,6 @@
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_013_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
@@ -1473,9 +1437,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell50;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell51;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell52;
-        private DevExpress.XtraReports.UI.XRTable xrTable9;
-        private DevExpress.XtraReports.UI.XRTableRow xrTableRow17;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell55;
         private DevExpress.XtraReports.UI.XRPictureBox logo;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell15;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow8;
