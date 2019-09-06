@@ -131,6 +131,15 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Descripcion_tip_cliente = "Todos"
             });
             ViewBag.lst_cliente_tipo = lst_cliente_tipo;
+
+            fa_Vendedor_Bus bus_vendedor = new fa_Vendedor_Bus();
+            var lst_vendedor = bus_vendedor.get_list(IdEmpresa, false);
+            lst_vendedor.Add(new Info.Facturacion.fa_Vendedor_Info
+            {
+                IdVendedor = 0,
+                Ve_Vendedor = "Todos"
+            });
+            ViewBag.lst_vendedor = lst_vendedor;
         }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
@@ -377,7 +386,74 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             return View(model);
         }
-     
+        public ActionResult CXC_006()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCliente = 0,
+                IdVendedor = 0,
+                StringArray = new string[] { }
+
+            };
+            cargar_combos(model.IdEmpresa);
+            CXC_006_Rpt report = new CXC_006_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_006");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdVendedor.Value = model.IdVendedor;
+            report.p_IdCliente.Value = model.IdCliente ?? 0;
+            //report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
+            cargar_tipo_cobro_check(model.StringArray);
+            report.StringArray = model.StringArray;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CXC_006(cl_filtros_facturacion_Info model)
+        {
+            CXC_006_Rpt report = new CXC_006_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_006");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            cargar_combos(model.IdEmpresa);
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdVendedor.Value = model.IdVendedor;
+            report.p_IdCliente.Value = model.IdCliente ?? 0;
+            //report.p_IdCobro_tipo.Value = model.IdCobro_tipo;
+            cargar_tipo_cobro_check(model.StringArray);
+            report.StringArray = model.StringArray;
+            report.p_fecha_ini.Value = model.fecha_ini;
+            report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario.ToString();
+            report.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.Report = report;
+
+            return View(model);
+        }
+
         public ActionResult CXC_007(int IdSucursal = 0, decimal IdLiquidacion = 0)
         {
             CXC_007_Rpt report = new CXC_007_Rpt();

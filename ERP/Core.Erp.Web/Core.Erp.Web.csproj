@@ -813,6 +813,12 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Rpt.Designer.cs">
       <DependentUpon>CXC_005_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Rpt.Designer.cs">
+      <DependentUpon>CXC_006_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10293,6 +10299,7 @@
     <Content Include="Areas\Compras\Views\AprobacionOS\_GridViewPartial_aprobacion_os.cshtml" />
     <Content Include="Areas\Contabilidad\Views\Dinardap\Nuevo.cshtml" />
     <Content Include="Areas\Inventario\Views\Producto\_CmbBodega_det.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_006.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10560,6 +10567,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_005_Rpt.resx">
       <DependentUpon>CXC_005_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_006_Rpt.resx">
+      <DependentUpon>CXC_006_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Rpt.resx">
       <DependentUpon>CXC_007_Cobros_Rpt.cs</DependentUpon>

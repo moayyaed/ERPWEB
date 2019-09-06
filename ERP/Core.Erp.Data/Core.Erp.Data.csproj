@@ -1509,6 +1509,9 @@
     <Compile Include="Reportes\Base\VWCXC_003.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWCXC_006.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\VWCXC_007.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1761,6 +1764,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_003_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_004_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_006_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Data.cs" />

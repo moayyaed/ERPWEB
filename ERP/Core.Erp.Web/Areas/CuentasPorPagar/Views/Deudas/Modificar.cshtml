@@ -283,7 +283,7 @@
                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CambiarVcto();}";
+                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CambiarVcto();FechaRetencion.SetValue(s.GetValue()}";
                            //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){co_FechaContabilizacion.SetValue(s.GetValue());}";
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaFactura, "", new { @class = "text-danger" })
@@ -305,7 +305,7 @@
                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){FechaRetencion.SetValue(s.GetValue());}";
+                           //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){FechaRetencion.SetValue(s.GetValue());}";
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaContabilizacion, "", new { @class = "text-danger" })
                     </div>
@@ -762,6 +762,11 @@
     $("#co_factura").change(function () {
         rellenar_ceros_izquierda();
     });
+
+    $("#co_plazo").change(function () {
+        CambiarVcto();
+    });
+
     $("#IdIden_credito").change(function () {
         $("#IdOrden_giro_Tipo").empty();
         $("#cmbTipoDocu_modif").empty();
@@ -1177,6 +1182,20 @@
         else{
             $("#ride").show();
             $("#sri").show();
+        }
+    }
+
+    function CambiarVcto() {
+        var plazo = Number($("#co_plazo").val());
+        if (plazo != 0) {
+
+            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(plazo, 'days'));
+            co_FechaFactura_vct.SetValue(date);
+        }
+        else {
+            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(0, 'days'));
+            co_FechaFactura_vct.SetValue(date);
+
         }
     }
 </script>

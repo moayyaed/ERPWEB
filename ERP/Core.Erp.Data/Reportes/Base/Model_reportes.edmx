@@ -1058,6 +1058,50 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_003' no tiene definida ningu
           <Property Name="dc_ValorPago" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_006' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWCXC_006">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="Ve_Vendedor" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdVendedor" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="ValorPago" />
+            <PropertyRef Name="IdCobro_tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencial" Type="int" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Ve_Vendedor" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="NumCotizacion" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="NumOPr" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="CodCbteVta" Type="varchar" MaxLength="500" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdVendedor" Type="int" Nullable="false" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="28" />
+          <Property Name="vt_fech_venc" Type="datetime" Nullable="false" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
+          <Property Name="DiasAtraso" Type="int" />
+          <Property Name="ValorPago" Type="float" Nullable="false" />
+          <Property Name="BaseComision" Type="float" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_007' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWCXC_007">
           <Key>
@@ -1682,6 +1726,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXP_009' no tiene definida ningu
             <PropertyRef Name="Idsecuencia" />
             <PropertyRef Name="IdOrden_giro_Tipo" />
             <PropertyRef Name="IdProveedor" />
+            
             <PropertyRef Name="ced_proveedor" />
             <PropertyRef Name="co_fechaOg" />
             <PropertyRef Name="co_serie" />
@@ -1707,7 +1752,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXP_009' no tiene definida ningu
           <Property Name="Idsecuencia" Type="int" Nullable="false" />
           <Property Name="IdOrden_giro_Tipo" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="IdProveedor" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="nom_proveedor" Type="varchar" MaxLength="200" />
+          <Property Name="nom_proveedor" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="ced_proveedor" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="dir_proveedor" Type="varchar" MaxLength="500" />
           <Property Name="co_fechaOg" Type="datetime" Nullable="false" />
@@ -5837,6 +5882,32 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCXC_003].[vt_fecha] AS [vt_fecha], 
     [VWCXC_003].[dc_ValorPago] AS [dc_ValorPago]
     FROM [web].[VWCXC_003] AS [VWCXC_003]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VWCXC_006" EntityType="Self.VWCXC_006" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWCXC_006].[IdEmpresa] AS [IdEmpresa], 
+    [VWCXC_006].[IdSucursal] AS [IdSucursal], 
+    [VWCXC_006].[IdCobro] AS [IdCobro], 
+    [VWCXC_006].[secuencial] AS [secuencial], 
+    [VWCXC_006].[vt_tipoDoc] AS [vt_tipoDoc], 
+    [VWCXC_006].[IdBodega] AS [IdBodega], 
+    [VWCXC_006].[IdCbteVta] AS [IdCbteVta], 
+    [VWCXC_006].[Ve_Vendedor] AS [Ve_Vendedor], 
+    [VWCXC_006].[vt_fecha] AS [vt_fecha], 
+    [VWCXC_006].[NumCotizacion] AS [NumCotizacion], 
+    [VWCXC_006].[NumOPr] AS [NumOPr], 
+    [VWCXC_006].[CodCbteVta] AS [CodCbteVta], 
+    [VWCXC_006].[IdCliente] AS [IdCliente], 
+    [VWCXC_006].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [VWCXC_006].[IdVendedor] AS [IdVendedor], 
+    [VWCXC_006].[vt_NumFactura] AS [vt_NumFactura], 
+    [VWCXC_006].[vt_fech_venc] AS [vt_fech_venc], 
+    [VWCXC_006].[cr_fecha] AS [cr_fecha], 
+    [VWCXC_006].[DiasAtraso] AS [DiasAtraso], 
+    [VWCXC_006].[ValorPago] AS [ValorPago], 
+    [VWCXC_006].[BaseComision] AS [BaseComision], 
+    [VWCXC_006].[IdCobro_tipo] AS [IdCobro_tipo]
+    FROM [web].[VWCXC_006] AS [VWCXC_006]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCXC_007" EntityType="Self.VWCXC_007" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -12089,6 +12160,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           </FunctionImport>
           <EntitySet Name="VWCXP_009" EntityType="Model_reportes.VWCXP_009" />
           <EntitySet Name="VWFAC_008" EntityType="Model_reportes.VWFAC_008" />
+          <EntitySet Name="VWCXC_006" EntityType="Model_reportes.VWCXC_006" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -14050,7 +14122,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="Idsecuencia" Type="Int32" Nullable="false" />
           <Property Name="IdOrden_giro_Tipo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="nom_proveedor" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="nom_proveedor" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ced_proveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="dir_proveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="co_fechaOg" Type="DateTime" Nullable="false" Precision="3" />
@@ -14155,6 +14227,48 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="ValorIVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="T_Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="VWCXC_006">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="Ve_Vendedor" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdVendedor" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="ValorPago" />
+            <PropertyRef Name="IdCobro_tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencial" Type="Int32" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Ve_Vendedor" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NumCotizacion" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NumOPr" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CodCbteVta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdVendedor" Type="Int32" Nullable="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DiasAtraso" Type="Int32" />
+          <Property Name="ValorPago" Type="Double" Nullable="false" />
+          <Property Name="BaseComision" Type="Double" />
+          <Property Name="IdCobro_tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -18398,6 +18512,34 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdNota" ColumnName="IdNota" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWCXC_006">
+            <EntityTypeMapping TypeName="Model_reportes.VWCXC_006">
+              <MappingFragment StoreEntitySet="VWCXC_006">
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+                <ScalarProperty Name="BaseComision" ColumnName="BaseComision" />
+                <ScalarProperty Name="ValorPago" ColumnName="ValorPago" />
+                <ScalarProperty Name="DiasAtraso" ColumnName="DiasAtraso" />
+                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="IdVendedor" ColumnName="IdVendedor" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="CodCbteVta" ColumnName="CodCbteVta" />
+                <ScalarProperty Name="NumOPr" ColumnName="NumOPr" />
+                <ScalarProperty Name="NumCotizacion" ColumnName="NumCotizacion" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="Ve_Vendedor" ColumnName="Ve_Vendedor" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
