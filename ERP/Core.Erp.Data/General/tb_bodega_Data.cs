@@ -291,6 +291,7 @@ namespace Core.Erp.Data.General
                                  .Take(take)
                                  .ToList();
                 }
+                Lista.ForEach(q => q.IdString = q.IdSucursal.ToString("000") + q.IdBodega.ToString("000"));
                 return Lista;
             }
             catch (Exception)
@@ -307,6 +308,7 @@ namespace Core.Erp.Data.General
             Lista = get_list_demanda(IdEmpresa, skip, take, args.Filter, estado, IdSucursal);
             return Lista;
         }
+
 
 
         public tb_bodega_Info get_info_demanda(int IdEmpresa, int IdBodega, int IdSucursal)
@@ -339,9 +341,47 @@ namespace Core.Erp.Data.General
             }
         }
 
+        public tb_bodega_Info get_info_demanda(int IdEmpresa, string IdString)
+        {
+            try
+            {
+                tb_bodega_Info info = new tb_bodega_Info();
+
+                using (Entities_general Context = new Entities_general())
+                {
+                    var lstBodega = Context.tb_bodega.Where(q => q.IdEmpresa == IdEmpresa).ToList();
+
+                    tb_bodega Entity = lstBodega.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdSucursal.ToString("000")+q.IdBodega.ToString("000") == IdString);
+                    if (Entity == null) return null;
+
+                    info = new tb_bodega_Info
+                    {
+                        IdString = Entity.IdSucursal.ToString("000") + Entity.IdBodega.ToString("000"),
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdSucursal = Entity.IdSucursal,
+                        IdBodega = Entity.IdBodega,
+                        bo_Descripcion = Entity.bo_Descripcion,
+                        Estado = Entity.Estado,
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public tb_bodega_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa, int IdSucursal)
         {
             return get_info(IdEmpresa, args.Value == null ? 0 : (int)args.Value, IdSucursal);
+        }
+
+        public tb_bodega_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, int IdEmpresa)
+        {
+            return get_info_demanda(IdEmpresa, args.Value == null ? "" : args.Value.ToString());
         }
 
     }
