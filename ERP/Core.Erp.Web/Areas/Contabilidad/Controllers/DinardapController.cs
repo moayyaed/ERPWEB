@@ -120,6 +120,16 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     case "RISE": InfoDinardap.clase_suje = "N"; InfoDinardap.sexo = ""; InfoDinardap.estado_civil = ""; InfoDinardap.Origen_Ing = ""; break;
                 }
 
+                if (InfoDinardap.clase_suje == "N")
+                {
+                    if (InfoDinardap.TipoIden == "R")
+                    {
+                        InfoDinardap.TipoIden = "C";
+                        var NumDoc = InfoDinardap.Identificacion.Substring(0,10);
+                        InfoDinardap.Identificacion = NumDoc;
+                    }
+                }
+
                 InfoDinardap.Provincia = item.Cod_Provincia;
                 InfoDinardap.canton = item.Cod_Ciudad;
                 InfoDinardap.parroquia = item.cod_parroquia;
