@@ -154,7 +154,6 @@ namespace Core.Erp.Data.ActivoFijo
                         Af_fecha_ini_depre = Entity.Af_fecha_ini_depre,
                         Af_Meses_depreciar = Entity.Af_Meses_depreciar,
                         Af_Nombre = Entity.Af_Nombre,
-                        Af_NumPlaca = Entity.Af_NumPlaca,
                         Af_NumSerie = Entity.Af_NumSerie,
                         Af_observacion = Entity.Af_observacion,
                         Af_porcentaje_deprec = Entity.Af_porcentaje_deprec,
@@ -226,7 +225,6 @@ namespace Core.Erp.Data.ActivoFijo
                         Af_fecha_ini_depre = info.Af_fecha_ini_depre.Date,
                         Af_Meses_depreciar = info.Af_Meses_depreciar,
                         Af_Nombre = info.Af_Nombre,
-                        Af_NumPlaca = info.Af_NumPlaca,
                         Af_NumSerie = info.Af_NumSerie,
                         Af_observacion = info.Af_observacion,
                         Af_porcentaje_deprec = info.Af_porcentaje_deprec,
@@ -237,8 +235,8 @@ namespace Core.Erp.Data.ActivoFijo
                         Estado_Proceso = info.Estado_Proceso,
                         IdActivoFijoTipo = info.IdActivoFijoTipo,
                         IdActivoFijo = info.IdActivoFijo=get_id(info.IdEmpresa),
-                        IdModelo = info.IdModelo,
-                        IdMarca = info.IdMarca,
+                        IdModelo = Convert.ToInt32(info.IdModelo),
+                        IdMarca = Convert.ToInt32(info.IdMarca),
                         IdCategoriaAF = info.IdCategoriaAF,
                         IdSucursal = info.IdSucursal,
                         IdEmpleadoCustodio = info.IdEmpleadoCustodio,
@@ -280,7 +278,6 @@ namespace Core.Erp.Data.ActivoFijo
                     Entity.Af_fecha_ini_depre = info.Af_fecha_ini_depre.Date;
                     Entity.Af_Meses_depreciar = info.Af_Meses_depreciar;
                     Entity.Af_Nombre = info.Af_Nombre;
-                    Entity.Af_NumPlaca = info.Af_NumPlaca;
                     Entity.Af_NumSerie = info.Af_NumSerie;
                     Entity.Af_observacion = info.Af_observacion;
                     Entity.Af_porcentaje_deprec = info.Af_porcentaje_deprec;
@@ -289,8 +286,8 @@ namespace Core.Erp.Data.ActivoFijo
                     Entity.CodActivoFijo = info.CodActivoFijo;
                     Entity.Estado_Proceso = info.Estado_Proceso;
                     Entity.IdActivoFijoTipo = info.IdActivoFijoTipo;
-                    Entity.IdModelo = info.IdModelo;
-                    Entity.IdMarca = info.IdMarca;
+                    Entity.IdModelo = Convert.ToInt32(info.IdModelo);
+                    Entity.IdMarca = Convert.ToInt32(info.IdMarca);
                     Entity.IdCategoriaAF = info.IdCategoriaAF;
                     Entity.IdSucursal = info.IdSucursal;
                     Entity.IdEmpleadoCustodio = info.IdEmpleadoCustodio;
@@ -464,26 +461,6 @@ namespace Core.Erp.Data.ActivoFijo
                         }
                     }
 
-                    if (Context.Af_Departamento.Where(q => q.IdEmpresa == activo).Count() == 0)
-                    {
-                        if (Lista_Departamento.Count > 0)
-                        {
-                            foreach (var item in Lista_Departamento)
-                            {
-                                Af_Departamento Entity_departamento = new Af_Departamento
-                                {
-                                    IdEmpresa = item.IdEmpresa,
-                                    IdDepartamento = item.IdDepartamento,
-                                    Descripcion = item.Descripcion,
-                                    Estado = true,
-                                    IdUsuarioCreacion = item.IdUsuarioCreacion,
-                                    FechaCreacion = DateTime.Now
-                                };
-                                Context.Af_Departamento.Add(Entity_departamento);
-                            }
-                        }
-                    }
-
                     if (Context.Af_Area.Count() == 0)
                     {
                         if (Lista_Area.Count > 0)
@@ -500,6 +477,27 @@ namespace Core.Erp.Data.ActivoFijo
                                     FechaCreacion = DateTime.Now
                                 };
                                 Context.Af_Area.Add(Entity_area);
+                            }
+                        }
+                    }
+
+                    if (Context.Af_Departamento.Where(q => q.IdEmpresa == activo).Count() == 0)
+                    {
+                        if (Lista_Departamento.Count > 0)
+                        {
+                            foreach (var item in Lista_Departamento)
+                            {
+                                Af_Departamento Entity_departamento = new Af_Departamento
+                                {
+                                    IdEmpresa = item.IdEmpresa,
+                                    IdArea = item.IdArea,
+                                    IdDepartamento = item.IdDepartamento,
+                                    Descripcion = item.Descripcion,
+                                    Estado = true,
+                                    IdUsuarioCreacion = item.IdUsuarioCreacion,
+                                    FechaCreacion = DateTime.Now
+                                };
+                                Context.Af_Departamento.Add(Entity_departamento);
                             }
                         }
                     }
@@ -578,7 +576,6 @@ namespace Core.Erp.Data.ActivoFijo
                                 Af_fecha_ini_depre = item.Af_fecha_ini_depre.Date,
                                 Af_Meses_depreciar = item.Af_Meses_depreciar,
                                 Af_Nombre = item.Af_Nombre,
-                                Af_NumPlaca = item.Af_NumPlaca,
                                 Af_NumSerie = item.Af_NumSerie,
                                 Af_observacion = item.Af_observacion,
                                 Af_porcentaje_deprec = item.Af_porcentaje_deprec,
@@ -589,8 +586,8 @@ namespace Core.Erp.Data.ActivoFijo
                                 Estado_Proceso = item.Estado_Proceso,
                                 IdActivoFijoTipo = item.IdActivoFijoTipo,
                                 IdActivoFijo = item.IdActivoFijo,
-                                IdMarca = item.IdMarca,
-                                IdModelo = item.IdModelo,
+                                IdMarca = Convert.ToInt32(item.IdMarca),
+                                IdModelo = Convert.ToInt32(item.IdModelo),
                                 IdCategoriaAF = item.IdCategoriaAF,
                                 IdSucursal = item.IdSucursal,
                                 IdEmpleadoCustodio = item.IdEmpleadoCustodio,

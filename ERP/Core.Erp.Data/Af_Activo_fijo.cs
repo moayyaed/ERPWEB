@@ -41,7 +41,6 @@ namespace Core.Erp.Data
         public int Af_Meses_depreciar { get; set; }
         public double Af_porcentaje_deprec { get; set; }
         public string Af_observacion { get; set; }
-        public string Af_NumPlaca { get; set; }
         public string Estado { get; set; }
         public decimal IdEmpleadoEncargado { get; set; }
         public decimal IdEmpleadoCustodio { get; set; }
@@ -49,8 +48,8 @@ namespace Core.Erp.Data
         public string Estado_Proceso { get; set; }
         public double Af_ValorSalvamento { get; set; }
         public int Cantidad { get; set; }
-        public Nullable<int> IdModelo { get; set; }
-        public Nullable<int> IdMarca { get; set; }
+        public int IdModelo { get; set; }
+        public int IdMarca { get; set; }
         public string IdUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public string IdUsuarioModificacion { get; set; }

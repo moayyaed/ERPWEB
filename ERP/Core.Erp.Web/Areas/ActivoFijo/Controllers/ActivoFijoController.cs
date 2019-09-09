@@ -18,6 +18,7 @@ using ExcelDataReader;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Web.Areas.RRHH.Controllers;
+using Core.Erp.Web.Areas.General.Controllers;
 
 namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
 {
@@ -95,11 +96,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         }
         public List<tb_persona_Info> get_list_bajo_demanda_emp(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.PERSONA.ToString());
         }
         public tb_persona_Info get_info_bajo_demanda_emp(ListEditItemRequestedByValueEventArgs args)
         {
-            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.PERSONA.ToString());
         }
 
 
@@ -653,29 +654,6 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 cont = 0;
                 reader.NextResult();
 
-                #region Departamento                
-                while (reader.Read())
-                {
-                    if (!reader.IsDBNull(0) && cont > 0)
-                    {
-                        Af_Departamento_Info info = new Af_Departamento_Info
-                        {
-                            IdEmpresa = IdEmpresa,
-                            IdDepartamento = Convert.ToInt32(reader.GetValue(0)),
-                            Descripcion = Convert.ToString(reader.GetValue(1)),
-                            IdUsuarioCreacion = SessionFixed.IdUsuario
-                        };
-                        Lista_Departamento.Add(info);
-                    }
-                    else
-                        cont++;
-                }
-                ListaDepartamento.set_list(Lista_Departamento, IdTransaccionSession);
-                #endregion
-
-                cont = 0;
-                reader.NextResult();
-
                 #region Area                
                 while (reader.Read())
                 {
@@ -694,6 +672,30 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                         cont++;
                 }
                 ListaAreaAF.set_list(Lista_Area, IdTransaccionSession);
+                #endregion
+
+                cont = 0;
+                reader.NextResult();
+
+                #region Departamento                
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0) && cont > 0)
+                    {
+                        Af_Departamento_Info info = new Af_Departamento_Info
+                        {
+                            IdEmpresa = IdEmpresa,
+                            IdDepartamento = Convert.ToInt32(reader.GetValue(0)),
+                            IdArea = Convert.ToInt32(reader.GetValue(1)),
+                            Descripcion = Convert.ToString(reader.GetValue(2)),
+                            IdUsuarioCreacion = SessionFixed.IdUsuario
+                        };
+                        Lista_Departamento.Add(info);
+                    }
+                    else
+                        cont++;
+                }
+                ListaDepartamento.set_list(Lista_Departamento, IdTransaccionSession);
                 #endregion
 
                 cont = 0;
@@ -775,28 +777,20 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 reader.NextResult();
 
                 #region ActivoFijo   
-                var ListaEmpleado = bus_empleado.get_list_combo(IdEmpresa);
-                ro_empleado_info_list Lista_Empleado = new ro_empleado_info_list();
-                Lista_Empleado.set_list(ListaEmpleado);
+                tb_persona_Bus bus_persona = new tb_persona_Bus();
+                var ListaPersonas = bus_persona.get_list(false);
+                tb_persona_List Lista_Personas = new tb_persona_List();
+                Lista_Personas.set_list(ListaPersonas, IdTransaccionSession);
 
                 while (reader.Read())
                 {
                     if (!reader.IsDBNull(0) && cont > 0)
                     {
                         var IdTipo = Convert.ToInt32(reader.GetValue(3));
-                        var ini_depre = Convert.ToDateTime(reader.GetValue(11));
-                        var info_empleado_custodio = Lista_Empleado.get_list().Where(q => q.pe_cedulaRuc == Convert.ToString(reader.GetValue(20))).FirstOrDefault();
-                        var info_empleado_encargado = Lista_Empleado.get_list().Where(q => q.pe_cedulaRuc == Convert.ToString(reader.GetValue(21))).FirstOrDefault();
+                        var ini_depre = Convert.ToDateTime(reader.GetValue(12));
+                        var info_custodio = Lista_Personas.get_list(IdTransaccionSession).Where(q => q.pe_cedulaRuc == Convert.ToString(reader.GetValue(20))).FirstOrDefault();
+                        var info_encargado = Lista_Personas.get_list(IdTransaccionSession).Where(q => q.pe_cedulaRuc == Convert.ToString(reader.GetValue(21))).FirstOrDefault();
                         var info_tipo_activofijo = ListaTipo.get_list(IdTransaccionSession).Where(q => q.IdActivoFijoTipo == IdTipo).FirstOrDefault();
-
-                        if (info_empleado_custodio == null)
-                        {
-
-                        }
-                        if (info_empleado_encargado == null)
-                        {
-
-                        }
 
                         Af_Activo_fijo_Info info = new Af_Activo_fijo_Info
                         {
@@ -804,31 +798,31 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                             IdUsuarioCreacion = SessionFixed.IdUsuario,
                             IdActivoFijo = Convert.ToInt32(reader.GetValue(0)),
                             CodActivoFijo = string.IsNullOrEmpty(Convert.ToString(reader.GetValue(1))) ? null : Convert.ToString(reader.GetValue(1)),
-                            Af_Codigo_Barra = string.IsNullOrEmpty(Convert.ToString(reader.GetValue(24))) ? null : Convert.ToString(reader.GetValue(22)),
+                            Af_Codigo_Barra = string.IsNullOrEmpty(Convert.ToString(reader.GetValue(22))) ? null : Convert.ToString(reader.GetValue(22)),
                             Af_Nombre = Convert.ToString(reader.GetValue(2)),
                             IdCategoriaAF = Convert.ToInt32(reader.GetValue(4)),
                             IdActivoFijoTipo = Convert.ToInt32(reader.GetValue(3)),
                             IdSucursal = Convert.ToInt32(reader.GetValue(5)),
-                            IdDepartamento = Convert.ToInt32(reader.GetValue(6)),
-                            IdMarca = Convert.ToInt32(reader.GetValue(7)),
-                            IdModelo = Convert.ToInt32(reader.GetValue(8)),
-                            IdEmpleadoCustodio = info_empleado_custodio == null ? 0 : info_empleado_custodio.IdEmpleado,
-                            IdEmpleadoEncargado = info_empleado_encargado == null ? 0 : info_empleado_encargado.IdEmpleado,
-                            Af_fecha_compra = Convert.ToDateTime(reader.GetValue(10)),
+                            IdArea = Convert.ToInt32(reader.GetValue(6)),
+                            IdDepartamento = Convert.ToInt32(reader.GetValue(7)),
+                            IdMarca = Convert.ToInt32(reader.GetValue(8)),
+                            IdModelo = Convert.ToInt32(reader.GetValue(9)),
+                            IdEmpleadoCustodio = info_custodio == null ? 0 : info_custodio.IdPersona,
+                            IdEmpleadoEncargado = info_encargado == null ? 0 : info_encargado.IdPersona,
+                            Af_fecha_compra = Convert.ToDateTime(reader.GetValue(11)),
                             Af_fecha_ini_depre = ini_depre,
-                            Af_costo_compra = Convert.ToDouble(reader.GetValue(13)),
-                            Af_Depreciacion_acum = Convert.ToDouble(reader.GetValue(14)),
+                            Af_costo_compra = Convert.ToDouble(reader.GetValue(14)),
+                            Af_Depreciacion_acum = Convert.ToDouble(reader.GetValue(15)),
                             Af_ValorSalvamento = Convert.ToDouble(reader.GetValue(23)),
-                            Af_NumSerie = string.IsNullOrEmpty(Convert.ToString(reader.GetValue(9))) ? null : Convert.ToString(reader.GetValue(9)),
-                            Af_NumPlaca = string.IsNullOrEmpty(Convert.ToString(reader.GetValue(19))) ? null : Convert.ToString(reader.GetValue(19)),
+                            Af_NumSerie = string.IsNullOrEmpty(Convert.ToString(reader.GetValue(10))) ? null : Convert.ToString(reader.GetValue(10)),
                             Estado_Proceso = "TIP_ESTADO_AF_ACTIVO",
                             Af_fecha_fin_depre = ini_depre.AddYears(info_tipo_activofijo.Af_anio_depreciacion),
                             Af_Meses_depreciar = (info_tipo_activofijo.Af_anio_depreciacion * 12),
                             Af_porcentaje_deprec = info_tipo_activofijo.Af_Porcentaje_depre,
                             Af_Vida_Util = info_tipo_activofijo.Af_anio_depreciacion,
-                            Af_observacion = Convert.ToString(reader.GetValue(18)),
-                            Cantidad = Convert.ToInt32(reader.GetValue(24)),
-                            IdArea = Convert.ToInt32(reader.GetValue(25)),
+                            Af_observacion = Convert.ToString(reader.GetValue(19)),
+                            Cantidad = Convert.ToInt32(reader.GetValue(24))
+                            
                         };
 
                         Lista_ActivoFijo.Add(info);

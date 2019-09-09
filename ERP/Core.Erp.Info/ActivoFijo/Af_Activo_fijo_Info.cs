@@ -31,7 +31,6 @@ namespace Core.Erp.Info.ActivoFijo
         public int Af_Meses_depreciar { get; set; }
         public double Af_porcentaje_deprec { get; set; }
         public string Af_observacion { get; set; }
-        public string Af_NumPlaca { get; set; }
         public string Estado { get; set; }
         [Required(ErrorMessage = ("el campo empleado encargado es obligatorio"))]
         public decimal IdEmpleadoEncargado { get; set; }
