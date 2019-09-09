@@ -8,10 +8,10 @@
     [IdSucursal]            INT           NOT NULL,
     [IdDepartamento]        NUMERIC (18)  NOT NULL,
     [IdArea]                NUMERIC (18)  NOT NULL,
-    [Af_NumSerie]           VARCHAR (100)  NULL,
-    [Af_fecha_compra]       DATE      NOT NULL,
-    [Af_fecha_ini_depre]    DATE      NOT NULL,
-    [Af_fecha_fin_depre]    DATE      NOT NULL,
+    [Af_NumSerie]           VARCHAR (100) NULL,
+    [Af_fecha_compra]       DATE          NOT NULL,
+    [Af_fecha_ini_depre]    DATE          NOT NULL,
+    [Af_fecha_fin_depre]    DATE          NOT NULL,
     [Af_costo_compra]       FLOAT (53)    NOT NULL,
     [Af_Depreciacion_acum]  FLOAT (53)    NOT NULL,
     [Af_Vida_Util]          INT           NOT NULL,
@@ -42,11 +42,13 @@
     CONSTRAINT [FK_Af_Activo_fijo_Af_Departamento] FOREIGN KEY ([IdEmpresa], [IdDepartamento]) REFERENCES [dbo].[Af_Departamento] ([IdEmpresa], [IdDepartamento]),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Marca] FOREIGN KEY ([IdEmpresa], [IdMarca]) REFERENCES [dbo].[Af_Marca] ([IdEmpresa], [IdMarca]),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Modelo] FOREIGN KEY ([IdEmpresa], [IdModelo]) REFERENCES [dbo].[Af_Modelo] ([IdEmpresa], [IdModelo]),
-    CONSTRAINT [FK_Af_Activo_fijo_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleadoEncargado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
-    CONSTRAINT [FK_Af_Activo_fijo_ro_empleado1] FOREIGN KEY ([IdEmpresa], [IdEmpleadoCustodio]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
     CONSTRAINT [FK_Af_Activo_fijo_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa]),
+    CONSTRAINT [FK_Af_Activo_fijo_tb_persona] FOREIGN KEY ([IdEmpleadoEncargado]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
+    CONSTRAINT [FK_Af_Activo_fijo_tb_persona1] FOREIGN KEY ([IdEmpleadoCustodio]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
     CONSTRAINT [FK_Af_Activo_fijo_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 
