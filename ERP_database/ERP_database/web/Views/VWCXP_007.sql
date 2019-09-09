@@ -3,7 +3,7 @@ AS
 SELECT isnull(ROW_NUMBER() OVER (ORDER BY A.IdEmpresa), 0) AS IdRow, A.*
 FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_TipoDocumento.Codigo, dbo.cp_TipoDocumento.Descripcion, 
                                     dbo.cp_proveedor.IdProveedor, tb_persona.pe_nombreCompleto pr_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.cp_orden_giro.co_serie AS serie_fact, dbo.cp_orden_giro.co_factura AS num_factura, 
-                                    CASE WHEN cp_retencion.IdRetencion IS NULL THEN dbo.cp_orden_giro.co_FechaFactura ELSE cp_retencion.fecha END AS co_FechaFactura, cp_orden_giro.co_subtotal_iva AS subtotal_iva, 
+                                    dbo.cp_orden_giro.co_FechaFactura AS co_FechaFactura, cp_orden_giro.co_subtotal_iva AS subtotal_iva, 
                                     cp_orden_giro.co_subtotal_siniva AS subtotal_sin_iva, cp_orden_giro.co_valoriva valor_iva, 
                                     CASE WHEN dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico = 1 THEN dbo.cp_retencion.NAutorizacion ELSE dbo.tb_sis_Documento_Tipo_Talonario.NumAutorizacion END AS NAutorizacion, 
                                     dbo.cp_retencion.serie1 + '-' + dbo.cp_retencion.serie1 AS serie_ret, dbo.cp_retencion.NumRetencion, dbo.cp_retencion_det.re_baseRetencion, dbo.cp_retencion_det.re_Porcen_retencion, 
@@ -37,7 +37,7 @@ FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro
                                     dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona ON dbo.cp_retencion.IdEmpresa_Ogiro = dbo.cp_orden_giro.IdEmpresa AND 
                                     dbo.cp_retencion.IdCbteCble_Ogiro = dbo.cp_orden_giro.IdCbteCble_Ogiro AND dbo.cp_retencion.IdTipoCbte_Ogiro = dbo.cp_orden_giro.IdTipoCbte_Ogiro INNER JOIN
                                     tb_persona AS per ON cp_proveedor.IdPersona = per.IdPersona INNER JOIN
-									tb_sucursal ON dbo.cp_orden_giro.IdEmpresa = tb_sucursal.IdEmpresa AND dbo.cp_orden_giro.IdSucursal = tb_sucursal.IdSucursal
+                                    tb_sucursal ON dbo.cp_orden_giro.IdEmpresa = tb_sucursal.IdEmpresa AND dbo.cp_orden_giro.IdSucursal = tb_sucursal.IdSucursal
                   WHERE   (dbo.cp_orden_giro.Estado = 'A')
                   /*and cp_orden_giro.IdEmpresa = 3 and cp_orden_giro.IdCbteCble_Ogiro = 248*/ UNION
                   SELECT cp_nota_DebCre.IdEmpresa, cp_nota_DebCre.IdTipoCbte_Nota, cp_nota_DebCre.IdCbteCble_Nota, '04', 'N/C', 'N/C Compras' AS Descripcion, cp_proveedor.IdProveedor, tb_persona.pe_nombreCompleto pr_nombre, 
@@ -48,7 +48,7 @@ FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro
                   FROM     cp_nota_DebCre INNER JOIN
                                     cp_proveedor ON cp_nota_DebCre.IdEmpresa = cp_proveedor.IdEmpresa AND cp_nota_DebCre.IdProveedor = cp_proveedor.IdProveedor INNER JOIN
                                     tb_persona ON cp_proveedor.IdPersona = tb_persona.IdPersona INNER JOIN
-									tb_sucursal ON dbo.cp_nota_DebCre.IdEmpresa = tb_sucursal.IdEmpresa AND dbo.cp_nota_DebCre.IdSucursal = tb_sucursal.IdSucursal
+                                    tb_sucursal ON dbo.cp_nota_DebCre.IdEmpresa = tb_sucursal.IdEmpresa AND dbo.cp_nota_DebCre.IdSucursal = tb_sucursal.IdSucursal
                   WHERE  (cp_nota_DebCre.cn_serie2 IS NOT NULL) AND (cp_nota_DebCre.DebCre = 'C') AND cp_nota_DebCre.Estado = 'A'
                   UNION
                   SELECT cp_nota_DebCre.IdEmpresa, cp_nota_DebCre.IdTipoCbte_Nota, cp_nota_DebCre.IdCbteCble_Nota, '05', 'N/D', 'N/D Compras' AS Descripcion, cp_proveedor.IdProveedor, tb_persona.pe_nombreCompleto pr_nombre, 
@@ -59,5 +59,5 @@ FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro
                   FROM     cp_nota_DebCre INNER JOIN
                                     cp_proveedor ON cp_nota_DebCre.IdEmpresa = cp_proveedor.IdEmpresa AND cp_nota_DebCre.IdProveedor = cp_proveedor.IdProveedor INNER JOIN
                                     tb_persona ON cp_proveedor.IdPersona = tb_persona.IdPersona INNER JOIN
-									tb_sucursal ON dbo.cp_nota_DebCre.IdEmpresa = tb_sucursal.IdEmpresa AND dbo.cp_nota_DebCre.IdSucursal = tb_sucursal.IdSucursal
+                                    tb_sucursal ON dbo.cp_nota_DebCre.IdEmpresa = tb_sucursal.IdEmpresa AND dbo.cp_nota_DebCre.IdSucursal = tb_sucursal.IdSucursal
                   WHERE  (cp_nota_DebCre.cn_serie2 IS NOT NULL) AND (cp_nota_DebCre.DebCre = 'D') AND cp_nota_DebCre.Estado = 'A') A

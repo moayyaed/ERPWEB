@@ -1,17 +1,17 @@
-﻿CREATE VIEW web.vwba_Conciliacion_det_IngEgr_x_conciliar
+﻿CREATE VIEW [web].[vwba_Conciliacion_det_IngEgr_x_conciliar]
 AS
-SELECT        dbo.ct_cbtecble_det.IdEmpresa, dbo.ct_cbtecble_det.IdTipoCbte, dbo.ct_cbtecble_det.IdCbteCble, dbo.ct_cbtecble_det.secuencia, dbo.ba_Banco_Cuenta.IdBanco, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_cbtecble_det.dc_Valor, 
-                         dbo.ba_Banco_Cuenta.ba_descripcion, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ba_Cbte_Ban.cb_Cheque, dbo.ct_cbtecble_tipo.tc_TipoCbte
-FROM            dbo.ba_Cbte_Ban INNER JOIN
-                         dbo.ct_cbtecble_det ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ba_Cbte_Ban.IdTipocbte = dbo.ct_cbtecble_det.IdTipoCbte AND 
-                         dbo.ba_Cbte_Ban.IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble INNER JOIN
-                         dbo.ba_Banco_Cuenta ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_Cbte_Ban.IdBanco = dbo.ba_Banco_Cuenta.IdBanco INNER JOIN
-                         dbo.ct_cbtecble_tipo ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ct_cbtecble_tipo.IdEmpresa AND dbo.ba_Cbte_Ban.IdTipocbte = dbo.ct_cbtecble_tipo.IdTipoCbte
-WHERE        (dbo.ct_cbtecble_det.dc_para_conciliar = 1) AND (dbo.ba_Cbte_Ban.Estado = 'A') AND (NOT EXISTS
-                             (SELECT        IdEmpresa
-                               FROM            dbo.ba_Conciliacion_det_IngEgr AS f
-                               WHERE        (dbo.ct_cbtecble_det.IdEmpresa = IdEmpresa) AND (dbo.ct_cbtecble_det.IdTipoCbte = IdTipocbte) AND (dbo.ct_cbtecble_det.IdCbteCble = IdCbteCble) AND (dbo.ct_cbtecble_det.secuencia = SecuenciaCbteCble) AND 
-                                                         (checked = 1)))
+SELECT dbo.ct_cbtecble_det.IdEmpresa, dbo.ct_cbtecble_det.IdTipoCbte, dbo.ct_cbtecble_det.IdCbteCble, dbo.ct_cbtecble_det.secuencia, dbo.ba_Banco_Cuenta.IdBanco, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_cbtecble_det.dc_Valor, 
+                  dbo.ba_Banco_Cuenta.ba_descripcion, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, isnull(dbo.ba_Cbte_Ban.cb_Cheque,cast(ct_cbtecble_det.IdCbteCble as varchar(20))) cb_Cheque, dbo.ct_cbtecble_tipo.tc_TipoCbte
+FROM     dbo.ba_Cbte_Ban INNER JOIN
+                  dbo.ct_cbtecble_det ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ba_Cbte_Ban.IdTipocbte = dbo.ct_cbtecble_det.IdTipoCbte AND 
+                  dbo.ba_Cbte_Ban.IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble INNER JOIN
+                  dbo.ct_cbtecble_tipo ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ct_cbtecble_tipo.IdEmpresa AND dbo.ba_Cbte_Ban.IdTipocbte = dbo.ct_cbtecble_tipo.IdTipoCbte INNER JOIN
+                  dbo.ba_Banco_Cuenta ON dbo.ct_cbtecble_det.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ct_cbtecble_det.IdCtaCble = dbo.ba_Banco_Cuenta.IdCtaCble
+WHERE  (dbo.ct_cbtecble_det.dc_para_conciliar = 1) AND (dbo.ba_Cbte_Ban.Estado = 'A') AND (NOT EXISTS
+                      (SELECT IdEmpresa
+                       FROM      dbo.ba_Conciliacion_det_IngEgr AS f
+                       WHERE   (dbo.ct_cbtecble_det.IdEmpresa = IdEmpresa) AND (dbo.ct_cbtecble_det.IdTipoCbte = IdTipocbte) AND (dbo.ct_cbtecble_det.IdCbteCble = IdCbteCble) AND (dbo.ct_cbtecble_det.secuencia = SecuenciaCbteCble) AND 
+                                         (checked = 1)))
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
@@ -86,40 +86,40 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "ba_Cbte_Ban"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 260
+               Top = 0
+               Left = 654
+               Bottom = 311
+               Right = 876
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ct_cbtecble_det"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 301
+               Top = 0
+               Left = 90
+               Bottom = 275
+               Right = 353
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ba_Banco_Cuenta"
             Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 266
+               Top = 0
+               Left = 423
+               Bottom = 276
+               Right = 651
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ct_cbtecble_tipo"
             Begin Extent = 
-               Top = 6
-               Left = 298
-               Bottom = 136
-               Right = 477
+               Top = 0
+               Left = 1003
+               Bottom = 130
+               Right = 1182
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -136,14 +136,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -151,6 +151,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwba_Conciliacion_det_IngEgr_x_conciliar';
+
+
 
 
 GO

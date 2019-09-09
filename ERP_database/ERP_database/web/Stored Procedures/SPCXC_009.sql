@@ -57,5 +57,5 @@ FROM     fa_notaCreDeb INNER JOIN
 				  GROUP BY d.IdEmpresa, d.IdSucursal, d.IdBodega_Cbte, d.IdCbte_vta_nota, d.dc_TipoDocumento
 				  ) as Cobro on fa_notaCreDeb.IdEmpresa = COBRO.IdEmpresa AND fa_notaCreDeb.IdSucursal = COBRO.IdSucursal AND fa_notaCreDeb.IdBodega = COBRO.IdBodega_Cbte AND fa_notaCreDeb.IdNota = COBRO.IdCbte_vta_nota AND fa_notaCreDeb.CodDocumentoTipo = COBRO.dc_TipoDocumento
 where fa_notaCreDeb.IdEmpresa = @IdEmpresa and fa_notaCreDeb.IdCliente = @IdCliente 
-AND fa_notaCreDeb.Estado = 'A' 
+AND fa_notaCreDeb.Estado = 'A' and fa_notaCreDeb.CreDeb = 'D'
 and round(fa_notaCreDeb_resumen.Total - isnull(COBRO.dc_ValorPago,0),2) >  0

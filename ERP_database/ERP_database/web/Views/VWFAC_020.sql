@@ -72,39 +72,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ight = 293
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 40
+      Begin ColumnWidths = 9
          Width = 284
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -134,6 +103,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ight = 293
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWFAC_020';
+
+
 
 
 

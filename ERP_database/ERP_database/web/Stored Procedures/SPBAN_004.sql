@@ -1,5 +1,5 @@
 ﻿
---exec [web].[SPBAN_004] 1,2,13
+--exec [web].[SPBAN_004] 1,1,1
 CREATE proc [web].[SPBAN_004]
 (
  @IdEmpresa int
@@ -438,10 +438,10 @@ begin
             A.IdEmpresa                    ,cast(@IdConciliacion as numeric) IdConciliacion    ,@IdBanco IdBanco        ,@IdPeriodo IdPeriodo        ,@o_nomBanco nom_banco        ,@o_ba_Num_Cuenta ba_Num_Cuenta    
             ,@IdCtaCble IdCtaCble        ,cast(@i_FechaIni as date ) Fecha                ,'' CodTipoCbte         ,'NO HAY REGISTRO' Tipo_Cbte                ,0 Secuencia        ,cast(0  as numeric) as IdCbteCble  
             ,0 IdTipocbte                ,0 SecuenciaCbte                ,cast(0 as float) Valor                ,'NO HAY REGISTRO' Observacion                ,''    Cheque    
-            ,ISNULL(@SaldoInicial,0) SaldoInicial    ,ISNULL(@SaldoFin,0) SaldoFinal            ,''Titulo_grupo            ,'NO HAY REGISTRO' referencia                ,A.em_ruc ruc_empresa    ,A.em_nombre nom_empresa
+            ,ISNULL(@SaldoInicial,0) SaldoInicial    ,ISNULL(@SaldoFin,0) SaldoFinal            ,''Titulo_grupo            ,'NO HAY REGISTRO' referencia                ,e.em_ruc ruc_empresa    ,e.em_nombre nom_empresa
             ,ISNULL(@SaldoContable,0) SaldoBanco_EstCta        ,@EstadoConciliado Estado_Conciliacion ,'' GiradoA
             ,null IdTipoFlujo            ,null AS nom_tipo_flujo            , ISNULL(@TotalConciliado,0) Total_Conciliado
-            ,cast(@i_FechaIni as date) as FechaIni,cast(@i_FechaFin as date )as FechaFin
-            from tb_empresa A
-            where A.IdEmpresa=@IdEmpresa 
+            ,cast(@i_FechaIni as date) as FechaIni,cast(@i_FechaFin as date )as FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior
+            from ba_Conciliacion A inner join tb_empresa as e on a.IdEmpresa = e.IdEmpresa
+            where A.IdEmpresa=@IdEmpresa  and a.IdConciliacion = @IdConciliacion
 end

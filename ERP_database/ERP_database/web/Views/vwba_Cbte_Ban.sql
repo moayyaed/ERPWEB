@@ -1,15 +1,22 @@
-﻿CREATE VIEW web.vwba_Cbte_Ban
+﻿CREATE VIEW [web].[vwba_Cbte_Ban]
 AS
-SELECT        dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdCbteCble, dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.CodTipoCbteBan, dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdTipoCbteCble, 
-                         dbo.ba_Cbte_Ban.IdPeriodo, dbo.ba_Cbte_Ban.IdBanco, dbo.ba_Banco_Cuenta.ba_descripcion, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ba_Cbte_Ban.cb_Valor, dbo.ba_Cbte_Ban.cb_Cheque, 
-                         dbo.ba_Cbte_Ban.Estado, dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.ba_Cbte_Ban.IdSucursal, dbo.tb_sucursal.Su_Descripcion, 
-                         dbo.ba_Banco_Cuenta.Imprimir_Solo_el_cheque
-FROM            dbo.ba_Cbte_Ban INNER JOIN
-                         dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdEmpresa AND 
-                         dbo.ba_Cbte_Ban.IdTipocbte = dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdTipoCbteCble INNER JOIN
-                         dbo.ba_Banco_Cuenta ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_Cbte_Ban.IdBanco = dbo.ba_Banco_Cuenta.IdBanco INNER JOIN
-                         dbo.tb_sucursal ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.ba_Cbte_Ban.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
-                         dbo.tb_persona ON dbo.ba_Cbte_Ban.IdPersona = dbo.tb_persona.IdPersona
+SELECT dbo.ba_Cbte_Ban.IdEmpresa, dbo.ba_Cbte_Ban.IdTipocbte, dbo.ba_Cbte_Ban.IdCbteCble, dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.CodTipoCbteBan, dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdTipoCbteCble, 
+                  dbo.ba_Cbte_Ban.IdPeriodo, dbo.ba_Cbte_Ban.IdBanco, dbo.ba_Banco_Cuenta.ba_descripcion, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ba_Cbte_Ban.cb_Valor, dbo.ba_Cbte_Ban.cb_Cheque, 
+                  dbo.ba_Cbte_Ban.Estado, dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.ba_Cbte_Ban.IdSucursal, dbo.tb_sucursal.Su_Descripcion, 
+                  dbo.ba_Banco_Cuenta.Imprimir_Solo_el_cheque, ban.ValorBanco
+FROM     dbo.ba_Cbte_Ban INNER JOIN
+                 dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdEmpresa AND 
+                  dbo.ba_Cbte_Ban.IdTipocbte = dbo.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.IdTipoCbteCble INNER JOIN
+                  dbo.ba_Banco_Cuenta ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_Cbte_Ban.IdBanco = dbo.ba_Banco_Cuenta.IdBanco INNER JOIN
+                  dbo.tb_sucursal ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.ba_Cbte_Ban.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
+                  dbo.tb_persona ON dbo.ba_Cbte_Ban.IdPersona = dbo.tb_persona.IdPersona LEFT JOIN
+				  (
+				  SELECT c.IdEmpresa, c.IdTipocbte, c.IdCbteCble, abs(sum(d.dc_Valor)) ValorBanco FROM ba_Cbte_Ban AS c inner join
+				  ct_cbtecble_det d on c.IdEmpresa = d.IdEmpresa and c.IdTipocbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble inner join
+				  ba_Banco_Cuenta as b on c.IdEmpresa = b.IdEmpresa and c.IdBanco = b.IdBanco and d.IdCtaCble = b.IdCtaCble
+				  where d.dc_para_conciliar = 1
+				  group by c.IdEmpresa, c.IdTipocbte, c.IdCbteCble
+				  ) as ban on ba_Cbte_Ban.IdEmpresa = ban.IdEmpresa and ba_Cbte_Ban.IdTipocbte = ban.IdTipocbte and ba_Cbte_Ban.IdCbteCble = ban.IdCbteCble
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwba_Cbte_Ban';
 

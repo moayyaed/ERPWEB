@@ -1,4 +1,4 @@
-﻿--exec web.SPCONTA_002 1,1,1,'2110501','2019/01/01','2019/12/31',0,99999,0,99999
+﻿--exec web.SPCONTA_002 1,1,1,'1190301','2019/08/01','2019/08/31',10,10,461,461
 CREATE PROC [web].[SPCONTA_002]
 (
 @IdEmpresa int,
@@ -36,6 +36,8 @@ inner join ct_cbtecble c
 on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble
 where c.IdEmpresa = @IdEmpresa and d.IdCtaCble = @IdCtaCble and c.cb_Fecha < @FechaIni
 and c.IdSucursal between @IdSucursalIni and @IdSucursalFin
+and isnull(D.IdPunto_cargo_grupo,0) between @IdGrupoIni and @IdGrupoFin
+and isnull(D.IdPunto_cargo,0) between @IdPunto_cargoIni and @IdPunto_cargoFin
 
 SET @SaldoInicial = CASE WHEN @SignoOperacion < 0 THEN @SaldoInicial *-1 ELSE @SaldoInicial END	
 
@@ -51,7 +53,19 @@ CASE WHEN @SignoOperacion < 0 THEN
 				  END 
 
 ) OVER(partition by ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble 
-ORDER BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble,ct_cbtecble.cb_Fecha, ct_cbtecble_det.dc_Valor desc, ct_cbtecble_det.IdTipoCbte, ct_cbtecble_det.IdCbteCble, ct_cbtecble_det.secuencia) as Saldo,
+
+ORDER BY 
+ct_cbtecble_det.IdEmpresa, 
+ct_cbtecble.IdSucursal,
+ct_cbtecble_det.IdCtaCble,
+YEAR(ct_cbtecble.cb_Fecha),
+MONTH(ct_cbtecble.cb_Fecha),
+ct_cbtecble.cb_Fecha, 
+ct_cbtecble_det.IdTipoCbte desc, 
+ct_cbtecble_det.IdCbteCble, 
+ct_cbtecble_det.secuencia) as Saldo,
+
+
 ct_cbtecble.cb_Fecha, isnull(ct_cbtecble.cb_Observacion,'') +' '+ isnull(ct_cbtecble_det.dc_Observacion,'') cb_Observacion, ct_cbtecble.cb_Estado, ct_cbtecble_tipo.tc_TipoCbte, m.IdMes, m.smes, ct_cbtecble.IdSucursal, Su_Descripcion, pc.nom_punto_cargo, pg.nom_punto_cargo_grupo
 FROM            ct_cbtecble INNER JOIN
                          ct_cbtecble_det ON ct_cbtecble.IdEmpresa = ct_cbtecble_det.IdEmpresa AND ct_cbtecble.IdTipoCbte = ct_cbtecble_det.IdTipoCbte AND ct_cbtecble.IdCbteCble = ct_cbtecble_det.IdCbteCble INNER JOIN

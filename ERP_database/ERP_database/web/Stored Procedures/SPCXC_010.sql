@@ -37,8 +37,8 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								F.CodCbteVta,F.vt_tipoDoc,F.vt_serie1,F.vt_serie2,F.vt_NumFactura, 
 								dbo.tb_sucursal.Su_Descripcion, LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) as pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
 								FD.Total Valor_Original,F.vt_fech_venc,
-								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, cc.Telefono+' '+cc.Celular as pe_telefonoOfic,
-								F.vt_Observacion,F.vt_plazo, p.pe_nombreCompleto as NomContacto, con.Telefono + '/' + con.Celular TelefonoContacto, t.Descripcion_tip_cliente
+								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,'') as pe_telefonoOfic,
+								F.vt_Observacion,F.vt_plazo, p.pe_nombreCompleto as NomContacto, ISNULL(con.Telefono,'') + ' ' + ISNULL(con.Celular,'') TelefonoContacto, t.Descripcion_tip_cliente
 			FROM            fa_factura AS F INNER JOIN
                          fa_factura_resumen AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
                          fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente 
@@ -70,8 +70,8 @@ SELECT			dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaC
 				dbo.tb_sucursal.Su_Descripcion, 
 				LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) , dbo.tb_persona.pe_cedulaRuc, 
 				dbo.fa_notaCreDeb_resumen.Total, dbo.fa_notaCreDeb.no_fecha_venc,dbo.fa_notaCreDeb.no_fecha, dbo.fa_cliente.Idtipo_cliente,				
-				cc.Telefono+' '+cc.Celular as pe_telefonoOfic, fa_notaCreDeb.sc_observacion,
-				DATEDIFF(DAY,dbo.fa_notaCreDeb.no_fecha,dbo.fa_notaCreDeb.no_fecha_venc), tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_telfono_Contacto,
+				ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,'') as pe_telefonoOfic, fa_notaCreDeb.sc_observacion,
+				DATEDIFF(DAY,dbo.fa_notaCreDeb.no_fecha,dbo.fa_notaCreDeb.no_fecha_venc), tb_persona.pe_nombreCompleto, ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,''),
 				t.Descripcion_tip_cliente
 FROM            fa_notaCreDeb INNER JOIN
                 fa_notaCreDeb_resumen ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_resumen.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_resumen.IdSucursal AND 
@@ -87,11 +87,6 @@ where           dbo.fa_notaCreDeb.IdEmpresa = @IdEmpresa and dbo.fa_notaCreDeb.C
 				and fa_cliente.Idtipo_cliente between @IdTipoClienteIni and @IdTipoClienteFin
 				AND fa_notaCreDeb.IdCliente between @IdClienteIni and @IdClienteFin 
 				AND fa_notaCreDeb.IdSucursal between @SucursalIni and @SucursalFin
-				AND NOT EXISTS(
-				  SELECT        *
-                               FROM            fa_notaCreDeb_x_fa_factura_NotaDeb Cruce
-                               WHERE        Cruce.IdEmpresa_nt = fa_notaCreDeb.IdEmpresa AND Cruce.IdSucursal_nt = fa_notaCreDeb.IdSucursal AND Cruce.IdBodega_nt = fa_notaCreDeb.IdBodega AND Cruce.IdNota_nt = fa_notaCreDeb.IdNota							  
-				)
 
 ) as  Facturas_y_notas_deb left join
 (

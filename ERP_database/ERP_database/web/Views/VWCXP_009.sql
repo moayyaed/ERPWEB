@@ -1,32 +1,48 @@
-﻿CREATE VIEW web.VWCXP_009
+﻿CREATE VIEW [web].[VWCXP_009]
 AS
 SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdCbteCble_Ogiro, ISNULL(dbo.cp_retencion_det.IdRetencion, 0) AS IdRetencion, ISNULL(dbo.cp_retencion_det.Idsecuencia, 0) AS Idsecuencia, 
-                  dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_orden_giro.IdProveedor, per.pe_nombreCompleto AS nom_proveedor, per.pe_cedulaRuc AS ced_proveedor, pro.pr_direccion AS dir_proveedor, dbo.cp_orden_giro.co_fechaOg, 
-                  dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura AS num_factura, dbo.cp_orden_giro.co_FechaFactura, ISNULL(dbo.cp_retencion.Estado, dbo.cp_orden_giro.Estado) AS Estado, 
-                  dbo.cp_TipoDocumento.Descripcion AS TipoDocumento, ISNULL(dbo.cp_retencion.fecha, dbo.cp_orden_giro.co_FechaContabilizacion) AS fecha_retencion, YEAR(ISNULL(dbo.cp_retencion.fecha, 
-                  dbo.cp_orden_giro.co_FechaContabilizacion)) AS ejercicio_fiscal, ISNULL(dbo.cp_retencion_det.re_tipoRet, 'RTF') AS Impuesto, ISNULL(dbo.cp_retencion_det.re_baseRetencion, dbo.cp_orden_giro.co_baseImponible) AS base_retencion, 
+                  dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_orden_giro.IdProveedor, per.pe_nombreCompleto AS nom_proveedor, per.pe_cedulaRuc AS ced_proveedor, pro.pr_direccion AS dir_proveedor, 
+                  dbo.cp_orden_giro.co_FechaFactura co_fechaOg, dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura AS num_factura, dbo.cp_orden_giro.co_FechaFactura, ISNULL(dbo.cp_retencion.Estado, dbo.cp_orden_giro.Estado) 
+                  AS Estado, dbo.cp_TipoDocumento.Descripcion AS TipoDocumento, dbo.cp_orden_giro.co_FechaFactura AS fecha_retencion, YEAR(ISNULL(dbo.cp_retencion.fecha, dbo.cp_orden_giro.co_FechaContabilizacion)) AS ejercicio_fiscal, 
+                  ISNULL(dbo.cp_retencion_det.re_tipoRet, 'RTF') AS Impuesto, ISNULL(dbo.cp_retencion_det.re_baseRetencion, dbo.cp_orden_giro.co_subtotal_iva + dbo.cp_orden_giro.co_subtotal_siniva) AS base_retencion, 
                   ISNULL(dbo.cp_retencion_det.IdCodigo_SRI, 0) AS IdCodigo_SRI, ISNULL(dbo.cp_codigo_SRI.codigoSRI, '332') AS cod_Impuesto_SRI, ISNULL(dbo.cp_codigo_SRI.co_porRetencion, 0) AS por_Retencion_SRI, 
-                  ISNULL(dbo.cp_retencion_det.re_valor_retencion, 0) AS valor_Retenido, dbo.cp_orden_giro.IdEmpresa AS IdEmpresa_Ogiro, dbo.cp_retencion.serie1 + '' + dbo.cp_retencion.serie2 AS serie, dbo.cp_retencion.NumRetencion, 
+                  ISNULL(dbo.cp_retencion_det.re_valor_retencion, 0) AS valor_Retenido, dbo.cp_orden_giro.IdEmpresa AS IdEmpresa_Ogiro, dbo.cp_retencion.serie1 + '-' + dbo.cp_retencion.serie2 AS serie, dbo.cp_retencion.NumRetencion, 
                   ISNULL(dbo.cp_codigo_SRI.co_descripcion, 'Retención de fuente 0%') AS co_descripcion, dbo.cp_codigo_SRI_x_CtaCble.IdCtaCble, dbo.cp_retencion_x_ct_cbtecble.ct_IdCbteCble AS IdCbteCbleRet, 
                   ISNULL(dbo.cp_orden_giro.co_observacion, dbo.cp_retencion.observacion) AS co_observacion, dbo.cp_orden_giro.IdSucursal, su.Su_Descripcion, CAST(ISNULL(dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico, 0) 
                   AS bit) AS es_Documento_Electronico
 FROM     dbo.cp_retencion_det INNER JOIN
                   dbo.cp_retencion ON dbo.cp_retencion_det.IdEmpresa = dbo.cp_retencion.IdEmpresa AND dbo.cp_retencion_det.IdRetencion = dbo.cp_retencion.IdRetencion INNER JOIN
-                  dbo.cp_codigo_SRI ON dbo.cp_retencion_det.IdCodigo_SRI = dbo.cp_codigo_SRI.IdCodigo_SRI LEFT OUTER JOIN
-                  dbo.tb_sis_Documento_Tipo_Talonario ON dbo.cp_retencion.IdEmpresa = dbo.tb_sis_Documento_Tipo_Talonario.IdEmpresa AND dbo.cp_retencion.CodDocumentoTipo = dbo.tb_sis_Documento_Tipo_Talonario.CodDocumentoTipo AND 
-                  dbo.cp_retencion.serie2 = dbo.tb_sis_Documento_Tipo_Talonario.PuntoEmision AND dbo.cp_retencion.serie1 = dbo.tb_sis_Documento_Tipo_Talonario.Establecimiento AND 
-                  dbo.cp_retencion.NumRetencion = dbo.tb_sis_Documento_Tipo_Talonario.NumDocumento RIGHT OUTER JOIN
+                  dbo.cp_codigo_SRI ON dbo.cp_retencion_det.IdCodigo_SRI = dbo.cp_codigo_SRI.IdCodigo_SRI INNER JOIN
                   dbo.cp_proveedor AS pro INNER JOIN
                   dbo.cp_orden_giro INNER JOIN
                   dbo.cp_TipoDocumento ON dbo.cp_orden_giro.IdOrden_giro_Tipo = dbo.cp_TipoDocumento.CodTipoDocumento ON pro.IdEmpresa = dbo.cp_orden_giro.IdEmpresa AND pro.IdProveedor = dbo.cp_orden_giro.IdProveedor INNER JOIN
                   dbo.tb_persona AS per ON pro.IdPersona = per.IdPersona ON dbo.cp_retencion.IdCbteCble_Ogiro = dbo.cp_orden_giro.IdCbteCble_Ogiro AND dbo.cp_retencion.IdTipoCbte_Ogiro = dbo.cp_orden_giro.IdTipoCbte_Ogiro AND 
                   dbo.cp_retencion.IdEmpresa_Ogiro = dbo.cp_orden_giro.IdEmpresa LEFT OUTER JOIN
+                  dbo.tb_sis_Documento_Tipo_Talonario ON dbo.cp_retencion.IdEmpresa = dbo.tb_sis_Documento_Tipo_Talonario.IdEmpresa AND dbo.cp_retencion.CodDocumentoTipo = dbo.tb_sis_Documento_Tipo_Talonario.CodDocumentoTipo AND 
+                  dbo.cp_retencion.serie2 = dbo.tb_sis_Documento_Tipo_Talonario.PuntoEmision AND dbo.cp_retencion.serie1 = dbo.tb_sis_Documento_Tipo_Talonario.Establecimiento AND 
+                  dbo.cp_retencion.NumRetencion = dbo.tb_sis_Documento_Tipo_Talonario.NumDocumento LEFT OUTER JOIN
                   dbo.cp_retencion_x_ct_cbtecble LEFT OUTER JOIN
                   dbo.ct_cbtecble ON dbo.cp_retencion_x_ct_cbtecble.ct_IdEmpresa = dbo.ct_cbtecble.IdEmpresa AND dbo.cp_retencion_x_ct_cbtecble.ct_IdTipoCbte = dbo.ct_cbtecble.IdTipoCbte AND 
                   dbo.cp_retencion_x_ct_cbtecble.ct_IdCbteCble = dbo.ct_cbtecble.IdCbteCble ON dbo.cp_retencion.IdEmpresa = dbo.cp_retencion_x_ct_cbtecble.rt_IdEmpresa AND 
                   dbo.cp_retencion.IdRetencion = dbo.cp_retencion_x_ct_cbtecble.rt_IdRetencion LEFT OUTER JOIN
                   dbo.cp_codigo_SRI_x_CtaCble ON dbo.cp_retencion_det.IdEmpresa = dbo.cp_codigo_SRI_x_CtaCble.IdEmpresa AND dbo.cp_retencion_det.IdCodigo_SRI = dbo.cp_codigo_SRI_x_CtaCble.idCodigo_SRI LEFT OUTER JOIN
                   dbo.tb_sucursal AS su ON dbo.cp_orden_giro.IdEmpresa = su.IdEmpresa AND dbo.cp_orden_giro.IdSucursal = su.IdSucursal
+WHERE  (dbo.cp_orden_giro.Estado = 'A')
+UNION ALL
+SELECT OG.IdEmpresa, OG.IdTipoCbte_Ogiro, OG.IdCbteCble_Ogiro, 0, 0, OG.IdOrden_giro_Tipo, OG.IdProveedor, PER.pe_nombreCompleto, PER.pe_cedulaRuc, PRO.pr_direccion, OG.co_FechaFactura, OG.co_serie, OG.co_factura, OG.co_FechaFactura, 
+                  OG.Estado, t .Descripcion, og.co_FechaFactura, year(og.co_FechaFactura), 'RTF', ROUND((og.co_subtotal_iva + og.co_subtotal_siniva) - ISNULL(R.re_valor_retencion, 0), 2), 0, '00F', 0, 0, og.IdEmpresa, NULL, NULL, 
+                  'Retención de fuente 0%', NULL, NULL, og.co_observacion, og.IdSucursal, s.Su_Descripcion, cast(1 AS bit)
+FROM     cp_orden_giro AS OG INNER JOIN
+                  cp_proveedor AS PRO ON OG.IdEmpresa = PRO.IdEmpresa AND OG.IdProveedor = PRO.IdProveedor INNER JOIN
+                  tb_persona AS PER ON PRO.IdPersona = PER.IdPersona INNER JOIN
+                  cp_TipoDocumento AS T ON t .CodTipoDocumento = og.IdOrden_giro_Tipo INNER JOIN
+                  tb_sucursal AS s ON og.IdEmpresa = s.IdEmpresa AND og.IdSucursal = s.IdSucursal LEFT JOIN
+                      (SELECT C.IdEmpresa_Ogiro, C.IdTipoCbte_Ogiro, C.IdCbteCble_Ogiro, SUM(D .re_baseRetencion) re_valor_retencion
+                       FROM      cp_retencion AS c INNER JOIN
+                                         cp_retencion_det AS d ON c.IdEmpresa = d .IdEmpresa AND c.IdRetencion = d .IdRetencion
+                       WHERE   ltrim(rtrim(d .re_tipoRet)) = 'RTF' AND c.Estado = 'A'
+                       GROUP BY C.IdEmpresa_Ogiro, C.IdTipoCbte_Ogiro, C.IdCbteCble_Ogiro) R ON og.IdEmpresa = R.IdEmpresa_Ogiro AND og.IdTipoCbte_Ogiro = R.IdTipoCbte_Ogiro AND og.IdCbteCble_Ogiro = R.IdCbteCble_Ogiro
+WHERE  ROUND((og.co_subtotal_iva + og.co_subtotal_siniva) - ISNULL(R.re_valor_retencion, 0), 2) > 0 AND OG.Estado = 'A'
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_009';
 

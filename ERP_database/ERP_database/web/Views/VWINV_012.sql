@@ -1,9 +1,9 @@
-﻿CREATE VIEW web.VWINV_012
+﻿CREATE VIEW [web].[VWINV_012]
 AS
 SELECT dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia, dbo.in_Ing_Egr_Inven_det.IdBodega, 
                   dbo.in_Ing_Egr_Inven_det.IdProducto, dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, dbo.in_Producto.pr_codigo, dbo.in_Producto.pr_descripcion, dbo.in_movi_inven_tipo.tm_descripcion, 
                   dbo.in_Ing_Egr_Inven.cm_fecha, dbo.in_Ing_Egr_Inven.cm_observacion, dbo.in_UnidadMedida.Descripcion AS NomUnidad, dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion, dbo.in_Ing_Egr_Inven_det.mv_costo_sinConversion, 
-                  dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion * dbo.in_Ing_Egr_Inven_det.mv_costo_sinConversion AS CostoTotal, dbo.in_movi_inven_tipo.cm_tipo_movi, dbo.in_Ing_Egr_Inven.IdEstadoAproba, 
+                  dbo.in_Ing_Egr_Inven_det.dm_cantidad_sinConversion * dbo.in_Ing_Egr_Inven_det.mv_costo AS CostoTotal, dbo.in_movi_inven_tipo.cm_tipo_movi, dbo.in_Ing_Egr_Inven.IdEstadoAproba, 
                   dbo.in_Ing_Egr_Inven.CodMoviInven, mot.Desc_mov_inv AS MotivoCabecera, modd.Desc_mov_inv AS MotivoDetalle, cc.cc_Descripcion
 FROM     dbo.in_UnidadMedida INNER JOIN
                   dbo.in_Producto INNER JOIN
@@ -19,7 +19,7 @@ FROM     dbo.in_UnidadMedida INNER JOIN
                   dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.in_Ing_Egr_Inven_det.IdBodega = dbo.tb_bodega.IdBodega LEFT OUTER JOIN
                   dbo.in_Motivo_Inven AS modd ON modd.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND modd.IdMotivo_Inv = dbo.in_Ing_Egr_Inven_det.IdMotivo_Inv LEFT OUTER JOIN
                   dbo.ct_CentroCosto AS cc ON cc.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND cc.IdCentroCosto = dbo.in_Ing_Egr_Inven_det.IdCentroCosto
-WHERE  (dbo.in_Ing_Egr_Inven.Estado = 'A')
+WHERE  (dbo.in_Ing_Egr_Inven.Estado = 'A') AND in_Ing_Egr_Inven.IdEstadoAproba = 'APRO'
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_012';
 

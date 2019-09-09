@@ -123,7 +123,7 @@ END
 
 
 SELECT sp.IdEmpresa, sp.IdSucursal, sp.IdBodega, sp.IdProducto, sp.Stock, sp.Costo_promedio, sp.Costo_total, s.Su_Descripcion, b.bo_Descripcion, p.pr_codigo, p.pr_descripcion, p.lote_num_lote, p.lote_fecha_vcto, c.IdCategoria, c.ca_Categoria, 
-                  l.IdLinea, l.nom_linea, g.IdGrupo, g.nom_grupo, sg.IdSubgrupo, sg.nom_subgrupo, pr.IdPresentacion, pr.nom_presentacion, sp.IdMarca, mar.Descripcion AS NomMarca
+                  l.IdLinea, l.nom_linea, g.IdGrupo, g.nom_grupo, sg.IdSubgrupo, sg.nom_subgrupo, pr.IdPresentacion, pr.nom_presentacion, sp.IdMarca, mar.Descripcion AS NomMarca, uni.IdUnidadMedida, uni.Descripcion NomUnidad
 FROM     in_linea AS l INNER JOIN
                   in_grupo AS g INNER JOIN
                   in_subgrupo AS sg ON g.IdEmpresa = sg.IdEmpresa AND g.IdCategoria = sg.IdCategoria AND g.IdLinea = sg.IdLinea AND g.IdGrupo = sg.IdGrupo ON l.IdEmpresa = g.IdEmpresa AND l.IdCategoria = g.IdCategoria AND 
@@ -135,5 +135,6 @@ FROM     in_linea AS l INNER JOIN
                   tb_bodega AS b ON s.IdEmpresa = b.IdEmpresa AND s.IdSucursal = b.IdSucursal ON sp.IdEmpresa = b.IdEmpresa AND sp.IdSucursal = b.IdSucursal AND sp.IdBodega = b.IdBodega ON sg.IdEmpresa = p.IdEmpresa AND 
                   sg.IdCategoria = p.IdCategoria AND sg.IdLinea = p.IdLinea AND sg.IdGrupo = p.IdGrupo AND sg.IdSubgrupo = p.IdSubGrupo LEFT OUTER JOIN
                   in_presentacion AS pr ON p.IdEmpresa = pr.IdEmpresa AND p.IdPresentacion = pr.IdPresentacion LEFT OUTER JOIN
-                  in_Marca AS mar ON mar.IdEmpresa = sp.IdEmpresa AND mar.IdMarca = sp.IdMarca
+                  in_Marca AS mar ON mar.IdEmpresa = sp.IdEmpresa AND mar.IdMarca = sp.IdMarca inner join
+				  in_UnidadMedida as uni on p.IdUnidadMedida_Consumo = uni.IdUnidadMedida
 END
