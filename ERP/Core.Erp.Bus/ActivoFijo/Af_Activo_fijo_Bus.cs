@@ -112,11 +112,11 @@ namespace Core.Erp.Bus.ActivoFijo
             }
         }
 
-        public bool guardarDB_importacion(List<Af_Activo_fijo_tipo_Info> Lista_Tipo, List<Af_Activo_fijo_Categoria_Info> Lista_Categoria, List<Af_Departamento_Info> Lista_Departamento, List<Af_Catalogo_Info> Lista_Catalogo, List<Af_Activo_fijo_Info> Lista_ActivoFijo)
+        public bool guardarDB_importacion(List<Af_Activo_fijo_tipo_Info> Lista_Tipo, List<Af_Activo_fijo_Categoria_Info> Lista_Categoria, List<Af_Departamento_Info> Lista_Departamento, List<Af_Area_Info> Lista_Area, List<Af_Catalogo_Info> Lista_Catalogo, List<Af_Modelo_Info> ListaModelo, List<Af_Marca_Info> ListaMarca, List<Af_Activo_fijo_Info> Lista_ActivoFijo)
         {
             try
             {
-                return odata.guardarDB_importacion(Lista_Tipo, Lista_Categoria, Lista_Departamento, Lista_Catalogo, Lista_ActivoFijo);
+                return odata.guardarDB_importacion(Lista_Tipo, Lista_Categoria, Lista_Departamento, Lista_Area, Lista_Catalogo, ListaModelo, ListaMarca, Lista_ActivoFijo);
             }
             catch (Exception)
             {

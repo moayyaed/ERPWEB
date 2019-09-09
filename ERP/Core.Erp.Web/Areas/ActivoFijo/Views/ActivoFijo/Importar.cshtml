@@ -95,7 +95,16 @@
                 <a href="#tab_departamentos" aria-controls="vales" role="tab" data-toggle="tab">Departamento</a>
             </li>
             <li>
+                <a href="#tab_areas" aria-controls="vales" role="tab" data-toggle="tab">Areas</a>
+            </li>
+            <li>
                 <a href="#tab_catalogos" aria-controls="vales" role="tab" data-toggle="tab">Catálogos</a>
+            </li>
+            <li>
+                <a href="#tab_modelos" aria-controls="vales" role="tab" data-toggle="tab">Modelos</a>
+            </li>
+            <li>
+                <a href="#tab_marcas" aria-controls="vales" role="tab" data-toggle="tab">Marcas</a>
             </li>
             <li>
                 <a href="#tab_activo_fijo" aria-controls="vales" role="tab" data-toggle="tab">Activo fijo</a>
@@ -134,12 +143,40 @@
                     </div>
                 </div>
             </div>
-
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_areas">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_areaAF_importacion")
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_catalogos">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
                             @Html.Action("GridViewPartial_catalogoAF_importacion")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_modelos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_modeloAF_importacion")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_marcas">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_marcaAF_importacion")
                         </div>
                     </div>
                 </div>

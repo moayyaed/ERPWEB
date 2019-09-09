@@ -257,37 +257,22 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="IdCatalogo_Marca">Marca</label>
-                                @Html.DropDownListFor(q => q.IdCatalogo_Marca, new SelectList(ViewBag.lst_marca, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.IdCatalogo_Marca, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(q => q.IdMarca, new SelectList(ViewBag.lst_marca, "IdMarca", "ma_Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdMarca, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="IdCatalogo_Modelo">Modelo</label>
-                                @Html.DropDownListFor(q => q.IdCatalogo_Modelo, new SelectList(ViewBag.lst_modelo, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.IdCatalogo_Modelo, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(q => q.IdModelo, new SelectList(ViewBag.lst_modelo, "IdModelo", "mo_Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdModelo, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="IdCatalogo_Color">Color</label>
-                                @Html.DropDownListFor(q => q.IdCatalogo_Color, new SelectList(ViewBag.lst_color, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.IdCatalogo_Color, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="IdTipoCatalogo_Ubicacion">Ubicación</label>
-                                @Html.DropDownListFor(q => q.IdTipoCatalogo_Ubicacion, new SelectList(ViewBag.lst_ubicacion, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.IdTipoCatalogo_Ubicacion, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="Af_NumPlaca">Número de placa</label>
-                                @Html.TextBoxFor(q => q.Af_NumPlaca, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.Af_NumPlaca, "", new { @class = "text-danger" })
+                                <label for="Af_NumPlaca">Número de serie</label>
+                                @Html.TextBoxFor(q => q.Af_NumSerie, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Af_NumSerie, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

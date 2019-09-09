@@ -12,25 +12,25 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Af_Catalogo
+    public partial class Af_Modelo
     {
-        public Af_Catalogo()
+        public Af_Modelo()
         {
             this.Af_Activo_fijo = new HashSet<Af_Activo_fijo>();
         }
     
-        public string IdCatalogo { get; set; }
-        public string IdTipoCatalogo { get; set; }
-        public string Descripcion { get; set; }
-        public string Estado { get; set; }
-        public string IdUsuario { get; set; }
-        public string IdUsuarioUltMod { get; set; }
-        public Nullable<System.DateTime> FechaUltMod { get; set; }
-        public string IdUsuarioUltAnu { get; set; }
-        public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public string MotiAnula { get; set; }
+        public int IdEmpresa { get; set; }
+        public int IdModelo { get; set; }
+        public string mo_Descripcion { get; set; }
+        public bool Estado { get; set; }
+        public string IdUsuarioCreacion { get; set; }
+        public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string IdUsuarioModificacion { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public string IdUsuarioAnulacion { get; set; }
+        public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        public string MotivoAnulacion { get; set; }
     
-        public virtual Af_CatalogoTipo Af_CatalogoTipo { get; set; }
         public virtual ICollection<Af_Activo_fijo> Af_Activo_fijo { get; set; }
     }
 }

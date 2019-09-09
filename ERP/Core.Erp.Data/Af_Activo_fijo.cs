@@ -31,11 +31,7 @@ namespace Core.Erp.Data
         public int IdSucursal { get; set; }
         public decimal IdDepartamento { get; set; }
         public decimal IdArea { get; set; }
-        public string IdCatalogo_Marca { get; set; }
-        public string IdCatalogo_Modelo { get; set; }
         public string Af_NumSerie { get; set; }
-        public string IdCatalogo_Color { get; set; }
-        public string IdTipoCatalogo_Ubicacion { get; set; }
         public System.DateTime Af_fecha_compra { get; set; }
         public System.DateTime Af_fecha_ini_depre { get; set; }
         public System.DateTime Af_fecha_fin_depre { get; set; }
@@ -53,23 +49,23 @@ namespace Core.Erp.Data
         public string Estado_Proceso { get; set; }
         public double Af_ValorSalvamento { get; set; }
         public int Cantidad { get; set; }
-        public string IdUsuario { get; set; }
-        public Nullable<System.DateTime> Fecha_Transac { get; set; }
-        public string IdUsuarioUltMod { get; set; }
-        public Nullable<System.DateTime> Fecha_UltMod { get; set; }
-        public string IdUsuarioUltAnu { get; set; }
-        public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        public string MotiAnula { get; set; }
+        public Nullable<int> IdModelo { get; set; }
+        public Nullable<int> IdMarca { get; set; }
+        public string IdUsuarioCreacion { get; set; }
+        public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string IdUsuarioModificacion { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public string IdUsuarioAnulacion { get; set; }
+        public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        public string MotivoAnulacion { get; set; }
     
         public virtual Af_Activo_fijo_Categoria Af_Activo_fijo_Categoria { get; set; }
         public virtual Af_Activo_fijo_tipo Af_Activo_fijo_tipo { get; set; }
         public virtual Af_Area Af_Area { get; set; }
         public virtual Af_Catalogo Af_Catalogo { get; set; }
-        public virtual Af_Catalogo Af_Catalogo1 { get; set; }
-        public virtual Af_Catalogo Af_Catalogo2 { get; set; }
-        public virtual Af_Catalogo Af_Catalogo3 { get; set; }
-        public virtual Af_Catalogo Af_Catalogo4 { get; set; }
         public virtual Af_Departamento Af_Departamento { get; set; }
+        public virtual Af_Marca Af_Marca { get; set; }
+        public virtual Af_Modelo Af_Modelo { get; set; }
         public virtual ICollection<Af_Depreciacion_Det> Af_Depreciacion_Det { get; set; }
         public virtual ICollection<Af_Mej_Baj_Activo> Af_Mej_Baj_Activo { get; set; }
         public virtual ICollection<Af_Retiro_Activo> Af_Retiro_Activo { get; set; }

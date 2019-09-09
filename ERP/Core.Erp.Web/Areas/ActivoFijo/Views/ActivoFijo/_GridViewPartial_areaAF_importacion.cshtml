@@ -1,10 +1,10 @@
 @using System.Web.UI.WebControls;
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "GridViewPartial_ActivoFijo_importacion";
-        settings.CallbackRouteValues = new { Controller = "ActivoFijo", Action = "GridViewPartial_ActivoFijo_importacion" };
+        settings.Name = "GridViewPartial_areaAF_importacion";
+        settings.CallbackRouteValues = new { Controller = "ActivoFijo", Action = "GridViewPartial_areaAF_importacion" };
         settings.Width = Unit.Percentage(100);
-        settings.KeyFieldName = "IdActivoFijo";
+        settings.KeyFieldName = "IdArea";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -48,22 +48,8 @@
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
-        settings.Columns.Add("IdActivoFijo", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_Nombre", "Descripción").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdCategoriaAF", "Categoría").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdActivoFijoTipo", "Tipo").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdSucursal", "Sucursal").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdDepartamento", "Departamento").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdMarca", "Marca").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdModelo", "Modelo").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdEmpleadoCustodio", "Custodio").Width = Unit.Percentage(5);
-        settings.Columns.Add("IdEmpleadoEncargado", "Encargado").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_fecha_compra", "Fec Compra").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_fecha_ini_depre", "Ini Dep").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_fecha_fin_depre", "Fin Dep").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_costo_compra", "Cto Compra").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_Depreciacion_acum", "Dep Acum").Width = Unit.Percentage(5);
-        settings.Columns.Add("Af_ValorSalvamento", "Salvamento").Width = Unit.Percentage(5);
+        settings.Columns.Add("IdArea", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(80);
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });

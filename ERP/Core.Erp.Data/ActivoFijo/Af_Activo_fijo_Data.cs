@@ -165,12 +165,10 @@ namespace Core.Erp.Data.ActivoFijo
                         Estado_Proceso = Entity.Estado_Proceso,
                         IdActivoFijoTipo = Entity.IdActivoFijoTipo,
                         IdActivoFijo = Entity.IdActivoFijo,
-                        IdCatalogo_Color = Entity.IdCatalogo_Color,
-                        IdCatalogo_Marca = Entity.IdCatalogo_Marca,
-                        IdCatalogo_Modelo = Entity.IdCatalogo_Modelo,
+                        IdMarca = Entity.IdMarca,
+                        IdModelo = Entity.IdModelo,
                         IdCategoriaAF = Entity.IdCategoriaAF,
                         IdSucursal = Entity.IdSucursal,
-                        IdTipoCatalogo_Ubicacion = Entity.IdTipoCatalogo_Ubicacion,
                         IdEmpleadoCustodio = Entity.IdEmpleadoCustodio,
                         IdEmpleadoEncargado = Entity.IdEmpleadoEncargado,
                         Estado_Proceso_nombre = Entity.Estado_Proceso,
@@ -239,18 +237,16 @@ namespace Core.Erp.Data.ActivoFijo
                         Estado_Proceso = info.Estado_Proceso,
                         IdActivoFijoTipo = info.IdActivoFijoTipo,
                         IdActivoFijo = info.IdActivoFijo=get_id(info.IdEmpresa),
-                        IdCatalogo_Color = info.IdCatalogo_Color,
-                        IdCatalogo_Marca = info.IdCatalogo_Marca,
-                        IdCatalogo_Modelo = info.IdCatalogo_Modelo,
+                        IdModelo = info.IdModelo,
+                        IdMarca = info.IdMarca,
                         IdCategoriaAF = info.IdCategoriaAF,
                         IdSucursal = info.IdSucursal,
-                        IdTipoCatalogo_Ubicacion = info.IdTipoCatalogo_Ubicacion,
                         IdEmpleadoCustodio = info.IdEmpleadoCustodio,
                         IdEmpleadoEncargado = info.IdEmpleadoEncargado,
                         IdDepartamento = info.IdDepartamento,
                         Cantidad = info.Cantidad,
-                        IdUsuario = info.IdUsuario,
-                        Fecha_Transac = DateTime.Now     ,
+                        IdUsuarioCreacion = info.IdUsuarioCreacion,
+                        FechaCreacion = DateTime.Now     ,
                         IdArea = info.IdArea
 
                     };
@@ -293,12 +289,10 @@ namespace Core.Erp.Data.ActivoFijo
                     Entity.CodActivoFijo = info.CodActivoFijo;
                     Entity.Estado_Proceso = info.Estado_Proceso;
                     Entity.IdActivoFijoTipo = info.IdActivoFijoTipo;
-                    Entity.IdCatalogo_Color = info.IdCatalogo_Color;
-                    Entity.IdCatalogo_Marca = info.IdCatalogo_Marca;
-                    Entity.IdCatalogo_Modelo = info.IdCatalogo_Modelo;
+                    Entity.IdModelo = info.IdModelo;
+                    Entity.IdMarca = info.IdMarca;
                     Entity.IdCategoriaAF = info.IdCategoriaAF;
                     Entity.IdSucursal = info.IdSucursal;
-                    Entity.IdTipoCatalogo_Ubicacion = info.IdTipoCatalogo_Ubicacion;
                     Entity.IdEmpleadoCustodio = info.IdEmpleadoCustodio;
                     Entity.IdEmpleadoEncargado = info.IdEmpleadoEncargado;
                     Entity.IdDepartamento = info.IdDepartamento;
@@ -325,8 +319,8 @@ namespace Core.Erp.Data.ActivoFijo
                         }
                     }*/
 
-                    Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
-                    Entity.Fecha_UltMod = DateTime.Now;
+                    Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
+                    Entity.FechaModificacion = DateTime.Now;
                     Context.SaveChanges();
                 }
                 return true;
@@ -349,8 +343,8 @@ namespace Core.Erp.Data.ActivoFijo
 
                     Entity.Estado = info.Estado="I";
 
-                    Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
-                    Entity.Fecha_UltAnu = DateTime.Now;
+                    Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
+                    Entity.FechaAnulacion = DateTime.Now;
                     Context.SaveChanges();
                 }
                 return true;
@@ -403,7 +397,7 @@ namespace Core.Erp.Data.ActivoFijo
             }
         }
 
-        public bool guardarDB_importacion(List<Af_Activo_fijo_tipo_Info> Lista_Tipo, List<Af_Activo_fijo_Categoria_Info> Lista_Categoria, List<Af_Departamento_Info> Lista_Departamento, List<Af_Catalogo_Info> Lista_Catalogo, List<Af_Activo_fijo_Info> Lista_ActivoFijo)
+        public bool guardarDB_importacion(List<Af_Activo_fijo_tipo_Info> Lista_Tipo, List<Af_Activo_fijo_Categoria_Info> Lista_Categoria, List<Af_Departamento_Info> Lista_Departamento, List<Af_Area_Info> Lista_Area, List<Af_Catalogo_Info> Lista_Catalogo, List<Af_Modelo_Info> ListaModelo, List<Af_Marca_Info> ListaMarca, List<Af_Activo_fijo_Info> Lista_ActivoFijo)
         {
             try
             {
@@ -490,6 +484,26 @@ namespace Core.Erp.Data.ActivoFijo
                         }
                     }
 
+                    if (Context.Af_Area.Count() == 0)
+                    {
+                        if (Lista_Area.Count > 0)
+                        {
+                            foreach (var item in Lista_Area)
+                            {
+                                Af_Area Entity_area = new Af_Area
+                                {
+                                    IdEmpresa = item.IdEmpresa,
+                                    IdArea = item.IdArea,
+                                    Descripcion = item.Descripcion,
+                                    Estado = true,
+                                    IdUsuarioCreacion = item.IdUsuarioCreacion,
+                                    FechaCreacion = DateTime.Now
+                                };
+                                Context.Af_Area.Add(Entity_area);
+                            }
+                        }
+                    }
+
                     if (Context.Af_Catalogo.Count() == 0)
                     {
                         if (Lista_Catalogo.Count > 0)
@@ -505,6 +519,46 @@ namespace Core.Erp.Data.ActivoFijo
                                     IdUsuario = item.IdUsuario
                                 };
                                 Context.Af_Catalogo.Add(Entity_catalogo);
+                            }
+                        }
+                    }
+
+                    if (Context.Af_Modelo.Count() == 0)
+                    {
+                        if (ListaModelo.Count > 0)
+                        {
+                            foreach (var item in ListaModelo)
+                            {
+                                Af_Modelo Entity_modelo = new Af_Modelo
+                                {
+                                    IdEmpresa = item.IdEmpresa,
+                                    IdModelo = item.IdModelo,
+                                    mo_Descripcion = item.mo_Descripcion,
+                                    Estado = true,
+                                    IdUsuarioCreacion = item.IdUsuarioCreacion,
+                                    FechaCreacion = DateTime.Now
+                                };
+                                Context.Af_Modelo.Add(Entity_modelo);
+                            }
+                        }
+                    }
+
+                    if (Context.Af_Marca.Count() == 0)
+                    {
+                        if (ListaMarca.Count > 0)
+                        {
+                            foreach (var item in ListaMarca)
+                            {
+                                Af_Marca Entity_marca = new Af_Marca
+                                {
+                                    IdEmpresa = item.IdEmpresa,
+                                    IdMarca = item.IdMarca,
+                                    ma_Descripcion = item.ma_Descripcion,
+                                    Estado = true,
+                                    IdUsuarioCreacion = item.IdUsuarioCreacion,
+                                    FechaCreacion = DateTime.Now
+                                };
+                                Context.Af_Marca.Add(Entity_marca);
                             }
                         }
                     }
@@ -535,18 +589,17 @@ namespace Core.Erp.Data.ActivoFijo
                                 Estado_Proceso = item.Estado_Proceso,
                                 IdActivoFijoTipo = item.IdActivoFijoTipo,
                                 IdActivoFijo = item.IdActivoFijo,
-                                IdCatalogo_Color = item.IdCatalogo_Color,
-                                IdCatalogo_Marca = item.IdCatalogo_Marca,
-                                IdCatalogo_Modelo = item.IdCatalogo_Modelo,
+                                IdMarca = item.IdMarca,
+                                IdModelo = item.IdModelo,
                                 IdCategoriaAF = item.IdCategoriaAF,
                                 IdSucursal = item.IdSucursal,
-                                IdTipoCatalogo_Ubicacion = item.IdTipoCatalogo_Ubicacion,
                                 IdEmpleadoCustodio = item.IdEmpleadoCustodio,
                                 IdEmpleadoEncargado = item.IdEmpleadoEncargado,
                                 IdDepartamento = item.IdDepartamento,
+                                IdArea = item.IdArea,
                                 Cantidad = item.Cantidad,
-                                IdUsuario = item.IdUsuario,
-                                Fecha_Transac = DateTime.Now
+                                IdUsuarioCreacion = item.IdUsuarioCreacion,
+                                FechaCreacion = DateTime.Now
                             };
 
                             /*
@@ -574,7 +627,7 @@ namespace Core.Erp.Data.ActivoFijo
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
                 throw;
             }

@@ -9,76 +9,74 @@ using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
 {
-    public class AreaAFController : Controller
+    public class ModeloController : Controller
     {
         #region Index
-        Af_Area_Bus bus_area = new Af_Area_Bus();
+        Af_Modelo_Bus bus_modelo = new Af_Modelo_Bus();
         public ActionResult Index()
         {
-            return View();
+            var model = new Af_Modelo_Info();
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_area_af()
+        public ActionResult GridViewPartial_modelo_af()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_area.GetList(IdEmpresa, true);
-            return PartialView("_GridViewPartial_area_af", model);
+            var model = bus_modelo.GetList(IdEmpresa, true);
+            return PartialView("_GridViewPartial_modelo_af", model);
         }
         #endregion
 
         #region Acciones
         public ActionResult Nuevo()
         {
-            Af_Area_Info model = new Af_Area_Info
-            {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
-            };
+            Af_Modelo_Info model = new Af_Modelo_Info();
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             return View(model);
         }
         [HttpPost]
-        public ActionResult Nuevo(Af_Area_Info model)
+        public ActionResult Nuevo(Af_Modelo_Info model)
         {
-           model.IdUsuarioCreacion = SessionFixed.IdUsuario;
-            if (!bus_area.GuardarDB(model))
+            model.IdUsuarioCreacion = SessionFixed.IdUsuario;
+            if (!bus_modelo.GuardarDB(model))
             {
                 return View(model);
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdArea = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdModelo=0)
         {
-            Af_Area_Info model = bus_area.GetInfo(IdEmpresa, IdArea);
+            Af_Modelo_Info model = bus_modelo.GetInfo(IdEmpresa, IdModelo);
             if (model == null)
                 return RedirectToAction("Index");
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Modificar(Af_Area_Info model)
+        public ActionResult Modificar(Af_Modelo_Info model)
         {
-            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
-            if (!bus_area.ModificarDB(model))
+            if (!bus_modelo.ModificarDB(model))
             {
                 return View(model);
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult Anular(int IdEmpresa = 0, decimal IdArea = 0)
+        public ActionResult Anular(int IdEmpresa = 0, int IdModelo = 0)
         {
-            Af_Area_Info model = bus_area.GetInfo(IdEmpresa, IdArea);
+            Af_Modelo_Info model = bus_modelo.GetInfo(IdEmpresa, IdModelo);
             if (model == null)
                 return RedirectToAction("Index");
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Anular(Af_Area_Info model)
+        public ActionResult Anular(Af_Modelo_Info model)
         {
-            model.IdUsuarioAnulacion = SessionFixed.IdUsuario;
-            if (!bus_area.AnularDB(model))
+            if (!bus_modelo.AnularDB(model))
             {
                 return View(model);
             }
@@ -87,21 +85,21 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #endregion
     }
 
-    public class Af_Area_List
+    public class Af_Modelo_List
     {
-        string Variable = "Af_Area_Info";
-        public List<Af_Area_Info> get_list(decimal IdTransaccionSession)
+        string Variable = "Af_Modelo_Info";
+        public List<Af_Modelo_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
-                List<Af_Area_Info> list = new List<Af_Area_Info>();
+                List<Af_Modelo_Info> list = new List<Af_Modelo_Info>();
 
                 HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<Af_Area_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+            return (List<Af_Modelo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<Af_Area_Info> list, decimal IdTransaccionSession)
+        public void set_list(List<Af_Modelo_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }

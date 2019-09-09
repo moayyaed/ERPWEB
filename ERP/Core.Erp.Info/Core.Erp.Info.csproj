@@ -52,7 +52,9 @@
     <Compile Include="ActivoFijo\Af_Departamento_Info.cs" />
     <Compile Include="ActivoFijo\Af_Depreciacion_Det_Info.cs" />
     <Compile Include="ActivoFijo\Af_Depreciacion_Info.cs" />
+    <Compile Include="ActivoFijo\Af_Marca_Info.cs" />
     <Compile Include="ActivoFijo\Af_Mej_Baj_Activo_Info.cs" />
+    <Compile Include="ActivoFijo\Af_Modelo_Info.cs" />
     <Compile Include="ActivoFijo\Af_Parametros_Info.cs" />
     <Compile Include="ActivoFijo\Af_Retiro_Activo_Info.cs" />
     <Compile Include="ActivoFijo\Af_Venta_Activo_Info.cs" />

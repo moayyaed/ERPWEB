@@ -51,7 +51,9 @@
     <Compile Include="ActivoFijo\Af_Departamento_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Depreciacion_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Depreciacion_Det_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Marca_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Mej_Baj_Activo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Modelo_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Parametros_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Retiro_Activo_Bus.cs" />
     <Compile Include="ActivoFijo\Af_Venta_Activo_Bus.cs" />

@@ -74,7 +74,9 @@
     <Compile Include="ActivoFijo\Af_Departamento_Data.cs" />
     <Compile Include="ActivoFijo\Af_Depreciacion_Data.cs" />
     <Compile Include="ActivoFijo\Af_Depreciacion_Det_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Marca_Data.cs" />
     <Compile Include="ActivoFijo\Af_Mej_Baj_Activo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Modelo_Data.cs" />
     <Compile Include="ActivoFijo\Af_Parametros_Data.cs" />
     <Compile Include="ActivoFijo\Af_Retiro_Activo_Data.cs" />
     <Compile Include="ActivoFijo\Af_Venta_Activo_Data.cs" />
@@ -105,7 +107,13 @@
     <Compile Include="Af_Depreciacion_Det.cs">
       <DependentUpon>Model_activo_fijo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Af_Marca.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Af_Mej_Baj_Activo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Modelo.cs">
       <DependentUpon>Model_activo_fijo.tt</DependentUpon>
     </Compile>
     <Compile Include="Af_Parametros.cs">
