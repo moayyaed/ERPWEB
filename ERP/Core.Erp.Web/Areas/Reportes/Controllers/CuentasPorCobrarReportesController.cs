@@ -616,6 +616,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.p_QuitarGrupo.Value = model.Check2;
             report.p_DiasVencimiento.Value = model.DiasVencidos;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
@@ -643,6 +644,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
             report.p_Idtipo_cliente.Value = model.Idtipo_cliente == 0 ? 0 : model.Idtipo_cliente;
             report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.p_QuitarGrupo.Value = model.Check2;
             report.p_DiasVencimiento.Value = model.DiasVencidos;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;

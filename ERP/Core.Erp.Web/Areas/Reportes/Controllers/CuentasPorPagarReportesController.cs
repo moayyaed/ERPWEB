@@ -574,6 +574,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_corte.Value = model.fecha_fin;
             report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
+            report.p_QuitarGrupo.Value = model.Check2;
             report.p_MostrarObservacion.Value = model.Check1;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
@@ -601,6 +602,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_mostrarSaldo0.Value = model.mostrarSaldo0;
             report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
             report.p_MostrarObservacion.Value = model.Check1;
+            report.p_QuitarGrupo.Value = model.Check2;
             cargar_combos(true);
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;

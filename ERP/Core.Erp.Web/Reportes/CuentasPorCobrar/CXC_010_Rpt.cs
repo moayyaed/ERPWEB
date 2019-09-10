@@ -136,5 +136,37 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
         {
 
         }
+
+        private void GroupHeader2_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupHeader1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupFooter1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupFooter2_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

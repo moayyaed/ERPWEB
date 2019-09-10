@@ -40,7 +40,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  pr_telefonos = q.pr_telefonos,
                                  NAutorizacion = q.NAutorizacion,
                                  Fecha_Autorizacion = q.Fecha_Autorizacion,
-                                 Su_Descripcion = q.Su_Descripcion
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 co_FechaFactura = q.co_FechaFactura
                              }).ToList();
                 }
                 return Lista;

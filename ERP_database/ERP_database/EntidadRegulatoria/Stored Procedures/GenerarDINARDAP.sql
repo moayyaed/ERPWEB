@@ -1,4 +1,4 @@
-﻿-- exec  [EntidadRegulatoria].[GenerarDINARDAP] 1,1,1,'01/04/2019','31/04/2019'
+﻿-- exec  [EntidadRegulatoria].[GenerarDINARDAP] 1,1,1,'01/08/2019','31/08/2019'
 CREATE PROCEDURE [EntidadRegulatoria].[GenerarDINARDAP]
 	@IdEmpresa as int,	
 	@SucursalIni as int,
@@ -39,9 +39,18 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 (
 
 					SELECT        F.IdEmpresa, F.IdSucursal, F.IdBodega, fa_cliente.IdCliente, fa_cliente.Codigo, F.IdCbteVta, F.CodCbteVta, F.vt_tipoDoc, F.vt_serie1, F.vt_serie2, F.vt_NumFactura, tb_sucursal.Su_Descripcion, 
-								LTRIM(tb_persona.pe_nombreCompleto) AS pe_nombreCompleto, tb_persona.pe_cedulaRuc, SUM(FD.vt_total) AS Valor_Original, case when f.vt_plazo = 0 then dateadd(day,1,F.vt_fech_venc) else f.vt_fech_venc end as vt_fech_venc, F.vt_fecha, 
+								LTRIM(tb_persona.pe_nombreCompleto) AS pe_nombreCompleto, 
+								CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
+								SUBSTRING(tb_persona.pe_cedulaRuc,0,11) ELSE tb_persona.pe_cedulaRuc END pe_cedulaRuc, 
+								
+								SUM(FD.vt_total) AS Valor_Original, case when f.vt_plazo = 0 then dateadd(day,1,F.vt_fech_venc) else f.vt_fech_venc end as vt_fech_venc, F.vt_fecha, 
 								fa_cliente.Idtipo_cliente, fa_cliente_contactos.Telefono AS pe_telefonoOfic, tb_provincia.Cod_Provincia, tb_ciudad.Cod_Ciudad, tb_parroquia.cod_parroquia, 
-								tb_persona.pe_Naturaleza, tb_persona.pe_sexo, tb_persona.IdTipoDocumento, tb_persona.IdEstadoCivil, case when F.vt_plazo = 0 then 1 else DATEDIFF(DAY,F.VT_FECHA, F.vt_fech_venc) /*F.vt_plazo*/ end AS Plazo, tb_empresa.cod_entidad_dinardap
+								tb_persona.pe_Naturaleza, tb_persona.pe_sexo, 
+								
+								CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
+								'CED' ELSE tb_persona.IdTipoDocumento END IdTipoDocumento, 
+								
+								tb_persona.IdEstadoCivil, case when F.vt_plazo = 0 then 1 else DATEDIFF(DAY,F.VT_FECHA, F.vt_fech_venc) /*F.vt_plazo*/ end AS Plazo, tb_empresa.cod_entidad_dinardap
 					FROM            fa_factura AS F INNER JOIN
 								fa_factura_det AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
 								fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente INNER JOIN
@@ -70,9 +79,15 @@ union
 SELECT        fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_cliente.IdCliente, fa_cliente.Codigo, fa_notaCreDeb.IdNota, fa_notaCreDeb.CodNota, 
                          CASE WHEN dbo.fa_notaCreDeb.CodDocumentoTipo IS NULL THEN 'NTDB' ELSE dbo.fa_notaCreDeb.CodDocumentoTipo END AS CodDocumentoTipo, fa_notaCreDeb.Serie1, fa_notaCreDeb.Serie2, 
                          ISNULL(fa_notaCreDeb.NumNota_Impresa, fa_notaCreDeb.IdNota) AS Expr1, tb_sucursal.Su_Descripcion, RTRIM(LTRIM(tb_persona.pe_nombreCompleto)) AS Expr2, 
-                         tb_persona.pe_cedulaRuc, SUM(fa_notaCreDeb_det.sc_total), case when fa_notaCreDeb.no_fecha_venc = fa_notaCreDeb.no_fecha then dateadd(day,1,fa_notaCreDeb.no_fecha) else fa_notaCreDeb.no_fecha_venc end, fa_notaCreDeb.no_fecha, fa_cliente.Idtipo_cliente, 
+                         
+						 CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
+								SUBSTRING(tb_persona.pe_cedulaRuc,0,11) ELSE tb_persona.pe_cedulaRuc END pe_cedulaRuc
+						 , SUM(fa_notaCreDeb_det.sc_total), case when fa_notaCreDeb.no_fecha_venc = fa_notaCreDeb.no_fecha then dateadd(day,1,fa_notaCreDeb.no_fecha) else fa_notaCreDeb.no_fecha_venc end, fa_notaCreDeb.no_fecha, fa_cliente.Idtipo_cliente, 
                          fa_cliente_contactos.Telefono AS pe_telefonoOfic, tb_provincia.Cod_Provincia, tb_ciudad.Cod_Ciudad, tb_parroquia.cod_parroquia, tb_persona.pe_Naturaleza, 
-                         tb_persona.pe_sexo, tb_persona.IdTipoDocumento, tb_persona.IdEstadoCivil, case when fa_notaCreDeb.no_fecha = fa_notaCreDeb.no_fecha_venc then 1 else DATEDIFF(day, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc) end AS Plazo, tb_empresa.cod_entidad_dinardap
+                         tb_persona.pe_sexo, 
+						 CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
+								'CED' ELSE tb_persona.IdTipoDocumento END IdTipoDocumento, 
+						  tb_persona.IdEstadoCivil, case when fa_notaCreDeb.no_fecha = fa_notaCreDeb.no_fecha_venc then 1 else DATEDIFF(day, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc) end AS Plazo, tb_empresa.cod_entidad_dinardap
 FROM            fa_notaCreDeb INNER JOIN
                          fa_notaCreDeb_det ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_det.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_det.IdSucursal AND 
                          fa_notaCreDeb.IdBodega = fa_notaCreDeb_det.IdBodega AND fa_notaCreDeb.IdNota = fa_notaCreDeb_det.IdNota INNER JOIN

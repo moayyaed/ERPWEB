@@ -1175,12 +1175,10 @@
     <Build Include="dbo\Views\vwin_Ing_Egr_Inven_PorOrdenCompra.sql" />
     <Build Include="web\Views\VWINV_020.sql" />
     <Build Include="dbo\Tables\ct_ClasificacionEBIT.sql" />
-    <Build Include="web\Tables\ct_CONTA_007.sql" />
     <Build Include="dbo\Tables\Af_Modelo.sql" />
     <Build Include="dbo\Tables\Af_Marca.sql" />
     <Build Include="web\Views\VWCXC_006.sql" />
     <Build Include="web\Views\VWBAN_014.sql" />
-    <Build Include="web\Stored Procedures\SPCONTA_007.sql" />
     <Build Include="EntidadRegulatoria\Stored Procedures\GenerarDINARDAP.sql" />
   </ItemGroup>
   <ItemGroup>

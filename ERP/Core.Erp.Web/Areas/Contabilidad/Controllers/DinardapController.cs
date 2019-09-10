@@ -177,7 +177,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 InfoDinardap.valor_vencido_mas_360 = Math.Round(Math.Abs(Convert.ToDecimal(item.Vencido_Mayor_a_360Dias)), 2, MidpointRounding.AwayFromZero);
                 InfoDinardap.valor_en_demand_judi = 0;
                 InfoDinardap.cartera_castigada = 0;
-                InfoDinardap.couta_credito = Math.Round(Math.Abs(Convert.ToDecimal(item.Valor_Vencido == 0 ? item.Valor_x_Vencer : item.Valor_Vencido)), 2, MidpointRounding.AwayFromZero);
+                //InfoDinardap.couta_credito = Math.Round(Math.Abs(Convert.ToDecimal(item.Valor_Vencido == 0 ? item.Valor_x_Vencer : item.Valor_Vencido)), 2, MidpointRounding.AwayFromZero);
+                InfoDinardap.couta_credito = Math.Round(Convert.ToDecimal(item.Valor_Original ?? 0), 2, MidpointRounding.AwayFromZero);
                 //Fecha de cobro
                 InfoDinardap.fecha_cancela = "";//item.cr_fechaCobro == null || item.Total_Pagado == 0 ? "" : Convert.ToDateTime(item.cr_fechaCobro).ToString("dd/MM/yyyy");
                 InfoDinardap.forma_cance = ""; //item.cr_fechaCobro == null ? "" : "E";

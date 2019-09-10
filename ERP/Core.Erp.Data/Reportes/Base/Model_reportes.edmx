@@ -147,10 +147,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWACTF_007' no tiene definida ning
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdActivoFijo" Type="int" Nullable="false" />
-          <Property Name="Af_fecha_compra" Type="datetime" Nullable="false" />
+          <Property Name="Af_fecha_compra" Type="date" Nullable="false" />
           <Property Name="Af_costo_compra" Type="float" Nullable="false" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Af_observacion" Type="varchar" MaxLength="5000" />
+          <Property Name="Af_observacion" Type="varchar(max)" />
           <Property Name="Af_Nombre" Type="varchar(max)" Nullable="false" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NomTipo" Type="varchar" MaxLength="5000" Nullable="false" />
@@ -184,9 +184,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWACTF_008' no tiene definida ning
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdActivoFijo" Type="int" Nullable="false" />
           <Property Name="Af_Nombre" Type="varchar(max)" Nullable="false" />
-          <Property Name="Af_observacion" Type="varchar" MaxLength="5000" />
+          <Property Name="Af_observacion" Type="varchar(max)" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Af_fecha_compra" Type="datetime" Nullable="false" />
+          <Property Name="Af_fecha_compra" Type="date" Nullable="false" />
           <Property Name="Af_costo_compra" Type="float" Nullable="false" />
           <Property Name="Af_Vida_Util" Type="int" Nullable="false" />
           <Property Name="IdEmpleadoEncargado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -1874,6 +1874,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXP_013' no tiene definida ningu
             <PropertyRef Name="re_valor_retencion" />
             <PropertyRef Name="NombreProveedor" />
             <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="co_FechaFactura" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdRetencion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -1895,6 +1896,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXP_013' no tiene definida ningu
           <Property Name="Fecha_Autorizacion" Type="datetime" />
           <Property Name="NAutorizacion" Type="varchar" MaxLength="50" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="co_FechaFactura" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCXP_014' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6386,7 +6388,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWCXP_013].[pr_telefonos] AS [pr_telefonos], 
     [VWCXP_013].[Fecha_Autorizacion] AS [Fecha_Autorizacion], 
     [VWCXP_013].[NAutorizacion] AS [NAutorizacion], 
-    [VWCXP_013].[Su_Descripcion] AS [Su_Descripcion]
+    [VWCXP_013].[Su_Descripcion] AS [Su_Descripcion], 
+    [VWCXP_013].[co_FechaFactura] AS [co_FechaFactura]
     FROM [web].[VWCXP_013] AS [VWCXP_013]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCXP_014" EntityType="Self.VWCXP_014" store:Type="Views" store:Schema="web">
@@ -8324,10 +8327,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
-          <Property Name="Af_fecha_compra" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Af_fecha_compra" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Af_costo_compra" Type="Double" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Af_observacion" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Af_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Af_Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NomTipo" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
@@ -8359,9 +8362,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
           <Property Name="Af_Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Af_observacion" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Af_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Af_fecha_compra" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Af_fecha_compra" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Af_costo_compra" Type="Double" Nullable="false" />
           <Property Name="Af_Vida_Util" Type="Int32" Nullable="false" />
           <Property Name="IdEmpleadoEncargado" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
@@ -9346,42 +9349,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="VWCXP_013">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdRetencion" />
-            <PropertyRef Name="Idsecuencia" />
-            <PropertyRef Name="re_TipoRet" />
-            <PropertyRef Name="co_factura" />
-            <PropertyRef Name="TipoComprobante" />
-            <PropertyRef Name="FechaDeEmision" />
-            <PropertyRef Name="re_baseRetencion" />
-            <PropertyRef Name="re_Porcen_retencion" />
-            <PropertyRef Name="re_valor_retencion" />
-            <PropertyRef Name="NombreProveedor" />
-            <PropertyRef Name="pe_cedulaRuc" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdRetencion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Idsecuencia" Type="Int32" Nullable="false" />
-          <Property Name="re_TipoRet" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="co_factura" Type="String" MaxLength="61" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NumRetencion" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
-          <Property Name="TipoComprobante" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FechaDeEmision" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EjercicioFiscal" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="re_baseRetencion" Type="Double" Nullable="false" />
-          <Property Name="re_Porcen_retencion" Type="Double" Nullable="false" />
-          <Property Name="re_valor_retencion" Type="Double" Nullable="false" />
-          <Property Name="NombreProveedor" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="pr_direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="pr_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="pr_telefonos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
-          <Property Name="NAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VWCXP_017">
           <Key>
@@ -11659,7 +11626,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySet Name="VWCXP_007" EntityType="Self.VWCXP_007" />
           <EntitySet Name="VWCXP_011" EntityType="Self.VWCXP_011" />
           <EntitySet Name="VWCXP_012" EntityType="Self.VWCXP_012" />
-          <EntitySet Name="VWCXP_013" EntityType="Self.VWCXP_013" />
           <EntitySet Name="VWCXP_017" EntityType="Self.VWCXP_017" />
           <EntitySet Name="VWFAC_001" EntityType="Self.VWFAC_001" />
           <EntitySet Name="VWFAC_003" EntityType="Self.VWFAC_003" />
@@ -12161,6 +12127,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="VWCXP_013" EntityType="Model_reportes.VWCXP_013" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -14271,6 +14238,44 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Double" Name="Saldo" Nullable="true" />
           <Property Type="String" Name="TipoDoc" Nullable="false" MaxLength="20" />
         </ComplexType>
+        <EntityType Name="VWCXP_013">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetencion" />
+            <PropertyRef Name="Idsecuencia" />
+            <PropertyRef Name="re_TipoRet" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="TipoComprobante" />
+            <PropertyRef Name="FechaDeEmision" />
+            <PropertyRef Name="re_baseRetencion" />
+            <PropertyRef Name="re_Porcen_retencion" />
+            <PropertyRef Name="re_valor_retencion" />
+            <PropertyRef Name="NombreProveedor" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="co_FechaFactura" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRetencion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Idsecuencia" Type="Int32" Nullable="false" />
+          <Property Name="re_TipoRet" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="NumRetencion" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="TipoComprobante" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEmision" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EjercicioFiscal" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="re_baseRetencion" Type="Double" Nullable="false" />
+          <Property Name="re_Porcen_retencion" Type="Double" Nullable="false" />
+          <Property Name="re_valor_retencion" Type="Double" Nullable="false" />
+          <Property Name="NombreProveedor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pr_direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pr_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pr_telefonos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="NAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15078,32 +15083,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VWCXP_013">
-            <EntityTypeMapping TypeName="Model_reportes.VWCXP_013">
-              <MappingFragment StoreEntitySet="VWCXP_013">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdRetencion" ColumnName="IdRetencion" />
-                <ScalarProperty Name="Idsecuencia" ColumnName="Idsecuencia" />
-                <ScalarProperty Name="re_TipoRet" ColumnName="re_TipoRet" />
-                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
-                <ScalarProperty Name="NumRetencion" ColumnName="NumRetencion" />
-                <ScalarProperty Name="TipoComprobante" ColumnName="TipoComprobante" />
-                <ScalarProperty Name="FechaDeEmision" ColumnName="FechaDeEmision" />
-                <ScalarProperty Name="EjercicioFiscal" ColumnName="EjercicioFiscal" />
-                <ScalarProperty Name="re_baseRetencion" ColumnName="re_baseRetencion" />
-                <ScalarProperty Name="re_Porcen_retencion" ColumnName="re_Porcen_retencion" />
-                <ScalarProperty Name="re_valor_retencion" ColumnName="re_valor_retencion" />
-                <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
-                <ScalarProperty Name="pr_direccion" ColumnName="pr_direccion" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="pr_correo" ColumnName="pr_correo" />
-                <ScalarProperty Name="pr_telefonos" ColumnName="pr_telefonos" />
-                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
-                <ScalarProperty Name="NAutorizacion" ColumnName="NAutorizacion" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -18547,6 +18526,33 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="VWCXP_013">
+            <EntityTypeMapping TypeName="Model_reportes.VWCXP_013">
+              <MappingFragment StoreEntitySet="VWCXP_013">
+                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="NAutorizacion" ColumnName="NAutorizacion" />
+                <ScalarProperty Name="Fecha_Autorizacion" ColumnName="Fecha_Autorizacion" />
+                <ScalarProperty Name="pr_telefonos" ColumnName="pr_telefonos" />
+                <ScalarProperty Name="pr_correo" ColumnName="pr_correo" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pr_direccion" ColumnName="pr_direccion" />
+                <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
+                <ScalarProperty Name="re_valor_retencion" ColumnName="re_valor_retencion" />
+                <ScalarProperty Name="re_Porcen_retencion" ColumnName="re_Porcen_retencion" />
+                <ScalarProperty Name="re_baseRetencion" ColumnName="re_baseRetencion" />
+                <ScalarProperty Name="EjercicioFiscal" ColumnName="EjercicioFiscal" />
+                <ScalarProperty Name="FechaDeEmision" ColumnName="FechaDeEmision" />
+                <ScalarProperty Name="TipoComprobante" ColumnName="TipoComprobante" />
+                <ScalarProperty Name="NumRetencion" ColumnName="NumRetencion" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="re_TipoRet" ColumnName="re_TipoRet" />
+                <ScalarProperty Name="Idsecuencia" ColumnName="Idsecuencia" />
+                <ScalarProperty Name="IdRetencion" ColumnName="IdRetencion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

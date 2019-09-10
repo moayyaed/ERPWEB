@@ -56,5 +56,37 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
                 lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
             }
         }
+
+        private void GrupoClase_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GrupoProveedor_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void PieProveedor_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void PieClase_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_QuitarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

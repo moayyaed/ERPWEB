@@ -80,6 +80,18 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
+                            <label for="Check1"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.Check2, settings =>
+                           {
+                               settings.Name = "Check2";
+                               settings.Text = "Quitar grupos";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.Check2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <label for="Descripcion">Dias Vencimiento*</label>
                             @Html.TextBoxFor(q => q.DiasVencidos, new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.DiasVencidos, "", new { @class = "text-danger" })

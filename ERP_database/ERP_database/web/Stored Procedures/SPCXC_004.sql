@@ -1,5 +1,5 @@
-﻿--EXEC web.SPCXC_004 1,1,9999,1,9999999,'2019/01/01','2019/08/14',0
-CREATE PROCEDURE web.SPCXC_004
+﻿--EXEC web.SPCXC_004 1,1,9999,1208,1208,'2019/01/01','2019/09/10',1
+CREATE PROCEDURE [web].[SPCXC_004]
 (
 @IdEmpresa int,
 @IdSucursalIni int,
@@ -14,7 +14,7 @@ AS
 SELECT fa_factura.IdEmpresa, fa_factura.IdSucursal, fa_factura.IdBodega, fa_factura.IdCbteVta, fa_factura.vt_serie1+'-'+ fa_factura.vt_serie2+'-'+ fa_factura.vt_NumFactura vt_NumFactura, fa_factura.vt_tipoDoc, fa_factura.IdCliente, fa_factura.vt_fecha, fa_factura.vt_fech_venc, 
                   fa_factura.vt_Observacion, fa_factura.Estado, tb_persona.pe_nombreCompleto, fa_factura_resumen.Total, fa_factura_resumen.Total as Debe, 0 as Haber, fa_factura.vt_serie1+'-'+ fa_factura.vt_serie2+'-'+ fa_factura.vt_NumFactura AS Referencia,
 				  1 as Orden, 'FACTURA' AS Tipo, fa_factura.vt_fecha as FechaReferencia, 0 IdReferencia, 0 SecuenciaReferencia, DATEDIFF(day,fa_factura.vt_fecha,CAST(GETDATE() AS DATE)) Dias, tb_sucursal.Su_Descripcion, 
-				  ROUND(fa_factura_resumen.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo
+				  ROUND(fa_factura_resumen.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo, vt_tipoDoc as TipoDoc
 FROM     fa_factura INNER JOIN
                   fa_cliente ON fa_factura.IdEmpresa = fa_cliente.IdEmpresa AND fa_factura.IdCliente = fa_cliente.IdCliente INNER JOIN
                   tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
@@ -33,7 +33,7 @@ UNION ALL
 SELECT fa_factura.IdEmpresa, fa_factura.IdSucursal, fa_factura.IdBodega, fa_factura.IdCbteVta, fa_factura.vt_serie1 + '-' + fa_factura.vt_serie2 + '-' + fa_factura.vt_NumFactura AS vt_NumFactura, fa_factura.vt_tipoDoc, fa_factura.IdCliente, 
                   fa_factura.vt_fecha, fa_factura.vt_fech_venc, fa_factura.vt_Observacion, fa_factura.Estado, tb_persona.pe_nombreCompleto, cxc_cobro_det.dc_ValorPago * - 1 AS Expr1, 0 AS Debe, cxc_cobro_det.dc_ValorPago AS Haber, 
                   cxc_cobro.cr_NumDocumento AS Referencia, 2 AS Orden, cxc_cobro_tipo.tc_descripcion As Tipo, cxc_cobro.cr_fecha, cxc_cobro_det.IdCobro, cxc_cobro_det.secuencial, DATEDIFF(day,fa_factura.vt_fecha,CAST(GETDATE() AS DATE)) Dias,
-				  tb_sucursal.Su_Descripcion, ROUND(fa_factura_resumen.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo
+				  tb_sucursal.Su_Descripcion, ROUND(fa_factura_resumen.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo, cxc_cobro_det.IdCobro_tipo
 FROM     fa_factura INNER JOIN
                   fa_cliente ON fa_factura.IdEmpresa = fa_cliente.IdEmpresa AND fa_factura.IdCliente = fa_cliente.IdCliente INNER JOIN
                   tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
@@ -56,7 +56,7 @@ UNION ALL
 SELECT fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota, CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN fa_notaCreDeb.Serie1+'-'+fa_notaCreDeb.Serie2+'-'+fa_notaCreDeb.NumNota_Impresa ELSE fa_notaCreDeb.CodNota  END vt_NumFactura, fa_notaCreDeb.CodDocumentoTipo, fa_notaCreDeb.IdCliente, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, 
                   fa_notaCreDeb.sc_observacion, fa_notaCreDeb.Estado, tb_persona.pe_nombreCompleto, d.Total, d.Total as Debe, 0 as Haber, fa_notaCreDeb.CodNota AS Referencia,
 				  1 as Orden, 'NOTA DE DEBITO' AS Tipo, fa_notaCreDeb.no_fecha as FechaReferencia, 0, 0 as Secuencia, DATEDIFF(day,fa_notaCreDeb.no_fecha,CAST(GETDATE() AS DATE)) Dias, tb_sucursal.Su_Descripcion,
-				  ROUND(d.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo
+				  ROUND(d.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo,'NTDB'
 FROM     fa_notaCreDeb INNER JOIN
                   fa_cliente ON fa_notaCreDeb.IdEmpresa = fa_cliente.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente.IdCliente INNER JOIN
                   tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
@@ -77,7 +77,7 @@ UNION ALL
 SELECT fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota, CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN fa_notaCreDeb.Serie1+'-'+fa_notaCreDeb.Serie2+'-'+fa_notaCreDeb.NumNota_Impresa ELSE fa_notaCreDeb.CodNota  END AS vt_NumFactura, fa_notaCreDeb.CodDocumentoTipo, fa_notaCreDeb.IdCliente, 
                   fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, fa_notaCreDeb.sc_observacion, fa_notaCreDeb.Estado, tb_persona.pe_nombreCompleto, cxc_cobro_det.dc_ValorPago * - 1 AS Expr1, 0 AS Debe, cxc_cobro_det.dc_ValorPago AS Haber, 
                   cxc_cobro.cr_NumDocumento AS Referencia, 2 AS Orden, cxc_cobro_tipo.tc_descripcion As Tipo, cxc_cobro.cr_fecha,  cxc_cobro_det.IdCobro, cxc_cobro_det.secuencial, DATEDIFF(day,fa_notaCreDeb.no_fecha,CAST(GETDATE() AS DATE)) Dias, tb_sucursal.Su_Descripcion,
-				  ROUND(d.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo
+				  ROUND(d.Total - isnull(cobro.dc_ValorPago,0),2) as Saldo, cxc_cobro_det.IdCobro_tipo
 FROM     fa_notaCreDeb INNER JOIN
                   fa_cliente ON fa_notaCreDeb.IdEmpresa = fa_cliente.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente.IdCliente INNER JOIN
                   (select IdEmpresa, IdSucursal, IdBodega, IdNota, sum(sc_total) Total from fa_notaCreDeb_det
