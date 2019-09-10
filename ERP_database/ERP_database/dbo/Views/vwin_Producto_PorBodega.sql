@@ -1,20 +1,20 @@
-﻿CREATE VIEW dbo.vwin_Producto_PorBodega
+﻿CREATE VIEW [dbo].[vwin_Producto_PorBodega]
 AS
-SELECT dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdBodega, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_codigo, dbo.in_Producto.pr_descripcion, 
-                  SUM(ISNULL(dbo.in_Ing_Egr_Inven_det.dm_cantidad, 0)) AS Stock, dbo.in_categorias.ca_Categoria AS nom_categoria
-FROM     dbo.in_ProductoTipo INNER JOIN
-                  dbo.in_producto_x_tb_bodega INNER JOIN
-                  dbo.in_Producto ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_Producto.IdProducto ON 
-                  dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo INNER JOIN
-                  dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria LEFT OUTER JOIN
-                  dbo.in_Ing_Egr_Inven INNER JOIN
-                  dbo.in_Ing_Egr_Inven_det ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdSucursal = dbo.in_Ing_Egr_Inven_det.IdSucursal AND 
-                  dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo AND dbo.in_Ing_Egr_Inven.IdNumMovi = dbo.in_Ing_Egr_Inven_det.IdNumMovi ON 
-                  dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_Ing_Egr_Inven_det.IdSucursal AND 
-                  dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_Ing_Egr_Inven_det.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_Ing_Egr_Inven_det.IdProducto
-WHERE  (ISNULL(dbo.in_Ing_Egr_Inven.Estado, 'A') = 'A') AND (dbo.in_Producto.Estado = 'A')
-GROUP BY dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdBodega, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_codigo, dbo.in_Producto.pr_descripcion, 
-                  dbo.in_categorias.ca_Categoria
+SELECT        dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdBodega, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_codigo, 
+                         dbo.in_Producto.pr_descripcion, SUM(ISNULL(dbo.in_Ing_Egr_Inven_det.dm_cantidad, 0)) AS Stock, dbo.in_categorias.ca_Categoria AS nom_categoria
+FROM            dbo.in_ProductoTipo INNER JOIN
+                         dbo.in_producto_x_tb_bodega INNER JOIN
+                         dbo.in_Producto ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_Producto.IdProducto ON 
+                         dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo INNER JOIN
+                         dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria LEFT OUTER JOIN
+                         dbo.in_Ing_Egr_Inven INNER JOIN
+                         dbo.in_Ing_Egr_Inven_det ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdSucursal = dbo.in_Ing_Egr_Inven_det.IdSucursal AND 
+                         dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo AND dbo.in_Ing_Egr_Inven.IdNumMovi = dbo.in_Ing_Egr_Inven_det.IdNumMovi and in_Ing_Egr_Inven.Estado = 'A' ON 
+                         dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_Ing_Egr_Inven_det.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_Ing_Egr_Inven_det.IdSucursal AND 
+                         dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_Ing_Egr_Inven_det.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_Ing_Egr_Inven_det.IdProducto
+WHERE  (dbo.in_Producto.Estado = 'A')
+GROUP BY dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdBodega, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_codigo, 
+                         dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorBodega';
 
