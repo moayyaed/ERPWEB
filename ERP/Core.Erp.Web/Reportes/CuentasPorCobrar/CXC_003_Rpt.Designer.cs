@@ -122,6 +122,7 @@
             this.xrTableCell52 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell53 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
+            this.P_IdTipo = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
@@ -514,6 +515,9 @@
             // 
             // xrTableCell1
             // 
+            this.xrTableCell1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(\'LISTADO DE RETENCIONES \',Iif( [Parameters].[P_IdTipo]=\'M\',\'MANUALES\',Iif(" +
+                    "[Parameters].[P_IdTipo]=\'E\',\'ELECTRONICAS\',\'\' ) ),\' DE VENTAS\')")});
             this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.xrTableCell1.Name = "xrTableCell1";
             this.xrTableCell1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 125, 0, 0, 100F);
@@ -1102,6 +1106,11 @@
             this.ReportHeader.HeightF = 100.4167F;
             this.ReportHeader.Name = "ReportHeader";
             // 
+            // P_IdTipo
+            // 
+            this.P_IdTipo.Name = "P_IdTipo";
+            this.P_IdTipo.Visible = false;
+            // 
             // CXC_003_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1128,7 +1137,8 @@
             this.p_IdEmpresa,
             this.p_IdCliente,
             this.p_Fecha_ini,
-            this.p_Fecha_fin});
+            this.p_Fecha_fin,
+            this.P_IdTipo});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXC_003_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
@@ -1234,5 +1244,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell52;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell53;
         private DevExpress.XtraReports.UI.ReportHeaderBand ReportHeader;
+        public DevExpress.XtraReports.Parameters.Parameter P_IdTipo;
     }
 }

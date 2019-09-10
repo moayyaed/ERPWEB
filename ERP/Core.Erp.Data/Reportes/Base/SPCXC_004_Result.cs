@@ -37,5 +37,6 @@ namespace Core.Erp.Data.Reportes.Base
         public Nullable<int> Dias { get; set; }
         public string Su_Descripcion { get; set; }
         public Nullable<double> Saldo { get; set; }
+        public string TipoDoc { get; set; }
     }
 }

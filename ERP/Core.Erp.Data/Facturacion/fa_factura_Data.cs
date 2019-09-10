@@ -285,6 +285,8 @@ namespace Core.Erp.Data.Facturacion
                 #region Resumen
                 if (info.info_resumen.ValorIVA > 0)
                     info.info_resumen.PorIva = (decimal)info.lst_det.Where(q => q.vt_iva > 0).FirstOrDefault().vt_por_iva;
+                else
+                    info.info_resumen.PorIva = 0;
 
                 db_f.fa_factura_resumen.Add(new fa_factura_resumen
                 {
@@ -883,6 +885,8 @@ namespace Core.Erp.Data.Facturacion
 
                 if (info.info_resumen.ValorIVA > 0)
                     info.info_resumen.PorIva = (decimal)info.lst_det.Where(q => q.vt_iva > 0).FirstOrDefault().vt_por_iva;
+                else
+                    info.info_resumen.PorIva = 0;
 
                 db_f.fa_factura_resumen.Add(new fa_factura_resumen
                 {

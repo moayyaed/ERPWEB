@@ -35,14 +35,16 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             this.DataSource = lst_rpt;
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
-            if (emp != null && emp.em_logo != null)
+            if (emp != null)
             {
                 lbl_telefonos.Text = string.IsNullOrEmpty(emp.em_telefonos) ? "" : "Tel. " + emp.em_telefonos;
                 lbl_direccion.Text = emp.em_direccion;
-                ImageConverter obj = new ImageConverter();
-                lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
-            }
-            
+                if (emp.em_logo != null)
+                {
+                    ImageConverter obj = new ImageConverter();
+                    lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+                }
+            }            
         }
     }
 }

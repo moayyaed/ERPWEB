@@ -248,8 +248,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             #region Validacion de conciliación bancaria
             if (!bus_ConciliacionDet.ValidarComprobanteEnConciliacion(IdEmpresa, IdTipoCbte, IdCbteCble, ref mensaje))
             {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
+                ViewBag.mensaje = "El comprobante se encuentra en una conciliación bancaria y solo se modificará la observación";
+                ViewBag.MostrarBoton = true;
             }
             #endregion
 

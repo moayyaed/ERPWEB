@@ -218,7 +218,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdCliente = 0
+                IdCliente = 0,
+                IdCobro_tipo = ""           
             };
             cargar_combos(model.IdEmpresa);
             CXC_003_Rpt report = new CXC_003_Rpt();

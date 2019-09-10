@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
 {
    public class CXC_003_Data
     {
-        public List<CXC_003_Info> get_list (int IdEmpresa, decimal IdCliente, DateTime Fecha_ini, DateTime Fecha_fin)
+        public List<CXC_003_Info> get_list (int IdEmpresa, decimal IdCliente, DateTime Fecha_ini, DateTime Fecha_fin, string Tipo)
         {
             try
             {
@@ -27,6 +27,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                              && q.IdCliente <= IdClienteFin
                              && q.vt_fecha >= Fecha_ini
                              && q.vt_fecha <= Fecha_fin
+                             && q.cr_EsElectronico == (string.IsNullOrEmpty(Tipo) ? q.cr_EsElectronico : (Tipo == "M" ? "NO" : "SI"))
                              select new CXC_003_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

@@ -931,8 +931,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdCliente = 0,
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
-                mostrarSaldo0 = true
-
+                mostrarSaldo0 = true,
+                fecha_ini = new DateTime(2000,1,1)
             };
             cargar_combos(model);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);            

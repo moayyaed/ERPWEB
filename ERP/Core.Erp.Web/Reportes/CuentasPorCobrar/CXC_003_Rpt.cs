@@ -29,9 +29,10 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             decimal IdCliente = p_IdCliente.Value == null ? 0 : Convert.ToDecimal(p_IdCliente.Value);
             DateTime Fecha_ini = p_Fecha_ini.Value == null ? DateTime.Now : Convert.ToDateTime(p_Fecha_ini.Value);
             DateTime Fecha_fin = p_Fecha_fin.Value == null ? DateTime.Now : Convert.ToDateTime(p_Fecha_fin.Value);
+            string Tipo = string.IsNullOrEmpty(P_IdTipo.Value.ToString()) ? "" : P_IdTipo.Value.ToString();
 
             CXC_003_Bus bus_rpt = new CXC_003_Bus();
-            List<CXC_003_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdCliente, Fecha_ini, Fecha_fin);
+            List<CXC_003_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdCliente, Fecha_ini, Fecha_fin, Tipo);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

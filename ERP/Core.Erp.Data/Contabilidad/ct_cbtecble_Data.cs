@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.General;
+﻿using Core.Erp.Data.Banco;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using System;
@@ -192,11 +193,20 @@ namespace Core.Erp.Data.Contabilidad
         {
             try
             {
+                ba_Conciliacion_det_IngEgr_Data odata = new ba_Conciliacion_det_IngEgr_Data();
+
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
                     ct_cbtecble Entity = Context.ct_cbtecble.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble);
                     if (Entity == null) return false;
 
+                    string mensaje = "";
+                    if (!odata.ValidarComprobanteEnConciliacion(info.IdEmpresa,info.IdTipoCbte,info.IdCbteCble,ref mensaje))
+                    {
+                        Entity.cb_Observacion = info.cb_Observacion;
+                        Context.SaveChanges();
+                        return true;
+                    }
                     
                     Entity.cb_Fecha = info.cb_Fecha.Date;
                     Entity.IdSucursal = info.IdSucursal;
@@ -208,7 +218,10 @@ namespace Core.Erp.Data.Contabilidad
                     Entity.IdUsuarioUltModi = info.IdUsuarioUltModi;
                     Entity.cb_FechaUltModi = DateTime.Now;
 
-                    Context.Database.ExecuteSqlCommand("DElETE ct_cbtecble_det WHERE IdEmpresa = " + info.IdEmpresa + " and IdTipoCbte = " + info.IdTipoCbte + " and IdCbteCble = " + info.IdCbteCble + "");
+                    var lstDet = Context.ct_cbtecble_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble).ToList();
+                    Context.ct_cbtecble_det.RemoveRange(lstDet);
+
+                    //Context.Database.ExecuteSqlCommand("DElETE ct_cbtecble_det WHERE IdEmpresa = " + info.IdEmpresa + " and IdTipoCbte = " + info.IdTipoCbte + " and IdCbteCble = " + info.IdCbteCble + "");
 
                     int secuencia = 1;
                     foreach (var item in info.lst_ct_cbtecble_det)
