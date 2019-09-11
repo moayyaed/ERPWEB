@@ -290,7 +290,7 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

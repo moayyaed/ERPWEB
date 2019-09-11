@@ -245,19 +245,29 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 {
                     if (!reader.IsDBNull(0) && cont > 0)
                     {
+                        //var IdCtaCble = Convert.ToString(reader.GetValue(0));
+                        //var pc_clave_corta = reader.GetValue(1) == null || string.IsNullOrEmpty(reader.GetString(1)) ? "" : reader.GetString(1);
+                        //var pc_Cuenta = reader.GetString(2);
+                        //var IdCtaCIdCtaCblePadreble = reader.GetValue(3) == null || string.IsNullOrEmpty(Convert.ToString(reader.GetValue(3))) ? null : Convert.ToString(reader.GetValue(3));
+                        //var pc_Naturaleza = Convert.ToString(reader.GetValue(4));
+                        //var IdNivelCta = Convert.ToInt32(reader.GetValue(5));
+                        //var pc_EsMovimiento_bool = Convert.ToString(reader.GetValue(6)) == "SI" ? true : false;
+                        //var pc_EsMovimiento = Convert.ToString(reader.GetValue(6)) == "SI" ? "S" : "N";
+                        //var IdGrupoCble = Convert.ToString(reader.GetValue(7));
+
                         ct_plancta_Info info = new ct_plancta_Info
                         {
                             IdEmpresa = IdEmpresa,
-                            IdCtaCble = reader.GetString(0),
-                            pc_clave_corta = reader.GetString(1),
+                            IdCtaCble = Convert.ToString(reader.GetValue(0)),
+                            pc_clave_corta = reader.GetValue(1) == null || string.IsNullOrEmpty(reader.GetString(1)) ? "" : reader.GetString(1),
                             pc_Cuenta = reader.GetString(2),
-                            IdCtaCblePadre = reader.GetValue(3) == null ? null : (string.IsNullOrEmpty(reader.GetString(3)) ? null : reader.GetString(3)),
-                            pc_Naturaleza = reader.GetString(4),
+                            IdCtaCblePadre = reader.GetValue(3) == null || string.IsNullOrEmpty(Convert.ToString(reader.GetValue(3))) ? null : Convert.ToString(reader.GetValue(3)),
+                            pc_Naturaleza = Convert.ToString(reader.GetValue(4)),
                             IdNivelCta = Convert.ToInt32(reader.GetValue(5)),
-                            pc_EsMovimiento_bool = reader.GetString(6) == "SI" ? true : false,
-                            pc_EsMovimiento = reader.GetString(6) == "SI" ? "S" : "N",
-                            IdGrupoCble = reader.GetString(7)
-                        };
+                            pc_EsMovimiento_bool = Convert.ToString(reader.GetValue(6)) == "SI" ? true : false,
+                            pc_EsMovimiento = Convert.ToString(reader.GetValue(6)) == "SI" ? "S" : "N",
+                            IdGrupoCble = Convert.ToString(reader.GetValue(7))
+                    };
                         ListaPlan.Add(info);
                     }
                     else
