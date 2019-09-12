@@ -75,3 +75,38 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+<script>
+    function get_info_nuevo()
+    {
+        if (IdCentroCostoPadre != "") {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdCentroCostoPadre: IdCentroCostoPadre.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_nuevo", "CentroCosto",new { Area = "Contabilidad"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == '') {
+                        //No hago nada
+                    } else {
+                        //$("#IdCentroCosto").val(data.IdCentroCosto);
+                        if (data.IdNivel == 0) {
+                            //$("#IdNivel").val(1);
+                        }
+                        else {
+                            //$("#IdNivel").val(data.IdNivel);
+                        }
+                    }
+                },
+                error: function (error) {
+
+                }
+            });
+        }
+    }
+</script>

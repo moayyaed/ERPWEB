@@ -119,7 +119,7 @@ namespace Core.Erp.Bus.Facturacion
                 return false;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

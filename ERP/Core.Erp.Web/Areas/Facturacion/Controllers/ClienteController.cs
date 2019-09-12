@@ -595,7 +595,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 IdNivel = 1,
                                 IdTipoCredito = "CON",
                                 FormaPago = "01",
-                                IdUsuario = SessionFixed.IdUsuario
+                                IdUsuario = SessionFixed.IdUsuario,
+                                IdCiudad = Convert.ToString(reader.GetValue(18)),
+                                IdParroquia = Convert.ToString(reader.GetValue(19)),
+                                Celular = Convert.ToString(reader.GetValue(11)),
+                                Correo = Convert.ToString(reader.GetValue(8)),
+                                Direccion = Convert.ToString(reader.GetValue(9)),
+                                Telefono = Convert.ToString(reader.GetValue(10))
                             };
 
                             fa_cliente_contactos_Info info_cliente_contacto = new fa_cliente_contactos_Info
