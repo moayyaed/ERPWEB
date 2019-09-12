@@ -10316,6 +10316,7 @@
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_modeloAF_importacion.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_marcaAF_importacion.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_areaAF_importacion.cshtml" />
+    <Content Include="Areas\Banco\Views\ParametroBanco\_GridViewPartial_CbteBan_x_CbteCble.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

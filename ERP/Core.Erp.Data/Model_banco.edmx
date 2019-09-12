@@ -187,6 +187,15 @@
           <Property Name="IdTipo_Persona" Type="varchar" MaxLength="20" />
           <Property Name="IdSolicitudPago" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="ba_Cbte_Ban_tipo">
+          <Key>
+            <PropertyRef Name="CodTipoCbteBan" />
+          </Key>
+          <Property Name="CodTipoCbteBan" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Signo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="orden" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -906,6 +915,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo">
+          <End Role="ba_Cbte_Ban_tipo" Type="Self.ba_Cbte_Ban_tipo" Multiplicity="1" />
+          <End Role="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Type="Self.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Cbte_Ban_tipo">
+              <PropertyRef Name="CodTipoCbteBan" />
+            </Principal>
+            <Dependent Role="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo">
+              <PropertyRef Name="CodTipoCbteBan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ba_Cbte_Ban_x_ba_TipoFlujo_ba_Cbte_Ban">
           <End Role="ba_Cbte_Ban" Type="Self.ba_Cbte_Ban" Multiplicity="1" />
           <End Role="ba_Cbte_Ban_x_ba_TipoFlujo" Type="Self.ba_Cbte_Ban_x_ba_TipoFlujo" Multiplicity="*" />
@@ -1084,6 +1105,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySet Name="ba_Catalogo" EntityType="Self.ba_Catalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_CatalogoTipo" EntityType="Self.ba_CatalogoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Cbte_Ban" EntityType="Self.ba_Cbte_Ban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ba_Cbte_Ban_tipo" EntityType="Self.ba_Cbte_Ban_tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" EntityType="Self.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Cbte_Ban_x_ba_TipoFlujo" EntityType="Self.ba_Cbte_Ban_x_ba_TipoFlujo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ba_Conciliacion" EntityType="Self.ba_Conciliacion" Schema="dbo" store:Type="Tables" />
@@ -1341,6 +1363,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_TipoFlujo" EntitySet="ba_TipoFlujo" />
             <End Role="ba_Cbte_Ban" EntitySet="ba_Cbte_Ban" />
           </AssociationSet>
+          <AssociationSet Name="FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo" Association="Self.FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo">
+            <End Role="ba_Cbte_Ban_tipo" EntitySet="ba_Cbte_Ban_tipo" />
+            <End Role="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" EntitySet="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" />
+          </AssociationSet>
           <AssociationSet Name="FK_ba_Cbte_Ban_x_ba_TipoFlujo_ba_Cbte_Ban" Association="Self.FK_ba_Cbte_Ban_x_ba_TipoFlujo_ba_Cbte_Ban">
             <End Role="ba_Cbte_Ban" EntitySet="ba_Cbte_Ban" />
             <End Role="ba_Cbte_Ban_x_ba_TipoFlujo" EntitySet="ba_Cbte_Ban_x_ba_TipoFlujo" />
@@ -1455,6 +1481,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="IdTipoCbteCble_Anu" Type="Int32" Nullable="false" />
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Tipo_DebCred" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="ba_Cbte_Ban_tipo" Relationship="Model_banco.FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo" FromRole="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" ToRole="ba_Cbte_Ban_tipo" />
         </EntityType>
         <EntityType Name="ba_Conciliacion">
           <Key>
@@ -1839,6 +1866,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
             <End Role="ba_Cbte_Ban_x_ba_TipoFlujo" EntitySet="ba_Cbte_Ban_x_ba_TipoFlujo" />
           </AssociationSet>
           <EntitySet Name="vwba_Cbte_Ban" EntityType="Model_banco.vwba_Cbte_Ban" />
+          <EntitySet Name="ba_Cbte_Ban_tipo" EntityType="Model_banco.ba_Cbte_Ban_tipo" />
+          <AssociationSet Name="FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo" Association="Model_banco.FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo">
+            <End Role="ba_Cbte_Ban_tipo" EntitySet="ba_Cbte_Ban_tipo" />
+            <End Role="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" EntitySet="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ba_Banco_Cuenta_x_tb_sucursal">
           <Key>
@@ -2618,6 +2650,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Imprimir_Solo_el_cheque" Type="Boolean" Nullable="false" />
           <Property Name="ValorBanco" Type="Double" />
         </EntityType>
+        <EntityType Name="ba_Cbte_Ban_tipo">
+          <Key>
+            <PropertyRef Name="CodTipoCbteBan" />
+          </Key>
+          <Property Name="CodTipoCbteBan" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="orden" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Relationship="Model_banco.FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo" FromRole="ba_Cbte_Ban_tipo" ToRole="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" />
+        </EntityType>
+        <Association Name="FK_ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_ba_Cbte_Ban_tipo">
+          <End Type="Model_banco.ba_Cbte_Ban_tipo" Role="ba_Cbte_Ban_tipo" Multiplicity="1" />
+          <End Type="Model_banco.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Role="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_Cbte_Ban_tipo">
+              <PropertyRef Name="CodTipoCbteBan" />
+            </Principal>
+            <Dependent Role="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo">
+              <PropertyRef Name="CodTipoCbteBan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3223,6 +3277,16 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
                 <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
                 <ScalarProperty Name="IdTipocbte" ColumnName="IdTipocbte" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ba_Cbte_Ban_tipo">
+            <EntityTypeMapping TypeName="Model_banco.ba_Cbte_Ban_tipo">
+              <MappingFragment StoreEntitySet="ba_Cbte_Ban_tipo">
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="Signo" ColumnName="Signo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CodTipoCbteBan" ColumnName="CodTipoCbteBan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

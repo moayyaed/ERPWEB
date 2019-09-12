@@ -12,15 +12,18 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwba_Cbte_Ban_x_ba_TipoFlujo
+    public partial class ba_Cbte_Ban_tipo
     {
-        public int IdEmpresa { get; set; }
-        public int IdTipocbte { get; set; }
-        public decimal IdCbteCble { get; set; }
-        public int Secuencia { get; set; }
-        public decimal IdTipoFlujo { get; set; }
-        public double Porcentaje { get; set; }
-        public double Valor { get; set; }
-        public string Descricion { get; set; }
+        public ba_Cbte_Ban_tipo()
+        {
+            this.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo = new HashSet<ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo>();
+        }
+    
+        public string CodTipoCbteBan { get; set; }
+        public string Descripcion { get; set; }
+        public string Signo { get; set; }
+        public int orden { get; set; }
+    
+        public virtual ICollection<ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo> ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo { get; set; }
     }
 }
