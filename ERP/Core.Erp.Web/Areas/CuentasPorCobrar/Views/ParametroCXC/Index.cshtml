@@ -86,6 +86,28 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Cuenta provisión fuente</label>
+                    @Html.Partial("_CmbCuenta_ProvisionFuente", Model.IdCtaCble_ProvisionFuente)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_ProvisionFuente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Cuenta provisión IVA</label>
+                    @Html.Partial("_CmbCuenta_ProvisionIva", Model.IdCtaCble_ProvisionIva)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_ProvisionIva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>

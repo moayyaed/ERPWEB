@@ -24,7 +24,9 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         pa_IdCaja_x_cobros_x_CXC = Entity.pa_IdCaja_x_cobros_x_CXC,
                         pa_IdTipoCbteCble_CxC = Entity.pa_IdTipoCbteCble_CxC,
                         pa_IdTipoMoviCaja_x_Cobros_x_cliente = Entity.pa_IdTipoMoviCaja_x_Cobros_x_cliente,
-                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo
+                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        IdCtaCble_ProvisionFuente = Entity.IdCtaCble_ProvisionFuente,
+                        IdCtaCble_ProvisionIva = Entity.IdCtaCble_ProvisionIva
                     };
                 }
                 return info;
@@ -52,6 +54,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             pa_IdTipoCbteCble_CxC = info.pa_IdTipoCbteCble_CxC,
                             pa_IdTipoMoviCaja_x_Cobros_x_cliente = info.pa_IdTipoMoviCaja_x_Cobros_x_cliente,
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            IdCtaCble_ProvisionFuente = info.IdCtaCble_ProvisionFuente,
+                            IdCtaCble_ProvisionIva = info.IdCtaCble_ProvisionIva,
                             IdUsuario = info.IdUsuario,
                             FechaTransac = DateTime.Now
                         };
@@ -63,6 +67,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         Entity.pa_IdTipoCbteCble_CxC = info.pa_IdTipoCbteCble_CxC;
                         Entity.pa_IdTipoMoviCaja_x_Cobros_x_cliente = info.pa_IdTipoMoviCaja_x_Cobros_x_cliente;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.IdCtaCble_ProvisionFuente = info.IdCtaCble_ProvisionFuente;
+                        Entity.IdCtaCble_ProvisionIva = info.IdCtaCble_ProvisionIva;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.FechaUltMod = DateTime.Now;
                     }

@@ -114,7 +114,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         cr_propietarioCta = Entity.cr_propietarioCta,
                         cr_estado = Entity.cr_estado,
                         cr_recibo = Entity.cr_recibo,
-                        cr_es_anticipo = Entity.cr_es_anticipo,
+                        cr_EsProvision = Entity.cr_EsProvision,
                         cr_Excedente = Entity.cr_Excedente,
                         IdBanco = Entity.IdBanco,
                         IdCaja = Entity.IdCaja
@@ -268,7 +268,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     cr_Tarjeta = info.cr_Tarjeta,
                     cr_propietarioCta = info.cr_propietarioCta,
                     cr_estado = "A",
-                    cr_es_anticipo = "N",
+                    cr_EsProvision = info.cr_EsProvision,
                     cr_EsElectronico = info.cr_EsElectronico,
                     cr_Excedente = info.cr_Excedente,
                     IdBanco = info.IdBanco,
@@ -491,6 +491,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 Entity.IdCaja = info.IdCaja;
                 Entity.cr_EsElectronico = info.cr_EsElectronico;
                 Entity.cr_Excedente = info.cr_Excedente;
+                Entity.cr_EsProvision = info.cr_EsProvision;
+                Entity.cr_EsProvision = info.cr_EsProvision;
                 Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                 Entity.Fecha_UltMod = DateTime.Now;
                 #endregion
@@ -1076,7 +1078,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         IdCliente = Entity.IdCliente,
                         IdEntidad = Entity.IdCliente,
                         vt_tipoDoc = Entity.vt_tipoDoc,
-                        cr_EsElectronico = Entity.cr_EsElectronico
+                        cr_EsElectronico = Entity.cr_EsElectronico,
+                        cr_EsProvision = Entity.cr_EsProvision
                     };
                 }
                 return info;

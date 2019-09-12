@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Contabilidad.ct_periodo_Info
 
 @{
-    ViewBag.Title = "Modificar periodo";
+    ViewBag.Title = "Modificar periodo contable";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

@@ -2,9 +2,12 @@
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.Facturacion;
+using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
@@ -19,6 +22,39 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         caj_Caja_Movimiento_Tipo_Bus bus_movimiento = new caj_Caja_Movimiento_Tipo_Bus();
         caj_Caja_Bus bus_caja = new caj_Caja_Bus();
         fa_TipoNota_Bus bus_tiponota = new fa_TipoNota_Bus();
+        ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        #endregion
+
+        #region Combos bajo demanda Fuente
+        public ActionResult CmbCuenta_ProvisionFuente()
+        {
+            cxc_Parametro_Info model = new cxc_Parametro_Info();
+            return PartialView("_CmbCuenta_ProvisionFuente", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
+        #region Combos bajo demanda Iva
+        public ActionResult CmbCuenta_ProvisionIva()
+        {
+            cxc_Parametro_Info model = new cxc_Parametro_Info();
+            return PartialView("_CmbCuenta_ProvisionIva", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_iva(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_iva(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
         #endregion
 
         #region Index
