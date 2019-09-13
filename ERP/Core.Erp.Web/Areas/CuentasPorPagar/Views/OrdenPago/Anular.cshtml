@@ -2,7 +2,7 @@
 
 @model Core.Erp.Info.CuentasPorPagar.cp_orden_pago_Info
 @{
-    ViewBag.Title = ("Anular orden" + " con ID #" + @Model.IdOrdenPago);
+    ViewBag.Title = ("Anular orden de pago" + " con ID #" + @Model.IdOrdenPago);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -125,6 +125,7 @@
                             settings.Properties.EditFormatString = "dd/MM/yyyy";
                             settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.AllowMouseWheel = false;
                         }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                     </div>

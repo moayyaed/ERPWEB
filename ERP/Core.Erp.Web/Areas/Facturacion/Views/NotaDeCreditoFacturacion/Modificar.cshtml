@@ -506,6 +506,7 @@ function cargar_lista_contactos() {
                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.AllowMouseWheel = false;
                                 }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.no_fecha, "", new { @class = "text-danger" })
                                 </div>
@@ -526,6 +527,7 @@ function cargar_lista_contactos() {
                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.AllowMouseWheel = false;
                                 }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.no_fecha_venc, "", new { @class = "text-danger" })
                                 </div>

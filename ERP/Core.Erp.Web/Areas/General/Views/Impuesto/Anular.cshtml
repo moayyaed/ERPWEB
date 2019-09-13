@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.General.tb_sis_Impuesto_Info
 @{
-    ViewBag.Title = "Impuesto";
+    ViewBag.Title = "Anular impuesto";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -57,18 +57,26 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label for="">@Html.CheckBoxFor(q => q.Usado_en_Compras) Usado en compras</label>
-                    </div>
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Usado_en_Compras, settings =>
+                    {
+                        settings.Name = "Usado_en_Compras";
+                        settings.Text = "Usado en compras";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Usado_en_Compras, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label for="">@Html.CheckBoxFor(q => q.Usado_en_Ventas) Usado en ventas</label>
-                    </div>
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Usado_en_Ventas, settings =>
+                    {
+                        settings.Name = "Usado_en_Ventas";
+                        settings.Text = "Usado en ventas";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Usado_en_Ventas, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

@@ -64,7 +64,16 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(q => q.cn_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "cn_fecha" })
+                        @Html.DevExpress().DateEditFor(q => q.cn_fecha, settings =>
+                        {
+                            settings.Name = "cn_fecha";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.AllowMouseWheel = false;
+                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cn_fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -76,7 +85,16 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(q => q.Fecha_contable, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "Fecha_contable" })
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_contable, settings =>
+                        {
+                            settings.Name = "Fecha_contable";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.AllowMouseWheel = false;
+                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha_contable, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -89,14 +107,15 @@
                             <i class="fa fa-calendar"></i>
                         </div>
                         @Html.DevExpress().DateEditFor(q=> q.cn_Fecha_vcto, settings =>
-                    {
-                        settings.Name = "cn_Fecha_vcto";
-                        settings.Properties.UseMaskBehavior = true;
-                        settings.Properties.EditFormat = EditFormat.Date;
-                        settings.Properties.EditFormatString = "dd/MM/yyyy";
-                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                    }).GetHtml()
+                        {
+                            settings.Name = "cn_Fecha_vcto";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.AllowMouseWheel = false;
+                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cn_Fecha_vcto, "", new { @class = "text-danger" })
                     </div>
                 </div>

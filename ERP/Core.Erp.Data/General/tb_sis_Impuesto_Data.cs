@@ -62,7 +62,9 @@ namespace Core.Erp.Data.General
                         nom_impuesto = Entity.nom_impuesto,
                         porcentaje = Entity.porcentaje,
                         IdCodigo_SRI = Entity.IdCodigo_SRI,
-                        estado = Entity.estado
+                        estado = Entity.estado,
+                        Usado_en_Compras = Entity.Usado_en_Compras,
+                        Usado_en_Ventas = Entity.Usado_en_Ventas
                     };
                 } return info;
             }
@@ -85,7 +87,9 @@ namespace Core.Erp.Data.General
                         nom_impuesto = info.nom_impuesto,
                         estado = info.estado = true,
                         IdCodigo_SRI = info.IdCodigo_SRI,
-                        porcentaje = info.porcentaje
+                        porcentaje = info.porcentaje,
+                        Usado_en_Compras = info.Usado_en_Compras,
+                        Usado_en_Ventas = info.Usado_en_Ventas
                     };
                     Context.tb_sis_Impuesto.Add(Entity);
                     Context.SaveChanges();
@@ -112,6 +116,8 @@ namespace Core.Erp.Data.General
                     Entity.nom_impuesto = info.nom_impuesto;
                     Entity.porcentaje = info.porcentaje;
                     Entity.IdCodigo_SRI = info.IdCodigo_SRI;
+                    Entity.Usado_en_Compras = info.Usado_en_Compras;
+                    Entity.Usado_en_Ventas = info.Usado_en_Ventas;
 
                     Context.SaveChanges();
                 } 

@@ -95,9 +95,8 @@
 
     function cargar_fecha_vencimiento() {
         var vida = Number($("#pf_plazo").val());
-        var from = $("#pf_fecha").val().split("/")
-        var f = new Date(from[2], from[1] - 1, from[0])
-        $('#pf_fecha_vcto').datepicker("update", moment(f, "DD-MM-YYYY").add(vida, 'days').format("DD/MM/YYYY"));
+        var date = new Date(moment(pf_fecha.GetValue(), "DD/MM/YYYY").add(vida, 'days'));
+        pf_fecha_vcto.SetValue(date);
     }
 
     function get_info_termino_pago() {
@@ -503,7 +502,16 @@ function cargar_lista_contactos() {
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(q => q.pf_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha" })
+                        @Html.DevExpress().DateEditFor(q => q.pf_fecha, settings =>
+                   {
+                       settings.Name = "pf_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.pf_fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -522,7 +530,16 @@ function cargar_lista_contactos() {
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(q => q.pf_fecha_vcto, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha_vcto" })
+                        @Html.DevExpress().DateEditFor(q => q.pf_fecha_vcto, settings =>
+                   {
+                       settings.Name = "pf_fecha_vcto";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.pf_fecha_vcto, "", new { @class = "text-danger" })
                     </div>
                 </div>

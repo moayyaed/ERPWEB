@@ -91,9 +91,13 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label for="Usado">@Html.CheckBoxFor(q => q.Usado) Usado</label>
-                    </div>
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Usado, settings =>
+                    {
+                        settings.Name = "Usado";
+                        settings.Text = "Usado";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Usado, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -120,9 +124,14 @@
         <div class="col-md-12">
             <div class="col-md-4">
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label for="es_Documento_Electronico_bool">@Html.CheckBoxFor(q => q.es_Documento_Electronico, new { @id = "es_Documento_Electronico_bool" }) Es documento electronico</label>
-                    </div>
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.es_Documento_Electronico, settings =>
+                    {
+                        settings.Name = "es_Documento_Electronico";
+                        settings.Text = "Es documento electrónico";
+                        settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){ocultar_mostrar_div_autorizacion();}";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.es_Documento_Electronico, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -153,6 +162,7 @@
                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               settings.Properties.AllowMouseWheel = false;
                            }).GetHtml()
                          @Html.ValidationMessageFor(q => q.FechaCaducidad, "", new { @class = "text-danger" })
                     </div>
@@ -192,10 +202,6 @@
         $("#Documentofinal").change(function () {
             set_documentofinal();
         });
-
-        $("#es_Documento_Electronico_bool").change(function () {
-            ocultar_mostrar_div_autorizacion();
-        });
     })
 
     function get_NumeroDocumentoInicial() {
@@ -230,9 +236,7 @@
     }
 
     function ocultar_mostrar_div_autorizacion() {
-        var doc_electronico = ($("#es_Documento_Electronico_bool:checked").val());
-
-        if (doc_electronico == "true") {
+        if (es_Documento_Electronico.GetChecked() == true) {
             $("#div_autorizacion").hide();
         } else {
             $("#div_autorizacion").show();

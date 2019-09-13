@@ -170,7 +170,16 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(q => q.pe_fechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pe_fechaNacimiento" })
+                                @Html.DevExpress().DateEditFor(q => q.pe_fechaNacimiento, settings =>
+                           {
+                               settings.Name = "pe_fechaNacimiento";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               settings.Properties.AllowMouseWheel = false;
+                           }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.pe_fechaNacimiento, "", new { @class = "text-danger" })
                             </div>
                         </div>
