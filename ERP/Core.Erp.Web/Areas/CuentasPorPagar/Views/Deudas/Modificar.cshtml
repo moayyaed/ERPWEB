@@ -283,6 +283,7 @@
                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.AllowMouseWheel = false;
                            settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CambiarVcto();FechaRetencion.SetValue(s.GetValue()}";
                            //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){co_FechaContabilizacion.SetValue(s.GetValue());}";
                        }).GetHtml()
@@ -305,6 +306,7 @@
                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.AllowMouseWheel = false;
                            //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){FechaRetencion.SetValue(s.GetValue());}";
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaContabilizacion, "", new { @class = "text-danger" })
@@ -340,6 +342,7 @@
                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.AllowMouseWheel = false;
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaFactura_vct, "", new { @class = "text-danger" })
                     </div>
@@ -526,6 +529,7 @@
                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.AllowMouseWheel = false;
                                            }).GetHtml()
                                                 @Html.ValidationMessageFor(q => q.FechaRetencion, "", new { @class = "text-danger" })
                                             </div>

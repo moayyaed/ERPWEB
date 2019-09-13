@@ -399,6 +399,7 @@
                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Properties.AllowMouseWheel = false;
                 }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                 </div>
@@ -443,6 +444,7 @@
                    settings.Properties.EditFormatString = "dd/MM/yyyy";
                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.AllowMouseWheel = false;
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetSaldoAnterior(); Calcular();}";
                        }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_ini, "", new { @class = "text-danger" })
@@ -459,6 +461,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                         settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetIngresos(); Calcular();}";
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_fin, "", new { @class = "text-danger" })
@@ -573,6 +576,7 @@
                                 settings.Properties.EditFormatString = "dd/MM/yyyy";
                                 settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.AllowMouseWheel = false;
                             }).GetHtml()
                             @Html.ValidationMessageFor(q => q.FechaOP, "", new { @class = "text-danger" })
                         </div>

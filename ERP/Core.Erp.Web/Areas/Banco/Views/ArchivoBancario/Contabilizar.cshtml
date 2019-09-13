@@ -299,6 +299,7 @@
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                        settings.Properties.DropDownButton.Enabled = false;
+                       settings.Properties.AllowMouseWheel = false;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                     </div>

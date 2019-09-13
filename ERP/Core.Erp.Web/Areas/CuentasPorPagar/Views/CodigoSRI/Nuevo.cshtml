@@ -126,6 +126,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_f_valides_desde, "", new { @class = "text-danger" })
                     </div>
@@ -147,6 +148,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_f_valides_hasta, "", new { @class = "text-danger" })
                     </div>
