@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Caja.cp_conciliacion_Caja_Info
 
 @{
-    ViewBag.Title = "Nueva conciliación";
+    ViewBag.Title = "Nueva conciliación de caja";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -15,7 +15,6 @@
         MostrarOcultarOP();
 
         $("#IdPeriodo").change(function () {
-            GetPeriodo();
             GetSaldoAnterior();
             GetIngresos();
         });
@@ -89,7 +88,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridView_conciliacion_facturas_x_cruzar.PerformCallback();
                 GridView_conciliacion_facturas_x_cruzar.UnselectRows();
                 $("#FacturasModal").modal("show");
@@ -142,7 +140,6 @@
     function Caja_GetSelectedFieldValuesCallback(values) {
         //Capture all selected keys
         selectedCajaIDs = values.join(',');
-        console.log(selectedCajaIDs);
     }
 
     function MostrarCajaMovimientoConciliacionModal() {
@@ -166,7 +163,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
                 GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
                 $("#CajaMovimientoModal").modal("show");
@@ -241,32 +237,6 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#IdCtaCble").val(data);
-            },
-            error: function (error) {
-            }
-        });
-    }
-
-    function GetPeriodo() {
-        var datos = {
-            IdPeriodo: $("#IdPeriodo").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetPeriodo", "ConciliacionCaja",new { Area = "Caja"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.IdEmpresa != 0) {
-                    var d1 = new Date(data.pe_FechaIni.match(/\d+/)[0] * 1);
-                    var d2 = new Date(data.pe_FechaFin.match(/\d+/)[0] * 1);
-                    Fecha_ini.SetValue(d1);
-                    Fecha_fin.SetValue(d2);
-                }
             },
             error: function (error) {
             }
@@ -429,6 +399,7 @@
                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Properties.AllowMouseWheel = false;
                 }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                 </div>
@@ -473,6 +444,7 @@
                    settings.Properties.EditFormatString = "dd/MM/yyyy";
                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.AllowMouseWheel = false;
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetSaldoAnterior(); Calcular();}";
                        }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_ini, "", new { @class = "text-danger" })
@@ -489,6 +461,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                         settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetIngresos(); Calcular();}";
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_fin, "", new { @class = "text-danger" })
@@ -603,6 +576,7 @@
                                 settings.Properties.EditFormatString = "dd/MM/yyyy";
                                 settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.AllowMouseWheel = false;
                             }).GetHtml()
                             @Html.ValidationMessageFor(q => q.FechaOP, "", new { @class = "text-danger" })
                         </div>

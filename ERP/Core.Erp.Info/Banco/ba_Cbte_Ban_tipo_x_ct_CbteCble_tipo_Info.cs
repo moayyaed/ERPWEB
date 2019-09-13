@@ -14,5 +14,9 @@ namespace Core.Erp.Info.Banco
         public int IdTipoCbteCble_Anu { get; set; }
         public string IdCtaCble { get; set; }
         public string Tipo_DebCred { get; set; }
+
+        #region Campos que no existen en la tabla
+        public int Secuencia { get; set; }
+        #endregion
     }
 }

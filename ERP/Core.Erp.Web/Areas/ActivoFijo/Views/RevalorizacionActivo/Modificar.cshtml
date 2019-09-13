@@ -2,7 +2,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Modificar revalorización ";
+    ViewBag.Title = "Modificar revalorización de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -69,6 +69,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha_MejBaj, "", new { @class = "text-danger" })
                     </div>

@@ -102,7 +102,18 @@
                     @Html.ValidationMessageFor(q => q.cr_EsElectronico, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-3 col-md-2">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdCobro_tipo">Se provisiona*</label>
+                    @Html.DevExpress().CheckBoxFor(q => q.cr_EsProvision, settings =>
+                            {
+                                settings.Name = "cr_EsProvision";
+                                settings.Text = "Es Provisión";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.cr_EsProvision, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-2">
                 <div class="form-group">
                     <label for="cr_fecha">Fecha*</label>
                     @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>
@@ -113,6 +124,7 @@
                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Properties.AllowMouseWheel = false;
                 }).GetHtml()
                     @Html.ValidationMessageFor(q => q.cr_fecha, "", new { @class = "text-danger" })
                 </div>

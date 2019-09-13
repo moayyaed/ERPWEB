@@ -13,6 +13,7 @@ namespace Core.Erp.Data.Banco
         {
             try
             {
+                var Secuencia = 0;
                 List<ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Info> Lista;
                 using (Entities_banco Contex = new Entities_banco())
                 {
@@ -28,6 +29,7 @@ namespace Core.Erp.Data.Banco
                     }).ToList();
                 }
 
+                Lista.ForEach(q => q.Secuencia = Secuencia++);
                 return Lista;
             }
             catch (Exception)

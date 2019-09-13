@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Caja.cp_conciliacion_Caja_Info
 
 @{
-    ViewBag.Title = "Modificar conciliación";
+    ViewBag.Title = "Modificar conciliación de caja";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -14,7 +14,6 @@
 
     $(function () {
         $("#IdPeriodo").change(function () {
-            GetPeriodo();
             GetSaldoAnterior();
             GetIngresos();
         });
@@ -244,31 +243,6 @@
         });
     }
 
-    function GetPeriodo() {
-        var datos = {
-            IdPeriodo: $("#IdPeriodo").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetPeriodo", "ConciliacionCaja",new { Area = "Caja"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.IdEmpresa != 0) {
-                    console.log(data);
-                    Fecha_ini.SetValue(data.pe_FechaIni);
-                    Fecha_fin.SetValue(data.pe_FechaFin);
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
-
     function GetIngresos() {
         var datos = {
             FechaFin: Fecha_fin.GetDate(),
@@ -427,6 +401,7 @@
                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Properties.AllowMouseWheel = false;
                 }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                 </div>
@@ -471,6 +446,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_ini, "", new { @class = "text-danger" })
                 </div>
@@ -486,6 +462,8 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
+
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_fin, "", new { @class = "text-danger" })
                 </div>
@@ -599,6 +577,7 @@
                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               settings.Properties.AllowMouseWheel = false;
                            }).GetHtml()
                             @Html.ValidationMessageFor(q => q.FechaOP, "", new { @class = "text-danger" })
                         </div>

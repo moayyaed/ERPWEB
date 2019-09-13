@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Caja.caj_Caja_Movimiento_Info
 @{
-    ViewBag.Title = ("Modificar ingreso" + " con ID #" + @Model.IdCbteCble);
+    ViewBag.Title = ("Modificar ingreso de caja" + " con ID #" + @Model.IdCbteCble);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -90,6 +90,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
                     </div>
