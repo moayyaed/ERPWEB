@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Presupuesto.pre_Periodo_Info
 @{
-    ViewBag.Title = "Anular periodo";
+    ViewBag.Title = "Anular periodo de presupuesto";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -40,6 +40,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                 </div>
@@ -55,6 +56,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
                 </div>
