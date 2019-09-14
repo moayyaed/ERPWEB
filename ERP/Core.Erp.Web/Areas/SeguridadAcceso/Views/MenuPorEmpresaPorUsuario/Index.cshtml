@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.SeguridadAcceso.seg_Menu_x_Empresa_x_Usuario_Info
 @{
-    ViewBag.Title = "Menú por usuario";
+    ViewBag.Title = "Consulta de menú por empresa por usuario";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
