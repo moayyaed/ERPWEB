@@ -1094,6 +1094,8 @@
     <Build Include="web\Views\VWCXC_006.sql" />
     <Build Include="web\Views\VWBAN_014.sql" />
     <Build Include="EntidadRegulatoria\Stored Procedures\GenerarDINARDAP.sql" />
+    <Build Include="dbo\Tables\cxc_LiquidacionRetProvDet.sql" />
+    <Build Include="dbo\Tables\cxc_LiquidacionRetProv.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
