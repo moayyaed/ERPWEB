@@ -1,4 +1,5 @@
-﻿--exec [web].[SPCXC_010] 1,1,1,572,572,1,99999,'13/08/2019',0
+﻿
+--exec [web].[SPCXC_010] 1,1,1,572,572,1,99999,'13/08/2019',0
 CREATE PROCEDURE [web].[SPCXC_010]
 	@IdEmpresa as int,
 	@SucursalIni as int,
@@ -34,7 +35,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 (
 	
 			SELECT              F.IdEmpresa, F.IdSucursal, F.IdBodega, dbo.fa_cliente.IdCliente, dbo.fa_cliente.Codigo, F.IdCbteVta, 
-								F.CodCbteVta,F.vt_tipoDoc,F.vt_serie1,F.vt_serie2,F.vt_NumFactura, 
+								F.CodCbteVta,F.vt_tipoDoc,F.vt_serie1,F.vt_serie2, f.vt_serie1+'-'+f.vt_serie2+'-'+ F.vt_NumFactura+'/'+cast(f.IdCbteVta as varchar(20)) vt_NumFactura, 
 								dbo.tb_sucursal.Su_Descripcion, LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) as pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
 								FD.Total Valor_Original,F.vt_fech_venc,
 								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,'') as pe_telefonoOfic,
@@ -42,12 +43,12 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 			FROM            fa_factura AS F INNER JOIN
                          fa_factura_resumen AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
                          fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente 
-						 inner join fa_cliente_contactos cc on cc.IdEmpresa = fa_cliente.IdEmpresa and cc.IdCliente = fa_cliente.IdCliente
+						 inner join fa_cliente_contactos cc on cc.IdEmpresa = fa_cliente.IdEmpresa and cc.IdCliente = fa_cliente.IdCliente and cc.IdContacto = f.IdContacto
 						 INNER JOIN
                          tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
                          tb_sucursal ON F.IdEmpresa = tb_sucursal.IdEmpresa AND F.IdSucursal = tb_sucursal.IdSucursal 
 						 inner join tb_persona as p on fa_cliente.IdPersona = p.IdPersona
-						 inner join fa_cliente_contactos as con on fa_cliente.IdEmpresa = con.IdEmpresa and fa_cliente.IdCliente = con.IdCliente
+						 inner join fa_cliente_contactos as con on fa_cliente.IdEmpresa = con.IdEmpresa and fa_cliente.IdCliente = con.IdCliente and f.IdContacto = con.IdContacto
 						 inner join fa_cliente_tipo AS T on fa_cliente.IdEmpresa = T.IdEmpresa and fa_cliente.Idtipo_cliente = t.Idtipo_cliente
 			WHERE				F.IdEmpresa = @IdEmpresa AND F.vt_fecha <= @fechaCorte and F.Estado='A' 
 			and fa_cliente.Idtipo_cliente between @IdTipoClienteIni and @IdTipoClienteFin
@@ -79,7 +80,7 @@ FROM            fa_notaCreDeb INNER JOIN
                 fa_cliente ON fa_notaCreDeb.IdEmpresa = fa_cliente.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente.IdCliente INNER JOIN
                 tb_sucursal ON fa_notaCreDeb.IdEmpresa = tb_sucursal.IdEmpresa AND fa_notaCreDeb.IdSucursal = tb_sucursal.IdSucursal INNER JOIN
                 tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona 
-				inner join fa_cliente_contactos cc on cc.IdEmpresa = fa_cliente.IdEmpresa and cc.IdCliente= fa_cliente.IdCliente
+				inner join fa_cliente_contactos cc on cc.IdEmpresa = fa_cliente.IdEmpresa and cc.IdCliente= fa_cliente.IdCliente and cc.IdContacto = fa_notaCreDeb.IdContacto
 				INNER JOIN
 				fa_cliente_tipo AS T on fa_cliente.IdEmpresa = T.IdEmpresa and fa_cliente.Idtipo_cliente = t.Idtipo_cliente
 where           dbo.fa_notaCreDeb.IdEmpresa = @IdEmpresa and dbo.fa_notaCreDeb.CreDeb='D' and fa_notaCreDeb.no_fecha <= @fechaCorte

@@ -1,12 +1,13 @@
 ﻿CREATE VIEW [web].[vwct_RevisionContableFacturas]
 AS
 SELECT dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa, 0) AS ct_IdEmpresa, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte, 0) 
-                  AS ct_IdTipoCbte, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, 0) AS ct_IdCbteCble, tb_persona.pe_nombreCompleto Nombres, 
+                  AS ct_IdTipoCbte, ISNULL(dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, 0) AS ct_IdCbteCble, dbo.tb_persona.pe_nombreCompleto AS Nombres, 
                   dbo.fa_factura.vt_tipoDoc + '-' + dbo.fa_factura.vt_serie1 + '-' + dbo.fa_factura.vt_serie2 + '-' + dbo.fa_factura.vt_NumFactura AS Referencia, dbo.fa_factura.vt_fecha, dbo.fa_factura_resumen.Total AS TotalModulo, 
                   ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS TotalContabilidad, dbo.fa_factura_resumen.Total - ISNULL(ROUND(SUM(dbo.ct_cbtecble_det.dc_Valor), 2), 0) AS Diferencia
 FROM     dbo.fa_factura INNER JOIN
                   dbo.fa_cliente ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
-                  dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente INNER JOIN
+                  dbo.fa_cliente_contactos ON dbo.fa_factura.IdEmpresa = dbo.fa_cliente_contactos.IdEmpresa AND dbo.fa_factura.IdCliente = dbo.fa_cliente_contactos.IdCliente AND 
+                  dbo.fa_factura.IdContacto = dbo.fa_cliente_contactos.IdContacto INNER JOIN
                   dbo.fa_factura_resumen ON dbo.fa_factura.IdEmpresa = dbo.fa_factura_resumen.IdEmpresa AND dbo.fa_factura.IdSucursal = dbo.fa_factura_resumen.IdSucursal AND dbo.fa_factura.IdBodega = dbo.fa_factura_resumen.IdBodega AND 
                   dbo.fa_factura.IdCbteVta = dbo.fa_factura_resumen.IdCbteVta INNER JOIN
                   dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
@@ -16,23 +17,37 @@ FROM     dbo.fa_factura INNER JOIN
                   dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble = dbo.ct_cbtecble_det.IdCbteCble AND dbo.fa_cliente.IdCtaCble_cxc_Credito = ISNULL(dbo.ct_cbtecble_det.IdCtaCble, dbo.fa_cliente.IdCtaCble_cxc_Credito)
 WHERE  (dbo.fa_factura.Estado = 'A')
 GROUP BY dbo.fa_factura_x_ct_cbtecble.ct_IdEmpresa, dbo.fa_factura_x_ct_cbtecble.ct_IdTipoCbte, dbo.fa_factura_x_ct_cbtecble.ct_IdCbteCble, dbo.fa_factura_resumen.Total, dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, 
-                  dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, tb_persona.pe_nombreCompleto, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.vt_fecha
+                  dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, dbo.tb_persona.pe_nombreCompleto, dbo.fa_factura.vt_serie1, dbo.fa_factura.vt_serie2, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.vt_tipoDoc, dbo.fa_factura.vt_fecha
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwct_RevisionContableFacturas';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'umnWidths = 12
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ht = 528
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 12
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -40,6 +55,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'umnWidths 
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwct_RevisionContableFacturas';
+
+
 
 
 GO
@@ -118,11 +135,11 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 0
                Left = 490
-               Bottom = 130
+               Bottom = 299
                Right = 719
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 8
          End
          Begin Table = "fa_cliente"
             Begin Extent = 
@@ -136,10 +153,30 @@ Begin DesignProperties =
          End
          Begin Table = "fa_cliente_contactos"
             Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 224
+               Top = 91
+               Left = 959
+               Bottom = 221
+               Right = 1145
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "fa_factura_resumen"
+            Begin Extent = 
+               Top = 0
+               Left = 873
+               Bottom = 130
+               Right = 1108
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 406
+               Left = 48
+               Bottom = 569
+               Right = 338
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -159,29 +196,7 @@ Begin DesignProperties =
                Top = 275
                Left = 315
                Bottom = 405
-               Right = 528
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "fa_factura_resumen"
-            Begin Extent = 
-               Top = 0
-               Left = 873
-               Bottom = 130
-               Right = 1108
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-   End
-   Begin CriteriaPane = 
-      Begin Col', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwct_RevisionContableFacturas';
+               Rig', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwct_RevisionContableFacturas';
+
+
 
