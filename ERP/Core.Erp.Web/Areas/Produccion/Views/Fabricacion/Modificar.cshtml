@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Produccion.pro_Fabricacion_Info
 @{
-    ViewBag.Title = "Modificar fabricación";
+    ViewBag.Title = "Modificar elaboración de productos";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -256,6 +256,7 @@
                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               settings.Properties.AllowMouseWheel = false;
                            }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                     </div>

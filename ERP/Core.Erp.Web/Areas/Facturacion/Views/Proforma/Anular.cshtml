@@ -68,10 +68,11 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="DatosCliente">Información adicional</label>
-                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
+                    <label for="IdPuntoVta">Contactos</label>
+                    @Html.DropDownListFor(q => q.IdContacto, new SelectList(ViewBag.lst_cliente_contactos, "IdContacto", "Nombres_combo"), new { @class = "form-control", @id = "IdContacto" })
+                    @Html.ValidationMessageFor(q => q.IdContacto, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div> 
         </div>
 
         <div class="col-md-6">
@@ -111,7 +112,16 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(q => q.pf_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha" })
+                        @Html.DevExpress().DateEditFor(q => q.pf_fecha, settings =>
+                   {
+                       settings.Name = "pf_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.pf_fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -130,7 +140,16 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(q => q.pf_fecha_vcto, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pf_fecha_vcto" })
+                        @Html.DevExpress().DateEditFor(q => q.pf_fecha_vcto, settings =>
+                   {
+                       settings.Name = "pf_fecha_vcto";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
+                   }).GetHtml()
                         @Html.ValidationMessageFor(q => q.pf_fecha_vcto, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -182,7 +201,6 @@
 }
 <script>
     $(function () {
-        cargar_info_adicional();
         //Date picker
         $('#pf_fecha').datepicker({
             autoclose: true
@@ -266,33 +284,6 @@
         {
             var win = window.open(location + "/Facturacion/Cliente/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
             win.focus();
-        }
-    }
-
-    function cargar_info_adicional() {
-        var codigo = IdCliente.GetValue();
-
-        if (codigo > 0) 
-        {
-            var datos = {
-                IdCliente: codigo
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("cargar_info_adicional", "Proforma",new { Area = "Facturacion"})',
-                async: false,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#DatosCliente").val(data);
-                },
-                error: function (error) {
-                }
-            });
-        }
-        else{
-            $("#DatosCliente").val("");
         }
     }
 </script>

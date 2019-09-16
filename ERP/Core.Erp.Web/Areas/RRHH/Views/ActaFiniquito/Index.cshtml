@@ -1,7 +1,7 @@
 ﻿
 @model Core.Erp.Info.Helps.cl_filtros_Info
 @{
-    ViewBag.Title = "Actas generadas";
+    ViewBag.Title = "Consulta de actas de finiquito";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

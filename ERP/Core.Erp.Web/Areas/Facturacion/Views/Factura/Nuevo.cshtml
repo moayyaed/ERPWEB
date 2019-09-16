@@ -845,6 +845,7 @@ function cargar_lista_contactos() {
                                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                        settings.Properties.AllowMouseWheel = false;
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.AllowMouseWheel = false;
                                        settings.Properties.ClientSideEvents.DateChanged = "function(s,e){cargar_fecha_vencimiento();}";
                                    }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.vt_fecha, "", new { @class = "text-danger" })
@@ -873,6 +874,7 @@ function cargar_lista_contactos() {
                                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.AllowMouseWheel = false;
                                    }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.vt_fech_venc, "", new { @class = "text-danger" })
                                 </div>
@@ -897,6 +899,7 @@ function cargar_lista_contactos() {
                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                      settings.Properties.AllowMouseWheel = false;
                                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CargarCuotas();}";
                                   }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.fecha_primera_cuota, "", new { @class = "text-danger" })

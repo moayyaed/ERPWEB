@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_CambioProducto_Info
 @{
-    ViewBag.Title = ("Modificar cambio" + " con ID #" + @Model.IdCambio);
+    ViewBag.Title = ("Modificar cambio de producto" + " con ID #" + @Model.IdCambio);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -187,6 +187,7 @@
                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.AllowMouseWheel = false;
                                            }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.FechaIni, "", new { @class = "text-danger" })
                                     </div>
@@ -207,6 +208,7 @@
                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.AllowMouseWheel = false;
                                            }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
                                     </div>
@@ -298,6 +300,7 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
                    }).GetHtml()
                         @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                     </div>

@@ -133,7 +133,17 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    @Html.TextBoxFor(q => q.vt_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "vt_fecha" })
+                                    @Html.DevExpress().DateEditFor(q => q.vt_fecha, settings =>
+                                  {
+                                      settings.Name = "vt_fecha";
+                                      settings.Properties.UseMaskBehavior = true;
+                                      settings.Properties.EditFormat = EditFormat.Date;
+                                      settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                      settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                      settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                      settings.Properties.AllowMouseWheel = false;
+                                      settings.Properties.ClientSideEvents.DateChanged = "function(s,e){cargar_fecha_vencimiento();}";
+                                  }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.vt_fecha, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -152,7 +162,16 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    @Html.TextBoxFor(q => q.vt_fech_venc, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "vt_fech_venc" })
+                                    @Html.DevExpress().DateEditFor(q => q.vt_fech_venc, settings =>
+                                  {
+                                      settings.Name = "vt_fech_venc";
+                                      settings.Properties.UseMaskBehavior = true;
+                                      settings.Properties.EditFormat = EditFormat.Date;
+                                      settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                      settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                      settings.Properties.AllowMouseWheel = false;
+                                      settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                  }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.vt_fech_venc, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -167,7 +186,17 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        @Html.TextBoxFor(q => q.fecha_primera_cuota, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "fecha_primera_cuota" })
+                                        @Html.DevExpress().DateEditFor(q => q.fecha_primera_cuota, settings =>
+                                          {
+                                              settings.Name = "fecha_primera_cuota";
+                                              settings.Properties.UseMaskBehavior = true;
+                                              settings.Properties.EditFormat = EditFormat.Date;
+                                              settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                              settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                              settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                              settings.Properties.AllowMouseWheel = false;
+                                              settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CargarCuotas();}";
+                                          }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.fecha_primera_cuota, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -321,9 +350,7 @@
         $("#vt_plazo").change(function () {
             cargar_fecha_vencimiento();
         });
-        $("#vt_fecha").change(function () {
-            cargar_fecha_vencimiento();
-        });
+
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
             GetUltimoDocumento();
@@ -335,9 +362,7 @@
         $("#IdPuntoVta").change(function () {
             GetUltimoDocumento();
         });
-        $("#fecha_primera_cuota").change(function () {
-            CargarCuotas();
-        });
+
         $("#valor_abono").change(function () {
             CargarCuotas();
         });
@@ -348,9 +373,8 @@
 
     function cargar_fecha_vencimiento() {
         var vida = Number($("#vt_plazo").val());
-        var from = $("#vt_fecha").val().split("/")
-        var f = new Date(from[2], from[1] - 1, from[0])
-        $('#vt_fech_venc').datepicker("update", moment(f, "DD-MM-YYYY").add(vida, 'days').format("DD/MM/YYYY"));
+        var date = new Date(moment(vt_fecha.GetValue(), "DD/MM/YYYY").add(vida, 'days'));
+        vt_fech_venc.SetValue(date);
     }
 
         function get_info_termino_pago() {

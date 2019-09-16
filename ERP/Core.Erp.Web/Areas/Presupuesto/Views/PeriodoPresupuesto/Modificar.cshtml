@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Presupuesto.pre_Periodo_Info
 @{
-    ViewBag.Title = "Modificar periodo";
+    ViewBag.Title = "Modificar periodo de presupuesto";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -40,6 +40,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                         settings.Properties.ClientSideEvents.DateChanged = "function(s,e){MostrarDescripcion();}";
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
@@ -56,6 +57,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                         settings.Properties.ClientSideEvents.DateChanged = "function(s,e){MostrarDescripcion();}";
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
