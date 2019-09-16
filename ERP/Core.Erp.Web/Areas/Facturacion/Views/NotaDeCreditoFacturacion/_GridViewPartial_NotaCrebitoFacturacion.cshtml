@@ -156,6 +156,11 @@
             });
             column.Width = Unit.Percentage(5);
         });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_subtotal").DisplayFormat = "{0:n2}"; 
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_iva").DisplayFormat = "{0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_total").DisplayFormat = "{0:n2}";
+        settings.Settings.ShowFooter = true;
     });
 }
 @grid.Bind(Model).GetHtml()

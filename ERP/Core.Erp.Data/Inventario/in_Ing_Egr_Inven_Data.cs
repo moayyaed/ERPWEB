@@ -606,7 +606,9 @@ namespace Core.Erp.Data.Inventario
                                  q.IdMovi_inven_tipo_inv,
                                  q.IdBodega_inv,
                                  q.IdNumMovi_inv,
-                                 q.IdCtaCble_CostoProducto
+                                 q.IdCtaCble_CostoProducto,
+                                 q.pr_descripcion,
+                                 q.bo_Descripcion
                 }).Select(g=> new
                              {
                                  g.Key.IdCtaCble_Motivo,
@@ -623,6 +625,8 @@ namespace Core.Erp.Data.Inventario
                                  g.Key.IdBodega_inv,
                                  g.Key.IdNumMovi_inv,
                                  g.Key.IdCtaCble_CostoProducto,
+                                 g.Key.pr_descripcion,
+                                 g.Key.bo_Descripcion,
                                  Valor = g.Sum(q=>q.Valor)
                              }).ToList();
 
@@ -640,7 +644,8 @@ namespace Core.Erp.Data.Inventario
                         : (!string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCble_MotivoDet 
                         : (string.IsNullOrEmpty(item.IdCtaCble_CostoProducto) ? item.IdCtaCtble_Costo : item.IdCtaCble_CostoProducto))),
                         IdCentroCosto = item.IdCentroCosto,
-                        dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero))
+                        dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)),
+                        dc_Observacion = item.bo_Descripcion +" "+ item.pr_descripcion
                     });
                     //Haber
                     lst_ct.Add(new ct_cbtecble_det_Info
@@ -651,7 +656,8 @@ namespace Core.Erp.Data.Inventario
                         : (!string.IsNullOrEmpty(item.IdCtaCble_MotivoDet) ? item.IdCtaCble_MotivoDet 
                         : (string.IsNullOrEmpty(item.IdCtaCble_CostoProducto) ? item.IdCtaCtble_Costo : item.IdCtaCble_CostoProducto))),
                         IdCentroCosto = item.IdCentroCosto,
-                        dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)) * -1
+                        dc_Valor = Math.Abs(Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero)) * -1,
+                        dc_Observacion = item.bo_Descripcion + " " + item.pr_descripcion
                     });
                 }
 
