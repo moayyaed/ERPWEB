@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPBAN_004] 1,1,1
+﻿--exec [web].[SPBAN_004] 1,1,1
 CREATE proc [web].[SPBAN_004]
 (
  @IdEmpresa int
@@ -27,6 +26,7 @@ declare @o_nomBanco varchar(200)
 declare @o_ba_Num_Cuenta varchar(200)
 declare @TotalConciliadoContable float
 declare @TotalConciliadoNoContable float
+declare @SaldoContableActual float
 
 delete web.ba_SPBAN_004
 
@@ -69,6 +69,12 @@ select @i_FechaIni=A.pe_FechaIni ,@i_FechaFin=A.pe_FechaFin
 from ct_periodo A
 where A.IdEmpresa=@IdEmpresa
 and A.IdPeriodo=@IdPeriodo
+END
+
+BEGIN --OBTENGO SALDO CONTABLE ACTUAL
+	select @SaldoContableActual = round( sum(d.dc_Valor),2) from ct_cbtecble as c inner join ct_cbtecble_det as d
+	on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble
+	where c.IdEmpresa = @IdEmpresa and c.cb_Fecha <= @i_FechaFin and d.IdCtaCble  = @IdCtaCble
 END
 
 BEGIN --CALCULO SALDO INICIAL
@@ -407,7 +413,8 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
                          dbo.ba_Cbte_Ban.cb_giradoA END AS GiradoA,
 						 
 						  dbo.ba_TipoFlujo.IdTipoFlujo, dbo.ba_TipoFlujo.Descricion AS nom_tipo_flujo, ISNULL(@TotalConciliado, 0) 
-                         AS Total_Conciliado, @i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior
+                         AS Total_Conciliado, @i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior,
+						 isnull(@SaldoContableActual,0) SaldoContableActual
 FROM            ba_TipoFlujo RIGHT OUTER JOIN
                          web.ba_SPBAN_004 INNER JOIN
                          ba_Conciliacion AS A INNER JOIN
@@ -421,7 +428,7 @@ FROM            ba_TipoFlujo RIGHT OUTER JOIN
 where web.ba_SPBAN_004.IdEmpresa = @IdEmpresa AND isnull(ct_cbtecble_det.dc_para_conciliar,0) = 1
 UNION ALL
 SELECT d.IdEmpresa,d.IdConciliacion,c.IdBanco,c.IdPeriodo, b.ba_descripcion, b.ba_Num_Cuenta, b.IdCtaCble, d.Fecha, t.CodTipoCbteBan, ti.tc_TipoCbte, d.Secuencia, d.IdTipocbte, d.Secuencia, case WHEN d.tipo_IngEgr = '+' THEN d.Valor ELSE d.Valor *-1 END Valor,d.Observacion, d.Referencia,@SaldoInicial, @SaldoFin,
-'REGISTROS ADICIONALES ', d.Referencia, e.em_ruc, e.em_nombre, c.co_SaldoBanco_EstCta, c.IdEstado_Concil_Cat, d.Observacion,null,null,@TotalConciliado,@i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, c.co_SaldoBanco_anterior
+'REGISTROS ADICIONALES ', d.Referencia, e.em_ruc, e.em_nombre, c.co_SaldoBanco_EstCta, c.IdEstado_Concil_Cat, d.Observacion,null,null,@TotalConciliado,@i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, c.co_SaldoBanco_anterior, isnull(@SaldoContableActual,0) SaldoContableActual
 FROM ba_Conciliacion as c inner join 
 ba_Conciliacion_det as d on c.IdEmpresa = d.IdEmpresa and c.IdConciliacion = d.IdConciliacion inner join
 ba_Banco_Cuenta as b on b.IdEmpresa = c.IdEmpresa and b.IdBanco = c.IdBanco inner join 
@@ -441,7 +448,7 @@ begin
             ,ISNULL(@SaldoInicial,0) SaldoInicial    ,ISNULL(@SaldoFin,0) SaldoFinal            ,''Titulo_grupo            ,'NO HAY REGISTRO' referencia                ,e.em_ruc ruc_empresa    ,e.em_nombre nom_empresa
             ,ISNULL(@SaldoContable,0) SaldoBanco_EstCta        ,@EstadoConciliado Estado_Conciliacion ,'' GiradoA
             ,null IdTipoFlujo            ,null AS nom_tipo_flujo            , ISNULL(@TotalConciliado,0) Total_Conciliado
-            ,cast(@i_FechaIni as date) as FechaIni,cast(@i_FechaFin as date )as FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior
+            ,cast(@i_FechaIni as date) as FechaIni,cast(@i_FechaFin as date )as FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior, isnull(@SaldoContableActual,0) SaldoContableActual
             from ba_Conciliacion A inner join tb_empresa as e on a.IdEmpresa = e.IdEmpresa
             where A.IdEmpresa=@IdEmpresa  and a.IdConciliacion = @IdConciliacion
 end

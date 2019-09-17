@@ -174,6 +174,7 @@
             this.xrTableCell64 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell65 = new DevExpress.XtraReports.UI.XRTableCell();
             this.p_QuitarGrupo = new DevExpress.XtraReports.Parameters.Parameter();
+            this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -574,7 +575,7 @@
             | DevExpress.XtraPrinting.BorderSide.Right) 
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTable2.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
-            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 125F);
+            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.xrTable2.Name = "xrTable2";
             this.xrTable2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow2});
@@ -1350,11 +1351,10 @@
             // ReportHeader
             // 
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.xrTable2,
             this.xrTable7,
             this.xrTable1,
             this.lbl_imagen});
-            this.ReportHeader.HeightF = 145F;
+            this.ReportHeader.HeightF = 125F;
             this.ReportHeader.Name = "ReportHeader";
             // 
             // GroupHeader2
@@ -1576,6 +1576,13 @@
             this.p_QuitarGrupo.Name = "p_QuitarGrupo";
             this.p_QuitarGrupo.Visible = false;
             // 
+            // PageHeader
+            // 
+            this.PageHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrTable2});
+            this.PageHeader.HeightF = 20F;
+            this.PageHeader.Name = "PageHeader";
+            // 
             // CXC_010_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1588,7 +1595,8 @@
             this.GroupFooter1,
             this.ReportHeader,
             this.GroupHeader2,
-            this.GroupFooter2});
+            this.GroupFooter2,
+            this.PageHeader});
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
@@ -1746,5 +1754,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell66;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell67;
         public DevExpress.XtraReports.Parameters.Parameter p_QuitarGrupo;
+        private DevExpress.XtraReports.UI.PageHeaderBand PageHeader;
     }
 }
