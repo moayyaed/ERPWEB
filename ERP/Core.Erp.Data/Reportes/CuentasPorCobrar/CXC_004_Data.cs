@@ -45,7 +45,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                 Haber=q.Haber,
                                 Dias=q.Dias,
                                 vt_tipoDoc = q.vt_tipoDoc,
-                                 TipoDoc = q.TipoDoc
+                                TipoDoc = q.TipoDoc,
+                                Referencia = q.Referencia,
+                                FechaReferencia = q.FechaReferencia
 
                              }).ToList();
                 }

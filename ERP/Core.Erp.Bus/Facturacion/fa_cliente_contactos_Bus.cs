@@ -61,11 +61,11 @@ namespace Core.Erp.Bus.Facturacion
             }
         }
 
-        public bool anularDB(fa_cliente_contactos_Info info)
+        public bool eliminarDB(fa_cliente_contactos_Info info)
         {
             try
             {
-                return odata.anularDB(info);
+                return odata.eliminarDB(info);
             }
             catch (Exception)
             {

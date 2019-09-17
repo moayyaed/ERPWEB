@@ -32,7 +32,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdCliente">Cliente</label>
                             @Html.Partial("_CmbCliente_CXC", Model.IdCliente)
@@ -91,7 +91,17 @@
                             @Html.ValidationMessageFor(q => q.IdCobro_tipo, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="bo_EsBodega"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados, settings =>
+                            {
+                                settings.Name = "mostrarAnulados";
+                                settings.Text = "Mostrar sin retención";
+                            }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.mostrarAnulados, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->

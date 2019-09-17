@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Data.Facturacion.Base;
+using Core.Erp.Data.General;
 using Core.Erp.Info.Facturacion;
+using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -323,5 +325,36 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public List<fa_proforma_Info> get_list_x_contacto(int IdEmpresa, decimal IdCliente, decimal IdContacto)
+        {
+            try
+            {
+                List<fa_proforma_Info> Lista;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    Lista = (from q in Context.fa_proforma
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdCliente == IdCliente
+                             && q.IdContacto == IdContacto
+                             select new fa_proforma_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdProforma = q.IdProforma,
+                                 pf_codigo = q.pf_codigo,
+                                 pf_observacion = q.pf_observacion,
+                                 pf_fecha = q.pf_fecha,
+                                 estado = q.estado
+                             }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_fac_sin_guia", IdUsuario = "consulta" });
+                return new List<fa_proforma_Info>();
+            }
+        }
     }
 }
