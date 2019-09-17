@@ -863,6 +863,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                              && q.co_serie == info.co_serie
                               && q.co_factura == info.co_factura
                               && q.IdProveedor == info.IdProveedor
+                              && q.IdOrden_giro_Tipo == info.IdOrden_giro_Tipo
                               && q.Estado == "A"
                               select q;
                     if (lst.Count() > 0)
