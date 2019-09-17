@@ -63,12 +63,13 @@
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.Width = Unit.Percentage(7);
         });
+
         settings.Columns.Add(column =>
         {
-            column.FieldName = "vt_fech_venc";
-            column.Caption = "Fecha Vcto.";
-            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(5);
+            column.FieldName = "Saldo";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
         settings.Columns.Add(column =>
         {

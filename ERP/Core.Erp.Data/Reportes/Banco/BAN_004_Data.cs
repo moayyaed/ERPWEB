@@ -50,7 +50,8 @@ namespace Core.Erp.Data.Reportes.Banco
                                  FechaFin = q.FechaFin,
                                  FechaIni = q.FechaIni,
                                  co_SaldoBanco_anterior = q.co_SaldoBanco_anterior,
-                                 TotalConciliadoNoContable = q.TotalConciliadoNoContable
+                                 TotalConciliadoNoContable = q.TotalConciliadoNoContable,
+                                 SaldoContableActual = q.SaldoContableActual
                              }).ToList();
                 }
                 return Lista;
