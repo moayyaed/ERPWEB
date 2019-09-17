@@ -48,7 +48,8 @@ namespace Core.Erp.Data.Facturacion
                                  CodNota = q.CodNota,
                                  EstadoBool = q.Estado == "A" ? true : false,
                                  Fecha_Autorizacion = q.Fecha_Autorizacion,
-                                 NumAutorizacion = q.NumAutorizacion
+                                 NumAutorizacion = q.NumAutorizacion,
+                                 NaturalezaNota = q.NaturalezaNota
                              }).ToList();
                 }
 

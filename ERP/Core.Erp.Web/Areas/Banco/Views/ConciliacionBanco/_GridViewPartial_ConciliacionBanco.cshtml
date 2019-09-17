@@ -69,9 +69,16 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstado_Concil_Cat")) != "CONCILIADO")
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion = DataBinder.Eval(tc.DataItem, "IdConciliacion")}) + "&nbsp;" +
+                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion = DataBinder.Eval(tc.DataItem, "IdConciliacion")}) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion = DataBinder.Eval(tc.DataItem, "IdConciliacion")},
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
+
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstado_Concil_Cat")) == "CONCILIADO")
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Abrir", "Abrir", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion = DataBinder.Eval(tc.DataItem, "IdConciliacion") })
                     );
                 }
             });

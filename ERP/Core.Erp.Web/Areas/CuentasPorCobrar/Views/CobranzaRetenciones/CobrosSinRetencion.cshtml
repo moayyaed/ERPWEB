@@ -104,6 +104,9 @@
         <div class="box-body">
             @Html.Action("GridViewPartial_cobranza_sinret", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
         </div>
+        <div class="box-footer">
+            <a class="btn btn-default" href="@Url.Action("Index", "CobranzaRetenciones", new { Area = "CuentasPorCobrar" }, null)">Volver</a>
+        </div>
         <!-- /.box-body -->
         <div class="box-footer">
             [@Core.Erp.Web.Helps.SessionFixed.IdEmpresa] @Core.Erp.Web.Helps.SessionFixed.NomEmpresa

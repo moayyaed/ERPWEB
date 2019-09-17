@@ -235,7 +235,7 @@ namespace Core.Erp.Data.Facturacion
             {
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    Context.Database.ExecuteSqlCommand("delete Af_Depreciacion_Det where IdEmpresa = " + info.IdEmpresa + "and IdCliente = " + info.IdCliente + "and IdContacto = " + info.IdContacto);
+                    Context.Database.ExecuteSqlCommand("delete fa_cliente_contactos where IdEmpresa = " + info.IdEmpresa + "and IdCliente = " + info.IdCliente + "and IdContacto = " + info.IdContacto);
 
                     Context.SaveChanges();
                 }

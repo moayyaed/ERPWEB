@@ -241,23 +241,6 @@ namespace Core.Erp.Data.Reportes.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPACTF_005_Result>("SPACTF_005", idEmpresaParameter, idActivoFijoTipo_iniParameter, idActivoFijoTipo_finParameter, idCategoriaAF_iniParameter, idCategoriaAF_finParameter, fecha_corteParameter, estado_procesoParameter);
         }
     
-        public virtual ObjectResult<SPBAN_004_Result> SPBAN_004(Nullable<int> idEmpresa, Nullable<int> idBanco, Nullable<decimal> idConciliacion)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idBancoParameter = idBanco.HasValue ?
-                new ObjectParameter("IdBanco", idBanco) :
-                new ObjectParameter("IdBanco", typeof(int));
-    
-            var idConciliacionParameter = idConciliacion.HasValue ?
-                new ObjectParameter("IdConciliacion", idConciliacion) :
-                new ObjectParameter("IdConciliacion", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_004_Result>("SPBAN_004", idEmpresaParameter, idBancoParameter, idConciliacionParameter);
-        }
-    
         public virtual ObjectResult<SPBAN_009_Result> SPBAN_009(Nullable<int> idEmpresa, Nullable<int> idBanco, Nullable<System.DateTime> fechaFin)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -1720,6 +1703,23 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("MostrarSaldo0", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXC_004_Result>("SPCXC_004", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idClienteIniParameter, idClienteFinParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter);
+        }
+    
+        public virtual ObjectResult<SPBAN_004_Result> SPBAN_004(Nullable<int> idEmpresa, Nullable<int> idBanco, Nullable<decimal> idConciliacion)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idBancoParameter = idBanco.HasValue ?
+                new ObjectParameter("IdBanco", idBanco) :
+                new ObjectParameter("IdBanco", typeof(int));
+    
+            var idConciliacionParameter = idConciliacion.HasValue ?
+                new ObjectParameter("IdConciliacion", idConciliacion) :
+                new ObjectParameter("IdConciliacion", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_004_Result>("SPBAN_004", idEmpresaParameter, idBancoParameter, idConciliacionParameter);
         }
     }
 }
