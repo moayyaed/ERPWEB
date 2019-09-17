@@ -1261,6 +1261,7 @@
           <Property Name="rub_AplicaIR" Type="bit" Nullable="false" />
           <Property Name="rub_ContPorEmpleado" Type="bit" Nullable="false" />
           <Property Name="rub_ContPorJornada" Type="bit" />
+          <Property Name="rub_ValorRecargoHoras" Type="float" />
         </EntityType>
         <EntityType Name="ro_rubro_tipo_x_jornada">
           <Key>
@@ -1568,7 +1569,7 @@
           <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_ActaFiniquito">
           <Key>
             <PropertyRef Name="NombreCompleto" />
@@ -1621,7 +1622,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_ActaFiniquito' no tiene defin
           <Property Name="EstadoContrato" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_archivos_bancos_generacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_archivos_bancos_generacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1657,7 +1658,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion' n
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_archivos_bancos_generacion_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_archivos_bancos_generacion_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1693,7 +1694,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion_x_
           <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_combo">
           <Key>
             <PropertyRef Name="pe_cedulaRuc" />
@@ -1725,7 +1726,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_combo' no tiene defi
           <Property Name="Valor_hora_control_salida" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_datos_generales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_datos_generales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_datos_generales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1830,7 +1831,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_datos_generales' no 
           <Property Name="IdSucursalContabilizacion" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_Novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1862,7 +1863,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_Novedad' no tiene de
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_novedad_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_novedad_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_novedad_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1887,7 +1888,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_novedad_det' no tien
           <Property Name="CantidadHoras" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Empleado_Novedades' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_Empleado_Novedades' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Empleado_Novedades">
           <Key>
             <PropertyRef Name="IdEmpleado" />
@@ -1929,7 +1930,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Empleado_Novedades' no tiene 
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_division_x_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_x_division_x_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_division_x_area">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1953,7 +1954,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_division_x_area' n
           <Property Name="CargaGasto" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1977,7 +1978,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_jornada' no tiene 
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_ro_rubro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_x_ro_rubro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_ro_rubro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2013,7 +2014,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_ro_rubro' no tiene
           <Property Name="es_indifinido" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2036,7 +2037,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado' n
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_rubro_acumulado_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2056,7 +2057,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado_de
           <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_titulos">
           <Key>
             <PropertyRef Name="CodCatalogo" />
@@ -2090,7 +2091,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_titulos' no tiene 
           <Property Name="estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoNovedadCargaMasiva">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2120,7 +2121,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva' n
           <Property Name="DescripcionProcesoNomina" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_EmpleadoNovedadCargaMasiva_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoNovedadCargaMasiva_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2146,7 +2147,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva_de
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleados_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_empleados_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleados_consulta">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2172,7 +2173,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleados_consulta' no tiene 
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Historico_Liquidacion_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_Historico_Liquidacion_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Historico_Liquidacion_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2209,7 +2210,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Historico_Liquidacion_Vacacio
           <Property Name="Fecha_Retorno" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_horario_planificacion_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2251,7 +2252,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_horario_planificacion_det' no
           <Property Name="IdCalendario" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_HorasProfesores' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_HorasProfesores">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2276,7 +2277,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores' no tiene def
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_HorasProfesores_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_HorasProfesores_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2318,7 +2319,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores_det' no tiene
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_marcaciones_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_marcaciones_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2350,11 +2351,11 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_empleado' no ti
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="cargo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cargo" Type="varchar(max)" Nullable="false" />
           <Property Name="ma_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_planificacion_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_marcaciones_x_planificacion_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_marcaciones_x_planificacion_horario">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2389,7 +2390,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_planificacion_h
           <Property Name="HoraFin" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_sin_percebir_sueldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_nomina_sin_percebir_sueldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_sin_percebir_sueldo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2413,7 +2414,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_sin_percebir_sueldo' n
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_aprobadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_nomina_x_horas_extras_aprobadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_x_horas_extras_aprobadas">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2439,7 +2440,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_aprobad
           <Property Name="IdSucursal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_nomina_x_horas_extras_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_x_horas_extras_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2497,7 +2498,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_det' no
           <Property Name="Sueldo_base" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_NominasPagosCheques' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_NominasPagosCheques">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2524,7 +2525,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques' no tiene
           <Property Name="pe_FechaFin" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_NominasPagosCheques_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_NominasPagosCheques_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2565,7 +2566,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques_det' no t
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2585,7 +2586,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_parametro_contable_x_Nomina_T
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_participacion_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_participacion_utilidad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2622,7 +2623,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad' no ti
           <Property Name="Estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_participacion_utilidad_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2655,7 +2656,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad_emplea
           <Property Name="IdNominaTipo_liq" Type="int" Nullable="false" />
           <Property Name="IdPeriodo" Type="int" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="1" />
-          <Property Name="ca_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ca_descripcion" Type="varchar(max)" Nullable="false" />
           <Property Name="pe_apellido" Type="varchar" MaxLength="100" />
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
@@ -2667,7 +2668,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad_emplea
           <Property Name="UtilidadCargaFamiliar" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Prestamo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2733,7 +2734,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Prestamo' no tiene definida n
           <Property Name="EstadoCancelacion" Type="varchar" MaxLength="9" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_rol' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2771,7 +2772,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol' no tiene definida ningun
           <Property Name="EstadoRol" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_rol_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2781,13 +2782,13 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle' no tiene definid
             <PropertyRef Name="IdPeriodo" />
             <PropertyRef Name="IdEmpleado" />
             <PropertyRef Name="IdRubro" />
-            <PropertyRef Name="Valor" />
             <PropertyRef Name="ru_tipo" />
             <PropertyRef Name="IdDepartamento" />
             <PropertyRef Name="ru_descripcion" />
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="rub_provision" />
             <PropertyRef Name="rub_ContPorEmpleado" />
+            <PropertyRef Name="Valor" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdRol" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -2814,7 +2815,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle' no tiene definid
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_rol_detalle_saldo_por_pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2855,7 +2856,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_rol_detalle_saldo_por_pagar' 
           <Property Name="IdCtaCble_x_pagar_empleado" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_rol_detalle_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol_detalle_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2879,7 +2880,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle_x_rubro_acumulado
           <Property Name="IdNominaTipo" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_rubro_tipo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rubro_tipo">
           <Key>
             <PropertyRef Name="ru_descripcion" />
@@ -2890,27 +2891,27 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo' no tiene definida
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_rubro_tipo_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rubro_tipo_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdRubro" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdRubroContabilizacion" />
             <PropertyRef Name="IdJornada" />
             <PropertyRef Name="ru_descripcion" />
             <PropertyRef Name="Descripcion" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdRubroContabilizacion" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdRubro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdRubroContabilizacion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdJornada" Type="int" Nullable="false" />
           <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
-          <Property Name="Secuencia" Type="int" Nullable="false" />
-          <Property Name="IdRubroContabilizacion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_SancionesPorMarcaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2937,7 +2938,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones' no t
           <Property Name="FechaNovedades" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_SancionesPorMarcaciones_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2975,7 +2976,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_det' 
           <Property Name="HoraSalio" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_x_novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwro_SancionesPorMarcaciones_x_novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones_x_novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3008,7 +3009,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_x_nov
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Solicitud_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwRo_Solicitud_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Solicitud_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3062,7 +3063,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Solicitud_Vacaciones' no tien
           <Property Name="Estado_liquidacion" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwrdep_IngrEgr_x_Empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.EntidadRegulatoria.vwrdep_IngrEgr_x_Empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwrdep_IngrEgr_x_Empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3114,7 +3115,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwrdep_IngrEgr_x_Em
           <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_ArchivosIess' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.EntidadRegulatoria.vwro_ArchivosIess' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_ArchivosIess">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3149,7 +3150,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_ArchivosIess' 
           <Property Name="Sueldo" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_rdep' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.EntidadRegulatoria.vwro_rdep' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rdep">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3172,7 +3173,7 @@ advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_rdep' no tiene
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_Personales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyeccion_Gastos_Personales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_Proyeccion_Gastos_Personales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -6001,11 +6002,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <DefiningQuery>SELECT 
     [vwro_rubro_tipo_x_jornada].[IdEmpresa] AS [IdEmpresa], 
     [vwro_rubro_tipo_x_jornada].[IdRubro] AS [IdRubro], 
+    [vwro_rubro_tipo_x_jornada].[Secuencia] AS [Secuencia], 
+    [vwro_rubro_tipo_x_jornada].[IdRubroContabilizacion] AS [IdRubroContabilizacion], 
     [vwro_rubro_tipo_x_jornada].[IdJornada] AS [IdJornada], 
     [vwro_rubro_tipo_x_jornada].[ru_descripcion] AS [ru_descripcion], 
-    [vwro_rubro_tipo_x_jornada].[Descripcion] AS [Descripcion], 
-    [vwro_rubro_tipo_x_jornada].[Secuencia] AS [Secuencia], 
-    [vwro_rubro_tipo_x_jornada].[IdRubroContabilizacion] AS [IdRubroContabilizacion]
+    [vwro_rubro_tipo_x_jornada].[Descripcion] AS [Descripcion]
     FROM [dbo].[vwro_rubro_tipo_x_jornada] AS [vwro_rubro_tipo_x_jornada]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_SancionesPorMarcaciones" EntityType="Self.vwro_SancionesPorMarcaciones" store:Type="Views" store:Schema="dbo">
@@ -6847,8 +6848,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_Parametros" Relationship="Model_rrhh.FK_ro_Parametros_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_Parametros" />
           <NavigationProperty Name="ro_contrato" Relationship="Model_rrhh.FK_ro_contrato_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_contrato" />
           <NavigationProperty Name="ro_contrato1" Relationship="Model_rrhh.FK_ro_contrato_ro_catalogo1" FromRole="ro_catalogo" ToRole="ro_contrato" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_prestamo" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo" FromRole="ro_catalogo" ToRole="ro_rubro_tipo" />
         </EntityType>
         <EntityType Name="ro_catalogoTipo">
           <Key>
@@ -6960,8 +6961,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="UsuarioModifica" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Fec_Inicio_Acumulacion" Type="DateTime" Precision="3" />
           <Property Name="Fec_Fin_Acumulacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_empleado_x_rubro_acumulado" ToRole="ro_rubro_tipo" />
         </EntityType>
         <EntityType Name="ro_empleado_x_titulos">
           <Key>
@@ -7610,7 +7611,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="IdNominaTipo_liq" Type="Int32" Nullable="false" />
           <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ca_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ca_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -8297,35 +8298,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           </AssociationSet>
           <EntitySet Name="vwro_empleado_x_division_x_area" EntityType="Model_rrhh.vwro_empleado_x_division_x_area" />
           <EntitySet Name="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar" EntityType="Model_rrhh.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar" />
-          <EntitySet Name="ro_rubro_tipo" EntityType="Model_rrhh.ro_rubro_tipo" />
-          <AssociationSet Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_Acta_Finiquito_Detalle" EntitySet="ro_Acta_Finiquito_Detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubro_tipo_ro_catalogo" Association="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo">
-            <End Role="ro_catalogo" EntitySet="ro_catalogo" />
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Config_Param_contable_ro_rubro_tipo" Association="Model_rrhh.FK_ro_Config_Param_contable_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_Config_Param_contable" EntitySet="ro_Config_Param_contable" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_empleado_x_ro_rubro" EntitySet="ro_empleado_x_ro_rubro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_empleado_x_rubro_acumulado" EntitySet="ro_empleado_x_rubro_acumulado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo" Association="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_EmpleadoNovedadCargaMasiva" EntitySet="ro_EmpleadoNovedadCargaMasiva" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_HorasProfesores_det_ro_rubro_tipo" Association="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_HorasProfesores_det" EntitySet="ro_HorasProfesores_det" />
-          </AssociationSet>
           <EntitySet Name="ro_rol" EntityType="Model_rrhh.ro_rol" />
           <EntitySet Name="vwro_rol" EntityType="Model_rrhh.vwro_rol" />
           <AssociationSet Name="FK_ro_rol_ro_Nomina_Tipo" Association="Model_rrhh.FK_ro_rol_ro_Nomina_Tipo">
@@ -8353,82 +8325,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Parameter Name="IdRol" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ro_rubros_calculados" EntityType="Model_rrhh.ro_rubros_calculados" />
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo1" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo10" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo11" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo11">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo12" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo12">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo13" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo13">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo14" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo14">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo15" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo15">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo16" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo16">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo17" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo17">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo18" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo18">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo19" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo19">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo20" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo20">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo21" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo21">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo6" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo8" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo9" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
-          </AssociationSet>
           <EntitySet Name="ro_empleado_novedad_det" EntityType="Model_rrhh.ro_empleado_novedad_det" />
           <EntitySet Name="vwro_empleado_novedad_det" EntityType="Model_rrhh.vwro_empleado_novedad_det" />
           <AssociationSet Name="FK_ro_empleado_novedad_det_ro_empleado_Novedad" Association="Model_rrhh.FK_ro_empleado_novedad_det_ro_empleado_Novedad">
             <End Role="ro_empleado_Novedad" EntitySet="ro_empleado_Novedad" />
-            <End Role="ro_empleado_novedad_det" EntitySet="ro_empleado_novedad_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_empleado_novedad_det_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_novedad_det_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_empleado_novedad_det" EntitySet="ro_empleado_novedad_det" />
           </AssociationSet>
           <EntitySet Name="vwRo_rol_detalle_saldo_por_pagar" EntityType="Model_rrhh.vwRo_rol_detalle_saldo_por_pagar" />
@@ -8534,10 +8434,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <AssociationSet Name="FK_ro_prestamo_detalle_ro_prestamo" Association="Model_rrhh.FK_ro_prestamo_detalle_ro_prestamo">
             <End Role="ro_prestamo" EntitySet="ro_prestamo" />
             <End Role="ro_prestamo_detalle" EntitySet="ro_prestamo_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_prestamo_ro_rubro_tipo" Association="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_prestamo" EntitySet="ro_prestamo" />
           </AssociationSet>
           <EntitySet Name="ro_empleado" EntityType="Model_rrhh.ro_empleado" />
           <AssociationSet Name="FK_ro_Acta_Finiquito_ro_empleado" Association="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado">
@@ -8671,14 +8567,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_jornada" EntitySet="ro_jornada" />
             <End Role="ro_rubro_tipo_x_jornada" EntitySet="ro_rubro_tipo_x_jornada" />
           </AssociationSet>
-          <AssociationSet Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubro_tipo_x_jornada" EntitySet="ro_rubro_tipo_x_jornada" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1" Association="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1">
-            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
-            <End Role="ro_rubro_tipo_x_jornada" EntitySet="ro_rubro_tipo_x_jornada" />
-          </AssociationSet>
           <EntitySet Name="ro_rol_detalle" EntityType="Model_rrhh.ro_rol_detalle" />
           <EntitySet Name="vwro_rol_detalle" EntityType="Model_rrhh.vwro_rol_detalle" />
           <AssociationSet Name="FK_ro_rol_detalle_ro_empleado" Association="Model_rrhh.FK_ro_rol_detalle_ro_empleado">
@@ -8689,11 +8577,124 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <End Role="ro_rol" EntitySet="ro_rol" />
             <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
           </AssociationSet>
+          <EntitySet Name="vwro_rubro_tipo_x_jornada" EntityType="Model_rrhh.vwro_rubro_tipo_x_jornada" />
+          <EntitySet Name="ro_rubro_tipo" EntityType="Model_rrhh.ro_rubro_tipo" />
+          <AssociationSet Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_Acta_Finiquito_Detalle" EntitySet="ro_Acta_Finiquito_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubro_tipo_ro_catalogo" Association="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo">
+            <End Role="ro_catalogo" EntitySet="ro_catalogo" />
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Config_Param_contable_ro_rubro_tipo" Association="Model_rrhh.FK_ro_Config_Param_contable_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_Config_Param_contable" EntitySet="ro_Config_Param_contable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_empleado_novedad_det_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_novedad_det_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_empleado_novedad_det" EntitySet="ro_empleado_novedad_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_empleado_x_ro_rubro" EntitySet="ro_empleado_x_ro_rubro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_empleado_x_rubro_acumulado" EntitySet="ro_empleado_x_rubro_acumulado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo" Association="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_EmpleadoNovedadCargaMasiva" EntitySet="ro_EmpleadoNovedadCargaMasiva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_HorasProfesores_det_ro_rubro_tipo" Association="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_HorasProfesores_det" EntitySet="ro_HorasProfesores_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_prestamo_ro_rubro_tipo" Association="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_prestamo" EntitySet="ro_prestamo" />
+          </AssociationSet>
           <AssociationSet Name="FK_ro_rol_detalle_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo">
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_rol_detalle" EntitySet="ro_rol_detalle" />
           </AssociationSet>
-          <EntitySet Name="vwro_rubro_tipo_x_jornada" EntityType="Model_rrhh.vwro_rubro_tipo_x_jornada" />
+          <AssociationSet Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubro_tipo_x_jornada" EntitySet="ro_rubro_tipo_x_jornada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1" Association="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubro_tipo_x_jornada" EntitySet="ro_rubro_tipo_x_jornada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo1" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo10" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo11" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo11">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo12" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo12">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo13" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo13">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo14" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo14">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo15" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo15">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo16" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo16">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo17" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo17">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo18" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo18">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo19" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo19">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo20" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo20">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo21" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo21">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo6" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo8" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo9" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -8801,8 +8802,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="FechaFin" Type="DateTime" Precision="0" />
           <Property Name="es_indifinido" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ro_Nomina_Tipoliqui" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_Nomina_Tipoliqui" FromRole="ro_empleado_x_ro_rubro" ToRole="ro_Nomina_Tipoliqui" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" FromRole="ro_empleado_x_ro_rubro" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_empleado" FromRole="ro_empleado_x_ro_rubro" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" FromRole="ro_empleado_x_ro_rubro" ToRole="ro_rubro_tipo" />
         </EntityType>
         <EntityType Name="vwro_empleado_x_ro_rubro">
           <Key>
@@ -9176,7 +9177,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="cargo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cargo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ma_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ro_contrato">
@@ -9306,8 +9307,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="ValorHora" Type="Double" Nullable="false" />
           <NavigationProperty Name="ro_HorasProfesores" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_HorasProfesores" FromRole="ro_HorasProfesores_det" ToRole="ro_HorasProfesores" />
           <NavigationProperty Name="ro_empleado_Novedad" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_empleado_Novedad" FromRole="ro_HorasProfesores_det" ToRole="ro_empleado_Novedad" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo" FromRole="ro_HorasProfesores_det" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_empleado" FromRole="ro_HorasProfesores_det" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo" FromRole="ro_HorasProfesores_det" ToRole="ro_rubro_tipo" />
         </EntityType>
         <EntityType Name="vwro_HorasProfesores">
           <Key>
@@ -10533,165 +10534,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="ro_rubro_tipo">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdRubro" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="rub_codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ru_codRolGen" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NombreCorto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ru_tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ru_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ru_orden" Type="Int32" Nullable="false" />
-          <Property Name="rub_concep" Type="Boolean" Nullable="false" />
-          <Property Name="rub_ctacon" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="rub_grupo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="rub_provision" Type="Boolean" Nullable="false" />
-          <Property Name="rub_nocontab" Type="Boolean" Nullable="false" />
-          <Property Name="rub_aplica_IESS" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="rub_acumula" Type="Boolean" Nullable="false" />
-          <Property Name="rub_acumula_descuento" Type="Boolean" Nullable="false" />
-          <Property Name="se_distribuye" Type="Boolean" Nullable="false" />
-          <Property Name="rub_GrupoResumen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="rub_AplicaIR" Type="Boolean" Nullable="false" />
-          <Property Name="rub_ContPorEmpleado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ro_Acta_Finiquito_Detalle" Relationship="Model_rrhh.FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_Acta_Finiquito_Detalle" />
-          <NavigationProperty Name="ro_catalogo" Relationship="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo" FromRole="ro_rubro_tipo" ToRole="ro_catalogo" />
-          <NavigationProperty Name="ro_Config_Param_contable" Relationship="Model_rrhh.FK_ro_Config_Param_contable_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_Config_Param_contable" />
-          <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_ro_rubro" />
-          <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_rubro_acumulado" />
-          <NavigationProperty Name="ro_EmpleadoNovedadCargaMasiva" Relationship="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_EmpleadoNovedadCargaMasiva" />
-          <NavigationProperty Name="ro_HorasProfesores_det" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_HorasProfesores_det" />
-          <NavigationProperty Name="ro_rubros_calculados" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados1" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados2" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados3" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo11" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados4" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo12" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados5" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo13" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados6" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo14" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados7" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo15" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados8" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo16" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados9" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo17" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados10" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo18" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados11" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo19" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados12" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo20" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados13" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo21" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_rubros_calculados16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-          <NavigationProperty Name="ro_empleado_novedad_det" Relationship="Model_rrhh.FK_ro_empleado_novedad_det_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_novedad_det" />
-          <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_prestamo" />
-          <Property Name="rub_ContPorJornada" Type="Boolean" />
-          <NavigationProperty Name="ro_rubro_tipo_x_jornada" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rubro_tipo_x_jornada" />
-          <NavigationProperty Name="ro_rubro_tipo_x_jornada1" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1" FromRole="ro_rubro_tipo" ToRole="ro_rubro_tipo_x_jornada" />
-          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rol_detalle" />
-        </EntityType>
-        <Association Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Acta_Finiquito_Detalle" Role="ro_Acta_Finiquito_Detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_Acta_Finiquito_Detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubro_tipo_ro_catalogo">
-          <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="0..1" />
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_catalogo">
-              <PropertyRef Name="CodCatalogo" />
-            </Principal>
-            <Dependent Role="ro_rubro_tipo">
-              <PropertyRef Name="rub_grupo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Config_Param_contable_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Config_Param_contable" Role="ro_Config_Param_contable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_Config_Param_contable">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_empleado_x_ro_rubro_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_empleado_x_ro_rubro" Role="ro_empleado_x_ro_rubro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_empleado_x_ro_rubro">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado" Role="ro_empleado_x_rubro_acumulado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_empleado_x_rubro_acumulado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_EmpleadoNovedadCargaMasiva" Role="ro_EmpleadoNovedadCargaMasiva" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_EmpleadoNovedadCargaMasiva">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_HorasProfesores_det_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_HorasProfesores_det" Role="ro_HorasProfesores_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_HorasProfesores_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ro_rol">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -10870,245 +10712,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_rubro_tipo14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_rubro_tipo15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_rubro_tipo16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-        </EntityType>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_horas_recargo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo1">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_horas_adicionales" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo10">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_prov_FR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo11">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_prov_DIV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo12">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_prov_DIII" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo13">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_prov_vac" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo14">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_fondo_reserva" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo15">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_aporte_patronal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo16">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_tot_pagar" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo17">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_sueldo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo18">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_iess_perso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo19">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_tot_egr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo20">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_tot_ing" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo21">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_dias_trabajados" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo6">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_horas_matutina" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo8">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_DIV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo9">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubros_calculados">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro_DIII" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+          </EntityType>
         <EntityType Name="ro_empleado_novedad_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -11161,20 +10765,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Dependent Role="ro_empleado_novedad_det">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdNovedad" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_empleado_novedad_det_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
-          <End Type="Model_rrhh.ro_empleado_novedad_det" Role="ro_empleado_novedad_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_empleado_novedad_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11741,8 +11331,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="GeneraOP" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ro_catalogo" Relationship="Model_rrhh.FK_ro_prestamo_ro_catalogo" FromRole="ro_prestamo" ToRole="ro_catalogo" />
           <NavigationProperty Name="ro_prestamo_detalle" Relationship="Model_rrhh.FK_ro_prestamo_detalle_ro_prestamo" FromRole="ro_prestamo" ToRole="ro_prestamo_detalle" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" FromRole="ro_prestamo" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_prestamo_ro_empleado" FromRole="ro_prestamo" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" FromRole="ro_prestamo" ToRole="ro_rubro_tipo" />
         </EntityType>
         <Association Name="FK_ro_prestamo_ro_catalogo">
           <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="0..1" />
@@ -11767,20 +11357,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Dependent Role="ro_prestamo_detalle">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdPrestamo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_prestamo_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_prestamo" Role="ro_prestamo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_prestamo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12461,7 +12037,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <NavigationProperty Name="ro_jornada" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_jornada" FromRole="ro_rubro_tipo_x_jornada" ToRole="ro_jornada" />
           <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo" FromRole="ro_rubro_tipo_x_jornada" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_rubro_tipo1" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1" FromRole="ro_rubro_tipo_x_jornada" ToRole="ro_rubro_tipo" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_ro_rubro_tipo_x_jornada_ro_jornada">
           <End Type="Model_rrhh.ro_jornada" Role="ro_jornada" Multiplicity="1" />
           <End Type="Model_rrhh.ro_rubro_tipo_x_jornada" Role="ro_rubro_tipo_x_jornada" Multiplicity="*" />
@@ -12473,34 +12049,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             <Dependent Role="ro_rubro_tipo_x_jornada">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdJornada" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubro_tipo_x_jornada" Role="ro_rubro_tipo_x_jornada" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubro_tipo_x_jornada">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rubro_tipo_x_jornada" Role="ro_rubro_tipo_x_jornada" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rubro_tipo_x_jornada">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubroContabilizacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12593,20 +12141,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_rol_detalle_ro_rubro_tipo">
-          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_rubro_tipo">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Principal>
-            <Dependent Role="ro_rol_detalle">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdRubro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="vwro_rubro_tipo_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12625,6 +12159,474 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
           <Property Name="IdRubroContabilizacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ro_rubro_tipo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRubro" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rub_codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ru_codRolGen" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreCorto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ru_tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ru_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ru_orden" Type="Int32" Nullable="false" />
+          <Property Name="rub_concep" Type="Boolean" Nullable="false" />
+          <Property Name="rub_ctacon" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="rub_grupo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rub_provision" Type="Boolean" Nullable="false" />
+          <Property Name="rub_nocontab" Type="Boolean" Nullable="false" />
+          <Property Name="rub_aplica_IESS" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="rub_acumula" Type="Boolean" Nullable="false" />
+          <Property Name="rub_acumula_descuento" Type="Boolean" Nullable="false" />
+          <Property Name="se_distribuye" Type="Boolean" Nullable="false" />
+          <Property Name="rub_GrupoResumen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rub_AplicaIR" Type="Boolean" Nullable="false" />
+          <Property Name="rub_ContPorEmpleado" Type="Boolean" Nullable="false" />
+          <Property Name="rub_ContPorJornada" Type="Boolean" />
+          <Property Name="rub_ValorRecargoHoras" Type="Double" />
+          <NavigationProperty Name="ro_Acta_Finiquito_Detalle" Relationship="Model_rrhh.FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_Acta_Finiquito_Detalle" />
+          <NavigationProperty Name="ro_catalogo" Relationship="Model_rrhh.FK_ro_rubro_tipo_ro_catalogo" FromRole="ro_rubro_tipo" ToRole="ro_catalogo" />
+          <NavigationProperty Name="ro_Config_Param_contable" Relationship="Model_rrhh.FK_ro_Config_Param_contable_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_Config_Param_contable" />
+          <NavigationProperty Name="ro_empleado_novedad_det" Relationship="Model_rrhh.FK_ro_empleado_novedad_det_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_novedad_det" />
+          <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_ro_rubro" />
+          <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_EmpleadoNovedadCargaMasiva" Relationship="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_EmpleadoNovedadCargaMasiva" />
+          <NavigationProperty Name="ro_HorasProfesores_det" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_HorasProfesores_det" />
+          <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_prestamo" />
+          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rol_detalle" />
+          <NavigationProperty Name="ro_rubro_tipo_x_jornada" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rubro_tipo_x_jornada" />
+          <NavigationProperty Name="ro_rubro_tipo_x_jornada1" Relationship="Model_rrhh.FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1" FromRole="ro_rubro_tipo" ToRole="ro_rubro_tipo_x_jornada" />
+          <NavigationProperty Name="ro_rubros_calculados" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados1" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados2" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados3" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo11" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados4" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo12" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados5" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo13" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados6" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo14" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados7" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo15" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados8" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo16" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados9" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo17" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados10" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo18" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados11" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo19" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados12" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo20" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados13" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo21" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+          <NavigationProperty Name="ro_rubros_calculados16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
+        </EntityType>
+        <Association Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Acta_Finiquito_Detalle" Role="ro_Acta_Finiquito_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_Acta_Finiquito_Detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubro_tipo_ro_catalogo">
+          <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="0..1" />
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_catalogo">
+              <PropertyRef Name="CodCatalogo" />
+            </Principal>
+            <Dependent Role="ro_rubro_tipo">
+              <PropertyRef Name="rub_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Config_Param_contable_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Config_Param_contable" Role="ro_Config_Param_contable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_Config_Param_contable">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_empleado_novedad_det_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
+          <End Type="Model_rrhh.ro_empleado_novedad_det" Role="ro_empleado_novedad_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_empleado_novedad_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_empleado_x_ro_rubro_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_empleado_x_ro_rubro" Role="ro_empleado_x_ro_rubro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_empleado_x_ro_rubro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_empleado_x_rubro_acumulado" Role="ro_empleado_x_rubro_acumulado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_empleado_x_rubro_acumulado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_EmpleadoNovedadCargaMasiva_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_EmpleadoNovedadCargaMasiva" Role="ro_EmpleadoNovedadCargaMasiva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_EmpleadoNovedadCargaMasiva">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_HorasProfesores_det_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_HorasProfesores_det" Role="ro_HorasProfesores_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_HorasProfesores_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_prestamo_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_prestamo" Role="ro_prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_prestamo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rol_detalle_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rol_detalle" Role="ro_rol_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rol_detalle">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubro_tipo_x_jornada" Role="ro_rubro_tipo_x_jornada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubro_tipo_x_jornada">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubro_tipo_x_jornada_ro_rubro_tipo1">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubro_tipo_x_jornada" Role="ro_rubro_tipo_x_jornada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubro_tipo_x_jornada">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubroContabilizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_horas_recargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo1">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_horas_adicionales" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo10">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_prov_FR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo11">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_prov_DIV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo12">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_prov_DIII" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo13">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_prov_vac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo14">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_fondo_reserva" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo15">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_aporte_patronal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo16">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_tot_pagar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo17">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_sueldo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo18">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_iess_perso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo19">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_tot_egr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo20">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_tot_ing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo21">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_dias_trabajados" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo6">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="0..1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_horas_matutina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo8">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_DIV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_rubros_calculados_ro_rubro_tipo9">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_rubros_calculados" Role="ro_rubros_calculados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_rubros_calculados">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro_DIII" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14515,40 +14517,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ro_rubro_tipo">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_rubro_tipo">
-              <MappingFragment StoreEntitySet="ro_rubro_tipo">
-                <ScalarProperty Name="rub_ContPorJornada" ColumnName="rub_ContPorJornada" />
-                <ScalarProperty Name="rub_ContPorEmpleado" ColumnName="rub_ContPorEmpleado" />
-                <ScalarProperty Name="rub_AplicaIR" ColumnName="rub_AplicaIR" />
-                <ScalarProperty Name="rub_GrupoResumen" ColumnName="rub_GrupoResumen" />
-                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
-                <ScalarProperty Name="rub_acumula_descuento" ColumnName="rub_acumula_descuento" />
-                <ScalarProperty Name="rub_acumula" ColumnName="rub_acumula" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="rub_aplica_IESS" ColumnName="rub_aplica_IESS" />
-                <ScalarProperty Name="rub_nocontab" ColumnName="rub_nocontab" />
-                <ScalarProperty Name="rub_provision" ColumnName="rub_provision" />
-                <ScalarProperty Name="rub_grupo" ColumnName="rub_grupo" />
-                <ScalarProperty Name="rub_ctacon" ColumnName="rub_ctacon" />
-                <ScalarProperty Name="rub_concep" ColumnName="rub_concep" />
-                <ScalarProperty Name="ru_orden" ColumnName="ru_orden" />
-                <ScalarProperty Name="ru_estado" ColumnName="ru_estado" />
-                <ScalarProperty Name="ru_tipo" ColumnName="ru_tipo" />
-                <ScalarProperty Name="NombreCorto" ColumnName="NombreCorto" />
-                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
-                <ScalarProperty Name="ru_codRolGen" ColumnName="ru_codRolGen" />
-                <ScalarProperty Name="rub_codigo" ColumnName="rub_codigo" />
-                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ro_rol">
             <EntityTypeMapping TypeName="Model_rrhh.ro_rol">
               <MappingFragment StoreEntitySet="ro_rol">
@@ -15280,6 +15248,41 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
                 <ScalarProperty Name="IdJornada" ColumnName="IdJornada" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_rubro_tipo">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_rubro_tipo">
+              <MappingFragment StoreEntitySet="ro_rubro_tipo">
+                <ScalarProperty Name="rub_ValorRecargoHoras" ColumnName="rub_ValorRecargoHoras" />
+                <ScalarProperty Name="rub_ContPorJornada" ColumnName="rub_ContPorJornada" />
+                <ScalarProperty Name="rub_ContPorEmpleado" ColumnName="rub_ContPorEmpleado" />
+                <ScalarProperty Name="rub_AplicaIR" ColumnName="rub_AplicaIR" />
+                <ScalarProperty Name="rub_GrupoResumen" ColumnName="rub_GrupoResumen" />
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="rub_acumula_descuento" ColumnName="rub_acumula_descuento" />
+                <ScalarProperty Name="rub_acumula" ColumnName="rub_acumula" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="rub_aplica_IESS" ColumnName="rub_aplica_IESS" />
+                <ScalarProperty Name="rub_nocontab" ColumnName="rub_nocontab" />
+                <ScalarProperty Name="rub_provision" ColumnName="rub_provision" />
+                <ScalarProperty Name="rub_grupo" ColumnName="rub_grupo" />
+                <ScalarProperty Name="rub_ctacon" ColumnName="rub_ctacon" />
+                <ScalarProperty Name="rub_concep" ColumnName="rub_concep" />
+                <ScalarProperty Name="ru_orden" ColumnName="ru_orden" />
+                <ScalarProperty Name="ru_estado" ColumnName="ru_estado" />
+                <ScalarProperty Name="ru_tipo" ColumnName="ru_tipo" />
+                <ScalarProperty Name="NombreCorto" ColumnName="NombreCorto" />
+                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
+                <ScalarProperty Name="ru_codRolGen" ColumnName="ru_codRolGen" />
+                <ScalarProperty Name="rub_codigo" ColumnName="rub_codigo" />
                 <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

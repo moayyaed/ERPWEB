@@ -47,7 +47,8 @@ namespace Core.Erp.Data.RRHH
                         rub_codigo = q.rub_codigo,
                         ru_codRolGen = q.ru_codRolGen,
                         ru_descripcion=q.ru_descripcion,
-                        NombreCorto=q.NombreCorto
+                        NombreCorto=q.NombreCorto,
+                        rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
                     });
                 }
 
@@ -112,6 +113,7 @@ namespace Core.Erp.Data.RRHH
                                      rub_acumula_descuento = q.rub_acumula_descuento,
                                      rub_AplicaIR=q.rub_AplicaIR,
                                      rub_GrupoResumen=q.rub_GrupoResumen,
+                                     rub_ValorRecargoHoras = q.rub_ValorRecargoHoras,
                                      EstadoBool = q.ru_estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -135,6 +137,7 @@ namespace Core.Erp.Data.RRHH
                                      rub_acumula_descuento = q.rub_acumula_descuento,
                                      rub_AplicaIR = q.rub_AplicaIR,
                                      rub_GrupoResumen = q.rub_GrupoResumen,
+                                     rub_ValorRecargoHoras = q.rub_ValorRecargoHoras,
                                      EstadoBool = q.ru_estado == "A" ? true : false
 
                                  }).ToList();
@@ -175,8 +178,8 @@ namespace Core.Erp.Data.RRHH
                                      rub_nocontab = q.rub_nocontab,
                                      rub_ctacon = q.rub_ctacon,
                                      ru_estado = q.ru_estado,
-                                     rub_acumula_descuento = q.rub_acumula_descuento
-
+                                     rub_acumula_descuento = q.rub_acumula_descuento,
+                                     rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
 
                                  }).ToList();
                 }
@@ -216,8 +219,8 @@ namespace Core.Erp.Data.RRHH
                                  rub_nocontab = q.rub_nocontab,
                                  rub_ctacon = q.rub_ctacon,
                                  ru_estado = q.ru_estado,
-                                 rub_acumula_descuento=q.rub_acumula_descuento
-
+                                 rub_acumula_descuento=q.rub_acumula_descuento,
+                                 rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
                              }).ToList();
                 }
 
@@ -264,7 +267,8 @@ namespace Core.Erp.Data.RRHH
                         rub_AplicaIR =Entity.rub_AplicaIR,
                         rub_GrupoResumen=Entity.rub_GrupoResumen,
                         rub_ContPorEmpleado = Entity.rub_ContPorEmpleado,
-                        rub_ContPorJornada = Entity.rub_ContPorJornada
+                        rub_ContPorJornada = Entity.rub_ContPorJornada,
+                        rub_ValorRecargoHoras = Entity.rub_ValorRecargoHoras
                     };
                 }
 
@@ -332,7 +336,8 @@ namespace Core.Erp.Data.RRHH
                         rub_aplica_IESS = info.rub_aplica_IESS,                         
                         rub_GrupoResumen = info.rub_GrupoResumen == "" ? null : info.rub_GrupoResumen,
                         rub_ContPorEmpleado = info.rub_ContPorEmpleado,
-                        rub_ContPorJornada = info.rub_ContPorJornada
+                        rub_ContPorJornada = info.rub_ContPorJornada,
+                        rub_ValorRecargoHoras = info.rub_ValorRecargoHoras
                     };
                     Context.ro_rubro_tipo.Add(Entity);
 
@@ -391,7 +396,7 @@ namespace Core.Erp.Data.RRHH
                     Entity.rub_GrupoResumen = info.rub_GrupoResumen == "" ? null : info.rub_GrupoResumen;
                     Entity.rub_ContPorEmpleado = info.rub_ContPorEmpleado;
                     Entity.rub_ContPorJornada = info.rub_ContPorJornada;
-
+                    Entity.rub_ValorRecargoHoras = info.rub_ValorRecargoHoras;
 
                     var lst_det = Context.ro_rubro_tipo_x_jornada.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdRubro == info.IdRubro);
                     Context.ro_rubro_tipo_x_jornada.RemoveRange(lst_det);
