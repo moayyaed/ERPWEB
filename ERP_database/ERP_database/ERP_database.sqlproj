@@ -1096,6 +1096,7 @@
     <Build Include="EntidadRegulatoria\Stored Procedures\GenerarDINARDAP.sql" />
     <Build Include="dbo\Tables\cxc_LiquidacionRetProvDet.sql" />
     <Build Include="dbo\Tables\cxc_LiquidacionRetProv.sql" />
+    <Build Include="web\Stored Procedures\SPINV_021.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
