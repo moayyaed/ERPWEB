@@ -123,6 +123,7 @@
             this.xrTableCell53 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.P_IdTipo = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_MostrarSinRetencion = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
@@ -1111,6 +1112,11 @@
             this.P_IdTipo.Name = "P_IdTipo";
             this.P_IdTipo.Visible = false;
             // 
+            // p_MostrarSinRetencion
+            // 
+            this.p_MostrarSinRetencion.Name = "p_MostrarSinRetencion";
+            this.p_MostrarSinRetencion.Visible = false;
+            // 
             // CXC_003_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1138,7 +1144,8 @@
             this.p_IdCliente,
             this.p_Fecha_ini,
             this.p_Fecha_fin,
-            this.P_IdTipo});
+            this.P_IdTipo,
+            this.p_MostrarSinRetencion});
             this.Version = "17.2";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXC_003_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
@@ -1245,5 +1252,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell53;
         private DevExpress.XtraReports.UI.ReportHeaderBand ReportHeader;
         public DevExpress.XtraReports.Parameters.Parameter P_IdTipo;
+        public DevExpress.XtraReports.Parameters.Parameter p_MostrarSinRetencion;
     }
 }

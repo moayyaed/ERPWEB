@@ -88,5 +88,18 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public List<fa_proforma_Info> get_list_x_contacto(int IdEmpresa, decimal IdCliente, decimal IdContacto)
+        {
+            try
+            {
+                return odata.get_list_x_contacto(IdEmpresa, IdCliente, IdContacto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

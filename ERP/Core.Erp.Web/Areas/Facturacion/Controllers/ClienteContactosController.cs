@@ -21,6 +21,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_ciudad_Bus bus_ciudad = new tb_ciudad_Bus();
         tb_parroquia_Bus bus_parroquia = new tb_parroquia_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
+        fa_factura_Bus bus_factura = new fa_factura_Bus();
+        fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
+        fa_guia_remision_Bus bus_guia = new fa_guia_remision_Bus();
+        fa_notaCreDeb_Bus bus_credeb = new fa_notaCreDeb_Bus();
+        string mensaje = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda cliente
@@ -69,6 +74,41 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public tb_parroquia_Info get_info_bajo_demanda_parroquia(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_parroquia.get_info_bajo_demanda(args, Convert.ToString(SessionFixed.IdCiudad));
+        }
+        #endregion
+
+        #region Validar
+        private bool validar(fa_cliente_contactos_Info i_validar, ref string msg)
+        {
+            var lst_factura = bus_factura.get_list_x_contacto(i_validar.IdEmpresa, i_validar.IdCliente, i_validar.IdContacto);
+            var lst_proforma = bus_proforma.get_list_x_contacto(i_validar.IdEmpresa, i_validar.IdCliente, i_validar.IdContacto);
+            var lst_nota_credeb = bus_credeb.get_list_x_contacto(i_validar.IdEmpresa, i_validar.IdCliente, i_validar.IdContacto);
+            var lst_guia = bus_guia.get_list_x_contacto(i_validar.IdEmpresa, i_validar.IdCliente, i_validar.IdContacto);
+
+            if (lst_factura.Count > 0)
+            {
+                msg = "No se puede eliminar el contacto, existe en facturas";
+                return false;
+            }
+
+            if (lst_proforma.Count > 0)
+            {
+                msg = "No se puede eliminar el contacto, existe en proformas";
+                return false;
+            }
+
+            if (lst_nota_credeb.Count > 0)
+            {
+                msg = "No se puede eliminar el contacto, existe en notas de crédito / débito";
+                return false;
+            }
+
+            if (lst_guia.Count > 0)
+            {
+                msg = "No se puede eliminar el contacto, existe en guías";
+                return false;
+            }
+            return true;
         }
         #endregion
 
@@ -156,7 +196,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Anular(fa_cliente_contactos_Info model)
         {
-            if (!bus_cliente_contactos.anularDB(model))
+            if (!validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
+
+            if (!bus_cliente_contactos.eliminarDB(model))
             {
                 ViewBag.IdEmpresa = model.IdEmpresa;
                 ViewBag.IdCliente = model.IdCliente;
