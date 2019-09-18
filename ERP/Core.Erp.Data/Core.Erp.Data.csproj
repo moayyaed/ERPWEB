@@ -1417,6 +1417,9 @@
     <Compile Include="Reportes\Base\SPINV_016_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\SPINV_021_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\SPROL_012_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1851,6 +1854,7 @@
     <Compile Include="Reportes\Inventario\INV_018_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_019_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_020_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_021_Data.cs" />
     <Compile Include="Reportes\Presupuesto\PRE_001_Data.cs" />
     <Compile Include="Reportes\Produccion\PRO_001_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_001_Data.cs" />
@@ -2796,6 +2800,9 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="vwtb_provincia.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_sis_Documento_Tipo_Talonario.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="vwtb_TarjetaCredito_x_cp_proveedor.cs">

@@ -66,6 +66,18 @@
             </div>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Autorizacion"></label>
+                            <button type="button" class="btn btn-primary form-control " onclick="ActualizacionMasiva();">
+                                Actualización masiva
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @Html.Action("GridViewPartial_tipodocumentotal", new { IdSucursal = Model.IdSucursal, CodDocumentoTipo = Model.CodDocumentoTipo })
         </div>
         <!-- /.box-body -->
@@ -76,3 +88,11 @@
     </div>
 
 }
+
+<script typeof="text-javascript">
+    function ActualizacionMasiva() {
+        var location = GetPathServer();
+        var win = window.open(location + "/General/TipoDocumentoTalonario/ActualizacionMasiva", '_blank');
+            win.focus();
+    }
+</script>

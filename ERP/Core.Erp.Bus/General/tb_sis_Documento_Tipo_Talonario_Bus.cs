@@ -92,5 +92,18 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+
+        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list_actualizacion_masiva(int IdEmpresa, int IdSucursal, string CodDocumentoTipo, string Establecimiento, string PuntoEmision, int NumInicio, int NumFin)
+        {
+            try
+            {
+                return odata.get_list_actualizacion_masiva(IdEmpresa, IdSucursal, CodDocumentoTipo, Establecimiento, PuntoEmision, NumInicio, NumFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

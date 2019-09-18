@@ -5,6 +5,8 @@ using Core.Erp.Web.Helps;
 using System;
 using System.Web.Mvc;
 using Core.Erp.Info.Helps;
+using System.Collections.Generic;
+using System.Web;
 
 namespace Core.Erp.Web.Areas.General.Controllers
 {
@@ -13,9 +15,11 @@ namespace Core.Erp.Web.Areas.General.Controllers
     {
         #region Variables
         tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
-            tb_sis_Documento_Tipo_Bus bus_tipodoc = new tb_sis_Documento_Tipo_Bus();
-            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+        tb_sis_Documento_Tipo_Bus bus_tipodoc = new tb_sis_Documento_Tipo_Bus();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+        tb_sis_Documento_Tipo_Talonario_List ListaTalonario = new tb_sis_Documento_Tipo_Talonario_List();
         #endregion
+
         #region Index / Metodos
         public ActionResult Index()
         {
@@ -77,6 +81,28 @@ namespace Core.Erp.Web.Areas.General.Controllers
         }
 
         #endregion
+
+        #region GridActualizacion
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_ActualizacionMasiva(int IdSucursal = 0, string CodDocumentoTipo = "", string Establecimiento="", string PuntoEmision="", int NumInicio=0, int NumFin=0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ViewBag.IdEmpresa = IdEmpresa;
+            ViewBag.IdSucursal = IdSucursal;
+            ViewBag.CodDocumentoTipo = CodDocumentoTipo;
+            ViewBag.Establecimiento = Establecimiento;
+            ViewBag.PuntoEmision = PuntoEmision;
+            ViewBag.NumInicio = NumInicio;
+            ViewBag.NumFin = NumFin;
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            //var model = bus_talonario.get_list_actualizacion_masiva(IdEmpresa, IdSucursal, CodDocumentoTipo, Establecimiento, PuntoEmision, NumInicio, NumFin);
+
+            var model = ListaTalonario.get_list(IdTransaccionSession);
+            //ListaTalonario.set_list(model, IdTransaccionSession);
+            return PartialView("_GridViewPartial_ActualizacionMasiva", model);
+        }
+        #endregion
+
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
@@ -191,7 +217,44 @@ namespace Core.Erp.Web.Areas.General.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult ActualizacionMasiva()
+        {
+            cl_filtros_talonario_Info model = new cl_filtros_talonario_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                CodDocumentoTipo = "",
+                NumInicio = 0,
+                NumFin =0,
+                Establecimiento="",
+                PuntoEmision="",
+                NumAutorizacion = "",
+                FechaCaducidad = DateTime.Now,
+                Usado =false,
+                EsElectronico = false,
+                Anulado = false
+            };
+            cargar_combos(model.IdEmpresa);
+            ListaTalonario.set_list(new List<tb_sis_Documento_Tipo_Talonario_Info>(), model.IdTransaccionSession);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ActualizacionMasiva(cl_filtros_talonario_Info model)
+        {
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            var Lista = bus_talonario.get_list_actualizacion_masiva(model.IdEmpresa, model.IdSucursal, model.CodDocumentoTipo, model.Establecimiento, model.PuntoEmision, model.NumInicio, model.NumFin);
+
+            ListaTalonario.set_list(Lista, model.IdTransaccionSession);
+            cargar_combos(model.IdEmpresa);
+            
+            return View(model);
+
+        }
         #endregion
+
         #region Json
         public JsonResult get_NumeroDocumentoInicial (int IdEmpresa = 0 , string CodDocumentoTipo="", string Establecimiento="", string PuntoEmision = "")
         {
@@ -205,6 +268,38 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult ActualizarRegistros(DateTime FechaCaducidad, int IdSucursal = 0, string NumAutorizacion = "", bool EsElectronico = false, bool Usado = false, bool Anulado = false)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            var resultado = "";
+            var ListaActualizacion = ListaTalonario.get_list(IdTransaccionSession);
+
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
+    }
+
+    public class tb_sis_Documento_Tipo_Talonario_List
+    {
+        string Variable = "tb_sis_Documento_Tipo_Talonario_Info";
+
+        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<tb_sis_Documento_Tipo_Talonario_Info> list = new List<tb_sis_Documento_Tipo_Talonario_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<tb_sis_Documento_Tipo_Talonario_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<tb_sis_Documento_Tipo_Talonario_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

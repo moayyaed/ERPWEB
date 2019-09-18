@@ -1314,6 +1314,12 @@
     <Compile Include="Reportes\Inventario\INV_020_Rpt.Designer.cs">
       <DependentUpon>INV_020_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Inventario\INV_021_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_021_Rpt.Designer.cs">
+      <DependentUpon>INV_021_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Presupuesto\PRE_001_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10320,6 +10326,8 @@
     <Content Include="Areas\CuentasPorCobrar\Views\ParametroCXC\_CmbCuenta_ProvisionFuente.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\ParametroCXC\_CmbCuenta_ProvisionIva.cshtml" />
     <Content Include="Areas\Banco\Views\ConciliacionBanco\Abrir.cshtml" />
+    <Content Include="Areas\General\Views\TipoDocumentoTalonario\ActualizacionMasiva.cshtml" />
+    <Content Include="Areas\General\Views\TipoDocumentoTalonario\_GridViewPartial_ActualizacionMasiva.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10836,6 +10844,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_020_Rpt.resx">
       <DependentUpon>INV_020_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_021_Rpt.resx">
+      <DependentUpon>INV_021_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Presupuesto\PRE_001_Rpt.resx">
       <DependentUpon>PRE_001_Rpt.cs</DependentUpon>

@@ -1,0 +1,238 @@
+﻿@model Core.Erp.Info.Helps.cl_filtros_talonario_Info
+@{
+    ViewBag.Title = "Actualización masiva de talonarios";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
+}
+
+@using (Html.BeginForm("ActualizacionMasiva", "TipoDocumentoTalonario", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    <div class="box ">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Sucursal*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" , @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Tipo documento*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.CodDocumentoTipo, new SelectList(ViewBag.lst_talonario, "codDocumentoTipo", "descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.CodDocumentoTipo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="CodigoLegal">Establecimiento</label>
+                            @Html.TextBoxFor(q => q.Establecimiento, new { @class = "form-control", @id = "Establecimiento" })
+                            @Html.ValidationMessageFor(q => q.Establecimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="CodigoLegal">PuntoEmision</label>
+                            @Html.TextBoxFor(q => q.PuntoEmision, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.PuntoEmision, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="CodigoLegal">Inicio</label>
+                            @Html.TextBoxFor(q => q.NumInicio, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.NumInicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="CodigoLegal">Fin</label>
+                            @Html.TextBoxFor(q => q.NumFin, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.NumFin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box ">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Número de autorización</label>
+                            <div class="form-group">
+                                @Html.TextBoxFor(q => q.NumAutorizacion, new { @class = "form-control", @id= "NumAutorizacion" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Fecha de caducidad*</label>
+                            <div class="form-group">
+                                @Html.DevExpress().DateEditFor(q => q.FechaCaducidad, settings =>
+                                   {
+                                       settings.Name = "FechaCaducidad";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Date;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                       settings.Properties.AllowMouseWheel = false;
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.AllowMouseWheel = false;
+                                   }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="EsElectronico"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.EsElectronico, settings =>
+                            {
+                                settings.Name = "EsElectronico";
+                                settings.Text = "Es Electronico";
+                            }).GetHtml()
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="Usado"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.Usado, settings =>
+                            {
+                                settings.Name = "Usado";
+                                settings.Text = "Usado";
+                            }).GetHtml()
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="Anulado"></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.Anulado, settings =>
+                            {
+                                settings.Name = "Anulado";
+                                settings.Text = "Anulado";
+                            }).GetHtml()
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="IdCliente"></label>
+                            <button type="button" class="btn btn-primary form-control " onclick="ActualizarRegistros();" title="Actualizar registros">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            @Html.Action("GridViewPartial_ActualizacionMasiva", new { IdSucursal = Model.IdSucursal, CodDocumentoTipo = Model.CodDocumentoTipo, Establecimiento = Model.Establecimiento, PuntoEmision = Model.PuntoEmision, NumInicio = Model.NumInicio, NumFin = Model.NumFin })
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        CargarEstablecimiento();
+
+        $("#IdSucursal").change(function () {
+            CargarEstablecimiento();
+        });
+    });
+
+    function CargarEstablecimiento() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfoEstablecimiento", "TipoDocumentoTalonario",new { Area = "General"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Establecimiento").val(data.Su_CodigoEstablecimiento);
+            },
+            error: function (error) {
+            }
+
+        });
+    }
+
+    function ActualizarRegistros() {
+        var datos = {
+            FechaCaducidad: FechaCaducidad.GetDate(),
+            IdSucursal: $("#IdSucursal").val(),
+            NumAutorizacion: $("#NumAutorizacion").val(),
+            EsElectronico : EsElectronico.GetChecked(),
+            Usado : Usado.GetChecked(),
+            Anulado: Anulado.GetChecked()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ActualizarRegistros", "TipoDocumentoTalonario", new { Area = "General"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_ActualizacionMasiva.PerformCallback();
+            },
+            error: function (error) {
+            }
+
+        });
+    }
+</script>

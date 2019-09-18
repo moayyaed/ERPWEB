@@ -535,7 +535,7 @@
           <Property Name="FechaTransaccion" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_banco_procesos_bancarios_x_empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_banco_procesos_bancarios_x_empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_banco_procesos_bancarios_x_empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -561,7 +561,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_banco_procesos_bancarios_x_em
           <Property Name="Expr1" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_Ciudad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_Ciudad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_Ciudad">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -579,7 +579,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_Ciudad' no tiene definida nin
           <Property Name="IdProvincia" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_ciudad_id' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_ciudad_id' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_ciudad_id">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -587,7 +587,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_ciudad_id' no tiene definida 
           <Property Name="IdCiudad" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_pais' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_pais' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_pais">
           <Key>
             <PropertyRef Name="Nombre" />
@@ -596,7 +596,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_pais' no tiene definida ningu
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_parroquia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_parroquia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_parroquia">
           <Key>
             <PropertyRef Name="IdParroquia" />
@@ -604,7 +604,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_parroquia' no tiene definida 
           <Property Name="IdParroquia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_provincia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_provincia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_provincia">
           <Key>
             <PropertyRef Name="IdProvincia" />
@@ -612,7 +612,31 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_provincia' no tiene definida 
           <Property Name="IdProvincia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_TarjetaCredito_x_cp_proveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_sis_Documento_Tipo_Talonario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwtb_sis_Documento_Tipo_Talonario">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="CodDocumentoTipo" />
+            <PropertyRef Name="Establecimiento" />
+            <PropertyRef Name="PuntoEmision" />
+            <PropertyRef Name="NumDocumento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Establecimiento" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="PuntoEmision" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="NumDocumento" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NumDocumentoInt" Type="int" />
+          <Property Name="FechaCaducidad" Type="date" />
+          <Property Name="Usado" Type="bit" />
+          <Property Name="Estado" Type="char" MaxLength="1" />
+          <Property Name="NumAutorizacion" Type="varchar" MaxLength="150" />
+          <Property Name="es_Documento_Electronico" Type="bit" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_TarjetaCredito_x_cp_proveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_TarjetaCredito_x_cp_proveedor">
           <Key>
             <PropertyRef Name="IdTarjeta" />
@@ -637,9 +661,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_TarjetaCredito_x_cp_proveedor
           <Property Name="IdTransaccion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwtb_bodega_x_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_comprobantes_no_autorizados">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1099,6 +1121,22 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
     [vwtb_provincia].[IdProvincia] AS [IdProvincia]
     FROM [dbo].[vwtb_provincia] AS [vwtb_provincia]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwtb_sis_Documento_Tipo_Talonario" EntityType="Self.vwtb_sis_Documento_Tipo_Talonario" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwtb_sis_Documento_Tipo_Talonario].[IdEmpresa] AS [IdEmpresa], 
+    [vwtb_sis_Documento_Tipo_Talonario].[IdSucursal] AS [IdSucursal], 
+    [vwtb_sis_Documento_Tipo_Talonario].[CodDocumentoTipo] AS [CodDocumentoTipo], 
+    [vwtb_sis_Documento_Tipo_Talonario].[Establecimiento] AS [Establecimiento], 
+    [vwtb_sis_Documento_Tipo_Talonario].[PuntoEmision] AS [PuntoEmision], 
+    [vwtb_sis_Documento_Tipo_Talonario].[NumDocumento] AS [NumDocumento], 
+    [vwtb_sis_Documento_Tipo_Talonario].[NumDocumentoInt] AS [NumDocumentoInt], 
+    [vwtb_sis_Documento_Tipo_Talonario].[FechaCaducidad] AS [FechaCaducidad], 
+    [vwtb_sis_Documento_Tipo_Talonario].[Usado] AS [Usado], 
+    [vwtb_sis_Documento_Tipo_Talonario].[Estado] AS [Estado], 
+    [vwtb_sis_Documento_Tipo_Talonario].[NumAutorizacion] AS [NumAutorizacion], 
+    [vwtb_sis_Documento_Tipo_Talonario].[es_Documento_Electronico] AS [es_Documento_Electronico]
+    FROM [dbo].[vwtb_sis_Documento_Tipo_Talonario] AS [vwtb_sis_Documento_Tipo_Talonario]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwtb_TarjetaCredito_x_cp_proveedor" EntityType="Self.vwtb_TarjetaCredito_x_cp_proveedor" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwtb_TarjetaCredito_x_cp_proveedor].[IdTarjeta] AS [IdTarjeta], 
@@ -1411,6 +1449,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <End Role="tb_sucursal" EntitySet="tb_sucursal" />
             <End Role="tb_bodega" EntitySet="tb_bodega" />
           </AssociationSet>
+          <EntitySet Name="vwtb_sis_Documento_Tipo_Talonario" EntityType="Model_general.vwtb_sis_Documento_Tipo_Talonario" />
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -2462,6 +2501,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwtb_sis_Documento_Tipo_Talonario">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="CodDocumentoTipo" />
+            <PropertyRef Name="Establecimiento" />
+            <PropertyRef Name="PuntoEmision" />
+            <PropertyRef Name="NumDocumento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="CodDocumentoTipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Establecimiento" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PuntoEmision" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NumDocumento" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumDocumentoInt" Type="Int32" />
+          <Property Name="FechaCaducidad" Type="DateTime" Precision="0" />
+          <Property Name="Usado" Type="Boolean" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NumAutorizacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="es_Documento_Electronico" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3101,6 +3162,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
                 <ScalarProperty Name="cod_bodega" ColumnName="cod_bodega" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwtb_sis_Documento_Tipo_Talonario">
+            <EntityTypeMapping TypeName="Model_general.vwtb_sis_Documento_Tipo_Talonario">
+              <MappingFragment StoreEntitySet="vwtb_sis_Documento_Tipo_Talonario">
+                <ScalarProperty Name="es_Documento_Electronico" ColumnName="es_Documento_Electronico" />
+                <ScalarProperty Name="NumAutorizacion" ColumnName="NumAutorizacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Usado" ColumnName="Usado" />
+                <ScalarProperty Name="FechaCaducidad" ColumnName="FechaCaducidad" />
+                <ScalarProperty Name="NumDocumentoInt" ColumnName="NumDocumentoInt" />
+                <ScalarProperty Name="NumDocumento" ColumnName="NumDocumento" />
+                <ScalarProperty Name="PuntoEmision" ColumnName="PuntoEmision" />
+                <ScalarProperty Name="Establecimiento" ColumnName="Establecimiento" />
+                <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

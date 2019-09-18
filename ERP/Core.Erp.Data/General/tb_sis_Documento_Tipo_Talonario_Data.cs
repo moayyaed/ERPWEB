@@ -256,5 +256,41 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+        public List<tb_sis_Documento_Tipo_Talonario_Info> get_list_actualizacion_masiva(int IdEmpresa, int IdSucursal, string CodDocumentoTipo, string Establecimiento, string PuntoEmision, int NumIni, int NumFin)
+        {
+            try
+            {
+                List<tb_sis_Documento_Tipo_Talonario_Info> Lista;
+                using (Entities_general Context = new Entities_general())
+                {
+                    Lista = Context.vwtb_sis_Documento_Tipo_Talonario.Where(q => q.IdEmpresa == IdEmpresa
+                              && q.IdSucursal == IdSucursal
+                              && q.CodDocumentoTipo == CodDocumentoTipo
+                              && q.Establecimiento == Establecimiento
+                              && q.PuntoEmision == PuntoEmision
+                              && q.NumDocumentoInt >= NumIni
+                              && q.NumDocumentoInt <= NumFin).Select(q => new tb_sis_Documento_Tipo_Talonario_Info
+                              {
+                                  CodDocumentoTipo = q.CodDocumentoTipo,
+                                  IdSucursal = q.IdSucursal,
+                                  IdEmpresa = q.IdEmpresa,
+                                  Establecimiento = q.Establecimiento,
+                                  Estado = q.Estado,
+                                  NumAutorizacion = q.NumAutorizacion,
+                                  NumDocumento = q.NumDocumento,
+                                  PuntoEmision = q.PuntoEmision,
+                                  EstadoBool = q.Estado == "A" ? true : false
+
+                              }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

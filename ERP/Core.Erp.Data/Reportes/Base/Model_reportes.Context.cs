@@ -14,7 +14,7 @@ namespace Core.Erp.Data.Reportes.Base
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
@@ -1720,6 +1720,35 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("IdConciliacion", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_004_Result>("SPBAN_004", idEmpresaParameter, idBancoParameter, idConciliacionParameter);
+        }
+    
+        public virtual ObjectResult<SPINV_021_Result> SPINV_021(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<int> idBodegaIni, Nullable<int> idBodegaFin, Nullable<System.DateTime> fechaCorte)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            var idBodegaIniParameter = idBodegaIni.HasValue ?
+                new ObjectParameter("IdBodegaIni", idBodegaIni) :
+                new ObjectParameter("IdBodegaIni", typeof(int));
+    
+            var idBodegaFinParameter = idBodegaFin.HasValue ?
+                new ObjectParameter("IdBodegaFin", idBodegaFin) :
+                new ObjectParameter("IdBodegaFin", typeof(int));
+    
+            var fechaCorteParameter = fechaCorte.HasValue ?
+                new ObjectParameter("FechaCorte", fechaCorte) :
+                new ObjectParameter("FechaCorte", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_021_Result>("SPINV_021", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idBodegaIniParameter, idBodegaFinParameter, fechaCorteParameter);
         }
     }
 }

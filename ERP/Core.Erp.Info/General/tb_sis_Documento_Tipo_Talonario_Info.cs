@@ -9,7 +9,7 @@ namespace Core.Erp.Info.General
 {
     public class tb_sis_Documento_Tipo_Talonario_Info
     {
-
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public string CodDocumentoTipo { get; set; }
         [Required(ErrorMessage = "El campo establecimiento es obligatorio")]

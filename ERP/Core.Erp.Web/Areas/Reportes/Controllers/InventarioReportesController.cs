@@ -1362,6 +1362,63 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 
             return View(model);
         }
+
+        public ActionResult INV_021()
+        {
+
+            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdBodega = 0
+            };
+
+            cargar_combos(model);
+            INV_021_Rpt report = new INV_021_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_021");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_fecha_corte.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult INV_021(cl_filtros_inventario_Info model)
+        {
+            INV_021_Rpt report = new INV_021_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_003");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_fecha_corte.Value = model.fecha_fin;
+            cargar_combos(model);
+
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 
 }

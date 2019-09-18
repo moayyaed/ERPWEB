@@ -259,4 +259,20 @@ namespace Core.Erp.Info.Helps
         }
     }
 
+    public class cl_filtros_talonario_Info
+    {
+        public decimal IdTransaccionSession { get; set; }
+        public int IdEmpresa { get; set; }
+        public int IdSucursal { get; set; }
+        public string CodDocumentoTipo { get; set; }
+        public int NumInicio { get; set; }
+        public int NumFin { get; set; }
+        public string Establecimiento { get; set; }
+        public string PuntoEmision { get; set; }
+        public string NumAutorizacion { get; set; }
+        public DateTime FechaCaducidad { get; set; }
+        public bool Usado { get; set; }
+        public bool EsElectronico { get; set; }
+        public bool Anulado { get; set; }
+    }
 }
