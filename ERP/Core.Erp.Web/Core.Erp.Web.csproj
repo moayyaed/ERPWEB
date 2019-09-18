@@ -10316,6 +10316,10 @@
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_modeloAF_importacion.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_marcaAF_importacion.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\_GridViewPartial_areaAF_importacion.cshtml" />
+    <Content Include="Areas\Banco\Views\ParametroBanco\_GridViewPartial_CbteBan_x_CbteCble.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\ParametroCXC\_CmbCuenta_ProvisionFuente.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\ParametroCXC\_CmbCuenta_ProvisionIva.cshtml" />
+    <Content Include="Areas\Banco\Views\ConciliacionBanco\Abrir.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10433,6 +10437,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

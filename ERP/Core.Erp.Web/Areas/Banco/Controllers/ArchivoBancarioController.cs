@@ -504,7 +504,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                     IdCtaCble = banco == null ? string.Empty : banco.IdCtaCble,
                     pc_Cuenta = cuenta == null ? string.Empty : cuenta.pc_Cuenta,
                     dc_Valor = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)*-1,
-                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)
+                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),
+                    dc_para_conciliar = true
                 });
                 #endregion
             }

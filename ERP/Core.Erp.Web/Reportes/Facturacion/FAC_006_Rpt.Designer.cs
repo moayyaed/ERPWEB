@@ -805,9 +805,7 @@
             // 
             this.xrTableCell55.Multiline = true;
             this.xrTableCell55.Name = "xrTableCell55";
-            this.xrTableCell55.Text = "Este documenti no tiene válidez tributaria, descargue su comprobante autorizado d" +
-    "esde el portal: www.edoc-ccgye.org.\r\n(Usuario: CI/RUC, Clave: CI/RUC), datos reg" +
-    "istrados en este documento.";
+            this.xrTableCell55.Text = " ";
             this.xrTableCell55.Weight = 3D;
             // 
             // xrTable7

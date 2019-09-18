@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_parametros_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public string CiudadDefaultParaCrearCheques { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
@@ -18,5 +19,9 @@ namespace Core.Erp.Info.Banco
         public Nullable<System.DateTime> FechaTransac { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> FechaUltMod { get; set; }
+
+        #region Campos que no existen en la tabla
+        public List<ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Info> Lista_CbteBan_x_CbteCble { get; set; }
+        #endregion
     }
 }

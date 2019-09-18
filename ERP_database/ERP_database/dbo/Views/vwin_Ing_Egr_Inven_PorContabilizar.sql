@@ -5,7 +5,8 @@ SELECT dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, 
                   dbo.in_Ing_Egr_Inven_det.secuencia_inv, dbo.in_producto_x_tb_bodega.IdCtaCble_Inven IdCtaCtble_Inve, dbo.in_categorias.IdCtaCtble_Costo, dbo.in_Motivo_Inven.IdCtaCble AS IdCtaCble_Motivo, dbo.in_parametro.P_IdCtaCble_transitoria_transf_inven, 
                   dbo.in_Ing_Egr_Inven_det.dm_cantidad * dbo.in_Ing_Egr_Inven_det.mv_costo AS Valor, dbo.in_Ing_Egr_Inven.Estado, CASE WHEN dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_parametro.IdMovi_inven_tipo_egresoBodegaOrigen OR
                   dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_parametro.IdMovi_inven_tipo_ingresoBodegaDestino THEN CAST(1 AS bit) ELSE CAST(0 AS bit) END AS EsTransferencia, dbo.in_Ing_Egr_Inven_det.IdCentroCosto, 
-                  in_Motivo_Inven_1.IdCtaCble AS IdCtaCble_MotivoDet, dbo.in_producto_x_tb_bodega.IdCtaCble_Costo AS IdCtaCble_CostoProducto
+                  in_Motivo_Inven_1.IdCtaCble AS IdCtaCble_MotivoDet, dbo.in_producto_x_tb_bodega.IdCtaCble_Costo AS IdCtaCble_CostoProducto, case when len(in_Producto.pr_codigo) = 0 then '' else '['+in_Producto.pr_codigo+'] ' end +
+				  dbo.in_Producto.pr_descripcion pr_descripcion, tb_bodega.bo_Descripcion
 FROM     dbo.in_Ing_Egr_Inven_det INNER JOIN
                   dbo.in_Producto ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdProducto = dbo.in_Producto.IdProducto INNER JOIN
                   dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria INNER JOIN

@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Banco.ba_Talonario_cheques_x_banco_Info
 
 @{
-    ViewBag.Title = "Modificar talonario";
+    ViewBag.Title = "Modificar talonario bancario";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

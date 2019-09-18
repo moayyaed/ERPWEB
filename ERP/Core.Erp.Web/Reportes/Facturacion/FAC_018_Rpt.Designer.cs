@@ -683,7 +683,8 @@
             // xrTableCell4
             // 
             this.xrTableCell4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([CreDeb]=\'C\',\'LISTADO DE NOTAS DE CRÉDITO \' ,\'LISTADO DE NOTAS DE DÉBITO\' )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([Parameters].[p_CreDeb]==\'C\',\'LISTADO DE NOTAS DE CRÉDITO \' ,\'LISTADO DE NOTA" +
+                    "S DE DÉBITO\' )")});
             this.xrTableCell4.Font = new System.Drawing.Font("Times New Roman", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 125, 0, 0, 100F);

@@ -2,7 +2,7 @@
 
 @model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_Info
 @{
-    ViewBag.Title = "Modificar activo";
+    ViewBag.Title = "Modificar activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -64,6 +64,7 @@
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
                        settings.Properties.ClientSideEvents.DateChanged = "function(s,e){calcular_fechas();}";
 
                    }).GetHtml()
@@ -204,6 +205,7 @@
                                    settings.Properties.EditFormatString = "dd/MM/yyyy";
                                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.AllowMouseWheel = false;
                                }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.Af_fecha_ini_depre, "", new { @class = "text-danger" })
                                 </div>
@@ -224,6 +226,7 @@
                                    settings.Properties.EditFormatString = "dd/MM/yyyy";
                                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.AllowMouseWheel = false;
                                }).GetHtml()
                                     @Html.ValidationMessageFor(q => q.Af_fecha_fin_depre, "", new { @class = "text-danger" })
                                 </div>

@@ -130,7 +130,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         [HttpPost]
         public ActionResult Nuevo(ba_Conciliacion_Info model)
         {
-            model.List_detalle = Lista_detalle.get_list(model.IdTransaccionSession); 
+            model.List_detalle = Lista_detalle.get_list(model.IdTransaccionSession);
+            model.IdUsuario = SessionFixed.IdUsuario;
             if (!validar(model,ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -222,7 +223,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public ActionResult Modificar(ba_Conciliacion_Info model)
         {
             model.List_detalle = Lista_detalle.get_list(model.IdTransaccionSession);
-
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -233,6 +234,55 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (!bus_conciliacion.modificarDB(model))
             {
                 ViewBag.mensaje = "No se pudo guardar el registro";
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos(model.IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region AbrirConciliacion
+        public ActionResult Abrir(int IdEmpresa = 0, decimal IdConciliacion = 0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ba_Conciliacion_Info model = bus_conciliacion.get_info(IdEmpresa, IdConciliacion);
+            if (model == null)
+                return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_det = bus_det.get_list(IdEmpresa, IdConciliacion);
+            model.List_detalle = bus_detalle_con.GetList(model.IdEmpresa, model.IdConciliacion);
+            Lista_detalle.set_list(model.List_detalle, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
+            var bco = bus_banco_cuenta.get_info(IdEmpresa, model.IdBanco);
+            var periodo = bus_periodo.get_info(IdEmpresa, model.IdPeriodo);
+            model.lst_det.AddRange(bus_det.get_list_x_conciliar(IdEmpresa, model.IdBanco, bco.IdCtaCble, periodo.pe_FechaFin.Date));
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Abrir(ba_Conciliacion_Info model)
+        {
+            model.List_detalle = Lista_detalle.get_list(model.IdTransaccionSession);
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
+            if (!validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos(model.IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
+                return View(model);
+            }
+            if (!bus_conciliacion.abrirDB(model))
+            {
+                ViewBag.mensaje = "No se pudo abrir el registro";
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
                 return View(model);

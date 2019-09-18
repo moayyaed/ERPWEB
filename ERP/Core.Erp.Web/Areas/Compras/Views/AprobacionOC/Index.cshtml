@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Compras.com_orden_aprobacion_Info
 
 @{
-    ViewBag.Title = "Aprobación órdenes de compra";
+    ViewBag.Title = "Aprobación de órdenes de compra";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -73,6 +73,7 @@
                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               settings.Properties.AllowMouseWheel = false;
                            }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
                             </div>
@@ -93,6 +94,7 @@
                                settings.Properties.EditFormatString = "dd/MM/yyyy";
                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               settings.Properties.AllowMouseWheel = false;
                            }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
                             </div>

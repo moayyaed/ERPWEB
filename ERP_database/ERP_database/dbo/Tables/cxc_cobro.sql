@@ -20,7 +20,6 @@
     [cr_propietarioCta] VARCHAR (100) NULL,
     [cr_estado]         NVARCHAR (1)  NULL,
     [cr_recibo]         NUMERIC (18)  NULL,
-    [cr_es_anticipo]    CHAR (1)      NULL,
     [Fecha_Transac]     DATETIME      NULL,
     [IdUsuario]         VARCHAR (20)  NULL,
     [IdUsuarioUltMod]   VARCHAR (20)  NULL,
@@ -31,6 +30,7 @@
     [IdCaja]            INT           NOT NULL,
     [MotiAnula]         VARCHAR (50)  NULL,
     [IdTipoNotaCredito] INT           NULL,
+    [cr_EsProvision]    BIT           NULL,
     CONSTRAINT [PK_cxc_cobro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdCobro] ASC),
     CONSTRAINT [FK_cxc_cobro_ba_Banco_Cuenta] FOREIGN KEY ([IdEmpresa], [IdBanco]) REFERENCES [dbo].[ba_Banco_Cuenta] ([IdEmpresa], [IdBanco]),
     CONSTRAINT [FK_cxc_cobro_caj_Caja] FOREIGN KEY ([IdEmpresa], [IdCaja]) REFERENCES [dbo].[caj_Caja] ([IdEmpresa], [IdCaja]),
@@ -38,6 +38,8 @@
     CONSTRAINT [FK_cxc_cobro_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
     CONSTRAINT [FK_cxc_cobro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

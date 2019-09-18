@@ -118,7 +118,6 @@
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_detalle_in_movi_inve" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_in_movi_inven_tipo" />
         <AssociationConnector Association="Model_inventario.FK_in_movi_inve_x_ct_cbteCble_in_movi_inve" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorBodega" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Stock" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorSucursal" Width="1.5" PointX="5.375" PointY="5.75" />
@@ -143,6 +142,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo5" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo6" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo7" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="0.75" PointY="21.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

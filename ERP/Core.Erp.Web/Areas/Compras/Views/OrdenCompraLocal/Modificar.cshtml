@@ -111,14 +111,15 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         @Html.DevExpress().DateEditFor(q => q.oc_fecha, settings =>
-                   {
-                       settings.Name = "oc_fecha";
-                       settings.Properties.UseMaskBehavior = true;
-                       settings.Properties.EditFormat = EditFormat.Date;
-                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   }).GetHtml()
+                                       {
+                                           settings.Name = "oc_fecha";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Date;
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.AllowMouseWheel = false;
+                                       }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.oc_fecha, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -131,14 +132,15 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         @Html.DevExpress().DateEditFor(q => q.oc_fechaVencimiento, settings =>
-                   {
-                       settings.Name = "oc_fechaVencimiento";
-                       settings.Properties.UseMaskBehavior = true;
-                       settings.Properties.EditFormat = EditFormat.Date;
-                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   }).GetHtml()
+                                       {
+                                           settings.Name = "oc_fechaVencimiento";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Date;
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.AllowMouseWheel = false;
+                                       }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.oc_fechaVencimiento, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

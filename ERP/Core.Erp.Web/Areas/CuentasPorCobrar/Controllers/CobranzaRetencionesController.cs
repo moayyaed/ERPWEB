@@ -67,7 +67,6 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         private bool validar(cxc_cobro_Info i_validar, ref string msg)
         {
             i_validar.IdEntidad = i_validar.IdCliente;            
-            i_validar.cr_TotalCobro = i_validar.lst_det.Sum(q => q.dc_ValorPago);
             i_validar.IdCaja = i_validar.IdCaja == 0 ? 1 : i_validar.IdCaja;
             i_validar.lst_det.ForEach(q => { q.IdEmpresa = i_validar.IdEmpresa; q.IdSucursal = i_validar.IdSucursal; q.IdCobro = i_validar.IdCobro; q.IdBodega_Cbte = i_validar.IdBodega; q.IdCbte_vta_nota = i_validar.IdCbteVta; q.dc_TipoDocumento = i_validar.vt_tipoDoc; });
             if (i_validar.lst_det.Count == 0)
@@ -83,7 +82,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             msg = bus_cobro.ValidarSaldoDocumento(i_validar.IdEmpresa, i_validar.IdSucursal, i_validar.IdBodega, i_validar.IdCbteVta, i_validar.vt_tipoDoc, Math.Round(i_validar.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero), Math.Round(i_validar.cr_TotalCobro, 2, MidpointRounding.AwayFromZero));
             if (msg.Length > 0)
                 return false;
-            
+
+            i_validar.cr_TotalCobro = Math.Round(i_validar.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero);
             string observacion = "Retención./ " + i_validar.vt_NumFactura + " # Ret./" + i_validar.cr_NumDocumento;
             i_validar.cr_observacion = observacion;
             i_validar.cr_fechaCobro = i_validar.cr_fecha;

@@ -57,8 +57,8 @@ namespace Core.Erp.Data.Banco
                         };
                         Context.ba_parametros.Add(Entity);
                     }
-                        else
-                        {
+                    else
+                    {
                         Entity.CiudadDefaultParaCrearCheques = info.CiudadDefaultParaCrearCheques;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
                         Entity.CantidadChequesAlerta = info.CantidadChequesAlerta;
@@ -67,6 +67,24 @@ namespace Core.Erp.Data.Banco
                         Entity.FechaUltMod = DateTime.Now;
                         Entity.ValidarSoloCuentasArchivo = info.ValidarSoloCuentasArchivo;
                     }
+
+                    var lstDet = Context.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.Where(q => q.IdEmpresa == info.IdEmpresa).ToList();
+                    Context.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.RemoveRange(lstDet);
+
+                    foreach (var item in info.Lista_CbteBan_x_CbteCble)
+                    {
+                        ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo Entity_CbteBan_CbteCble = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            CodTipoCbteBan = item.CodTipoCbteBan,
+                            IdCtaCble = item.IdCtaCble,
+                            IdTipoCbteCble = item.IdTipoCbteCble,
+                            IdTipoCbteCble_Anu = item.IdTipoCbteCble_Anu,
+                            Tipo_DebCred = item.Tipo_DebCred
+                        };
+                        Context.ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.Add(Entity_CbteBan_CbteCble);
+                    }
+
                     Context.SaveChanges();
                 }
                     return true;

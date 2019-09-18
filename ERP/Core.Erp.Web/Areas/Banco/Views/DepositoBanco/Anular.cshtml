@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Banco.ba_Cbte_Ban_Info
 @{
-    ViewBag.Title = ("Anular depósito" + " con ID #" + @Model.IdCbteCble);
+    ViewBag.Title = ("Anular depósito bancario" + " con ID #" + @Model.IdCbteCble);
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
@@ -274,6 +274,7 @@ function GetListBancoPorSucursal() {
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cb_Fecha, "", new { @class = "text-danger" })
                     </div>

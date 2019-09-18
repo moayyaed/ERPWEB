@@ -86,5 +86,19 @@ namespace Core.Erp.Bus.Banco
                 throw;
             }
         }
+
+        public bool abrirDB(ba_Conciliacion_Info info)
+        {
+            try
+            {
+                return odata.abrirDB(info);
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ba_Conciliacion_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
+            }
+        }
     }
 }

@@ -57,8 +57,8 @@
                 //{
                 ViewContext.Writer.Write(
                     Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCliente = DataBinder.Eval(tc.DataItem, "IdCliente"), IdContacto = DataBinder.Eval(tc.DataItem, "IdContacto") }) + "&nbsp;" +
-                    Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCliente = DataBinder.Eval(tc.DataItem, "IdCliente"), IdContacto = DataBinder.Eval(tc.DataItem, "IdContacto") },
-                        new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    Html.ActionLink("Eliminar", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCliente = DataBinder.Eval(tc.DataItem, "IdCliente"), IdContacto = DataBinder.Eval(tc.DataItem, "IdContacto") },
+                        new { onclick = "return confirm('¿Está seguro de que desea eliminar el registro?')" })
                 );
                 //}
             });

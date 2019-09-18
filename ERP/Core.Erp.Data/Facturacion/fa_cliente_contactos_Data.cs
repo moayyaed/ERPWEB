@@ -207,7 +207,7 @@ namespace Core.Erp.Data.Facturacion
             {
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    fa_cliente_contactos Entity = Context.fa_cliente_contactos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdContacto == info.IdContacto);
+                    fa_cliente_contactos Entity = Context.fa_cliente_contactos.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente && q.IdContacto == info.IdContacto).FirstOrDefault();
                     if (Entity == null) return false;
 
                     Entity.Nombres = info.Nombres;
@@ -229,14 +229,13 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
-        public bool anularDB(fa_cliente_contactos_Info info)
+        public bool eliminarDB(fa_cliente_contactos_Info info)
         {
             try
             {
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    fa_cliente_contactos Entity = Context.fa_cliente_contactos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdContacto == info.IdContacto);
-                    if (Entity == null) return false;
+                    Context.Database.ExecuteSqlCommand("delete fa_cliente_contactos where IdEmpresa = " + info.IdEmpresa + "and IdCliente = " + info.IdCliente + "and IdContacto = " + info.IdContacto);
 
                     Context.SaveChanges();
                 }

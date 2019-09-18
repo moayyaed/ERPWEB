@@ -1404,5 +1404,34 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public List<fa_factura_Info> get_list_x_contacto(int IdEmpresa, decimal IdCliente, decimal IdContacto)
+        {
+            try
+            {
+                List<fa_factura_Info> Lista;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    Lista = (from q in Context.fa_factura
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdCliente == IdCliente
+                             && q.IdContacto == IdContacto
+                             select new fa_factura_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdBodega = q.IdBodega,
+                                 IdCbteVta = q.IdCbteVta,
+                                 CodCbteVta = q.CodCbteVta
+                             }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_fac_sin_guia", IdUsuario = "consulta" });
+                return new List<fa_factura_Info>();
+            }
+        }
     }
 }

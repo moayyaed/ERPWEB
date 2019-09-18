@@ -798,5 +798,37 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
+
+        public List<fa_guia_remision_Info> get_list_x_contacto(int IdEmpresa, decimal IdCliente, decimal IdContacto)
+        {
+            try
+            {
+                List<fa_guia_remision_Info> Lista;
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    Lista = (from q in Context.fa_guia_remision
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdCliente == IdCliente
+                             && q.IdContacto == IdContacto
+                             select new fa_guia_remision_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdBodega = q.IdBodega,
+                                 IdGuiaRemision = q.IdGuiaRemision,
+                                 CodGuiaRemision = q.CodGuiaRemision,
+                                 CodDocumentoTipo = q.CodDocumentoTipo
+                             }).ToList();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_fac_sin_guia", IdUsuario = "consulta" });
+                return new List<fa_guia_remision_Info>();
+            }
+        }
+
     }
 }

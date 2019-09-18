@@ -4,7 +4,8 @@ SELECT dbo.cp_retencion_det.IdEmpresa, dbo.cp_retencion_det.IdRetencion, dbo.cp_
                   dbo.cp_orden_giro.co_serie + '-' + dbo.cp_orden_giro.co_factura AS co_factura, dbo.cp_retencion.serie1 + '-' + dbo.cp_retencion.serie2 + '-' + dbo.cp_retencion.NumRetencion AS NumRetencion, 
                   dbo.cp_TipoDocumento.Descripcion AS TipoComprobante, dbo.cp_retencion.fecha AS FechaDeEmision, RIGHT('00' + CAST(MONTH(dbo.cp_retencion.fecha) AS varchar(2)), 2) + '/' + CAST(YEAR(dbo.cp_retencion.fecha) AS varchar(4)) 
                   AS EjercicioFiscal, dbo.cp_retencion_det.re_baseRetencion, dbo.cp_retencion_det.re_Porcen_retencion, dbo.cp_retencion_det.re_valor_retencion, dbo.tb_persona.pe_nombreCompleto AS NombreProveedor, 
-                  dbo.cp_proveedor.pr_direccion, dbo.tb_persona.pe_cedulaRuc, dbo.cp_proveedor.pr_correo, dbo.cp_proveedor.pr_telefonos, dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.NAutorizacion, dbo.tb_sucursal.Su_Descripcion
+                  dbo.cp_proveedor.pr_direccion, dbo.tb_persona.pe_cedulaRuc, dbo.cp_proveedor.pr_correo, dbo.cp_proveedor.pr_telefonos, dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.NAutorizacion, dbo.tb_sucursal.Su_Descripcion, 
+                  dbo.cp_orden_giro.co_FechaFactura
 FROM     dbo.cp_retencion INNER JOIN
                   dbo.cp_retencion_det ON dbo.cp_retencion.IdEmpresa = dbo.cp_retencion_det.IdEmpresa AND dbo.cp_retencion.IdRetencion = dbo.cp_retencion_det.IdRetencion INNER JOIN
                   dbo.cp_orden_giro ON dbo.cp_retencion.IdEmpresa_Ogiro = dbo.cp_orden_giro.IdEmpresa AND dbo.cp_retencion.IdCbteCble_Ogiro = dbo.cp_orden_giro.IdCbteCble_Ogiro AND 
@@ -18,7 +19,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'           End
             DisplayFlags = 280
             TopColumn = 0
          End
@@ -34,14 +35,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         E
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -49,6 +50,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         E
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_013';
+
+
 
 
 GO
@@ -119,7 +122,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -240
+         Top = -120
          Left = 0
       End
       Begin Tables = 
@@ -135,23 +138,23 @@ Begin DesignProperties =
          End
          Begin Table = "cp_retencion_det"
             Begin Extent = 
-               Top = 175
-               Left = 48
-               Bottom = 338
-               Right = 279
+               Top = 165
+               Left = 952
+               Bottom = 328
+               Right = 1183
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "cp_orden_giro"
             Begin Extent = 
-               Top = 242
-               Left = 48
-               Bottom = 506
-               Right = 355
+               Top = 149
+               Left = 153
+               Bottom = 413
+               Right = 460
             End
             DisplayFlags = 280
-            TopColumn = 32
+            TopColumn = 5
          End
          Begin Table = "cp_proveedor"
             Begin Extent = 
@@ -189,5 +192,7 @@ Begin DesignProperties =
                Left = 606
                Bottom = 451
                Right = 878
-   ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_013';
+ ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_013';
+
+
 

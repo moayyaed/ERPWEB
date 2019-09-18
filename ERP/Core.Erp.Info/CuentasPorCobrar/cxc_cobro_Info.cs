@@ -36,12 +36,12 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public string cr_estado { get; set; }
         public bool EstadoBool { get; set; }
         public Nullable<decimal> cr_recibo { get; set; }
-        public string cr_es_anticipo { get; set; }
         public Nullable<int> IdBanco { get; set; }
         [Required(ErrorMessage ="El campo caja es obligatorio")]
         public int IdCaja { get; set; }
         public string MotiAnula { get; set; }
         public Nullable<int> IdTipoNotaCredito { get; set; }
+        public Nullable<bool> cr_EsProvision { get; set; }
 
         #region Campos de auditoria
         public Nullable<System.DateTime> Fecha_Transac { get; set; }

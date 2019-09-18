@@ -103,9 +103,10 @@
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.Width = Unit.Percentage(8);
         });
-        settings.Columns.Add("Nombres", "Cliente").Width = Unit.Percentage(25);
-        settings.Columns.Add("CodNota", "Codigo").Width = Unit.Percentage(14);
+        settings.Columns.Add("Nombres", "Cliente").Width = Unit.Percentage(22);
+        settings.Columns.Add("CodNota", "Codigo").Width = Unit.Percentage(10);
         settings.Columns.Add("NumNota_Impresa", "# Nota").Width = Unit.Percentage(12);
+        settings.Columns.Add("NaturalezaNota", "Naturaleza").Width = Unit.Percentage(8);
         settings.Columns.Add(column =>
         {
             column.FieldName = "sc_subtotal";

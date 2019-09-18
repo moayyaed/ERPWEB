@@ -101,10 +101,11 @@
             column.FieldName = "no_fecha";
             column.Caption = "Fecha";
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(8);
         });
-        settings.Columns.Add("Nombres", "Cliente").Width = Unit.Percentage(30);
-        settings.Columns.Add("NumNota_Impresa", "# Nota").Width = Unit.Percentage(15);
+        settings.Columns.Add("Nombres", "Cliente").Width = Unit.Percentage(27);
+        settings.Columns.Add("NumNota_Impresa", "# Nota").Width = Unit.Percentage(12);
+        settings.Columns.Add("NaturalezaNota", "Naturaleza").Width = Unit.Percentage(8);
         settings.Columns.Add(column =>
         {
             column.FieldName = "sc_subtotal";
@@ -156,6 +157,11 @@
             });
             column.Width = Unit.Percentage(5);
         });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_subtotal").DisplayFormat = "{0:n2}"; 
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_iva").DisplayFormat = "{0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_total").DisplayFormat = "{0:n2}";
+        settings.Settings.ShowFooter = true;
     });
 }
 @grid.Bind(Model).GetHtml()

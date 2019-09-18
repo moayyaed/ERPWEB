@@ -153,6 +153,7 @@
     <Compile Include="Banco\ba_CatalogoTipo_Data.cs" />
     <Compile Include="Banco\ba_Catalogo_Data.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_Data.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_tipo_Data.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Data.cs" />
     <Compile Include="Banco\ba_Cbte_Ban_x_ba_TipoFlujo_Data.cs" />
     <Compile Include="Banco\ba_Conciliacion_Data.cs" />
@@ -190,6 +191,9 @@
       <DependentUpon>Model_banco.tt</DependentUpon>
     </Compile>
     <Compile Include="ba_Cbte_Ban.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Cbte_Ban_tipo.cs">
       <DependentUpon>Model_banco.tt</DependentUpon>
     </Compile>
     <Compile Include="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.cs">

@@ -1,7 +1,7 @@
 ﻿@using System.Web.UI.WebControls
 @model Core.Erp.Info.Inventario.in_transferencia_Info
 @{
-    ViewBag.Title = "Auditoria de inventario";
+    ViewBag.Title = "Auditoría de inventario";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -139,6 +139,7 @@
                                             settings.Properties.EditFormatString = "dd/MM/yyyy";
                                             settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.AllowMouseWheel = false;
                                         }).GetHtml()
                                         @Html.ValidationMessageFor(q => q.fecha_correccion_transferencia, "", new { @class = "text-danger" })
                                     </div>
@@ -188,6 +189,7 @@
                                                 settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                 settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.AllowMouseWheel = false;
                                             }).GetHtml()
                                             @Html.ValidationMessageFor(q => q.fecha_inicio_mov, "", new { @class = "text-danger" })
                                         </div>
@@ -208,6 +210,7 @@
                                                 settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                 settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.AllowMouseWheel = false;
                                             }).GetHtml()
                                             @Html.ValidationMessageFor(q => q.fecha_fin_mov, "", new { @class = "text-danger" })
                                         </div>
@@ -278,6 +281,7 @@
                                             settings.Properties.EditFormatString = "dd/MM/yyyy";
                                             settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.AllowMouseWheel = false;
                                         }).GetHtml()
                                             @Html.ValidationMessageFor(q => q.fecha_recosteo_sucursal, "", new { @class = "text-danger" })
                                         </div>

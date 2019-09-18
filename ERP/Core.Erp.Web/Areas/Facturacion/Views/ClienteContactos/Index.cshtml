@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Contactos";
+    ViewBag.Title = "Consulta de contactos de cliente";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -12,6 +12,7 @@
 {
     @Html.Action("GridViewPartial_ClienteContactos", new { IdEmpresa = ViewBag.IdEmpresa, IdCliente = ViewBag.IdCliente })
 }
+
 
 <div class="box-footer">
     <a class="btn btn-default" href="@Url.Action("Index","Cliente",new { Area = "Facturacion" },null)">Volver</a>
