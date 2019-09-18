@@ -14,7 +14,7 @@ namespace Core.Erp.Data.Reportes.Base
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
@@ -1749,6 +1749,64 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("FechaCorte", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_021_Result>("SPINV_021", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idBodegaIniParameter, idBodegaFinParameter, fechaCorteParameter);
+        }
+    
+        public virtual ObjectResult<SPCONTA_007_Result> SPCONTA_007(Nullable<int> idEmpresa, string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarAcumulado, Nullable<bool> mostrarDetalle)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var mostrarAcumuladoParameter = mostrarAcumulado.HasValue ?
+                new ObjectParameter("MostrarAcumulado", mostrarAcumulado) :
+                new ObjectParameter("MostrarAcumulado", typeof(bool));
+    
+            var mostrarDetalleParameter = mostrarDetalle.HasValue ?
+                new ObjectParameter("MostrarDetalle", mostrarDetalle) :
+                new ObjectParameter("MostrarDetalle", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_007_Result>("SPCONTA_007", idEmpresaParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter, mostrarAcumuladoParameter, mostrarDetalleParameter);
+        }
+    
+        public virtual int SPCONTA_008(Nullable<int> idEmpresa, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, string idUsuario, Nullable<bool> mostrarSaldo0, Nullable<bool> mostrarAcumulado)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
+                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
+                new ObjectParameter("MostrarSaldo0", typeof(bool));
+    
+            var mostrarAcumuladoParameter = mostrarAcumulado.HasValue ?
+                new ObjectParameter("MostrarAcumulado", mostrarAcumulado) :
+                new ObjectParameter("MostrarAcumulado", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPCONTA_008", idEmpresaParameter, fechaIniParameter, fechaFinParameter, idUsuarioParameter, mostrarSaldo0Parameter, mostrarAcumuladoParameter);
         }
     }
 }

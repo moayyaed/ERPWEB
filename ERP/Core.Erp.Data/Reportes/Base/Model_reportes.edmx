@@ -4933,6 +4933,22 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
           <Parameter Name="Balance" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SPCONTA_007" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="FechaIni" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+          <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
+          <Parameter Name="MostrarDetalle" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPCONTA_008" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="FechaIni" Type="datetime" Mode="In" />
+          <Parameter Name="FechaFin" Type="datetime" Mode="In" />
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
+          <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SPCXC_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdSucursalIni" Type="int" Mode="In" />
@@ -12144,6 +12160,22 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
             <Parameter Name="IdBodegaFin" Mode="In" Type="Int32" />
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="SPCONTA_007" ReturnType="Collection(Model_reportes.SPCONTA_007_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
+            <Parameter Name="MostrarDetalle" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPCONTA_008">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -14314,6 +14346,18 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Type="String" Name="EstadoAprobacion" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="co_factura" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="co_FechaContabilizacion" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SPCONTA_007_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Secuencia" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="IdCtaCble" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="pc_cuenta" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="TipoOrden" Nullable="false" />
+          <Property Type="String" Name="Clasificacion" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ClasificacionOrden" Nullable="false" />
+          <Property Type="Decimal" Name="Valor" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -18619,6 +18663,23 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_007" FunctionName="Model_reportes.Store.SPCONTA_007">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_007_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="pc_cuenta" ColumnName="pc_cuenta" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="TipoOrden" ColumnName="TipoOrden" />
+                <ScalarProperty Name="Clasificacion" ColumnName="Clasificacion" />
+                <ScalarProperty Name="ClasificacionOrden" ColumnName="ClasificacionOrden" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_008" FunctionName="Model_reportes.Store.SPCONTA_008" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

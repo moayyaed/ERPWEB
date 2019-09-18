@@ -292,5 +292,45 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+        public bool ModificacionMasivaDB(List<tb_sis_Documento_Tipo_Talonario_Info> info)
+        {
+            try
+            {
+                using (Entities_general Context = new Entities_general())
+                {
+                    foreach (var item in info)
+                    {
+                        tb_sis_Documento_Tipo_Talonario Entity = Context.tb_sis_Documento_Tipo_Talonario.FirstOrDefault(q => q.IdEmpresa == item.IdEmpresa 
+                        && q.CodDocumentoTipo == item.CodDocumentoTipo && q.Establecimiento == item.Establecimiento && q.PuntoEmision == item.PuntoEmision 
+                        && q.NumDocumento == item.NumDocumento);
+                        if (Entity == null) return false;
+
+                        if (item.FechaCaducidad != null)
+                        {
+                            Entity.FechaCaducidad = item.FechaCaducidad;
+                        }
+
+                        if (item.NumAutorizacion != null || item.NumAutorizacion !="")
+                        {
+                            Entity.NumAutorizacion = item.NumAutorizacion;
+                        }
+
+                        Entity.es_Documento_Electronico = item.es_Documento_Electronico;
+                        Entity.Usado = item.Usado;
+                        Entity.Estado = item.Estado;
+
+                        Context.SaveChanges();
+                    }
+                    
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

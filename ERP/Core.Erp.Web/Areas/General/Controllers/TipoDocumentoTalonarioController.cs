@@ -230,7 +230,6 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 Establecimiento="",
                 PuntoEmision="",
                 NumAutorizacion = "",
-                FechaCaducidad = DateTime.Now,
                 Usado =false,
                 EsElectronico = false,
                 Anulado = false
@@ -269,14 +268,54 @@ namespace Core.Erp.Web.Areas.General.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ActualizarRegistros(DateTime FechaCaducidad, int IdSucursal = 0, string NumAutorizacion = "", bool EsElectronico = false, bool Usado = false, bool Anulado = false)
+        public JsonResult ActualizarRegistros(DateTime? FechaCaducidad, int IdSucursal = 0, string NumAutorizacion = "", bool EsElectronico = false, bool Usado = false, bool Anulado = false)
         {
             var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-            var resultado = "";
-            var ListaActualizacion = ListaTalonario.get_list(IdTransaccionSession);
+            var resultado = "0";
+            List<tb_sis_Documento_Tipo_Talonario_Info> Lista = ListaTalonario.get_list(IdTransaccionSession);
 
+            if (Lista.Count > 0)
+            {
+                foreach (var item in Lista)
+                {
+                    if (FechaCaducidad == null)
+                    {
+                        item.FechaCaducidad = null;
+                    }
+                    else
+                    {
+                        item.FechaCaducidad = FechaCaducidad;
+                    }
 
+                    if (NumAutorizacion == null || NumAutorizacion=="")
+                    {
+                        item.NumAutorizacion = null;
+                    }
+                    else
+                    {
+                        item.NumAutorizacion = NumAutorizacion;
+                    }
+
+                    if (Anulado == true)
+                    {
+                        item.Estado = "I";
+                    }
+                    else
+                    {
+                        item.Estado = "A";
+                    }
+
+                    item.Usado = Usado;
+                    item.es_Documento_Electronico = EsElectronico;
+                }
+
+                if (bus_talonario.ModificacionMasivaDB(Lista))
+                {
+                    resultado = "1";
+                }
+            }
+            
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion

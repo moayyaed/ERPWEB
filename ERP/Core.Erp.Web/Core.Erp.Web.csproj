@@ -774,6 +774,12 @@
     <Compile Include="Reportes\Contabilidad\CONTA_006_ER_Rpt.Designer.cs">
       <DependentUpon>CONTA_006_ER_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_007_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_007_Rpt.Designer.cs">
+      <DependentUpon>CONTA_007_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10328,6 +10334,7 @@
     <Content Include="Areas\Banco\Views\ConciliacionBanco\Abrir.cshtml" />
     <Content Include="Areas\General\Views\TipoDocumentoTalonario\ActualizacionMasiva.cshtml" />
     <Content Include="Areas\General\Views\TipoDocumentoTalonario\_GridViewPartial_ActualizacionMasiva.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_007.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10574,6 +10581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_006_ER_Rpt.resx">
       <DependentUpon>CONTA_006_ER_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_007_Rpt.resx">
+      <DependentUpon>CONTA_007_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.resx">
       <DependentUpon>CXC_001_diario_Rpt.cs</DependentUpon>

@@ -105,5 +105,18 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+
+        public bool ModificacionMasivaDB(List<tb_sis_Documento_Tipo_Talonario_Info> info)
+        {
+            try
+            {
+                return odata.ModificacionMasivaDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

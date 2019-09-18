@@ -592,5 +592,55 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_nivel_CONTA006();
             return View(model);
         }
+
+        public ActionResult CONTA_007()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                MostrarSaldoAcumulado = false,
+                MostrarSaldoDetallado = false
+            };
+
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+
+            CONTA_007_Rpt report = new CONTA_007_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaini.Value = model.fecha_ini;
+            report.p_fechafin.Value = model.fecha_fin;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_MostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.p_MostrarDetallado.Value = model.MostrarSaldoDetallado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_nivel();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_007(cl_filtros_contabilidad_Info model)
+        {
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+
+            CONTA_007_Rpt report = new CONTA_007_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaini.Value = model.fecha_ini;
+            report.p_fechafin.Value = model.fecha_fin;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_MostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.p_MostrarDetallado.Value = model.MostrarSaldoDetallado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            return View(model);
+        }
     }
 }

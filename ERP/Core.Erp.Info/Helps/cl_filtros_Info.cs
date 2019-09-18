@@ -193,6 +193,7 @@ namespace Core.Erp.Info.Helps
         public DateTime fecha_fin { get; set; }
         public bool mostrar_saldos_en_0 { get; set; }
         public bool MostrarSaldoAcumulado { get; set; }
+        public bool MostrarSaldoDetallado { get; set; }
         public int IdSucursal { get; set; }
         public int IdPunto_cargo_grupo { get; set; }
         public string IdUsuario { get; set; }
