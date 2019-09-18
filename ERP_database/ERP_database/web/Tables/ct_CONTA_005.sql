@@ -1,4 +1,4 @@
-﻿CREATE TABLE [web].[ct_SPCONTA_005] (
+﻿CREATE TABLE [web].[ct_CONTA_005] (
     [IdEmpresa]             INT           NOT NULL,
     [IdPunto_cargo]         INT           NOT NULL,
     [IdUsuario]             VARCHAR (50)  NOT NULL,
