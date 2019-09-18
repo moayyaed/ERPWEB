@@ -1101,6 +1101,7 @@
     <Build Include="web\Stored Procedures\SPCONTA_007.sql" />
     <Build Include="web\Tables\ct_CONTA_008.sql" />
     <Build Include="web\Tables\ct_CONTA_005.sql" />
+    <Build Include="web\Stored Procedures\SPCONTA_008.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
