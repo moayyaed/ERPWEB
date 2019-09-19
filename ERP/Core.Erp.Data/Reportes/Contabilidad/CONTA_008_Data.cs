@@ -20,7 +20,7 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                 List<CONTA_008_Info> Lista = new List<CONTA_008_Info>();
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    /*Lista = (from q in Context.SPCONTA_008(IdEmpresa, fechaIni, fechaFin, IdUsuario, mostrarSaldo0, MostrarSaldoAcumulado)
+                    Lista = (from q in Context.SPCONTA_008(IdEmpresa, fechaIni, fechaFin, IdUsuario, mostrarSaldo0, MostrarSaldoAcumulado)
                              select new CONTA_008_Info
                              {
                                  IdUsuario = q.IdUsuario,
@@ -34,24 +34,12 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                                  gc_estado_financiero = q.gc_estado_financiero,
                                  gc_GrupoCble = q.gc_GrupoCble,
                                  gc_Orden = q.gc_Orden,
-                                 Debitos = q.Debitos,
-                                 DebitosSaldoInicial = q.DebitosSaldoInicial,
-                                 SaldoDebitos = q.SaldoDebitos,
-                                 SaldoDebitosCreditos = q.SaldoDebitosCreditos,
-                                 Creditos = q.Creditos,
-                                 CreditosSaldoInicial = q.CreditosSaldoInicial,
-                                 SaldoCreditos = q.SaldoCreditos,
                                  SaldoFinal = q.SaldoFinal,
-                                 SaldoInicial = q.SaldoInicial,
                                  EsCuentaMovimiento = q.EsCuentaMovimiento,
                                  Naturaleza = q.Naturaleza,
-                                 SaldoCreditosNaturaleza = q.SaldoCreditosNaturaleza,
-                                 SaldoDebitosCreditosNaturaleza = q.SaldoDebitosCreditosNaturaleza,
-                                 SaldoDebitosNaturaleza = q.SaldoDebitosNaturaleza,
                                  SaldoFinalNaturaleza = q.SaldoFinalNaturaleza,
-                                 SaldoInicialNaturaleza = q.SaldoInicialNaturaleza,
                                  Su_Descripcion = Su_Descripcion
-                             }).ToList();*/
+                             }).ToList();
                 }
                 return Lista;
             }

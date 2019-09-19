@@ -1354,6 +1354,9 @@
     <Compile Include="Reportes\Base\SPCONTA_007_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\SPCONTA_008_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\SPCXC_004_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>

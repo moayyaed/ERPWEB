@@ -1780,7 +1780,7 @@ namespace Core.Erp.Data.Reportes.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_007_Result>("SPCONTA_007", idEmpresaParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter, mostrarAcumuladoParameter, mostrarDetalleParameter);
         }
     
-        public virtual int SPCONTA_008(Nullable<int> idEmpresa, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, string idUsuario, Nullable<bool> mostrarSaldo0, Nullable<bool> mostrarAcumulado)
+        public virtual ObjectResult<SPCONTA_008_Result> SPCONTA_008(Nullable<int> idEmpresa, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, string idUsuario, Nullable<bool> mostrarSaldo0, Nullable<bool> mostrarAcumulado)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
                 new ObjectParameter("IdEmpresa", idEmpresa) :
@@ -1806,7 +1806,7 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("MostrarAcumulado", mostrarAcumulado) :
                 new ObjectParameter("MostrarAcumulado", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPCONTA_008", idEmpresaParameter, fechaIniParameter, fechaFinParameter, idUsuarioParameter, mostrarSaldo0Parameter, mostrarAcumuladoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_008_Result>("SPCONTA_008", idEmpresaParameter, fechaIniParameter, fechaFinParameter, idUsuarioParameter, mostrarSaldo0Parameter, mostrarAcumuladoParameter);
         }
     }
 }
