@@ -10342,6 +10342,7 @@
     <Content Include="Areas\General\Views\TipoDocumentoTalonario\_GridViewPartial_ActualizacionMasiva.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_007.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_008.cshtml" />
+    <Content Include="Areas\Reportes\Views\InventarioReportes\INV_021.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
