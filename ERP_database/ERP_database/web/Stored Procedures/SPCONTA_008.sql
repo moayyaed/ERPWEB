@@ -1,4 +1,4 @@
-﻿--exec [web].[SPCONTA_008] 1,2019,'2019/09/01','2019/09/30','admin',0,1
+﻿--exec [web].[SPCONTA_008] 1,'2019/09/01','2019/09/30','admin',0,1
 CREATE PROCEDURE [web].[SPCONTA_008]
 (
 @IdEmpresa int,
@@ -72,7 +72,7 @@ BEGIN --INSERTO CUENTAS DE ER
 	from ct_cbtecble_det as d left join 
 	ct_CentroCosto as ct on d.IdEmpresa = ct.IdEmpresa and d.IdCentroCosto = ct.IdCentroCosto inner join 
 	ct_cbtecble as c on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble inner join
-	web.tb_FiltroReportes as f on c.IdEmpresa = f.IdEmpresa and c.IdSucursal = f.IdSucursal and c.IdUsuario = @IdUsuario inner join
+	web.tb_FiltroReportes as f on c.IdEmpresa = f.IdEmpresa and c.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario inner join
 	ct_plancta as pc on d.IdEmpresa = pc.IdEmpresa and d.IdCtaCble = pc.IdCtaCble inner join
 	ct_grupocble as g on pc.IdGrupoCble = g.IdGrupoCble
 	where d.IdEmpresa = @IdEmpresa and c.cb_Fecha between iif(@MostrarAcumulado = 1, c.cb_Fecha,@FechaIni) and @FechaFin
@@ -136,4 +136,6 @@ UPDATE web.ct_CONTA_008 SET SaldoFinalNaturaleza = iif(Naturaleza = 'C', SaldoFi
 where web.ct_CONTA_008.IdEmpresa = @IdEmpresa 
 and web.ct_CONTA_008.IdUsuario = @IdUsuario
 
-SELECT * FROM [web].[ct_CONTA_008] WHERE IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario
+SELECT IdUsuario,IdEmpresa,IdCtaCble,IdCentroCosto,pc_Cuenta,IdCtaCblePadre,EsCtaUtilidad,IdNivelCta,IdGrupoCble,gc_GrupoCble,gc_estado_financiero,gc_Orden,SaldoFinal,SaldoFinalNaturaleza,EsCuentaMovimiento,Naturaleza 
+FROM [web].[ct_CONTA_008] 
+WHERE IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario

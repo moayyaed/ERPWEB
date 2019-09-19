@@ -2,7 +2,7 @@
 @using System.Web.UI.WebControls
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "Estado de resultados EBITDA";
+    ViewBag.Title = "Estado de resultados por centros de costo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -38,7 +38,7 @@
         return actualValues;
     }
 </script>
-@using (Html.BeginForm("CONTA_007", "ContabilidadReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("CONTA_008", "ContabilidadReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id = "IdEmpresa"})
     <div class="box">
@@ -149,26 +149,26 @@
                     <div class="col-md-2">
                         <div class="checkbox">
                             <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.mostrar_saldos_en_0,
+                         settings =>
+                         {
+                             settings.Name = "mostrar_saldos_en_0";
+                             settings.Checked = false;
+                             settings.Text = "Mostrar saldos en 0";
+                         }
+                     ).GetHtml()
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <div class="form-group">
                                 @Html.DevExpress().CheckBoxFor(q => q.MostrarSaldoAcumulado,
                          settings =>
                          {
                              settings.Name = "MostrarSaldoAcumulado";
                              settings.Checked = false;
                              settings.Text = "Mostrar acumulado";
-                         }
-                     ).GetHtml()
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="checkbox">
-                            <div class="form-group">
-                                @Html.DevExpress().CheckBoxFor(q => q.MostrarSaldoDetallado,
-                         settings =>
-                         {
-                             settings.Name = "MostrarSaldoDetallado";
-                             settings.Checked = false;
-                             settings.Text = "Mostrar detallado";
                          }
                      ).GetHtml()
                             </div>

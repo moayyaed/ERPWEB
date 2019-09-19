@@ -27,3 +27,11 @@ $(document).on('submit', 'form', function () {
         });
     }
 });
+
+$(document).ready(function () {
+    $(".form").keypress(function (e) {//Para deshabilitar el uso de la tecla "Enter"
+        if (e.which == 13) {
+            return false;
+        }
+    });
+});
