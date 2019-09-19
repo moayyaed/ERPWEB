@@ -75,7 +75,7 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Retención", "AplicarRetencion", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") }) + "&nbsp;" +
+                    Html.ActionLink("Modificar", "AplicarRetencion", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
 

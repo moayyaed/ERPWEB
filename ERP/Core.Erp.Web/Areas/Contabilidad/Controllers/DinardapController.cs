@@ -57,7 +57,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             var lst_dinardarp = set_dinardap_info(lst_archivo, model.IdPeriodoIni);
 
             archivo = GetArchivo(lst_dinardarp, nombre_file);
-            return File(archivo, "application/xml", nombre_file + ".txt");
+            return File(archivo, "text/plain", nombre_file + ".txt");
         }
         #endregion
 

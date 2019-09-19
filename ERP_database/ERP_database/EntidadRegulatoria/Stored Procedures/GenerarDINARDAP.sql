@@ -142,6 +142,6 @@ and Facturas_y_notas_deb.IdCbteVta=Cobros_x_fac.IdCbte_vta_nota
 and Facturas_y_notas_deb.vt_tipoDoc=Cobros_x_fac.dc_TipoDocumento
 where 
     ROUND(Facturas_y_notas_deb.Valor_Original - isnull(Cobros_x_fac.dc_ValorPago,0),2)>60
-	and Facturas_y_notas_deb.vt_fech_venc < @FechaFin
+	--and Facturas_y_notas_deb.vt_fech_venc < @FechaFin
 
 END
