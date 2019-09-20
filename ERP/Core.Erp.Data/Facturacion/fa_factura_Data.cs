@@ -1192,6 +1192,14 @@ namespace Core.Erp.Data.Facturacion
                             Entity.IdUsuarioUltAnu = null;
                             Entity.Estado = "A";
                         }
+                    var lst_det = Context.fa_factura_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdCbteVta == info.IdCbteVta).ToList();
+                    foreach (var item in lst_det)
+                    {
+                        item.IdSucursal_pf = null;
+                        item.IdEmpresa_pf = null;
+                        item.IdProforma = null;
+                        item.Secuencia_pf = null;
+                    }
                     Context.SPFAC_EliminarCobroEfectivo(info.IdEmpresa, info.IdSucursal, info.IdBodega, info.IdCbteVta);
                     Context.SaveChanges();
                 }

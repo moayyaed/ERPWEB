@@ -139,5 +139,18 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
+        public List<ct_CentroCosto_Info> GetListPorNivel(int IdEmpresa, int IdNivel)
+        {
+            try
+            {
+                return odata.GetListPorNivel(IdEmpresa, IdNivel);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

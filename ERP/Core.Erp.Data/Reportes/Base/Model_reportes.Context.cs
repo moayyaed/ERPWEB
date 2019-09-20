@@ -1808,5 +1808,38 @@ namespace Core.Erp.Data.Reportes.Base
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_008_Result>("SPCONTA_008", idEmpresaParameter, fechaIniParameter, fechaFinParameter, idUsuarioParameter, mostrarSaldo0Parameter, mostrarAcumuladoParameter);
         }
+    
+        public virtual ObjectResult<SPCONTA_009_Result> SPCONTA_009(Nullable<int> idEmpresa, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, string idUsuario, Nullable<bool> mostrarSaldo0, Nullable<bool> mostrarAcumulado, string idCentroCosto)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
+                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
+                new ObjectParameter("MostrarSaldo0", typeof(bool));
+    
+            var mostrarAcumuladoParameter = mostrarAcumulado.HasValue ?
+                new ObjectParameter("MostrarAcumulado", mostrarAcumulado) :
+                new ObjectParameter("MostrarAcumulado", typeof(bool));
+    
+            var idCentroCostoParameter = idCentroCosto != null ?
+                new ObjectParameter("IdCentroCosto", idCentroCosto) :
+                new ObjectParameter("IdCentroCosto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_009_Result>("SPCONTA_009", idEmpresaParameter, fechaIniParameter, fechaFinParameter, idUsuarioParameter, mostrarSaldo0Parameter, mostrarAcumuladoParameter, idCentroCostoParameter);
+        }
     }
 }

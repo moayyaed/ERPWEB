@@ -738,6 +738,18 @@
     <Compile Include="Reportes\Contabilidad\CONTA_003_BG_Rpt.Designer.cs">
       <DependentUpon>CONTA_003_BG_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_009_Rpt_Resumen.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_009_Rpt_Resumen.Designer.cs">
+      <DependentUpon>CONTA_009_Rpt_Resumen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_009_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_009_Rpt.Designer.cs">
+      <DependentUpon>CONTA_009_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Contabilidad\CONTA_008_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10343,6 +10355,7 @@
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_007.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_008.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_021.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_009.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10571,6 +10584,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_003_BG_Rpt.resx">
       <DependentUpon>CONTA_003_BG_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_009_Rpt_Resumen.resx">
+      <DependentUpon>CONTA_009_Rpt_Resumen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_009_Rpt.resx">
+      <DependentUpon>CONTA_009_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_008_Rpt.resx">
       <DependentUpon>CONTA_008_Rpt.cs</DependentUpon>

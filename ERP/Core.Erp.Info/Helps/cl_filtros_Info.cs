@@ -199,6 +199,7 @@ namespace Core.Erp.Info.Helps
         public string IdUsuario { get; set; }
         public int IdPeriodoIni { get; set; }
         public int IdPeriodoFin { get; set; }
+        public string IdCentroCosto { get; set; }
         public cl_filtros_contabilidad_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);

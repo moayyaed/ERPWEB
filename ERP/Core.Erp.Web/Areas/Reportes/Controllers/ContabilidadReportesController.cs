@@ -102,6 +102,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         #endregion
 
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
         public ActionResult CONTA_001(int IdTipoCbte = 0, decimal IdCbteCble = 0)
@@ -138,7 +139,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_punto = bus_punto.GetList(IdEmpresa, false);
             ViewBag.lst_punto = lst_punto;
         }
-
+        private void cargar_cc(int IdEmpresa)
+        {
+            var lst = bus_cc.GetListPorNivel(IdEmpresa, 1);
+            lst.Add(new ct_CentroCosto_Info
+            {
+                IdCentroCosto = "",
+                cc_Descripcion = "Todos"
+            });
+            ViewBag.lstCC = lst;
+        }
         private void cargar_combos_punto_cargo(cl_filtros_Info model)
         {
             ct_punto_cargo_grupo_Bus bus_punto = new ct_punto_cargo_grupo_Bus();
@@ -650,7 +660,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNivel = 6,
                 balance = "ER",
-                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                IdCentroCosto = ""
             };
 
             model.IdAnio = model.fecha_fin.Year;
@@ -692,6 +703,65 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
 
             cargar_nivel();
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
+
+        public ActionResult CONTA_009()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdNivel = 6,
+                balance = "ER",
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                IdCentroCosto = ""
+            };
+
+            model.IdAnio = model.fecha_fin.Year;
+            model.MostrarSaldoAcumulado = false;
+            CONTA_009_Rpt report = new CONTA_009_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaIni.Value = model.fecha_ini;
+            report.p_fechaFin.Value = model.fecha_fin;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+            report.p_MostrarSaldoAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_nivel();
+            cargar_cc(model.IdEmpresa);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_009(cl_filtros_contabilidad_Info model)
+        {
+            model.IdAnio = model.fecha_fin.Year;
+
+
+            CONTA_009_Rpt report = new CONTA_009_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaIni.Value = model.fecha_ini;
+            report.p_fechaFin.Value = model.fecha_fin;
+            report.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
+            report.p_MostrarSaldoAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_nivel();
+            cargar_cc(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }

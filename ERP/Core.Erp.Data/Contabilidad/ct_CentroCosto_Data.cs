@@ -303,6 +303,32 @@ namespace Core.Erp.Data.Contabilidad
             }
         }
 
+        public List<ct_CentroCosto_Info> GetListPorNivel(int IdEmpresa, int IdNivel)
+        {
+            try
+            {
+                List<ct_CentroCosto_Info> Lista = new List<ct_CentroCosto_Info>();
+
+                using (Entities_contabilidad db = new Entities_contabilidad())
+                {
+                    Lista = db.ct_CentroCosto.Where(q => q.IdEmpresa == IdEmpresa && q.IdNivel == IdNivel).Select(q => new ct_CentroCosto_Info
+                     {
+                        IdEmpresa = q.IdEmpresa,
+                        IdCentroCosto = q.IdCentroCosto,
+                        cc_Descripcion = q.cc_Descripcion,
+                        IdNivel = q.IdNivel
+                     }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public ct_CentroCosto_Info get_info_nuevo(int IdEmpresa, string IdCentroCostoPadre)
         {
             try

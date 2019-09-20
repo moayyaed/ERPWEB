@@ -80,7 +80,7 @@
         });
         settings.Columns.Add("SecuenciaCaja", "Secuencia").Width = System.Web.UI.WebControls.Unit.Percentage(6);
         settings.Columns.Add("IdCbteCble", "#Cbte").Width = System.Web.UI.WebControls.Unit.Percentage(6);
-        settings.Columns.Add("ca_Descripcion", "Caja").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add("ca_Descripcion", "Caja").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "cm_fecha";
@@ -88,6 +88,7 @@
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
             column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
         });
+        settings.Columns.Add("tm_descripcion", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("pe_nombreCompleto", "Beneficiario").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Columns.Add("cm_observacion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Columns.Add(column =>
