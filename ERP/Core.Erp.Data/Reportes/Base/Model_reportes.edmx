@@ -1072,11 +1072,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_006' no tiene definida ningu
             <PropertyRef Name="vt_fecha" />
             <PropertyRef Name="IdCliente" />
             <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="IdVendedor" />
             <PropertyRef Name="vt_fech_venc" />
             <PropertyRef Name="cr_fecha" />
             <PropertyRef Name="ValorPago" />
             <PropertyRef Name="IdCobro_tipo" />
+            <PropertyRef Name="IdVendedor" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -4948,6 +4948,15 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
           <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPCONTA_009" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="FechaIni" Type="datetime" Mode="In" />
+          <Parameter Name="FechaFin" Type="datetime" Mode="In" />
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
+          <Parameter Name="MostrarAcumulado" Type="bit" Mode="In" />
+          <Parameter Name="IdCentroCosto" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SPCXC_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -12176,6 +12185,15 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
             <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="SPCONTA_009" ReturnType="Collection(Model_reportes.SPCONTA_009_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
+            <Parameter Name="IdCentroCosto" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -14376,6 +14394,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Type="Decimal" Name="SaldoFinalNaturaleza" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
           <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SPCONTA_009_Result">
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="IdCentroCosto" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
+          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
+          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
+          <Property Type="Decimal" Name="SaldoFinal" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="SaldoFinalNaturaleza" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
+          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="cc_Descripcion" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="pc_cuenta_padre" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="FiltroCC" Nullable="true" MaxLength="500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -18716,6 +18755,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
                 <ScalarProperty Name="SaldoFinalNaturaleza" ColumnName="SaldoFinalNaturaleza" />
                 <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
                 <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_009" FunctionName="Model_reportes.Store.SPCONTA_009">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_009_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
+                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
+                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
+                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
+                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
+                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
+                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
+                <ScalarProperty Name="SaldoFinalNaturaleza" ColumnName="SaldoFinalNaturaleza" />
+                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
+                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
+                <ScalarProperty Name="cc_Descripcion" ColumnName="cc_Descripcion" />
+                <ScalarProperty Name="pc_cuenta_padre" ColumnName="pc_cuenta_padre" />
+                <ScalarProperty Name="FiltroCC" ColumnName="FiltroCC" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
