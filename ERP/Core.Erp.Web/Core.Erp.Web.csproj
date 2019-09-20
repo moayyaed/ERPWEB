@@ -10361,6 +10361,7 @@
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_prestamos_masivos.cshtml" />
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Nuevo.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_009.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbSucursal.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

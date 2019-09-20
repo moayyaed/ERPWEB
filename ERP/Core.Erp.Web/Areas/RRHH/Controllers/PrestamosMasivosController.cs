@@ -16,14 +16,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class PrestamosMasivosController : Controller
     {
         #region Variables
-        ro_prestamo_Bus bus_prestamos = new ro_prestamo_Bus();
-        ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
-        ro_Nomina_Tipoliquiliqui_Bus bus_nomina_tipo = new ro_Nomina_Tipoliquiliqui_Bus();
-        ro_prestamo_detalle_Bus bus_detalle = new ro_prestamo_detalle_Bus();
-        ro_prestamo_detalle_lst Lis_ro_prestamo_detalle_lst = new ro_prestamo_detalle_lst();
+        ro_PrestamoMasivo_Bus bus_prestamo_masivo = new ro_PrestamoMasivo_Bus();
         ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         int IdEmpresa = 0;
         ro_prestamo_Info info = new ro_prestamo_Info();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
@@ -48,6 +45,22 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         #endregion
 
+        #region metodo bajo demanda sucursal
+        public ActionResult CmbSucursal()
+        {
+            int model = new int();
+            return PartialView("_CmbSucursal", model);
+        }
+        public List<tb_sucursal_Info> get_list_bajo_demanda_sucursal(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_sucursal.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        public tb_sucursal_Info get_info_bajo_demanda_sucursal(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_sucursal.get_info_bajo_demanda(Convert.ToInt32(SessionFixed.IdEmpresa), args);
+        }
+        #endregion
+
         #region vistas
         public ActionResult Index()
         {
@@ -55,7 +68,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdEmpleado = 0
+                fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
+                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
             };
             return View(model);
         }
@@ -63,15 +77,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult Index(cl_filtros_Info model)
         {
             return View(model);
+
         }
 
-
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_prestamos_masivos(decimal IdEmpleado = 0)
+        public ActionResult GridViewPartial_prestamos_masivos(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdEmpleado = IdEmpleado == 0 ? 0 : IdEmpleado;
-            List<ro_prestamo_Info> model = bus_prestamos.get_list_prestamo(IdEmpresa, IdEmpleado);
+            ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
+            ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
+            ViewBag.IdSucursal = IdSucursal;
+
+            var model = bus_prestamo_masivo.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, ViewBag.IdSucursal, true);
             return PartialView("_GridViewPartial_prestamos_masivos", model);
         }
         #endregion
