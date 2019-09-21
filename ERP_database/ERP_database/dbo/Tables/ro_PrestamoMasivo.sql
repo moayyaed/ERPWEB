@@ -3,7 +3,6 @@
     [IdSucursal]         INT           NOT NULL,
     [IdCarga]            NUMERIC (18)  NOT NULL,
     [Fecha_PriPago]      DATE          NOT NULL,
-    [MontoSol]           FLOAT (53)    NOT NULL,
     [NumCuotas]          INT           NOT NULL,
     [descuento_mensual]  BIT           NOT NULL,
     [descuento_quincena] BIT           NOT NULL,
@@ -17,4 +16,6 @@
     [MotiAnula]          VARCHAR (200) NULL,
     CONSTRAINT [PK_ro_PrestamoMasivo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdCarga] ASC)
 );
+
+
 

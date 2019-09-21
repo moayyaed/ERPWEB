@@ -88,11 +88,12 @@ BEGIN --INSERTO CUENTAS DE ER
 	ct_CentroCosto as cc on d.IdEmpresa = cc.IdEmpresa and d.IdCentroCosto = cc.IdCentroCosto
 	where d.IdEmpresa = @IdEmpresa and c.cb_Fecha between iif(@MostrarAcumulado = 1, c.cb_Fecha,@FechaIni) and @FechaFin
 	and g.gc_estado_financiero = 'ER' and d.IdCtaCble not like '4%'
-	and @IdCentroCosto = 
+	and 
+	@IdCentroCosto = case when D.IdCtaCble not like '6%' then
 	(case when len(@IdCentroCosto) > 0 
 	then 
 		case when len(d.IdCentroCosto) >4 then substring(d.IdCentroCosto,0,4) else d.IdCentroCosto end  
-	else @IdCentroCosto end)
+	else @IdCentroCosto end) else @IdCentroCosto END
 	group by d.IdEmpresa, d.IdCtaCble, d.IdCentroCosto,pc.pc_Cuenta,ct.cc_Descripcion,d.IdCtaCble,pc.IdNivelCta, pc.IdGrupoCble, g.gc_GrupoCble, g.gc_estado_financiero, g.gc_Orden,pc.pc_naturaleza,ct.cc_Descripcion,cc.cc_Descripcion
 	having ROUND(sum(d.dc_Valor),2) != 0
 	UNION ALL
