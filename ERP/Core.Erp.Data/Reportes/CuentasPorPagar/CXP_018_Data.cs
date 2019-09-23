@@ -25,7 +25,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                 List<CXP_018_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPCXP_015(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin).Select(q => new CXP_018_Info
+                    Lista = Context.SPCXP_018(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin).Select(q => new CXP_018_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
