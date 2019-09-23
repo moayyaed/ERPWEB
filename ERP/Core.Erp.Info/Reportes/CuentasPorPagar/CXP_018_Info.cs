@@ -35,6 +35,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         #region Campos que no existen
         public int Orden { get; set; }
         public string Grupo { get; set; }
+        public int? TotalDias { get; set; }
         #endregion
     }
 }
