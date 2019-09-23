@@ -61,6 +61,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         TotalDias = q.Min(g => g.DiasVcto)
                     }).ToList();
 
+                    var Lista_Agrupada = lstA.Where(q=> q.IdProveedor==786).ToList();
+                    var Lista_Rpte = lst.Where(q => q.IdProveedor == 786).ToList();
+
                     Lista = (from g in lstA
                              join q in lst
                              on new { g.Orden, g.IdProveedor } equals new { q.Orden, q.IdProveedor }
@@ -94,6 +97,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  TotalDias = g.TotalDias
                              }).ToList();
                 }
+                
                 return Lista;
             }
             catch (Exception)
