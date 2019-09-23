@@ -33,7 +33,6 @@ namespace Core.Erp.Data.RRHH
                                  IdSucursal = q.IdSucursal,
                                  IdCarga = q.IdCarga,
                                  Fecha_PriPago = q.Fecha_PriPago,
-                                 MontoSol = q.MontoSol,
                                  NumCuotas = q.NumCuotas,
                                  descuento_quincena = q.descuento_quincena,
                                  descuento_mensual = q.descuento_mensual,
@@ -70,7 +69,6 @@ namespace Core.Erp.Data.RRHH
                         IdSucursal= Entity.IdSucursal,
                         IdCarga = Entity.IdCarga,
                         Fecha_PriPago = Entity.Fecha_PriPago,
-                        MontoSol = Entity.MontoSol,
                         NumCuotas = Entity.NumCuotas,
                         descuento_mensual= Entity.descuento_mensual,
                         descuento_men_quin= Entity.descuento_men_quin,
@@ -123,7 +121,6 @@ namespace Core.Erp.Data.RRHH
                         IdEmpresa = info.IdEmpresa,
                         IdCarga = info.IdCarga = get_id(info.IdEmpresa),
                         Fecha_PriPago = info.Fecha_PriPago,
-                        MontoSol = info.MontoSol,
                         NumCuotas = info.NumCuotas,
                         descuento_mensual = info.descuento_mensual,
                         descuento_men_quin = info.descuento_men_quin,
@@ -157,7 +154,6 @@ namespace Core.Erp.Data.RRHH
                     if (Entity == null)
                         return false;
                     Entity.Fecha_PriPago = info.Fecha_PriPago;
-                    Entity.MontoSol = info.MontoSol;
                     Entity.NumCuotas = info.NumCuotas;
                     Entity.descuento_mensual = info.descuento_mensual;
                     Entity.descuento_men_quin = info.descuento_men_quin;
@@ -187,6 +183,7 @@ namespace Core.Erp.Data.RRHH
                     Entity.Estado = info.Estado = false;
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
                     Entity.Fecha_UltAnu = info.Fecha_UltAnu = DateTime.Now;
+                    Entity.MotiAnula = info.MotiAnula;
                     Context.SaveChanges();
                 }
 

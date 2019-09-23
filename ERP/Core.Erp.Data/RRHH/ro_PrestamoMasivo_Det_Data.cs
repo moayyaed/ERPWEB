@@ -25,15 +25,12 @@ namespace Core.Erp.Data.RRHH
                                  IdEmpresa = q.IdEmpresa,
                                  IdCarga = q.IdCarga,
                                  IdSucursal = q.IdSucursal,
-                                 SaldoInicial = q.SaldoInicial,
-                                 TotalCuota = q.TotalCuota,
-                                 Saldo = q.Saldo,
-                                 FechaPago = q.FechaPago,
                                  Secuencia = q.Secuencia,
                                  IdPrestamo = q.IdPrestamo,
                                  IdEmpleado = q.IdEmpleado,
                                  IdRubro = q.IdRubro,
-                                 IdNominaTipoLiqui = q.IdNominaTipoLiqui
+                                 Monto = q.Monto,
+                                 NumCuotas = q.NumCuotas
                              }).ToList();
                 }
 

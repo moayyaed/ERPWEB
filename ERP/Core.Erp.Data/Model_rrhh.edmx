@@ -1179,7 +1179,6 @@
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdCarga" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Fecha_PriPago" Type="date" Nullable="false" />
-          <Property Name="MontoSol" Type="float" Nullable="false" />
           <Property Name="NumCuotas" Type="int" Nullable="false" />
           <Property Name="descuento_mensual" Type="bit" Nullable="false" />
           <Property Name="descuento_quincena" Type="bit" Nullable="false" />
@@ -1206,11 +1205,8 @@
           <Property Name="IdPrestamo" Type="numeric" Precision="18" Scale="0" />
           <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdRubro" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SaldoInicial" Type="float" Nullable="false" />
-          <Property Name="TotalCuota" Type="float" Nullable="false" />
-          <Property Name="Saldo" Type="float" Nullable="false" />
-          <Property Name="FechaPago" Type="datetime" Nullable="false" />
-          <Property Name="IdNominaTipoLiqui" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="float" Nullable="false" />
+          <Property Name="NumCuotas" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ro_rol">
           <Key>
@@ -8832,7 +8828,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyecc
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_PrestamoMasivo_Det" EntitySet="ro_PrestamoMasivo_Det" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
@@ -12777,7 +12773,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyecc
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="IdCarga" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Fecha_PriPago" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="MontoSol" Type="Double" Nullable="false" />
           <Property Name="NumCuotas" Type="Int32" Nullable="false" />
           <Property Name="descuento_mensual" Type="Boolean" Nullable="false" />
           <Property Name="descuento_quincena" Type="Boolean" Nullable="false" />
@@ -12805,11 +12800,8 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyecc
           <Property Name="IdPrestamo" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SaldoInicial" Type="Double" Nullable="false" />
-          <Property Name="TotalCuota" Type="Double" Nullable="false" />
-          <Property Name="Saldo" Type="Double" Nullable="false" />
-          <Property Name="FechaPago" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdNominaTipoLiqui" Type="Int32" Nullable="false" />
+          <Property Name="Monto" Type="Double" Nullable="false" />
+          <Property Name="NumCuotas" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_empleado" FromRole="ro_PrestamoMasivo_Det" ToRole="ro_empleado" />
           <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_prestamo" FromRole="ro_PrestamoMasivo_Det" ToRole="ro_prestamo" />
           <NavigationProperty Name="ro_PrestamoMasivo" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_PrestamoMasivo" FromRole="ro_PrestamoMasivo_Det" ToRole="ro_PrestamoMasivo" />
@@ -12873,7 +12865,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyecc
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -15548,7 +15540,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyecc
                 <ScalarProperty Name="descuento_quincena" ColumnName="descuento_quincena" />
                 <ScalarProperty Name="descuento_mensual" ColumnName="descuento_mensual" />
                 <ScalarProperty Name="NumCuotas" ColumnName="NumCuotas" />
-                <ScalarProperty Name="MontoSol" ColumnName="MontoSol" />
                 <ScalarProperty Name="Fecha_PriPago" ColumnName="Fecha_PriPago" />
                 <ScalarProperty Name="IdCarga" ColumnName="IdCarga" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
@@ -15559,11 +15550,8 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwro_empleado_x_Proyecc
           <EntitySetMapping Name="ro_PrestamoMasivo_Det">
             <EntityTypeMapping TypeName="Model_rrhh.ro_PrestamoMasivo_Det">
               <MappingFragment StoreEntitySet="ro_PrestamoMasivo_Det">
-                <ScalarProperty Name="IdNominaTipoLiqui" ColumnName="IdNominaTipoLiqui" />
-                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-                <ScalarProperty Name="TotalCuota" ColumnName="TotalCuota" />
-                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
+                <ScalarProperty Name="NumCuotas" ColumnName="NumCuotas" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
                 <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
                 <ScalarProperty Name="IdPrestamo" ColumnName="IdPrestamo" />

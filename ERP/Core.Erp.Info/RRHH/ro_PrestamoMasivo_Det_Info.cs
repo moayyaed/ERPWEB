@@ -15,10 +15,7 @@ namespace Core.Erp.Info.RRHH
         public Nullable<decimal> IdPrestamo { get; set; }
         public decimal IdEmpleado { get; set; }
         public string IdRubro { get; set; }
-        public double SaldoInicial { get; set; }
-        public double TotalCuota { get; set; }
-        public double Saldo { get; set; }
-        public System.DateTime FechaPago { get; set; }
-        public int IdNominaTipoLiqui { get; set; }
+        public double Monto { get; set; }
+        public int NumCuotas { get; set; }
     }
 }

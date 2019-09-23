@@ -12,7 +12,6 @@ namespace Core.Erp.Info.RRHH
         public int IdSucursal { get; set; }
         public decimal IdCarga { get; set; }
         public System.DateTime Fecha_PriPago { get; set; }
-        public double MontoSol { get; set; }
         public int NumCuotas { get; set; }
         public bool descuento_mensual { get; set; }
         public bool descuento_quincena { get; set; }

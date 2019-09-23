@@ -380,6 +380,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_012_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_013_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_014_Info.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_018_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_017_Info.cs" />
