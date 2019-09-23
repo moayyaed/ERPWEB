@@ -58,7 +58,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                     {
                         Orden = q.Key.Orden,
                         IdProveedor = q.Key.IdProveedor,
-                        TotalDias = q.Sum(g => g.DiasVcto)
+                        TotalDias = q.Min(g => g.DiasVcto)
                     }).ToList();
 
                     Lista = (from g in lstA

@@ -322,6 +322,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetTipoNota(string CreDeb = "")
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            fa_TipoNota_Bus bus_nota = new fa_TipoNota_Bus();
+            var lst_nota = bus_nota.get_list(IdEmpresa, CreDeb, false);
+            lst_nota.Add(new fa_TipoNota_Info
+            {
+                No_Descripcion = "Todos",
+                IdTipoNota = 0
+            });
+            ViewBag.lst_nota = lst_nota;
+            var resultado = lst_nota;
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult FAC_002(int IdEmpresa, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {

@@ -209,7 +209,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="IdNivel">Crédito/Débito</label>
-                            @Html.DropDownListFor(q => q.CreDeb, new SelectList(ViewBag.lst_cre, "Key", "Value"), new { @class = "form-control" })
+                            @Html.DropDownListFor(q => q.CreDeb, new SelectList(ViewBag.lst_cre, "Key", "Value"), new { @class = "form-control", @id= "CreDeb" })
                             @Html.ValidationMessageFor(q => q.CreDeb, "", new { @class = "form", @role = "text-danger" })
                         </div>
                     </div>
@@ -302,3 +302,29 @@
         <!-- /.box-footer-->
     </div>    
 }
+<script type="text/javascript">
+    $(function () {
+        $("#CreDeb").change(function () {
+            //GetTipoNota();
+        });
+    });
+
+    function GetTipoNota() {
+        var datos = {
+            CreDeb: $("#CreDeb").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetTipoNota", "FacturacionReportes",new { Area = "Reportes"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                BeginCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
