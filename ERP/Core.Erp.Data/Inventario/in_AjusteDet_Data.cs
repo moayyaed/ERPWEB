@@ -57,8 +57,10 @@ namespace Core.Erp.Data.Inventario
                         IdBodega = q.IdBodega,
                         IdProducto = q.IdProducto,
                         IdUnidadMedida = q.IdUnidadMedida,
+                        StockSistema = q.Stock,
                         Stock = q.Stock,
                         UltimoCosto = q.UltimoCosto,
+                        Costo = q.UltimoCosto,
                         IdFecha = q.IdFecha,
                         pr_descripcion = q.pr_descripcion,
                         pr_codigo = q.pr_codigo

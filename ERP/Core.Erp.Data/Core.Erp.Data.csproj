@@ -2770,6 +2770,9 @@
     <Compile Include="vwRo_Prestamo.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwro_PrestamoMasivo_Det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwro_rdep.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>

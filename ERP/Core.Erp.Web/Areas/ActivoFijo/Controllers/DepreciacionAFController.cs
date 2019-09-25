@@ -130,7 +130,6 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #endregion
 
         #region Acciones
-
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
             #region Validar Session
@@ -148,6 +147,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 lst_detalle_ct = new List<ct_cbtecble_det_Info>(),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
             };
+
             lst_depreciacion_det.set_list(model.lst_detalle, model.IdTransaccionSession);
             lst_comprobante_detalle.set_list(model.lst_detalle_ct,model.IdTransaccionSession);
             cargar_combos(IdEmpresa);

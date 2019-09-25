@@ -10,8 +10,6 @@ namespace Core.Erp.Data.RRHH
 {
    public class ro_rubro_tipo_Data
     {
-
-
         public List<ro_rubro_tipo_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args, int IdEmpresa)
         {
             var skip = args.BeginIndex;
@@ -82,8 +80,6 @@ namespace Core.Erp.Data.RRHH
             }
             return info;
         }
-
-
 
         public List<ro_rubro_tipo_Info> get_list(int IdEmpresa, bool mostrar_anulados)
         {
@@ -444,6 +440,54 @@ namespace Core.Erp.Data.RRHH
                 }
 
                 return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public ro_rubro_tipo_Info get_info_x_codigo(int IdEmpresa, string rub_codigo)
+        {
+            try
+            {
+                ro_rubro_tipo_Info info = new ro_rubro_tipo_Info();
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    ro_rubro_tipo Entity = Context.ro_rubro_tipo.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.rub_codigo == rub_codigo);
+                    if (Entity == null) return null;
+
+                    info = new ro_rubro_tipo_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdRubro = Entity.IdRubro,
+                        rub_codigo = Entity.rub_codigo,
+                        ru_codRolGen = Entity.ru_codRolGen,
+                        ru_descripcion = Entity.ru_descripcion,
+                        NombreCorto = Entity.NombreCorto,
+                        ru_tipo = Entity.ru_tipo,
+                        ru_orden = Entity.ru_orden,
+                        rub_grupo = Entity.rub_grupo,
+                        rub_concep = Entity.rub_concep,
+                        rub_nocontab = Entity.rub_nocontab,
+                        rub_ctacon = Entity.rub_ctacon,
+                        ru_estado = Entity.ru_estado,
+                        rub_aplica_IESS = Entity.rub_aplica_IESS,
+                        rub_acumula_descuento = Entity.rub_acumula_descuento,
+                        se_distribuye = Entity.se_distribuye,
+                        rub_provision = Entity.rub_provision,
+                        rub_acumula = Entity.rub_acumula,
+                        rub_AplicaIR = Entity.rub_AplicaIR,
+                        rub_GrupoResumen = Entity.rub_GrupoResumen,
+                        rub_ContPorEmpleado = Entity.rub_ContPorEmpleado,
+                        rub_ContPorJornada = Entity.rub_ContPorJornada,
+                        rub_ValorRecargoHoras = Entity.rub_ValorRecargoHoras
+                    };
+                }
+
+                return info;
             }
             catch (Exception)
             {

@@ -57,6 +57,7 @@
             column.Caption = "Valor";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario(); }";
     });
 }

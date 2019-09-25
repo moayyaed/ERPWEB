@@ -28,11 +28,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ct_plancta_Bus bus_cuentacontable = new ct_plancta_Bus();
         ba_Banco_Cuenta_List ListaBanco = new ba_Banco_Cuenta_List();
         ba_Banco_Cbte_List ListaCbte = new ba_Banco_Cbte_List();
-
         ba_Banco_Cuenta_x_tb_sucursal_Bus bus_cta_det = new ba_Banco_Cuenta_x_tb_sucursal_Bus();
         ba_Banco_Det_List List_Det = new ba_Banco_Det_List();
-        
-
         #endregion
 
         #region Index
@@ -74,7 +71,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #endregion
 
         #region Acciones
-
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
             #region Validar Session

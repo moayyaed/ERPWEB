@@ -410,7 +410,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_AjusteDet_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
 
             edited_info.StockFisico = info_det.StockFisico;
-            edited_info.Ajuste = info_det.StockFisico - info_det.StockSistema;
+            edited_info.Ajuste = info_det.StockFisico - edited_info.StockSistema;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

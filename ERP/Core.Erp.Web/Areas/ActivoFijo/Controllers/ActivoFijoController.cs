@@ -51,20 +51,26 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #endregion
 
         #region Index
-
         public ActionResult Index()
         {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+
+            var model = bus_activo.get_list(IdEmpresa, true);
+            ListaActivoFijo.set_list(model, IdTransaccionSession);
             return View();
         }
 
         [ValidateInput(false)]
         public ActionResult GridViewPartial_activo_fijo()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_activo.get_list(IdEmpresa, true);
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            var model = ListaActivoFijo.get_list(IdTransaccionSession);
+
             return PartialView("_GridViewPartial_activo_fijo", model);
         }
         #endregion
+
         #region Metodos ComboBox bajo demanda
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         public ActionResult CmbCuenta_AF()
@@ -82,6 +88,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
+
         #region Metodos ComboBox bajo demanda
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         public ActionResult CmbEmpleado_Enc_AF()
@@ -581,7 +588,6 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             //Af_Activo_fijo_CtaCble_List ListaActivoFijoCtaCble = new Af_Activo_fijo_CtaCble_List();
             List<Af_Activo_fijo_CtaCble_Info> Lista_ActivoFijoCtaCble = new List<Af_Activo_fijo_CtaCble_Info>();
 
-
             int cont = 0;
             decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -859,7 +865,6 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             }
         }
     }
-    
 
     //public class Af_Activo_fijo_CtaCble_List
     //{
@@ -930,6 +935,4 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
-
-
 }

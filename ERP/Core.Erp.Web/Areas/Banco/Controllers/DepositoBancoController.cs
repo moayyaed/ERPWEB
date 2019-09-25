@@ -108,7 +108,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         private bool validar(ba_Cbte_Ban_Info i_validar, ref string msg)
         {
             i_validar.lst_det_ct = List_ct.get_list(i_validar.IdTransaccionSession);
-            i_validar.lst_det_ing = List_ing.get_list();
+            i_validar.lst_det_ing = List_ing.get_list(i_validar.IdTransaccionSession);
 
 
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.BANCO, i_validar.IdSucursal, ref msg))
@@ -198,11 +198,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cb_Fecha = DateTime.Now.Date,
                 lst_det_ct = new List<ct_cbtecble_det_Info>(),
                 lst_det_ing = new List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>(),
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 list_det = new List<ba_Cbte_Ban_x_ba_TipoFlujo_Info>()
             };
             List_ct.set_list(model.lst_det_ct,model.IdTransaccionSession);
-            List_ing.set_list(model.lst_det_ing);
+            List_ing.set_list(model.lst_det_ing, model.IdTransaccionSession);
             List_Flujo.set_list(model.list_det, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, model.IdSucursal);
             return View(model);
@@ -239,13 +239,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Cbte_Ban_Info model = bus_cbteban.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");
-            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.list_det = bus_flujo.GetList(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
             List_Flujo.set_list(model.list_det, model.IdTransaccionSession);
             model.lst_det_ct = bus_det_ct.get_list(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
             model.lst_det_ing = bus_det.get_list(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
             List_ct.set_list(model.lst_det_ct,model.IdTransaccionSession);
-            List_ing.set_list(model.lst_det_ing);
+            List_ing.set_list(model.lst_det_ing, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, model.IdSucursal);
             SessionFixed.TipoPersona = model.IdTipo_Persona;
 
@@ -310,7 +310,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.lst_det_ct = bus_det_ct.get_list(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
             List_ct.set_list(model.lst_det_ct, model.IdTransaccionSession);
             model.lst_det_ing = bus_det.get_list(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
-            List_ing.set_list(model.lst_det_ing);
+            List_ing.set_list(model.lst_det_ing, model.IdTransaccionSession);
             cargar_combos(IdEmpresa, model.IdSucursal);
 
             #region Validacion Periodo
@@ -345,16 +345,16 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         public ActionResult GridViewPartial_DepositoBanco_x_cruzar()
         {
-            
             List <ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> model;
-           model = ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal.get_list();
+            model = ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_DepositoBanco_x_cruzar", model);
         }
 
         public ActionResult GridViewPartial_DepositoBanco_det()
         {
-            var model = List_ing.get_list();
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_ing.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_DepositoBanco_det", model);
         }
 
@@ -365,23 +365,23 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             {
                 int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> lst_x_cruzar;
-                lst_x_cruzar = ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal.get_list();
+                lst_x_cruzar = ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 string[] array = IDs.Split(',');
                 foreach (var item in array)
                 {
                     var info_det = lst_x_cruzar.Where(q => q.mcj_IdCbteCble == Convert.ToInt32(item)).FirstOrDefault();
                     if (info_det != null)
-                        List_ing.AddRow(info_det);
+                        List_ing.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 }
             }
-            var model = List_ing.get_list();
+            var model = List_ing.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_DepositoBanco_det", model);
         }
 
         public ActionResult EditingDelete(decimal mcj_IdCbteCble)
         {
-            List_ing.DeleteRow(mcj_IdCbteCble);
-            var model = List_ing.get_list();
+            List_ing.DeleteRow(mcj_IdCbteCble, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = List_ing.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_DepositoBanco_det", model);
         }
         #endregion
@@ -391,7 +391,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             List_ct.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
             var bco = bus_banco_cuenta.get_info(IdEmpresa, IdBanco);
-            var lst_op = List_ing.get_list();
+            var lst_op = List_ing.get_list(IdTransaccionSession);
 
             var lst = (from q in lst_op
                        group q by q.IdCtaCble
@@ -426,10 +426,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public JsonResult Filtrar_GridViewPartial_DepositoBanco_x_cruzar(int IdSucursal = 0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+
             List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> model;
             model = bus_det.get_list_x_depositar(IdEmpresa, IdSucursal);
 
-            ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal.set_list(model);
+            ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal.set_list(model, IdTransaccionSession);
 
 
             return Json(model, JsonRequestBehavior.AllowGet);
@@ -439,53 +441,55 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
     public class ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List
     {
-        public List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> get_list()
+        string Variable = "ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info";
+        public List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info"] == null)
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list = new List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>();
 
-                HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info"] = list;
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>)HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info"];
+            return (List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list)
+        public void set_list(List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info"] = list;
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
-        public void AddRow(ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info info_det)
+        public void AddRow(ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info info_det, decimal IdTransaccionSession)
         {
-            List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list = get_list();            
+            List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list = get_list(IdTransaccionSession);            
             if (list.Where(q => q.mcj_IdCbteCble == info_det.mcj_IdCbteCble).Count() == 0)
                 list.Add(info_det);
         }
 
-        public void DeleteRow(decimal mcj_IdCbteCble)
+        public void DeleteRow(decimal mcj_IdCbteCble, decimal IdTransaccionSession)
         {
-            List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list = get_list();
+            List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.mcj_IdCbteCble == mcj_IdCbteCble).First());
         }
     }
 
     public class ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal
     {
-        public List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> get_list()
+        string Variable = "ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal";
+        public List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal"] == null)
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list = new List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>();
 
-                HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal"] = list;
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>)HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal"];
+            return (List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
 
-        public void set_list(List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list)
+        public void set_list(List<ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session["ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal"] = list;
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
     }

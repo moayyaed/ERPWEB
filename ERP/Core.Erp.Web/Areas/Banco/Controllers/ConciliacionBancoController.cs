@@ -337,11 +337,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
         #region Detalle
-
         private void cargar_combos_Detalle()
         {
             ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus bus_tipo = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus();

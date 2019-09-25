@@ -10376,6 +10376,12 @@
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbSucursal.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_018.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_011.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbEmpleado_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbRubro_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbSucursal_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_PrestamosMasivos_Det.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

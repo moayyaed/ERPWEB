@@ -262,6 +262,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
             if (!bus_ordencompra.modificarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
@@ -294,6 +295,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
 
             if (!bus_ordencompra.anularDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
