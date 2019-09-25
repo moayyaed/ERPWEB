@@ -12,11 +12,11 @@ namespace Core.Erp.Bus.RRHH
     {
         ro_PrestamoMasivo_Det_Data odata = new ro_PrestamoMasivo_Det_Data();
 
-        public List<ro_PrestamoMasivo_Det_Info> get_list(int IdEmpresa, decimal IdCarga)
+        public List<ro_PrestamoMasivo_Det_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCarga)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdCarga);
+                return odata.get_list(IdEmpresa, IdSucursal, IdCarga);
             }
             catch (Exception)
             {

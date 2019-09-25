@@ -9,7 +9,7 @@ namespace Core.Erp.Data.RRHH
 {
     public class ro_PrestamoMasivo_Det_Data
     {
-        public List<ro_PrestamoMasivo_Det_Info> get_list(int IdEmpresa, decimal IdCarga)
+        public List<ro_PrestamoMasivo_Det_Info> get_list(int IdEmpresa, int IdSucursal, decimal IdCarga)
         {
             try
             {
@@ -17,9 +17,10 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.ro_PrestamoMasivo_Det
+                    Lista = (from q in Context.vwro_PrestamoMasivo_Det
                              where q.IdEmpresa == IdEmpresa
-                                   & q.IdCarga == IdCarga
+                                    && q.IdSucursal == IdSucursal
+                                   && q.IdCarga == IdCarga
                              select new ro_PrestamoMasivo_Det_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
@@ -28,7 +29,9 @@ namespace Core.Erp.Data.RRHH
                                  Secuencia = q.Secuencia,
                                  IdPrestamo = q.IdPrestamo,
                                  IdEmpleado = q.IdEmpleado,
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
                                  IdRubro = q.IdRubro,
+                                 ru_descripcion = q.ru_descripcion,
                                  Monto = q.Monto,
                                  NumCuotas = q.NumCuotas
                              }).ToList();

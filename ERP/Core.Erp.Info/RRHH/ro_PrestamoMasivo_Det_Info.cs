@@ -17,5 +17,10 @@ namespace Core.Erp.Info.RRHH
         public string IdRubro { get; set; }
         public double Monto { get; set; }
         public int NumCuotas { get; set; }
+
+        #region Campos que no existen en la tabla
+        public string ru_descripcion { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        #endregion
     }
 }

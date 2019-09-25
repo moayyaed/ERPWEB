@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
     public class ro_PrestamoMasivo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public decimal IdCarga { get; set; }
@@ -23,5 +24,9 @@ namespace Core.Erp.Info.RRHH
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
+
+        #region Campos que no existen en la tabla
+        public List<ro_PrestamoMasivo_Det_Info> lst_detalle { get; set; }
+        #endregion
     }
 }

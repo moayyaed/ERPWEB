@@ -1,8 +1,8 @@
 @using System.Web.UI.WebControls;
     @{
         var grid = Html.DevExpress().GridView(settings => {
-            settings.Name = "GridViewPartial_prestamos_masivos";
-            settings.CallbackRouteValues = new { Controller = "Prestamos", Action = "GridViewPartial_prestamos_masivos", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+            settings.Name = "GridViewPartial_PrestamosMasivos";
+            settings.CallbackRouteValues = new { Controller = "PrestamosMasivos", Action = "GridViewPartial_PrestamosMasivos", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
 
             settings.Width = Unit.Percentage(100);
             settings.KeyFieldName = "IdPrestamo";
@@ -54,11 +54,6 @@
             };
             settings.HtmlRowPrepared = (s, e) =>
             {
-                if (Convert.ToString(e.GetValue("EstadoAprob")) == "APROB")
-                {
-                    e.Row.ForeColor = System.Drawing.Color.Blue;
-                }
-
                 if (Convert.ToBoolean(e.GetValue("Estado")) == false)
                 {
                     e.Row.ForeColor = System.Drawing.Color.Red;
@@ -72,8 +67,7 @@
                     if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
                     {
                         ViewContext.Writer.Write(
-                             Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCarga = DataBinder.Eval(tc.DataItem, "IdCarga") }) + "&nbsp;" +
-                             Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCarga = DataBinder.Eval(tc.DataItem, "IdCarga") },
+                             Html.ActionLink("Anular", "Anular", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCarga = DataBinder.Eval(tc.DataItem, "IdCarga") },
                                 new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                         );
                     }
@@ -104,20 +98,20 @@
                     sp.Width = Unit.Percentage(100);
                 });
             });
-            settings.Columns.Add(column =>
-            {
-                column.FieldName = "NumCuotas";
-                column.Caption = "# Cuotas";
-                column.Width = Unit.Percentage(10);
-                column.EditorProperties().SpinEdit(sp =>
-                {
-                    sp.MinValue = 0;
-                    sp.MaxValue = 999999999;
-                    sp.Width = Unit.Percentage(100);
-                    //column.PropertiesEdit.DisplayFormatString = "n2";
+            //settings.Columns.Add(column =>
+            //{
+            //    column.FieldName = "NumCuotas";
+            //    column.Caption = "# Cuotas";
+            //    column.Width = Unit.Percentage(10);
+            //    column.EditorProperties().SpinEdit(sp =>
+            //    {
+            //        sp.MinValue = 0;
+            //        sp.MaxValue = 999999999;
+            //        sp.Width = Unit.Percentage(100);
+            //        //column.PropertiesEdit.DisplayFormatString = "n2";
 
-                });
-            });
+            //    });
+            //});
             settings.Columns.Add(column =>
             {
                 column.FieldName = "descuento_quincena";
@@ -148,7 +142,7 @@
 
                 });
             });
-            settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(20);
+            settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
             settings.Columns.Add(column =>
             {
                 column.FieldName = "Estado";

@@ -32,7 +32,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="IdRubro">Sucursal</label>
-                        @Html.Partial("_CmbSucursal", Model.IdSucursal)
+                        @Html.Partial("_CmbSucursal_PrestamosMasivos", Model.IdSucursal)
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_prestamos_masivos", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_PrestamosMasivos", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

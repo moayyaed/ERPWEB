@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_PrestamoMasivo_Info
 
 @{
-    ViewBag.Title = "Nueva carga de préstamo masivo";
+    ViewBag.Title = "Anular carga de préstamo masivo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -17,7 +17,7 @@
     }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Nuevo", "PrestamosMasivos", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Anular", "PrestamosMasivos", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdCarga);
     @Html.HiddenFor(q => q.IdTransaccionSession);
@@ -110,21 +110,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
-                @Html.DevExpress().UploadControl(settings =>
-               {
-                   settings.Name = "UploadControlFile";
-                   settings.CallbackRouteValues = new { Controller = "PrestamosMasivos", Action = "UploadControlUpload" };
-                   settings.ShowUploadButton = true;
-                   settings.ShowProgressPanel = true;
-                   settings.NullText = "Click here to browse files...";
-                   settings.ClientSideEvents.FileUploadComplete = "function(s, e) { GridViewPartial_PrestamosMasivos_Det.PerformCallback({ path: e.callbackData}); }";
-               }).GetHtml()
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
                 <div class="form-group">
                     <label for="GridViewPartial_prestamos_det">Detalle carga de prestamos*</label>
                     @Html.Action("GridViewPartial_PrestamosMasivos_Det")
@@ -133,7 +118,7 @@
         </div>
     </div>
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index","PrestamosMasivos",new { Area = "RRHH" },null)">Cancelar</a>
     </div>
 
