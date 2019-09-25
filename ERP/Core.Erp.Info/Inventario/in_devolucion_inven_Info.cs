@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Inventario
 {
     public class in_devolucion_inven_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdDev_Inven { get; set; }
         public string cod_Dev_Inven { get; set; }

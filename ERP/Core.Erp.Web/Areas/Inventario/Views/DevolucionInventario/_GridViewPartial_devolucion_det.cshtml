@@ -14,6 +14,11 @@
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
 
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = false;
+
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;
         settings.Settings.ShowFilterRow = true;
@@ -38,7 +43,7 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(55);
+            column.Width = Unit.Percentage(50);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -46,7 +51,7 @@
         {
             column.FieldName = "NomUnidad";
             column.Caption = "Unidad de medida";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -54,7 +59,7 @@
         {
             column.FieldName = "dm_cantidad";
             column.Caption = "Cantidad";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -62,12 +67,14 @@
         {
             column.FieldName = "cant_devuelta";
             column.Caption = "Cant. Devuelta";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().SpinEdit(q =>
             {
                 q.MinValue = 0;
             });
         });
+
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

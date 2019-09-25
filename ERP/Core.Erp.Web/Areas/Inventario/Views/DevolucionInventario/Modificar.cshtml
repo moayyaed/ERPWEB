@@ -92,7 +92,7 @@
     @Html.HiddenFor(q => q.dev_IdSucursal)
     @Html.HiddenFor(q => q.dev_IdMovi_inven_tipo)
     @Html.HiddenFor(q => q.dev_IdNumMovi)
-
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">

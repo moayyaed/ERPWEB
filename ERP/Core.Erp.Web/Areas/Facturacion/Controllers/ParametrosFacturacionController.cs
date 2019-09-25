@@ -28,7 +28,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
 
         #endregion
-
         #region Index
         public ActionResult Index()
         {
@@ -49,7 +48,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         #endregion
-
         #region MEtodos
         private void cargar_combos(int IdEmpresa)
         {
@@ -88,8 +86,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.CLIENTE.ToString());
         }
         #endregion
-
-
         #region Metodos ComboBox bajo demanda
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         public ActionResult CmbCuenta_Param1()
@@ -121,6 +117,5 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
-
     }
 }
