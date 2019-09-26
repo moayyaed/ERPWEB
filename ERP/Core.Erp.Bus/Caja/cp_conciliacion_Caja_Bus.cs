@@ -63,5 +63,18 @@ namespace Core.Erp.Bus.Caja
                 return false;
             }
         }
+        public bool anularDB(cp_conciliacion_Caja_Info info)
+        {
+            try
+            {
+                return odata.anularDB(info);
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Bus LogData = new tb_LogError_Bus();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_conciliacion_Caja_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
+            }
+        }
     }
 }

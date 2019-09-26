@@ -220,7 +220,8 @@
         public enum eEstadoCierreCaja
         {
             EST_CIE_ABI,
-            EST_CIE_CER
+            EST_CIE_CER,
+            EST_CIE_ANU
         }
 
         public enum eTipoOrdenPago

@@ -1350,5 +1350,40 @@ namespace Core.Erp.Data.Caja
                 return false;
             }
         }
+
+        public bool anularDB(cp_conciliacion_Caja_Info info)
+        {
+            Entities_caja Context = new Entities_caja();
+            try
+            {
+                cp_conciliacion_Caja Entity = Context.cp_conciliacion_Caja.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).FirstOrDefault();
+                if (Entity == null) return false;
+
+                Entity.IdEstadoCierre = cl_enumeradores.eEstadoCierreCaja.EST_CIE_ANU.ToString();
+
+                var lst_det = Context.cp_conciliacion_Caja_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
+                Context.cp_conciliacion_Caja_det.RemoveRange(lst_det);
+
+                var lst_caja = Context.cp_conciliacion_Caja_det_Ing_Caja.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
+                Context.cp_conciliacion_Caja_det_Ing_Caja.RemoveRange(lst_caja);
+
+                var lst_vales = Context.cp_conciliacion_Caja_det_x_ValeCaja.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
+                Context.cp_conciliacion_Caja_det_x_ValeCaja.RemoveRange(lst_vales);
+
+                var lst_facturas = Context.cp_conciliacion_Caja_ValesNoConciliados.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
+                Context.cp_conciliacion_Caja_ValesNoConciliados.RemoveRange(lst_facturas);
+
+                Context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Context.Dispose();
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "cp_conciliacion_Caja_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
+            }
+        }
     }
 }
