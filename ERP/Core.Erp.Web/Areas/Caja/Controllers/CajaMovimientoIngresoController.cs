@@ -93,7 +93,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 }
             }
 
-            if (i_validar.lst_ct_cbtecble_det.Sum(q => q.dc_Valor) != 0)
+            if (Math.Round(i_validar.lst_ct_cbtecble_det.Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
             {
                 mensaje = "La suma de los detalles debe ser 0, por favor verifique";
                 return false;
