@@ -23,5 +23,12 @@ namespace Core.Erp.Data
         public int IdFecha { get; set; }
         public string pr_descripcion { get; set; }
         public string pr_codigo { get; set; }
+        public string IdCategoria { get; set; }
+        public Nullable<int> IdGrupo { get; set; }
+        public Nullable<int> IdSubGrupo { get; set; }
+        public Nullable<int> IdLinea { get; set; }
+        public string ca_Categoria { get; set; }
+        public string nom_grupo { get; set; }
+        public string nom_linea { get; set; }
     }
 }
