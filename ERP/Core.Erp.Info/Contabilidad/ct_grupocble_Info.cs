@@ -24,5 +24,6 @@ namespace Core.Erp.Info.Contabilidad
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string IdGrupo_Mayor { get; set; }
+        public bool Seleccionado { get; set; }
     }
 }

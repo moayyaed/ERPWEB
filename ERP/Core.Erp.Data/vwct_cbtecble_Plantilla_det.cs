@@ -24,5 +24,7 @@ namespace Core.Erp.Data
         public Nullable<int> IdPunto_cargo { get; set; }
         public string IdCentroCosto { get; set; }
         public string pc_Cuenta { get; set; }
+        public string cc_Descripcion { get; set; }
+        public string nom_punto_cargo { get; set; }
     }
 }

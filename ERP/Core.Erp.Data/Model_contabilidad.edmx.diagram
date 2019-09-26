@@ -41,7 +41,6 @@
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_ct_cbtecble_tipo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_cbtecble_Plantilla" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_CentroCosto" />
-        <EntityTypeShape EntityType="Model_contabilidad.vwct_cbtecble_Plantilla_det" Width="1.5" PointX="12.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_contabilidad.vwct_periodo" Width="1.5" PointX="14.375" PointY="17.75" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_anio_fiscal_x_tb_sucursal" Width="1.5" PointX="17.25" PointY="21.25" />
         <EntityTypeShape EntityType="Model_contabilidad.vwct_anio_fiscal_x_cuenta_utilidad" Width="1.5" PointX="18.375" PointY="0.75" />
@@ -74,6 +73,7 @@
         <EntityTypeShape EntityType="Model_contabilidad.ct_parametro" Width="1.5" PointX="5.25" PointY="18.375" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo1" />
+        <EntityTypeShape EntityType="Model_contabilidad.vwct_cbtecble_Plantilla_det" Width="1.5" PointX="18.375" PointY="4.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -307,6 +307,7 @@
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Bus.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Bus.cs" />
     <Compile Include="Reportes\Compra\COMP_001_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_010_Bus.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_002_Bus.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_003_balances_Bus.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_004_Bus.cs" />

@@ -346,6 +346,7 @@
     <Compile Include="Reportes\Contabilidad\CONTA_009_Info.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_008_Info.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_007_Info.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_010_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Info.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_diario_Info.cs" />

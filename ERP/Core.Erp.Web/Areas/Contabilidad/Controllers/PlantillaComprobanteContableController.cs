@@ -20,6 +20,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_cbtecble_Plantilla_det_List CbteCble_PlantillaDet_Lista = new ct_cbtecble_Plantilla_det_List();
         ct_cbtecble_det_List List_Det_Cbte = new ct_cbtecble_det_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
+        ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
         string mensaje = string.Empty;
         #endregion
 
@@ -37,6 +40,39 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
         {
             return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+        #region Metodos ComboBox bajo demanda centro de costo
+        public ActionResult CmbCentroCosto_CbteCblePlantilla()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbCentroCosto_CbteCblePlantilla", model);
+        }
+        public List<ct_CentroCosto_Info> get_list_bajo_demandaCC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            List<ct_CentroCosto_Info> Lista = bus_cc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            return Lista;
+        }
+        public ct_CentroCosto_Info get_info_bajo_demandaCC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_cc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+        #region Metodos ComboBox bajo demanda punto de cargo        
+        public ActionResult CmbPuntoCargo_CbteCblePlantilla()
+        {
+            string model = string.Empty;
+            return PartialView("_CmbPuntoCargo_CbteCblePlantilla", model);
+        }
+        public List<ct_punto_cargo_Info> get_list_bajo_demandaPC(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            int IdPunto_cargo_grupo = 0;
+            List<ct_punto_cargo_Info> Lista = bus_pc.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), IdPunto_cargo_grupo);
+            return Lista;
+        }
+        public ct_punto_cargo_Info get_info_bajo_demandaPC(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_pc.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
         }
         #endregion
 
@@ -193,6 +229,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = CbteCble_PlantillaDet_Lista.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ComprobanteContablePlantillaDet", model);
         }
 
@@ -213,7 +250,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             CbteCble_PlantillaDet_Lista.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = CbteCble_PlantillaDet_Lista.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ComprobanteContablePlantillaDet", model);
         }
 
@@ -233,7 +270,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 }
             CbteCble_PlantillaDet_Lista.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = CbteCble_PlantillaDet_Lista.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ComprobanteContablePlantillaDet", model);
         }
 
@@ -242,7 +279,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             CbteCble_PlantillaDet_Lista.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ct_cbtecble_Plantilla_Info model = new ct_cbtecble_Plantilla_Info();
             model.lst_cbtecble_plantilla_det = CbteCble_PlantillaDet_Lista.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ComprobanteContablePlantillaDet", model.lst_cbtecble_plantilla_det);
         }
 
@@ -279,6 +316,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             var lst_tipo_comprobante = bus_tipo_comprobante.get_list(IdEmpresa, false);
             ViewBag.lst_tipo_comprobante = lst_tipo_comprobante;
         }
+        private void cargar_combos_detalle()
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_punto_cargo_grupo = bus_pcg.GetList(IdEmpresa, false);
+            ViewBag.lst_punto_cargo_grupo = lst_punto_cargo_grupo;
+        }
         #endregion
 
         #region Json
@@ -304,7 +347,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     dc_Observacion = item.dc_Observacion,
                     IdPunto_cargo = item.IdPunto_cargo,
                     IdPunto_cargo_grupo = item.IdPunto_cargo_grupo,
-                    IdCentroCosto = item.IdCentroCosto
+                    IdCentroCosto = item.IdCentroCosto,
+                    cc_Descripcion = item.cc_Descripcion,
+                    nom_punto_cargo = item.nom_punto_cargo
                 });
             }
 
@@ -317,6 +362,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
     public class ct_cbtecble_Plantilla_det_List
     {
         string Variable = "ct_cbtecble_Plantilla_det_Info";
+        ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
+
         public List<ct_cbtecble_Plantilla_det_Info> get_list(decimal IdTransaccionSession)
         {
 
@@ -337,12 +385,35 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public void AddRow(ct_cbtecble_Plantilla_det_Info info_det, decimal IdTransaccionSession)
         {
             List<ct_cbtecble_Plantilla_det_Info> list = get_list(IdTransaccionSession);
-            if (list.Where(q => q.IdPlantilla == info_det.IdPlantilla).Count() == 0)
-            {
+            //if (list.Where(q => q.IdPlantilla == info_det.IdPlantilla).Count() == 0)
+            //{
                 info_det.secuencia = list.Count == 0 ? 1 : list.Max(q => q.secuencia) + 1;
                 info_det.dc_Valor = info_det.dc_Valor_debe > 0 ? info_det.dc_Valor_debe : info_det.dc_Valor_haber * -1;
+
+                #region Centro de costo
+                if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                    info_det.cc_Descripcion = string.Empty;
+                else
+                {
+                    var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                    if (cc != null)
+                        info_det.cc_Descripcion = cc.cc_Descripcion;
+                }
+                #endregion
+
+                #region Punto de cargo
+                if (info_det.IdPunto_cargo == null || info_det.IdPunto_cargo == 0)
+                    info_det.nom_punto_cargo = string.Empty;
+                else
+                {
+                    var pc = bus_pc.GetInfo(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.IdPunto_cargo));
+                    if (pc != null)
+                        info_det.nom_punto_cargo = pc.nom_punto_cargo;
+                }
+                #endregion
+
                 list.Add(info_det);
-            }
+            //}
         }
 
         public void UpdateRow(ct_cbtecble_Plantilla_det_Info info_det, decimal IdTransaccionSession)
@@ -353,9 +424,35 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             edited_info.dc_Valor_debe = info_det.dc_Valor_debe;
             edited_info.dc_Valor_haber = info_det.dc_Valor_haber;
             edited_info.dc_Observacion = info_det.dc_Observacion;
+
+            #region Centro de costo
+            edited_info.IdCentroCosto = info_det.IdCentroCosto;
+            if (string.IsNullOrEmpty(info_det.IdCentroCosto))
+                edited_info.cc_Descripcion = string.Empty;
+            else
+            {
+                var cc = bus_cc.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdCentroCosto);
+                if (cc != null)
+                {
+                    edited_info.cc_Descripcion = cc.cc_Descripcion;
+                }
+            }
+            #endregion
+
+            #region Punto Cargo
             edited_info.IdPunto_cargo = info_det.IdPunto_cargo;
             edited_info.IdPunto_cargo_grupo = info_det.IdPunto_cargo_grupo;
-            edited_info.IdCentroCosto = info_det.IdCentroCosto;
+            if (info_det.IdPunto_cargo == null || info_det.IdPunto_cargo == 0)
+                edited_info.nom_punto_cargo = string.Empty;
+            else
+            {
+                var pc = bus_pc.GetInfo(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.IdPunto_cargo));
+                if (pc != null)
+                {
+                    edited_info.nom_punto_cargo = pc.nom_punto_cargo;
+                }
+            }
+            #endregion
         }
 
         public void DeleteRow(int secuencia, decimal IdTransaccionSession)

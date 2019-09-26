@@ -31,7 +31,9 @@ namespace Core.Erp.Data.Contabilidad
                         dc_Observacion = q.dc_Observacion,
                         IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
                         IdPunto_cargo = q.IdPunto_cargo,
-                        IdCentroCosto = q.IdCentroCosto
+                        IdCentroCosto = q.IdCentroCosto,
+                        cc_Descripcion = q.cc_Descripcion,
+                        nom_punto_cargo = q.nom_punto_cargo
                     }).ToList();
 
                     return Lista;

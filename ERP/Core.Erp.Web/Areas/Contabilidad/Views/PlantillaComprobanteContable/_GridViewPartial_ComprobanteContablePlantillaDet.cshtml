@@ -18,7 +18,8 @@
 
         settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
@@ -47,14 +48,14 @@
         {
             column.FieldName = "pc_Cuenta";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCtaCble";
             column.Caption = "Cuenta";
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(20);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -88,12 +89,84 @@
                 sp.MaxValue = 999999999;
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCentroCosto";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 4;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCentroCosto_CbteCblePlantilla", DataBinder.Eval(c.DataItem, "IdCentroCosto"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cc_Descripcion";
+            column.Caption = "Centro de costo";
+            column.Width = Unit.Percentage(10);
+            column.VisibleIndex = 4;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPunto_cargo_grupo";
+            column.Caption = "Grupo punto de cargo";
+            column.Width = Unit.Percentage(10);
+            column.VisibleIndex = 5;
+            column.EditorProperties().ComboBox(p =>
+            {
+
+                p.Columns.Add("IdPunto_cargo_grupo", "ID").Width = Unit.Percentage(10);
+                p.Columns.Add("nom_punto_cargo_grupo", "Descripción").Width = Unit.Percentage(50);
+                p.ValueField = "IdPunto_cargo_grupo";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_punto_cargo_grupo;
+                p.Width = Unit.Percentage(100);
+                p.ClientSideEvents.SelectedIndexChanged = "OnSelectedGrupoPuntoCargoChanged";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPunto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(10);
+            column.Visible = false;
+            column.VisibleIndex = 6;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbPuntoCargo_CbteCblePlantilla", DataBinder.Eval(c.DataItem, "IdPunto_cargo"));
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "nom_punto_cargo";
+            column.Caption = "Punto de cargo";
+            column.Width = Unit.Percentage(10);
+            column.VisibleIndex = 6;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.Columns.Add("dc_Observacion", "Observación").Width = Unit.Percentage(20);
         //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Porcentaje");
 
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = IdCtaCble;editor.Focus();}}";
     });
 
 }
 @grid.Bind(Model).GetHtml()
+
+<script>
+    function OnSelectedGrupoPuntoCargoChanged() {
+        IdPunto_cargo.PerformCallback();
+    }
+    function PuntoCargoComboBox_BeginCallback(s, e) {
+        e.customArgs["fx_IdPunto_cargo_grupo"] = GridViewPartial_ComprobanteContablePlantillaDet.GetEditor("IdPunto_cargo_grupo").GetValue();
+    }
+</script>

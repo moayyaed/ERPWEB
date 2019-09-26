@@ -1525,6 +1525,9 @@
     <Compile Include="Reportes\Base\VWCONTA_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWCONTA_010.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\VWCXC_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1782,6 +1785,7 @@
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Data.cs" />
     <Compile Include="Reportes\Compra\COMP_001_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_010_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_001_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_002_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_004_Data.cs" />

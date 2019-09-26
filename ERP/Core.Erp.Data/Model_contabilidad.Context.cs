@@ -51,7 +51,6 @@ namespace Core.Erp.Data
         public DbSet<ct_cbtecble_det> ct_cbtecble_det { get; set; }
         public DbSet<ct_cbtecble_Plantilla> ct_cbtecble_Plantilla { get; set; }
         public DbSet<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
-        public DbSet<vwct_cbtecble_Plantilla_det> vwct_cbtecble_Plantilla_det { get; set; }
         public DbSet<vwct_periodo> vwct_periodo { get; set; }
         public DbSet<ct_anio_fiscal_x_tb_sucursal> ct_anio_fiscal_x_tb_sucursal { get; set; }
         public DbSet<vwct_anio_fiscal_x_cuenta_utilidad> vwct_anio_fiscal_x_cuenta_utilidad { get; set; }
@@ -65,6 +64,7 @@ namespace Core.Erp.Data
         public DbSet<ct_plancta> ct_plancta { get; set; }
         public DbSet<ct_periodo_x_tb_modulo> ct_periodo_x_tb_modulo { get; set; }
         public DbSet<ct_parametro> ct_parametro { get; set; }
+        public DbSet<vwct_cbtecble_Plantilla_det> vwct_cbtecble_Plantilla_det { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

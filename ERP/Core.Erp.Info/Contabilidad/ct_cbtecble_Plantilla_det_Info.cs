@@ -26,6 +26,8 @@ namespace Core.Erp.Info.Contabilidad
         public string pc_Cuenta { get; set; }
         public double dc_Valor_debe { get; set; }
         public double dc_Valor_haber { get; set; }
+        public string cc_Descripcion { get; set; }
+        public string nom_punto_cargo { get; set; }
         #endregion
     }
 }

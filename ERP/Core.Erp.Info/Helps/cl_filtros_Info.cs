@@ -48,6 +48,7 @@ namespace Core.Erp.Info.Helps
         public bool Check3 { get; set; }
 
         public int[] IntArray { get; set; }
+        public string[] StringArray { get; set; }
         public bool mostrarSaldo0 { get; set; }
         #endregion
 

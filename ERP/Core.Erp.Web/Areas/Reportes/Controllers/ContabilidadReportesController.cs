@@ -187,6 +187,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 }
             ViewBag.lst_sucursal = lst_sucursal;
         }
+        private void cargar_grupo_check(int IdEmpresa, string[] StringArray)
+        {
+            ct_grupocble_Bus bus_grupo = new ct_grupocble_Bus();
+            var lst_grupo = bus_grupo.get_list(false);
+            if (StringArray == null || StringArray.Count() == 0)
+            {
+
+            }
+            else
+                foreach (var item in lst_grupo)
+                {
+                    item.Seleccionado = (StringArray.Where(q => q == item.IdGrupoCble).Count() > 0 ? true : false);
+                }
+            ViewBag.lst_grupo = lst_grupo;
+        }
         private void cargar_nivel()
         {
             Dictionary<int, string> lst_nivel = new Dictionary<int, string>();
@@ -763,6 +778,53 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_nivel();
             cargar_cc(model.IdEmpresa);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
+
+        public ActionResult CONTA_010()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCtaCble = "",
+                StringArray = new string[] { },
+                mostrar_agrupado = false
+            };
+
+            CONTA_010_Rpt report = new CONTA_010_Rpt();
+            report.StringArray = model.StringArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaini.Value = model.fecha_ini;
+            report.p_fechafin.Value = model.fecha_fin;
+            report.p_IdCtaCble.Value = model.IdCtaCble;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_MostrarGrupo.Value = model.mostrar_agrupado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_grupo_check(model.IdEmpresa, model.StringArray);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_010(cl_filtros_Info model)
+        {
+            CONTA_010_Rpt report = new CONTA_010_Rpt();
+            report.StringArray = model.StringArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaini.Value = model.fecha_ini;
+            report.p_fechafin.Value = model.fecha_fin;
+            report.p_IdCtaCble.Value = model.IdCtaCble;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_MostrarGrupo.Value = model.mostrar_agrupado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_grupo_check(model.IdEmpresa, model.StringArray);
             return View(model);
         }
     }
