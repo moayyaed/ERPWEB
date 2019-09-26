@@ -10369,11 +10369,8 @@
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_008.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_021.cshtml" />
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Index.cshtml" />
-    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbEmpleado_prestamos.cshtml" />
-    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_prestamos_masivos.cshtml" />
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Nuevo.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_009.cshtml" />
-    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbSucursal.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_018.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_011.cshtml" />
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Anular.cshtml" />
