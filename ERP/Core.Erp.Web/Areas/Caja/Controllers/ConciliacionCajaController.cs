@@ -260,6 +260,63 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Anular(int IdEmpresa = 0, decimal IdConciliacion_caja = 0)
+        {
+            cp_conciliacion_Caja_Info model = bus_conciliacion.get_info(IdEmpresa, IdConciliacion_caja);
+            if (model.FechaOP.Year == 1)
+                model.FechaOP = DateTime.Now;
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_det_fact = bus_det.get_list(model.IdEmpresa, model.IdConciliacion_Caja);
+            list_det.set_list(model.lst_det_fact, model.IdTransaccionSession);
+            model.lst_det_vale = bus_vales.get_list(model.IdEmpresa, model.IdConciliacion_Caja);
+            list_vale.set_list(model.lst_det_vale, model.IdTransaccionSession);
+            model.lst_det_ing = bus_ing.get_list_ingresos_x_conciliar(IdEmpresa, model.Fecha_fin, model.IdCaja);
+            list_ing.set_list(model.lst_det_ing, model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            cargar_combos(IdEmpresa);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Anular(cp_conciliacion_Caja_Info model)
+        {
+
+            if (!validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
+            if (!bus_conciliacion.modificarDB(model))
+            {
+                ViewBag.mensaje = "No se ha podido modificar el registro";
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
         #endregion
 
         #region Metodos
