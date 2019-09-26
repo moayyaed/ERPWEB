@@ -26,6 +26,12 @@ namespace Core.Erp.Info.Inventario
         public double UltimoCosto { get; set; }
         public int IdFecha { get; set; }
         public string pr_codigo { get; set; }
+        public string ca_Categoria { get; set; }
+        public string nom_linea { get; set; }
+        public string nom_grupo { get; set; }
+        public int? IdGrupo { get; set; }
+        public int? IdLinea { get; set; }
+        public string IdCategoria { get; set; }
         #endregion
     }
 }

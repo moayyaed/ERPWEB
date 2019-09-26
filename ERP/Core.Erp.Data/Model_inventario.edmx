@@ -4256,12 +4256,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
             <End Role="in_AjusteDet" EntitySet="in_AjusteDet" />
           </AssociationSet>
-          <FunctionImport Name="SPINV_GetStock" ReturnType="Collection(Model_inventario.SPINV_GetStock_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
-            <Parameter Name="IdBodega" Mode="In" Type="Int32" />
-            <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <EntitySet Name="in_transferencia_det" EntityType="Model_inventario.in_transferencia_det" />
           <EntitySet Name="vwin_movi_inve_x_estado_contabilizacion" EntityType="Model_inventario.vwin_movi_inve_x_estado_contabilizacion" />
           <AssociationSet Name="FK_in_transferencia_det_in_Producto" Association="Model_inventario.FK_in_transferencia_det_in_Producto">
@@ -4478,6 +4472,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <End Role="in_parametro" EntitySet="in_parametro" />
           </AssociationSet>
           <EntitySet Name="vwin_Ing_Egr_Inven_PorContabilizar" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" />
+          <FunctionImport Name="SPINV_GetStock" ReturnType="Collection(Model_inventario.SPINV_GetStock_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodega" Mode="In" Type="Int32" />
+            <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
@@ -5340,18 +5340,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="SPINV_GetStock_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="Int32" Name="IdBodega" Nullable="false" />
-          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="25" />
-          <Property Type="Double" Name="Stock" Nullable="false" />
-          <Property Type="Double" Name="UltimoCosto" Nullable="false" />
-          <Property Type="Int32" Name="IdFecha" Nullable="false" />
-          <Property Type="String" Name="pr_descripcion" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="pr_codigo" Nullable="true" MaxLength="40" />
-        </ComplexType>
         <EntityType Name="in_transferencia_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -6746,6 +6734,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="543" FixedLength="false" Unicode="true" />
           <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SPINV_GetStock_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="25" />
+          <Property Type="Double" Name="Stock" Nullable="false" />
+          <Property Type="Double" Name="UltimoCosto" Nullable="false" />
+          <Property Type="Int32" Name="IdFecha" Nullable="false" />
+          <Property Type="String" Name="pr_descripcion" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="pr_codigo" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="IdCategoria" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="IdGrupo" Nullable="true" />
+          <Property Type="Int32" Name="IdSubGrupo" Nullable="true" />
+          <Property Type="Int32" Name="IdLinea" Nullable="true" />
+          <Property Type="String" Name="ca_Categoria" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="nom_grupo" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="nom_linea" Nullable="true" MaxLength="150" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7509,22 +7516,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPINV_GetStock" FunctionName="Model_inventario.Store.SPINV_GetStock">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_inventario.SPINV_GetStock_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="UltimoCosto" ColumnName="UltimoCosto" />
-                <ScalarProperty Name="IdFecha" ColumnName="IdFecha" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="in_transferencia_det">
             <EntityTypeMapping TypeName="Model_inventario.in_transferencia_det">
               <MappingFragment StoreEntitySet="in_transferencia_det">
@@ -8044,6 +8035,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPINV_GetStock" FunctionName="Model_inventario.Store.SPINV_GetStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_inventario.SPINV_GetStock_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="UltimoCosto" ColumnName="UltimoCosto" />
+                <ScalarProperty Name="IdFecha" ColumnName="IdFecha" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdSubGrupo" ColumnName="IdSubGrupo" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="nom_grupo" ColumnName="nom_grupo" />
+                <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -160,27 +160,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSys_Inv_Recosteo_Inventario", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fecha_iniParameter, cant_DecimalesParameter);
         }
     
-        public virtual ObjectResult<SPINV_GetStock_Result> SPINV_GetStock(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<System.DateTime> fechaCorte)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idSucursalParameter = idSucursal.HasValue ?
-                new ObjectParameter("IdSucursal", idSucursal) :
-                new ObjectParameter("IdSucursal", typeof(int));
-    
-            var idBodegaParameter = idBodega.HasValue ?
-                new ObjectParameter("IdBodega", idBodega) :
-                new ObjectParameter("IdBodega", typeof(int));
-    
-            var fechaCorteParameter = fechaCorte.HasValue ?
-                new ObjectParameter("FechaCorte", fechaCorte) :
-                new ObjectParameter("FechaCorte", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_GetStock_Result>("SPINV_GetStock", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fechaCorteParameter);
-        }
-    
         public virtual int spINV_aprobacion_ing_egr(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<int> idMovi_inven_tipo, Nullable<decimal> idNumMovi)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -204,6 +183,27 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdNumMovi", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spINV_aprobacion_ing_egr", idEmpresaParameter, idSucursalParameter, idBodegaParameter, idMovi_inven_tipoParameter, idNumMoviParameter);
+        }
+    
+        public virtual ObjectResult<SPINV_GetStock_Result> SPINV_GetStock(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<System.DateTime> fechaCorte)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var idBodegaParameter = idBodega.HasValue ?
+                new ObjectParameter("IdBodega", idBodega) :
+                new ObjectParameter("IdBodega", typeof(int));
+    
+            var fechaCorteParameter = fechaCorte.HasValue ?
+                new ObjectParameter("FechaCorte", fechaCorte) :
+                new ObjectParameter("FechaCorte", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_GetStock_Result>("SPINV_GetStock", idEmpresaParameter, idSucursalParameter, idBodegaParameter, fechaCorteParameter);
         }
     }
 }

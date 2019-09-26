@@ -63,7 +63,13 @@ namespace Core.Erp.Data.Inventario
                         Costo = q.UltimoCosto,
                         IdFecha = q.IdFecha,
                         pr_descripcion = q.pr_descripcion,
-                        pr_codigo = q.pr_codigo
+                        pr_codigo = q.pr_codigo,
+                        ca_Categoria = q.ca_Categoria,
+                        nom_linea = q.nom_linea,
+                        nom_grupo = q.nom_grupo,
+                        IdCategoria = q.IdCategoria,
+                        IdLinea = q.IdLinea,
+                        IdGrupo = q.IdGrupo
 
                     }).ToList();
                 }
