@@ -21,6 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_inventario")
         {
         }
+
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
@@ -92,6 +93,7 @@ namespace Core.Erp.Data
         public DbSet<vwin_Ing_Egr_Inven_PorOrdenCompra> vwin_Ing_Egr_Inven_PorOrdenCompra { get; set; }
         public DbSet<in_parametro> in_parametro { get; set; }
         public DbSet<vwin_Ing_Egr_Inven_PorContabilizar> vwin_Ing_Egr_Inven_PorContabilizar { get; set; }
+        public DbSet<vwin_AjusteDet> vwin_AjusteDet { get; set; }
     
         public virtual ObjectResult<string> spin_Producto_validar_anulacion(Nullable<int> idEmpresa, Nullable<decimal> idProducto)
         {

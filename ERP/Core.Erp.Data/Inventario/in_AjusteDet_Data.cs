@@ -17,7 +17,7 @@ namespace Core.Erp.Data.Inventario
 
                 using (Entities_inventario db = new Entities_inventario())
                 {
-                    Lista = db.in_AjusteDet.Where(q => q.IdEmpresa == IdEmpresa && q.IdAjuste == IdAjuste).Select(q => new in_AjusteDet_Info
+                    Lista = db.vwin_AjusteDet.Where(q => q.IdEmpresa == IdEmpresa && q.IdAjuste == IdAjuste).Select(q => new in_AjusteDet_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdAjuste = q.IdAjuste,
@@ -27,7 +27,13 @@ namespace Core.Erp.Data.Inventario
                         StockSistema = q.StockSistema,
                         StockFisico = q.StockFisico,
                         Ajuste = q.Ajuste,
-                        Costo = q.Costo
+                        Costo = q.Costo,
+                        IdCategoria = q.IdCategoria,
+                        IdLinea = q.IdLinea,
+                        pr_codigo = q.pr_codigo,
+                        pr_descripcion = q.pr_descripcion,
+                        nom_linea = q.nom_linea,
+                        ca_Categoria = q.ca_Categoria
                     }).ToList();
 
                     return Lista;

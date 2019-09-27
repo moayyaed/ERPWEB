@@ -2573,6 +2573,9 @@
     <Compile Include="vwin_Ajuste.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwin_AjusteDet.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwin_Consignacion.cs">
       <DependentUpon>Model_inventario.tt</DependentUpon>
     </Compile>

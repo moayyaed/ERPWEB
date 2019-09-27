@@ -769,6 +769,42 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ajuste' no tiene definida nin
           <Property Name="bo_Descripcion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_AjusteDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwin_AjusteDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAjuste" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="StockSistema" />
+            <PropertyRef Name="StockFisico" />
+            <PropertyRef Name="Ajuste" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="IdCategoria" />
+            <PropertyRef Name="IdLinea" />
+            <PropertyRef Name="ca_Categoria" />
+            <PropertyRef Name="nom_linea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdAjuste" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="StockSistema" Type="float" Nullable="false" />
+          <Property Name="StockFisico" Type="float" Nullable="false" />
+          <Property Name="Ajuste" Type="float" Nullable="false" />
+          <Property Name="Costo" Type="float" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="IdCategoria" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdLinea" Type="int" Nullable="false" />
+          <Property Name="ca_Categoria" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nom_linea" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Consignacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Consignacion">
           <Key>
@@ -2754,6 +2790,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_Ajuste].[bo_Descripcion] AS [bo_Descripcion]
     FROM [dbo].[vwin_Ajuste] AS [vwin_Ajuste]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwin_AjusteDet" EntityType="Self.vwin_AjusteDet" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwin_AjusteDet].[IdEmpresa] AS [IdEmpresa], 
+    [vwin_AjusteDet].[IdAjuste] AS [IdAjuste], 
+    [vwin_AjusteDet].[Secuencia] AS [Secuencia], 
+    [vwin_AjusteDet].[IdProducto] AS [IdProducto], 
+    [vwin_AjusteDet].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [vwin_AjusteDet].[StockSistema] AS [StockSistema], 
+    [vwin_AjusteDet].[StockFisico] AS [StockFisico], 
+    [vwin_AjusteDet].[Ajuste] AS [Ajuste], 
+    [vwin_AjusteDet].[Costo] AS [Costo], 
+    [vwin_AjusteDet].[pr_descripcion] AS [pr_descripcion], 
+    [vwin_AjusteDet].[pr_codigo] AS [pr_codigo], 
+    [vwin_AjusteDet].[IdCategoria] AS [IdCategoria], 
+    [vwin_AjusteDet].[IdLinea] AS [IdLinea], 
+    [vwin_AjusteDet].[ca_Categoria] AS [ca_Categoria], 
+    [vwin_AjusteDet].[nom_linea] AS [nom_linea]
+    FROM [dbo].[vwin_AjusteDet] AS [vwin_AjusteDet]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwin_Consignacion" EntityType="Self.vwin_Consignacion" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwin_Consignacion].[IdEmpresa] AS [IdEmpresa], 
@@ -4478,6 +4533,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="IdBodega" Mode="In" Type="Int32" />
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="vwin_AjusteDet" EntityType="Model_inventario.vwin_AjusteDet" />
           </EntityContainer>
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
@@ -6753,6 +6809,40 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Type="String" Name="nom_grupo" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="nom_linea" Nullable="true" MaxLength="150" />
         </ComplexType>
+        <EntityType Name="vwin_AjusteDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAjuste" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="StockSistema" />
+            <PropertyRef Name="StockFisico" />
+            <PropertyRef Name="Ajuste" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="IdCategoria" />
+            <PropertyRef Name="IdLinea" />
+            <PropertyRef Name="ca_Categoria" />
+            <PropertyRef Name="nom_linea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdAjuste" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="StockSistema" Type="Double" Nullable="false" />
+          <Property Name="StockFisico" Type="Double" Nullable="false" />
+          <Property Name="Ajuste" Type="Double" Nullable="false" />
+          <Property Name="Costo" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="IdCategoria" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdLinea" Type="Int32" Nullable="false" />
+          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_linea" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8058,6 +8148,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vwin_AjusteDet">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_AjusteDet">
+              <MappingFragment StoreEntitySet="vwin_AjusteDet">
+                <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Ajuste" ColumnName="Ajuste" />
+                <ScalarProperty Name="StockFisico" ColumnName="StockFisico" />
+                <ScalarProperty Name="StockSistema" ColumnName="StockSistema" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdAjuste" ColumnName="IdAjuste" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -676,7 +676,7 @@ namespace Core.Erp.Data.Inventario
                 if (descuadre < -0.01 || 0.01 <= descuadre)
                     return false;
 
-                if (descuadre <= 0.01 || -0.01 <= descuadre && descuadre != 0)
+                if ((descuadre <= 0.01 || -0.01 <= descuadre) && descuadre != 0)
                 {
                     if (descuadre > 0)
                         diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor < 0).FirstOrDefault().dc_Valor -= descuadre;

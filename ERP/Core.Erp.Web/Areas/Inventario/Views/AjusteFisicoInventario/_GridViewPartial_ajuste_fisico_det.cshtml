@@ -34,15 +34,17 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCategoria";
-            column.Caption = "";
+            column.Caption = "Categoría";
             column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.GroupIndex = 0;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdLinea";
-            column.Caption = "";
+            column.Caption = "Linea";
             column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.GroupIndex = 1;
         });
         settings.Columns.Add(column =>
@@ -132,6 +134,13 @@
             gridView.ExpandAll();
         };
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.CustomGroupDisplayText = (s, e) =>
+        {
+            if (e.Column.FieldName == "IdCategoria")
+                e.DisplayText = e.GetFieldValue("ca_Categoria").ToString();
+            if (e.Column.FieldName == "IdLinea")
+                e.DisplayText = e.GetFieldValue("nom_linea").ToString();
+        };
     });
 }
 @grid.Bind(Model).GetHtml()
