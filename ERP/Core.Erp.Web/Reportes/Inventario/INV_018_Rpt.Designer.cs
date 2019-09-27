@@ -166,6 +166,8 @@
             this.Detail.HeightF = 25F;
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
+            this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("pr_descripcion", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // xrTable4
@@ -387,13 +389,13 @@
             // xrTableCell21
             // 
             this.xrTableCell21.Name = "xrTableCell21";
-            this.xrTableCell21.Text = "Stock sistema";
+            this.xrTableCell21.Text = "S. sistema";
             this.xrTableCell21.Weight = 0.836934115172385D;
             // 
             // xrTableCell22
             // 
             this.xrTableCell22.Name = "xrTableCell22";
-            this.xrTableCell22.Text = "Stock físico";
+            this.xrTableCell22.Text = "S. físico";
             this.xrTableCell22.Weight = 0.697445065051357D;
             // 
             // xrTableCell23
@@ -811,11 +813,11 @@
             // 
             this.xrTable5.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrTable5.Font = new System.Drawing.Font("Verdana", 7F);
-            this.xrTable5.LocationFloat = new DevExpress.Utils.PointFloat(320F, 0F);
+            this.xrTable5.LocationFloat = new DevExpress.Utils.PointFloat(6.103516E-05F, 0F);
             this.xrTable5.Name = "xrTable5";
             this.xrTable5.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow11});
-            this.xrTable5.SizeF = new System.Drawing.SizeF(431F, 25F);
+            this.xrTable5.SizeF = new System.Drawing.SizeF(750.9999F, 25F);
             this.xrTable5.StylePriority.UseBorders = false;
             this.xrTable5.StylePriority.UseFont = false;
             this.xrTable5.StylePriority.UseTextAlignment = false;
@@ -843,7 +845,7 @@
             this.xrTableCell40.StylePriority.UseTextAlignment = false;
             this.xrTableCell40.Text = "TOTAL";
             this.xrTableCell40.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell40.Weight = 0.697445100525248D;
+            this.xrTableCell40.Weight = 3.6732102111630365D;
             // 
             // xrTableCell41
             // 
