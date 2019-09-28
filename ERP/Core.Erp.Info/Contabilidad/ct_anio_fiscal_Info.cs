@@ -18,5 +18,6 @@ namespace Core.Erp.Info.Contabilidad
         public bool EstadoBool { get; set; }
         //no existe en la tabla
         public ct_anio_fiscal_x_cuenta_utilidad_Info info_anio_ctautil { get; set; }
+        public List<ct_periodo_Info> lst_periodo { get; set; }
     }
 }

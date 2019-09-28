@@ -71,17 +71,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         #endregion
 
-
-
-
-
-
         private bool validar(ct_anio_fiscal_Info i_validar, ref string msg)
         {
             if (string.IsNullOrEmpty(i_validar.info_anio_ctautil.IdCtaCble))
              {
-                        msg = "El campo cuenta contable es obligatorio";
-                        return false;
+                msg = "El campo cuenta contable es obligatorio";
+                return false;
             }
             return true;
         }
@@ -101,6 +96,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         [HttpPost]
         public ActionResult Nuevo(ct_anio_fiscal_Info model)
         {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.lst_periodo = new List<ct_periodo_Info>();
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -114,6 +111,32 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
             model.info_anio_ctautil.IdEmpresa = Convert.ToInt32( SessionFixed.IdEmpresa);
+            var mes_ini = model.af_fechaIni.Month;
+            var mes_fin = model.af_fechaFin.Month;
+            var meses = mes_fin - mes_ini;
+            for (int i = mes_ini; i <= mes_fin; i++)
+            {
+                var mes = i.ToString().PadLeft(2, '0');
+                var IdPeriodo = model.IdanioFiscal + mes;
+                var anio = model.IdanioFiscal;
+                var ini = new DateTime(anio, Convert.ToInt32(i), 1);
+                var fin = new DateTime(anio, Convert.ToInt32(i), 1).AddMonths(1).AddDays(-1);
+                
+                var info_periodo = new ct_periodo_Info
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdanioFiscal = model.IdanioFiscal,
+                    IdPeriodo = Convert.ToInt32(IdPeriodo),
+                    pe_mes = i,
+                    pe_FechaIni = ini,
+                    pe_FechaFin = fin,
+                    pe_estado = "A", 
+                    pe_cerrado = "N"
+                };
+
+                model.lst_periodo.Add(info_periodo);
+            }
+
             if(!bus_anio_fiscal.guardarDB(model))
             {
                 model.info_anio_ctautil.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);

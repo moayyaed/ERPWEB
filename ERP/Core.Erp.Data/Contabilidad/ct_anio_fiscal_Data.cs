@@ -114,14 +114,31 @@ namespace Core.Erp.Data.Contabilidad
                         };
                         Context.ct_anio_fiscal.Add(Entity);
                     }           
-                        ct_anio_fiscal_x_cuenta_utilidad Entity_det = new ct_anio_fiscal_x_cuenta_utilidad
+                    ct_anio_fiscal_x_cuenta_utilidad Entity_det = new ct_anio_fiscal_x_cuenta_utilidad
+                    {
+                        IdEmpresa = info.info_anio_ctautil.IdEmpresa,
+                        IdanioFiscal = info.IdanioFiscal,
+                        IdCtaCble = info.info_anio_ctautil.IdCtaCble,
+                        IdCtaCbleCierre = info.info_anio_ctautil.IdCtaCbleCierre
+                    };
+                    Context.ct_anio_fiscal_x_cuenta_utilidad.Add(Entity_det);
+
+                    if(info.lst_periodo.Count >0){
+                        foreach (var item in info.lst_periodo)
                         {
-                            IdEmpresa = info.info_anio_ctautil.IdEmpresa,
-                            IdanioFiscal = info.IdanioFiscal,
-                            IdCtaCble = info.info_anio_ctautil.IdCtaCble,
-                            IdCtaCbleCierre = info.info_anio_ctautil.IdCtaCbleCierre
-                        };
-                        Context.ct_anio_fiscal_x_cuenta_utilidad.Add(Entity_det);                    
+                            Context.ct_periodo.Add(new ct_periodo
+                            {
+                                IdEmpresa = item.IdEmpresa,
+                                IdPeriodo = item.IdPeriodo,
+                                IdanioFiscal = item.IdanioFiscal,
+                                pe_mes = item.pe_mes,
+                                pe_FechaIni = item.pe_FechaIni,
+                                pe_FechaFin = item.pe_FechaFin,
+                                pe_cerrado = item.pe_cerrado,
+                                pe_estado = item.pe_estado
+                            });
+                        }
+                    }       
                     Context.SaveChanges();
                 }
                 return true;
