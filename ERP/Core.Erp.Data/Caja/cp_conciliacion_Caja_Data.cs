@@ -1362,16 +1362,20 @@ namespace Core.Erp.Data.Caja
                 Entity.IdEstadoCierre = cl_enumeradores.eEstadoCierreCaja.EST_CIE_ANU.ToString();
 
                 var lst_det = Context.cp_conciliacion_Caja_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
-                Context.cp_conciliacion_Caja_det.RemoveRange(lst_det);
+                if(lst_det!=null)
+                    Context.cp_conciliacion_Caja_det.RemoveRange(lst_det);
 
                 var lst_caja = Context.cp_conciliacion_Caja_det_Ing_Caja.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
-                Context.cp_conciliacion_Caja_det_Ing_Caja.RemoveRange(lst_caja);
+                if (lst_caja != null)
+                    Context.cp_conciliacion_Caja_det_Ing_Caja.RemoveRange(lst_caja);
 
                 var lst_vales = Context.cp_conciliacion_Caja_det_x_ValeCaja.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
-                Context.cp_conciliacion_Caja_det_x_ValeCaja.RemoveRange(lst_vales);
+                if (lst_vales != null)
+                    Context.cp_conciliacion_Caja_det_x_ValeCaja.RemoveRange(lst_vales);
 
                 var lst_facturas = Context.cp_conciliacion_Caja_ValesNoConciliados.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
-                Context.cp_conciliacion_Caja_ValesNoConciliados.RemoveRange(lst_facturas);
+                if (lst_facturas != null)
+                    Context.cp_conciliacion_Caja_ValesNoConciliados.RemoveRange(lst_facturas);
 
                 Context.SaveChanges();
 

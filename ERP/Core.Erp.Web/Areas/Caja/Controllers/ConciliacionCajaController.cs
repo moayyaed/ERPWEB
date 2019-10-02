@@ -310,7 +310,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             model.IdUsuarioModificacion = SessionFixed.IdUsuario;
             if (!bus_conciliacion.anularDB(model))
             {
-                ViewBag.mensaje = "No se ha podido modificar el registro";
+                ViewBag.mensaje = "No se ha podido anular el registro";
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }

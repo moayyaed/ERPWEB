@@ -175,7 +175,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public ActionResult Modificar(ct_cbtecble_Plantilla_Info model)
         {
             model.lst_cbtecble_plantilla_det = CbteCble_PlantillaDet_Lista.get_list(model.IdTransaccionSession);
-            model.IdUsuarioModificacion = Session["IdUsuario"].ToString();
+            model.IdUsuarioModificacion = SessionFixed.IdUsuario;
 
             if (!Validar(model, ref mensaje))
             {
