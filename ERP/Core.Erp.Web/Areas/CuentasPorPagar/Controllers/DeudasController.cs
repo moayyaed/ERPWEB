@@ -1076,7 +1076,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     Total = Math.Round( (Total + Convert.ToDouble(item)) , 2);
                 }
             }
-            return Json(Total, JsonRequestBehavior.AllowGet);
+            return Json(Total.ToString("n2"), JsonRequestBehavior.AllowGet);
         }
 
         #endregion

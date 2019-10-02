@@ -9,14 +9,13 @@
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;
         settings.Settings.ShowFilterRow = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        
 
         //Configuración click derecho
         settings.SettingsContextMenu.Enabled = true;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
         settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
-
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
 
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;

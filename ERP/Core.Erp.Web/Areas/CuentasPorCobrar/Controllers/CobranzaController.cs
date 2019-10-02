@@ -499,7 +499,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                     Total = Math.Round((Total + Convert.ToDouble(item)), 2, MidpointRounding.AwayFromZero);
                 }
             }
-            return Json(Total, JsonRequestBehavior.AllowGet);
+            return Json(Total.ToString("n2"), JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

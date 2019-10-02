@@ -553,6 +553,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         public ActionResult INV_005(cl_filtros_inventario_Info model)
         {
             if (model.mostrar_detallado)
+
             {
                 INV_005_detalle_Rpt report = new INV_005_detalle_Rpt();
                 report.p_IdEmpresa.Value = model.IdEmpresa;
