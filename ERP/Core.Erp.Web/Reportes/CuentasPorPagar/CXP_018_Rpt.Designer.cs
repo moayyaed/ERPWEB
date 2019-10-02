@@ -778,7 +778,6 @@
             this.GroupHeader2.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("TotalDias", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupHeader2.HeightF = 0F;
-            this.GroupHeader2.Level = 1;
             this.GroupHeader2.Name = "GroupHeader2";
             // 
             // xrTable4
@@ -816,7 +815,6 @@
             // GroupFooter2
             // 
             this.GroupFooter2.HeightF = 0F;
-            this.GroupFooter2.Level = 1;
             this.GroupFooter2.Name = "GroupFooter2";
             // 
             // xrTable6
@@ -1210,6 +1208,7 @@
             this.GroupHeader4.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("pe_nombreCompleto", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.GroupHeader4.HeightF = 21F;
+            this.GroupHeader4.Level = 1;
             this.GroupHeader4.Name = "GroupHeader4";
             // 
             // GroupFooter4
@@ -1217,6 +1216,7 @@
             this.GroupFooter4.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable6});
             this.GroupFooter4.HeightF = 19F;
+            this.GroupFooter4.Level = 1;
             this.GroupFooter4.Name = "GroupFooter4";
             // 
             // CXP_018_Rpt
