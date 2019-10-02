@@ -152,8 +152,8 @@
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add("dc_Observacion", "Observación").Width = Unit.Percentage(20);
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Porcentaje");
-
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber");
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){if (s.IsEditing()) {var editor = IdCtaCble;editor.Focus();}}";

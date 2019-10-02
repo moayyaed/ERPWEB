@@ -57,7 +57,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             var lst_dinardarp = set_dinardap_info(lst_archivo, model.IdPeriodoIni);
 
             archivo = GetArchivo(lst_dinardarp, nombre_file);
-            return File(archivo, "text/plain", nombre_file + ".txt");
+            return File(archivo, "application/text", nombre_file + ".txt");
         }
         #endregion
 
@@ -199,7 +199,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 string sLinea = "";
                 System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
 
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true, Encoding.Default))
                 {
                     foreach (Dinardap_Info InfoData in lst_dinardarp)
                     {
