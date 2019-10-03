@@ -14,6 +14,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
 {
     public class cxc_cobro_Data
     {
+        caj_Caja_Movimiento_Data data_caj_movi = new caj_Caja_Movimiento_Data();
         public List<cxc_cobro_Info> get_list(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin)
         {
             try
@@ -411,6 +412,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             IdTipo_Persona = cl_enumeradores.eTipoPersona.CLIENTE.ToString(),
                             IdEntidad = info.IdEntidad,
                             IdPersona = cliente.IdPersona,
+                            SecuenciaCaja = data_caj_movi.get_Secuencia(diario.IdEmpresa,info.IdCaja,"+"),
 
                             IdUsuario = info.IdUsuario,
                             Fecha_Transac = DateTime.Now
@@ -739,6 +741,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                 cm_fecha = diario.cb_Fecha,
                                 cm_valor = diario.cb_Valor,
                                 cm_Signo = "+",
+                                SecuenciaCaja = data_caj_movi.get_Secuencia(diario.IdEmpresa, info.IdCaja, "+"),
                                 cm_observacion = diario.cb_Observacion,
                                 Estado = "A",
                                 IdPeriodo = diario.IdPeriodo,
@@ -876,6 +879,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                     cm_fecha = diario.cb_Fecha,
                                     cm_valor = diario.cb_Valor,
                                     cm_Signo = "+",
+                                    SecuenciaCaja = data_caj_movi.get_Secuencia(diario.IdEmpresa, info.IdCaja, "+"),
                                     cm_observacion = diario.cb_Observacion,
                                     Estado = "A",
                                     IdPeriodo = diario.IdPeriodo,

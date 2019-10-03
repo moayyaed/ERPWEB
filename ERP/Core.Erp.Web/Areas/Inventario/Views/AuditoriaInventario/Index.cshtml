@@ -475,7 +475,9 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 console.log(data);
+                BuscarMovimientos();
                 GridViewPartial_MovimientosSinCont.PerformCallback();
+                alert("Contabilización existósa");
             },
             error: function (error) {
             }

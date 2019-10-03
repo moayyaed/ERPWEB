@@ -59,6 +59,7 @@
             success: function (data) {
                 $("#myform").submit();
                 GridViewPartial_aprobacion_facturas.PerformCallback();
+                alert("Documentos aprobados exitósamente");
             },
             error: function (error) {
             }
@@ -163,7 +164,8 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <div class="form-group">                    
+                <div class="form-group">             
+                    <label for="">        </label>       
                     <button type="button" class="btn btn-primary form-control" onclick="fac_con_saldo()" title="Buscar deudas">
                         <i class="fa fa-search"></i>
                     </button>

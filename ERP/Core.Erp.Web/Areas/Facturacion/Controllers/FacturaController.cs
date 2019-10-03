@@ -182,10 +182,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
-            {
-                return false;
-            }
+            
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
@@ -335,26 +332,31 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
 
             #region ValidarStock
-            /*
-            var lst_validar = i_validar.lst_det.GroupBy(q=> new { q.IdProducto, q.pr_descripcion, q.tp_manejaInven, q.se_distribuye}).Select(q => new in_Producto_Stock_Info
+            if (i_validar.lst_det.Where(q => q.tp_manejaInven == "S").Count() > 0)
             {
-                IdEmpresa = i_validar.IdEmpresa,
-                IdSucursal = i_validar.IdSucursal,
-                IdBodega = i_validar.IdBodega,
-                IdProducto = q.Key.IdProducto,
-                pr_descripcion = q.Key.pr_descripcion,
-                tp_manejaInven = q.Key.tp_manejaInven,
-                SeDestribuye = q.Key.se_distribuye ?? false,
+                if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
+                {
+                    return false;
+                }
+                var lst_validar = i_validar.lst_det.GroupBy(q => new { q.IdProducto, q.pr_descripcion, q.tp_manejaInven, q.se_distribuye }).Select(q => new in_Producto_Stock_Info
+                {
+                    IdEmpresa = i_validar.IdEmpresa,
+                    IdSucursal = i_validar.IdSucursal,
+                    IdBodega = i_validar.IdBodega,
+                    IdProducto = q.Key.IdProducto,
+                    pr_descripcion = q.Key.pr_descripcion,
+                    tp_manejaInven = q.Key.tp_manejaInven,
+                    SeDestribuye = q.Key.se_distribuye ?? false,
 
-                Cantidad = q.Sum(v=> v.vt_cantidad),
-                CantidadAnterior = q.Sum(v => v.CantidadAnterior),                
-            }).ToList();
+                    Cantidad = q.Sum(v => v.vt_cantidad),
+                    CantidadAnterior = q.Sum(v => v.CantidadAnterior),
+                }).ToList();
 
-            if (!bus_producto.validar_stock(lst_validar, ref msg))
-            {
-                return false;
+                if (!bus_producto.validar_stock(lst_validar, ref msg))
+                {
+                    return false;
+                }
             }
-            */
             #endregion
 
             #region ValidarCentroCosto
@@ -377,6 +379,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 }
             }
             #endregion
+
             return true;
         }
         #endregion

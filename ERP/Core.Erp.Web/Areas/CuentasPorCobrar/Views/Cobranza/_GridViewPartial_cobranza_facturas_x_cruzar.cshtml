@@ -9,7 +9,7 @@
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = false;
         settings.Settings.ShowFilterRow = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
@@ -18,6 +18,7 @@
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowSelectCheckbox = true;
         settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
 
         //Configuración click derecho
         settings.SettingsContextMenu.Enabled = true;
@@ -35,7 +36,6 @@
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
 
         settings.Columns.Add("IdCbte_vta_nota", "ID").Width = Unit.Percentage(10);
         settings.Columns.Add("NomCliente", "Cliente").Width = Unit.Percentage(20);
