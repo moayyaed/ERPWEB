@@ -10,7 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Index", "ParametroCXC", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -108,6 +108,64 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Grupo de punto de cargo fuente</label>
+                    @Html.DropDownListFor(q => q.IdPunto_cargo_grupo_Fte, new SelectList(ViewBag.lst_grupo_fuente, "IdPunto_cargo_grupo", "nom_punto_cargo_grupo"), new { @class = "form-control", @id = "IdPunto_cargo_grupo_Fte" })
+                    @Html.ValidationMessageFor(q => q.IdPunto_cargo_grupo_Fte, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Punto cargo fuente</label>
+                    @Html.DropDownListFor(q => q.IdPunto_cargo_Fte, new SelectList(ViewBag.lst_punto_fuente, "IdPunto_cargo", "nom_punto_cargo"), new { @class = "form-control", @id = "IdPunto_cargo_Fte" })
+                    @Html.ValidationMessageFor(q => q.IdPunto_cargo_Fte, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Grupo de punto de cargo IVA</label>
+                    @Html.DropDownListFor(q => q.IdPunto_cargo_grupo_Iva, new SelectList(ViewBag.lst_grupo_iva, "IdPunto_cargo_grupo", "nom_punto_cargo_grupo"), new { @class = "form-control", @id = "IdPunto_cargo_grupo_Iva" })
+                    @Html.ValidationMessageFor(q => q.IdPunto_cargo_grupo_Iva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Punto cargo IVA</label>
+                    @Html.DropDownListFor(q => q.IdPunto_cargo_Iva, new SelectList(ViewBag.lst_punto_iva, "IdPunto_cargo", "nom_punto_cargo"), new { @class = "form-control", @id = "IdPunto_cargo_Iva" })
+                    @Html.ValidationMessageFor(q => q.IdPunto_cargo_Iva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DiasTransaccionesAFuturo">Tipo de comprobante de liquidación de retenciones</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_LiquidacionRet, settings =>
+                       {
+                           settings.Name = "IdTipoCbte_LiquidacionRet";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                           settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                           settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                           //Campo ID
+                           settings.Properties.ValueField = "IdTipoCbte";
+                           settings.Properties.ValueType = typeof(int);
+                           settings.Properties.TextField = "tc_TipoCbte";
+                           //Boton para seleccionar ningun registro
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                           settings.Properties.NullText = "== Seleccione ==";
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       }).BindList(ViewBag.lst_tipo_comprobante_ret).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte_LiquidacionRet, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
@@ -124,3 +182,68 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+<script type="text/javascript">
+    $(function () {
+        $("#IdPunto_cargo_grupo_Fte").change(function () {
+            CargarPuntoFuente();
+        });
+
+        $("#IdPunto_cargo_grupo_Iva").change(function () {
+            CargarPuntoIva();
+        });
+    });
+
+    function CargarPuntoFuente() {
+        $("#IdPunto_cargo_Fte").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdPunto_cargo_grupo: $("#IdPunto_cargo_grupo_Fte").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPunto", "ParametroCXC", new { Area = "CuentasPorCobrar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdPunto_cargo_Fte").append("<option value=" + row.IdPunto_cargo + ">" + row.nom_punto_cargo + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function CargarPuntoIva() {
+        $("#IdPunto_cargo_Iva").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdPunto_cargo_grupo: $("#IdPunto_cargo_grupo_Iva").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPunto", "ParametroCXC", new { Area = "CuentasPorCobrar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdPunto_cargo_Iva").append("<option value=" + row.IdPunto_cargo + ">" + row.nom_punto_cargo + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

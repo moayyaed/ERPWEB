@@ -19,5 +19,10 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public Nullable<System.DateTime> FechaUltMod { get; set; }
         public string IdCtaCble_ProvisionFuente { get; set; }
         public string IdCtaCble_ProvisionIva { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo_Fte { get; set; }
+        public Nullable<int> IdPunto_cargo_Fte { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo_Iva { get; set; }
+        public Nullable<int> IdPunto_cargo_Iva { get; set; }
+        public Nullable<int> IdTipoCbte_LiquidacionRet { get; set; }
     }
 }

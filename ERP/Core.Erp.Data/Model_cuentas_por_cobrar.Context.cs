@@ -45,7 +45,11 @@ namespace Core.Erp.Data
         public DbSet<vwcxc_cobro_det> vwcxc_cobro_det { get; set; }
         public DbSet<vwcxc_cartera_x_cobrar> vwcxc_cartera_x_cobrar { get; set; }
         public DbSet<cxc_cobro> cxc_cobro { get; set; }
-        public DbSet<cxc_Parametro> cxc_Parametro { get; set; }
         public DbSet<vwcxc_cobro_para_retencion> vwcxc_cobro_para_retencion { get; set; }
+        public DbSet<cxc_Parametro> cxc_Parametro { get; set; }
+        public DbSet<cxc_LiquidacionRetProv> cxc_LiquidacionRetProv { get; set; }
+        public DbSet<cxc_LiquidacionRetProvDet> cxc_LiquidacionRetProvDet { get; set; }
+        public DbSet<vwcxc_LiquidacionRetProvDet> vwcxc_LiquidacionRetProvDet { get; set; }
+        public DbSet<vwcxc_LiquidacionRetProvDet_PorCruzar> vwcxc_LiquidacionRetProvDet_PorCruzar { get; set; }
     }
 }

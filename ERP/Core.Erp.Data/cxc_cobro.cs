@@ -19,6 +19,7 @@ namespace Core.Erp.Data
             this.cxc_cobro_det = new HashSet<cxc_cobro_det>();
             this.cxc_cobro_x_ct_cbtecble = new HashSet<cxc_cobro_x_ct_cbtecble>();
             this.cxc_LiquidacionTarjeta_x_cxc_cobro = new HashSet<cxc_LiquidacionTarjeta_x_cxc_cobro>();
+            this.cxc_LiquidacionRetProvDet = new HashSet<cxc_LiquidacionRetProvDet>();
         }
     
         public int IdEmpresa { get; set; }
@@ -58,5 +59,6 @@ namespace Core.Erp.Data
         public virtual ICollection<cxc_cobro_det> cxc_cobro_det { get; set; }
         public virtual ICollection<cxc_cobro_x_ct_cbtecble> cxc_cobro_x_ct_cbtecble { get; set; }
         public virtual ICollection<cxc_LiquidacionTarjeta_x_cxc_cobro> cxc_LiquidacionTarjeta_x_cxc_cobro { get; set; }
+        public virtual ICollection<cxc_LiquidacionRetProvDet> cxc_LiquidacionRetProvDet { get; set; }
     }
 }
