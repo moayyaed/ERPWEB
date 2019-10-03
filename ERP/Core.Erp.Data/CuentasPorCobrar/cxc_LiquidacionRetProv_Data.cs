@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.General;
+﻿using Core.Erp.Data.Contabilidad;
+using Core.Erp.Data.General;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.General;
 using System;
@@ -11,7 +12,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
 {
     public class cxc_LiquidacionRetProv_Data
     {
-        public List<cxc_LiquidacionRetProv_Info> get_list(int IdEmpresa, DateTime Fecha_ini, DateTime Fecha_fin)
+        ct_cbtecble_Data odata_ct = new ct_cbtecble_Data();
+        public List<cxc_LiquidacionRetProv_Info> get_list(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin)
         {
             try
             {
@@ -21,11 +23,13 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 {
                     Lista = (from q in Context.cxc_LiquidacionRetProv
                              where q.IdEmpresa == IdEmpresa
+                             && q.IdSucursal == IdSucursal
                              && Fecha_ini <= q.li_Fecha && q.li_Fecha <= Fecha_fin
                              orderby q.IdLiquidacion descending
                              select new cxc_LiquidacionRetProv_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
                                  IdLiquidacion = q.IdLiquidacion,
                                  li_Fecha = q.li_Fecha,
                                  Observacion = q.Observacion,
@@ -36,7 +40,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -67,7 +71,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
             }
         }
 
-        public cxc_LiquidacionRetProv_Info get_info(int IdEmpresa, decimal IdLiquidacion)
+        public cxc_LiquidacionRetProv_Info get_info(int IdEmpresa, int IdSucursal, decimal IdLiquidacion)
         {
             try
             {
@@ -75,16 +79,18 @@ namespace Core.Erp.Data.CuentasPorCobrar
 
                 using (Entities_cuentas_por_cobrar Context = new Entities_cuentas_por_cobrar())
                 {
-                    var Entity = Context.cxc_LiquidacionRetProv.Where(q => q.IdEmpresa == IdEmpresa && q.IdLiquidacion == IdLiquidacion).FirstOrDefault();
+                    var Entity = Context.cxc_LiquidacionRetProv.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdLiquidacion == IdLiquidacion).FirstOrDefault();
                     if (Entity == null) return null;
                     info = new cxc_LiquidacionRetProv_Info
                     {
                         IdEmpresa = Entity.IdEmpresa,
+                        IdSucursal = Entity.IdSucursal,
                         IdLiquidacion = Entity.IdLiquidacion,
                         li_Fecha = Entity.li_Fecha,
                         Observacion = Entity.Observacion,
                         Estado = Entity.Estado,
-                        IdTipoCbte = Entity.IdTipoCbte
+                        IdTipoCbte = Entity.IdTipoCbte,
+                        IdCbteCble = Entity.IdCbteCble
                     };
                 }
 
@@ -106,14 +112,14 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     cxc_LiquidacionRetProv Entity = new cxc_LiquidacionRetProv
                     {
                         IdEmpresa = info.IdEmpresa,
+                        IdSucursal = info.IdSucursal,
                         IdLiquidacion = info.IdLiquidacion = get_id(info.IdEmpresa),
                         li_Fecha = info.li_Fecha,
                         Observacion = info.Observacion,
-                        Estado = info.Estado,
-                        IdTipoCbte = info.IdTipoCbte
+                        Estado = true,
+                        IdUsuarioCreacion = info.IdUsuarioCreacion,
+                        FechaCreacion = DateTime.Now
                     };
-
-                    Context.cxc_LiquidacionRetProv.Add(Entity);
 
                     foreach (var item in info.lst_detalle)
                     {
@@ -121,16 +127,26 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         {
                             IdEmpresa = info.IdEmpresa,
                             IdLiquidacion = info.IdLiquidacion,
-                            IdSucursal = item.IdSucursal,
-                            IdCobro = item.IdCobro,
+                            IdSucursal = info.IdSucursal,
                             Secuencia = secuencia++,
+                            IdCobro = item.IdCobro,
+                            secuencial = item.secuencial,
                             IdCobro_tipo = item.IdCobro_tipo,
-                            Valor = item.dc_ValorPago,
+                            Valor = item.Valor,
                         });
-
-                        secuencia++;
                     }
 
+                    var param = Context.cxc_Parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
+                    var diario = odata_ct.armar_info(info.lst_detalle_cbte, info.IdEmpresa, info.IdSucursal, (int)param.IdTipoCbte_LiquidacionRet, 0, info.Observacion, info.li_Fecha);
+                    if (diario != null)
+                    {
+                        odata_ct.guardarDB(diario);
+                    }
+
+                    Entity.IdTipoCbte = diario.IdTipoCbte;
+                    Entity.IdCbteCble = diario.IdCbteCble;
+
+                    Context.cxc_LiquidacionRetProv.Add(Entity);
                     Context.SaveChanges();
                 }
                 return true;
@@ -149,14 +165,12 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 int secuencia = 1;
                 using (Entities_cuentas_por_cobrar Context = new Entities_cuentas_por_cobrar())
                 {
-                    var Entity = Context.cxc_LiquidacionRetProv.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdLiquidacion == info.IdLiquidacion).FirstOrDefault();
+                    var Entity = Context.cxc_LiquidacionRetProv.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdLiquidacion == info.IdLiquidacion).FirstOrDefault();
                     if (Entity == null) return false;
 
+                    Entity.IdSucursal = info.IdSucursal;
                     Entity.li_Fecha = info.li_Fecha;
                     Entity.Observacion = info.Observacion;
-                    Entity.IdTipoCbte = info.IdTipoCbte;
-
-                    Context.cxc_LiquidacionRetProv.Add(Entity);
 
                     var lst = Context.cxc_LiquidacionRetProvDet.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdLiquidacion == info.IdLiquidacion).ToList();
                     Context.cxc_LiquidacionRetProvDet.RemoveRange(lst);
@@ -169,13 +183,32 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             IdLiquidacion = info.IdLiquidacion,
                             IdSucursal = item.IdSucursal,
                             IdCobro = item.IdCobro,
+                            secuencial = item.secuencial,
                             Secuencia = secuencia++,
                             IdCobro_tipo = item.IdCobro_tipo,
                             Valor = item.dc_ValorPago,
                         });
-
-                        secuencia++;
                     }
+
+                    var info_cbte = odata_ct.get_info(info.IdEmpresa, Convert.ToInt32(info.IdTipoCbte), Convert.ToInt32(info.IdCbteCble));
+
+                    var param = Context.cxc_Parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
+                    var diario = odata_ct.armar_info(info.lst_detalle_cbte, info.IdEmpresa, info.IdSucursal, Convert.ToInt32(info.IdTipoCbte), Convert.ToInt32(info.IdCbteCble), info.Observacion, info.li_Fecha);
+                    if (diario!= null)
+                    {
+                        if (info_cbte == null)
+                        {
+                            odata_ct.guardarDB(diario);
+                        }
+                        else
+                        {
+                            odata_ct.modificarDB(diario);
+                        }
+                        
+                    }
+                    
+                    Entity.IdTipoCbte = diario.IdTipoCbte;
+                    Entity.IdCbteCble = diario.IdCbteCble;
 
                     Context.SaveChanges();
                 }
@@ -195,12 +228,13 @@ namespace Core.Erp.Data.CuentasPorCobrar
             {
                 using (Entities_cuentas_por_cobrar Context = new Entities_cuentas_por_cobrar())
                 {
-                    var Entity = Context.cxc_LiquidacionRetProv.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdLiquidacion == info.IdLiquidacion).FirstOrDefault();
+                    var Entity = Context.cxc_LiquidacionRetProv.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdLiquidacion == info.IdLiquidacion).FirstOrDefault();
                     if (Entity == null) return false;
 
                     Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
                     Entity.FechaAnulacion = DateTime.Now;
                     Entity.MotivoAnulacion = info.MotivoAnulacion;
+                    Entity.Estado = false;
                     Context.SaveChanges();
                 }
 

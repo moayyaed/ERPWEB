@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[cxc_LiquidacionRetProv] (
     [IdEmpresa]             INT           NOT NULL,
+    [IdSucursal]            INT           NOT NULL,
     [IdLiquidacion]         NUMERIC (18)  NOT NULL,
     [li_Fecha]              DATE          NOT NULL,
     [Observacion]           VARCHAR (MAX) NULL,
@@ -13,7 +14,10 @@
     [IdUsuarioAnulacion]    VARCHAR (50)  NULL,
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
-    CONSTRAINT [PK_cxc_LiquidacionRetProv] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdLiquidacion] ASC),
-    CONSTRAINT [FK_cxc_LiquidacionRetProv_ct_cbtecble] FOREIGN KEY ([IdEmpresa], [IdTipoCbte], [IdCbteCble]) REFERENCES [dbo].[ct_cbtecble] ([IdEmpresa], [IdTipoCbte], [IdCbteCble])
+    CONSTRAINT [PK_cxc_LiquidacionRetProv] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdLiquidacion] ASC),
+    CONSTRAINT [FK_cxc_LiquidacionRetProv_ct_cbtecble] FOREIGN KEY ([IdEmpresa], [IdTipoCbte], [IdCbteCble]) REFERENCES [dbo].[ct_cbtecble] ([IdEmpresa], [IdTipoCbte], [IdCbteCble]),
+    CONSTRAINT [FK_cxc_LiquidacionRetProv_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 

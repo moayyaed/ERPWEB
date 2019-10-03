@@ -12,11 +12,11 @@ namespace Core.Erp.Bus.CuentasPorCobrar
     {
         cxc_LiquidacionRetProvDet_Data odata = new cxc_LiquidacionRetProvDet_Data();
 
-        public List<cxc_LiquidacionRetProvDet_Info> GetList(int IdEmpresa, decimal IdLiquidacion)
+        public List<cxc_LiquidacionRetProvDet_Info> GetList(int IdEmpresa,int IdSucursal, decimal IdLiquidacion)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdLiquidacion);
+                return odata.get_list(IdEmpresa, IdSucursal, IdLiquidacion);
             }
             catch (Exception)
             {
@@ -24,11 +24,11 @@ namespace Core.Erp.Bus.CuentasPorCobrar
             }
         }
 
-        public List<cxc_LiquidacionRetProvDet_Info> GetList_X_Cruzar(int IdEmpresa)
+        public List<cxc_LiquidacionRetProvDet_Info> GetList_X_Cruzar(int IdEmpresa, int IdSucursal)
         {
             try
             {
-                return odata.GetList_X_Cruzar(IdEmpresa);
+                return odata.GetList_X_Cruzar(IdEmpresa, IdSucursal);
             }
             catch (Exception)
             {

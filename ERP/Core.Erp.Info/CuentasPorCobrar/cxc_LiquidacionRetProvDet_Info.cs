@@ -29,6 +29,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public string ESRetenIVA { get; set; }
         public string ESRetenFTE { get; set; }
         public string cr_NumDocumento { get; set; }
+        public string SecuencialCobro { get; set; }
         #endregion
     }
 }

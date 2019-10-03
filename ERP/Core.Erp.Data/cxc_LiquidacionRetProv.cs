@@ -20,6 +20,7 @@ namespace Core.Erp.Data
         }
     
         public int IdEmpresa { get; set; }
+        public int IdSucursal { get; set; }
         public decimal IdLiquidacion { get; set; }
         public System.DateTime li_Fecha { get; set; }
         public string Observacion { get; set; }

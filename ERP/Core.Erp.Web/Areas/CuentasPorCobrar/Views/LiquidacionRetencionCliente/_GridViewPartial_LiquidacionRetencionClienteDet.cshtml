@@ -7,7 +7,7 @@
         settings.Width = Unit.Percentage(100);
 
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Cobranza", Action = "EditingDeleteFactura", Area = "CuentasPorCobrar" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "LiquidacionRetencionCliente", Action = "EditingDeleteFactura", Area = "CuentasPorCobrar" };
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -57,7 +57,7 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(50);
             column.FieldName = "tc_descripcion";
             column.Caption = "Tipo retencion";
         });
@@ -79,6 +79,7 @@
         settings.Settings.ShowFooter = true;
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

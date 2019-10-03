@@ -154,9 +154,11 @@
         <EntityType Name="cxc_LiquidacionRetProv">
           <Key>
             <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
             <PropertyRef Name="IdLiquidacion" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="li_Fecha" Type="date" Nullable="false" />
           <Property Name="Observacion" Type="varchar(max)" />
@@ -176,6 +178,7 @@
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdLiquidacion" />
             <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdSucursal" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -352,6 +355,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionRetProvDet' no ti
             <PropertyRef Name="ESRetenIVA" />
             <PropertyRef Name="ESRetenFTE" />
             <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Secuencia" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -370,6 +374,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionRetProvDet' no ti
           <Property Name="ESRetenFTE" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
           <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionRetProvDet_PorCruzar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -747,10 +752,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <ReferentialConstraint>
             <Principal Role="cxc_LiquidacionRetProv">
               <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
               <PropertyRef Name="IdLiquidacion" />
             </Principal>
             <Dependent Role="cxc_LiquidacionRetProvDet">
               <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
               <PropertyRef Name="IdLiquidacion" />
             </Dependent>
           </ReferentialConstraint>
@@ -892,7 +899,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_LiquidacionRetProvDet].[ESRetenIVA] AS [ESRetenIVA], 
     [vwcxc_LiquidacionRetProvDet].[ESRetenFTE] AS [ESRetenFTE], 
     [vwcxc_LiquidacionRetProvDet].[cr_NumDocumento] AS [cr_NumDocumento], 
-    [vwcxc_LiquidacionRetProvDet].[IdLiquidacion] AS [IdLiquidacion]
+    [vwcxc_LiquidacionRetProvDet].[IdLiquidacion] AS [IdLiquidacion], 
+    [vwcxc_LiquidacionRetProvDet].[Secuencia] AS [Secuencia]
     FROM [dbo].[vwcxc_LiquidacionRetProvDet] AS [vwcxc_LiquidacionRetProvDet]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcxc_LiquidacionRetProvDet_PorCruzar" EntityType="Self.vwcxc_LiquidacionRetProvDet_PorCruzar" store:Type="Views" store:Schema="dbo">
@@ -1339,7 +1347,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySet Name="cxc_Parametro" EntityType="Model_cuentas_por_cobrar.cxc_Parametro" />
           <EntitySet Name="cxc_LiquidacionRetProv" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionRetProv" />
           <EntitySet Name="cxc_LiquidacionRetProvDet" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionRetProvDet" />
-          <EntitySet Name="vwcxc_LiquidacionRetProvDet" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet" />
           <EntitySet Name="vwcxc_LiquidacionRetProvDet_PorCruzar" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet_PorCruzar" />
           <AssociationSet Name="FK_cxc_LiquidacionRetProvDet_cxc_cobro" Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_cobro">
             <End Role="cxc_cobro" EntitySet="cxc_cobro" />
@@ -1353,6 +1360,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
             <End Role="cxc_LiquidacionRetProv" EntitySet="cxc_LiquidacionRetProv" />
             <End Role="cxc_LiquidacionRetProvDet" EntitySet="cxc_LiquidacionRetProvDet" />
           </AssociationSet>
+          <EntitySet Name="vwcxc_LiquidacionRetProvDet" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet" />
           </EntityContainer>
         <EntityType Name="cxc_cobro_tipo">
           <Key>
@@ -1880,9 +1888,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
         <EntityType Name="cxc_LiquidacionRetProv">
           <Key>
             <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
             <PropertyRef Name="IdLiquidacion" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="li_Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1903,6 +1913,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdLiquidacion" />
             <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdSucursal" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
@@ -1915,39 +1926,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <NavigationProperty Name="cxc_cobro" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_cobro" FromRole="cxc_LiquidacionRetProvDet" ToRole="cxc_cobro" />
           <NavigationProperty Name="cxc_cobro_det" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_cobro_det" FromRole="cxc_LiquidacionRetProvDet" ToRole="cxc_cobro_det" />
           <NavigationProperty Name="cxc_LiquidacionRetProv" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_LiquidacionRetProv" FromRole="cxc_LiquidacionRetProvDet" ToRole="cxc_LiquidacionRetProv" />
-        </EntityType>
-        <EntityType Name="vwcxc_LiquidacionRetProvDet">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdCobro" />
-            <PropertyRef Name="secuencial" />
-            <PropertyRef Name="IdCobro_tipo" />
-            <PropertyRef Name="dc_ValorPago" />
-            <PropertyRef Name="tc_descripcion" />
-            <PropertyRef Name="cr_fecha" />
-            <PropertyRef Name="cr_observacion" />
-            <PropertyRef Name="ESRetenIVA" />
-            <PropertyRef Name="ESRetenFTE" />
-            <PropertyRef Name="IdLiquidacion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="secuencial" Type="Int32" Nullable="false" />
-          <Property Name="IdCobro_tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
-          <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
-          <Property Name="cr_EsProvision" Type="Boolean" />
-          <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Cuenta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
-          <Property Name="ESRetenIVA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ESRetenFTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="vwcxc_LiquidacionRetProvDet_PorCruzar">
           <Key>
@@ -2021,14 +1999,51 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <ReferentialConstraint>
             <Principal Role="cxc_LiquidacionRetProv">
               <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
               <PropertyRef Name="IdLiquidacion" />
             </Principal>
             <Dependent Role="cxc_LiquidacionRetProvDet">
               <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
               <PropertyRef Name="IdLiquidacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwcxc_LiquidacionRetProvDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="IdCobro_tipo" />
+            <PropertyRef Name="dc_ValorPago" />
+            <PropertyRef Name="tc_descripcion" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="cr_observacion" />
+            <PropertyRef Name="ESRetenIVA" />
+            <PropertyRef Name="ESRetenFTE" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencial" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
+          <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="cr_EsProvision" Type="Boolean" />
+          <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
+          <Property Name="ESRetenIVA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESRetenFTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2464,6 +2479,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="li_Fecha" ColumnName="li_Fecha" />
                 <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2482,9 +2498,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwcxc_LiquidacionRetProvDet">
-            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet">
-              <MappingFragment StoreEntitySet="vwcxc_LiquidacionRetProvDet">
+          <EntitySetMapping Name="vwcxc_LiquidacionRetProvDet_PorCruzar">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet_PorCruzar">
+              <MappingFragment StoreEntitySet="vwcxc_LiquidacionRetProvDet_PorCruzar">
                 <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
                 <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
                 <ScalarProperty Name="ESRetenFTE" ColumnName="ESRetenFTE" />
@@ -2505,9 +2521,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwcxc_LiquidacionRetProvDet_PorCruzar">
-            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet_PorCruzar">
-              <MappingFragment StoreEntitySet="vwcxc_LiquidacionRetProvDet_PorCruzar">
+          <EntitySetMapping Name="vwcxc_LiquidacionRetProvDet">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet">
+              <MappingFragment StoreEntitySet="vwcxc_LiquidacionRetProvDet">
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
                 <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
                 <ScalarProperty Name="ESRetenFTE" ColumnName="ESRetenFTE" />

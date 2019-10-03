@@ -31,5 +31,6 @@ namespace Core.Erp.Data
         public string ESRetenFTE { get; set; }
         public string cr_NumDocumento { get; set; }
         public decimal IdLiquidacion { get; set; }
+        public int Secuencia { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_LiquidacionRetencionClienteXCruzar";
         settings.CallbackRouteValues = new { Controller = "LiquidacionRetencionCliente", Action = "GridViewPartial_LiquidacionRetencionClienteXCruzar" };
-        settings.KeyFieldName = "secuencial";
+        settings.KeyFieldName = "SecuencialCobro";
         settings.Width = Unit.Percentage(100);
 
         settings.SettingsPager.Visible = true;
@@ -35,7 +35,7 @@
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
 
         settings.Columns.Add(column =>
         {
@@ -60,7 +60,7 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(50);
             column.FieldName = "tc_descripcion";
             column.Caption = "Tipo retencion";
         });

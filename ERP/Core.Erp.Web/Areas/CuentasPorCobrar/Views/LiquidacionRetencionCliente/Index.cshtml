@@ -30,7 +30,16 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdSucursal">Sucursal*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
                             <div class="input-group date">
@@ -51,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha fin*</label>
                             <div class="input-group date">
@@ -91,7 +100,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_LiquidacionRetencionCliente", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin})
+            @Html.Action("GridViewPartial_LiquidacionRetencionCliente", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal})
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

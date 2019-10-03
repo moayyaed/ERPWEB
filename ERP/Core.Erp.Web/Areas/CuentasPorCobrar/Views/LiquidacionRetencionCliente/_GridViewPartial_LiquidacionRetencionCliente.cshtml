@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_LiquidacionRetencionCliente";
-        settings.CallbackRouteValues = new { Controller = "LiquidacionRetencionCliente", Action = "GridViewPartial_LiquidacionRetencionCliente", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin };
+        settings.CallbackRouteValues = new { Controller = "LiquidacionRetencionCliente", Action = "GridViewPartial_LiquidacionRetencionCliente", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdSucursal= ViewBag.IdSucursal };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdLiquidacion";
         //Configuración para que la grilla no muestre texto completo
@@ -72,8 +72,8 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdLiquidacion = DataBinder.Eval(tc.DataItem, "IdLiquidacion") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdLiquidacion = DataBinder.Eval(tc.DataItem, "IdLiquidacion") },
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdLiquidacion = DataBinder.Eval(tc.DataItem, "IdLiquidacion") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdLiquidacion = DataBinder.Eval(tc.DataItem, "IdLiquidacion") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -81,7 +81,7 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdSucursal = Core.Erp.Web.Helps.SessionFixed.IdSucursal }).ToHtmlString()
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
