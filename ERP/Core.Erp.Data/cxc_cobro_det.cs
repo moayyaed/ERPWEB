@@ -14,6 +14,11 @@ namespace Core.Erp.Data
     
     public partial class cxc_cobro_det
     {
+        public cxc_cobro_det()
+        {
+            this.cxc_LiquidacionRetProvDet = new HashSet<cxc_LiquidacionRetProvDet>();
+        }
+    
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public decimal IdCobro { get; set; }
@@ -35,5 +40,6 @@ namespace Core.Erp.Data
     
         public virtual cxc_cobro_tipo cxc_cobro_tipo { get; set; }
         public virtual cxc_cobro cxc_cobro { get; set; }
+        public virtual ICollection<cxc_LiquidacionRetProvDet> cxc_LiquidacionRetProvDet { get; set; }
     }
 }

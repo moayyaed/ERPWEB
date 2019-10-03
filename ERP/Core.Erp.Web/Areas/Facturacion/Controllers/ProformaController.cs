@@ -780,7 +780,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<fa_proforma_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
 }

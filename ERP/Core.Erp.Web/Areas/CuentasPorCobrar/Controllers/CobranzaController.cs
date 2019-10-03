@@ -544,7 +544,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         public void DeleteRow(string secuencia, decimal IdTransaccionSession)
         {
             List<cxc_cobro_det_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.secuencia == secuencia).First());
+            list.Remove(list.Where(m => m.secuencia == secuencia).FirstOrDefault());
         }
     }
 

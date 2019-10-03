@@ -26,7 +26,13 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         pa_IdTipoMoviCaja_x_Cobros_x_cliente = Entity.pa_IdTipoMoviCaja_x_Cobros_x_cliente,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
                         IdCtaCble_ProvisionFuente = Entity.IdCtaCble_ProvisionFuente,
-                        IdCtaCble_ProvisionIva = Entity.IdCtaCble_ProvisionIva
+                        IdCtaCble_ProvisionIva = Entity.IdCtaCble_ProvisionIva,
+                        IdPunto_cargo_grupo_Fte = Entity.IdPunto_cargo_grupo_Fte,
+                        IdPunto_cargo_Fte = Entity.IdPunto_cargo_Fte,
+                        IdPunto_cargo_grupo_Iva = Entity.IdPunto_cargo_grupo_Iva,
+                        IdPunto_cargo_Iva = Entity.IdPunto_cargo_Iva,
+                        IdTipoCbte_LiquidacionRet = Entity.IdTipoCbte_LiquidacionRet,
+
                     };
                 }
                 return info;
@@ -57,7 +63,12 @@ namespace Core.Erp.Data.CuentasPorCobrar
                             IdCtaCble_ProvisionFuente = info.IdCtaCble_ProvisionFuente,
                             IdCtaCble_ProvisionIva = info.IdCtaCble_ProvisionIva,
                             IdUsuario = info.IdUsuario,
-                            FechaTransac = DateTime.Now
+                            FechaTransac = DateTime.Now,
+                            IdPunto_cargo_grupo_Fte = info.IdPunto_cargo_grupo_Fte,
+                            IdPunto_cargo_Fte = info.IdPunto_cargo_Fte,
+                            IdPunto_cargo_grupo_Iva = info.IdPunto_cargo_grupo_Iva,
+                            IdPunto_cargo_Iva = info.IdPunto_cargo_Iva,
+                            IdTipoCbte_LiquidacionRet = info.IdTipoCbte_LiquidacionRet
                         };
                         Context.cxc_Parametro.Add(Entity);
                     }
@@ -71,6 +82,11 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         Entity.IdCtaCble_ProvisionIva = info.IdCtaCble_ProvisionIva;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.FechaUltMod = DateTime.Now;
+                        Entity.IdPunto_cargo_grupo_Fte = info.IdPunto_cargo_grupo_Fte;
+                        Entity.IdPunto_cargo_Fte = info.IdPunto_cargo_Fte;
+                        Entity.IdPunto_cargo_grupo_Iva = info.IdPunto_cargo_grupo_Iva;
+                        Entity.IdPunto_cargo_Iva = info.IdPunto_cargo_Iva;
+                        Entity.IdTipoCbte_LiquidacionRet = info.IdTipoCbte_LiquidacionRet;
                     }
                     Context.SaveChanges();
                 }
