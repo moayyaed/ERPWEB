@@ -10390,6 +10390,11 @@
     <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\_CmbPuntoCargo_CbteCblePlantilla.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_010.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\Anular.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Index.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\_GridViewPartial_LiquidacionRetencionCliente.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Nuevo.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\_GridViewPartial_LiquidacionRetencionClienteDet.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\_GridViewPartial_LiquidacionRetencionClienteXCruzar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10458,7 +10463,6 @@
     <Folder Include="Areas\Compras\Models\" />
     <Folder Include="Areas\Contabilidad\Models\" />
     <Folder Include="Areas\CuentasPorCobrar\Models\" />
-    <Folder Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\" />
     <Folder Include="Areas\CuentasPorPagar\Models\" />
     <Folder Include="Areas\Facturacion\Models\" />
     <Folder Include="Areas\General\Models\" />

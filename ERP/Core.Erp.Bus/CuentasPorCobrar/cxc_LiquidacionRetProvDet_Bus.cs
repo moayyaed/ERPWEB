@@ -23,5 +23,17 @@ namespace Core.Erp.Bus.CuentasPorCobrar
                 throw;
             }
         }
+
+        public List<cxc_LiquidacionRetProvDet_Info> GetList_X_Cruzar(int IdEmpresa)
+        {
+            try
+            {
+                return odata.GetList_X_Cruzar(IdEmpresa);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

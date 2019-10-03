@@ -27,7 +27,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  IdCobro = q.IdCobro,
                                  secuencial = q.secuencial,
                                  IdCobro_tipo = q.IdCobro_tipo,
-                                 dc_ValorPago = q.dc_ValorPago,
+                                 Valor = q.dc_ValorPago,
                                  tc_descripcion = q.tc_descripcion,
                                  cr_fecha = q.cr_fecha,
                                  cr_observacion = q.cr_observacion,
@@ -41,6 +41,45 @@ namespace Core.Erp.Data.CuentasPorCobrar
                              }).ToList();
                 }
                 
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<cxc_LiquidacionRetProvDet_Info> GetList_X_Cruzar(int IdEmpresa)
+        {
+            try
+            {
+                List<cxc_LiquidacionRetProvDet_Info> Lista;
+                using (Entities_cuentas_por_cobrar Context = new Entities_cuentas_por_cobrar())
+                {
+                    Lista = (from q in Context.vwcxc_LiquidacionRetProvDet_PorCruzar
+                             where q.IdEmpresa == IdEmpresa
+                             select new cxc_LiquidacionRetProvDet_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdCobro = q.IdCobro,
+                                 secuencial = q.secuencial,
+                                 IdCobro_tipo = q.IdCobro_tipo,
+                                 Valor = q.dc_ValorPago,
+                                 tc_descripcion = q.tc_descripcion,
+                                 cr_fecha = q.cr_fecha,
+                                 cr_observacion = q.cr_observacion,
+                                 cr_EsProvision = q.cr_EsProvision,
+                                 cr_estado = q.cr_estado,
+                                 IdCtaCble = q.IdCtaCble,
+                                 pc_Cuenta = q.pc_Cuenta,
+                                 ESRetenIVA = q.ESRetenIVA,
+                                 ESRetenFTE = q.ESRetenFTE,
+                                 cr_NumDocumento = q.cr_NumDocumento
+                             }).ToList();
+                }
+
                 return Lista;
             }
             catch (Exception)
