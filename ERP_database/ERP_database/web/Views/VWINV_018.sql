@@ -1,23 +1,26 @@
-﻿CREATE VIEW web.VWINV_018
+﻿CREATE VIEW [web].[VWINV_018]
 AS
-SELECT dbo.in_AjusteDet.IdEmpresa, dbo.in_AjusteDet.IdAjuste, dbo.in_AjusteDet.Secuencia, dbo.in_Ajuste.IdSucursal, dbo.in_Ajuste.IdBodega, dbo.in_Ajuste.IdMovi_inven_tipo_ing, dbo.in_Ajuste.IdMovi_inven_tipo_egr, 
-                  dbo.in_Ajuste.IdNumMovi_ing, dbo.in_Ajuste.IdNumMovi_egr, dbo.in_Ajuste.IdCatalogo_Estado, dbo.in_Ajuste.Estado, dbo.in_Ajuste.Fecha, dbo.in_Ajuste.Observacion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, 
-                  movi_ing.tm_descripcion AS tm_descripcion_ing, movi_egr.tm_descripcion AS tm_descripcion_egr, dbo.in_AjusteDet.IdProducto, dbo.in_AjusteDet.IdUnidadMedida, dbo.in_AjusteDet.StockSistema, dbo.in_AjusteDet.StockFisico, 
-                  dbo.in_AjusteDet.Ajuste, dbo.in_AjusteDet.Costo, dbo.in_Producto.pr_descripcion, dbo.in_UnidadMedida.Descripcion AS NomUnidadMedida, dbo.in_categorias.ca_Categoria, dbo.in_linea.nom_linea, 
-                  dbo.in_AjusteDet.Ajuste * dbo.in_AjusteDet.Costo AS Total, dbo.in_Catalogo.Nombre AS NombreEstado
-FROM     dbo.in_UnidadMedida INNER JOIN
-                  dbo.in_Ajuste INNER JOIN
-                  dbo.in_AjusteDet ON dbo.in_Ajuste.IdEmpresa = dbo.in_AjusteDet.IdEmpresa AND dbo.in_Ajuste.IdAjuste = dbo.in_AjusteDet.IdAjuste INNER JOIN
-                  dbo.tb_bodega ON dbo.in_Ajuste.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.in_Ajuste.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.in_Ajuste.IdSucursal = dbo.tb_bodega.IdSucursal AND 
-                  dbo.in_Ajuste.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.in_Ajuste.IdBodega = dbo.tb_bodega.IdBodega AND dbo.in_Ajuste.IdBodega = dbo.tb_bodega.IdBodega INNER JOIN
-                  dbo.tb_sucursal ON dbo.tb_bodega.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.tb_bodega.IdSucursal = dbo.tb_sucursal.IdSucursal INNER JOIN
-                  dbo.in_Producto ON dbo.in_AjusteDet.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_AjusteDet.IdProducto = dbo.in_Producto.IdProducto INNER JOIN
-                  dbo.in_linea INNER JOIN
-                  dbo.in_categorias ON dbo.in_linea.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_linea.IdCategoria = dbo.in_categorias.IdCategoria ON dbo.in_Producto.IdEmpresa = dbo.in_linea.IdEmpresa AND 
-                  dbo.in_Producto.IdCategoria = dbo.in_linea.IdCategoria AND dbo.in_Producto.IdLinea = dbo.in_linea.IdLinea ON dbo.in_UnidadMedida.IdUnidadMedida = dbo.in_AjusteDet.IdUnidadMedida INNER JOIN
-                  dbo.in_Catalogo ON dbo.in_Ajuste.IdCatalogo_Estado = dbo.in_Catalogo.IdCatalogo LEFT OUTER JOIN
-                  dbo.in_movi_inven_tipo AS movi_ing ON dbo.in_Ajuste.IdEmpresa = movi_ing.IdEmpresa AND dbo.in_Ajuste.IdMovi_inven_tipo_ing = movi_ing.IdMovi_inven_tipo LEFT OUTER JOIN
-                  dbo.in_movi_inven_tipo AS movi_egr ON dbo.in_Ajuste.IdEmpresa = movi_egr.IdEmpresa AND dbo.in_Ajuste.IdMovi_inven_tipo_egr = movi_egr.IdMovi_inven_tipo
+SELECT        dbo.in_AjusteDet.IdEmpresa, dbo.in_AjusteDet.IdAjuste, dbo.in_AjusteDet.Secuencia, dbo.in_Ajuste.IdSucursal, dbo.in_Ajuste.IdBodega, dbo.in_Ajuste.IdMovi_inven_tipo_ing, 
+                         dbo.in_Ajuste.IdMovi_inven_tipo_egr, dbo.in_Ajuste.IdNumMovi_ing, dbo.in_Ajuste.IdNumMovi_egr, dbo.in_Ajuste.IdCatalogo_Estado, dbo.in_Ajuste.Estado, dbo.in_Ajuste.Fecha, dbo.in_Ajuste.Observacion, 
+                         dbo.tb_sucursal.Su_Descripcion, dbo.tb_bodega.bo_Descripcion, movi_ing.tm_descripcion AS tm_descripcion_ing, movi_egr.tm_descripcion AS tm_descripcion_egr, dbo.in_AjusteDet.IdProducto, 
+                         dbo.in_AjusteDet.IdUnidadMedida, dbo.in_AjusteDet.StockSistema, dbo.in_AjusteDet.StockFisico, dbo.in_AjusteDet.Ajuste, dbo.in_AjusteDet.Costo, dbo.in_Producto.pr_descripcion, 
+                         dbo.in_UnidadMedida.Descripcion AS NomUnidadMedida, dbo.in_categorias.ca_Categoria, dbo.in_linea.nom_linea, dbo.in_AjusteDet.Ajuste * dbo.in_AjusteDet.Costo AS Total, 
+                         dbo.in_Catalogo.Nombre AS NombreEstado
+FROM            dbo.in_UnidadMedida INNER JOIN
+                         dbo.in_Ajuste INNER JOIN
+                         dbo.in_AjusteDet ON dbo.in_Ajuste.IdEmpresa = dbo.in_AjusteDet.IdEmpresa AND dbo.in_Ajuste.IdAjuste = dbo.in_AjusteDet.IdAjuste INNER JOIN
+                         dbo.tb_bodega ON dbo.in_Ajuste.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.in_Ajuste.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.in_Ajuste.IdSucursal = dbo.tb_bodega.IdSucursal AND 
+                         dbo.in_Ajuste.IdSucursal = dbo.tb_bodega.IdSucursal AND dbo.in_Ajuste.IdBodega = dbo.tb_bodega.IdBodega AND dbo.in_Ajuste.IdBodega = dbo.tb_bodega.IdBodega INNER JOIN
+                         dbo.tb_sucursal ON dbo.tb_bodega.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.tb_bodega.IdSucursal = dbo.tb_sucursal.IdSucursal INNER JOIN
+                         dbo.in_Producto ON dbo.in_AjusteDet.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_AjusteDet.IdProducto = dbo.in_Producto.IdProducto INNER JOIN
+                         dbo.in_linea INNER JOIN
+                         dbo.in_categorias ON dbo.in_linea.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_linea.IdCategoria = dbo.in_categorias.IdCategoria ON dbo.in_Producto.IdEmpresa = dbo.in_linea.IdEmpresa AND 
+                         dbo.in_Producto.IdCategoria = dbo.in_linea.IdCategoria AND dbo.in_Producto.IdLinea = dbo.in_linea.IdLinea ON dbo.in_UnidadMedida.IdUnidadMedida = dbo.in_AjusteDet.IdUnidadMedida INNER JOIN
+                         dbo.in_Catalogo ON dbo.in_Ajuste.IdCatalogo_Estado = dbo.in_Catalogo.IdCatalogo LEFT OUTER JOIN
+                         dbo.in_movi_inven_tipo AS movi_ing ON dbo.in_Ajuste.IdEmpresa = movi_ing.IdEmpresa AND dbo.in_Ajuste.IdMovi_inven_tipo_ing = movi_ing.IdMovi_inven_tipo LEFT OUTER JOIN
+                         dbo.in_movi_inven_tipo AS movi_egr ON dbo.in_Ajuste.IdEmpresa = movi_egr.IdEmpresa AND dbo.in_Ajuste.IdMovi_inven_tipo_egr = movi_egr.IdMovi_inven_tipo
+WHERE        --(dbo.in_AjusteDet.IdAjuste = 1) and in_AjusteDet.StockFisico != 0 or 
+in_AjusteDet.Ajuste !=0
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_018';
 
@@ -32,6 +35,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'          
                Left = 48
                Bottom = 1346
                Right = 257
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "in_Catalogo"
+            Begin Extent = 
+               Top = 1521
+               Left = 351
+               Bottom = 1684
+               Right = 559
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -52,16 +65,6 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'          
                Left = 48
                Bottom = 1682
                Right = 303
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "in_Catalogo"
-            Begin Extent = 
-               Top = 1521
-               Left = 351
-               Bottom = 1684
-               Right = 559
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -93,6 +96,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'          
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWINV_018';
+
+
 
 
 GO

@@ -9,9 +9,9 @@
     [cr_TotalCobro]     FLOAT (53)    NOT NULL,
     [cr_Excedente]      FLOAT (53)    NULL,
     [cr_EsElectronico]  BIT           NULL,
-    [cr_fecha]          DATETIME      NOT NULL,
-    [cr_fechaDocu]      DATETIME      NOT NULL,
-    [cr_fechaCobro]     DATETIME      NOT NULL,
+    [cr_fecha]          DATE          NOT NULL,
+    [cr_fechaDocu]      DATE          NOT NULL,
+    [cr_fechaCobro]     DATE          NOT NULL,
     [cr_observacion]    VARCHAR (700) NOT NULL,
     [cr_Banco]          VARCHAR (50)  NULL,
     [cr_cuenta]         VARCHAR (100) NULL,
@@ -38,6 +38,8 @@
     CONSTRAINT [FK_cxc_cobro_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
     CONSTRAINT [FK_cxc_cobro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

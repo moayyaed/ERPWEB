@@ -1,4 +1,5 @@
-﻿--EXEC web.SPFAC_019 1,0,999999,0,99999,'01/01/2019','30/08/2019',0,0,'admin'
+﻿
+--EXEC web.SPFAC_019 1,0,999999,0,99999,'01/01/2019','30/08/2019',0,0,'admin'
 CREATE PROCEDURE [web].[SPFAC_019]
 (
 @IdEmpresa int,
@@ -43,7 +44,7 @@ FROM     fa_factura INNER JOIN
 				  ) as CobroRet on fa_factura.IdEmpresa = CobroRet.IdEmpresa AND fa_factura.IdSucursal = CobroRet.IdSucursal AND fa_factura.IdBodega = CobroRet.IdBodega_Cbte AND fa_factura.IdCbteVta = CobroRet.IdCbte_vta_nota AND fa_factura.vt_tipoDoc = CobroRet.dc_TipoDocumento
 				  left join web.tb_FiltroReportes as f on fa_factura.IdEmpresa = f.IdEmpresa and fa_factura.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario
 				  LEFT JOIN
-				  fa_cliente_contactos AS CON ON fa_cliente.IdEmpresa = CON.IdEmpresa AND fa_cliente.IdCliente = CON.IdCliente
+				  fa_cliente_contactos AS CON ON fa_cliente.IdEmpresa = CON.IdEmpresa AND fa_cliente.IdCliente = CON.IdCliente and fa_factura.IdContacto = con.IdContacto
 where fa_factura.IdEmpresa = @IdEmpresa and fa_factura.IdCliente between @IdClienteIni and @IdClienteFin and fa_factura.IdVendedor between @IdVendedorIni and @IdVendedorFin
 AND fa_factura.Estado = 'A' AND CASE WHEN DATEDIFF(DAY,fa_factura.vt_fech_venc,@FechaFin) < 0 THEN 0 ELSE DATEDIFF(DAY,fa_factura.vt_fech_venc,@FechaFin) END > case when @MostrarSoloVencido = 1 then 0 else -1 end 
 and round(fa_factura_resumen.Total - isnull(COBRO.dc_ValorPago,0),2) > case when @MostrarSaldo0 = 1 then -1 else 0 end
@@ -84,7 +85,7 @@ FROM     fa_notaCreDeb INNER JOIN
 				  ) as CobroRet on fa_notaCreDeb.IdEmpresa = CobroRet.IdEmpresa AND fa_notaCreDeb.IdSucursal = CobroRet.IdSucursal AND fa_notaCreDeb.IdBodega = CobroRet.IdBodega_Cbte AND fa_notaCreDeb.IdNota = CobroRet.IdCbte_vta_nota AND fa_notaCreDeb.CodDocumentoTipo = CobroRet.dc_TipoDocumento
 				  left join web.tb_FiltroReportes as f on fa_notaCreDeb.IdEmpresa = f.IdEmpresa and fa_notaCreDeb.IdSucursal = f.IdSucursal and f.IdUsuario = @IdUsuario left join
 				  fa_notaCreDeb_resumen as d on fa_notaCreDeb.IdEmpresa = D.IdEmpresa AND fa_notaCreDeb.IdSucursal = D.IdSucursal AND fa_notaCreDeb.IdBodega = D.IdBodega AND fa_notaCreDeb.IdNota = D.IdNota LEFT JOIN
-				  fa_cliente_contactos AS CON ON fa_cliente.IdEmpresa = CON.IdEmpresa AND fa_cliente.IdCliente = CON.IdCliente
+				  fa_cliente_contactos AS CON ON fa_cliente.IdEmpresa = CON.IdEmpresa AND fa_cliente.IdCliente = CON.IdCliente and fa_notaCreDeb.IdContacto = con.IdContacto
 where fa_notaCreDeb.IdEmpresa = @IdEmpresa and fa_notaCreDeb.IdCliente between @IdClienteIni and @IdClienteFin and fa_notaCreDeb.IdVendedor between @IdVendedorIni and @IdVendedorFin
 AND fa_notaCreDeb.Estado = 'A' AND 
 CASE WHEN DATEDIFF(DAY,fa_notaCreDeb.no_fecha_venc,@FechaFin) < 0 THEN 0 ELSE DATEDIFF(DAY,fa_notaCreDeb.no_fecha_venc,@FechaFin) END > case when @MostrarSoloVencido = 1 then 0 else -1 end 

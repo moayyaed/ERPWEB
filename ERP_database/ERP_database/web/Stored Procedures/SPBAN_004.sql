@@ -312,8 +312,9 @@ SELECT       @IdEmpresa,@IdConciliacion,C.IdTipoCbte,C.IdCbteCble,D.secuencia
 FROM            ct_cbtecble_det AS D INNER JOIN
 ct_cbtecble AS C ON C.IdEmpresa = D.IdEmpresa AND C.IdTipoCbte = D.IdTipoCbte AND D.IdCbteCble = C.IdCbteCble
 WHERE        (C.IdEmpresa = @IdEmpresa) AND (D.IdCtaCble = @IdCtaCble) AND (D.dc_Valor < 0) 
-AND C.cb_Fecha <= @i_FechaFin AND C.cb_Estado = 'A' 
-AND C.cb_Observacion NOT LIKE '%**REVERS%' AND SUBSTRING(C.cb_Observacion, 1, 2) != '**'
+AND C.cb_Fecha <= @i_FechaFin 
+--AND C.cb_Estado = 'A' 
+--AND C.cb_Observacion NOT LIKE '%**REVERS%' AND SUBSTRING(C.cb_Observacion, 1, 2) != '**'
 AND ISNULL(D.dc_para_conciliar,0) = 1
 AND EXISTS
             (
@@ -327,7 +328,15 @@ AND EXISTS
             WHERE ba_Conciliacion.IdPeriodo <= @IdPeriodo and ba_Conciliacion_det_IngEgr.IdEmpresa = D.IdEmpresa AND 
             ba_Conciliacion_det_IngEgr.IdTipocbte = D.IdTipoCbte AND ba_Conciliacion_det_IngEgr.IdCbteCble = D.IdCbteCble AND 
             ba_Conciliacion_det_IngEgr.SecuenciaCbteCble = D.secuencia and ba_Conciliacion.IdEmpresa = @IdEmpresa and ba_Conciliacion_det_IngEgr.checked = 0
-            and ba_Conciliacion_det_IngEgr.IdConciliacion = @IdConciliacion)
+            and ba_Conciliacion_det_IngEgr.IdConciliacion = @IdConciliacion
+			and not exists(
+				select * from ct_cbtecble as a inner join ct_cbtecble_Reversado as b on a.IdEmpresa = b.IdEmpresa and a.IdTipoCbte = b.IdTipoCbte and a.IdCbteCble = b.IdCbteCble
+				inner join ct_cbtecble as c on b.IdEmpresa_Anu = c.IdEmpresa and b.IdTipoCbte_Anu = c.IdTipoCbte and b.IdCbteCble_Anu = c.IdCbteCble
+				where c.IdEmpresa = @IdEmpresa and c.cb_Fecha <= @i_FechaFin
+				and ct_cbtecble_det.IdEmpresa = a.IdEmpresa
+				and ct_cbtecble_det.IdTipoCbte = a.IdTipoCbte
+				and ct_cbtecble_det.IdCbteCble = a.IdCbteCble
+			))
             
 END
 
@@ -405,7 +414,7 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
                          isnull(dbo.ct_cbtecble_det.dc_Valor,0) AS Valor, dbo.ct_cbtecble_det.dc_Observacion AS Observacion, 
                          dbo.ba_Cbte_Ban.cb_Cheque AS Cheque, ISNULL(@SaldoInicial, 0) AS SaldoInicial, ISNULL(@SaldoFin, 0) AS SaldoFinal, RTRIM(dbo.ct_cbtecble_tipo.tc_TipoCbte) 
                          + 'S GIRADOS Y NO COBRADOS' AS Titulo_grupo, CASE WHEN ISNULL(ba_Cbte_Ban.cb_Cheque, '') <> '' THEN rtrim(ct_cbtecble_tipo.CodTipoCbte) 
-                         + '#:' + ba_Cbte_Ban.cb_Cheque + ' cbte:' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) ELSE rtrim(ct_cbtecble_tipo.CodTipoCbte) 
+                         + '#:' + ba_Cbte_Ban.cb_Cheque /*+ ' cbte:' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20)))*/ ELSE rtrim(ct_cbtecble_tipo.CodTipoCbte) 
                          + '#: ' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) END AS referencia, dbo.tb_empresa.em_ruc AS ruc_empresa, 
                          dbo.tb_empresa.em_nombre AS nom_empresa, A.co_SaldoBanco_EstCta AS SaldoBanco_EstCta, A.IdEstado_Concil_Cat AS Estado_Conciliacion, 
                          case when dbo.ba_Cbte_Ban.Estado = 'I' THEN '**ANULADO** ' ELSE '' END +
