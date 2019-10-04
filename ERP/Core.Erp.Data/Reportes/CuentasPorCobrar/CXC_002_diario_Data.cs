@@ -38,9 +38,11 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                               dc_Valor_Haber = q.dc_Valor_Haber,
                               IdCtaCble = q.IdCtaCble,
                               IdTipoCbte_ct = q.IdTipoCbte_ct,
-                              pc_Cuenta = q.pc_Cuenta
-
-
+                              pc_Cuenta = q.pc_Cuenta,
+                              IdPunto_cargo = q.IdPunto_cargo,
+                              IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
+                              nom_punto_cargo = q.nom_punto_cargo,
+                              nom_punto_cargo_grupo = q.nom_punto_cargo_grupo
                              }).ToList();
                 }
                 return Lista;
