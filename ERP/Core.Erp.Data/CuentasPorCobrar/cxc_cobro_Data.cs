@@ -148,9 +148,15 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 string IdCtaCble_Anticipo = string.Empty;
                 int IdTipoCbte = 0;
                 int IdTipoMoviCaja = 0;
+                cxc_Parametro param_cxc;
                 #endregion
 
                 #region Consultas para generar diario
+
+                param_cxc = Context_cxc.cxc_Parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
+                if (param_cxc == null)
+                    return false;
+
                 #region CtaCble debe
                 var cliente = Context_fac.fa_cliente.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).FirstOrDefault();
                 if (cliente == null)
@@ -220,9 +226,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 if(generar_diario)
                 {
                     #region TipoCbte
-                    var param_cxc = Context_cxc.cxc_Parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
-                    if (param_cxc == null)
-                        return false;
+                    
                     var d = info.lst_det[0];
                     var tipo_cobro = Context_cxc.cxc_cobro_tipo.Where(q => q.IdCobro_tipo == d.IdCobro_tipo_det).FirstOrDefault();
                     if (tipo_cobro == null)
@@ -349,8 +353,10 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                 IdTipoCbte = diario.IdTipoCbte,
                                 IdCbteCble = diario.IdCbteCble,
                                 secuencia = Secuencia++,
-                                IdCtaCble = item.IdCtaCble,
                                 dc_Valor = Math.Round(Convert.ToDouble(item.dc_ValorPago), 2, MidpointRounding.AwayFromZero),
+                                IdCtaCble = info.cr_EsProvision == true ? (item.IdCobro_tipo_det.Contains("RTFTE") ? param_cxc.IdCtaCble_ProvisionFuente : param_cxc.IdCtaCble_ProvisionIva ) : item.IdCtaCble,                                
+                                IdPunto_cargo = info.cr_EsProvision == true ? (item.IdCobro_tipo_det.Contains("RTFTE") ? param_cxc.IdPunto_cargo_Fte : param_cxc.IdPunto_cargo_Iva) : null,
+                                IdPunto_cargo_grupo = info.cr_EsProvision == true ? (item.IdCobro_tipo_det.Contains("RTFTE") ? param_cxc.IdPunto_cargo_grupo_Fte : param_cxc.IdPunto_cargo_grupo_Iva) : null
                             });
                         }
                     }
@@ -471,7 +477,12 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 string IdCtaCble_Anticipo = string.Empty;
                 int IdTipoCbte = 0;
                 int IdTipoMoviCaja = 0;
+                cxc_Parametro param_cxc;
                 #endregion
+
+                param_cxc = Context_cxc.cxc_Parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
+                if (param_cxc == null)
+                    return false;
 
                 #region Cabecera cobro
                 var Entity = Context_cxc.cxc_cobro.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdCobro == info.IdCobro).FirstOrDefault();
@@ -577,9 +588,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 if (generar_diario)
                 {
                     #region TipoCbte
-                    var param_cxc = Context_cxc.cxc_Parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
-                    if (param_cxc == null)
-                        return false;
+                    
                     var d = info.lst_det[0];
                     var tipo_cobro = Context_cxc.cxc_cobro_tipo.Where(q => q.IdCobro_tipo == d.IdCobro_tipo_det).FirstOrDefault();
                     if (tipo_cobro == null)
@@ -682,8 +691,10 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                     IdTipoCbte = diario.IdTipoCbte,
                                     IdCbteCble = diario.IdCbteCble,
                                     secuencia = Secuencia++,
-                                    IdCtaCble = item.IdCtaCble,
                                     dc_Valor = Math.Round(Convert.ToDouble(item.dc_ValorPago), 2, MidpointRounding.AwayFromZero),
+                                    IdCtaCble = info.cr_EsProvision == true ? (item.IdCobro_tipo_det.Contains("RTFTE") ? param_cxc.IdCtaCble_ProvisionFuente : param_cxc.IdCtaCble_ProvisionIva) : item.IdCtaCble,
+                                    IdPunto_cargo = info.cr_EsProvision == true ? (item.IdCobro_tipo_det.Contains("RTFTE") ? param_cxc.IdPunto_cargo_Fte : param_cxc.IdPunto_cargo_Iva) : null,
+                                    IdPunto_cargo_grupo = info.cr_EsProvision == true ? (item.IdCobro_tipo_det.Contains("RTFTE") ? param_cxc.IdPunto_cargo_grupo_Fte : param_cxc.IdPunto_cargo_grupo_Iva) : null
                                 };
                                 Context_ct.ct_cbtecble_det.Add(Debe);
                             }

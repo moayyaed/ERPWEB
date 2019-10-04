@@ -28,6 +28,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ct_cbtecble_det_Bus bus_cbte_det = new ct_cbtecble_det_Bus();
         string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Index
@@ -170,7 +171,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal=model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -197,6 +198,9 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             cargar_combos();
             return View(model);
@@ -225,7 +229,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             };
 
             cargar_combos();
-            return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal=0, decimal IdLiquidacion = 0)
@@ -332,8 +336,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                     IdCtaCble = item.IdCtaCble,
                     dc_Valor_debe = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
                     dc_Valor = Math.Round(item.Valor * -1, 2, MidpointRounding.AwayFromZero),
-                    IdPunto_cargo_grupo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_grupo_Fte : info_parametro.IdPunto_cargo_grupo_Iva),
-                    IdPunto_cargo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_Fte : info_parametro.IdPunto_cargo_Iva)
+                    //IdPunto_cargo_grupo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_grupo_Fte : info_parametro.IdPunto_cargo_grupo_Iva),
+                    //IdPunto_cargo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_Fte : info_parametro.IdPunto_cargo_Iva)
                 }, IdTransaccionSession);
 
                 list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
@@ -348,15 +352,23 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 
             var lst_cbtecble = list_ct_cbtecble_det.get_list(IdTransaccionSession);
 
-            var lst = (from q in lst_cbtecble
-                       group q by new { q.IdEmpresa, q.IdCtaCble, q.pc_Cuenta, q.IdPunto_cargo_grupo, q.IdPunto_cargo }
+            var lst = (from q in lst_cbtecble 
+                       group q by new { q.IdEmpresa, q.IdCtaCble, q.pc_Cuenta, q.IdPunto_cargo_grupo, q.IdPunto_cargo, q.nom_punto_cargo }
                        into g
-                       select new
+                       select new ct_cbtecble_det_Info
                        {
-                           IdCtaCble = g.Key,
-                           Valor = g.Sum(q => q.dc_Valor),
+                           IdCtaCble = g.Key.IdCtaCble,
+                           pc_Cuenta = g.Key.pc_Cuenta,
+                           IdPunto_cargo = g.Key.IdPunto_cargo,
+                           IdPunto_cargo_grupo = g.Key.IdPunto_cargo_grupo,
+                           nom_punto_cargo = g.Key.nom_punto_cargo,
+                           dc_Valor = g.Sum(q => q.dc_Valor),
+                           dc_Valor_debe = g.Sum(q => q.dc_Valor_debe),
+                           dc_Valor_haber = g.Sum(q => q.dc_Valor_haber),
                        }).ToList();
-
+            int Secuencia = 1;
+            lst.ForEach(q => q.secuencia = Secuencia++);
+            list_ct_cbtecble_det.set_list(lst, IdTransaccionSession);
 
             return Json(lst_cbtecble, JsonRequestBehavior.AllowGet);
         }

@@ -34,7 +34,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  li_Fecha = q.li_Fecha,
                                  Observacion = q.Observacion,
                                  Estado = q.Estado,
-                                 IdTipoCbte = q.IdTipoCbte
+                                 IdTipoCbte = q.IdTipoCbte,
+                                 IdCbteCble = q.IdCbteCble
                              }).ToList();
                 }
 

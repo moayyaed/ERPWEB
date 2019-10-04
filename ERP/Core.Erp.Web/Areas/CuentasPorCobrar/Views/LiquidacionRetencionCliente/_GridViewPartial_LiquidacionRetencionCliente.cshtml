@@ -97,6 +97,14 @@
             column.Width = Unit.Percentage(10);
         });
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(60);
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CONTA_001", "ContabilidadReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdTipoCbte = DataBinder.Eval(c.DataItem, "IdTipoCbte").ToString(), IdCbteCble = DataBinder.Eval(c.DataItem, "IdCbteCble").ToString() }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
     });
 }
 @grid.Bind(Model).GetHtml()
