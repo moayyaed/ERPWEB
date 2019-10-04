@@ -1,4 +1,4 @@
-﻿-- exec  [EntidadRegulatoria].[GenerarDINARDAP] 1,1,1,'01/08/2019','31/08/2019'
+﻿-- exec [EntidadRegulatoria].[GenerarDINARDAP]1,1,1,'01/09/2019','30/09/2019'
 CREATE PROCEDURE [EntidadRegulatoria].[GenerarDINARDAP]
 	@IdEmpresa as int,	
 	@SucursalIni as int,
@@ -43,7 +43,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
 								SUBSTRING(tb_persona.pe_cedulaRuc,0,11) ELSE tb_persona.pe_cedulaRuc END pe_cedulaRuc, 
 								
-								SUM(FD.vt_total) AS Valor_Original, case when f.vt_plazo = 0 then dateadd(day,1,F.vt_fech_venc) else f.vt_fech_venc end as vt_fech_venc, F.vt_fecha, 
+								cast(FD.Total as float) AS Valor_Original, case when f.vt_plazo = 0 then dateadd(day,1,F.vt_fech_venc) else f.vt_fech_venc end as vt_fech_venc, F.vt_fecha, 
 								fa_cliente.Idtipo_cliente, fa_cliente_contactos.Telefono AS pe_telefonoOfic, tb_provincia.Cod_Provincia, tb_ciudad.Cod_Ciudad, tb_parroquia.cod_parroquia, 
 								tb_persona.pe_Naturaleza, tb_persona.pe_sexo, 
 								
@@ -52,7 +52,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								
 								tb_persona.IdEstadoCivil, case when F.vt_plazo = 0 then 1 else DATEDIFF(DAY,F.VT_FECHA, F.vt_fech_venc) /*F.vt_plazo*/ end AS Plazo, tb_empresa.cod_entidad_dinardap
 					FROM            fa_factura AS F INNER JOIN
-								fa_factura_det AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
+								fa_factura_resumen AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
 								fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente INNER JOIN
 								fa_cliente_contactos on f.IdEmpresa = fa_cliente_contactos.IdEmpresa and f.IdCliente = fa_cliente_contactos.IdCliente and f.IdContacto = fa_cliente_contactos.IdContacto INNER JOIN
 								tb_persona ON fa_cliente.IdPersona = tb_persona.IdPersona INNER JOIN
@@ -61,11 +61,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								tb_provincia ON tb_ciudad.IdProvincia = tb_provincia.IdProvincia INNER JOIN
 								tb_empresa ON F.IdEmpresa = tb_empresa.IdEmpresa LEFT OUTER JOIN
 								tb_parroquia ON fa_cliente_contactos.IdParroquia = tb_parroquia.IdParroquia
-					WHERE        (F.vt_fecha between DATEFROMPARTS(2017,1,1) and  @fechaFin) AND F.IdEmpresa = @IdEmpresa AND F.Estado = 'A'
-					GROUP BY F.IdEmpresa, F.IdSucursal, F.IdBodega, fa_cliente.IdCliente, fa_cliente.Codigo, F.IdCbteVta, F.CodCbteVta, F.vt_tipoDoc, F.vt_serie1, F.vt_serie2, F.vt_NumFactura, tb_sucursal.Su_Descripcion, 
-								LTRIM(tb_persona.pe_nombreCompleto), tb_persona.pe_cedulaRuc, F.vt_fech_venc, F.vt_fecha, fa_cliente.Idtipo_cliente, 
-								fa_cliente_contactos.Telefono, tb_provincia.Cod_Provincia, tb_ciudad.Cod_Ciudad, tb_parroquia.cod_parroquia, tb_persona.pe_Naturaleza, tb_persona.pe_sexo, 
-								tb_persona.IdTipoDocumento, tb_persona.IdEstadoCivil, F.vt_plazo, tb_empresa.cod_entidad_dinardap
+					WHERE        (F.vt_fecha <=  @fechaFin) AND F.IdEmpresa = @IdEmpresa AND F.Estado = 'A'
 
 						 
 						 	
@@ -82,15 +78,15 @@ SELECT        fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.I
                          
 						 CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
 								SUBSTRING(tb_persona.pe_cedulaRuc,0,11) ELSE tb_persona.pe_cedulaRuc END pe_cedulaRuc
-						 , SUM(fa_notaCreDeb_det.sc_total), case when fa_notaCreDeb.no_fecha_venc = fa_notaCreDeb.no_fecha then dateadd(day,1,fa_notaCreDeb.no_fecha) else fa_notaCreDeb.no_fecha_venc end, fa_notaCreDeb.no_fecha, fa_cliente.Idtipo_cliente, 
+						 , cast(fa_notaCreDeb_resumen.Total as float), case when fa_notaCreDeb.no_fecha_venc = fa_notaCreDeb.no_fecha then dateadd(day,1,fa_notaCreDeb.no_fecha) else fa_notaCreDeb.no_fecha_venc end, fa_notaCreDeb.no_fecha, fa_cliente.Idtipo_cliente, 
                          fa_cliente_contactos.Telefono AS pe_telefonoOfic, tb_provincia.Cod_Provincia, tb_ciudad.Cod_Ciudad, tb_parroquia.cod_parroquia, tb_persona.pe_Naturaleza, 
                          tb_persona.pe_sexo, 
 						 CASE WHEN tb_persona.pe_Naturaleza = 'NATU' AND tb_persona.IdTipoDocumento = 'RUC' AND LEN(tb_persona.pe_cedulaRuc) > 10 THEN
 								'CED' ELSE tb_persona.IdTipoDocumento END IdTipoDocumento, 
 						  tb_persona.IdEstadoCivil, case when fa_notaCreDeb.no_fecha = fa_notaCreDeb.no_fecha_venc then 1 else DATEDIFF(day, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc) end AS Plazo, tb_empresa.cod_entidad_dinardap
 FROM            fa_notaCreDeb INNER JOIN
-                         fa_notaCreDeb_det ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_det.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_det.IdSucursal AND 
-                         fa_notaCreDeb.IdBodega = fa_notaCreDeb_det.IdBodega AND fa_notaCreDeb.IdNota = fa_notaCreDeb_det.IdNota INNER JOIN
+                         fa_notaCreDeb_resumen ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_resumen.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_resumen.IdSucursal AND 
+                         fa_notaCreDeb.IdBodega = fa_notaCreDeb_resumen.IdBodega AND fa_notaCreDeb.IdNota = fa_notaCreDeb_resumen.IdNota INNER JOIN
                          fa_cliente ON fa_notaCreDeb.IdEmpresa = fa_cliente.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente.IdCliente INNER JOIN 
 						 fa_cliente_contactos on fa_notaCreDeb.IdEmpresa = fa_cliente_contactos.IdEmpresa and fa_notaCreDeb.IdCliente = fa_cliente_contactos.IdCliente and fa_notaCreDeb.IdContacto = fa_cliente_contactos.IdContacto INNER JOIN
                          tb_sucursal ON fa_notaCreDeb.IdEmpresa = tb_sucursal.IdEmpresa AND fa_notaCreDeb.IdSucursal = tb_sucursal.IdSucursal INNER JOIN
@@ -99,12 +95,7 @@ FROM            fa_notaCreDeb INNER JOIN
                          tb_provincia ON tb_ciudad.IdProvincia = tb_provincia.IdProvincia INNER JOIN
                          tb_empresa ON fa_notaCreDeb.IdEmpresa = tb_empresa.IdEmpresa LEFT OUTER JOIN
                          tb_parroquia ON fa_cliente_contactos.IdParroquia = tb_parroquia.IdParroquia 
-WHERE        (fa_notaCreDeb.CreDeb = 'D') AND (fa_notaCreDeb.no_fecha between DATEFROMPARTS(2017,1,1) and  @fechaFin) AND (fa_notaCreDeb.Estado = 'A') AND fa_notaCreDeb.IdEmpresa = @IdEmpresa
-GROUP BY fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_cliente.IdCliente, fa_cliente.Codigo, fa_notaCreDeb.IdNota, fa_notaCreDeb.CodNota, fa_notaCreDeb.CodDocumentoTipo, 
-                         fa_notaCreDeb.Serie1, fa_notaCreDeb.Serie2, fa_notaCreDeb.NumNota_Impresa, tb_sucursal.Su_Descripcion, LTRIM(tb_persona.pe_nombreCompleto), 
-                         tb_persona.pe_cedulaRuc, fa_notaCreDeb.no_fecha_venc, fa_notaCreDeb.no_fecha, fa_cliente.Idtipo_cliente, fa_cliente_contactos.Telefono, 
-                         tb_provincia.Cod_Provincia, tb_ciudad.Cod_Ciudad, tb_parroquia.cod_parroquia, tb_persona.pe_Naturaleza, tb_persona.pe_sexo, tb_persona.IdTipoDocumento, tb_persona.IdEstadoCivil, 
-                         tb_empresa.cod_entidad_dinardap
+WHERE        (fa_notaCreDeb.CreDeb = 'D') AND (fa_notaCreDeb.no_fecha  <=  @fechaFin) AND (fa_notaCreDeb.Estado = 'A') AND fa_notaCreDeb.IdEmpresa = @IdEmpresa
 
 
 ) as  Facturas_y_notas_deb left join
@@ -143,5 +134,6 @@ and Facturas_y_notas_deb.vt_tipoDoc=Cobros_x_fac.dc_TipoDocumento
 where 
     ROUND(Facturas_y_notas_deb.Valor_Original - isnull(Cobros_x_fac.dc_ValorPago,0),2)>60
 	--and Facturas_y_notas_deb.vt_fech_venc < @FechaFin
-
+	and Facturas_y_notas_deb.vt_fecha <= @fechaFin
+	--and Facturas_y_notas_deb.IdCliente = 737
 END
