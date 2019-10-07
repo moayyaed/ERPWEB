@@ -17,32 +17,42 @@ namespace Core.Erp.Data.RRHH
                 List<ro_nomina_tipo_Info> Lista;
 
                 using (Entities_rrhh Context = new Entities_rrhh())
-                {if(mostrar_anulados)
-                    Lista = (from q in Context.ro_Nomina_Tipo
-                             where q.IdEmpresa == IdEmpresa
-                             select new ro_nomina_tipo_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdNomina_Tipo = q.IdNomina_Tipo,
-                                 Descripcion = q.Descripcion,
-                                 Estado = q.Estado,
+                {
+                    Lista = Context.ro_Nomina_Tipo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados==true ? "A" : q.Estado)).Select(q => new ro_nomina_tipo_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdNomina_Tipo = q.IdNomina_Tipo,
+                        Descripcion = q.Descripcion,
+                        Estado = q.Estado,
+                        EstadoBool = q.Estado == "A" ? true : false
+                    }).ToList();
 
-                                 EstadoBool = q.Estado == "A" ? true : false
-                             }).ToList();
-                else
-                        Lista = (from q in Context.ro_Nomina_Tipo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Estado=="A"
-                                 select new ro_nomina_tipo_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdNomina_Tipo = q.IdNomina_Tipo,
-                                     Descripcion = q.Descripcion,
-                                     Estado = q.Estado,
+                //    if (mostrar_anulados)
+                //    Lista = (from q in Context.ro_Nomina_Tipo
+                //             where q.IdEmpresa == IdEmpresa
+                //             select new ro_nomina_tipo_Info
+                //             {
+                //                 IdEmpresa = q.IdEmpresa,
+                //                 IdNomina_Tipo = q.IdNomina_Tipo,
+                //                 Descripcion = q.Descripcion,
+                //                 Estado = q.Estado,
 
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
-                }
+                //                 EstadoBool = q.Estado == "A" ? true : false
+                //             }).ToList();
+                //else
+                //        Lista = (from q in Context.ro_Nomina_Tipo
+                //                 where q.IdEmpresa == IdEmpresa
+                //                 && q.Estado=="A"
+                //                 select new ro_nomina_tipo_Info
+                //                 {
+                //                     IdEmpresa = q.IdEmpresa,
+                //                     IdNomina_Tipo = q.IdNomina_Tipo,
+                //                     Descripcion = q.Descripcion,
+                //                     Estado = q.Estado,
+
+                //                     EstadoBool = q.Estado == "A" ? true : false
+                //                 }).ToList();
+                //}
 
                 return Lista;
             }
