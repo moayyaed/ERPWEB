@@ -50,7 +50,8 @@ namespace Core.Erp.Data.Reportes.Inventario
                                  tm_descripcion = q.tm_descripcion,
                                  NomUsuario = q.NomUsuario,
                                  IdOrdenCompra = q.IdOrdenCompra,
-                                 pe_nombreCompleto = q.pe_nombreCompleto
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 SecuenciaTipo = q.SecuenciaTipo                                 
                              }).ToList();
                 }
                 return Lista;

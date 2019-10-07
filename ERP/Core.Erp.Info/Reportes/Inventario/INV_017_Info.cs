@@ -38,5 +38,6 @@ namespace Core.Erp.Info.Reportes.Inventario
         public decimal IdPersona { get; set; }
         public string pe_nombreCompleto { get; set; }
         public Nullable<decimal> IdOrdenCompra { get; set; }
+        public int? SecuenciaTipo { get; set; }
     }
 }

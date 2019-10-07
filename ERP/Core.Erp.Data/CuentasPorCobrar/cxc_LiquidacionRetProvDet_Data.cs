@@ -40,7 +40,9 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  pc_Cuenta = q.pc_Cuenta,
                                  ESRetenIVA = q.ESRetenIVA,
                                  ESRetenFTE = q.ESRetenFTE,
-                                 cr_NumDocumento = q.cr_NumDocumento
+                                 cr_NumDocumento = q.cr_NumDocumento,
+                                 vt_NumFactura = q.vt_NumFactura,
+                                 pe_nombreCompleto = q.pe_nombreCompleto
                              }).ToList();
                 }
                 
@@ -81,7 +83,9 @@ namespace Core.Erp.Data.CuentasPorCobrar
                                  pc_Cuenta = q.pc_Cuenta,
                                  ESRetenIVA = q.ESRetenIVA,
                                  ESRetenFTE = q.ESRetenFTE,
-                                 cr_NumDocumento = q.cr_NumDocumento
+                                 cr_NumDocumento = q.cr_NumDocumento,
+                                 vt_NumFactura = q.vt_NumFactura,
+                                 pe_nombreCompleto = q.pe_nombreCompleto
                              }).ToList();
 
                     Lista.ForEach(q=> q.SecuencialCobro = q.IdCobro.ToString() + q.secuencial.ToString());

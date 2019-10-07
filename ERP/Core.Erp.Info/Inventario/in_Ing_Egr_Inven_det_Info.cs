@@ -56,6 +56,7 @@ namespace Core.Erp.Info.Inventario
         public bool se_distribuye { get; set; }
         public string tp_ManejaInven { get; set; }
         public double CantidadAnterior { get; set; }
+        public int SecuenciaTipo { get; set; }
         #endregion
     }
 }

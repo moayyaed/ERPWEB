@@ -31,6 +31,10 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+
         //Configuración filtro por columna
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         settings.Settings.ShowFilterRow = true;
@@ -39,16 +43,15 @@
 
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(7);
             column.FieldName = "IdCobro";
             column.Caption = "# Cobro";
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(10);
-            column.FieldName = "cr_NumDocumento";
-            column.Caption = "# Retencion";
-            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(28);
+            column.FieldName = "pe_nombreCompleto";
+            column.Caption = "Cliente";
         });
         settings.Columns.Add(column =>
         {
@@ -60,10 +63,25 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(50);
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "vt_NumFactura";
+            column.Caption = "# Factura";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "cr_NumDocumento";
+            column.Caption = "# Retencion";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(15);
             column.FieldName = "tc_descripcion";
             column.Caption = "Tipo retencion";
         });
+
         settings.Columns.Add(column =>
         {
             column.Width = Unit.Percentage(10);

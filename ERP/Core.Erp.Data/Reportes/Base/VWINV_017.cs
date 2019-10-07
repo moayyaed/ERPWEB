@@ -44,5 +44,7 @@ namespace Core.Erp.Data.Reportes.Base
         public decimal IdPersona { get; set; }
         public string pe_nombreCompleto { get; set; }
         public Nullable<decimal> IdOrdenCompra { get; set; }
+        public Nullable<int> SecuenciaTipo { get; set; }
+        public string Tipo { get; set; }
     }
 }
