@@ -43,9 +43,10 @@
     function ModificarCbte() {
         var location = GetPathServer();
         var IdCbteCble = Number($("#IdCbteCble").val());
+
         if (IdTipoCbte.GetValue() > 0 && IdCbteCble > 0)
         {
-            var win = window.open(location + "/Contabilidad/ComprobanteContable/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdTipoCbte=" + IdTipoCbte.GetValue(), +"&IdCbteCble=" + IdCbteCble, '_blank');
+            var win = window.open(location + "/Contabilidad/ComprobanteContable/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa +"&IdTipoCbte=" + IdTipoCbte.GetValue() +"&IdCbteCble=" + IdCbteCble, '_blank');
             win.focus();
         }
     }

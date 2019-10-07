@@ -139,6 +139,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_punto = bus_punto.GetList(IdEmpresa, false);
             ViewBag.lst_punto = lst_punto;
         }
+        private void cargar_combo_cbte(cl_filtros_Info model)
+        {
+            ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
+            var lst_tipo = bus_tipo.get_list(model.IdEmpresa, false);
+            ViewBag.lst_tipo = lst_tipo;
+        }
         private void cargar_cc(int IdEmpresa)
         {
             var lst = bus_cc.GetListPorNivel(IdEmpresa, 1);
@@ -256,7 +262,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
                 IdPunto_cargo_grupo = 0
             };
-            //cargar_combos(model.IdEmpresa);
+            cargar_combo_cbte(model);
             cargar_combos_punto_cargo(model);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             CONTA_002_Rpt report = new CONTA_002_Rpt();
@@ -309,7 +315,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdPuntoCargo.Value = model.IdPunto_cargo;
             report.p_IdGrupo.Value = model.IdPunto_cargo_grupo;
             SessionFixed.IdDivision_IC = model.IdPunto_cargo_grupo.ToString();
-            //cargar_combos(model.IdEmpresa);
+            cargar_combo_cbte(model);
             cargar_combos_punto_cargo(model);
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
