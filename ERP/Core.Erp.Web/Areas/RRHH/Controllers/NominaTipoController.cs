@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class NominaTipoController : Controller
@@ -21,7 +23,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_nomina_tipo_Info> model = bus_nomina_tipo.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                List<ro_nomina_tipo_Info> model = bus_nomina_tipo.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_nomina_tipo", model);
             }
             catch (Exception)
@@ -38,7 +41,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_nomina_tipo.guardarDB(info))
                         return View(info);
                     else
@@ -59,6 +61,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_nomina_tipo_Info info = new ro_nomina_tipo_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -91,12 +94,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdNomina_Tipo = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdNomina_Tipo = 0)
         {
             try
             {
 
-                return View(bus_nomina_tipo.get_info(GetIdEmpresa(), IdNomina_Tipo));
+                return View(bus_nomina_tipo.get_info(IdEmpresa, IdNomina_Tipo));
 
             }
             catch (Exception)
@@ -122,12 +125,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdNomina_Tipo = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdNomina_Tipo = 0)
         {
             try
             {
 
-                return View(bus_nomina_tipo.get_info(GetIdEmpresa(), IdNomina_Tipo));
+                return View(bus_nomina_tipo.get_info(IdEmpresa, IdNomina_Tipo));
 
             }
             catch (Exception)
@@ -136,23 +139,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
     }
 
     public class ro_nomina_tipo_List
