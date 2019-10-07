@@ -192,7 +192,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             com_parametro_Info info_param_oc = bus_com_param.get_info(model.IdEmpresa);
             model.lst_in_Ing_Egr_Inven_det = List_in_Ing_Egr_Inven_det.get_list(model.IdTransaccionSession);
-            var IdOrdenCompra = (model.lst_in_Ing_Egr_Inven_det.Count() >0) ? model.lst_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == model.IdEmpresa).FirstOrDefault().IdOrdenCompra : 0;
+            var IdOrdenCompra = (model.lst_in_Ing_Egr_Inven_det.Count() >0) ? model.lst_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == model.IdEmpresa).FirstOrDefault().SecuenciaTipo : 0;
             model.CodMoviInven = Convert.ToString(IdOrdenCompra);
             if (!validar(model, ref mensaje))
             {
@@ -253,7 +253,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         public ActionResult Modificar(in_Ing_Egr_Inven_Info model)
         {
             model.lst_in_Ing_Egr_Inven_det = List_in_Ing_Egr_Inven_det.get_list(model.IdTransaccionSession);
-            var IdOrdenCompra = (model.lst_in_Ing_Egr_Inven_det.Count() > 0) ? model.lst_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == model.IdEmpresa).FirstOrDefault().IdOrdenCompra : 0;
+            var IdOrdenCompra = (model.lst_in_Ing_Egr_Inven_det.Count() > 0) ? model.lst_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa == model.IdEmpresa).FirstOrDefault().SecuenciaTipo : 0;
             model.CodMoviInven = Convert.ToString(IdOrdenCompra);
             if (!validar(model, ref mensaje))
             {
@@ -376,7 +376,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                             IdCentroCosto = info_det.IdCentroCosto,
                             IdPunto_cargo = info_det.IdPunto_cargo,
                             IdPunto_cargo_grupo = info_det.IdPunto_cargo_grupo,
-                            cc_Descripcion = info_det.cc_Descripcion,                            
+                            cc_Descripcion = info_det.cc_Descripcion,
+                            SecuenciaTipo = info_det.SecuenciaTipo
                         };
                         ObservacionOC = "OC# "+info_det.SecuenciaTipo+" " + info_det.oc_observacion;
                         List_in_Ing_Egr_Inven_det.AddRow(info_det_inv, IdTransaccionSession);

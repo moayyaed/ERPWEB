@@ -336,40 +336,28 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                     IdCtaCble = item.IdCtaCble,
                     dc_Valor_debe = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
                     dc_Valor = Math.Round(item.Valor * -1, 2, MidpointRounding.AwayFromZero),
-                    //IdPunto_cargo_grupo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_grupo_Fte : info_parametro.IdPunto_cargo_grupo_Iva),
-                    //IdPunto_cargo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_Fte : info_parametro.IdPunto_cargo_Iva)
-                }, IdTransaccionSession);
-
-                list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
-                {
-                    IdCtaCble = (item.ESRetenFTE=="S" ? info_parametro.IdCtaCble_ProvisionFuente : info_parametro.IdCtaCble_ProvisionIva),
-                    dc_Valor_haber = Math.Round(item.Valor, 2, MidpointRounding.AwayFromZero),
-                    dc_Valor = Math.Round(item.Valor * -1, 2, MidpointRounding.AwayFromZero),
-                    IdPunto_cargo_grupo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_grupo_Fte : info_parametro.IdPunto_cargo_grupo_Iva),
-                    IdPunto_cargo = (item.ESRetenFTE == "S" ? info_parametro.IdPunto_cargo_Fte : info_parametro.IdPunto_cargo_Iva)
+                    dc_Observacion = "CLIENTE: "+item.pe_nombreCompleto+" FACT#"+item.vt_NumFactura
                 }, IdTransaccionSession);
             }
 
+            list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
+            {
+                IdCtaCble = info_parametro.IdCtaCble_ProvisionFuente,
+                dc_Valor_haber = Math.Round(lst_detalle.Where(q => q.ESRetenFTE == "S").Sum(q=> q.dc_ValorPago), 2, MidpointRounding.AwayFromZero),
+                dc_Valor = Math.Round(lst_detalle.Where(q => q.ESRetenFTE == "S").Sum(q => q.dc_ValorPago) * -1, 2, MidpointRounding.AwayFromZero),
+                IdPunto_cargo_grupo = info_parametro.IdPunto_cargo_grupo_Fte,
+                IdPunto_cargo =info_parametro.IdPunto_cargo_Fte,
+            }, IdTransaccionSession);
+            list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
+            {
+                IdCtaCble = info_parametro.IdCtaCble_ProvisionIva,
+                dc_Valor_haber = Math.Round(lst_detalle.Where(q => q.ESRetenIVA == "S").Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero),
+                dc_Valor = Math.Round(lst_detalle.Where(q => q.ESRetenIVA == "S").Sum(q => q.dc_ValorPago) * -1, 2, MidpointRounding.AwayFromZero),
+                IdPunto_cargo_grupo = info_parametro.IdPunto_cargo_grupo_Iva,
+                IdPunto_cargo = info_parametro.IdPunto_cargo_Iva,
+            }, IdTransaccionSession);
+
             var lst_cbtecble = list_ct_cbtecble_det.get_list(IdTransaccionSession);
-
-            var lst = (from q in lst_cbtecble 
-                       group q by new { q.IdEmpresa, q.IdCtaCble, q.pc_Cuenta, q.IdPunto_cargo_grupo, q.IdPunto_cargo, q.nom_punto_cargo }
-                       into g
-                       select new ct_cbtecble_det_Info
-                       {
-                           IdCtaCble = g.Key.IdCtaCble,
-                           pc_Cuenta = g.Key.pc_Cuenta,
-                           IdPunto_cargo = g.Key.IdPunto_cargo,
-                           IdPunto_cargo_grupo = g.Key.IdPunto_cargo_grupo,
-                           nom_punto_cargo = g.Key.nom_punto_cargo,
-                           dc_Valor = g.Sum(q => q.dc_Valor),
-                           dc_Valor_debe = g.Sum(q => q.dc_Valor_debe),
-                           dc_Valor_haber = g.Sum(q => q.dc_Valor_haber),
-                       }).ToList();
-            int Secuencia = 1;
-            lst.ForEach(q => q.secuencia = Secuencia++);
-            list_ct_cbtecble_det.set_list(lst, IdTransaccionSession);
-
             return Json(lst_cbtecble, JsonRequestBehavior.AllowGet);
         }
         #endregion
