@@ -13,14 +13,14 @@ namespace Core.Erp.Data.Reportes.Contabilidad
 
         tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
         string Su_Descripcion = "";
-        public List<CONTA_006_Info> GetList(int IdEmpresa, int IdAnio, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance)
+        public List<CONTA_006_Info> GetList(int IdEmpresa, bool mostrarSaldo0, string IdUsuario, int IdNivel, bool mostrarAcumulado, string balance, DateTime FechaIni, DateTime FechaFin)
         {
             try
             {
                 List<CONTA_006_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPCONTA_006(IdEmpresa, IdAnio, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance).Select(q => new CONTA_006_Info
+                    Lista = Context.SPCONTA_006(IdEmpresa, FechaIni, FechaFin, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance).Select(q => new CONTA_006_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdCtaCble = q.IdCtaCble,
