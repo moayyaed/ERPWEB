@@ -12,9 +12,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class DepartamentoController : Controller
     {
-        // GET: RRHH/Departamento
-        int IdEmpresa = 0;
-
         ro_departamento_Bus bus_departamento = new ro_departamento_Bus();
         public ActionResult Index()
         {
@@ -26,7 +23,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_departamento_Info> model = bus_departamento.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                List<ro_departamento_Info> model = bus_departamento.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_departamento", model);
             }
             catch (Exception)
@@ -43,7 +41,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuario = SessionFixed.IdUsuario;
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_departamento.guardarDB(info))
                         return View(info);
                     else
@@ -59,11 +56,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(int IdEmpresa=0)
         {
             try
             {
                 ro_departamento_Info info = new ro_departamento_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -97,11 +95,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdDepartamento = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdDepartamento = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 return View(bus_departamento.get_info(IdEmpresa, IdDepartamento));
 
             }
@@ -131,29 +128,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdDepartamento = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdDepartamento = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 return View(bus_departamento.get_info(IdEmpresa, IdDepartamento));
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
             }
             catch (Exception)
             {

@@ -10,8 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Area", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-
-
+    @Html.HiddenFor(q => q.IdEmpresa)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -32,8 +31,7 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_id()}";
+                   //settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_id()}";
                }).BindList(ViewBag.lista_division).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdDivision, "", new { @class = "text-danger" })
                 </div>

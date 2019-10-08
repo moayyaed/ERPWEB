@@ -18,29 +18,15 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_jornada
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_jornada_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdJornada = q.IdJornada,
-                                     codigo = q.codigo,
-                                     Descripcion = q.Descripcion,
-                                     estado = q.estado
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_jornada
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.estado == true
-                                 select new ro_jornada_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdJornada = q.IdJornada,
-                                     codigo = q.codigo,
-                                     Descripcion = q.Descripcion,
-                                     estado = q.estado
-                                 }).ToList();
+                    Lista = Context.ro_jornada.Where(q => q.IdEmpresa == IdEmpresa && q.estado == (mostrar_anulados == true ? q.estado : true)).Select(q => new ro_jornada_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdJornada = q.IdJornada,
+                        codigo = q.codigo,
+                        Descripcion = q.Descripcion,
+                        estado = q.estado
+                    }).ToList();
+
                 }
 
                 return Lista;

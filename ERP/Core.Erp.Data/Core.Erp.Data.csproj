@@ -2703,6 +2703,9 @@
     <Compile Include="vwro_archivos_bancos_generacion_x_empleado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwro_area.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwro_EmpleadoNovedadCargaMasiva.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -2773,6 +2776,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_nomina_sin_percebir_sueldo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_Nomina_Tipoliqui.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_nomina_x_horas_extras_aprobadas.cs">

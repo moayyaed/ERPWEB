@@ -25,7 +25,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_Nomina_Tipoliqui_Info> model = bus_nomina_tipo.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                List<ro_Nomina_Tipoliqui_Info> model = bus_nomina_tipo.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_nomina_tipo_liquidacion", model);
             }
             catch (Exception)
@@ -42,7 +43,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_nomina_tipo.guardarDB(info))
                         return View(info);
                     else
@@ -67,6 +67,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     IdNomina_Tipo = 1
                 };
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -85,8 +86,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 if (ModelState.IsValid)
                 {
-                    info.IdUsuarioUltModi = Session["IdUsuario"].ToString();
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.IdUsuarioUltModi = SessionFixed.IdUsuario;
                     if (!bus_nomina_tipo.modificarDB(info))
                         return View(info);
                     else
@@ -102,12 +102,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdNomina_Tipo = 0, int IdNomina_TipoLiqui=0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdNomina_Tipo = 0, int IdNomina_TipoLiqui=0)
         {
             try
             {
                 cargar_combos();
-                return View(bus_nomina_tipo.get_info(GetIdEmpresa(), IdNomina_Tipo, IdNomina_TipoLiqui));
+                return View(bus_nomina_tipo.get_info(IdEmpresa, IdNomina_Tipo, IdNomina_TipoLiqui));
 
             }
             catch (Exception)
@@ -122,8 +122,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                info.IdUsuarioAnu = Session["IdUsuario"].ToString();
-                info.IdEmpresa = GetIdEmpresa();
+                info.IdUsuarioAnu = SessionFixed.IdUsuario;
                 if (!bus_nomina_tipo.anularDB(info))
                     return View(info);
                 else
@@ -135,12 +134,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdNomina_Tipo = 0, int IdNomina_TipoLiqui=0)
+        public ActionResult Anular(int IdEmpresa=0, int IdNomina_Tipo = 0, int IdNomina_TipoLiqui=0)
         {
             try
             {
                 cargar_combos();
-                return View(bus_nomina_tipo.get_info(GetIdEmpresa(), IdNomina_Tipo, IdNomina_TipoLiqui));
+                return View(bus_nomina_tipo.get_info(IdEmpresa, IdNomina_Tipo, IdNomina_TipoLiqui));
 
             }
             catch (Exception)
@@ -165,28 +164,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-    
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
 
         private void cargar_combos()
         {
             try
             {
-                lst_nominas = bus_nomina.get_list(GetIdEmpresa(), false);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                lst_nominas = bus_nomina.get_list(IdEmpresa, false);
                 ViewBag.lst_nomina = lst_nominas;
             }
             catch (Exception)

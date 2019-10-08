@@ -18,42 +18,16 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_Nomina_Tipoliqui
-                                 join p in Context.ro_Nomina_Tipo
-                                 on q.IdNomina_Tipo equals p.IdNomina_Tipo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdEmpresa==p.IdEmpresa
-                                 select new ro_Nomina_Tipoliqui_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdNomina_Tipo = q.IdNomina_Tipo,
-                                     IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
-                                     DescripcionProcesoNomina=q.DescripcionProcesoNomina,
-                                     Estado = q.Estado,
-                                     Descripcion=p.Descripcion,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_Nomina_Tipoliqui
-                                 join p in Context.ro_Nomina_Tipo
-                                 on q.IdNomina_Tipo equals p.IdNomina_Tipo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdEmpresa == p.IdEmpresa
-                                 && q.Estado == "A"
-                                 select new ro_Nomina_Tipoliqui_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdNomina_Tipo = q.IdNomina_Tipo,
-                                     IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
-                                     DescripcionProcesoNomina = q.DescripcionProcesoNomina,
-                                     Descripcion = p.Descripcion,
-                                     Estado = q.Estado,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.vwro_Nomina_Tipoliqui.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados == true ? q.Estado : "A")).Select(q => new ro_Nomina_Tipoliqui_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdNomina_Tipo = q.IdNomina_Tipo,
+                        IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
+                        DescripcionProcesoNomina = q.DescripcionProcesoNomina,
+                        Estado = q.Estado,
+                        Descripcion = q.Descripcion,
+                        EstadoBool = q.Estado == "A" ? true : false
+                    }).ToList();
                 }
                 Lista.ForEach(q => q.IdString = q.IdNomina_Tipo.ToString("000") + q.IdNomina_TipoLiqui.ToString("000"));
 

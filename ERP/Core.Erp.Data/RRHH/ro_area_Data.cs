@@ -19,36 +19,18 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_area
-                                 join c in Context.ro_Division
-                                 on q.IdDivision equals c.IdDivision
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdEmpresa==c.IdEmpresa
-                                 select new ro_area_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdArea = q.IdArea,
-                                     IdDivision=q.IdDivision,                                    
-                                     Descripcion = q.Descripcion,
-                                     Division=c.Descripcion,
-                                     estado = q.estado,
+                    Lista = Context.vwro_area.Where(q => q.IdEmpresa == IdEmpresa && q.estado == (mostrar_anulados == true ? q.estado : "A")).Select(q => new ro_area_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdArea = q.IdArea,
+                        IdDivision = q.IdDivision,
+                        Descripcion = q.DescripcionArea,
+                        Division = q.DescripcionDivision,
+                        estado = q.estado,
 
-                                     EstadoBool = q.estado == "A" ? true : false
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_area
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.estado == "A"
-                                 select new ro_area_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdArea = q.IdArea,
-                                     Descripcion = q.Descripcion,
-                                     estado = q.estado,
+                        EstadoBool = q.estado == "A" ? true : false
+                    }).ToList();
 
-                                     EstadoBool = q.estado == "A" ? true : false
-                                 }).ToList();
                 }
 
                 return Lista;

@@ -27,7 +27,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_area_Info> model = bus_area.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_area", model);
             }
@@ -46,7 +46,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuario = SessionFixed.IdUsuario;
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_area.guardarDB(info))
                         return View(info);
                     else
@@ -68,6 +67,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 cargar_combos();
                 ro_area_Info info = new ro_area_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -101,12 +101,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdArea = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdArea = 0)
         {
             try
             {
                 cargar_combos();
-                IdEmpresa = GetIdEmpresa();
+
                 return View(bus_area.get_info(IdEmpresa, IdArea));
 
             }
@@ -135,29 +135,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdArea = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdArea = 0)
         {
             try
             {
                 cargar_combos();
-                IdEmpresa = GetIdEmpresa();
                 return View(bus_area.get_info(IdEmpresa, IdArea));
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
             }
             catch (Exception)
             {
@@ -170,7 +154,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                lista_division = bus_division.get_list(GetIdEmpresa(), false);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                lista_division = bus_division.get_list(IdEmpresa, false);
                 ViewBag.lista_division = lista_division;
             }
             catch (Exception)
@@ -185,8 +170,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_area_Info> lst_areas = new List<ro_area_Info>();
-                lst_areas = bus_area.get_list(GetIdEmpresa(), IdDivision);
+                lst_areas = bus_area.get_list(IdEmpresa, IdDivision);
                 return Json(lst_areas, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

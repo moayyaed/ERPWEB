@@ -31,7 +31,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_departamento_area()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"].ToString());
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             lst_departamento_area = bus_area_x_departamento.get_list(IdEmpresa);
             return PartialView("_GridViewPartial_departamento_area", lst_departamento_area);
         }

@@ -24,7 +24,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_division_Info> model = bus_division.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                List<ro_division_Info> model = bus_division.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_division", model);
             }
             catch (Exception)
@@ -42,7 +43,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuario = SessionFixed.IdUsuario;
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_division.guardarDB(info))
                         return View(info);
                     else
@@ -58,11 +58,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(int IdEmpresa=0)
         {
             try
             {
                 ro_division_Info info = new ro_division_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -96,12 +97,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdDivision = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdDivision = 0)
         {
             try
             {
 
-                return View(bus_division.get_info(GetIdEmpresa(), IdDivision));
+                return View(bus_division.get_info(IdEmpresa, IdDivision));
 
             }
             catch (Exception)
@@ -129,30 +130,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdDivision = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdDivision = 0)
         {
             try
             {
 
-                return View(bus_division.get_info(GetIdEmpresa(), IdDivision));
+                return View(bus_division.get_info(IdEmpresa, IdDivision));
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
             }
             catch (Exception)
             {

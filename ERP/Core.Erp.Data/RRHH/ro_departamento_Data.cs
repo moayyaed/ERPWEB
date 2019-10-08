@@ -18,31 +18,14 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.ro_Departamento
-                             where q.IdEmpresa == IdEmpresa
-                             select new ro_departamento_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdDepartamento = q.IdDepartamento,
-                                 de_descripcion = q.de_descripcion,
-                                 Estado = q.Estado,
-
-                                 EstadoBool = q.Estado == "A" ? true : false
-                             }).ToList();
-                    else
-                        Lista = (from q in Context.ro_Departamento
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Estado=="A"
-                                 select new ro_departamento_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdDepartamento = q.IdDepartamento,
-                                     de_descripcion = q.de_descripcion,
-                                     Estado = q.Estado,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.ro_Departamento.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados == true ? q.Estado : "A")).Select(q => new ro_departamento_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdDepartamento = q.IdDepartamento,
+                        de_descripcion = q.de_descripcion,
+                        Estado = q.Estado,
+                        EstadoBool = q.Estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;
