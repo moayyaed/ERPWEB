@@ -24,7 +24,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_cargo_Info> model = bus_cargo.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_cargo", model);
             }
@@ -42,7 +42,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuario = SessionFixed.IdUsuario;
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa =  GetIdEmpresa();
                     if (!bus_cargo.guardarDB(info))
                         return View(info);
                     else
@@ -63,6 +62,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_cargo_Info info = new ro_cargo_Info();
+                info.IdEmpresa= Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -96,11 +96,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
       
-        public ActionResult Modificar(int IdCargo=0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdCargo=0)
         {
             try
             {
-                return View(bus_cargo.get_info(GetIdEmpresa(),IdCargo));
+                return View(bus_cargo.get_info(IdEmpresa, IdCargo));
 
             }
             catch (Exception)
@@ -129,28 +129,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-       public ActionResult Anular(int IdCargo=0)
+       public ActionResult Anular(int IdEmpresa = 0, int IdCargo=0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 return View(bus_cargo.get_info(IdEmpresa, IdCargo));
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);              
-                    else
-                    return 0;
             }
             catch (Exception)
             {

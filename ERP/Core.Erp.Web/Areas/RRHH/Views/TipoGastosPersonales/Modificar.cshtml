@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.RRHH.ro_tipo_gastos_personales_Info
 @{
-    ViewBag.Title = "Modificar tipo de gasto";
+    ViewBag.Title = "Modificar tipo de gasto personal";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -11,7 +11,6 @@
 @using (Html.BeginForm("Modificar", "TipoGastosPersonales", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdTipoGasto)
-
 
     <div class="row">
         <div class="col-md-12">

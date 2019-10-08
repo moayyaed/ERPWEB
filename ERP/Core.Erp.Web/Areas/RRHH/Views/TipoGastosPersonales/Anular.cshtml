@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.RRHH.ro_tipo_gastos_personales_Info
 @{
-    ViewBag.Title = "Anular tipo de gsto";
+    ViewBag.Title = "Anular tipo de gasto personal";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -12,7 +12,6 @@
 {
     @Html.HiddenFor(q => q.IdTipoGasto)
     @Html.HiddenFor(q => q.nom_tipo_gasto)
-
 
     <div class="row">
         <div class="col-md-12">

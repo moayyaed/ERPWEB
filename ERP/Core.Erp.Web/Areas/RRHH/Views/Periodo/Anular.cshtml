@@ -13,8 +13,6 @@
 {
     @Html.HiddenFor(q => q.IdPeriodo)
     @Html.HiddenFor(q => q.IdEmpresa)
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -81,7 +79,7 @@
         </div>
     </div>
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index","Periodo",new { Area = "RRHH" },null)">Cancelar</a>
     </div>
     @section Scripts {

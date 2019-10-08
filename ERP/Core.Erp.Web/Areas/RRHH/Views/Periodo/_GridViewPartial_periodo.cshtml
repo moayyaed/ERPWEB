@@ -65,8 +65,8 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "pe_estado")) == "A")
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") },
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -74,7 +74,7 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString() + "&nbsp;"+ "/" + "&nbsp;"
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString() + "&nbsp;"+ "/" + "&nbsp;"
                 );
                 ViewContext.Writer.Write(
                     Html.ActionLink("Generar Periodos","Generar_Periodos").ToHtmlString()

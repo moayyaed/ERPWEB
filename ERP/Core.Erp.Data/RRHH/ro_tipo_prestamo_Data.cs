@@ -16,33 +16,15 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.ro_Tipo_Prestamo
-                             where q.IdEmpresa == IdEmpresa
-                             select new ro_tipo_prestamo_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdTipoPrestamo = q.IdTipoPrestamo,
-                                 tp_Descripcion = q.tp_Descripcion,
-                                 tp_Monto=q.tp_Monto,
-                                 tp_Estado = q.tp_Estado,
-
-                                 EstadoBool = q.tp_Estado == "A" ? true : false
-                             }).ToList();
-                    else
-                        Lista = (from q in Context.ro_Tipo_Prestamo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.tp_Estado=="A"
-                                 select new ro_tipo_prestamo_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdTipoPrestamo = q.IdTipoPrestamo,
-                                     tp_Descripcion = q.tp_Descripcion,
-                                     tp_Monto = q.tp_Monto,
-                                     tp_Estado = q.tp_Estado,
-
-                                     EstadoBool = q.tp_Estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.ro_Tipo_Prestamo.Where(q => q.IdEmpresa == IdEmpresa && q.tp_Estado == (mostrar_anulados == true ? q.tp_Estado : "A")).Select(q => new ro_tipo_prestamo_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdTipoPrestamo = q.IdTipoPrestamo,
+                        tp_Descripcion = q.tp_Descripcion,
+                        tp_Monto = q.tp_Monto,
+                        tp_Estado = q.tp_Estado,
+                        EstadoBool = q.tp_Estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;

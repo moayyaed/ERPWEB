@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.RRHH.ro_area_x_departamento_Info
 @{
-    ViewBag.Title = "Nueva asignación";
+    ViewBag.Title = "Nueva asignación de departamentos por área";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -10,7 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "DepartamentoPorArea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-
+    @Html.HiddenFor(q => q.IdEmpresa)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -31,8 +31,6 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_areas()}";
                }).BindList(ViewBag.lst_division).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdDivision, "", new { @class = "text-danger" })
                 </div>
@@ -60,8 +58,6 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_id()}";
                }).BindList(ViewBag.lst_area).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
                 </div>
@@ -89,8 +85,6 @@
                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
                    settings.Properties.NullText = "== Seleccione ==";
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_id()}";
                }).BindList(ViewBag.lst_departamento).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
                 </div>
@@ -107,41 +101,7 @@
     }
 }
 
-
-
-
 <script>
-
-
-
-    function get_areas() {
-            var datos = {
-                IdDivision: IdDivision.GetValue()
-            }
-
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("get_areas","Area", new { Area = "RRHH" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-
-                    $.each(data, function (i, row) {
-                        $("#IdNomina_TipoLiqui").append("<option value=" + row.IdArea + ">" + row.Descripcion + "</option>");
-                    });
-                },
-                error: function (error) {
-                }
-            });
-        };
-
-
-
-
 
 </script>
 

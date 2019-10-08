@@ -8,6 +8,8 @@ using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.General;
 using Core.Erp.Bus.General;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class PeriodoController : Controller
@@ -27,7 +29,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_periodo_Info> model = bus_periodo.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                List<ro_periodo_Info> model = bus_periodo.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_periodo", model);
             }
             catch (Exception)
@@ -43,7 +46,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_periodo.guardarDB(info))
                         return View(info);
                     else
@@ -59,11 +61,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(int IdEmpresa=0)
         {
             try
             {
                 ro_periodo_Info info = new ro_periodo_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 cargar_combo();
                 return View(info);
 
@@ -81,7 +84,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdUsuarioUltMod = GetIdUsuario();
+                    info.IdUsuarioUltMod = SessionFixed.IdUsuario;
 
                     if (!bus_periodo.modificarDB(info))
                         return View(info);
@@ -98,12 +101,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdPeriodo = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdPeriodo = 0)
         {
             try
             {
                 cargar_combo();
-                return View(bus_periodo.get_info(GetIdEmpresa(), IdPeriodo));
+                return View(bus_periodo.get_info(IdEmpresa, IdPeriodo));
 
             }
             catch (Exception)
@@ -117,7 +120,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                    info.IdUsuarioUltAnu = GetIdUsuario();
+                info.IdUsuarioUltAnu = SessionFixed.IdUsuario;
                     if (!bus_periodo.anularDB(info))
                         return View(info);
                     else
@@ -129,12 +132,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdPeriodo = 0)
+        public ActionResult Anular(int IdEmpresa = 0, int IdPeriodo = 0)
         {
             try
             {
                 cargar_combo();
-                return View(bus_periodo.get_info(GetIdEmpresa(), IdPeriodo));
+                return View(bus_periodo.get_info(IdEmpresa, IdPeriodo));
 
             }
             catch (Exception)
@@ -150,8 +153,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
-                    info.IdUsuario = GetIdUsuario();
+                    info.IdUsuario = SessionFixed.IdUsuario;
                     if (!bus_periodo.Generar_Periodos(info))
                     {
                         cargar_combo();
@@ -178,6 +180,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_periodo_Info info = new ro_periodo_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 cargar_combo();
                 return View(info);
 
@@ -205,36 +208,5 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        private string GetIdUsuario()
-        {
-            try
-            {
-                if (Session["IdUsuario"] != null)
-                    return Convert.ToString(Session["IdUsuario"]);
-                else
-                    return "";
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
     }
 }

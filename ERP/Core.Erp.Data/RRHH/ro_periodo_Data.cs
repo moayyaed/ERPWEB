@@ -16,41 +16,19 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_periodo
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_periodo_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdPeriodo = q.IdPeriodo,
-                                     pe_FechaIni = q.pe_FechaIni,
-                                     pe_FechaFin = q.pe_FechaFin,
-                                     Carga_Todos_Empl=q.Carga_Todos_Empleados,
-                                     Cod_region=q.Cod_region,
-                                     pe_mes=q.pe_mes,
-                                     pe_anio=q.pe_anio,
-                                     pe_estado=q.pe_estado,
-
-                                     EstadoBool = q.pe_estado == "A" ? true : false
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_periodo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.pe_estado == "A"
-                                 select new ro_periodo_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdPeriodo = q.IdPeriodo,
-                                     pe_FechaIni = q.pe_FechaIni,
-                                     pe_FechaFin = q.pe_FechaFin,
-                                     Carga_Todos_Empl = q.Carga_Todos_Empleados,
-                                     Cod_region = q.Cod_region,
-                                     pe_mes = q.pe_mes,
-                                     pe_anio = q.pe_anio,
-                                     pe_estado = q.pe_estado,
-
-                                     EstadoBool = q.pe_estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.ro_periodo.Where(q => q.IdEmpresa == IdEmpresa && q.pe_estado == (mostrar_anulados == true ? q.pe_estado : "A")).Select(q => new ro_periodo_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdPeriodo = q.IdPeriodo,
+                        pe_FechaIni = q.pe_FechaIni,
+                        pe_FechaFin = q.pe_FechaFin,
+                        Carga_Todos_Empl = q.Carga_Todos_Empleados,
+                        Cod_region = q.Cod_region,
+                        pe_mes = q.pe_mes,
+                        pe_anio = q.pe_anio,
+                        pe_estado = q.pe_estado,
+                        EstadoBool = q.pe_estado == "A" ? true : false
+                    }).ToList();
                 }
                 foreach (var item in Lista)
                 {

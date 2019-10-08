@@ -16,26 +16,17 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from ad in Context.ro_area_x_departamento
-                             join divi in Context.ro_Division
-                             on new { ad.IdEmpresa, ad.IdDivision } equals new { divi.IdEmpresa, divi.IdDivision }
-                             join area in Context.ro_area
-                             on new { ad.IdEmpresa, ad.IdDivision,ad.IdArea } equals new { area.IdEmpresa, area.IdDivision, area.IdArea }
-                             join dep in Context.ro_Departamento
-                             on new { ad.IdEmpresa, ad.IdDepartamento } equals new { dep.IdEmpresa, dep.IdDepartamento }
-                             where ad.IdEmpresa == IdEmpresa
-                             select new ro_area_x_departamento_Info
-                             {
-                                 IdEmpresa = ad.IdEmpresa,
-                                 Secuencia= ad.Secuencia,
-                                 IdDivision = ad.IdDivision,
-                                 IdArea = ad.IdArea,
-                                 IdDepartamento = ad.IdDepartamento,
-                                 area=area.Descripcion,
-                                 division=divi.Descripcion,
-                                 departamento=dep.de_descripcion
-
-                             }).ToList();
+                    Lista = Context.vwro_area_x_departamento.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new ro_area_x_departamento_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        Secuencia = q.Secuencia,
+                        IdDivision = q.IdDivision,
+                        IdArea = q.IdArea,
+                        IdDepartamento = q.IdDepartamento,
+                        area = q.AreaDescripcion,
+                        division = q.DivisionDescripcion,
+                        departamento = q.DepartamentoDescripcion
+                    }).ToList();
                 }
 
                 return Lista;
@@ -120,7 +111,7 @@ namespace Core.Erp.Data.RRHH
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

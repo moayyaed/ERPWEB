@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class TipoPrestamoController : Controller
@@ -21,7 +23,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                List<ro_tipo_prestamo_Info> model = bus_tipo_prestamo.get_list(GetIdEmpresa(), true);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                List<ro_tipo_prestamo_Info> model = bus_tipo_prestamo.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_tipo_prestamo", model);
             }
             catch (Exception)
@@ -38,7 +41,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_tipo_prestamo.guardarDB(info))
                         return View(info);
                     else
@@ -59,6 +61,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_tipo_prestamo_Info info = new ro_tipo_prestamo_Info();
+                info.IdEmpresa= Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -91,12 +94,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdTipoPrestamo = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoPrestamo = 0)
         {
             try
             {
 
-                return View(bus_tipo_prestamo.get_info(GetIdEmpresa(), IdTipoPrestamo));
+                return View(bus_tipo_prestamo.get_info(IdEmpresa, IdTipoPrestamo));
 
             }
             catch (Exception)
@@ -122,30 +125,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdTipoPrestamo = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdTipoPrestamo = 0)
         {
             try
             {
 
-                return View(bus_tipo_prestamo.get_info(GetIdEmpresa(), IdTipoPrestamo));
+                return View(bus_tipo_prestamo.get_info(IdEmpresa, IdTipoPrestamo));
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
             }
             catch (Exception)
             {

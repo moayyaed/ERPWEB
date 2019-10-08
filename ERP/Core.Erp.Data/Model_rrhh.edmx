@@ -1751,6 +1751,28 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_area' no tiene definida ningu
           <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_area_x_departamento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwro_area_x_departamento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdDivision" />
+            <PropertyRef Name="DivisionDescripcion" />
+            <PropertyRef Name="IdArea" />
+            <PropertyRef Name="AreaDescripcion" />
+            <PropertyRef Name="IdDepartamento" />
+            <PropertyRef Name="DepartamentoDescripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdDivision" Type="int" Nullable="false" />
+          <Property Name="DivisionDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdArea" Type="int" Nullable="false" />
+          <Property Name="AreaDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdDepartamento" Type="int" Nullable="false" />
+          <Property Name="DepartamentoDescripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_combo">
           <Key>
@@ -5435,6 +5457,18 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
     [vwro_area].[estado] AS [estado]
     FROM [dbo].[vwro_area] AS [vwro_area]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwro_area_x_departamento" EntityType="Self.vwro_area_x_departamento" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwro_area_x_departamento].[IdEmpresa] AS [IdEmpresa], 
+    [vwro_area_x_departamento].[Secuencia] AS [Secuencia], 
+    [vwro_area_x_departamento].[IdDivision] AS [IdDivision], 
+    [vwro_area_x_departamento].[DivisionDescripcion] AS [DivisionDescripcion], 
+    [vwro_area_x_departamento].[IdArea] AS [IdArea], 
+    [vwro_area_x_departamento].[AreaDescripcion] AS [AreaDescripcion], 
+    [vwro_area_x_departamento].[IdDepartamento] AS [IdDepartamento], 
+    [vwro_area_x_departamento].[DepartamentoDescripcion] AS [DepartamentoDescripcion]
+    FROM [dbo].[vwro_area_x_departamento] AS [vwro_area_x_departamento]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwro_empleado_combo" EntityType="Self.vwro_empleado_combo" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwro_empleado_combo].[Empleado] AS [Empleado], 
@@ -8932,6 +8966,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="vwro_PrestamoMasivo_Det" EntityType="Model_rrhh.vwro_PrestamoMasivo_Det" />
           <EntitySet Name="vwro_Nomina_Tipoliqui" EntityType="Model_rrhh.vwro_Nomina_Tipoliqui" />
           <EntitySet Name="vwro_area" EntityType="Model_rrhh.vwro_area" />
+          <EntitySet Name="vwro_area_x_departamento" EntityType="Model_rrhh.vwro_area_x_departamento" />
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13028,6 +13063,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="DescripcionArea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="vwro_area_x_departamento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdDivision" />
+            <PropertyRef Name="DivisionDescripcion" />
+            <PropertyRef Name="IdArea" />
+            <PropertyRef Name="AreaDescripcion" />
+            <PropertyRef Name="IdDepartamento" />
+            <PropertyRef Name="DepartamentoDescripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdDivision" Type="Int32" Nullable="false" />
+          <Property Name="DivisionDescripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdArea" Type="Int32" Nullable="false" />
+          <Property Name="AreaDescripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="DepartamentoDescripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15763,6 +15818,20 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="IdArea" ColumnName="IdArea" />
                 <ScalarProperty Name="DescripcionDivision" ColumnName="DescripcionDivision" />
                 <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwro_area_x_departamento">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_area_x_departamento">
+              <MappingFragment StoreEntitySet="vwro_area_x_departamento">
+                <ScalarProperty Name="DepartamentoDescripcion" ColumnName="DepartamentoDescripcion" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="AreaDescripcion" ColumnName="AreaDescripcion" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="DivisionDescripcion" ColumnName="DivisionDescripcion" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

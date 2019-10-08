@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.RRHH.ro_periodo_Info
 @{
-    ViewBag.Title = "Generar periodo";
+    ViewBag.Title = "Generar periodos";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -10,8 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Generar_Periodos", "Periodo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-
-
+    @Html.HiddenFor(q => q.IdEmpresa)
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

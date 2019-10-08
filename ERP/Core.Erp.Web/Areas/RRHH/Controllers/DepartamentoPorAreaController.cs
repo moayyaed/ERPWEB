@@ -37,10 +37,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(int IdEmpresa=0)
         {
             cargar_combos();
             ro_area_x_departamento_Info info = new ro_area_x_departamento_Info();
+            info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             return View(info);
         }
         [HttpPost]
@@ -48,7 +49,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             if (model == null)
                 return View(model);
-            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            
             if (bus_area_x_departamento.guardarDB(model))
                 return RedirectToAction("Index");
             else
@@ -57,17 +58,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
         }
-        public ActionResult Modificar(int Secuencia)
+        public ActionResult Modificar(int IdEmpresa=0, int Secuencia=0)
         {
             cargar_combos();
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             return View(bus_area_x_departamento.get_info(IdEmpresa, Secuencia));
         }
         [HttpPost]
         public ActionResult Modificar(ro_area_x_departamento_Info model)
         {
-
-            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!bus_area_x_departamento.modificarDB(model))
             {
                 cargar_combos();
@@ -76,17 +74,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Index");
 
         }
-        public ActionResult Anular(int Secuencia)
+        public ActionResult Anular(int IdEmpresa=0, int Secuencia=0)
         {
             cargar_combos();
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             return View(bus_area_x_departamento.get_info(IdEmpresa, Secuencia));
         }
         [HttpPost]
         public ActionResult Anular(ro_area_x_departamento_Info model)
         {
-
-            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!bus_area_x_departamento.anularDB(model))
             {
                 cargar_combos();
@@ -97,7 +92,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         private void cargar_combos()
         {
-            IdEmpresa = Convert.ToInt32(Session["IdEmpresa"].ToString());
+            IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.lst_division = bus_divisiaon.get_list(IdEmpresa, false);
             ViewBag.lst_area = bus_area.get_list(IdEmpresa, false);
             ViewBag.lst_departamento = bus_departamento.get_list(IdEmpresa, false);
