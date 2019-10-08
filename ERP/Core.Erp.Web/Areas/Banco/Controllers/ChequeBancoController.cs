@@ -186,16 +186,17 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 mensaje = "Existen detalles con valor 0 en el debe o haber, por favor verifique";
                 return false;
             }
-
-            var persona = bus_persona.get_info(i_validar.IdEmpresa, i_validar.IdTipo_Persona, Convert.ToDecimal(i_validar.IdEntidad));
-            if (persona == null)
+            if (i_validar.IdEntidad != null && i_validar.IdEntidad != 0)
             {
-                msg = "La persona seleccionada no corresponde al tipo asignado";
-                return false;
+                var persona = bus_persona.get_info(i_validar.IdEmpresa, i_validar.IdTipo_Persona, Convert.ToDecimal(i_validar.IdEntidad));
+                if (persona == null)
+                {
+                    msg = "La persona seleccionada no corresponde al tipo asignado";
+                    return false;
+                }
+                i_validar.IdPersona = persona.IdPersona;
+                i_validar.IdPersona_Girado_a = persona.IdPersona;
             }
-            i_validar.IdPersona = persona.IdPersona;
-            i_validar.IdPersona_Girado_a = persona.IdPersona;
-
             if (Math.Round(i_validar.lst_det_canc_op.Sum(q=>q.MontoAplicado), 2, MidpointRounding.AwayFromZero) != Math.Round(i_validar.lst_det_ct.Sum(q => q.dc_Valor_debe), 2, MidpointRounding.AwayFromZero))
             {
                 msg = "Los valores ingresados no concuerdan con el valor del diario";
