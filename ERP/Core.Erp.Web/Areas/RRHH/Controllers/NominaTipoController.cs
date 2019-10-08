@@ -13,8 +13,23 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class NominaTipoController : Controller
     {
         ro_nomina_tipo_Bus bus_nomina_tipo = new ro_nomina_tipo_Bus();
+        ro_nomina_tipo_List ListaNominaTipo = new ro_nomina_tipo_List();
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            ro_nomina_tipo_Info model = new ro_nomina_tipo_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
+            };
+
+            List<ro_nomina_tipo_Info> lista = bus_nomina_tipo.get_list(model.IdEmpresa, true);
+            ListaNominaTipo.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return View();
         }
 
@@ -23,8 +38,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_nomina_tipo_Info> model = bus_nomina_tipo.get_list(IdEmpresa, true);
+                List<ro_nomina_tipo_Info> model = ListaNominaTipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_nomina_tipo", model);
             }
             catch (Exception)
