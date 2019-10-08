@@ -21,5 +21,6 @@ namespace Core.Erp.Info.Reportes.Banco
         public int IdTipoCbte_pago { get; set; }
         public decimal IdCbteCble_pago { get; set; }
         public DateTime? FechaCruce { get; set; }
+        public string pe_nombreCompleto { get; set; }
     }
 }

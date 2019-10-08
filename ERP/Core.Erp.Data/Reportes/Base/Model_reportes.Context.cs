@@ -35,10 +35,8 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWACTF_003> VWACTF_003 { get; set; }
         public virtual DbSet<VWACTF_007> VWACTF_007 { get; set; }
         public virtual DbSet<VWACTF_008> VWACTF_008 { get; set; }
-        public virtual DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
         public virtual DbSet<VWBAN_002> VWBAN_002 { get; set; }
         public virtual DbSet<VWBAN_002_cancelaciones> VWBAN_002_cancelaciones { get; set; }
-        public virtual DbSet<VWBAN_003> VWBAN_003 { get; set; }
         public virtual DbSet<VWBAN_005> VWBAN_005 { get; set; }
         public virtual DbSet<VWBAN_010> VWBAN_010 { get; set; }
         public virtual DbSet<VWCAJ_002> VWCAJ_002 { get; set; }
@@ -116,7 +114,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
         public virtual DbSet<VWFAC_020> VWFAC_020 { get; set; }
         public virtual DbSet<VWBAN_013> VWBAN_013 { get; set; }
-        public virtual DbSet<VWBAN_001> VWBAN_001 { get; set; }
         public virtual DbSet<VWBAN_006> VWBAN_006 { get; set; }
         public virtual DbSet<VWBAN_007> VWBAN_007 { get; set; }
         public virtual DbSet<VWCAJ_001> VWCAJ_001 { get; set; }
@@ -137,6 +134,9 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWCONTA_010> VWCONTA_010 { get; set; }
         public virtual DbSet<VWCXC_002_diario> VWCXC_002_diario { get; set; }
         public virtual DbSet<VWINV_017> VWINV_017 { get; set; }
+        public virtual DbSet<VWBAN_003> VWBAN_003 { get; set; }
+        public virtual DbSet<VWBAN_001> VWBAN_001 { get; set; }
+        public virtual DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

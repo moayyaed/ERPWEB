@@ -26,6 +26,7 @@ namespace Core.Erp.Data.Reportes.Base
         public int IdEmpresa_pago { get; set; }
         public int IdTipoCbte_pago { get; set; }
         public decimal IdCbteCble_pago { get; set; }
-        public Nullable<System.DateTime> FechaCruce { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public Nullable<System.DateTime> co_FechaFactura { get; set; }
     }
 }
