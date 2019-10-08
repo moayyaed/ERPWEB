@@ -16,12 +16,11 @@ namespace Core.Erp.Data.RRHH
                 List<ro_marcaciones_tipo_Info> Lista;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.ro_marcaciones_tipo
-                             select new ro_marcaciones_tipo_Info
-                             {
-                             IdTipoMarcaciones = q.IdTipoMarcaciones,
-                             ma_descripcion = q.ma_descripcion
-                             }).ToList();
+                    Lista = Context.ro_marcaciones_tipo.Select(q => new ro_marcaciones_tipo_Info
+                    {
+                        IdTipoMarcaciones = q.IdTipoMarcaciones,
+                        ma_descripcion = q.ma_descripcion
+                    }).ToList();
                 }
                 return Lista;
             }

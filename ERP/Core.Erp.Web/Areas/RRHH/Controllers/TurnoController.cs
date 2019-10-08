@@ -6,12 +6,13 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.RRHH;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class TurnoController : Controller
     {
         ro_turno_Bus bus_cargo = new ro_turno_Bus();
-        int IdEmpresa = 0;
         public ActionResult Index()
         {
             return View();
@@ -22,7 +23,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_turno_Info> model = bus_cargo.get_list(IdEmpresa, true);
                 return PartialView("_GridView1Partial_turnos", model);
             }
@@ -39,7 +40,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
                     if (!bus_cargo.guardarDB(info))
                         return View(info);
                     else
@@ -60,6 +60,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_turno_Info info = new ro_turno_Info();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -92,11 +93,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdTurno = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdTurno = 0)
         {
             try
             {
-                return View(bus_cargo.get_info(GetIdEmpresa(), IdTurno));
+                return View(bus_cargo.get_info(IdEmpresa, IdTurno));
 
             }
             catch (Exception)
@@ -125,28 +126,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdTurno = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdTurno = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 return View(bus_cargo.get_info(IdEmpresa, IdTurno));
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
             }
             catch (Exception)
             {

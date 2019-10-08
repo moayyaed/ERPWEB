@@ -20,6 +20,7 @@ namespace Core.Erp.Web.Helps
         string IdCaja { get; set; }
         string Ruc { get; set; }
         string IdDivision { get; set; }
+        string IdArea { get; set; }
         string IdDivision_IC { get; set; }
         string Idtipo_cliente { get; set; }
         string IdSucursalInv { get; set; } //Para filtrar producto por bodega
@@ -121,6 +122,12 @@ namespace Core.Erp.Web.Helps
             set { _sessionValueProvider.IdDivision = value; }
         }
 
+        public static string IdArea
+        {
+            get { return _sessionValueProvider.IdArea; }
+            set { _sessionValueProvider.IdArea = value; }
+        }
+
         public static string IdDivision_IC
         {
             get { return _sessionValueProvider.IdDivision_IC; }
@@ -176,6 +183,7 @@ namespace Core.Erp.Web.Helps
         private const string _IdCaja = "Fx_IdCaja";
         private const string _Ruc = "Fx_Ruc";
         private const string _IdDivision = "Fx_IdDivision";
+        private const string _IdArea = "Fx_IdArea";
         private const string _IdDivision_IC = "Fx_IdDivision_IC";
         private const string _Idtipo_cliente = "Fx_Idtipo_cliente";
         private const string _IdSucursalInv = "Fx_IdSucursalInv";
@@ -265,7 +273,13 @@ namespace Core.Erp.Web.Helps
             get { return (string)HttpContext.Current.Session[_IdDivision]; }
             set { HttpContext.Current.Session[_IdDivision] = value; }
         }
-        
+
+        public string IdArea
+        {
+            get { return (string)HttpContext.Current.Session[_IdArea]; }
+            set { HttpContext.Current.Session[_IdArea] = value; }
+        }
+
         public string IdDivision_IC
         {
             get { return (string)HttpContext.Current.Session[_IdDivision_IC]; }

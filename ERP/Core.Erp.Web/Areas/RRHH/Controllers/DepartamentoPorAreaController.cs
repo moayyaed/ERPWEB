@@ -7,6 +7,7 @@ using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
 using DevExpress.Web.Mvc;
 using Core.Erp.Web.Helps;
+using DevExpress.Web;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -18,11 +19,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_division_Bus bus_divisiaon = new ro_division_Bus();
         ro_area_Bus bus_area = new ro_area_Bus();
         ro_departamento_Bus bus_departamento = new ro_departamento_Bus();
-
+        ro_division_Bus bus_division = new ro_division_Bus();
         ro_departamento_Info info = new ro_departamento_Info();
         int IdEmpresa = 0;
         #endregion
 
+        #region Index
         public ActionResult Index()
         {
             return View();
@@ -35,9 +37,47 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             lst_departamento_area = bus_area_x_departamento.get_list(IdEmpresa);
             return PartialView("_GridViewPartial_departamento_area", lst_departamento_area);
         }
+        #endregion
 
+        #region Combos bajo demanda
+        #region Division
+        public ActionResult CmbDivision()
+        {
+            ro_empleado_Info model = new ro_empleado_Info();
+            return PartialView("_CmbDivision", model);
+        }
+        public List<ro_division_Info> get_list_bajo_demanda_division(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_division.get_list_bajo_demanda_division(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ro_division_Info get_info_bajo_demanda_division(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_division.get_info_bajo_demanda_division(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
+        #region Area
+        public ActionResult CmbArea()
+        {
+            SessionFixed.IdDivision = Request.Params["IdDivision"] != null ? Request.Params["IdDivision"].ToString() : SessionFixed.IdDivision;
+            ro_empleado_Info model = new ro_empleado_Info();
+            return PartialView("_CmbArea", model);
+        }
+        public List<ro_area_Info> get_list_bajo_demanda_area(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_area.get_list_bajo_demanda_area(args, Convert.ToInt32(SessionFixed.IdEmpresa), false, Convert.ToInt32(SessionFixed.IdDivision));
+        }
+        public ro_area_Info get_info_bajo_demanda_area(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_area.get_info_bajo_demanda_area(args, Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.IdDivision));
+        }
+        #endregion
+
+        #endregion
+
+        #region Acciones
         [ValidateInput(false)]
-        public ActionResult Nuevo(int IdEmpresa=0)
+        public ActionResult Nuevo(int IdEmpresa = 0)
         {
             cargar_combos();
             ro_area_x_departamento_Info info = new ro_area_x_departamento_Info();
@@ -49,7 +89,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             if (model == null)
                 return View(model);
-            
+
             if (bus_area_x_departamento.guardarDB(model))
                 return RedirectToAction("Index");
             else
@@ -58,7 +98,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
         }
-        public ActionResult Modificar(int IdEmpresa=0, int Secuencia=0)
+        public ActionResult Modificar(int IdEmpresa = 0, int Secuencia = 0)
         {
             cargar_combos();
             return View(bus_area_x_departamento.get_info(IdEmpresa, Secuencia));
@@ -74,7 +114,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Index");
 
         }
-        public ActionResult Anular(int IdEmpresa=0, int Secuencia=0)
+        public ActionResult Anular(int IdEmpresa = 0, int Secuencia = 0)
         {
             cargar_combos();
             return View(bus_area_x_departamento.get_info(IdEmpresa, Secuencia));
@@ -90,6 +130,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Index");
 
         }
+        #endregion
+
         private void cargar_combos()
         {
             IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);

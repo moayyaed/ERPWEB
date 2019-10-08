@@ -10,10 +10,7 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Anular", "DepartamentoPorArea", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdDivision)
-    @Html.HiddenFor(q => q.IdArea)
     @Html.HiddenFor(q => q.Secuencia)
-    @Html.HiddenFor(q => q.IdDepartamento)
     @Html.HiddenFor(q => q.IdEmpresa)
 
     <div class="row">
@@ -21,22 +18,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdDivision">División*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdDivision, settings =>
-               {
-                   settings.Name = "IdDivision";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdDivision", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("Descripcion", "División").Width = System.Web.UI.WebControls.Unit.Percentage(90);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdDivision";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Descripcion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-               }).BindList(ViewBag.lst_division).GetHtml()
+                    @Html.Partial("_CmbDivision", Model.IdDivision)
                     @Html.ValidationMessageFor(q => q.IdDivision, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -48,22 +30,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdArea">Área*</label>
-                    @Html.DevExpress().ComboBoxFor(q => q.IdDivision, settings =>
-               {
-                   settings.Name = "IdArea";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("Descripcion", "Área").Width = System.Web.UI.WebControls.Unit.Percentage(90);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdArea";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Descripcion";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-               }).BindList(ViewBag.lst_area).GetHtml()
+                    @Html.Partial("_CmbArea", Model.IdArea)
                     @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
                 </div>
             </div>

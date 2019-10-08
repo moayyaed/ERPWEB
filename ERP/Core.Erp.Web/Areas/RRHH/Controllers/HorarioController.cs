@@ -6,12 +6,13 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class HorarioController : Controller
     {
         ro_horario_Bus bus_cargo = new ro_horario_Bus();
-        int IdEmpresa = 0;
         public ActionResult Index()
         {
             return View();
@@ -22,7 +23,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_horario_Info> model = bus_cargo.get_list(IdEmpresa, true);
                 return PartialView("_GridViewPartial_horarios", model);
             }
@@ -39,9 +40,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
-                    info.IdUsuario = Session["IdUsuario"].ToString();
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.IdUsuario = SessionFixed.IdUsuario;
                     if (!bus_cargo.guardarDB(info))
                         return View(info);
                     else
@@ -62,6 +61,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_horario_Info info = new ro_horario_Info();
+                info.IdEmpresa= Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(info);
 
             }
@@ -78,8 +78,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
-                    info.IdUsuarioUltMod = Session["IdUsuario"].ToString();
+                    info.IdUsuarioUltMod = SessionFixed.IdUsuario;
                     if (!bus_cargo.modificarDB(info))
                         return View(info);
                     else
@@ -96,11 +95,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdHorario = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdHorario = 0)
         {
             try
             {
-                return View(bus_cargo.get_info(GetIdEmpresa(), IdHorario));
+                return View(bus_cargo.get_info(IdEmpresa, IdHorario));
 
             }
             catch (Exception)
@@ -115,8 +114,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                info.IdEmpresa = GetIdEmpresa();
-                info.IdUsuarioUltAnu = Session["IdUsuario"].ToString();
+                info.IdUsuarioUltAnu = SessionFixed.IdUsuario;
                 if (!bus_cargo.anularDB(info))
                     return View(info);
                 else
@@ -130,11 +128,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdHorario = 0)
+        public ActionResult Anular(int IdEmpresa=0, int IdHorario = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 return View(bus_cargo.get_info(IdEmpresa, IdHorario));
 
             }
@@ -144,22 +141,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
     }
 
     public class ro_horario_List

@@ -16,44 +16,20 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_horario                        
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_horario_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdHorario = q.IdHorario,
-                                     HoraFin = q.HoraFin,
-                                     HoraIni=q.HoraIni,
-                                     SalLunch=q.SalLunch,
-                                     RegLunch=q.RegLunch,
-                                     ToleranciaEnt=q.ToleranciaEnt,
-                                     ToleranciaReg_lunh=q.ToleranciaReg_lunh,
-                                     Estado=q.Estado,
-                                     Descripcion = q.Descripcion,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_horario
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Estado == "A"
-                                 select new ro_horario_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdHorario = q.IdHorario,
-                                     HoraFin = q.HoraFin,
-                                     HoraIni = q.HoraIni,
-                                     SalLunch = q.SalLunch,
-                                     RegLunch = q.RegLunch,
-                                     ToleranciaEnt = q.ToleranciaEnt,
-                                     ToleranciaReg_lunh = q.ToleranciaReg_lunh,
-                                     Estado = q.Estado,
-                                     Descripcion = q.Descripcion,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.ro_horario.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados == true ? q.Estado : "A")).Select(q => new ro_horario_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdHorario = q.IdHorario,
+                        HoraFin = q.HoraFin,
+                        HoraIni = q.HoraIni,
+                        SalLunch = q.SalLunch,
+                        RegLunch = q.RegLunch,
+                        ToleranciaEnt = q.ToleranciaEnt,
+                        ToleranciaReg_lunh = q.ToleranciaReg_lunh,
+                        Estado = q.Estado,
+                        Descripcion = q.Descripcion,
+                        EstadoBool = q.Estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;

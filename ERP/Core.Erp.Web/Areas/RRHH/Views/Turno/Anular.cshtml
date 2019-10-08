@@ -26,8 +26,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Lunes</label>
-                    @Html.EditorFor(q => q.Lunes, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Lunes, settings =>
+                    {
+                        settings.Name = "Lunes";
+                        settings.Text = "Lunes";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Lunes, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -37,8 +41,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Martes</label>
-                    @Html.EditorFor(q => q.Martes, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Martes, settings =>
+                    {
+                        settings.Name = "Martes";
+                        settings.Text = "Martes";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Martes, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -48,8 +56,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Miércoles</label>
-                    @Html.EditorFor(q => q.Miercoles, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Miercoles, settings =>
+                    {
+                        settings.Name = "Miercoles";
+                        settings.Text = "Miércoles";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Miercoles, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -59,8 +71,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Jueves</label>
-                    @Html.EditorFor(q => q.Jueves, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Jueves, settings =>
+                    {
+                        settings.Name = "Jueves";
+                        settings.Text = "Jueves";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Jueves, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -70,8 +86,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Viernes</label>
-                    @Html.EditorFor(q => q.Viernes, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Viernes, settings =>
+                    {
+                        settings.Name = "Viernes";
+                        settings.Text = "Viernes";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Viernes, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -81,8 +101,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Sábado</label>
-                    @Html.EditorFor(q => q.Sabado, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Sabado, settings =>
+                    {
+                        settings.Name = "Sabado";
+                        settings.Text = "Sábado";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Sabado, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -92,8 +116,12 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="NumDocumento">Domingo</label>
-                    @Html.EditorFor(q => q.Domingo, new { @class = "form-control" })
+                    @Html.DevExpress().CheckBoxFor(q => q.Domingo, settings =>
+                    {
+                        settings.Name = "Domingo";
+                        settings.Text = "Domingo";
+
+                    }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Domingo, "", new { @class = "text-danger" })
                 </div>
             </div>
