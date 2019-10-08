@@ -34,7 +34,8 @@ namespace Core.Erp.Data.Reportes.Banco
                                  Referencia = q.Referencia,
                                  Observacion = q.Observacion,
                                  MontoAplicado = q.MontoAplicado,
-                                 FechaCruce = q.FechaCruce
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 FechaCruce = q.co_FechaFactura
                              }).ToList();
                 }
                 return Lista;

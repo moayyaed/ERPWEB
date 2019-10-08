@@ -32,7 +32,6 @@ namespace Core.Erp.Data.Reportes.Banco
                                  cb_Observacion = q.cb_Observacion,
                                  Estado = q.Estado,
                                  IdTipoNota = q.IdTipoNota,
-                                 pe_nombreCompleto = q.pe_nombreCompleto,
                                  IdCtaCble = q.IdCtaCble,
                                  pc_Cuenta = q.pc_Cuenta,
                                  dc_Valor = q.dc_Valor,

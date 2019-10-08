@@ -254,7 +254,7 @@ where exists(
 								SET @W_Ult_Costo_promedio = ISNULL(@W_Ult_Costo_promedio,0)		
 						--ACTUALIZO CAMPO DE PROCESO DE RECOSTEO
 								
-								UPDATE in_movi_inve_detalle  set mv_costo = @W_Ult_Costo_promedio, Costeado = 1
+								UPDATE in_movi_inve_detalle  set mv_costo = @W_Ult_Costo_promedio, Costeado = 1, mv_costo_sinConversion = @W_Ult_Costo_promedio
 								where IdEmpresa = @C2_IdEmpresa
 								and IdSucursal = @C2_IdSucursal
 								and IdBodega = @C2_IdBodega
@@ -262,7 +262,8 @@ where exists(
 								and IdNumMovi = @C2_IdNumMovi
 								and Secuencia = @C2_Secuencia
 
-								UPDATE in_Ing_Egr_Inven_det set mv_costo = @W_Ult_Costo_promedio
+								UPDATE in_Ing_Egr_Inven_det set mv_costo = @W_Ult_Costo_promedio,
+								mv_costo_sinConversion = @W_Ult_Costo_promedio
 								where IdEmpresa_inv = @C2_IdEmpresa
 								and IdSucursal_inv = @C2_IdSucursal
 								and IdBodega_inv = @C2_IdBodega
