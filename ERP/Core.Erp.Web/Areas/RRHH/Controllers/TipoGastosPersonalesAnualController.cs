@@ -12,14 +12,30 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class TipoGastosPersonalesAnualController : Controller
     {
         ro_tipo_gastos_personales_maxim_x_anio_Bus bus_gastos = new ro_tipo_gastos_personales_maxim_x_anio_Bus();
+        ro_tipo_gastos_personales_maxim_x_anio_List Lista_GastosPersonalesAnual = new ro_tipo_gastos_personales_maxim_x_anio_List();
 
         #region Variables
         ro_tipo_gastos_personales_Bus bus_tipo_gasto = new ro_tipo_gastos_personales_Bus();
         #endregion
         public ActionResult Index(string IdTipoGasto)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_tipo_gastos_personales_maxim_x_anio_Info model = new ro_tipo_gastos_personales_maxim_x_anio_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_tipo_gastos_personales_maxim_x_anio_Info> lista = bus_gastos.get_list(IdTipoGasto);
+            Lista_GastosPersonalesAnual.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
             ViewBag.IdTipoGasto = IdTipoGasto;
-            return View();
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -28,8 +44,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 cargar_combo();
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_tipo_gastos_personales_maxim_x_anio_Info> model = bus_gastos.get_list(IdTipoGasto);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_tipo_gastos_personales_maxim_x_anio_Info> model = Lista_GastosPersonalesAnual.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 ViewBag.IdTipoGasto = IdTipoGasto;
                 return PartialView("_GridViewPartial_tipo_gastos_personal_anual", model);
             }
@@ -188,6 +205,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 throw;
             }
+        }
+    }
+
+    public class ro_tipo_gastos_personales_maxim_x_anio_List
+    {
+        string Variable = "ro_tipo_gastos_personales_maxim_x_anio_Info";
+        public List<ro_tipo_gastos_personales_maxim_x_anio_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_tipo_gastos_personales_maxim_x_anio_Info> list = new List<ro_tipo_gastos_personales_maxim_x_anio_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_tipo_gastos_personales_maxim_x_anio_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_tipo_gastos_personales_maxim_x_anio_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 }

@@ -13,9 +13,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class DepartamentoController : Controller
     {
         ro_departamento_Bus bus_departamento = new ro_departamento_Bus();
+        ro_departamento_List Lista_Departamento = new ro_departamento_List();
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_departamento_Info model = new ro_departamento_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_departamento_Info> lista = bus_departamento.get_list(model.IdEmpresa, true);
+            Lista_Departamento.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -23,8 +40,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_departamento_Info> model = bus_departamento.get_list(IdEmpresa, true);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_departamento_Info> model = Lista_Departamento.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_departamento", model);
             }
             catch (Exception)

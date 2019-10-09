@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_periodo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdPeriodo { get; set; }
         public Nullable<int> pe_anio { get; set; }

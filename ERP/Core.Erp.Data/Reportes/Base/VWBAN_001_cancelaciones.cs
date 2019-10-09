@@ -28,5 +28,8 @@ namespace Core.Erp.Data.Reportes.Base
         public decimal IdCbteCble_pago { get; set; }
         public string pe_nombreCompleto { get; set; }
         public Nullable<System.DateTime> co_FechaFactura { get; set; }
+        public Nullable<System.DateTime> FechaCruce { get; set; }
+        public string pe_nombreCompleto1 { get; set; }
+        public Nullable<System.DateTime> co_FechaFactura1 { get; set; }
     }
 }

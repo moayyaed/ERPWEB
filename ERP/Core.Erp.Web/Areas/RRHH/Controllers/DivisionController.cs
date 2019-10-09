@@ -13,10 +13,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class DivisionController : Controller
     {
         ro_division_Bus bus_division = new ro_division_Bus();
-        // GET: RRHH/Division
+        ro_division_List Lista_Division = new ro_division_List();
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_division_Info model = new ro_division_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_division_Info> lista = bus_division.get_list(model.IdEmpresa, true);
+            Lista_Division.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -24,8 +40,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_division_Info> model = bus_division.get_list(IdEmpresa, true);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_division_Info> model = Lista_Division.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_division", model);
             }
             catch (Exception)

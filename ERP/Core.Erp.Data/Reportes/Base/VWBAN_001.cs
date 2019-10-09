@@ -37,5 +37,7 @@ namespace Core.Erp.Data.Reportes.Base
         public string nom_punto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo_grupo { get; set; }
         public Nullable<int> IdPunto_cargo { get; set; }
+        public Nullable<int> IdPunto_cargo_grupo1 { get; set; }
+        public Nullable<int> IdPunto_cargo1 { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_tabla_Impu_Renta_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("El campo año fiscal es obligatorio"))]
         public int AnioFiscal { get; set; }
         public int Secuencia { get; set; }

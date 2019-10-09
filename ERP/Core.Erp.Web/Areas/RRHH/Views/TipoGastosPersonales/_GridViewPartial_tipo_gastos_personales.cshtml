@@ -4,8 +4,6 @@
     {
         settings.Name = "GridViewPartial_tipo_gastos_personales";
         settings.CallbackRouteValues = new { Controller = "TipoGastosPersonales", Action = "GridViewPartial_tipo_gastos_personales" };
-
-
         settings.KeyFieldName = "IdTipoGasto";
 
         settings.Width = Unit.Percentage(100);
@@ -111,6 +109,7 @@
                 }).Render();
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

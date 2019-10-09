@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_area_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo división es obligatorio")]
         public int IdDivision { get; set; }

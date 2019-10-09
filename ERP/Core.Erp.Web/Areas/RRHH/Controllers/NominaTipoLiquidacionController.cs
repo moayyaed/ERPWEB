@@ -15,9 +15,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Nomina_Tipoliquiliqui_Bus bus_nomina_tipo = new ro_Nomina_Tipoliquiliqui_Bus();
         ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
         List<ro_nomina_tipo_Info> lst_nominas = new List<ro_nomina_tipo_Info>();
+        ro_Nomina_Tipoliqui_List Lista_NominaTipoLiqui = new ro_Nomina_Tipoliqui_List();
+
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_Nomina_Tipoliqui_Info model = new ro_Nomina_Tipoliqui_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_Nomina_Tipoliqui_Info> lista = bus_nomina_tipo.get_list(model.IdEmpresa, true);
+            Lista_NominaTipoLiqui.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -25,8 +43,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_Nomina_Tipoliqui_Info> model = bus_nomina_tipo.get_list(IdEmpresa, true);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_Nomina_Tipoliqui_Info> model = Lista_NominaTipoLiqui.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_nomina_tipo_liquidacion", model);
             }
             catch (Exception)
@@ -179,6 +198,25 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-       
+    }
+
+    public class ro_Nomina_Tipoliqui_List
+    {
+        string Variable = "ro_Nomina_Tipoliqui_Info";
+        public List<ro_Nomina_Tipoliqui_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_Nomina_Tipoliqui_Info> list = new List<ro_Nomina_Tipoliqui_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_Nomina_Tipoliqui_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_Nomina_Tipoliqui_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

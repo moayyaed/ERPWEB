@@ -13,9 +13,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     public class TipoPrestamoController : Controller
     {
         ro_tipo_prestamo_Bus bus_tipo_prestamo = new ro_tipo_prestamo_Bus();
+        ro_tipo_prestamo_List Lista_TipoPrestamo = new ro_tipo_prestamo_List();
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_tipo_prestamo_Info model = new ro_tipo_prestamo_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_tipo_prestamo_Info> lista = bus_tipo_prestamo.get_list(model.IdEmpresa, true);
+            Lista_TipoPrestamo.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -23,8 +40,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_tipo_prestamo_Info> model = bus_tipo_prestamo.get_list(IdEmpresa, true);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_tipo_prestamo_Info> model = Lista_TipoPrestamo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_tipo_prestamo", model);
             }
             catch (Exception)
@@ -138,6 +156,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 throw;
             }
+        }
+    }
+
+    public class ro_tipo_prestamo_List
+    {
+        string Variable = "ro_tipo_prestamo_Info";
+        public List<ro_tipo_prestamo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_tipo_prestamo_Info> list = new List<ro_tipo_prestamo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_tipo_prestamo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_tipo_prestamo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 }

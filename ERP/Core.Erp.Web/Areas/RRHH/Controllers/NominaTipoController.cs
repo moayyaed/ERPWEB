@@ -25,12 +25,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_nomina_tipo_Info model = new ro_nomina_tipo_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
             };
 
             List<ro_nomina_tipo_Info> lista = bus_nomina_tipo.get_list(model.IdEmpresa, true);
-            ListaNominaTipo.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return View();
+            ListaNominaTipo.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -38,6 +38,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
                 List<ro_nomina_tipo_Info> model = ListaNominaTipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_nomina_tipo", model);
             }

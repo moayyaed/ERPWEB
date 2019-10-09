@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.RRHH.ro_tabla_Impu_Renta_Info
 @{
     ViewBag.Title = "Consulta de bases de impuestos a la renta";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -11,5 +11,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
     @Html.Action("GridViewPartial_base_impuesto_renta")
 }

@@ -33,5 +33,7 @@ namespace Core.Erp.Data.Reportes.Base
         public string cb_Cheque { get; set; }
         public string NombreUsuario { get; set; }
         public string Su_Descripcion { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public int secuencia { get; set; }
     }
 }

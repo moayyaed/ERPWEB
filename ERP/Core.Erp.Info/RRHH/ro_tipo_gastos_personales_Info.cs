@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_tipo_gastos_personales_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("El codigo del gasto es obligatorio"))]
         [StringLength(10, MinimumLength = 4, ErrorMessage = "El campo codigo debe tener mínimo 4 caracteres y máximo 10")]
 

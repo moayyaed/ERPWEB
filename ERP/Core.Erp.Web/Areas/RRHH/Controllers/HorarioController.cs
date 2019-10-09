@@ -12,10 +12,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class HorarioController : Controller
     {
-        ro_horario_Bus bus_cargo = new ro_horario_Bus();
+        ro_horario_Bus bus_horario = new ro_horario_Bus();
+        ro_horario_List Lista_Horario = new ro_horario_List();
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_horario_Info model = new ro_horario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_horario_Info> lista = bus_horario.get_list(model.IdEmpresa, true);
+            Lista_Horario.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -23,8 +40,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_horario_Info> model = bus_cargo.get_list(IdEmpresa, true);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_horario_Info> model = Lista_Horario.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_horarios", model);
             }
             catch (Exception)
@@ -41,7 +59,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     info.IdUsuario = SessionFixed.IdUsuario;
-                    if (!bus_cargo.guardarDB(info))
+                    if (!bus_horario.guardarDB(info))
                         return View(info);
                     else
                         return RedirectToAction("Index");
@@ -56,7 +74,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(int IdEmpresa=0)
         {
             try
             {
@@ -79,7 +97,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     info.IdUsuarioUltMod = SessionFixed.IdUsuario;
-                    if (!bus_cargo.modificarDB(info))
+                    if (!bus_horario.modificarDB(info))
                         return View(info);
                     else
                         return RedirectToAction("Index");
@@ -99,7 +117,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                return View(bus_cargo.get_info(IdEmpresa, IdHorario));
+                return View(bus_horario.get_info(IdEmpresa, IdHorario));
 
             }
             catch (Exception)
@@ -115,7 +133,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 info.IdUsuarioUltAnu = SessionFixed.IdUsuario;
-                if (!bus_cargo.anularDB(info))
+                if (!bus_horario.anularDB(info))
                     return View(info);
                 else
                     return RedirectToAction("Index");
@@ -132,7 +150,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                return View(bus_cargo.get_info(IdEmpresa, IdHorario));
+                return View(bus_horario.get_info(IdEmpresa, IdHorario));
 
             }
             catch (Exception)

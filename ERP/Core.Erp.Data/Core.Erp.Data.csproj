@@ -1445,6 +1445,9 @@
     <Compile Include="Reportes\Base\SPINV_021_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\SPINV_022_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\SPROL_012_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1870,6 +1873,7 @@
     <Compile Include="Reportes\Importacion\IMP_002_gastos_Data.cs" />
     <Compile Include="Reportes\Importacion\IMP_003_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_001_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_022_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_004_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_008_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_009_Data.cs" />

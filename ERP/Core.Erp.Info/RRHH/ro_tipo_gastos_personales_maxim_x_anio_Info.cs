@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_tipo_gastos_personales_maxim_x_anio_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdGasto { get; set; }
         public string IdTipoGasto { get; set; }
         public int AnioFiscal { get; set; }

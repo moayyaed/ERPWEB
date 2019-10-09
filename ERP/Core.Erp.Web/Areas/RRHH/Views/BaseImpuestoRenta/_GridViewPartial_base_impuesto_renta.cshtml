@@ -4,12 +4,8 @@
     {
         settings.Name = "GridView_division";
         settings.CallbackRouteValues = new { Controller = "BaseImpuestoRenta", Action = "GridViewPartial_base_impuesto_renta" };
-
-
         settings.KeyFieldName = "IdDivision";
-
         settings.Width = Unit.Percentage(100);
-
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -21,7 +17,6 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
-
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
         settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
         settings.Settings.VerticalScrollableHeight = 400;
@@ -30,12 +25,10 @@
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsPager.AlwaysShowPager = true;
 
-
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-
 
         settings.SettingsExport.EnableClientSideExportAPI = true;
         settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
@@ -85,7 +78,7 @@
         settings.Columns.Add("ImpFraccionBasica", "impuesto fraccion basica").Width = Unit.Percentage(20);
         settings.Columns.Add("Por_ImpFraccion_Exce", "% imp. fraccion exed.").Width = Unit.Percentage(20);
 
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

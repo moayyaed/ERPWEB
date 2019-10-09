@@ -1118,6 +1118,8 @@
     <Build Include="dbo\Views\vwro_Nomina_Tipoliqui.sql" />
     <Build Include="dbo\Views\vwro_area.sql" />
     <Build Include="dbo\Views\vwro_area_x_departamento.sql" />
+    <Build Include="web\Tables\in_SPINV_022.sql" />
+    <Build Include="web\Stored Procedures\SPINV_022.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
