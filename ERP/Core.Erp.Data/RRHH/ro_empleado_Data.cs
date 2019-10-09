@@ -33,20 +33,16 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        Lista = (from q in Context.vwro_empleado_combo
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_empleado_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdEmpleado = q.IdEmpleado,
-                                     Empleado=q.Empleado,
-                                     pe_cedulaRuc=q.pe_cedulaRuc,
-                                     IdTipoNomina= q.IdNomina,
-                                     IdSucursal=q.IdSucursal
-                                 }).ToList();
-                  
+                    Lista = Context.vwro_empleado_combo.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new ro_empleado_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        Empleado = q.Empleado,
+                        pe_cedulaRuc = q.pe_cedulaRuc,
+                        IdTipoNomina = q.IdNomina,
+                        IdSucursal = q.IdSucursal
+                    }).ToList();
                 }
-
                 return Lista;
             }
             catch (Exception)
@@ -63,17 +59,13 @@ namespace Core.Erp.Data.RRHH
                 string estado = cl_enumeradores.eEstadoEmpleadoRRHH.EST_LIQ.ToString()+","+cl_enumeradores.eEstadoEmpleadoRRHH.EST_PLQ.ToString();
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.vwro_empleado_combo
-                             where q.IdEmpresa == IdEmpresa
-                             && (q.em_status== "EST_LIQ" || q.em_status== "EST_PLQ")
-                             select new ro_empleado_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdEmpleado = q.IdEmpleado,
-                                 Empleado = q.Empleado,
-                                 pe_cedulaRuc = q.pe_cedulaRuc
-                             }).ToList();
-
+                    Lista = Context.vwro_empleado_combo.Where(q => q.IdEmpresa == IdEmpresa && (q.em_status == "EST_LIQ" || q.em_status == "EST_PLQ")).Select(q => new ro_empleado_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        Empleado = q.Empleado,
+                        pe_cedulaRuc = q.pe_cedulaRuc
+                    }).ToList();
                 }
 
                 return Lista;
@@ -88,92 +80,23 @@ namespace Core.Erp.Data.RRHH
         {
             try
             {
-
                 List<ro_empleado_Info> Lista;
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (em_status=="")
+                    Lista = Context.vwro_empleados_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.em_status == (em_status=="" ? q.em_status : em_status) && q.em_estado == (mostrar_anulados==true ? q.em_estado : "A")).Select(q => new ro_empleado_Info
                     {
-                        if (mostrar_anulados)
-                            Lista = (from q in Context.vwro_empleados_consulta
-                                     where q.IdEmpresa == IdEmpresa
-                                     && q.IdSucursal == IdSucursal
-                                     select new ro_empleado_Info
-                                     {
-                                         IdEmpresa = q.IdEmpresa,
-                                         IdEmpleado = q.IdEmpleado,
-                                         IdPersona = q.IdPersona,
-                                         pe_cedulaRuc = q.pe_cedulaRuc,
-                                         em_estado = q.em_estado,
-                                         em_status = q.em_status,
-                                         Empleado = q.Empleado,
-                                         em_codigo = q.em_codigo,
-                                         em_fechaIngaRol = q.em_fechaIngaRol,
-                                         EstadoBool = q.em_estado == "A" ? true : false
-                                     }).ToList();
-                        else
-                            Lista = (from q in Context.vwro_empleados_consulta
-                                     where q.IdEmpresa == IdEmpresa
-                                     && q.IdSucursal == IdSucursal
-                                     && q.em_estado == "A"
-                                     select new ro_empleado_Info
-                                     {
-                                         IdEmpresa = q.IdEmpresa,
-                                         IdEmpleado = q.IdEmpleado,
-                                         IdPersona = q.IdPersona,
-                                         pe_cedulaRuc = q.pe_cedulaRuc,
-                                         em_estado = q.em_estado,
-                                         em_status = q.em_status,
-                                         Empleado = q.Empleado,
-                                         em_codigo = q.em_codigo,
-                                         em_fechaIngaRol = q.em_fechaIngaRol,
-
-                                         EstadoBool = q.em_estado == "A" ? true : false
-                                     }).ToList();
-                    }
-                    else
-                    {
-                        if (mostrar_anulados)
-                            Lista = (from q in Context.vwro_empleados_consulta
-                                     where q.IdEmpresa == IdEmpresa
-                                     && q.IdSucursal == IdSucursal
-                                     && q.em_status == em_status
-                                     select new ro_empleado_Info
-                                     {
-                                         IdEmpresa = q.IdEmpresa,
-                                         IdEmpleado = q.IdEmpleado,
-                                         IdPersona = q.IdPersona,
-                                         pe_cedulaRuc = q.pe_cedulaRuc,
-                                         em_estado = q.em_estado,
-                                         em_status = q.em_status,
-                                         Empleado = q.Empleado,
-                                         em_codigo = q.em_codigo,
-                                         em_fechaIngaRol = q.em_fechaIngaRol,
-                                         EstadoBool = q.em_estado == "A" ? true : false
-                                     }).ToList();
-                        else
-                            Lista = (from q in Context.vwro_empleados_consulta
-                                     where q.IdEmpresa == IdEmpresa
-                                     && q.IdSucursal == IdSucursal
-                                     && q.em_status == em_status
-                                     && q.em_estado == "A"
-                                     select new ro_empleado_Info
-                                     {
-                                         IdEmpresa = q.IdEmpresa,
-                                         IdEmpleado = q.IdEmpleado,
-                                         IdPersona = q.IdPersona,
-                                         pe_cedulaRuc = q.pe_cedulaRuc,
-                                         em_estado = q.em_estado,
-                                         em_status = q.em_status,
-                                         Empleado = q.Empleado,
-                                         em_codigo = q.em_codigo,
-                                         em_fechaIngaRol = q.em_fechaIngaRol,
-
-                                         EstadoBool = q.em_estado == "A" ? true : false
-                                     }).ToList();
-                    }
-                    
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        IdPersona = q.IdPersona,
+                        pe_cedulaRuc = q.pe_cedulaRuc,
+                        em_estado = q.em_estado,
+                        em_status = q.em_status,
+                        Empleado = q.Empleado,
+                        em_codigo = q.em_codigo,
+                        em_fechaIngaRol = q.em_fechaIngaRol,
+                        EstadoBool = q.em_estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;
@@ -194,24 +117,20 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.vwro_empleado_x_jornada
-                             where q.IdEmpresa == IdEmpresa
-                             && q.Pago_por_horas==true
-                             select new ro_empleado_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdEmpleado = q.IdEmpleado,
-                                 Empleado = q.Empleado,
-                                 IdTipoNomina = q.IdNomina,
-                                 IdSucursal = q.IdSucursal,
-                                 Valor_horas_matutino=q.Valor_horas_matutino,
-                                 Valor_horas_vespertina=q.Valor_horas_vespertina,
-                                 Valor_horas_brigada=q.Valor_horas_brigada,
-                                 Valor_hora_adicionales = q.Valor_hora_adicionales,
-                                 Valor_hora_control_salida = q.Valor_hora_control_salida,  
-                                 pe_cedulaRuc=q.pe_cedulaRuc
-                                
-                             }).ToList();
+                    Lista = Context.vwro_empleado_x_jornada.Where(q => q.IdEmpresa == IdEmpresa && q.Pago_por_horas == true).Select(q => new ro_empleado_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        Empleado = q.Empleado,
+                        IdTipoNomina = q.IdNomina,
+                        IdSucursal = q.IdSucursal,
+                        Valor_horas_matutino = q.Valor_horas_matutino,
+                        Valor_horas_vespertina = q.Valor_horas_vespertina,
+                        Valor_horas_brigada = q.Valor_horas_brigada,
+                        Valor_hora_adicionales = q.Valor_hora_adicionales,
+                        Valor_hora_control_salida = q.Valor_hora_control_salida,
+                        pe_cedulaRuc = q.pe_cedulaRuc
+                    }).ToList();
 
                 }
 

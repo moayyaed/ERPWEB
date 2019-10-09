@@ -111,8 +111,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region acciones
         public ActionResult Nuevo()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             var lst_empleados = bus_empleado.get_list_profesores(Convert.ToInt32(SessionFixed.IdEmpresa));
-            empleado_info_list.set_list(lst_empleados);
+            empleado_info_list.set_list(lst_empleados, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
             ro_HorasProfesores_Info model = new ro_HorasProfesores_Info
             {
@@ -135,9 +142,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Nuevo(ro_HorasProfesores_Info model)
         {
-
-
-
             model.detalle = detalle.get_list();
             if (model.detalle == null || model.detalle.Count() == 0)
             {
@@ -299,6 +303,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             var rubros_calculados = bus_rubros_calculados.get_info(Convert.ToInt32(SessionFixed.IdEmpresa));
             ro_rubro_tipo_Info_list ro_rubro_tipo_Info_list = new ro_rubro_tipo_Info_list();
             ro_jornada_Data odata_j = new ro_jornada_Data();
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
 
             var lst_jornada = odata_j.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
             double horas_mat = 0;
@@ -322,7 +327,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                         jornada = Convert.ToString(reader.GetValue(2));
                         ro_rubro_tipo_Info rubros = new ro_rubro_tipo_Info();
-                        var empleado = empleado_info_list.get_list().Where(v => v.pe_cedulaRuc == cedula).FirstOrDefault();
+                        var empleado = empleado_info_list.get_list(IdTransaccionSession).Where(v => v.pe_cedulaRuc == cedula).FirstOrDefault();
 
                         if (empleado != null)
                         {
@@ -402,7 +407,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
 
 
-            foreach (var item in empleado_info_list.get_list())
+            foreach (var item in empleado_info_list.get_list(IdTransaccionSession))
             {
 
                 double mat_mas_ves = lista_novedades.Where(v => v.IdEmpleado == item.IdEmpleado && (v.IdRubro == rubros_calculados.IdRubro_horas_matutina || v.IdRubro == rubros_calculados.IdRubro_horas_vespertina)).Sum(v => v.NumHoras);

@@ -70,8 +70,8 @@
             c.Width = Unit.Pixel(150);
         });
 
-
         settings.Columns.Add("Descripcion","Parametro contable");
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

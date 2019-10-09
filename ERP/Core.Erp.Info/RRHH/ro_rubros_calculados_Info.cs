@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_rubros_calculados_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo días trabajados es obligatorio")]
         public string IdRubro_dias_trabajados { get; set; }

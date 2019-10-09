@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_Parametros_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo tipo de asiento es obligatorio es obligatorio")]
 

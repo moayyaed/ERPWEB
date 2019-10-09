@@ -61,7 +61,7 @@
 @using (Html.BeginForm("Index", "PeriodosPorNominas", FormMethod.Post, new { role = "form", @class = "form", @id = "myform" }))
 {
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" })
-        @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
 
     <div class="row">
         <div class="col-md-12">

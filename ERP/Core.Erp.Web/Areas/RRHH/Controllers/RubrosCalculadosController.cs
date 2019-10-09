@@ -12,12 +12,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class RubrosCalculadosController : Controller
     {
-        ro_rubros_calculados_Bus bus_cargo = new ro_rubros_calculados_Bus();
+        ro_rubros_calculados_Bus bus_rubro_calculado = new ro_rubros_calculados_Bus();
         ro_rubro_tipo_Bus bus_rubro = new ro_rubro_tipo_Bus();
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             ro_rubros_calculados_Info model = new ro_rubros_calculados_Info();
-            model= bus_cargo.get_info(Convert.ToInt32( SessionFixed.IdEmpresa));
+            model = bus_rubro_calculado.get_info(Convert.ToInt32(SessionFixed.IdEmpresa));
             cargar_combos();
             return View(model);
         }
@@ -30,8 +37,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
-                    if (!bus_cargo.guardarDB(info))
+                    if (!bus_rubro_calculado.guardarDB(info))
                     {
                         cargar_combos();
                         return View(info);
@@ -39,7 +45,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     else
                     {
                         cargar_combos();
-
                         return View(info);
 
                     }
@@ -59,28 +64,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
        
-       
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         private void cargar_combos()
         {
             try
             {
-                ViewBag.lst_rubro = bus_rubro.get_list(GetIdEmpresa(), false);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                ViewBag.lst_rubro = bus_rubro.get_list(IdEmpresa, false);
             }
             catch (Exception)
             {

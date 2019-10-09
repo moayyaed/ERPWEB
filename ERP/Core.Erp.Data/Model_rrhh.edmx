@@ -2765,6 +2765,39 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad_emplea
           <Property Name="UtilidadCargaFamiliar" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_periodo_x_ro_Nomina_TipoLiqui' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwRo_periodo_x_ro_Nomina_TipoLiqui">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdNomina_Tipo" />
+            <PropertyRef Name="IdNomina_TipoLiqui" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Cerrado" />
+            <PropertyRef Name="Procesado" />
+            <PropertyRef Name="Contabilizado" />
+            <PropertyRef Name="pe_FechaIni" />
+            <PropertyRef Name="pe_FechaFin" />
+            <PropertyRef Name="pe_estado" />
+            <PropertyRef Name="DescripcionProcesoNomina" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdNomina_Tipo" Type="int" Nullable="false" />
+          <Property Name="IdNomina_TipoLiqui" Type="int" Nullable="false" />
+          <Property Name="IdPeriodo" Type="int" Nullable="false" />
+          <Property Name="Cerrado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Procesado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Contabilizado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="pe_FechaIni" Type="smalldatetime" Nullable="false" />
+          <Property Name="pe_FechaFin" Type="smalldatetime" Nullable="false" />
+          <Property Name="pe_anio" Type="int" />
+          <Property Name="pe_mes" Type="int" />
+          <Property Name="pe_estado" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
+          <Property Name="Cod_region" Type="varchar" MaxLength="10" />
+          <Property Name="Carga_Todos_Empleados" Type="bit" />
+          <Property Name="DescripcionProcesoNomina" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Prestamo">
           <Key>
@@ -6080,6 +6113,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
     [vwro_participacion_utilidad_empleado].[UtilidadCargaFamiliar] AS [UtilidadCargaFamiliar]
     FROM [dbo].[vwro_participacion_utilidad_empleado] AS [vwro_participacion_utilidad_empleado]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwRo_periodo_x_ro_Nomina_TipoLiqui" EntityType="Self.vwRo_periodo_x_ro_Nomina_TipoLiqui" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[IdEmpresa] AS [IdEmpresa], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[IdNomina_Tipo] AS [IdNomina_Tipo], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[IdNomina_TipoLiqui] AS [IdNomina_TipoLiqui], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[IdPeriodo] AS [IdPeriodo], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[Cerrado] AS [Cerrado], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[Procesado] AS [Procesado], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[Contabilizado] AS [Contabilizado], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[pe_FechaIni] AS [pe_FechaIni], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[pe_FechaFin] AS [pe_FechaFin], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[pe_anio] AS [pe_anio], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[pe_mes] AS [pe_mes], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[pe_estado] AS [pe_estado], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[MotivoAnulacion] AS [MotivoAnulacion], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[Cod_region] AS [Cod_region], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[Carga_Todos_Empleados] AS [Carga_Todos_Empleados], 
+    [vwRo_periodo_x_ro_Nomina_TipoLiqui].[DescripcionProcesoNomina] AS [DescripcionProcesoNomina]
+    FROM [dbo].[vwRo_periodo_x_ro_Nomina_TipoLiqui] AS [vwRo_periodo_x_ro_Nomina_TipoLiqui]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwRo_Prestamo" EntityType="Self.vwRo_Prestamo" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwRo_Prestamo].[IdEmpresa] AS [IdEmpresa], 
@@ -8967,6 +9020,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="vwro_Nomina_Tipoliqui" EntityType="Model_rrhh.vwro_Nomina_Tipoliqui" />
           <EntitySet Name="vwro_area" EntityType="Model_rrhh.vwro_area" />
           <EntitySet Name="vwro_area_x_departamento" EntityType="Model_rrhh.vwro_area_x_departamento" />
+          <EntitySet Name="vwRo_periodo_x_ro_Nomina_TipoLiqui" EntityType="Model_rrhh.vwRo_periodo_x_ro_Nomina_TipoLiqui" />
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13083,6 +13137,37 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
           <Property Name="DepartamentoDescripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vwRo_periodo_x_ro_Nomina_TipoLiqui">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdNomina_Tipo" />
+            <PropertyRef Name="IdNomina_TipoLiqui" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="Cerrado" />
+            <PropertyRef Name="Procesado" />
+            <PropertyRef Name="Contabilizado" />
+            <PropertyRef Name="pe_FechaIni" />
+            <PropertyRef Name="pe_FechaFin" />
+            <PropertyRef Name="pe_estado" />
+            <PropertyRef Name="DescripcionProcesoNomina" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdNomina_Tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdNomina_TipoLiqui" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Cerrado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Procesado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Contabilizado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="pe_FechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pe_FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pe_anio" Type="Int32" />
+          <Property Name="pe_mes" Type="Int32" />
+          <Property Name="pe_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cod_region" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Carga_Todos_Empleados" Type="Boolean" />
+          <Property Name="DescripcionProcesoNomina" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15832,6 +15917,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="DivisionDescripcion" ColumnName="DivisionDescripcion" />
                 <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwRo_periodo_x_ro_Nomina_TipoLiqui">
+            <EntityTypeMapping TypeName="Model_rrhh.vwRo_periodo_x_ro_Nomina_TipoLiqui">
+              <MappingFragment StoreEntitySet="vwRo_periodo_x_ro_Nomina_TipoLiqui">
+                <ScalarProperty Name="DescripcionProcesoNomina" ColumnName="DescripcionProcesoNomina" />
+                <ScalarProperty Name="Carga_Todos_Empleados" ColumnName="Carga_Todos_Empleados" />
+                <ScalarProperty Name="Cod_region" ColumnName="Cod_region" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="pe_estado" ColumnName="pe_estado" />
+                <ScalarProperty Name="pe_mes" ColumnName="pe_mes" />
+                <ScalarProperty Name="pe_anio" ColumnName="pe_anio" />
+                <ScalarProperty Name="pe_FechaFin" ColumnName="pe_FechaFin" />
+                <ScalarProperty Name="pe_FechaIni" ColumnName="pe_FechaIni" />
+                <ScalarProperty Name="Contabilizado" ColumnName="Contabilizado" />
+                <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+                <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="IdNomina_TipoLiqui" ColumnName="IdNomina_TipoLiqui" />
+                <ScalarProperty Name="IdNomina_Tipo" ColumnName="IdNomina_Tipo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

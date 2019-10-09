@@ -131,7 +131,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region acciones
         public ActionResult Nuevo()
         {
-            empleado_info_list.set_list(bus_empleado.get_list_combo(Convert.ToInt32(SessionFixed.IdEmpresa)));
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            empleado_info_list.set_list(bus_empleado.get_list_combo(Convert.ToInt32(SessionFixed.IdEmpresa)), Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
             ro_PrestamoMasivo_Info model = new ro_PrestamoMasivo_Info
             {
@@ -269,7 +276,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             
                             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                             string cedula = reader.GetString(0);
-                            var empleado = empleado_info_list.get_list().Where(v => v.pe_cedulaRuc == cedula).FirstOrDefault();
+                            var empleado = empleado_info_list.get_list(IdTransaccionSession).Where(v => v.pe_cedulaRuc == cedula).FirstOrDefault();
                             var CodRubro = Convert.ToString(reader.GetValue(2));
                             var info_rubro = bus_rubro.get_info_x_codigo(IdEmpresa, CodRubro);
                             if (empleado != null)

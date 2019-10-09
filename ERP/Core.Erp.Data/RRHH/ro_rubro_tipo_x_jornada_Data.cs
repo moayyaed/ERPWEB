@@ -16,19 +16,16 @@ namespace Core.Erp.Data.RRHH
                 List<ro_rubro_tipo_x_jornada_Info> Lista = new List<ro_rubro_tipo_x_jornada_Info>();
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.vwro_rubro_tipo_x_jornada
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdRubro == IdRubro
-                             select new ro_rubro_tipo_x_jornada_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdRubro = q.IdRubro,
-                                 Secuencia = q.Secuencia,
-                                 IdJornada = q.IdJornada,
-                                 IdRubroContabilizacion = q.IdRubroContabilizacion,
-                                 ru_descripcion = q.ru_descripcion,
-                                 Descripcion = q.Descripcion
-                             }).ToList();
+                    Lista = Context.vwro_rubro_tipo_x_jornada.Where(q => q.IdEmpresa == IdEmpresa && q.IdRubro == IdRubro).Select(q => new ro_rubro_tipo_x_jornada_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdRubro = q.IdRubro,
+                        Secuencia = q.Secuencia,
+                        IdJornada = q.IdJornada,
+                        IdRubroContabilizacion = q.IdRubroContabilizacion,
+                        ru_descripcion = q.ru_descripcion,
+                        Descripcion = q.Descripcion
+                    }).ToList();
                 }
 
                 return Lista;

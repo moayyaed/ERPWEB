@@ -114,13 +114,7 @@
                 Html.RenderPartial("_CmbCuenta_provisiones_credito", DataBinder.Eval(c.DataItem, "IdCtaCble_prov_credito"));
             });
         });
-
-
-
-
-
-
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
     if (ViewData["EditError"] != null)
     {

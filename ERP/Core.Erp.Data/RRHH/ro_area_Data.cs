@@ -27,10 +27,8 @@ namespace Core.Erp.Data.RRHH
                         Descripcion = q.DescripcionArea,
                         Division = q.DescripcionDivision,
                         estado = q.estado,
-
                         EstadoBool = q.estado == "A" ? true : false
                     }).ToList();
-
                 }
 
                 return Lista;
@@ -50,20 +48,14 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        
-                        Lista = (from q in Context.ro_area
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdDivision==IdDivision
-                                 && q.estado == "A"
-                                 select new ro_area_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdArea = q.IdArea,
-                                     Descripcion = q.Descripcion,
-                                     estado = q.estado
-                                 }).ToList();
+                    Lista = Context.ro_area.Where(q => q.IdEmpresa == IdEmpresa && q.IdDivision == IdDivision && q.estado == "A").Select(q => new ro_area_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdArea = q.IdArea,
+                        Descripcion = q.Descripcion,
+                        estado = q.estado
+                    }).ToList();
                 }
-
                 return Lista;
             }
             catch (Exception)

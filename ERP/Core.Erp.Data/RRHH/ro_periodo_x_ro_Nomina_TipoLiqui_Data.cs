@@ -16,6 +16,22 @@ namespace Core.Erp.Data.RRHH
                 List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> Lista;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    Lista = Context.vwRo_periodo_x_ro_Nomina_TipoLiqui.Where(q => q.IdEmpresa == IdEmpresa && q.IdNomina_Tipo == IdNominTipo && q.IdNomina_TipoLiqui == IdNominaTipo_liq).Select(q => new ro_periodo_x_ro_Nomina_TipoLiqui_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdPeriodo = q.IdPeriodo,
+                        IdNomina_Tipo = q.IdNomina_Tipo,
+                        IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
+                        Procesado = q.Procesado,
+                        Cerrado = q.Cerrado,
+                        Contabilizado = q.Contabilizado,
+                        pe_FechaFin = q.pe_FechaFin,
+                        pe_FechaIni = q.pe_FechaIni,
+                        seleccionado = true,
+                        esta_base = true
+                    }).ToList();
+
+                    /*
                     Lista = (from q in Context.ro_periodo
                              join r in Context.ro_periodo_x_ro_Nomina_TipoLiqui
                              on new { q.IdEmpresa , q.IdPeriodo} equals new { r.IdEmpresa, r.IdPeriodo }
@@ -34,10 +50,9 @@ namespace Core.Erp.Data.RRHH
                                   pe_FechaFin=q.pe_FechaFin,
                                   pe_FechaIni=q.pe_FechaIni,
                                   seleccionado = true,
-                                  esta_base=true
-                                  
+                                  esta_base=true        
                              }).ToList();
-
+                        */
                     
                         Lista.AddRange((from q in Context.ro_periodo
                                         where !Context.ro_periodo_x_ro_Nomina_TipoLiqui.Any(meu => meu.IdEmpresa == q.IdEmpresa && meu.IdPeriodo==q.IdPeriodo&& meu.IdNomina_Tipo == IdNominTipo && meu.IdNomina_TipoLiqui == IdNominaTipo_liq)
@@ -50,8 +65,7 @@ namespace Core.Erp.Data.RRHH
                                             pe_FechaFin = q.pe_FechaFin,
                                             pe_FechaIni = q.pe_FechaIni,
                                             seleccionado = false
-                                        }).ToList());
-                    
+                                        }).ToList());        
                 }
                 return Lista;
             }
@@ -70,6 +84,21 @@ namespace Core.Erp.Data.RRHH
                 List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> Lista;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    Lista = Context.vwRo_periodo_x_ro_Nomina_TipoLiqui.Where(q => q.IdEmpresa == IdEmpresa && q.IdNomina_Tipo == IdNominTipo && q.IdNomina_TipoLiqui == IdNominaTipo_liq).Select(q => new ro_periodo_x_ro_Nomina_TipoLiqui_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdPeriodo = q.IdPeriodo,
+                        IdNomina_Tipo = q.IdNomina_Tipo,
+                        IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
+                        Procesado = q.Procesado,
+                        Cerrado = q.Cerrado,
+                        Contabilizado = q.Contabilizado,
+                        pe_FechaFin = q.pe_FechaFin,
+                        pe_FechaIni = q.pe_FechaIni,
+                        seleccionado = true,
+                        esta_base = true
+                    }).ToList();
+                    /*
                     Lista = (from q in Context.ro_periodo
                              join r in Context.ro_periodo_x_ro_Nomina_TipoLiqui
                              on new { q.IdEmpresa, q.IdPeriodo } equals new { r.IdEmpresa, r.IdPeriodo }
@@ -89,12 +118,8 @@ namespace Core.Erp.Data.RRHH
                                  pe_FechaIni = q.pe_FechaIni,
                                  seleccionado = true,
                                  esta_base = true
-
                              }).ToList();
-
-
-                  
-
+                    */
                 }
 
                 Lista.ForEach(v => v.descripcion = v.pe_FechaIni.ToString().Substring(0, 10) + " " + v.pe_FechaFin.ToString().Substring(0, 10)

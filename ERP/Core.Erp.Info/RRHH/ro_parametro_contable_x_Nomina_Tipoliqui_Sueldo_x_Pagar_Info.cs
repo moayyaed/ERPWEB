@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
   public  class ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdNomina { get; set; }
         public int IdNominaTipo { get; set; }

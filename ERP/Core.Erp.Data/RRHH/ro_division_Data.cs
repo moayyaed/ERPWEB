@@ -18,31 +18,14 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.ro_Division
-                             where q.IdEmpresa == IdEmpresa
-                             select new ro_division_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdDivision = q.IdDivision,
-                                 Descripcion = q.Descripcion,
-                                 estado = q.estado,
-
-                                 EstadoBool = q.estado == "A" ? true : false
-                             }).ToList();
-                    else
-                        Lista = (from q in Context.ro_Division
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.estado=="A"
-                                 select new ro_division_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdDivision = q.IdDivision,
-                                     Descripcion = q.Descripcion,
-                                     estado = q.estado,
-
-                                     EstadoBool = q.estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.ro_Division.Where(q => q.IdEmpresa == IdEmpresa && q.estado == (mostrar_anulados == true ? q.estado : "A")).Select(q => new ro_division_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdDivision = q.IdDivision,
+                        Descripcion = q.Descripcion,
+                        estado = q.estado,
+                        EstadoBool = q.estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;

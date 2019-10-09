@@ -47,7 +47,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region acciones
         public ActionResult Nuevo()
         {
-            empleado_info_list.set_list(bus_empleado.get_list_combo(Convert.ToInt32(SessionFixed.IdEmpresa)));
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            empleado_info_list.set_list(bus_empleado.get_list_combo(Convert.ToInt32(SessionFixed.IdEmpresa)), Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -127,6 +134,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_empleado_info_list empleado_info_list = new ro_empleado_info_list();
             ro_marcaciones_x_empleado_detLis_Info EmpleadoNovedadCargaMasiva_detLis_Info = new ro_marcaciones_x_empleado_detLis_Info();
             List<ro_marcaciones_x_empleado_Info> lista_novedades = new List<ro_marcaciones_x_empleado_Info>();
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
 
             Stream stream = new MemoryStream(e.UploadedFile.FileBytes);
             if (stream.Length > 0)
@@ -142,7 +150,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         if (cont != 0)
                         {
                             string cedua = reader.GetString(0);
-                            var empleado = empleado_info_list.get_list().Where(v => v.pe_cedulaRuc == cedua).FirstOrDefault();
+                            var empleado = empleado_info_list.get_list(IdTransaccionSession).Where(v => v.pe_cedulaRuc == cedua).FirstOrDefault();
                             if (empleado != null)
                             {
                                 if (!reader.IsDBNull(2))// si tiene fehca de marcacion

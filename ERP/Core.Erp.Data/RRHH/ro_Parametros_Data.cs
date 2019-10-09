@@ -17,7 +17,7 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     ro_Parametros q = Context.ro_Parametros.FirstOrDefault(v => v.IdEmpresa == IdEmpresa);
-                    if (q == null) return null;
+                    if (q == null) return info;
 
                     info = new ro_Parametros_Info
                     {
@@ -43,7 +43,7 @@ namespace Core.Erp.Data.RRHH
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -104,7 +104,7 @@ namespace Core.Erp.Data.RRHH
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

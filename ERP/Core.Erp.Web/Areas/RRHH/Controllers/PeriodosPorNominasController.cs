@@ -52,9 +52,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         }
         #endregion
+
         #region grillas
-
-
         public ActionResult GridViewPartial_periodos()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;

@@ -20,8 +20,9 @@
 
 @using (Html.BeginForm("Index", "ParametrosContable", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.HiddenFor(q => q.IdEmpresa);
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -209,7 +210,7 @@
                                        //Boton para seleccionar ningun registro
                                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                       //settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
                                    }).BindList(ViewBag.lst_tipo_op).GetHtml()
                                 @Html.ValidationMessageFor(q => q.IdTipo_op_sueldo_por_pagar, "", new { @class = "text-danger" })
                             </div>
@@ -246,7 +247,7 @@
                                        //Boton para seleccionar ningun registro
                                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                       //settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
                                    }).BindList(ViewBag.lst_tipo_op).GetHtml()
                                 @Html.ValidationMessageFor(q => q.IdTipo_op_prestamos, "", new { @class = "text-danger" })
                             </div>
@@ -284,7 +285,7 @@
                                        //Boton para seleccionar ningun registro
                                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                       //settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
                                    }).BindList(ViewBag.lst_tipo_op).GetHtml()
                                 @Html.ValidationMessageFor(q => q.IdTipo_op_acta_finiquito, "", new { @class = "text-danger" })
                             </div>
@@ -323,7 +324,7 @@
                                        //Boton para seleccionar ningun registro
                                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                       //settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
                                    }).BindList(ViewBag.lst_tipo_op).GetHtml()
                                 @Html.ValidationMessageFor(q => q.IdTipo_op_vacaciones, "", new { @class = "text-danger" })
                             </div>

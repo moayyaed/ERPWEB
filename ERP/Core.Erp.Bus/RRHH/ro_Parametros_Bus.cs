@@ -20,7 +20,7 @@ namespace Core.Erp.Bus.RRHH
                 info.lst_cta_x_sueldo_pagar = bus_nomina_sueldo.get_list(IdEmpresa);
                 return info;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

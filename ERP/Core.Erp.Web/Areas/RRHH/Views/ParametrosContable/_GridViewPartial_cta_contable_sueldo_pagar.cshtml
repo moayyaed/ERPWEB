@@ -107,7 +107,7 @@
                 Html.RenderPartial("_CmbCuenta_sueldo_x_pagar", DataBinder.Eval(c.DataItem, "IdCtaCble_sueldo"));
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
     if (ViewData["EditError"] != null)
     {

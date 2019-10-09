@@ -155,6 +155,7 @@ namespace Core.Erp.Data
         public DbSet<vwro_Nomina_Tipoliqui> vwro_Nomina_Tipoliqui { get; set; }
         public DbSet<vwro_area> vwro_area { get; set; }
         public DbSet<vwro_area_x_departamento> vwro_area_x_departamento { get; set; }
+        public DbSet<vwRo_periodo_x_ro_Nomina_TipoLiqui> vwRo_periodo_x_ro_Nomina_TipoLiqui { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

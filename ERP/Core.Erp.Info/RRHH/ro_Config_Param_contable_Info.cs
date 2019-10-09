@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_Config_Param_contable_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdDivision { get; set; }
         public int IdArea { get; set; }

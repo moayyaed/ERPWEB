@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
     public class ro_rubro_tipo_x_jornada_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public string IdRubro { get; set; }
         public int Secuencia { get; set; }

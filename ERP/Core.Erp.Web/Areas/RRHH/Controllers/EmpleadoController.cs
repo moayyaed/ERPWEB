@@ -81,18 +81,36 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 em_status = ""
             };
+
+            List<ro_empleado_Info> lista = bus_empleado.get_list(model.IdEmpresa, model.IdSucursal, model.em_status, true);
+            ListaEmpleado.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            ViewBag.IdSucursal = model.IdSucursal;
+            ViewBag.em_status = model.em_status;
+
+            List<ro_empleado_Info> lista = bus_empleado.get_list(model.IdEmpresa, model.IdSucursal, model.em_status, true);
+            ListaEmpleado.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
@@ -115,12 +133,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_empleados(int IdSucursal = 0, string em_status="")
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.em_status = em_status;
-            var model = bus_empleado.get_list(IdEmpresa,  IdSucursal, em_status, true);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+            List<ro_empleado_Info> model = ListaEmpleado.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_empleados", model);
-           
         }        
 
         #region Combos bajo demanda
@@ -784,7 +800,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 var Lista_Rubro = ListaRubro.get_list(model.IdTransaccionSession);
                 var Lista_Horario = ListaHorario.get_list(model.IdTransaccionSession);
                 var Lista_Turno = ListaTurno.get_list(model.IdTransaccionSession);
-                var Lista_Empleado = ListaEmpleado.get_list();
+                var Lista_Empleado = ListaEmpleado.get_list(model.IdTransaccionSession);
                 var lista_division = ListaDivision.get_list(model.IdTransaccionSession);
                 var Lista_Area = ListaArea.get_list(model.IdTransaccionSession);
                 var Lista_Departamento = ListaDepartamento.get_list(model.IdTransaccionSession);
@@ -839,7 +855,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_Empleado_importacion()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            var model = ListaEmpleado.get_list();
+            var model = ListaEmpleado.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Empleado_importacion", model);
         }
 
@@ -1045,7 +1061,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         cont++;
                     }
                 }
-                ListaRubro.set_list(Lista_Rubro, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                ListaRubro.set_list(Lista_Rubro, IdTransaccionSession);
                 #endregion
 
                 //Para avanzar a la siguiente hoja de excel
@@ -1317,7 +1333,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         cont++;
                     }
                 }
-                ListaEmpleado.set_list(Lista_Empleado);
+                ListaEmpleado.set_list(Lista_Empleado, IdTransaccionSession);
 
                 #region division 
                 List<ro_division_Info> lista_division;
@@ -1590,21 +1606,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
     public class ro_empleado_info_list
     {
-        string variable = "ro_empleado_Info";
-        public List<ro_empleado_Info> get_list()
+        string Variable = "ro_empleado_Info";
+        public List<ro_empleado_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session[variable] == null)
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ro_empleado_Info> list = new List<ro_empleado_Info>();
 
-                HttpContext.Current.Session[variable] = list;
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ro_empleado_Info>)HttpContext.Current.Session[variable];
+            return (List<ro_empleado_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<ro_empleado_Info> list)
+        public void set_list(List<ro_empleado_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session[variable] = list;
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 

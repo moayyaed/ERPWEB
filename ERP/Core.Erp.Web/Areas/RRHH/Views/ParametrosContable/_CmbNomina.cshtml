@@ -16,7 +16,7 @@
         settings.Properties.ValueType = typeof(int);
         settings.Properties.Columns.Add("IdNomina_Tipo", "ID", 10);
         settings.Properties.Columns.Add("Descripcion", "Descripción", 90);
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedNominaChanged";
+        //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedNominaChanged";
     })
      .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.ParametrosContableController().get_list_bajo_demanda_nomina, new Core.Erp.Web.Areas.RRHH.Controllers.ParametrosContableController().get_info_bajo_demanda_prov_nomina)
     .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_Parametros_Info) ? "" : (Model == 0 ? "" : Model));
