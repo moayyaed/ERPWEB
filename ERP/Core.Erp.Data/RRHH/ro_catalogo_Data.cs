@@ -16,34 +16,16 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_catalogo
-                                 select new ro_catalogo_Info
-                                 {
-                                     CodCatalogo = q.CodCatalogo,
-                                     IdCatalogo = q.IdCatalogo,
-                                     ca_descripcion = q.ca_descripcion,
-                                     IdTipoCatalogo = q.IdTipoCatalogo,
-                                     ca_estado=q.ca_estado,
-                                     ca_orden=q.ca_orden,
-
-                                     EstadoBool = q.ca_estado == "A" ? true : false
-
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_catalogo
-                                 where q.ca_estado == "A"
-                                 select new ro_catalogo_Info
-                                 {
-                                     CodCatalogo = q.CodCatalogo,
-                                     IdCatalogo = q.IdCatalogo,
-                                     ca_descripcion = q.ca_descripcion,
-                                     IdTipoCatalogo = q.IdTipoCatalogo,
-                                     ca_estado = q.ca_estado,
-                                     ca_orden = q.ca_orden,
-
-                                     EstadoBool = q.ca_estado == "A" ? true : false
-                                 }).ToList();
+                    Lista = Context.ro_catalogo.Where(q => q.ca_estado == (mostrar_anulados == true ? q.ca_estado : "A")).Select(q => new ro_catalogo_Info
+                    {
+                        CodCatalogo = q.CodCatalogo,
+                        IdCatalogo = q.IdCatalogo,
+                        ca_descripcion = q.ca_descripcion,
+                        IdTipoCatalogo = q.IdTipoCatalogo,
+                        ca_estado = q.ca_estado,
+                        ca_orden = q.ca_orden,
+                        EstadoBool = q.ca_estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;

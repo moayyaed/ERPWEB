@@ -17,30 +17,14 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if(mostrar_anulados)
-                        Lista = (from q in Context.ro_catalogoTipo
-                                 select new ro_catalogoTipo_Info
-                                 {
-                                     Codigo = q.Codigo,
-                                     tc_Descripcion = q.tc_Descripcion,
-                                     IdTipoCatalogo = q.IdTipoCatalogo,
-                                     ca_estado=q.ca_estado,
-
-                                     EstadoBool = q.ca_estado == "A" ? true : false
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_catalogoTipo
-                                 where q.ca_estado=="A"
-                                 select new ro_catalogoTipo_Info
-                                 {
-                                     Codigo = q.Codigo,
-                                     tc_Descripcion = q.tc_Descripcion,
-                                     IdTipoCatalogo = q.IdTipoCatalogo,
-                                     ca_estado = q.ca_estado,
-
-                                     EstadoBool = q.ca_estado == "A" ? true : false
-                                 }).ToList();
-
+                    Lista = Context.ro_catalogoTipo.Where(q =>q.ca_estado == (mostrar_anulados == true ? q.ca_estado : "A")).Select(q => new ro_catalogoTipo_Info
+                    {
+                        Codigo = q.Codigo,
+                        tc_Descripcion = q.tc_Descripcion,
+                        IdTipoCatalogo = q.IdTipoCatalogo,
+                        ca_estado = q.ca_estado,
+                        EstadoBool = q.ca_estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;

@@ -39,7 +39,7 @@ namespace Core.Erp.Web.Reportes.Inventario
             bool ConsiderarNoAprobados = p_ConsiderarNoAprobados.Value == null ? false : Convert.ToBoolean(p_ConsiderarNoAprobados.Value);
             bool InventarioFisico = p_InventarioFisico.Value == null ? false : Convert.ToBoolean(p_InventarioFisico.Value);
 
-            INV_003_Bus bus_rpt = new INV_003_Bus();
+            INV_022_Bus bus_rpt = new INV_022_Bus();
 
             Detail.SortFields.Clear();
             if (!Convert.ToBoolean(p_mostrar_agrupados.Value))
@@ -63,13 +63,13 @@ namespace Core.Erp.Web.Reportes.Inventario
             }else
                 Detail.SortFields.Add(new GroupField("pr_descripcion", XRColumnSortOrder.Ascending));
 
-            List<INV_003_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdProducto, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0, IdMarca, ConsiderarNoAprobados);
+            List<INV_022_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdProducto, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0, IdMarca, ConsiderarNoAprobados);
 
             if (InventarioFisico == true)
             {
                 lbl_titulo.Text = "Stock Fisico";
                 lbl_costo.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-                lst_rpt.ForEach(q=> q.Costo_total=null);
+                lst_rpt.ForEach(q=> q.Costo_total=0);
             }
             else
             {

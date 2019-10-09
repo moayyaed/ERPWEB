@@ -2,13 +2,13 @@
 @model Core.Erp.Info.Helps.cl_filtros_inventario_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "Listado de inventario físico";
+    ViewBag.Title = "Valoración de acuerdo a la NIC.02 (Inventario)";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
 }
-@using (Html.BeginForm("INV_003", "InventarioReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("INV_022", "InventarioReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
     <div class="box">

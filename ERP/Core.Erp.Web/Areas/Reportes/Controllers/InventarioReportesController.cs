@@ -1420,6 +1420,92 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult INV_022()
+        {
+
+            cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdCategoria = "",
+                IdMarca = 0,
+                IdProducto = 0,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdLinea = 0,
+                IdGrupo = 0,
+                IdSubGrupo = 0,
+                considerarSinAprobar = false,
+                InventarioFisico = false
+            };
+
+            cargar_combos(model);
+            INV_022_Rpt report = new INV_022_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_022");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_IdProducto.Value = model.IdProducto ?? 0;
+            report.p_IdCategoria.Value = model.IdCategoria == null ? "" : model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubgrupo.Value = model.IdSubGrupo;
+            report.p_IdMarca.Value = model.IdMarca;
+            report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_mostrar_stock_0.Value = model.mostrar_saldos_en_0;
+            report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
+            report.p_AgruparPorID.Value = model.mostrar_detallado;
+            report.p_ConsiderarNoAprobados.Value = model.considerarSinAprobar;
+            report.p_InventarioFisico.Value = model.InventarioFisico;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult INV_022(cl_filtros_inventario_Info model)
+        {
+            INV_022_Rpt report = new INV_022_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "INV_022");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdBodega.Value = model.IdBodega;
+            report.p_IdProducto.Value = model.IdProducto ?? 0;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubgrupo.Value = model.IdSubGrupo;
+            report.p_fecha_corte.Value = model.fecha_fin;
+            report.p_mostrar_stock_0.Value = model.mostrar_saldos_en_0;
+            report.p_mostrar_agrupados.Value = model.mostrar_agrupado;
+            report.p_IdMarca.Value = model.IdMarca;
+            report.p_AgruparPorID.Value = model.mostrar_detallado;
+            report.p_ConsiderarNoAprobados.Value = model.considerarSinAprobar;
+            report.p_InventarioFisico.Value = model.InventarioFisico;
+            cargar_combos(model);
+
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 
 }
