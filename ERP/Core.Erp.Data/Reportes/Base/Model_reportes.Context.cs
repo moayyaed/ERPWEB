@@ -131,9 +131,9 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWCONTA_010> VWCONTA_010 { get; set; }
         public virtual DbSet<VWCXC_002_diario> VWCXC_002_diario { get; set; }
         public virtual DbSet<VWINV_017> VWINV_017 { get; set; }
-        public virtual DbSet<VWBAN_003> VWBAN_003 { get; set; }
         public virtual DbSet<VWBAN_001> VWBAN_001 { get; set; }
         public virtual DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
+        public virtual DbSet<VWBAN_003> VWBAN_003 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
