@@ -781,7 +781,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                var Lista_Rubro = ListaRubro.get_list();
+                var Lista_Rubro = ListaRubro.get_list(model.IdTransaccionSession);
                 var Lista_Horario = ListaHorario.get_list(model.IdTransaccionSession);
                 var Lista_Turno = ListaTurno.get_list(model.IdTransaccionSession);
                 var Lista_Empleado = ListaEmpleado.get_list();
@@ -818,7 +818,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_Rubro_importacion()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            var model = ListaRubro.get_list();
+            var model = ListaRubro.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Rubro_importacion", model);
         }
 
@@ -1045,7 +1045,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         cont++;
                     }
                 }
-                ListaRubro.set_list(Lista_Rubro);
+                ListaRubro.set_list(Lista_Rubro, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 #endregion
 
                 //Para avanzar a la siguiente hoja de excel

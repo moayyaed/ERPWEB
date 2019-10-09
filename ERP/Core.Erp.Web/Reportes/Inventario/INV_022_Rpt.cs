@@ -64,19 +64,6 @@ namespace Core.Erp.Web.Reportes.Inventario
                 Detail.SortFields.Add(new GroupField("pr_descripcion", XRColumnSortOrder.Ascending));
 
             List<INV_022_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdBodega, IdProducto, IdCategoria, IdLinea, IdGrupo, IdSubgrupo, fecha_corte, mostrar_stock_0, IdMarca, ConsiderarNoAprobados);
-
-            if (InventarioFisico == true)
-            {
-                lbl_titulo.Text = "Stock Fisico";
-                lbl_costo.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-                lst_rpt.ForEach(q=> q.Costo_total=0);
-            }
-            else
-            {
-                lbl_titulo.Text = "Costo Total";
-                lbl_costo.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            }
-
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

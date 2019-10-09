@@ -26,10 +26,47 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         List<ro_catalogo_Info> lst_grupo_rep_gene = new List<ro_catalogo_Info>();
         ro_rubro_tipo_x_jornada_List ListaDetalle = new ro_rubro_tipo_x_jornada_List();
         Bus.Contabilidad.ct_plancta_Bus bus_plancuenta = new Bus.Contabilidad.ct_plancta_Bus();
+        ro_rubro_tipo_Info_list Lista_Rubro = new ro_rubro_tipo_Info_list();
+
+        #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_rubro_tipo_Info model = new ro_rubro_tipo_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_rubro_tipo_Info> lista = bus_rubro.get_list(model.IdEmpresa, true);
+            Lista_Rubro.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
+
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_rubro()
+        {
+            try
+            {
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_rubro_tipo_Info> model = Lista_Rubro.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                return PartialView("_GridViewPartial_rubro", model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
 
         #region Combo bajo demanda
         public ActionResult CmbRubro()
@@ -66,22 +103,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         #endregion
 
-        [ValidateInput(false)]
-        public ActionResult GridViewPartial_rubro()
-        {
-            try
-            {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa); 
-
-                List<ro_rubro_tipo_Info> model = bus_rubro.get_list(IdEmpresa, true);
-                return PartialView("_GridViewPartial_rubro", model);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         [HttpPost]
         public ActionResult Nuevo(ro_rubro_tipo_Info info)
         {
@@ -233,6 +254,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 lst_tipo_rubro = bus_catalogo.get_list_x_tipo(22);
                 ViewBag.lst_tipo_rubro = lst_tipo_rubro;
                 lst_tipo_campo = bus_catalogo.get_list_x_tipo(13);
@@ -242,7 +264,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     IdCatalogo = 0,
                     ca_descripcion = ""
                 });
-                lst_plancuenta = bus_plancuenta.get_list(GetIdEmpresa(), false, true);
+                lst_plancuenta = bus_plancuenta.get_list(IdEmpresa, false, true);
                 lst_grupo_rep_gene = bus_catalogo.get_list_x_tipo(43);
                 lst_grupo_rep_gene.Add(new ro_catalogo_Info
                 {
@@ -255,22 +277,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ViewBag.lst_grupo_rep_gene = lst_grupo_rep_gene;
                 ViewBag.lst_plancuenta = lst_plancuenta;
 
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
             }
             catch (Exception)
             {
@@ -321,21 +327,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
     public class ro_rubro_tipo_Info_list
     {
-        string variable = "ro_rubro_tipo_Info";
-        public List<ro_rubro_tipo_Info> get_list()
+        string Variable = "ro_rubro_tipo_Info";
+        public List<ro_rubro_tipo_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session[variable] == null)
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ro_rubro_tipo_Info> list = new List<ro_rubro_tipo_Info>();
 
-                HttpContext.Current.Session[variable] = list;
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ro_rubro_tipo_Info>)HttpContext.Current.Session[variable];
+            return (List<ro_rubro_tipo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<ro_rubro_tipo_Info> list)
+        public void set_list(List<ro_rubro_tipo_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session[variable] = list;
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
 

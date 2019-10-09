@@ -111,20 +111,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region acciones
         public ActionResult Nuevo()
         {
-
-            var lst_rubros = bus_rubro.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
-            ro_rubro_tipo_Info_list.set_list(lst_rubros);
-
             var lst_empleados = bus_empleado.get_list_profesores(Convert.ToInt32(SessionFixed.IdEmpresa));
             empleado_info_list.set_list(lst_empleados);
 
             ro_HorasProfesores_Info model = new ro_HorasProfesores_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 FechaCarga = DateTime.Now,
                 IdNomina = 1,
                 IdNominaTipo = 2,
             };
+
+            var lst_rubros = bus_rubro.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), false);
+            ro_rubro_tipo_Info_list.set_list(lst_rubros, model.IdTransaccionSession);
+
             model.detalle = new List<ro_HorasProfesores_det_Info>();
             detalle.set_list(model.detalle);
             cargar_combos();
@@ -339,7 +340,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
 
 
-                            rubros = ro_rubro_tipo_Info_list.get_list().FirstOrDefault(v => v.rub_codigo == IdRubro);
+                            rubros = ro_rubro_tipo_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).FirstOrDefault(v => v.rub_codigo == IdRubro);
                             if (rubros != null)
                             {
                                 ro_HorasProfesores_det_Info info = new ro_HorasProfesores_det_Info
@@ -411,7 +412,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     if (rubros_calculados.IdRubro_horas_recargo != null)
                     {
-                        var rubros = ro_rubro_tipo_Info_list.get_list().FirstOrDefault(v => v.IdRubro == rubros_calculados.IdRubro_horas_recargo);
+                        var rubros = ro_rubro_tipo_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).FirstOrDefault(v => v.IdRubro == rubros_calculados.IdRubro_horas_recargo);
                         if (rubros != null)
                         {
                             ro_HorasProfesores_det_Info info = new ro_HorasProfesores_det_Info

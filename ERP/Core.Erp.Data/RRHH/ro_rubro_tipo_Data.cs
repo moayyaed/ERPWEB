@@ -63,20 +63,29 @@ namespace Core.Erp.Data.RRHH
         public ro_rubro_tipo_Info get_info_demanda(int IdEmpresa, string value)
         {
             ro_rubro_tipo_Info info = new ro_rubro_tipo_Info();
-            using (Entities_rrhh Contex = new Entities_rrhh())
+            using (Entities_rrhh Context = new Entities_rrhh())
             {
-                info = (from q in Contex.ro_rubro_tipo
-                        where q.IdEmpresa == IdEmpresa
-                        && q.IdRubro==value
-                        select new ro_rubro_tipo_Info
-                        {
-                            IdEmpresa = q.IdEmpresa,
-                            IdRubro=q.IdRubro,
-                            rub_codigo = q.rub_codigo,
-                            ru_codRolGen = q.ru_codRolGen,
-                            ru_descripcion = q.ru_descripcion,
-                            NombreCorto = q.NombreCorto
-                        }).FirstOrDefault();
+                info = Context.ro_rubro_tipo.Where(q => q.IdEmpresa == IdEmpresa && q.IdRubro == value).Select(q => new ro_rubro_tipo_Info
+                {
+                    IdEmpresa = q.IdEmpresa,
+                    IdRubro = q.IdRubro,
+                    rub_codigo = q.rub_codigo,
+                    ru_codRolGen = q.ru_codRolGen,
+                    ru_descripcion = q.ru_descripcion,
+                    NombreCorto = q.NombreCorto
+                }).FirstOrDefault();
+                //info = (from q in Context.ro_rubro_tipo
+                //        where q.IdEmpresa == IdEmpresa
+                //        && q.IdRubro==value
+                //        select new ro_rubro_tipo_Info
+                //        {
+                //            IdEmpresa = q.IdEmpresa,
+                //            IdRubro=q.IdRubro,
+                //            rub_codigo = q.rub_codigo,
+                //            ru_codRolGen = q.ru_codRolGen,
+                //            ru_descripcion = q.ru_descripcion,
+                //            NombreCorto = q.NombreCorto
+                //        }).FirstOrDefault();
             }
             return info;
         }
@@ -89,54 +98,26 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.ro_rubro_tipo
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_rubro_tipo_Info
-                                 {
-                                    IdRubro=q.IdRubro,
-                                    rub_codigo =q.rub_codigo,
-                                    ru_codRolGen =q.ru_codRolGen,
-                                    ru_descripcion = q.ru_descripcion,
-                                    NombreCorto = q.NombreCorto,
-                                    ru_tipo = q.ru_tipo,
-                                    ru_orden = q.ru_orden,
-                                    rub_grupo = q.rub_grupo,
-                                     rub_concep = q.rub_concep ,
-                                     rub_nocontab = q.rub_nocontab,
-                                     rub_ctacon = q.rub_ctacon,
-                                    ru_estado = q.ru_estado,
-                                     rub_acumula_descuento = q.rub_acumula_descuento,
-                                     rub_AplicaIR=q.rub_AplicaIR,
-                                     rub_GrupoResumen=q.rub_GrupoResumen,
-                                     rub_ValorRecargoHoras = q.rub_ValorRecargoHoras,
-                                     EstadoBool = q.ru_estado == "A" ? true : false
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.ro_rubro_tipo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.ru_estado == "A"
-                                 select new ro_rubro_tipo_Info
-                                 {
-                                     IdRubro = q.IdRubro,
-                                     rub_codigo = q.rub_codigo,
-                                     ru_codRolGen = q.ru_codRolGen,
-                                     ru_descripcion = q.ru_descripcion,
-                                     NombreCorto = q.NombreCorto,
-                                     ru_tipo = q.ru_tipo,
-                                     ru_orden = q.ru_orden,
-                                     rub_grupo = q.rub_grupo,
-                                     rub_concep = q.rub_concep,
-                                     rub_nocontab = q.rub_nocontab,
-                                     rub_ctacon = q.rub_ctacon,
-                                     ru_estado = q.ru_estado,
-                                     rub_acumula_descuento = q.rub_acumula_descuento,
-                                     rub_AplicaIR = q.rub_AplicaIR,
-                                     rub_GrupoResumen = q.rub_GrupoResumen,
-                                     rub_ValorRecargoHoras = q.rub_ValorRecargoHoras,
-                                     EstadoBool = q.ru_estado == "A" ? true : false
-
-                                 }).ToList();
+                    Lista = Context.ro_rubro_tipo.Where(q => q.IdEmpresa == IdEmpresa && q.ru_estado == (mostrar_anulados==true ? q.ru_estado : "A")).Select(q => new ro_rubro_tipo_Info
+                    {
+                        IdRubro = q.IdRubro,
+                        rub_codigo = q.rub_codigo,
+                        ru_codRolGen = q.ru_codRolGen,
+                        ru_descripcion = q.ru_descripcion,
+                        NombreCorto = q.NombreCorto,
+                        ru_tipo = q.ru_tipo,
+                        ru_orden = q.ru_orden,
+                        rub_grupo = q.rub_grupo,
+                        rub_concep = q.rub_concep,
+                        rub_nocontab = q.rub_nocontab,
+                        rub_ctacon = q.rub_ctacon,
+                        ru_estado = q.ru_estado,
+                        rub_acumula_descuento = q.rub_acumula_descuento,
+                        rub_AplicaIR = q.rub_AplicaIR,
+                        rub_GrupoResumen = q.rub_GrupoResumen,
+                        rub_ValorRecargoHoras = q.rub_ValorRecargoHoras,
+                        EstadoBool = q.ru_estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;
@@ -155,29 +136,23 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                   
-                        Lista = (from q in Context.ro_rubro_tipo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.ru_estado == "A"
-                                 && q.rub_acumula==true
-                                 select new ro_rubro_tipo_Info
-                                 {
-                                     IdRubro = q.IdRubro,
-                                     rub_codigo = q.rub_codigo,
-                                     ru_codRolGen = q.ru_codRolGen,
-                                     ru_descripcion = q.ru_descripcion,
-                                     NombreCorto = q.NombreCorto,
-                                     ru_tipo = q.ru_tipo,
-                                     ru_orden = q.ru_orden,
-                                     rub_grupo = q.rub_grupo,
-                                     rub_concep = q.rub_concep,
-                                     rub_nocontab = q.rub_nocontab,
-                                     rub_ctacon = q.rub_ctacon,
-                                     ru_estado = q.ru_estado,
-                                     rub_acumula_descuento = q.rub_acumula_descuento,
-                                     rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
-
-                                 }).ToList();
+                    Lista = Context.ro_rubro_tipo.Where(q => q.IdEmpresa == IdEmpresa && q.ru_estado == "A" && q.rub_acumula == true).Select(q => new ro_rubro_tipo_Info
+                    {
+                        IdRubro = q.IdRubro,
+                        rub_codigo = q.rub_codigo,
+                        ru_codRolGen = q.ru_codRolGen,
+                        ru_descripcion = q.ru_descripcion,
+                        NombreCorto = q.NombreCorto,
+                        ru_tipo = q.ru_tipo,
+                        ru_orden = q.ru_orden,
+                        rub_grupo = q.rub_grupo,
+                        rub_concep = q.rub_concep,
+                        rub_nocontab = q.rub_nocontab,
+                        rub_ctacon = q.rub_ctacon,
+                        ru_estado = q.ru_estado,
+                        rub_acumula_descuento = q.rub_acumula_descuento,
+                        rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
+                    }).ToList();
                 }
 
                 return Lista;
@@ -196,28 +171,23 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-
-                    Lista = (from q in Context.ro_rubro_tipo
-                             where q.IdEmpresa == IdEmpresa
-                             && q.ru_estado == "A"
-                             && q.rub_concep == true
-                             select new ro_rubro_tipo_Info
-                             {
-                                 IdRubro = q.IdRubro,
-                                 rub_codigo = q.rub_codigo,
-                                 ru_codRolGen = q.ru_codRolGen,
-                                 ru_descripcion = q.ru_descripcion,
-                                 NombreCorto = q.NombreCorto,
-                                 ru_tipo = q.ru_tipo,
-                                 ru_orden = q.ru_orden,
-                                 rub_grupo = q.rub_grupo,
-                                 rub_concep = q.rub_concep,
-                                 rub_nocontab = q.rub_nocontab,
-                                 rub_ctacon = q.rub_ctacon,
-                                 ru_estado = q.ru_estado,
-                                 rub_acumula_descuento=q.rub_acumula_descuento,
-                                 rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
-                             }).ToList();
+                    Lista = Context.ro_rubro_tipo.Where(q => q.IdEmpresa == IdEmpresa && q.ru_estado == "A" && q.rub_concep == true).Select(q => new ro_rubro_tipo_Info
+                    {
+                        IdRubro = q.IdRubro,
+                        rub_codigo = q.rub_codigo,
+                        ru_codRolGen = q.ru_codRolGen,
+                        ru_descripcion = q.ru_descripcion,
+                        NombreCorto = q.NombreCorto,
+                        ru_tipo = q.ru_tipo,
+                        ru_orden = q.ru_orden,
+                        rub_grupo = q.rub_grupo,
+                        rub_concep = q.rub_concep,
+                        rub_nocontab = q.rub_nocontab,
+                        rub_ctacon = q.rub_ctacon,
+                        ru_estado = q.ru_estado,
+                        rub_acumula_descuento = q.rub_acumula_descuento,
+                        rub_ValorRecargoHoras = q.rub_ValorRecargoHoras
+                    }).ToList();
                 }
 
                 return Lista;

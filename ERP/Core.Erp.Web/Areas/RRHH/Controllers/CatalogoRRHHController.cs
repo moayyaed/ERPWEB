@@ -12,12 +12,31 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class CatalogoRRHHController : Controller
     {
-        ro_catalogo_Bus bus_cargo = new ro_catalogo_Bus();
+        ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
         List<ro_catalogoTipo_Info> lista_tipo = new List<ro_catalogoTipo_Info>();
         ro_catalogoTipo_Bus bus_tipo = new ro_catalogoTipo_Bus();
-        public ActionResult Index()
+        ro_catalogo_List Lista_Catalogo = new ro_catalogo_List();
+        public ActionResult Index(int IdTipoCatalogo=0)
         {
-            return View();
+            ViewBag.IdTipoCatalogo = IdTipoCatalogo;
+
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_catalogo_Info model = new ro_catalogo_Info
+            {
+                IdTipoCatalogo = IdTipoCatalogo,
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_catalogo_Info> lista = bus_catalogo.get_list_x_tipo(model.IdTipoCatalogo);
+            Lista_Catalogo.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -26,7 +45,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ViewBag.IdTipoCatalogo = IdTipoCatalogo;
-                List<ro_catalogo_Info> model = bus_cargo.get_list_x_tipo(IdTipoCatalogo);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_catalogo_Info> model = Lista_Catalogo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_catalogos", model);
             }
             catch (Exception)
@@ -46,7 +67,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 if (ModelState.IsValid)
                 {
-                    if (bus_cargo.si_existe_codigo(info.CodCatalogo))
+                    if (bus_catalogo.si_existe_codigo(info.CodCatalogo))
                     {
                         ViewBag.mensaje = "El código ya se encuentra registrado";
                         return View(info);
@@ -55,7 +76,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     {
                         info.Fecha_Transac = DateTime.Now;
                         info.IdUsuario = Session["IdUsuario"].ToString();
-                        if (!bus_cargo.guardarDB(info))
+                        if (!bus_catalogo.guardarDB(info))
                             return View(info);
                         else
                             return RedirectToAction("Index", new { IdTipoCatalogo = info.IdTipoCatalogo });
@@ -98,7 +119,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuarioUltMod = SessionFixed.IdUsuario;
                 info.Fecha_UltMod = DateTime.Now;
                 info.IdUsuarioUltMod = Session["IdUsuario"].ToString();
-                if (!bus_cargo.modificarDB(info))
+                if (!bus_catalogo.modificarDB(info))
                     return View(info);
                 else
                     return RedirectToAction("Index", new { IdTipoCatalogo = info.IdTipoCatalogo });
@@ -117,7 +138,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 cargar_combos();
                 ViewBag.IdTipoCatalogo = IdTipoCatalogo;
-                return View(bus_cargo.get_info(IdTipoCatalogo, IdCatalogo));
+                return View(bus_catalogo.get_info(IdTipoCatalogo, IdCatalogo));
 
             }
             catch (Exception)
@@ -134,7 +155,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 info.Fecha_UltAnu = DateTime.Now;
                 info.IdUsuarioUltAnu = SessionFixed.IdUsuario;
-                if (!bus_cargo.anularDB(info))
+                if (!bus_catalogo.anularDB(info))
                     return View(info);
                 else
                     return RedirectToAction("Index");
@@ -153,7 +174,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 cargar_combos();
                 ViewBag.IdTipoCatalogo = IdTipoCatalogo;
-                return View(bus_cargo.get_info(IdTipoCatalogo, IdCatalogo));
+                return View(bus_catalogo.get_info(IdTipoCatalogo, IdCatalogo));
 
             }
             catch (Exception)
@@ -175,6 +196,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 
                 throw;
             }
+        }
+    }
+
+    public class ro_catalogo_List
+    {
+        string Variable = "ro_catalogo_Info";
+        public List<ro_catalogo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_catalogo_Info> list = new List<ro_catalogo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_catalogo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_catalogo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 }

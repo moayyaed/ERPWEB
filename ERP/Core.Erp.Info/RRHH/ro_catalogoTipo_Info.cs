@@ -9,6 +9,7 @@ namespace Core.Erp.Info.RRHH
 {
   public  class ro_catalogoTipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdTipoCatalogo { get; set; }
         [StringLength(10, MinimumLength = 4, ErrorMessage = "El campo código debe tener mínimo 4 caracteres y máximo 10")]
         [Required(ErrorMessage = "El campo Código obligatorio")]
