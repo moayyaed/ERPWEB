@@ -17,19 +17,14 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.ro_empleado_proyeccion_gastos_det
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdTransaccion== IdTransaccion
-                             select new ro_empleado_proyeccion_gastos_det_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdTransaccion=q.IdTransaccion,
-                                 Secuencia = q.Secuencia,
-                                 IdTipoGasto = q.IdTipoGasto,
-                                 Valor=q.Valor
-
-                             }).ToList();
-
+                    Lista = Context.ro_empleado_proyeccion_gastos_det.Where(q => q.IdEmpresa == IdEmpresa && q.IdTransaccion == IdTransaccion).Select(q => new ro_empleado_proyeccion_gastos_det_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdTransaccion = q.IdTransaccion,
+                        Secuencia = q.Secuencia,
+                        IdTipoGasto = q.IdTipoGasto,
+                        Valor = q.Valor
+                    }).ToList();
                 }
 
                 return Lista;
@@ -40,7 +35,5 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-
-     
     }
 }

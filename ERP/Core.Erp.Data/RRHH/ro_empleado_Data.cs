@@ -84,7 +84,7 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = Context.vwro_empleados_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.em_status == (em_status=="" ? q.em_status : em_status) && q.em_estado == (mostrar_anulados==true ? q.em_estado : "A")).Select(q => new ro_empleado_Info
+                    Lista = Context.vwro_empleados_consulta.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.em_status == ((em_status==null || em_status=="") ? q.em_status : em_status) && q.em_estado == (mostrar_anulados==true ? q.em_estado : "A")).Select(q => new ro_empleado_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdEmpleado = q.IdEmpleado,

@@ -20,6 +20,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_empleado_proyeccion_gastos_Bus bus_proyeccion = new ro_empleado_proyeccion_gastos_Bus();
         ro_empleado_proyeccion_gastos_det_Bus bus_det = new ro_empleado_proyeccion_gastos_det_Bus();
         ro_empleado_proyeccion_gastos_det_Info_lis ro_empleado_proyeccion_gastos_det_Info_lis = new ro_empleado_proyeccion_gastos_det_Info_lis();
+        ro_empleado_proyeccion_gastos_List Lista_Proyeccion = new ro_empleado_proyeccion_gastos_List();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -41,15 +42,32 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region vistas
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ro_empleado_proyeccion_gastos_Info model = new ro_empleado_proyeccion_gastos_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            List<ro_empleado_proyeccion_gastos_Info> lista = bus_proyeccion.get_list(model.IdEmpresa);
+            Lista_Proyeccion.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return View(model);
         }
         [ValidateInput(false)]
         public ActionResult GridViewPartial_proyeccion_gastos()
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_empleado_proyeccion_gastos_Info> model = bus_proyeccion.get_list(IdEmpresa);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                List<ro_empleado_proyeccion_gastos_Info> model = Lista_Proyeccion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_proyeccion_gastos", model);
             }
             catch (Exception)
@@ -89,10 +107,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     info.list_proyeciones = ro_empleado_proyeccion_gastos_det_Info_lis.get_list(info.IdTransaccionSession);
-
                     var gastos = bus_detalle_techo_x_anio.get_list_gastos_tope_x_anio(info.AnioFiscal);
 
-                    if(gastos==null)
+                    if (gastos == null)
                     {
                         cargar_combo();
                         ViewBag.mensaje = "No existen valores maximo registrado para el periodo fiscal";
@@ -100,7 +117,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
                     else
                     {
-                        if(gastos.Count()==0)
+                        if (gastos.Count() == 0)
                         {
                             cargar_combo();
                             ViewBag.mensaje = "No existen valores maximo registrado para el periodo fiscal";
@@ -109,19 +126,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
                     foreach (var item in info.list_proyeciones)
                     {
-
                         if (gastos.Where(v => v.AnioFiscal == info.AnioFiscal && v.IdTipoGasto == item.IdTipoGasto && v.Monto_max < item.Valor).Count() > 0)
-
                         {
                             cargar_combo();
-                            ViewBag.mensaje = "El tipo de gasto "+item.IdTipoGasto+" supera el valor maximo deducible";
+                            ViewBag.mensaje = "El tipo de gasto " + item.IdTipoGasto + " supera el valor maximo deducible";
                             return View(info);
                         }
-                        }
-                    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                    info.IdEmpresa = IdEmpresa;
+                    }
+
                     if (!bus_proyeccion.guardarDB(info))
                     {
+                        SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
                         cargar_combo();
                         return View(info);
                     }
@@ -148,11 +163,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
+
                 ro_empleado_proyeccion_gastos_Info info = new ro_empleado_proyeccion_gastos_Info
                 {
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                     AnioFiscal = DateTime.Now.Year,
                     IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
                 };
+                ro_empleado_proyeccion_gastos_det_Info_lis.set_list(new List<ro_empleado_proyeccion_gastos_det_Info>(), info.IdTransaccionSession);
                 cargar_combo();
                 return View(info);
 
@@ -197,17 +215,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         gastos = bus_detalle_techo_x_anio.get_list_gastos_tope_x_anio(info.AnioFiscal);
 
                         if (gastos.Where(v => v.AnioFiscal == info.AnioFiscal && v.IdTipoGasto == item.IdTipoGasto && v.Monto_max < item.Valor).Count() > 0)
-
                         {
                             cargar_combo();
                             ViewBag.mensaje = "El tipo de gasto " + item.IdTipoGasto + " supera el valor maximo deducible";
                             return View(info);
                         }
                     }
-                    int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                    info.IdEmpresa = IdEmpresa;
+
                     if (!bus_proyeccion.modificarDB(info))
                     {
+                        SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
                         cargar_combo();
                         return View(info);
                     }
@@ -224,7 +241,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(decimal IdEmpleado=0, int IdTransaccion = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdEmpleado = 0, int IdTransaccion = 0)
         {
             try
             {
@@ -234,13 +251,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
-                
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
                 ro_empleado_proyeccion_gastos_Info model = bus_proyeccion.get_info(IdEmpresa, IdEmpleado, IdTransaccion);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-               model.list_proyeciones= bus_det.get_list(IdEmpresa, model.IdTransaccion);
+                model.list_proyeciones = bus_det.get_list(IdEmpresa, model.IdTransaccion);
                 ro_empleado_proyeccion_gastos_det_Info_lis.set_list(model.list_proyeciones, Convert.ToDecimal(model.IdTransaccionSession));
-                model.IdTransaccion = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                //model.IdTransaccion = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 return View(model);
 
             }
@@ -259,6 +275,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 if (!bus_proyeccion.anularDB(info))
                 {
+                    SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
                     cargar_combo();
                     return View(info);
                 }
@@ -271,7 +288,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(decimal IdEmpleado=0, int IdTransaccion = 0)
+        public ActionResult Anular(int IdEmpresa=0,  decimal IdEmpleado=0, int IdTransaccion = 0)
         {
             try
             {
@@ -282,11 +299,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
 
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 ro_empleado_proyeccion_gastos_Info model = bus_proyeccion.get_info(IdEmpresa, IdEmpleado, IdTransaccion);
                 model.list_proyeciones = bus_det.get_list(IdEmpresa, model.IdTransaccion);
                 ro_empleado_proyeccion_gastos_det_Info_lis.set_list(model.list_proyeciones, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-                model.IdTransaccion = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                //model.IdTransaccion = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 return View(model);
             }
             catch (Exception)
@@ -354,6 +370,25 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     }
 
 
+    public class ro_empleado_proyeccion_gastos_List
+    {
+        string variable = "ro_empleado_proyeccion_gastos_Info";
+        public List<ro_empleado_proyeccion_gastos_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_empleado_proyeccion_gastos_Info> list = new List<ro_empleado_proyeccion_gastos_Info>();
+
+                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_empleado_proyeccion_gastos_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_empleado_proyeccion_gastos_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
     public class ro_empleado_proyeccion_gastos_det_Info_lis
     {
         string variable = "ro_empleado_proyeccion_gastos_det_Info";

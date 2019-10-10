@@ -16,20 +16,16 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        Lista = (from q in Context.vwro_empleado_x_Proyeccion_Gastos_Personales
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_empleado_proyeccion_gastos_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdTransaccion=q.IdTransaccion,
-                                     IdEmpleado = q.IdEmpleado,
-                                     AnioFiscal = q.AnioFiscal,
-                                     pe_cedulaRuc=q.pe_cedulaRuc,
-                                     pe_nombreCompleto=q.pe_nombreCompleto,
-                                     estado=q.estado
-                                    
-                                 }).ToList();
-                  
+                    Lista = Context.vwro_empleado_x_Proyeccion_Gastos_Personales.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new ro_empleado_proyeccion_gastos_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdTransaccion = q.IdTransaccion,
+                        IdEmpleado = q.IdEmpleado,
+                        AnioFiscal = q.AnioFiscal,
+                        pe_cedulaRuc = q.pe_cedulaRuc,
+                        pe_nombreCompleto = q.pe_nombreCompleto,
+                        estado = q.estado
+                    }).ToList();
                 }
 
                 return Lista;

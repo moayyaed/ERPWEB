@@ -14,38 +14,28 @@ namespace Core.Erp.Data.RRHH
             try
             {
                 List<ro_marcaciones_x_empleado_Info> Lista;
-              DateTime fi = FechaInicio.Date;
+                DateTime fi = FechaInicio.Date;
                 DateTime ff = FechaFin.Date;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-
-                    Lista = (from q in Context.vwro_marcaciones_x_empleado
-                            where q.IdEmpresa==IdEmpresa
-                            && q.es_fechaRegistro>=fi
-                            && q.es_fechaRegistro<=ff
-                             select new ro_marcaciones_x_empleado_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdEmpleado = q.IdEmpleado,
-                                 IdRegistro=q.IdRegistro,
-                                 IdTipoMarcaciones = q.IdTipoMarcaciones,
-                                 es_Hora = q.es_Hora,
-                                 es_fechaRegistro = q.es_fechaRegistro,
-                                
-                                 Observacion = q.Observacion,
-                                 IdUsuario = q.IdUsuario,
-                                
-                                 Estado = q.Estado,
-                                 ca_descripcion=q.ma_descripcion,
-                                 cargo=q.cargo,
-                                 pe_NombreCompleato=q.pe_apellido+" "+q.pe_nombre,
-                                 pe_cedula=q.pe_cedulaRuc,
-                                 em_codigo=q.em_codigo,
-
-                                 EstadoBool = q.Estado == "A" ? true : false
-
-                             }).ToList();
-
+                    Lista = Context.vwro_marcaciones_x_empleado.Where(q => q.IdEmpresa == IdEmpresa && q.es_fechaRegistro >= fi && q.es_fechaRegistro <= ff).Select(q => new ro_marcaciones_x_empleado_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        IdRegistro = q.IdRegistro,
+                        IdTipoMarcaciones = q.IdTipoMarcaciones,
+                        es_Hora = q.es_Hora,
+                        es_fechaRegistro = q.es_fechaRegistro,
+                        Observacion = q.Observacion,
+                        IdUsuario = q.IdUsuario,
+                        Estado = q.Estado,
+                        ca_descripcion = q.ma_descripcion,
+                        cargo = q.cargo,
+                        pe_NombreCompleato = q.pe_apellido + " " + q.pe_nombre,
+                        pe_cedula = q.pe_cedulaRuc,
+                        em_codigo = q.em_codigo,
+                        EstadoBool = q.Estado == "A" ? true : false
+                    }).ToList();
 
                     return Lista;
                 }

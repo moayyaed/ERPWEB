@@ -64,8 +64,8 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdNovedad = DataBinder.Eval(tc.DataItem, "IdNovedad") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdNovedad = DataBinder.Eval(tc.DataItem, "IdNovedad") },
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdNovedad = DataBinder.Eval(tc.DataItem, "IdNovedad") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdNovedad = DataBinder.Eval(tc.DataItem, "IdNovedad") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -90,7 +90,7 @@
             column.PropertiesEdit.DisplayFormatString = "d";
 
         });
-       
+
         settings.Columns.Add("pe_cedulaRuc","Cédula").Width = Unit.Percentage(10);
         settings.Columns.Add("pe_nombreCompleto","Nombres").Width = Unit.Percentage(20);
         settings.Columns.Add("Descripcion","Nómina").Width = Unit.Percentage(10);
@@ -114,6 +114,7 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

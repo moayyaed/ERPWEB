@@ -31,6 +31,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_jornada_Bus bus_jornada = new ro_jornada_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        ro_empleado_novedad_List Lista_EmpNovedad = new ro_empleado_novedad_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         int IdEmpresa = 0;
         #endregion
@@ -100,31 +101,45 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region Vistas
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
+                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
             };
+
+            List<ro_empleado_novedad_Info> lista = bus_novedad.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal);
+            Lista_EmpNovedad.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
+            cargar_combos(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            return View(model);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            List<ro_empleado_novedad_Info> lista = bus_novedad.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal);
+            Lista_EmpNovedad.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
 
+            cargar_combos(model.IdEmpresa);
+            return View(model);
         }
 
         [ValidateInput(false)]
         public ActionResult GridViewPartial_empleado_novedad(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
-            ViewBag.IdSucursal = IdSucursal;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-            var model = bus_novedad.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, ViewBag.IdSucursal);
+            List<ro_empleado_novedad_Info> model = Lista_EmpNovedad.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_empleado_novedad", model);
         }
 
@@ -132,7 +147,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_empleado_novedad_det()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_empleado_novedad_Info model = new ro_empleado_novedad_Info();
             model.lst_novedad_det = ro_empleado_novedad_det_lst.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_empleado_novedad_det", model);
@@ -142,14 +157,22 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region acciones
         public ActionResult Nuevo()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             ro_empleado_novedad_Info model = new ro_empleado_novedad_Info
             {
-                IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Fecha = DateTime.Now,
-                    IdNomina_Tipo = 1,
-                    IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                    lst_novedad_det = new List<ro_empleado_novedad_det_Info>()
+                IdNomina_Tipo = 1,
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                lst_novedad_det = new List<ro_empleado_novedad_det_Info>()
             };
+
             model.lst_novedad_det = new List<ro_empleado_novedad_det_Info>();
             ro_empleado_novedad_det_lst.set_list(model.lst_novedad_det, model.IdTransaccionSession);
             cargar_combos(0);
@@ -211,7 +234,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_empleado_novedad_Info model = bus_novedad.get_info(IdEmpresa, IdEmpleado, IdNovedad);
             model.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession));
             if (model == null)
@@ -283,7 +306,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult Anular(int IdEmpleado, decimal IdNovedad)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_empleado_novedad_Info model = bus_novedad.get_info(IdEmpresa, IdEmpleado, IdNovedad);
             if (model == null)
                 return RedirectToAction("Index");
@@ -416,13 +439,33 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         private void cargar_combos_detalle()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             lst_rubros= bus_rubro.get_list_rub_concepto(IdEmpresa);
             ViewBag.lst_rubro = lst_rubros;
             Session["rubros"]=lst_rubros;
         }
 
        
+    }
+
+    public class ro_empleado_novedad_List
+    {
+        string Variable = "ro_empleado_novedad_Info";
+        public List<ro_empleado_novedad_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_empleado_novedad_Info> list = new List<ro_empleado_novedad_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_empleado_novedad_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_empleado_novedad_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     public class ro_empleado_novedad_det_lst

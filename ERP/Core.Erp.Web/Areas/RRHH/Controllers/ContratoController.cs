@@ -23,8 +23,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_contrato_Bus bus_contrato = new ro_contrato_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
-
-        int IdEmpresa = 0;
+        ro_contrato_List Lista_Contrato = new ro_contrato_List();
 
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         #region Metodos ComboBox bajo demanda
@@ -76,19 +75,34 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
             };
+
+            List<ro_contrato_Info> lista = bus_contrato.get_list(model.IdEmpresa, model.IdSucursal, true);
+            Lista_Contrato.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            return View(model);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            List<ro_contrato_Info> lista = bus_contrato.get_list(model.IdEmpresa, model.IdSucursal, true);
+            Lista_Contrato.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
 
+            return View(model);
         }
 
         [ValidateInput(false)]
@@ -96,10 +110,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 ViewBag.IdSucursal = IdSucursal;
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-                List<ro_contrato_Info> model = bus_contrato.get_list(IdEmpresa, ViewBag.IdSucursal, true);
+                List<ro_contrato_Info> model = Lista_Contrato.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_contrato", model);
             }
             catch (Exception)
@@ -114,7 +128,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ViewBag.FechaCorte = FechaCorte;
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 List<ro_contrato_Info> model = bus_contrato.get_list_contratos_por_vencer(IdEmpresa, FechaCorte);
                 return PartialView("_GridViewPartial_contratos_por_vencer", model);
             }
@@ -132,12 +146,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuario = SessionFixed.IdUsuario;
                 if (ModelState.IsValid)
                 {
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     if (!bus_contrato.guardarDB(info))
-                        {
+                    {
                         cargar_combo();
                         return View(info);
-                        }
+                    }
                     else
                         return RedirectToAction("Index");
                 }
@@ -155,13 +169,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                ro_contrato_Info info = new ro_contrato_Info();
-                info.IdNomina = 1;
-                info.FechaInicio = DateTime.Now.Date;
-                info.FechaFin = DateTime.Now.Date;
+                ro_contrato_Info info = new ro_contrato_Info
+                {
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                    IdNomina = 1,
+                    FechaInicio = DateTime.Now.Date,
+                    FechaFin = DateTime.Now.Date,
+                    IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+                };
+
                 cargar_combo();
                 return View(info);
-
             }
             catch (Exception)
             {
@@ -200,9 +218,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var model = bus_contrato.get_info(IdEmpresa, IdEmpleado, IdContrato);
                 cargar_combo();
-                return View(bus_contrato.get_info(IdEmpresa,IdEmpleado, IdContrato));
+                return View(model);
 
             }
             catch (Exception)
@@ -237,9 +256,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                var model = bus_contrato.get_info(IdEmpresa, IdEmpleado, IdContrato);
                 cargar_combo();
-                return View(bus_contrato.get_info(IdEmpresa,IdEmpleado, IdContrato));
+                return View(model);
 
             }
             catch (Exception)
@@ -253,7 +273,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             { ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 lis_empleado = bus_empleado.get_list_combo(IdEmpresa);
                 lst_tipo_contrato = bus_catalogo.get_list_x_tipo(2);
                 lst_esta_contrato = bus_catalogo.get_list_x_tipo(33);
@@ -270,26 +290,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-
         public JsonResult get_info_contato_a_liquidar(Decimal IdEmpleado)
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             var resultado = bus_contrato.get_info_contato_a_liquidar(IdEmpresa, IdEmpleado);
 

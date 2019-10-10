@@ -97,7 +97,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             };
 
             List<ro_empleado_Info> lista = bus_empleado.get_list(model.IdEmpresa, model.IdSucursal, model.em_status, true);
-            ListaEmpleado.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            ListaEmpleado.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
 
             cargar_combos(model.IdEmpresa);
             return View(model);
@@ -105,11 +105,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            ViewBag.IdSucursal = model.IdSucursal;
-            ViewBag.em_status = model.em_status;
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             List<ro_empleado_Info> lista = bus_empleado.get_list(model.IdEmpresa, model.IdSucursal, model.em_status, true);
-            ListaEmpleado.set_list(lista, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            ListaEmpleado.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
 
             cargar_combos(model.IdEmpresa);
             return View(model);

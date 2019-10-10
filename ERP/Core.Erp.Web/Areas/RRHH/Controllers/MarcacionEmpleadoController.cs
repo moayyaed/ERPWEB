@@ -20,6 +20,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_marcaciones_x_empleado_Bus bus_marcaciones = new ro_marcaciones_x_empleado_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_marcaciones_tipo_Bus bus_tipo = new ro_marcaciones_tipo_Bus();
+        ro_marcaciones_x_empleado_List Lista_Marcarciones = new ro_marcaciones_x_empleado_List();
         int IdEmpresa = 0;
         #region Metodos ComboBox bajo demanda
         tb_persona_Bus bus_persona = new tb_persona_Bus();
@@ -39,12 +40,33 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
         public ActionResult Index()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
+        };
+
+            List<ro_marcaciones_x_empleado_Info> lista = bus_marcaciones.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            Lista_Marcarciones.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            List<ro_marcaciones_x_empleado_Info> lista = bus_marcaciones.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            Lista_Marcarciones.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
             return View(model);
 
         }
@@ -53,11 +75,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-                ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-                List<ro_marcaciones_x_empleado_Info> model = bus_marcaciones.get_list(IdEmpresa, ViewBag. Fecha_ini,ViewBag. Fecha_fin);
+                List<ro_marcaciones_x_empleado_Info> model = Lista_Marcarciones.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_marcaciones_empleado", model);
             }
             catch (Exception)
@@ -73,9 +93,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    info.IdUsuario = Session["IdUsuario"].ToString();
-
-                    info.IdEmpresa = GetIdEmpresa();
+                    info.IdUsuario = SessionFixed.IdUsuario;
                     if (!bus_marcaciones.guardarDB(info))
                     {
                         cargar_combo();
@@ -98,9 +116,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                ro_marcaciones_x_empleado_Info info = new ro_marcaciones_x_empleado_Info();
-                info.es_fechaRegistro = DateTime.Now.Date;
-                info.es_Hora = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                ro_marcaciones_x_empleado_Info info = new ro_marcaciones_x_empleado_Info
+                {
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                    es_fechaRegistro = DateTime.Now.Date,
+                    es_Hora = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
+                };
+
                 cargar_combo();
                 return View(info);
 
@@ -136,11 +158,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(decimal IdEmpleado = 0, decimal IdRegistro = 0)
+        public ActionResult Modificar(int IdEmpresa=0, decimal IdEmpleado = 0, decimal IdRegistro = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 cargar_combo();
                 return View(bus_marcaciones.get_info(IdEmpresa, IdEmpleado, IdRegistro));
 
@@ -172,11 +193,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(decimal IdEmpleado = 0, decimal IdRegistro = 0)
+        public ActionResult Anular(int IdEmpresa=0, decimal IdEmpleado = 0, decimal IdRegistro = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
                 cargar_combo();
                 return View(bus_marcaciones.get_info(IdEmpresa, IdEmpleado, IdRegistro));
 
@@ -197,7 +217,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 bus_empleado = new ro_empleado_Bus();
                 bus_catalogo = new ro_catalogo_Bus();
                 ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
-                IdEmpresa = GetIdEmpresa();
+                int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 ViewBag.lst_empleado = bus_empleado.get_list_combo(IdEmpresa);
                 ViewBag.lst_tipomarcacion = bus_catalogo.get_list_x_tipo(18);
 
@@ -209,21 +229,25 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
+    }
 
-                throw;
+    public class ro_marcaciones_x_empleado_List
+    {
+        string Variable = "ro_marcaciones_x_empleado_Info";
+        public List<ro_marcaciones_x_empleado_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_marcaciones_x_empleado_Info> list = new List<ro_marcaciones_x_empleado_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
+            return (List<ro_marcaciones_x_empleado_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
-       
+
+        public void set_list(List<ro_marcaciones_x_empleado_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

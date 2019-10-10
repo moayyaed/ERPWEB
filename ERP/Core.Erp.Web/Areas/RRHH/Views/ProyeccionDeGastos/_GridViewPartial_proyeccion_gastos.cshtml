@@ -66,8 +66,8 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdTransaccion = DataBinder.Eval(tc.DataItem, "IdTransaccion") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdTransaccion = DataBinder.Eval(tc.DataItem, "IdTransaccion") },
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdTransaccion = DataBinder.Eval(tc.DataItem, "IdTransaccion") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdTransaccion = DataBinder.Eval(tc.DataItem, "IdTransaccion") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -97,7 +97,7 @@
 
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()
