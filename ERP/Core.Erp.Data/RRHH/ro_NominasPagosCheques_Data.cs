@@ -19,25 +19,20 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        Lista = (from q in Context.vwro_NominasPagosCheques
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new ro_NominasPagosCheques_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdTransaccion = q.IdTransaccion,
-                                     IdNomina_Tipo = q.IdNomina_Tipo,
-                                     IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
-                                     IdPeriodo = q.IdPeriodo,
-                                     Observacion=q.Observacion,
-                                     Estado=q.Estado,
-                                     Descripcion=q.Descripcion,
-                                     DescripcionProcesoNomina=q.DescripcionProcesoNomina,
-                                     pe_FechaFin=q.pe_FechaFin,
-                                     pe_FechaIni=q.pe_FechaIni
-
-
-                                 }).ToList();
-                    
+                    Lista = Context.vwro_NominasPagosCheques.Where(q => q.IdEmpresa == IdEmpresa ).Select(q => new ro_NominasPagosCheques_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdTransaccion = q.IdTransaccion,
+                        IdNomina_Tipo = q.IdNomina_Tipo,
+                        IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
+                        IdPeriodo = q.IdPeriodo,
+                        Observacion = q.Observacion,
+                        Estado = q.Estado,
+                        Descripcion = q.Descripcion,
+                        DescripcionProcesoNomina = q.DescripcionProcesoNomina,
+                        pe_FechaFin = q.pe_FechaFin,
+                        pe_FechaIni = q.pe_FechaIni
+                    }).ToList();
                 }
 
                 return Lista;

@@ -26,13 +26,11 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        Lista = (from q in Context.vwro_empleado_Novedad
-                                 where q.IdEmpresa == IdEmpresa
+                    Lista = Context.vwro_empleado_Novedad.Where(q => q.IdEmpresa == IdEmpresa
                                  && q.IdSucursal >= IdSucursalIni
                                  && q.IdSucursal <= IdSucursalFin
                                  && q.Fecha >= fecha_inicio
-                                 && q.Fecha <= fecha_fin
-                                 select new ro_empleado_novedad_Info
+                                 && q.Fecha <= fecha_fin).Select(q => new ro_empleado_novedad_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
                                      IdNovedad = q.IdNovedad,
@@ -48,7 +46,6 @@ namespace Core.Erp.Data.RRHH
                                      Observacion = q.Observacion,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
-
                 }
 
                 return Lista;

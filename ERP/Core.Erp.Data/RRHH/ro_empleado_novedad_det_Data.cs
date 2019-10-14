@@ -17,22 +17,19 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.vwro_empleado_novedad_det
-                             where q.IdEmpresa == IdEmpresa
-                                   && q.IdNovedad==IdNovedad
-                             select new ro_empleado_novedad_det_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdNovedad = q.IdNovedad,
-                                 FechaPago = q.FechaPago,
-                                 Observacion = q.Observacion,
-                                 Valor = q.Valor,
-                                 IdRubro = q.IdRubro ,
-                                 Secuencia=q.Secuencia ,
-                                 ru_descripcion = q.ru_descripcion,
-                                 CantidadHoras = q.CantidadHoras
-                             }).ToList();
-
+                    Lista = Context.vwro_empleado_novedad_det.Where(q => q.IdEmpresa == IdEmpresa
+                                 && q.IdNovedad == IdNovedad).Select(q => new ro_empleado_novedad_det_Info
+                                 {
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdNovedad = q.IdNovedad,
+                                     FechaPago = q.FechaPago,
+                                     Observacion = q.Observacion,
+                                     Valor = q.Valor,
+                                     IdRubro = q.IdRubro,
+                                     Secuencia = q.Secuencia,
+                                     ru_descripcion = q.ru_descripcion,
+                                     CantidadHoras = q.CantidadHoras
+                                 }).ToList();
                 }
 
                 return Lista;
@@ -52,11 +49,8 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     Lista = (from q in Context.ro_empleado_Novedad
-
                              join s in Context.ro_empleado_novedad_det
                              on new { q.IdEmpresa,q.IdNovedad } equals new { s.IdEmpresa, s.IdNovedad }
-
-
                              join p in Context.ro_rubro_tipo
                              on new { s.IdEmpresa, s.IdRubro} equals new {p.IdEmpresa, p.IdRubro}
                                  where q.IdEmpresa == IdEmpresa

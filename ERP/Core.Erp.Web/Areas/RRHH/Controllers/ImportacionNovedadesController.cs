@@ -38,23 +38,40 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         int IdEmpresa = 0;
+        ro_EmpleadoNovedadCargaMasiva_List Lista_NovedadMasiva = new ro_EmpleadoNovedadCargaMasiva_List();
         #endregion
-        
+
         #region Vistas
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
+                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
             };
+
+            List<ro_EmpleadoNovedadCargaMasiva_Info> lista = bus_novedad.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal, false);
+            Lista_NovedadMasiva.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            List<ro_EmpleadoNovedadCargaMasiva_Info> lista = bus_novedad.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal, false);
+            Lista_NovedadMasiva.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
             return View(model);
 
         }
@@ -67,7 +84,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
             ViewBag.IdSucursal = IdSucursal;
 
-            var model = bus_novedad.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, ViewBag.IdSucursal, false);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+            List<ro_EmpleadoNovedadCargaMasiva_Info> model = Lista_NovedadMasiva.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_importacion_novedades", model);
         }
 
@@ -75,8 +94,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_importacion_novedades_det()
         {
             ro_EmpleadoNovedadCargaMasiva_Info modelReturn = new ro_EmpleadoNovedadCargaMasiva_Info();
-          
-            modelReturn.detalle = detalle.get_list();
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+            modelReturn.detalle = detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_importacion_novedades_det", modelReturn);
         }
         #endregion
@@ -100,10 +120,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdNomina=1,
                 IdNominaTipo=2,
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
             };
             model.detalle = new List<ro_EmpleadoNovedadCargaMasiva_det_Info>();
-            detalle.set_list(model.detalle);
+            detalle.set_list(model.detalle, model.IdTransaccionSession);
             cargar_combos();
             return View(model);
         }
@@ -111,7 +131,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Nuevo(ro_EmpleadoNovedadCargaMasiva_Info model)
         {
-            model.detalle = detalle.get_list();
+            model.detalle = detalle.get_list(model.IdTransaccionSession);
             if (model.detalle == null || model.detalle.Count() == 0)
             {
                 ViewBag.mensaje = "No existe detalle para la novedad";
@@ -131,14 +151,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Anular(decimal IdCarga)
+        public ActionResult Anular(int IdEmpresa = 0, decimal IdCarga=0)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             ro_EmpleadoNovedadCargaMasiva_Info model = bus_novedad.get_info(IdEmpresa,  IdCarga);
             if (model == null)
                 return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.detalle = bus_novedad_detalle_bus.get_list(IdEmpresa,  IdCarga);
-            detalle.set_list(model.detalle);
+            detalle.set_list(model.detalle, model.IdTransaccionSession);
 
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
@@ -155,9 +182,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         [HttpPost]
         public ActionResult Anular(ro_EmpleadoNovedadCargaMasiva_Info model)
         {
-            model.detalle = detalle.get_list();
-
-            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.detalle = detalle.get_list(model.IdTransaccionSession);
             model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
             model.Fecha_UltAnu = DateTime.Now;
             if (!bus_novedad.AnularDB(model))
@@ -205,17 +230,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_EmpleadoNovedadCargaMasiva_det_Info info_det)
         {
             if (ModelState.IsValid)
-                detalle.UpdateRow(info_det);
+                detalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_EmpleadoNovedadCargaMasiva_Info model = new ro_EmpleadoNovedadCargaMasiva_Info();
-            model.detalle = detalle.get_list();
+            model.detalle = detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_importacion_novedades_det", model);
         }
 
         public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_EmpleadoNovedadCargaMasiva_det_Info info_det)
         {
-            detalle.DeleteRow(info_det.Secuancia);
+            detalle.DeleteRow(info_det.Secuancia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             ro_EmpleadoNovedadCargaMasiva_Info model = new ro_EmpleadoNovedadCargaMasiva_Info();
-            model.detalle = detalle.get_list();
+            model.detalle = detalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_importacion_novedades_det", model);
         }
         #endregion
@@ -277,42 +302,64 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
 
                 }
-                EmpleadoNovedadCargaMasiva_detLis_Info.set_list(lista_novedades);
+                EmpleadoNovedadCargaMasiva_detLis_Info.set_list(lista_novedades, IdTransaccionSession);
             }
         }
 
 
       
     }
+
+    public class ro_EmpleadoNovedadCargaMasiva_List
+    {
+        string Variable = "ro_EmpleadoNovedadCargaMasiva_Info";
+        public List<ro_EmpleadoNovedadCargaMasiva_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_EmpleadoNovedadCargaMasiva_Info> list = new List<ro_EmpleadoNovedadCargaMasiva_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_EmpleadoNovedadCargaMasiva_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_EmpleadoNovedadCargaMasiva_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
     public class ro_EmpleadoNovedadCargaMasiva_detLis_Info
     {
-        public List<ro_EmpleadoNovedadCargaMasiva_det_Info> get_list()
+        string Variable = "ro_EmpleadoNovedadCargaMasiva_det_Info";
+        public List<ro_EmpleadoNovedadCargaMasiva_det_Info> get_list(decimal IdTransaccionSession)
         {
-            if (HttpContext.Current.Session["ro_EmpleadoNovedadCargaMasiva_det_Info"] == null)
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
                 List<ro_EmpleadoNovedadCargaMasiva_det_Info> list = new List<ro_EmpleadoNovedadCargaMasiva_det_Info>();
 
-                HttpContext.Current.Session["ro_EmpleadoNovedadCargaMasiva_det_Info"] = list;
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ro_EmpleadoNovedadCargaMasiva_det_Info>)HttpContext.Current.Session["ro_EmpleadoNovedadCargaMasiva_det_Info"];
+            return (List<ro_EmpleadoNovedadCargaMasiva_det_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<ro_EmpleadoNovedadCargaMasiva_det_Info> list)
+        public void set_list(List<ro_EmpleadoNovedadCargaMasiva_det_Info> list, decimal IdTransaccionSession)
         {
-            HttpContext.Current.Session["ro_EmpleadoNovedadCargaMasiva_det_Info"] = list;
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
 
-        public void UpdateRow(ro_EmpleadoNovedadCargaMasiva_det_Info info_det)
+        public void UpdateRow(ro_EmpleadoNovedadCargaMasiva_det_Info info_det, decimal IdTransaccionSession)
         {
-            ro_EmpleadoNovedadCargaMasiva_det_Info edited_info = get_list().Where(m => m.Secuancia == info_det.Secuancia).First();
+            ro_EmpleadoNovedadCargaMasiva_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuancia == info_det.Secuancia).First();
             edited_info.Valor = info_det.Valor;
             edited_info.Valor = info_det.Valor;
         }
 
-        public void DeleteRow(int Secuencia)
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
-            List<ro_EmpleadoNovedadCargaMasiva_det_Info> list = get_list();
+            List<ro_EmpleadoNovedadCargaMasiva_det_Info> list = get_list(IdTransaccionSession);
             list.Remove(list.Where(m => m.Secuancia == Secuencia).First());
         }
     }

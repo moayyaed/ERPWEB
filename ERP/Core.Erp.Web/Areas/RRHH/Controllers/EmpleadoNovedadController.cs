@@ -169,7 +169,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Fecha = DateTime.Now,
                 IdNomina_Tipo = 1,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 lst_novedad_det = new List<ro_empleado_novedad_det_Info>()
             };
 
@@ -226,7 +226,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdNovedad = model.IdNovedad, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpleado, decimal IdNovedad, bool Exito = false)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdEmpleado=0, decimal IdNovedad=0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -234,9 +234,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ro_empleado_novedad_Info model = bus_novedad.get_info(IdEmpresa, IdEmpleado, IdNovedad);
-            model.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            model.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             if (model == null)
                 return RedirectToAction("Index");
             model.lst_novedad_det = bus_novedad_detalle_bus.get_list(IdEmpresa, IdEmpleado, IdNovedad);
@@ -304,12 +303,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Modificar", new { IdEmpleado = model.IdEmpleado, IdNovedad = model.IdNovedad, Exito = true });
         }
 
-        public ActionResult Anular(int IdEmpleado, decimal IdNovedad)
+        public ActionResult Anular(int IdEmpresa=0, int IdEmpleado=0, decimal IdNovedad=0)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             ro_empleado_novedad_Info model = bus_novedad.get_info(IdEmpresa, IdEmpleado, IdNovedad);
             if (model == null)
                 return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.lst_novedad_det = bus_novedad_detalle_bus.get_list(IdEmpresa, IdEmpleado, IdNovedad);
             ro_empleado_novedad_det_lst.set_list(model.lst_novedad_det, model.IdTransaccionSession);
 
@@ -343,7 +349,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
 
         #region cargar combos
-
         private void cargar_combos(int IdNomina)
         {
             IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);

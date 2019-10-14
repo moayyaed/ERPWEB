@@ -11,8 +11,8 @@
 
 @using (Html.BeginForm("Anular", "EmpleadoNovedad", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
-    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })on)
     @Html.HiddenFor(q => q.IdNovedad)
 
     if (ViewBag.mensaje != null)

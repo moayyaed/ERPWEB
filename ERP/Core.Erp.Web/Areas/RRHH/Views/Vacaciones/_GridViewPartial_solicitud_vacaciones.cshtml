@@ -184,7 +184,7 @@
             });
             column.Width = System.Web.UI.WebControls.Unit.Percentage(4);
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

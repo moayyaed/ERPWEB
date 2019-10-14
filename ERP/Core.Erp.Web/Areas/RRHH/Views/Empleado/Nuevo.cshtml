@@ -22,9 +22,9 @@
 @using (Html.BeginForm("Nuevo", "Empleado", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdPersona);
-    @Html.HiddenFor(q => q.IdEmpresa);
     @Html.HiddenFor(q => q.IdEmpleado);
-    @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">

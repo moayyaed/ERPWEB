@@ -19,7 +19,8 @@
 
 @using (Html.BeginForm("Anular", "ImportacionNovedades", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdCarga)
 
 
