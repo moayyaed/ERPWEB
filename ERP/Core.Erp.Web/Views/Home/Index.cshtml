@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Menú";
 
-    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    if (string.IsNullOrEmpty(Core.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
