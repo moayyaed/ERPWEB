@@ -116,6 +116,9 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_det_fa_proforma" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_TerminoPago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_Vendedor" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_ProbabilidadCobro" Width="1.5" PointX="20.375" PointY="8" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_ProbabilidadCobroDet" Width="1.5" PointX="22.625" PointY="8.5" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_ProbabilidadCobroDet_fa_ProbabilidadCobro" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
