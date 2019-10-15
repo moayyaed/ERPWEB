@@ -883,6 +883,12 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Rpt.Designer.cs">
       <DependentUpon>CXC_009_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_012_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_012_Rpt.Designer.cs">
+      <DependentUpon>CXC_012_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10529,6 +10535,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10711,6 +10718,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_009_Rpt.resx">
       <DependentUpon>CXC_009_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_012_Rpt.resx">
+      <DependentUpon>CXC_012_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.resx">
       <DependentUpon>CXC_010_Rpt.cs</DependentUpon>
