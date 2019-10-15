@@ -219,6 +219,8 @@
     <Compile Include="Facturacion\fa_notaCreDeb_resumen_Info.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_x_fa_factura_NotaDeb_Info.cs" />
     <Compile Include="Facturacion\fa_parametro_Info.cs" />
+    <Compile Include="Facturacion\fa_ProbabilidadCobroDet_Info.cs" />
+    <Compile Include="Facturacion\fa_ProbabilidadCobro_Info.cs" />
     <Compile Include="Facturacion\fa_proforma_det_Info.cs" />
     <Compile Include="Facturacion\fa_proforma_Info.cs" />
     <Compile Include="Facturacion\fa_PuntoVta_Info.cs" />

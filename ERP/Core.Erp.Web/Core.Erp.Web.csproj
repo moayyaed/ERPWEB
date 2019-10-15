@@ -351,6 +351,7 @@
     <Compile Include="Areas\Facturacion\Controllers\NotaDeCreditoFacturacionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NotaDeDebitoFacturacionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ParametrosFacturacionController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\ProbabilidadCobroController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ProformaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\PuntoVentaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\TerminoPagoController.cs" />
@@ -10404,6 +10405,11 @@
     <Content Include="Areas\RRHH\Views\DepartamentoPorArea\_CmbDivision.cshtml" />
     <Content Include="Areas\RRHH\Views\DepartamentoPorArea\_CmbArea.cshtml" />
     <Content Include="Areas\Reportes\Views\InventarioReportes\INV_022.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_ProbabilidadCobro.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_ProbabilidadCobroDet.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_Facturas.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Nuevo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
