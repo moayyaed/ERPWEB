@@ -196,9 +196,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         private bool validar(cp_nota_DebCre_Info i_validar, ref string msg)
         {
             i_validar.lst_detalle_ct = list_ct_cbtecble_det.get_list(i_validar.IdTransaccionSession);
-
-
-
+            
             foreach (var item in i_validar.lst_detalle_ct)
             {
                 if (string.IsNullOrEmpty(item.IdCtaCble))
@@ -219,7 +217,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return false;
             }
 
-            if (i_validar.lst_detalle_ct.Sum(q => q.dc_Valor) != 0)
+            if (Math.Round(i_validar.lst_detalle_ct.Sum(q => q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
             {
                 mensaje = "La suma de los detalles debe ser 0";
                 return false;
