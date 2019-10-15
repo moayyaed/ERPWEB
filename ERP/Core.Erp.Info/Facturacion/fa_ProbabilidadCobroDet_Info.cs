@@ -15,5 +15,16 @@ namespace Core.Erp.Info.Facturacion
         public int IdBodega { get; set; }
         public decimal IdCbteVta { get; set; }
         public string vt_tipoDoc { get; set; }
+
+        #region Campos que no existen en la tabla
+        public string vt_NumFactura { get; set; }
+        public DateTime vt_fecha { get; set; }
+        public int DiasVencido { get; set; }
+        public double Saldo { get; set; }
+        public decimal Total { get; set; }
+        public string vt_Observacion { get; set; }
+        public string IdString { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        #endregion
     }
 }

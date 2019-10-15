@@ -76,18 +76,5 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
-
-        public bool EliminarDB(fa_ProbabilidadCobroDet_Info info)
-        {
-            try
-            {
-                return odata_det.eliminarDB(info);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

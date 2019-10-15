@@ -191,6 +191,7 @@
     <Compile Include="Facturacion\fa_notaCreDeb_det_Bus.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_x_fa_factura_NotaDeb_Bus.cs" />
     <Compile Include="Facturacion\fa_parametro_Bus.cs" />
+    <Compile Include="Facturacion\fa_ProbabilidadCobroDet_Bus.cs" />
     <Compile Include="Facturacion\fa_ProbabilidadCobro_Bus.cs" />
     <Compile Include="Facturacion\fa_proforma_Bus.cs" />
     <Compile Include="Facturacion\fa_proforma_det_Bus.cs" />

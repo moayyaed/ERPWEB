@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_ProbabilidadCobro_Info
 @{
-    ViewBag.Title = "Nueva probabilidad de cobro";
+    ViewBag.Title = "Anular probabilidad de cobro";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -74,10 +74,11 @@
         $("#FacturasModal").modal("hide");
     }
 </script>
-@using (Html.BeginForm("Nuevo", "ProbabilidadCobro", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Anular", "ProbabilidadCobro", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdProbabilidad, new { @id = "IdProbabilidad" })
 
     if (ViewBag.mensaje != null)
     {
@@ -91,6 +92,19 @@
             </div>
         </div>
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-10">
@@ -113,9 +127,17 @@
             </div>
         </div>
     </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_ProbabilidadCobroDet")
+            </div>
+        </div>
+    </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index","ProbabilidadCobro",new { Area = "Facturacion" },null)">Cancelar</a>
     </div>
     @section Scripts {

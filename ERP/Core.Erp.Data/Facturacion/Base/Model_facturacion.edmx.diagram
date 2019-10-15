@@ -119,6 +119,7 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_ProbabilidadCobro" Width="1.5" PointX="20.375" PointY="8" />
         <EntityTypeShape EntityType="Model_facturacion.fa_ProbabilidadCobroDet" Width="1.5" PointX="22.625" PointY="8.5" />
         <AssociationConnector Association="Model_facturacion.FK_fa_ProbabilidadCobroDet_fa_ProbabilidadCobro" />
+        <EntityTypeShape EntityType="Model_facturacion.vwfa_ProbabilidadCobroDet" Width="1.5" PointX="20.75" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

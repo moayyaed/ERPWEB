@@ -10410,6 +10410,8 @@
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_ProbabilidadCobroDet.cshtml" />
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_Facturas.cshtml" />
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Nuevo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
