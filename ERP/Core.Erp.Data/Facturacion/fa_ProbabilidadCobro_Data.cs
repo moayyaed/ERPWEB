@@ -22,6 +22,7 @@ namespace Core.Erp.Data.Facturacion
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdProbabilidad = q.IdProbabilidad,
+                        MostrarNoAsignadas = q.MostrarNoAsignadas,
                         Descripcion = q.Descripcion,
                         Estado = q.Estado
                     }).ToList();
@@ -51,6 +52,7 @@ namespace Core.Erp.Data.Facturacion
                         IdEmpresa = Entity.IdEmpresa,
                         IdProbabilidad = Entity.IdProbabilidad,
                         Descripcion = Entity.Descripcion,
+                        MostrarNoAsignadas = Entity.MostrarNoAsignadas,
                         Estado = Entity.Estado
                     };
                 }
@@ -73,31 +75,19 @@ namespace Core.Erp.Data.Facturacion
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdProbabilidad = info.IdProbabilidad = get_id(info.IdEmpresa),
+                        Descripcion = info.Descripcion,
+                        MostrarNoAsignadas = info.MostrarNoAsignadas,
                         Estado = true,
                         FechaCreacion = DateTime.Now,
                         IdUsuarioCreacion = info.IdUsuarioCreacion
                     };
                     Context.fa_ProbabilidadCobro.Add(Entity);
 
-                    foreach (var item in info.lst_detalle)
-                    {
-                        fa_ProbabilidadCobroDet Entity_det = new fa_ProbabilidadCobroDet
-                        {
-                            IdEmpresa = info.IdEmpresa,
-                            IdProbabilidad = info.IdProbabilidad,
-                            Secuencia = item.Secuencia,
-                            IdSucursal = item.IdSucursal,
-                            IdBodega = item.IdBodega,
-                            IdCbteVta= item.IdCbteVta,
-                            vt_tipoDoc = item.vt_tipoDoc
-                        };
-                        Context.fa_ProbabilidadCobroDet.Add(Entity_det);
-                    }
                     Context.SaveChanges();
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
 
                 throw;
@@ -113,25 +103,26 @@ namespace Core.Erp.Data.Facturacion
                     if (Entity == null)
                         return false;
                     Entity.Descripcion = info.Descripcion;
+                    Entity.MostrarNoAsignadas = info.MostrarNoAsignadas;
                     Entity.FechaModificacion = DateTime.Now;
                     Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
 
-                    var select = Context.fa_ProbabilidadCobroDet.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdProbabilidad == info.IdProbabilidad);
-                    Context.fa_ProbabilidadCobroDet.RemoveRange(select);
-                    foreach (var item in info.lst_detalle)
-                    {
-                        fa_ProbabilidadCobroDet Entity_det = new fa_ProbabilidadCobroDet
-                        {
-                            IdEmpresa = info.IdEmpresa,
-                            IdProbabilidad = info.IdProbabilidad,
-                            Secuencia = item.Secuencia,
-                            IdSucursal = item.IdSucursal,
-                            IdBodega = item.IdBodega,
-                            IdCbteVta = item.IdCbteVta,
-                            vt_tipoDoc = item.vt_tipoDoc
-                        };
-                        Context.fa_ProbabilidadCobroDet.Add(Entity_det);
-                    }
+                    //var select = Context.fa_ProbabilidadCobroDet.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdProbabilidad == info.IdProbabilidad);
+                    //Context.fa_ProbabilidadCobroDet.RemoveRange(select);
+                    //foreach (var item in info.lst_detalle)
+                    //{
+                    //    fa_ProbabilidadCobroDet Entity_det = new fa_ProbabilidadCobroDet
+                    //    {
+                    //        IdEmpresa = info.IdEmpresa,
+                    //        IdProbabilidad = info.IdProbabilidad,
+                    //        Secuencia = item.Secuencia,
+                    //        IdSucursal = item.IdSucursal,
+                    //        IdBodega = item.IdBodega,
+                    //        IdCbteVta = item.IdCbteVta,
+                    //        vt_tipoDoc = item.vt_tipoDoc
+                    //    };
+                    //    Context.fa_ProbabilidadCobroDet.Add(Entity_det);
+                    //}
                     Context.SaveChanges();
                 }
 

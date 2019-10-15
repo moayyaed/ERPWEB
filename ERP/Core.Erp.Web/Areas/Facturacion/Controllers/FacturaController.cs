@@ -672,8 +672,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             List_det.set_list(detalle_factura, IdTransaccionSession);
 
-
-
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public void CargarCuotas(DateTime? FechaPrimerPago, string IdTerminoPago = "", double ValorPrimerPago = 0, decimal IdTransaccionSession = 0)

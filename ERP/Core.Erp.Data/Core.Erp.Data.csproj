@@ -804,6 +804,9 @@
     <Compile Include="Facturacion\Base\vwfa_notaCreDeb_x_fa_factura_NotaDeb.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\vwfa_ProbabilidadCobroDet.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\vwfa_proforma.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>

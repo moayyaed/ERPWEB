@@ -1145,6 +1145,41 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwfa_guia_remision_det'
           <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwfa_ProbabilidadCobroDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwfa_ProbabilidadCobroDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="SubtotalConDscto" />
+            <PropertyRef Name="ValorIVA" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="dc_ValorPago" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="28" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="vt_fech_venc" Type="datetime" Nullable="false" />
+          <Property Name="DiasVencido" Type="int" />
+          <Property Name="vt_Observacion" Type="varchar(max)" />
+          <Property Name="SubtotalConDscto" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ValorIVA" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="dc_ValorPago" Type="float" Nullable="false" />
+          <Property Name="Saldo" Type="float" />
+          <Property Name="IdProbabilidad" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwfa_proforma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwfa_proforma">
           <Key>
@@ -2424,20 +2459,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwfa_notaCreDeb_x_fa_fa
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_fa_ProbabilidadCobroDet_fa_ProbabilidadCobro">
-          <End Role="fa_ProbabilidadCobro" Type="Self.fa_ProbabilidadCobro" Multiplicity="1" />
-          <End Role="fa_ProbabilidadCobroDet" Type="Self.fa_ProbabilidadCobroDet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fa_ProbabilidadCobro">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProbabilidad" />
-            </Principal>
-            <Dependent Role="fa_ProbabilidadCobroDet">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdProbabilidad" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_fa_proforma_det_fa_proforma">
           <End Role="fa_proforma" Type="Self.fa_proforma" Multiplicity="1" />
           <End Role="fa_proforma_det" Type="Self.fa_proforma_det" Multiplicity="*" />
@@ -2736,6 +2757,27 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwfa_notaCreDeb_x_fa_fa
     [vwfa_guia_remision_det].[Secuencia_pf] AS [Secuencia_pf], 
     [vwfa_guia_remision_det].[cc_Descripcion] AS [cc_Descripcion]
     FROM [dbo].[vwfa_guia_remision_det] AS [vwfa_guia_remision_det]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwfa_ProbabilidadCobroDet" EntityType="Self.vwfa_ProbabilidadCobroDet" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwfa_ProbabilidadCobroDet].[IdEmpresa] AS [IdEmpresa], 
+    [vwfa_ProbabilidadCobroDet].[IdSucursal] AS [IdSucursal], 
+    [vwfa_ProbabilidadCobroDet].[IdBodega] AS [IdBodega], 
+    [vwfa_ProbabilidadCobroDet].[IdCbteVta] AS [IdCbteVta], 
+    [vwfa_ProbabilidadCobroDet].[vt_tipoDoc] AS [vt_tipoDoc], 
+    [vwfa_ProbabilidadCobroDet].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwfa_ProbabilidadCobroDet].[vt_fecha] AS [vt_fecha], 
+    [vwfa_ProbabilidadCobroDet].[vt_fech_venc] AS [vt_fech_venc], 
+    [vwfa_ProbabilidadCobroDet].[DiasVencido] AS [DiasVencido], 
+    [vwfa_ProbabilidadCobroDet].[vt_Observacion] AS [vt_Observacion], 
+    [vwfa_ProbabilidadCobroDet].[SubtotalConDscto] AS [SubtotalConDscto], 
+    [vwfa_ProbabilidadCobroDet].[ValorIVA] AS [ValorIVA], 
+    [vwfa_ProbabilidadCobroDet].[Total] AS [Total], 
+    [vwfa_ProbabilidadCobroDet].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwfa_ProbabilidadCobroDet].[dc_ValorPago] AS [dc_ValorPago], 
+    [vwfa_ProbabilidadCobroDet].[Saldo] AS [Saldo], 
+    [vwfa_ProbabilidadCobroDet].[IdProbabilidad] AS [IdProbabilidad]
+    FROM [dbo].[vwfa_ProbabilidadCobroDet] AS [vwfa_ProbabilidadCobroDet]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwfa_proforma" EntityType="Self.vwfa_proforma" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -3276,10 +3318,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwfa_notaCreDeb_x_fa_fa
           <AssociationSet Name="FK_fa_parametro_fa_cliente" Association="Self.FK_fa_parametro_fa_cliente">
             <End Role="fa_cliente" EntitySet="fa_cliente" />
             <End Role="fa_parametro" EntitySet="fa_parametro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fa_ProbabilidadCobroDet_fa_ProbabilidadCobro" Association="Self.FK_fa_ProbabilidadCobroDet_fa_ProbabilidadCobro">
-            <End Role="fa_ProbabilidadCobro" EntitySet="fa_ProbabilidadCobro" />
-            <End Role="fa_ProbabilidadCobroDet" EntitySet="fa_ProbabilidadCobroDet" />
           </AssociationSet>
           <AssociationSet Name="FK_fa_proforma_det_fa_proforma" Association="Self.FK_fa_proforma_det_fa_proforma">
             <End Role="fa_proforma" EntitySet="fa_proforma" />
@@ -5327,6 +5365,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwfa_notaCreDeb_x_fa_fa
             <End Role="fa_ProbabilidadCobro" EntitySet="fa_ProbabilidadCobro" />
             <End Role="fa_ProbabilidadCobroDet" EntitySet="fa_ProbabilidadCobroDet" />
           </AssociationSet>
+          <EntitySet Name="vwfa_ProbabilidadCobroDet" EntityType="Model_facturacion.vwfa_ProbabilidadCobroDet" />
           </EntityContainer>
         <EntityType Name="vwfa_factura_sin_guia">
           <Key>
@@ -6183,6 +6222,39 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwfa_notaCreDeb_x_fa_fa
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwfa_ProbabilidadCobroDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="SubtotalConDscto" />
+            <PropertyRef Name="ValorIVA" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="dc_ValorPago" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DiasVencido" Type="Int32" />
+          <Property Name="vt_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SubtotalConDscto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ValorIVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
+          <Property Name="Saldo" Type="Double" />
+          <Property Name="IdProbabilidad" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7554,6 +7626,29 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwfa_notaCreDeb_x_fa_fa
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdProbabilidad" ColumnName="IdProbabilidad" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwfa_ProbabilidadCobroDet">
+            <EntityTypeMapping TypeName="Model_facturacion.vwfa_ProbabilidadCobroDet">
+              <MappingFragment StoreEntitySet="vwfa_ProbabilidadCobroDet">
+                <ScalarProperty Name="IdProbabilidad" ColumnName="IdProbabilidad" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="dc_ValorPago" ColumnName="dc_ValorPago" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ValorIVA" ColumnName="ValorIVA" />
+                <ScalarProperty Name="SubtotalConDscto" ColumnName="SubtotalConDscto" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="DiasVencido" ColumnName="DiasVencido" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
