@@ -916,7 +916,7 @@ namespace Core.Erp.Data.RRHH
                 Context_rrhh.Dispose();                
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

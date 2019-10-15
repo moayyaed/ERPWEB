@@ -134,7 +134,7 @@
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorCancelado");
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo");
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 
 }

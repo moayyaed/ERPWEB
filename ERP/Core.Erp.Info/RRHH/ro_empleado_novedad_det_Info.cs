@@ -8,6 +8,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_empleado_novedad_det_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdNovedad { get; set; }
         public decimal IdEmpleado { get; set; }

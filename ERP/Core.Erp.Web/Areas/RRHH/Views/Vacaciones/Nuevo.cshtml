@@ -19,7 +19,8 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Vacaciones", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -204,8 +205,8 @@
         var datos = {
             FechaDesde:Fecha_Desde.GetValue(),
             FechaHasta:Fecha_Hasta.GetValue(),
-            IdEmpleado: IdEmpleado.GetValue()
-
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $.ajax({
             type: 'POST',

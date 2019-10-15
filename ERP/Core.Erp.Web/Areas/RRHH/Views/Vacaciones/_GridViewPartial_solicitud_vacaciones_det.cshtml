@@ -71,7 +71,7 @@
         });
         settings.Columns.Add("DiasGanado", "Días ganado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Columns.Add("DiasTomados", "Días gozado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

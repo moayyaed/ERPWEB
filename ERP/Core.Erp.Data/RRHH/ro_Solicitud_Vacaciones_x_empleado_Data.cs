@@ -20,40 +20,35 @@ namespace Core.Erp.Data.RRHH
                 DateTime ff = FechaFin.Date;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        Lista = (from q in Context.vwRo_Solicitud_Vacaciones
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Fecha_Hasta>=fi
-                                 && q.Fecha_Hasta <= ff
-                                 select new ro_Solicitud_Vacaciones_x_empleado_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdEmpleado = q.IdEmpleado,
-                                     IdSolicitud = q.IdSolicitud,
-                                     IdVacacion = q.IdVacacion,
-                                     IdEmpleado_aprue = q.IdEmpleado_aprue,
-                                     IdEmpleado_remp = q.IdEmpleado_remp,
-                                     IdEstadoAprobacion = q.IdEstadoAprobacion,
-                                     Fecha = q.Fecha,
-                                     AnioServicio = q.AnioServicio,
-                                     Dias_q_Corresponde = q.Dias_q_Corresponde,
-                                     Dias_a_disfrutar = q.Dias_a_disfrutar,
-                                     Dias_pendiente = q.Dias_pendiente,
-                                     Anio_Desde = q.Anio_Desde,
-                                     Anio_Hasta = q.Anio_Hasta,
-                                     Fecha_Desde = q.Fecha_Desde,
-                                     Fecha_Hasta = q.Fecha_Hasta,
-                                     Fecha_Retorno = q.Fecha_Retorno,
-                                     Observacion = q.Observacion,
-                                     Gozadas_Pgadas = q.Gozadas_Pgadas,
-                                     em_codigo=q.em_codigo,
-                                     pe_cedulaRuc=q.pe_cedulaRuc,
-                                     pe_nombre_completo=q.pe_apellido+" "+q.pe_nombre,
-                                     Estado = q.Estado,
-                                     IdLiquidacion=q.IdLiquidacion,
-                                     Estado_liquidacion=q.Estado_liquidacion,
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
-                    
+                    Lista = Context.vwRo_Solicitud_Vacaciones.Where(q => q.IdEmpresa == IdEmpresa && q.Fecha_Hasta >= fi && q.Fecha_Hasta <= ff).Select(q => new ro_Solicitud_Vacaciones_x_empleado_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        IdSolicitud = q.IdSolicitud,
+                        IdVacacion = q.IdVacacion,
+                        IdEmpleado_aprue = q.IdEmpleado_aprue,
+                        IdEmpleado_remp = q.IdEmpleado_remp,
+                        IdEstadoAprobacion = q.IdEstadoAprobacion,
+                        Fecha = q.Fecha,
+                        AnioServicio = q.AnioServicio,
+                        Dias_q_Corresponde = q.Dias_q_Corresponde,
+                        Dias_a_disfrutar = q.Dias_a_disfrutar,
+                        Dias_pendiente = q.Dias_pendiente,
+                        Anio_Desde = q.Anio_Desde,
+                        Anio_Hasta = q.Anio_Hasta,
+                        Fecha_Desde = q.Fecha_Desde,
+                        Fecha_Hasta = q.Fecha_Hasta,
+                        Fecha_Retorno = q.Fecha_Retorno,
+                        Observacion = q.Observacion,
+                        Gozadas_Pgadas = q.Gozadas_Pgadas,
+                        em_codigo = q.em_codigo,
+                        pe_cedulaRuc = q.pe_cedulaRuc,
+                        pe_nombre_completo = q.pe_apellido + " " + q.pe_nombre,
+                        Estado = q.Estado,
+                        IdLiquidacion = q.IdLiquidacion,
+                        Estado_liquidacion = q.Estado_liquidacion,
+                        EstadoBool = q.Estado == "A" ? true : false
+                    }).ToList();
                 }
 
                 return Lista;

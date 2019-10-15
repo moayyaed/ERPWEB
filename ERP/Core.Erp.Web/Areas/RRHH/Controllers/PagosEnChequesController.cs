@@ -24,25 +24,40 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_Parametros_Bus bus_parametro = new ro_Parametros_Bus();
         cp_orden_pago_tipo_x_empresa_Bus bus_tipo_op = new cp_orden_pago_tipo_x_empresa_Bus();
+        ro_NominasPagosCheques_List Lista_Pagocheques = new ro_NominasPagosCheques_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Vistas
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 fecha_ini = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1)
+                fecha_fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
             };
             cargar_combos_consulta();
+            List<ro_NominasPagosCheques_Info> lista = bus_archivo.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, true);
+            Lista_Pagocheques.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            List<ro_NominasPagosCheques_Info> lista = bus_archivo.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, true);
+            Lista_Pagocheques.set_list(lista, Convert.ToDecimal(model.IdTransaccionSession));
             cargar_combos_consulta();
 
             return View(model);
@@ -55,8 +70,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ViewBag.Fecha_ini = Fecha_ini == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1) : Convert.ToDateTime(Fecha_fin);
             ViewBag.IdSucursal = IdSucursal;
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_archivo.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, true);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+            List<ro_NominasPagosCheques_Info> model = Lista_Pagocheques.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_pagos_cheques", model);
         }
 
@@ -86,10 +102,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdNomina_Tipo = IdNomina_Tipo_Tipo,
                 IdNomina_TipoLiqui = IdNomina_Tipo_TipoLiqui,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-
-
-
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
             };
             ro_NominasPagosCheques_det_Info_list.set_list(model.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
             cargar_combos(0);
@@ -140,9 +153,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 }
             }
 
-
-
-            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_archivo.guardarDB(model))
             {
@@ -162,11 +172,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
             ro_NominasPagosCheques_Info model = bus_archivo.get_info(IdEmpresa, IdTransaccion);
-            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             if (model == null)
                 return RedirectToAction("Index");
             model.detalle = bus_pago_detalle.get_list(IdEmpresa, IdTransaccion);
-            ro_NominasPagosCheques_det_Info_list.set_list(model.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            ro_NominasPagosCheques_det_Info_list.set_list(model.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos(model.IdNomina_Tipo);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
@@ -184,8 +194,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            model.IdUsuarioAnu = Session["IdUsuario"].ToString();
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.IdUsuarioAnu = SessionFixed.IdUsuario;
             if (!bus_archivo.modificarDB(model))
             {
                 cargar_combos(model.IdNomina_Tipo);
@@ -217,8 +227,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             model.detalle = ro_NominasPagosCheques_det_Info_list.get_list(model.IdTransaccionSession);
 
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            model.IdUsuarioAnu = Session["IdUsuario"].ToString();
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.IdUsuarioAnu = SessionFixed.IdUsuario;
             model.FechaAnu = DateTime.Now;
             if (!bus_archivo.anularDB(model))
             {
@@ -291,7 +301,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     }
 
 
-    public class ro_NominasPagosCheques_det_Info_list
+    public class ro_NominasPagosCheques_List
+    {
+        string variable = "ro_NominasPagosCheques_Info";
+        public List<ro_NominasPagosCheques_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_NominasPagosCheques_Info> list = new List<ro_NominasPagosCheques_Info>();
+
+                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_NominasPagosCheques_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_NominasPagosCheques_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+        public class ro_NominasPagosCheques_det_Info_list
     {
         string variable = "ro_NominasPagosCheques_det_Info";
         public List<ro_NominasPagosCheques_det_Info> get_list(decimal IdTransaccionSession)

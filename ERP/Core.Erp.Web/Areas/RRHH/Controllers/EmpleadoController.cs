@@ -92,7 +92,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 em_status = ""
             };
 
@@ -279,7 +279,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     cargar_combos();
                     return View(info);
                 }
-                info.IdEmpresa = GetIdEmpresa();
+
                 info.IdUsuario = SessionFixed.IdUsuario;
                 var return_naturaleza = "";
 
@@ -315,10 +315,18 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+
                 cargar_combos();
                 ro_empleado_Info info = new ro_empleado_Info
                 {
-                    IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                    IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                     em_fechaIngaRol = DateTime.Now,
                     em_fechaSalida = DateTime.Now,
                     IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
@@ -356,7 +364,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     cargar_combos();
                     return View(info);
                 }
-                info.IdEmpresa = GetIdEmpresa();
                 var return_naturaleza = "";
                 info.IdUsuarioUltModi = SessionFixed.IdUsuario;
 
@@ -390,15 +397,22 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdEmpleado = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdEmpleado = 0)
         {
             try
             {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+
                 cargar_combos();
                 ro_empleado_Info info = new ro_empleado_Info();
-                info = bus_empleado.get_info(GetIdEmpresa(), IdEmpleado);
+                info = bus_empleado.get_info(IdEmpresa, IdEmpleado);
 
-                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 info.lst_empleado_area = bus_empleado_x_division_x_area.GetList(info.IdEmpresa, info.IdEmpleado);
                 ListaEmpleadoXDivisionXArea.set_list(info.lst_empleado_area, info.IdTransaccionSession);
                 info.lst_det = bus_jornada_det.GetList(info.IdEmpresa, info.IdEmpleado);
@@ -444,7 +458,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     return View(info);
                 }
                 info.IdUsuarioUltAnu = SessionFixed.IdUsuario;
-                info.IdEmpresa = GetIdEmpresa();
                 if (!bus_empleado.anularDB(info))
                 {
                     if (info.em_foto == null)
@@ -462,15 +475,21 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int Idempleado = 0)
+        public ActionResult Anular(int IdEmpresa=0, int Idempleado = 0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+
                 cargar_combos();
                 ro_empleado_Info info = new ro_empleado_Info();
-                info = bus_empleado.get_info(GetIdEmpresa(), Idempleado);
-                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                info = bus_empleado.get_info(IdEmpresa, Idempleado);
+                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 info.lst_empleado_area = bus_empleado_x_division_x_area.GetList(info.IdEmpresa, info.IdEmpleado);
                 ListaEmpleadoXDivisionXArea.set_list(info.lst_empleado_area, info.IdTransaccionSession);
                 info.lst_det = bus_jornada_det.GetList(info.IdEmpresa, info.IdEmpleado);
@@ -504,7 +523,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 cargar_combos();
-                IdEmpresa = GetIdEmpresa();
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 return View(bus_empleado.get_info(IdEmpresa, Idempleado));
 
             }
@@ -515,26 +534,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        private int GetIdEmpresa()
-        {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         private void cargar_combos()
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 ViewBag.lst_area = bus_area.get_list(IdEmpresa, false);
                 ViewBag.lst_banco = bus_banco.get_list(false);
                 ViewBag.lst_cargo = bus_cargo.get_list(IdEmpresa, false);
@@ -808,7 +812,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 var Lista_RubrosAcumulados = ListaRubrosAcumulados.get_list(model.IdTransaccionSession);
                 var Lista_CargasFamiliares = ListaCargasFamiliares.get_list(model.IdTransaccionSession);
                 var Lista_ProvisionesAcumuladas = ListaProvisionesAcumuladas.get_list(model.IdTransaccionSession);
-                var Lista_Vacaciones = ListaVacaciones.get_list();
+                var Lista_Vacaciones = ListaVacaciones.get_list(model.IdTransaccionSession);
 
                 if (!bus_empleado.guardarDB_importacion(Convert.ToInt32(SessionFixed.IdEmpresa), lista_division, Lista_Area, Lista_Departamento, Lista_Cargo,
                                                         Lista_Rubro, Lista_Horario, Lista_Turno, Lista_Empleado, Lista_RubrosAcumulados, Lista_TipoNomina, Lista_Contrato, 
@@ -881,7 +885,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult GridViewPartial_Vacaciones_importacion()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            var model = ListaVacaciones.get_list();
+            var model = ListaVacaciones.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Vacaciones_importacion", model);
         }
 
@@ -898,7 +902,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         private void carga_combo()
         {
             ro_jornada_Bus bus_jor = new ro_jornada_Bus();
-            var lst_jor = bus_jor.get_list(GetIdEmpresa(), false);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var lst_jor = bus_jor.get_list(IdEmpresa, false);
             ViewBag.lst_jor = lst_jor;
         }
         [ValidateInput(false)]
@@ -1204,6 +1209,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             }
 
                             info_persona_empleado.pe_Naturaleza = return_naturaleza;
+
                             ro_empleado_Info info = new ro_empleado_Info
                             {
                                 IdEmpresa = IdEmpresa,

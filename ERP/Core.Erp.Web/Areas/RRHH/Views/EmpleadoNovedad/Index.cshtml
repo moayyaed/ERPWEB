@@ -1,7 +1,7 @@
 ﻿
 @model Core.Erp.Info.Helps.cl_filtros_Info
 @{
-    ViewBag.Title = "Novedades por empleados";
+    ViewBag.Title = "Consulta de novedades por empleados";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

@@ -19,31 +19,28 @@ namespace Core.Erp.Data.RRHH
                 FechaInicio = Convert.ToDateTime(FechaInicio.Date.ToShortDateString());
                 var IdSucursalIni = IdSucursal == 0 ? 0 : IdSucursal;
                 var IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
+
                 List<ro_EmpleadoNovedadCargaMasiva_Info> lista;
+
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                        lista = (from q in Context.vwro_EmpleadoNovedadCargaMasiva
-                                 where q.IdEmpresa == IdEmpresa
+                    lista = Context.vwro_EmpleadoNovedadCargaMasiva.Where(q => q.IdEmpresa == IdEmpresa
                                  && q.IdSucursal >= IdSucursalIni
                                  && q.IdSucursal <= IdSucursalFin
                                  && q.FechaCarga >= FechaInicio
-                                 && q.FechaCarga <= FechaFin
-                                 select new ro_EmpleadoNovedadCargaMasiva_Info
+                                 && q.FechaCarga <= FechaFin).Select(q => new ro_EmpleadoNovedadCargaMasiva_Info
                                  {
-                                     IdEmpresa=q.IdEmpresa,
-                                     IdCarga=q.IdCarga,
+                                     IdEmpresa = q.IdEmpresa,
+                                     IdCarga = q.IdCarga,
                                      FechaCarga = q.FechaCarga,
                                      Observacion = q.Observacion,
                                      IdRubro = q.IdRubro,
                                      EstadoBool = q.Estado,
-                                     Descripcion=q.Descripcion,
-                                     DescripcionProcesoNomina=q.DescripcionProcesoNomina,
-                                     ru_descripcion=q.ru_descripcion,
-                                     Estado=q.Estado
-                                 }
-                               ).ToList();
-                   
-
+                                     Descripcion = q.Descripcion,
+                                     DescripcionProcesoNomina = q.DescripcionProcesoNomina,
+                                     ru_descripcion = q.ru_descripcion,
+                                     Estado = q.Estado
+                                 }).ToList();
                 }
 
                 return lista;
@@ -82,9 +79,7 @@ namespace Core.Erp.Data.RRHH
                     Contex.ro_EmpleadoNovedadCargaMasiva.Add(entity);
 
                     foreach (var item in info.detalle)
-                    {
-                        
-
+                    {                
                         ro_empleado_Novedad Entity = new ro_empleado_Novedad
                         {
                             IdEmpresa = info.IdEmpresa,
