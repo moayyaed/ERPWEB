@@ -33,8 +33,8 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
             DateTime fechaCorte = p_fechaCorte.Value == null ? DateTime.Now : Convert.ToDateTime(p_fechaCorte.Value);
             bool MostrarSoloCarteraVencida = p_MostrarSoloCarteraVencida.Value == null ? false : Convert.ToBoolean(p_MostrarSoloCarteraVencida.Value);
 
-            CXC_010_Bus bus_rpt = new CXC_010_Bus();
-            List<CXC_010_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdCliente, Idtipo_cliente, fechaCorte, MostrarSoloCarteraVencida, DiasVencimiento);
+            CXC_012_Bus bus_rpt = new CXC_012_Bus();
+            List<CXC_012_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdCliente, Idtipo_cliente, fechaCorte, MostrarSoloCarteraVencida, DiasVencimiento);
             this.DataSource = lst_rpt;
 
 

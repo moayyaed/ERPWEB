@@ -10418,6 +10418,7 @@
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Nuevo.cshtml" />
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Modificar.cshtml" />
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Anular.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_012.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10535,6 +10536,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

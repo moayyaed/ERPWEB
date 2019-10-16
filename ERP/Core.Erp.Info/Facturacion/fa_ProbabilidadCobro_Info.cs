@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DevExpress.ExpressApp.Utils;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ namespace Core.Erp.Info.Facturacion
         public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdProbabilidad { get; set; }
+        [Required(ErrorMessage = "El campo descripcion es obligatorio")]
         public string Descripcion { get; set; }
         public bool MostrarNoAsignadas { get; set; }
         public bool Estado { get; set; }

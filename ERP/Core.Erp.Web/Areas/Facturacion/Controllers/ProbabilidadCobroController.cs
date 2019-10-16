@@ -97,17 +97,39 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 info.IdUsuarioCreacion = SessionFixed.IdUsuario;
                 info.lst_detalle = Lista_ProbabilidadCobroDet.get_list(info.IdTransaccionSession);
-
+                var lst = bus_probabilidad.get_list(info.IdEmpresa, false);
                 if (ModelState.IsValid)
                 {
-                    if (!bus_probabilidad.GuardarDB(info))
+                    if (info.MostrarNoAsignadas == false)
                     {
-                        ViewBag.mensaje = "No se ha podido guardar el registro";
-                        SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
-                        return View(info);
+                        if (lst.Where(q => q.MostrarNoAsignadas == true).Count() > 0)
+                        {
+                            if (!bus_probabilidad.GuardarDB(info))
+                            {
+                                ViewBag.mensaje = "No se ha podido guardar el registro";
+                                SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
+                                return View(info);
+                            }
+                            else
+                                return RedirectToAction("Modificar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
+                        }
+                        else
+                        {
+                            ViewBag.mensaje = "Debe existir un registro para agrupar las facturas que no pertenezacan a ninguna otra probabilidad";
+                            return View(info);
+                        }
                     }
                     else
-                        return RedirectToAction("Modificar", new { IdEmpresa=info.IdEmpresa, IdProbabilidad=info.IdProbabilidad, Exito = true });
+                    {
+                        if (!bus_probabilidad.GuardarDB(info))
+                            {
+                                ViewBag.mensaje = "No se ha podido guardar el registro";
+                                SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
+                                return View(info);
+                            }
+                            else
+                                return RedirectToAction("Modificar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
+                    }
                 }
                 else
                     return View(info);

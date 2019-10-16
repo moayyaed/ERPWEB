@@ -335,6 +335,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_012_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_011_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Bus.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_Bus.cs" />

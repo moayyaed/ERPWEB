@@ -32,7 +32,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 			IIF( DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte )>90,  Facturas_y_notas_deb.Valor_Original - isnull( Cobros_x_fac.dc_ValorPago,0),0) Mayor_a_90Dias
 			,Facturas_y_notas_deb.vt_fech_venc,Facturas_y_notas_deb.vt_fecha,Facturas_y_notas_deb.Idtipo_cliente,DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte ) Dias_Vencidos,
 			ISNULL(cast( Facturas_y_notas_deb.Valor_Original-isnull( Cobros_x_fac.dc_ValorPago,0) as numeric(10,2)),0) Saldo,Facturas_y_notas_deb.pe_telefonoOfic, vt_Observacion, vt_plazo, NomContacto, TelefonoContacto,
-			Descripcion_tip_cliente, Idtipo_cliente, NombreProbabilidad, IdProbabilidad
+			Descripcion_tip_cliente, NombreProbabilidad, IdProbabilidad
 			
  from 
 (

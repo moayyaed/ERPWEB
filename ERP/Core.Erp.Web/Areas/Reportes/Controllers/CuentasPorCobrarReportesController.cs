@@ -721,5 +721,69 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult CXC_012()
+        {
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                Idtipo_cliente = 0,
+                DiasVencidos = 0
+            };
+
+            cargar_combos(model.IdEmpresa);
+            CXC_012_Rpt report = new CXC_012_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
+            report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.p_QuitarGrupo.Value = model.Check2;
+            report.p_DiasVencimiento.Value = model.DiasVencidos;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CXC_012(cl_filtros_facturacion_Info model)
+        {
+            CXC_012_Rpt report = new CXC_012_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXC_012");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaCorte.Value = model.fecha_fin;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente == null ? 0 : Convert.ToDecimal(model.IdCliente);
+            report.p_Idtipo_cliente.Value = model.Idtipo_cliente == 0 ? 0 : model.Idtipo_cliente;
+            report.p_MostrarSoloCarteraVencida.Value = model.Check1;
+            report.p_QuitarGrupo.Value = model.Check2;
+            report.p_DiasVencimiento.Value = model.DiasVencidos;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_combos(model.IdEmpresa);
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }
