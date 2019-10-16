@@ -274,7 +274,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     var info = lst_x_cruzar.Where(q => q.IdString == item).FirstOrDefault();
                     if (info != null)
                     {
-                        if (lst_det_probabilidad.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdCbteVta == info.IdCbteVta).Count() == 0)
+                        if (lst_det_probabilidad.Where(q => q.IdString == item).Count() == 0)
                         {
                             info.Secuencia = lst_det_probabilidad.Count == 0 ? 1 : lst_det_probabilidad.Max(q => q.Secuencia) + 1;
                             info.IdEmpresa = IdEmpresa;

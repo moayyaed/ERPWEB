@@ -219,6 +219,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_novedad.guardarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }
@@ -296,6 +297,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
             if (!bus_novedad.modificarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }
@@ -341,6 +343,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.Fecha_UltAnu = DateTime.Now;
             if (!bus_novedad.anularDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdNomina_Tipo);
                 return View(model);
             }

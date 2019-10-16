@@ -83,8 +83,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_NominasPagosCheques_Info model = new ro_NominasPagosCheques_Info();
             model.detalle = ro_NominasPagosCheques_det_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_pagos_cheques_det", model);
-
-
         }
         #endregion
 

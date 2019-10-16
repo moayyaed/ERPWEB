@@ -81,8 +81,7 @@
         settings.ClientSideEvents.FocusedCellChanging = "function(s,e,){get_fila()}";
 
         settings.Settings.ShowFooter = true;
-        settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdSolicitud'] =  $('#IdSolicitud').val(); e.customArgs['IdEmpleado'] =  $('#IdEmpleado').val();}";
-
+        settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdSolicitud'] =  $('#IdSolicitud').val(); e.customArgs['IdEmpleado'] =  $('#IdEmpleado').val(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

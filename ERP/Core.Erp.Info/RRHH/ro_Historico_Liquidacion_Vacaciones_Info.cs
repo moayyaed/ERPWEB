@@ -7,6 +7,7 @@ namespace Core.Erp.Info.RRHH
 {
    public class ro_Historico_Liquidacion_Vacaciones_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdEmpleado { get; set; }
         public int IdLiquidacion { get; set; }

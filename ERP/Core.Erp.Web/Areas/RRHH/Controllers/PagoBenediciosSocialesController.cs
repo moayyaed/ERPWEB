@@ -17,25 +17,40 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class PagoBenediciosSocialesController : Controller
     {
-        #region MyRegion
+        #region Variables
         int IdEmpresa = 0;
         ro_rol_Bus bus_rol = new ro_rol_Bus();
+        ro_rol_List Lista_Benenificios = new ro_rol_List();
         #endregion
 
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
             };
+            List<ro_rol_Info> lista = bus_rol.get_list_decimos(model.IdEmpresa, model.IdSucursal);
+            Lista_Benenificios.set_list(lista, model.IdTransaccionSession);
             cargar_combo_consulta(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             cargar_combo_consulta(model.IdEmpresa);
+            List<ro_rol_Info> lista = bus_rol.get_list_decimos(model.IdEmpresa, model.IdSucursal);
+            Lista_Benenificios.set_list(lista, model.IdTransaccionSession);
+
             return View(model);
         }
         [ValidateInput(false)]
@@ -43,8 +58,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                List<ro_rol_Info> model = bus_rol.get_list_decimos(IdEmpresa, IdSucursal);
+                SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+                var model = Lista_Benenificios.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_pago_beneficios", model);
             }
             catch (Exception)
@@ -192,10 +208,26 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(archivo);
             return File(byteArray, "application/xml", NombreFile + ".csv");
-
-
         }
-        
+    }
 
+    public class ro_rol_List
+    {
+        string variable = "ro_rol_Info";
+        public List<ro_rol_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_rol_Info> list = new List<ro_rol_Info>();
+
+                HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_rol_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_rol_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

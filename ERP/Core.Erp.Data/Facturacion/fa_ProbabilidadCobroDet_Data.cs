@@ -35,6 +35,7 @@ namespace Core.Erp.Data.Facturacion
                         pe_nombreCompleto = q.pe_nombreCompleto
                     }).ToList();
                     Lista.ForEach(q => q.Secuencia = Secuencia++);
+                    Lista.ForEach(q => q.IdString = q.vt_tipoDoc.ToString() + q.IdEmpresa.ToString("0000") + q.IdSucursal.ToString("0000") + q.IdBodega.ToString("0000") + q.IdCbteVta.ToString("0000000000"));
                 }
 
                 return Lista;
@@ -70,7 +71,7 @@ namespace Core.Erp.Data.Facturacion
                         vt_Observacion =q.vt_Observacion,
                         pe_nombreCompleto = q.pe_nombreCompleto
                     }).ToList();
-                    Lista.ForEach(q => q.IdString = q.IdEmpresa.ToString("0000") + q.IdSucursal.ToString("0000") + q.IdBodega.ToString("0000") + q.IdCbteVta.ToString("0000000000"));
+                    Lista.ForEach(q => q.IdString = q.vt_tipoDoc.ToString() + q.IdEmpresa.ToString("0000") + q.IdSucursal.ToString("0000") + q.IdBodega.ToString("0000") + q.IdCbteVta.ToString("0000000000"));
                     Lista.ForEach(q => q.Secuencia = Secuencia++);
                 }
 
@@ -118,7 +119,7 @@ namespace Core.Erp.Data.Facturacion
             {
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    var sql = "delete from fa_ProbabilidadCobroDet where IdEmpresa =" + info.IdEmpresa + " and IdProbabilidad = " + info.IdProbabilidad + " and Secuencia = " + info.Secuencia;
+                    var sql = "delete from fa_ProbabilidadCobroDet where IdEmpresa =" + info.IdEmpresa + " and IdSucursal = " + info.IdSucursal + " and IdBodega = " + info.IdBodega + " and IdCbteVta = " + info.IdCbteVta;
                     Context.Database.ExecuteSqlCommand(sql);
                 }
 

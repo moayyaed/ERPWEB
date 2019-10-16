@@ -145,6 +145,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_novedad.GuardarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos();
                 return View(model);
             }
@@ -187,6 +188,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.Fecha_UltAnu = DateTime.Now;
             if (!bus_novedad.AnularDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos();
                 return View(model);
             }

@@ -9,8 +9,10 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Modificar", "PagoBenediciosSociales", FormMethod.Post, new { @class = "form", @role = "form" }))
-{@Html.HiddenFor(q => q.IdEmpresa);
-@Html.HiddenFor(q => q.IdRol);
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdRol);
 
     <div class="row">
         <div class="col-md-12">

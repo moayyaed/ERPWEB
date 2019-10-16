@@ -20,6 +20,12 @@
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowNewButton = false;
 
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
         settings.SettingsContextMenu.Enabled = true;
         settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
         settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = false;
