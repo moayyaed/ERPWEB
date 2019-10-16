@@ -280,6 +280,7 @@ namespace Core.Erp.Data.General
                                   NumAutorizacion = q.NumAutorizacion,
                                   NumDocumento = q.NumDocumento,
                                   PuntoEmision = q.PuntoEmision,
+                                  FechaCaducidad = q.FechaCaducidad,
                                   EstadoBool = q.Estado == "A" ? true : false
 
                               }).ToList();

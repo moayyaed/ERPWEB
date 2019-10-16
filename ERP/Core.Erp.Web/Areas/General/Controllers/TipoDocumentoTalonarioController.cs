@@ -245,7 +245,13 @@ namespace Core.Erp.Web.Areas.General.Controllers
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             var Lista = bus_talonario.get_list_actualizacion_masiva(model.IdEmpresa, model.IdSucursal, model.CodDocumentoTipo, model.Establecimiento, model.PuntoEmision, model.NumInicio, model.NumFin);
-
+            var info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
+            if (Lista.Count > 0)
+            {
+                info_talonario = Lista[0];
+            }
+            model.NumAutorizacion = info_talonario.NumAutorizacion;
+            model.FechaCaducidad = Convert.ToDateTime(info_talonario.FechaCaducidad);
             ListaTalonario.set_list(Lista, model.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
             
