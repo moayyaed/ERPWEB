@@ -387,7 +387,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                     msg = "El valor de la orden de pago no puede ser 0";
                     return false;
                 }
-                if (i_validar.ValorOP == 0)
+                if (i_validar.ValorReposicion == 0)
                 {
                     msg = "El valor de la reposición de caja no puede ser 0";
                     return false;
