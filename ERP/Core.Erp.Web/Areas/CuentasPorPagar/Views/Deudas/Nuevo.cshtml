@@ -90,6 +90,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                $("#co_plazo").val(data.info_oc.oc_plazo); 
+                var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(data.info_oc.oc_plazo, 'days'));
+                co_FechaFactura_vct.SetValue(date);
             },
             error: function (error) {
             }

@@ -95,8 +95,7 @@
                 p.DisplayFormatString = "N2";
             });
         });
-
-        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); OnBeginCallback(s,e)}";
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
     });
 }

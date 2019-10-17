@@ -1234,8 +1234,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 }
             }
             List<cp_orden_giro_det_ing_x_oc_Info> lista = ListaDetalleOC.get_list(IdTransaccionSession);
+            var info = lista.FirstOrDefault();
+            var info_oc = bus_ordencompra.get_info(info.IdEmpresa, Convert.ToInt32(info.oc_IdSucursal), Convert.ToDecimal(info.oc_IdOrdenCompra));
+            if (info_oc == null)
+            {
+                info_oc = new com_ordencompra_local_Info();
+            }
+            
             var model = ListaDetalleOC.get_list(IdTransaccionSession);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(new { model= model, info_oc = info_oc }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost, ValidateInput(false)]
