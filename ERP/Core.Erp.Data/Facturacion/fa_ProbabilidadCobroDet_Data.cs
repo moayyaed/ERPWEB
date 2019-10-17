@@ -119,7 +119,7 @@ namespace Core.Erp.Data.Facturacion
             {
                 using (Entities_facturacion Context = new Entities_facturacion())
                 {
-                    var sql = "delete from fa_ProbabilidadCobroDet where IdEmpresa =" + info.IdEmpresa + " and IdSucursal = " + info.IdSucursal + " and IdBodega = " + info.IdBodega + " and IdCbteVta = " + info.IdCbteVta;
+                    var sql = "delete from fa_ProbabilidadCobroDet where IdEmpresa =" + info.IdEmpresa + " and IdSucursal = " + info.IdSucursal + " and IdBodega = " + info.IdBodega + " and IdCbteVta = " + info.IdCbteVta + " and vt_tipoDoc = " + "'"+info.vt_tipoDoc+"'";
                     Context.Database.ExecuteSqlCommand(sql);
                 }
 
