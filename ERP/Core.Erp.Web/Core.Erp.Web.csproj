@@ -10420,6 +10420,7 @@
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Anular.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_012.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
+    <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />

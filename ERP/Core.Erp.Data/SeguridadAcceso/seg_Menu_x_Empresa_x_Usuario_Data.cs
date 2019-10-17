@@ -156,7 +156,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                 {
                     foreach (var item in Lista)
                     {
-                        seg_Menu_x_Empresa_x_Usuario Entity = new Data.seg_Menu_x_Empresa_x_Usuario
+                        seg_Menu_x_Empresa_x_Usuario Entity = new seg_Menu_x_Empresa_x_Usuario
                         {
                             IdEmpresa = item.IdEmpresa,
                             IdUsuario = item.IdUsuario,
