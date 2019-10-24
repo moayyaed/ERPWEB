@@ -836,5 +836,49 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_grupo_check(model.IdEmpresa, model.StringArray);
             return View(model);
         }
+
+        public ActionResult CONTA_011()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+            };
+
+            CONTA_011_Rpt report = new CONTA_011_Rpt();
+            report.IntArray.Value = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaIni.Value = model.fecha_ini;
+            report.p_fechaFin.Value = model.fecha_fin;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_011(cl_filtros_contabilidad_Info model)
+        {
+            model.IdAnio = model.fecha_fin.Year;
+
+
+            CONTA_011_Rpt report = new CONTA_011_Rpt();
+            report.IntArray.Value = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_fechaIni.Value = model.fecha_ini;
+            report.p_fechaFin.Value = model.fecha_fin;
+            report.p_IdUsuario.Value = SessionFixed.IdUsuario;
+
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
     }
 }

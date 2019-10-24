@@ -805,6 +805,12 @@
     <Compile Include="Reportes\Contabilidad\CONTA_010_Rpt.Designer.cs">
       <DependentUpon>CONTA_010_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_011_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_011_Rpt.Designer.cs">
+      <DependentUpon>CONTA_011_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10419,6 +10425,7 @@
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Modificar.cshtml" />
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Anular.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_012.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_011.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10681,6 +10688,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_010_Rpt.resx">
       <DependentUpon>CONTA_010_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_011_Rpt.resx">
+      <DependentUpon>CONTA_011_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.resx">
       <DependentUpon>CXC_001_diario_Rpt.cs</DependentUpon>

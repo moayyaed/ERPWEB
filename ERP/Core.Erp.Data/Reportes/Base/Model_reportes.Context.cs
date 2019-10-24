@@ -2046,5 +2046,26 @@ namespace Core.Erp.Data.Reportes.Base
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXC_012_Result>("SPCXC_012", idEmpresaParameter, sucursalIniParameter, sucursalFinParameter, idClienteIniParameter, idClienteFinParameter, idTipoClienteIniParameter, idTipoClienteFinParameter, fechaCorteParameter, mostrarSoloCarteraVencidaParameter, diasVencidosParameter);
         }
+    
+        public virtual ObjectResult<SPCONTA_011_Result> SPCONTA_011(Nullable<int> idEmpresa, string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_011_Result>("SPCONTA_011", idEmpresaParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter);
+        }
     }
 }

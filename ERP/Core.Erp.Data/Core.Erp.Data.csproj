@@ -1381,6 +1381,9 @@
     <Compile Include="Reportes\Base\SPCONTA_009_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\SPCONTA_011_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\SPCXC_004_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1822,6 +1825,7 @@
     <Compile Include="Reportes\Contabilidad\CONTA_009_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_008_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_007_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_011_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Data.cs" />
