@@ -17,13 +17,17 @@
     [IdUsuarioUltAnu]     VARCHAR (50)  NULL,
     [Fecha_UltAnu]        DATETIME      NULL,
     [MotivoAnulacion]     VARCHAR (150) NULL,
+    [IdTipo_Gasto]        INT           NULL,
     CONSTRAINT [PK__ct_planc__86F41E99182C9B23] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdCtaCble] ASC),
     CONSTRAINT [FK_ct_plancta_ct_ClasificacionEBIT] FOREIGN KEY ([IdClasificacionEBIT]) REFERENCES [dbo].[ct_ClasificacionEBIT] ([IdClasificacionEBIT]),
+    CONSTRAINT [FK_ct_plancta_ct_grupo_x_Tipo_Gasto] FOREIGN KEY ([IdEmpresa], [IdTipo_Gasto]) REFERENCES [dbo].[ct_grupo_x_Tipo_Gasto] ([IdEmpresa], [IdTipo_Gasto]),
     CONSTRAINT [FK_ct_plancta_ct_grupocble] FOREIGN KEY ([IdGrupoCble]) REFERENCES [dbo].[ct_grupocble] ([IdGrupoCble]),
     CONSTRAINT [FK_ct_plancta_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCblePadre]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_ct_plancta_ct_plancta_nivel] FOREIGN KEY ([IdEmpresa], [IdNivelCta]) REFERENCES [dbo].[ct_plancta_nivel] ([IdEmpresa], [IdNivelCta]),
     CONSTRAINT [FK_ct_plancta_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa])
 );
+
+
 
 
 
