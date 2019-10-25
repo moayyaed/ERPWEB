@@ -62,7 +62,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                  Total_Pagado = q.Total_Pagado,
                                  TelefonoContacto = q.TelefonoContacto,
                                  NomContacto = q.NomContacto,
-                                 Descripcion_tip_cliente = q.Descripcion_tip_cliente
+                                 Descripcion_tip_cliente = q.Descripcion_tip_cliente,
+                                 EsRelacionado = q.EsRelacionado
                              }).ToList();
                 }
                 return Lista;

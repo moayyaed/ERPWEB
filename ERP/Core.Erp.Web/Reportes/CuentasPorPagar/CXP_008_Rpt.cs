@@ -31,10 +31,10 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             DateTime fecha = string.IsNullOrEmpty(p_fecha.Value.ToString()) ? DateTime.Now : Convert.ToDateTime(p_fecha.Value);
             bool no_mostrar_en_conciliacion = string.IsNullOrEmpty(p_no_mostrar_en_conciliacion.ToString()) ? false : Convert.ToBoolean(p_no_mostrar_en_conciliacion.Value);
             bool no_mostrar_saldo_0 = string.IsNullOrEmpty(p_no_mostrar_saldo_0.ToString()) ? false : Convert.ToBoolean(p_no_mostrar_saldo_0.Value);
-
+            bool mostrarGrupo = string.IsNullOrEmpty(p_mostrarGrupo.ToString()) ? false : Convert.ToBoolean(p_mostrarGrupo.Value);
             int IdClaseProveedor = string.IsNullOrEmpty(p_IdClaseProveedor.Value.ToString()) ? 0 : Convert.ToInt32(p_IdClaseProveedor.Value);
             
-                        CXP_008_Bus bus_rpt = new CXP_008_Bus();
+            CXP_008_Bus bus_rpt = new CXP_008_Bus();
             List<CXP_008_Info> lst_rpt = bus_rpt.get_list(IdEmpresa,  fecha, IdSucursal, IdClaseProveedor, IdProveedor, no_mostrar_en_conciliacion, no_mostrar_saldo_0);
             this.DataSource = lst_rpt;
 
@@ -45,6 +45,48 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             {
                 ImageConverter obj = new ImageConverter();
                 lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
+            }
+        }
+
+        private void EsRelacionadoTit_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            
+        }
+
+        private void EsRelacionadoDet_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+          
+        }
+
+        private void GroupHeader2_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_mostrarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupHeader1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_mostrarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupFooter1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_mostrarGrupo.Value))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void GroupFooter2_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (Convert.ToBoolean(p_mostrarGrupo.Value))
+            {
+                e.Cancel = true;
             }
         }
     }

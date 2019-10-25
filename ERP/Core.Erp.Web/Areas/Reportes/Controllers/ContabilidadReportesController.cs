@@ -208,6 +208,21 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 }
             ViewBag.lst_grupo = lst_grupo;
         }
+        private void cargar_periodo_check(int IdEmpresa, int[] intArray)
+        {
+            ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+            var lst_periodo = bus_periodo.get_list(IdEmpresa, false);
+            if (intArray == null || intArray.Count() == 0)
+            {
+                lst_periodo.FirstOrDefault().Seleccionado = true;
+            }
+            else
+                foreach (var item in lst_periodo)
+                {
+                    item.Seleccionado = (intArray.Where(q => q == item.IdPeriodo).Count() > 0 ? true : false);
+                }
+            ViewBag.lst_periodo = lst_periodo;
+        }
         private void cargar_nivel()
         {
             Dictionary<int, string> lst_nivel = new Dictionary<int, string>();
@@ -878,6 +893,40 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
 
             cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
+
+        public ActionResult CONTA_012()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IntArray = new int[] { },
+            };
+
+            CONTA_012_Rpt report = new CONTA_012_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_periodo_check(model.IdEmpresa, model.IntArray);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_012(cl_filtros_contabilidad_Info model)
+        {
+            CONTA_012_Rpt report = new CONTA_012_Rpt();
+            report.IntArray = model.IntArray;
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+
+            cargar_periodo_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }
     }

@@ -31,6 +31,7 @@ namespace Core.Erp.Info.Contabilidad
         public string AnioMes { get; set; }
         public string IdUsuario { get; set; }
         public List<ct_periodo_x_tb_modulo_Info> lst_periodo_x_modulo { get; set; }
+        public bool Seleccionado { get; set; }
 
     }
 }

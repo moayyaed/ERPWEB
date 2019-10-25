@@ -168,5 +168,15 @@ namespace Core.Erp.Web.Reportes.CuentasPorCobrar
                 e.Cancel = true;
             }
         }
+
+        private void Relacionado_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            
+        }
+
+        private void xrTableCell37_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            
+        }
     }
 }

@@ -63,7 +63,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      en_conciliacion = q.en_conciliacion,
                                      Su_Descripcion = q.Su_Descripcion,
                                      descripcion_clas_prove = q.descripcion_clas_prove,
-                                     IdClaseProveedor = q.IdClaseProveedor
+                                     IdClaseProveedor = q.IdClaseProveedor,
+                                     EsRelacionado = q.EsRelacionado
                                  }).ToList();
                     }
                     else
@@ -104,7 +105,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      en_conciliacion = q.en_conciliacion,
                                      Su_Descripcion = q.Su_Descripcion,
                                      descripcion_clas_prove = q.descripcion_clas_prove,
-                                     IdClaseProveedor = q.IdClaseProveedor
+                                     IdClaseProveedor = q.IdClaseProveedor,
+                                     EsRelacionado = q.EsRelacionado
                                  }).ToList();
                     }
                     else
@@ -145,7 +147,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                      en_conciliacion = q.en_conciliacion,
                                      Su_Descripcion = q.Su_Descripcion,
                                      descripcion_clas_prove = q.descripcion_clas_prove,
-                                     IdClaseProveedor = q.IdClaseProveedor
+                                     IdClaseProveedor = q.IdClaseProveedor,
+                                     EsRelacionado = q.EsRelacionado
                                  }).ToList();
                     }
                     else
@@ -183,7 +186,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  en_conciliacion = q.en_conciliacion,
                                  Su_Descripcion = q.Su_Descripcion,
                                  descripcion_clas_prove = q.descripcion_clas_prove,
-                                 IdClaseProveedor = q.IdClaseProveedor
+                                 IdClaseProveedor = q.IdClaseProveedor,
+                                 EsRelacionado = q.EsRelacionado
                              }).ToList();
                 }
                 return Lista;

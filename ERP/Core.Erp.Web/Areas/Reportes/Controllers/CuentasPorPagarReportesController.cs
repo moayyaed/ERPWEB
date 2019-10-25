@@ -253,7 +253,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdProveedor = 0
+                IdProveedor = 0,
+                mostrar_agrupado = false
             };
             cargar_combos(true);
             CXP_008_Rpt report = new CXP_008_Rpt();
@@ -267,6 +268,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             }
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_mostrarGrupo.Value = model.mostrar_agrupado;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_fecha.Value = model.fecha_fin;
             report.p_IdProveedor.Value = model.IdProveedor;
@@ -293,6 +295,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_mostrarGrupo.Value = model.mostrar_agrupado;
             report.p_fecha.Value = model.fecha_fin;
             report.p_IdProveedor.Value = model.IdProveedor;
             report.p_IdClaseProveedor.Value = model.IdClaseProveedor;

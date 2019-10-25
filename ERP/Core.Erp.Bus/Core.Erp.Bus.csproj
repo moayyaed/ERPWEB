@@ -323,6 +323,7 @@
     <Compile Include="Reportes\Contabilidad\CONTA_009_Bus.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_008_Bus.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_011_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_012_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Bus.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Bus.cs" />

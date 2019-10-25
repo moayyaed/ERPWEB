@@ -46,5 +46,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string NomContacto { get; set; }
         public string TelefonoContacto { get; set; }
         public string Descripcion_tip_cliente { get; set; }
+        public string EsRelacionado { get; set; }
     }
 }

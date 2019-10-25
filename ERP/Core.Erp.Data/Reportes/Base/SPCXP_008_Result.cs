@@ -45,5 +45,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string Su_Descripcion { get; set; }
         public int IdClaseProveedor { get; set; }
         public string descripcion_clas_prove { get; set; }
+        public string EsRelacionado { get; set; }
     }
 }
