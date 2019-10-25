@@ -15,6 +15,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
         public string usuario { get; set; }
         public string empresa { get; set; }
         public int[] IntArray { get; set; }
+        List<CONTA_012_Info> lst_rpt = new List<CONTA_012_Info>();
         public CONTA_012_Rpt()
         {
             InitializeComponent();
@@ -26,14 +27,16 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             lbl_empresa.Text = empresa;
             lbl_usuario.Text = usuario;
             int IdEmpresa = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
-            int IdPeriodo = p_IdPeriodo.Value == null ? 0 : Convert.ToInt32(p_IdPeriodo.Value);
+            //int IdPeriodo = p_IdPeriodo.Value == null ? 0 : Convert.ToInt32(p_IdPeriodo.Value);
+            string IdGrupoCble = p_IdGrupoCble.Value == null ? "" : Convert.ToString(p_IdGrupoCble.Value);
 
             CONTA_012_Bus bus_rpt = new CONTA_012_Bus();
             foreach (var item in IntArray)
             {
-
+                List<CONTA_012_Info> lst = bus_rpt.get_list(IdEmpresa, item, IdGrupoCble);
+                lst_rpt.AddRange(lst);
             }
-            List<CONTA_012_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdPeriodo);
+            //
 
             this.DataSource = lst_rpt;
 

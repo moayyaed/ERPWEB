@@ -103,6 +103,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         #endregion
 
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+        ct_grupocble_Bus bus_grupo_cble = new ct_grupocble_Bus();
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
         public ActionResult CONTA_001(int IdTipoCbte = 0, decimal IdCbteCble = 0)
@@ -178,6 +179,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.lst_punto_cargo = lst_punto_cargo;
 
         }
+        private void cargar_grupo_cble()
+        {
+            var lst_grupo = bus_grupo_cble.get_list(false);
+            //lst_grupo.Add(new ct_grupocble_Info
+            //{
+            //    IdGrupoCble = "",
+            //    gc_GrupoCble = "Todos"
+            //});
+            ViewBag.lst_grupo = lst_grupo;
+        }
         private void cargar_sucursal_check(int IdEmpresa, int[] intArray)
         {
             tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
@@ -214,7 +225,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_periodo = bus_periodo.get_list(IdEmpresa, false);
             if (intArray == null || intArray.Count() == 0)
             {
-                lst_periodo.FirstOrDefault().Seleccionado = true;
+                //lst_periodo.FirstOrDefault().Seleccionado = true;
             }
             else
                 foreach (var item in lst_periodo)
@@ -902,6 +913,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IntArray = new int[] { },
+                IdGrupoCble =""
             };
 
             CONTA_012_Rpt report = new CONTA_012_Rpt();
@@ -909,9 +921,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
+            report.p_IdGrupoCble.Value = model.IdGrupoCble;
             report.RequestParameters = false;
             ViewBag.Report = report;
-
+            cargar_grupo_cble();
             cargar_periodo_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }
@@ -921,11 +934,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             CONTA_012_Rpt report = new CONTA_012_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdGrupoCble.Value = model.IdGrupoCble;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
-
+            cargar_grupo_cble();
             cargar_periodo_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }

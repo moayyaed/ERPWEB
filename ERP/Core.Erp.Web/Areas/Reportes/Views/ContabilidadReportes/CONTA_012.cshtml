@@ -1,5 +1,5 @@
-﻿@model Core.Erp.Info.Helps.cl_filtros_contabilidad_Info
-@using System.Web.UI.WebControls
+﻿@using System.Web.UI.WebControls
+@model Core.Erp.Info.Helps.cl_filtros_contabilidad_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
     ViewBag.Title = "Cuentas de resultado por tipo de gasto";
@@ -8,15 +8,6 @@
         Response.Redirect("~/Account/Login");
     }
 }
-
-@Html.DevExpress().CheckBoxList(settings =>
-{
-    settings.Name = "CheckBoxList";
-    settings.Properties.Items.Add("Item 0");
-    settings.Properties.Items.Add("Item 1");
-    settings.Properties.Items.Add("Item 2");
-}).GetHtml()
-
 
 <script type="text/javascript">
     var textSeparator = ";";
@@ -70,50 +61,57 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="IdSucursal">Periodo*</label>
+                            <label for="IdPeriodo">Periodo</label>
                             @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
-                            {
-                               settings.Name = "checkComboBox";
-                               settings.Width = Unit.Percentage(100);
+                       {
+                           settings.Name = "checkComboBox";
+                           settings.Width = Unit.Percentage(100);
 
-                               settings.SetDropDownWindowTemplateContent(c =>
+                           settings.SetDropDownWindowTemplateContent(c =>
+                           {
+                               @Html.DevExpress().ListBox(listBoxSettings =>
                                {
-                                   @Html.DevExpress().ListBox(listBoxSettings =>
-                                   {
-                                       listBoxSettings.Name = "IntArray";
-                                       listBoxSettings.ControlStyle.Border.BorderWidth = 0;
-                                       listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
+                                   listBoxSettings.Name = "IntArray";
+                                   listBoxSettings.ControlStyle.Border.BorderWidth = 0;
+                                   listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
 
-                                       listBoxSettings.Height = Unit.Pixel(350);
-                                       listBoxSettings.Width = Unit.Percentage(100);
+                                   listBoxSettings.Height = Unit.Pixel(350);
+                                   listBoxSettings.Width = Unit.Percentage(100);
 
-                                       listBoxSettings.Properties.EnableSelectAll = true;
-                                       listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
-                                       listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
-                                       foreach (var item in ViewBag.lst_periodo)
-                                       {
-                                           listBoxSettings.Properties.Items.Add(item.IdPeriodo, item.nom_periodo_combo).Selected = item.Seleccionado;
-                                       }
-                                       listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
-                                       listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
-                                   }).Render();
-                                   ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
-                                   @Html.DevExpress().Button(buttonSettings =>
+                                   listBoxSettings.Properties.EnableSelectAll = true;
+                                   listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
+                                   listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
+                                   foreach (var item in ViewBag.lst_periodo)
                                    {
-                                       buttonSettings.Name = "buttonClose";
-                                       buttonSettings.Text = "Close";
-                                       buttonSettings.Style.Add("float", "right");
-                                       buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBox.HideDropDown(); }";
-                                       buttonSettings.Height = 26;
-                                   }).Render();
-                                   ViewContext.Writer.Write("</div>");
-                               });
-                               settings.Properties.AnimationType = AnimationType.None;
-                               settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
-                               settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
-                        }).GetHtml()
+                                       listBoxSettings.Properties.Items.Add(item.IdPeriodo, item.IdPeriodo).Selected = item.Seleccionado;
+                                   }
+                                   listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
+                                   listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
+                               }).Render();
+                               ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
+                               @Html.DevExpress().Button(buttonSettings =>
+                               {
+                                   buttonSettings.Name = "buttonClose";
+                                   buttonSettings.Text = "Close";
+                                   buttonSettings.Style.Add("float", "right");
+                                   buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBox.HideDropDown(); }";
+                                   buttonSettings.Height = 26;
+                               }).Render();
+                               ViewContext.Writer.Write("</div>");
+                           });
+                           settings.Properties.AnimationType = AnimationType.None;
+                           settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
+                           settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
+                       }).GetHtml()
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdPeriodo">Grupo contable</label>
+                            @Html.DropDownListFor(q => q.IdGrupoCble, new SelectList(ViewBag.lst_grupo, "IdGrupoCble", "gc_GrupoCble"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdGrupoCble, "", new { @class = "form", @role = "text-danger" })
                         </div>
                     </div>
                 </div>

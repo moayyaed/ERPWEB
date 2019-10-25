@@ -1,23 +1,22 @@
-﻿using Core.Erp.Data.Reportes.Base;
+﻿using Core.Erp.Data.General;
+using Core.Erp.Data.Reportes.Base;
 using Core.Erp.Info.Reportes.Contabilidad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Erp.Data.Reportes.Contabilidad
 {
     public class CONTA_012_Data
     {
-        public List<CONTA_012_Info> get_list(int IdEmpresa, int IdPeriodo)
+        public List<CONTA_012_Info> get_list(int IdEmpresa, int IdPeriodo, string IdGrupoCble)
         {
             try
             {
                 List<CONTA_012_Info> Lista = new List<CONTA_012_Info>();
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = (from q in Context.SPCONTA_012(IdEmpresa, IdPeriodo, "")
+                    Lista = (from q in Context.SPCONTA_012(IdEmpresa, IdPeriodo, IdGrupoCble)
                              select new CONTA_012_Info
                              {
                                 IdEmpresa = q.IdEmpresa,

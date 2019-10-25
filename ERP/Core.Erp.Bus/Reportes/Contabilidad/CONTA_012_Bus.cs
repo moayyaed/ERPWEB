@@ -11,11 +11,11 @@ namespace Core.Erp.Bus.Reportes.Contabilidad
     public class CONTA_012_Bus
     {
         CONTA_012_Data odata = new CONTA_012_Data();
-        public List<CONTA_012_Info> get_list(int IdEmpresa, int IdPeriodo)
+        public List<CONTA_012_Info> get_list(int IdEmpresa, int IdPeriodo, string IdGrupoCble)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdPeriodo);
+                return odata.get_list(IdEmpresa, IdPeriodo, IdGrupoCble);
             }
             catch (Exception)
             {
