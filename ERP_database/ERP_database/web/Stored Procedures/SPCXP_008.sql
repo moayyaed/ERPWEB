@@ -30,14 +30,15 @@ Select
         (Case when datediff(day,co_FechaFactura_vct,@fecha) >=31  and datediff(day,co_FechaFactura_vct,@fecha) <=60 then (A.Valor_a_pagar - ISNULL(b.MontoAplicado, 0)) else 0 end) Vencido_31_60,
 		(Case when datediff(day,co_FechaFactura_vct,@fecha) >=61  and datediff(day,co_FechaFactura_vct,@fecha) <=90 then (A.Valor_a_pagar - ISNULL(b.MontoAplicado, 0)) else 0 end) Vencido_60_90,
         (Case when datediff(day,co_FechaFactura_vct,@fecha) >=91    then (A.Valor_a_pagar - ISNULL(b.MontoAplicado, 0)) else 0 end) Vencido_mayor_90, isnull(a.en_conciliacion,0) as en_conciliacion, Su_Descripcion,
-		a.IdClaseProveedor, a.descripcion_clas_prove
+		a.IdClaseProveedor, a.descripcion_clas_prove, a.EsRelacionado
  from
  (
  
 			select og.IdEmpresa,og.IdCbteCble_Ogiro,og.IdTipoCbte_Ogiro,og.IdOrden_giro_Tipo,og.co_factura Documento, td.Descripcion as nom_tipo_doc,td.Codigo as cod_tipo_doc, og.IdProveedor, per.pe_nombreCompleto as nom_proveedor,
 			og.co_total as Valor_a_pagar, og.co_observacion Observacion,per.pe_cedulaRuc Ruc_Proveedor, per.pe_nombreCompleto as representante_legal, 'CBTE_CXP' as Tipo_cbte, og.co_plazo, co_fechaOg, co_FechaFactura_vct,
 			case when conci.IdEmpresa_OGiro is null then cast(0 as bit) else cast(1 as bit) end as en_conciliacion,
-			DATEDIFF(DAY,og.co_FechaFactura_vct,@fecha) as Dias_Vcto, Su_Descripcion, c.IdClaseProveedor, c.descripcion_clas_prove
+			DATEDIFF(DAY,og.co_FechaFactura_vct,@fecha) as Dias_Vcto, Su_Descripcion, c.IdClaseProveedor, c.descripcion_clas_prove, 
+			CASE WHEN ISNULL(PRO.es_empresa_relacionada, CAST(0 AS BIT)) = 1 THEN 'RELACIONADO' ELSE 'NO RELACIONADO' END AS EsRelacionado
 			from cp_orden_giro as og inner join cp_TipoDocumento as td on og.IdOrden_giro_Tipo = td.CodTipoDocumento inner join cp_proveedor AS pro on pro.IdEmpresa = og.IdEmpresa
 			and pro.IdProveedor = og.IdProveedor inner join tb_persona as per on per.IdPersona = pro.IdPersona inner join tb_sucursal as su on og.IdEmpresa = su.IdEmpresa and og.IdSucursal = su.IdSucursal
 			left join (
@@ -53,7 +54,8 @@ Select
 			union all
 			select og.IdEmpresa,og.IdCbteCble_nota,og.IdTipoCbte_Nota,'05',og.cod_nota, 'Nota de débito' as nom_tipo_doc,'ND' as cod_tipo_doc, og.IdProveedor, per.pe_nombreCompleto as nom_proveedor,
 			og.cn_total as Valor_a_pagar, og.cN_observacion Observacion,per.pe_cedulaRuc Ruc_Proveedor, per.pe_nombreCompleto as representante_legal, 'CBTE_CXP' as Tipo_cbte, 0, cn_fecha, cn_Fecha_vcto,0,
-			DATEDIFF(DAY,og.cn_Fecha_vcto,@fecha) as Dias_Vcto, Su_Descripcion, c.IdClaseProveedor, c.descripcion_clas_prove
+			DATEDIFF(DAY,og.cn_Fecha_vcto,@fecha) as Dias_Vcto, Su_Descripcion, c.IdClaseProveedor, c.descripcion_clas_prove,
+			CASE WHEN ISNULL(PRO.es_empresa_relacionada, CAST(0 AS BIT)) = 1 THEN 'RELACIONADO' ELSE 'NO RELACIONADO' END AS EsRelacionado
 			from cp_nota_DebCre as og inner join cp_proveedor AS pro on pro.IdEmpresa = og.IdEmpresa
 			and pro.IdProveedor = og.IdProveedor inner join tb_persona as per on per.IdPersona = pro.IdPersona inner join tb_sucursal as su on og.IdEmpresa = su.IdEmpresa and og.IdSucursal = su.IdSucursal
 			inner join cp_proveedor_clase as c on c.IdEmpresa = pro.IdEmpresa and c.IdClaseProveedor = pro.IdClaseProveedor
@@ -64,7 +66,8 @@ Select
 			UNION ALL
 			select og.IdEmpresa,CAST( d.IdCbteCble_cxp AS INT), CAST(d.IdTipoCbte_cxp AS DECIMAL),'00',cast(og.IdOrdenPago as varchar(20)), 'Orden de pago' as nom_tipo_doc,'OP' as cod_tipo_doc, og.IdEntidad, per.pe_nombreCompleto as nom_proveedor,
 			d.Valor_a_pagar as Valor_a_pagar, og.Observacion Observacion,per.pe_cedulaRuc Ruc_Proveedor, per.pe_nombreCompleto as representante_legal, 'CBTE_CXP' as Tipo_cbte, 0, OG.Fecha, OG.Fecha,0,
-			DATEDIFF(DAY,og.Fecha,@fecha) as Dias_Vcto, Su_Descripcion, c.IdClaseProveedor, c.descripcion_clas_prove
+			DATEDIFF(DAY,og.Fecha,@fecha) as Dias_Vcto, Su_Descripcion, c.IdClaseProveedor, c.descripcion_clas_prove,
+			CASE WHEN ISNULL(PRO.es_empresa_relacionada, CAST(0 AS BIT)) = 1 THEN 'RELACIONADO' ELSE 'NO RELACIONADO' END AS EsRelacionado
 			from cp_orden_pago as og inner join cp_proveedor AS pro on pro.IdEmpresa = og.IdEmpresa
 			and pro.IdProveedor = og.IdEntidad inner join tb_persona as per on per.IdPersona = pro.IdPersona
 			INNER JOIN cp_orden_pago_det as d on og.IdEmpresa = d.IdEmpresa

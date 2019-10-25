@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPCXC_010] 1,1,1,572,572,1,99999,'13/08/2019',0
+﻿--exec [web].[SPCXC_010] 1,1,1,572,572,1,99999,'13/08/2019',0
 CREATE PROCEDURE [web].[SPCXC_010]
 	@IdEmpresa as int,
 	@SucursalIni as int,
@@ -29,7 +28,7 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 			IIF( DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte )>90,  Facturas_y_notas_deb.Valor_Original - isnull( Cobros_x_fac.dc_ValorPago,0),0) Mayor_a_90Dias
 			,Facturas_y_notas_deb.vt_fech_venc,Facturas_y_notas_deb.vt_fecha,Facturas_y_notas_deb.Idtipo_cliente,DATEDIFF( day,Facturas_y_notas_deb.vt_fech_venc,@fechaCorte ) Dias_Vencidos,
 			ISNULL(cast( Facturas_y_notas_deb.Valor_Original-isnull( Cobros_x_fac.dc_ValorPago,0) as numeric(10,2)),0) Saldo,Facturas_y_notas_deb.pe_telefonoOfic, vt_Observacion, vt_plazo, NomContacto, TelefonoContacto,
-			Descripcion_tip_cliente--, Idtipo_cliente
+			Descripcion_tip_cliente, EsRelacionado
 			
  from 
 (
@@ -39,7 +38,8 @@ select      Facturas_y_notas_deb.IdEmpresa ,Facturas_y_notas_deb.IdSucursal,Fact
 								dbo.tb_sucursal.Su_Descripcion, LTRIM(dbo.tb_persona.pe_nombreCompleto) + '/'+ cast( fa_cliente.IdCliente as varchar(20)) as pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
 								FD.Total Valor_Original,F.vt_fech_venc,
 								F.vt_fecha,dbo.fa_cliente.Idtipo_cliente, ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,'') as pe_telefonoOfic,
-								F.vt_Observacion,F.vt_plazo, p.pe_nombreCompleto as NomContacto, ISNULL(con.Telefono,'') + ' ' + ISNULL(con.Celular,'') TelefonoContacto, t.Descripcion_tip_cliente
+								F.vt_Observacion,F.vt_plazo, p.pe_nombreCompleto as NomContacto, ISNULL(con.Telefono,'') + ' ' + ISNULL(con.Celular,'') TelefonoContacto, t.Descripcion_tip_cliente,
+								CASE WHEN ISNULL(fa_cliente.es_empresa_relacionada, CAST(0 AS BIT)) = 1 THEN 'RELACIONADO' ELSE 'NO RELACIONADO' END AS EsRelacionado
 			FROM            fa_factura AS F INNER JOIN
                          fa_factura_resumen AS FD ON F.IdEmpresa = FD.IdEmpresa AND F.IdSucursal = FD.IdSucursal AND F.IdBodega = FD.IdBodega AND F.IdCbteVta = FD.IdCbteVta INNER JOIN
                          fa_cliente ON F.IdEmpresa = fa_cliente.IdEmpresa AND F.IdCliente = fa_cliente.IdCliente 
@@ -73,7 +73,7 @@ SELECT			dbo.fa_notaCreDeb.IdEmpresa, dbo.fa_notaCreDeb.IdSucursal, dbo.fa_notaC
 				dbo.fa_notaCreDeb_resumen.Total, dbo.fa_notaCreDeb.no_fecha_venc,dbo.fa_notaCreDeb.no_fecha, dbo.fa_cliente.Idtipo_cliente,				
 				ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,'') as pe_telefonoOfic, fa_notaCreDeb.sc_observacion,
 				DATEDIFF(DAY,dbo.fa_notaCreDeb.no_fecha,dbo.fa_notaCreDeb.no_fecha_venc), tb_persona.pe_nombreCompleto, ISNULL(cc.Telefono,'')+' '+ISNULL(cc.Celular,''),
-				t.Descripcion_tip_cliente
+				t.Descripcion_tip_cliente, CASE WHEN ISNULL(fa_cliente.es_empresa_relacionada, CAST(0 AS BIT)) = 1 THEN 'RELACIONADO' ELSE 'NO RELACIONADO' END AS EsRelacionado
 FROM            fa_notaCreDeb INNER JOIN
                 fa_notaCreDeb_resumen ON fa_notaCreDeb.IdEmpresa = fa_notaCreDeb_resumen.IdEmpresa AND fa_notaCreDeb.IdSucursal = fa_notaCreDeb_resumen.IdSucursal AND 
                 fa_notaCreDeb.IdBodega = fa_notaCreDeb_resumen.IdBodega AND fa_notaCreDeb.IdNota = fa_notaCreDeb_resumen.IdNota INNER JOIN
