@@ -85,7 +85,7 @@
                                    listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
                                    foreach (var item in ViewBag.lst_periodo)
                                    {
-                                       listBoxSettings.Properties.Items.Add(item.IdPeriodo, item.IdPeriodo).Selected = item.Seleccionado;
+                                       listBoxSettings.Properties.Items.Add(item.nom_periodo_combo, item.IdPeriodo).Selected = item.Seleccionado;
                                    }
                                    listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
                                    listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
