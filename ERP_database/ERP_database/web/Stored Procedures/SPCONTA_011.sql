@@ -20,16 +20,20 @@ INSERT INTO [web].[ct_CONTA_011]
            ,[NombreC3]
            ,[NombreC4]
            ,[NombreC5]
+		   ,[NombreC6]
+		   ,[NombreC7]
            ,[Columna1]
            ,[Columna2]
            ,[Columna3]
            ,[Columna4]
-           ,[Columna5])
-select @IdEmpresa, @IdUsuario, 1, 1, 'Bancos','Saldo inicial', 'Ingresos', 'Egresos','','Saldo final',0,0,0,0,0
+           ,[Columna5]
+		   ,[Columna6]
+		   ,[Columna7])
+select @IdEmpresa, @IdUsuario, 1, 1, 'Bancos','Saldo inicial', 'Ingresos', 'Egresos','','','','Saldo final',0,0,0,0,0,0,0
 UNION ALL
-select @IdEmpresa, @IdUsuario, 2, 2, 'Cuentas por cobrar clientes','Saldo inicial', 'Facturado', 'Cobrado','Cruce de cuentas','Saldo final',0,0,0,0,0
+select @IdEmpresa, @IdUsuario, 2, 2, 'Cuentas por cobrar clientes','Saldo inicial', 'Facturado', 'Cobrado','Cobros anticipados','Retenciones','Cruce de cuentas','Saldo final',0,0,0,0,0,0,0
 UNION ALL
-select @IdEmpresa, @IdUsuario, 3, 3, 'Cuentas por pagar','Saldo inicial', 'Facturas recibidas', 'Pagos','','Saldo final',0,0,0,0,0
+select @IdEmpresa, @IdUsuario, 3, 3, 'Cuentas por pagar','Saldo inicial', 'Facturas recibidas', 'Pagos','','','','Saldo final',0,0,0,0,0,0,0
 
 BEGIN --BANCOS
 	UPDATE [web].[ct_CONTA_011] SET Columna1 = A.SaldoInicial
@@ -90,7 +94,7 @@ BEGIN --BANCOS
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 1
 
-	update [web].[ct_CONTA_011] set Columna5 = round(Columna1 + Columna2 - Columna3,2)
+	update [web].[ct_CONTA_011] set Columna7 = round(Columna1 + Columna2 - Columna3,2)
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 1
@@ -153,15 +157,48 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 	from(
 		select SUM(D.dc_ValorPago) Valor
 		from cxc_cobro as c inner join 
-		cxc_cobro_det as d on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro
+		cxc_cobro_det as d on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro inner join
+		cxc_cobro_tipo as t on d.IdCobro_tipo = t.IdCobro_tipo
 		where c.IdEmpresa = @IdEmpresa and c.cr_fecha between @FechaIni and @FechaFin and c.cr_estado = 'A' AND D.estado = 'A'
-		AND D.IdCobro_tipo <> 'NTCR'
+		AND t.IdMotivo_tipo_cobro not in ('NTCR','RET')
 	)A
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 2
 
 	UPDATE [web].[ct_CONTA_011] SET Columna4 = round(isnull(A.Valor,0),2)
+	from(
+			select ROUND(SUM(CD.cr_Valor),2) Valor
+			from caj_Caja_Movimiento CM INNER JOIN
+			caj_Caja_Movimiento_det AS CD ON CM.IdEmpresa = CD.IdEmpresa AND CM.IdTipocbte = CD.IdTipocbte AND CM.IdCbteCble = CD.IdCbteCble
+			where CM.IdTipo_Persona = 'CLIENTE' AND NOT EXISTS(
+			SELECT F.ct_IdEmpresa FROM cxc_cobro_x_ct_cbtecble AS F 
+			WHERE CM.IdEmpresa = F.ct_IdEmpresa
+			AND CM.IdTipocbte = F.ct_IdTipoCbte
+			AND CM.IdCbteCble = F.ct_IdCbteCble
+	)
+	AND CM.IdEmpresa = @IdEmpresa AND CM.cm_fecha BETWEEN @FechaIni AND @FechaFin AND CM.Estado = 'A'
+	)A
+	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
+	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
+	and [web].[ct_CONTA_011].Secuencia = 2
+
+	
+
+	UPDATE [web].[ct_CONTA_011] SET Columna5 = round(isnull(A.Valor,0),2)
+	from(
+		select SUM(D.dc_ValorPago) Valor
+		from cxc_cobro as c inner join 
+		cxc_cobro_det as d on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro inner join
+		cxc_cobro_tipo as t on d.IdCobro_tipo = t.IdCobro_tipo
+		where c.IdEmpresa = @IdEmpresa and c.cr_fecha between @FechaIni and @FechaFin and c.cr_estado = 'A' AND D.estado = 'A'
+		AND t.IdMotivo_tipo_cobro = 'RET'
+	)A
+	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
+	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
+	and [web].[ct_CONTA_011].Secuencia = 2
+
+	UPDATE [web].[ct_CONTA_011] SET Columna6 = round(isnull(A.Valor,0),2)
 	from(
 		select SUM(D.dc_ValorPago) Valor
 		from cxc_cobro as c inner join 
@@ -173,7 +210,7 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 2
 
-	update [web].[ct_CONTA_011] set Columna5 = round(Columna1 + Columna2 - Columna3 - Columna4 ,2)
+	update [web].[ct_CONTA_011] set Columna7 = round(Columna1 + Columna2 - Columna3 - Columna4 - Columna5 - Columna6  ,2)
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 2
@@ -181,9 +218,9 @@ END
 
 BEGIN --CUENTAS POR PAGAR
 
-	UPDATE [web].[ct_CONTA_011] set Columna1 = A.Saldo
+	UPDATE [web].[ct_CONTA_011] set Columna1 = round(isnull(A.Saldo,0),2)
 	FROM(
-	SELECT SUM(G.Saldo) Saldo FROM(
+	/*SELECT SUM(G.Saldo) Saldo FROM(
 		SELECT OG.co_total - ISNULL(CAN.MontoAplicado,0) - ISNULL(re_valor_retencion,0) Saldo 
 		FROM cp_orden_giro AS OG LEFT JOIN 
 		(
@@ -236,18 +273,37 @@ BEGIN --CUENTAS POR PAGAR
 			and ne.IdCbteCble_Nota = opd.IdCbteCble_cxp
 			)
 	) G
+	*/
+	SELECT SUM(D.dc_Valor)*-1 Saldo FROM ct_cbtecble AS C INNER JOIN ct_cbtecble_det AS D
+	ON C.IdEmpresa = D.IdEmpresa AND C.IdTipoCbte = D.IdTipoCbte AND C.IdCbteCble = D.IdCbteCble
+	WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha < @FechaIni AND D.IdCtaCble = '2110101'
 	)A WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 3
 
-	UPDATE [web].[ct_CONTA_011] set Columna2 = A.Valor
+	UPDATE [web].[ct_CONTA_011] set Columna2 = isnull(A.Valor,0)
 	FROM(
 		SELECT SUM(G.Valor) Valor FROM(
 			SELECT SUM(OG.co_total) Valor FROM cp_orden_giro AS OG
-			WHERE OG.IdEmpresa = @IdEmpresa AND OG.Estado = 'A' AND OG.co_FechaFactura BETWEEN @FechaIni AND @FechaFin
+			WHERE OG.IdEmpresa = @IdEmpresa AND OG.Estado = 'A' AND OG.co_FechaContabilizacion BETWEEN @FechaIni AND @FechaFin
+			UNION ALL
+			SELECT SUM(D.re_valor_retencion) *-1 FROM cp_retencion AS C INNER JOIN
+			cp_retencion_det AS D ON C.IdEmpresa = D.IdEmpresa AND C.IdRetencion = D.IdRetencion 
+			WHERE C.fecha BETWEEN @FechaIni AND @FechaFin AND C.IdEmpresa = @IdEmpresa AND C.Estado = 'A'
+			UNION ALL
+			SELECT SUM(CAN.MontoAplicado) *-1
+			FROM cp_orden_pago_cancelaciones AS CAN INNER JOIN 
+			ct_cbtecble AS C ON C.IdEmpresa = CAN.IdEmpresa_pago AND C.IdTipoCbte = CAN.IdTipoCbte_pago AND C.IdCbteCble = CAN.IdCbteCble_pago inner join
+			cp_orden_pago as op on can.IdEmpresa_op = op.IdEmpresa and can.IdOrdenPago_op = op.IdOrdenPago
+			WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha BETWEEN @FechaIni AND @FechaFin and op.IdTipo_Persona = 'PROVEE' AND
+			EXISTS(
+			SELECT * FROM cp_nota_DebCre AS NC
+			WHERE CAN.IdEmpresa_pago = NC.IdEmpresa AND CAN.IdTipoCbte_pago = NC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = NC.IdCbteCble_Nota
+			AND NC.cn_fecha <= @FechaFin
+			)
 			UNION ALL
 			SELECT SUM(OG.cn_total) Valor FROM cp_nota_DebCre AS OG
-			WHERE OG.IdEmpresa = @IdEmpresa AND OG.Estado = 'A' AND OG.DebCre = 'D' AND OG.cn_fecha BETWEEN @FechaIni AND @FechaFin
+			WHERE OG.IdEmpresa = @IdEmpresa AND OG.Estado = 'A' AND OG.DebCre = 'D' AND OG.Fecha_contable BETWEEN @FechaIni AND @FechaFin
 			UNION ALL
 			SELECT SUM(D.Valor_a_pagar) Valor FROM cp_orden_pago_det AS D INNER JOIN
 			cp_orden_pago AS C ON C.IdEmpresa = D.IdEmpresa AND C.IdOrdenPago = D.IdOrdenPago
@@ -270,24 +326,26 @@ BEGIN --CUENTAS POR PAGAR
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 3
 
-	UPDATE [web].[ct_CONTA_011] set Columna3 = A.Valor
+
+	UPDATE [web].[ct_CONTA_011] set Columna3 = isnull(A.Valor,0)
 	FROM(
 	SELECT SUM(G.Valor) Valor FROM(
 		SELECT SUM(CAN.MontoAplicado) Valor 
 		FROM cp_orden_pago_cancelaciones AS CAN INNER JOIN 
 		ct_cbtecble AS C ON C.IdEmpresa = CAN.IdEmpresa_pago AND C.IdTipoCbte = CAN.IdTipoCbte_pago AND C.IdCbteCble = CAN.IdCbteCble_pago inner join
 		cp_orden_pago as op on can.IdEmpresa_op = op.IdEmpresa and can.IdOrdenPago_op = op.IdOrdenPago
-		WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha BETWEEN @FechaIni AND @FechaFin and op.IdTipo_Persona = 'PROVEE' 
-		UNION ALL
-		SELECT SUM(D.re_valor_retencion) FROM cp_retencion AS C INNER JOIN
-		cp_retencion_det AS D ON C.IdEmpresa = D.IdEmpresa AND C.IdRetencion = D.IdRetencion 
-		WHERE C.fecha BETWEEN @FechaIni AND @FechaFin AND C.IdEmpresa = @IdEmpresa AND C.Estado = 'A'
+		WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha BETWEEN @FechaIni AND @FechaFin and op.IdTipo_Persona = 'PROVEE' AND
+		NOT EXISTS(
+			SELECT * FROM cp_nota_DebCre AS NC
+			WHERE CAN.IdEmpresa_pago = NC.IdEmpresa AND CAN.IdTipoCbte_pago = NC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = NC.IdCbteCble_Nota
+			AND NC.cn_fecha <= @FechaFin
+		)
 	)G
 	)A WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 3
 	
-	update [web].[ct_CONTA_011] set Columna5 = round(Columna1 + Columna2 - Columna3,2)
+	update [web].[ct_CONTA_011] set Columna7 = round(Columna1 + Columna2 - Columna3,2)
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
 	and [web].[ct_CONTA_011].Secuencia = 3

@@ -4,6 +4,8 @@ CREATE PROCEDURE [web].[SPFAC_010]
 @IdEmpresa int,
 @IdSucursalIni int, 
 @IdSucursalFin int,
+@IdClienteIni numeric,
+@IdClienteFin numeric,
 @FechaIni datetime,
 @FechaFin datetime,
 @MostrarAnulados bit
@@ -30,7 +32,4 @@ FROM            fa_factura AS c INNER JOIN
 							 group by f.IdEmpresa
 						 ) as anu on c.IdEmpresa = anu.IdEmpresa
 						 where c.IdEmpresa = @IdEmpresa and c.IdSucursal between @IdSucursalIni and @IdSucursalFin and c.vt_fecha between @FechaIni and @FechaFin
-						 and c.Estado= case when @MostrarAnulados = 1 then c.Estado else 'A' END 
-
-						 --update fa_factura_resumen set PorIva = 12 where ValorIVA > 0
-						 --update fa_factura_resumen set PorIva = 0 where ValorIVA = 0
+						 and c.Estado= case when @MostrarAnulados = 1 then c.Estado else 'A' END and c.IdCliente between @IdClienteIni and @IdClienteFin
