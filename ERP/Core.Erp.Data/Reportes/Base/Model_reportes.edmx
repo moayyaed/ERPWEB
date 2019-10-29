@@ -1012,7 +1012,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXC_002' no tiene def
           <Property Name="dc_ValorPago" Type="float" Nullable="false" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" />
-          <Property Name="cr_fecha" Type="date" Nullable="false" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
           <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
           <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
@@ -1082,7 +1082,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXC_003' no tiene def
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="28" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="cr_fecha" Type="date" />
+          <Property Name="cr_fecha" Type="datetime" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
           <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" />
           <Property Name="IdMotivo_tipo_cobro" Type="varchar" MaxLength="15" />
@@ -1135,7 +1135,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXC_006' no tiene def
           <Property Name="IdVendedor" Type="int" Nullable="false" />
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="50" />
           <Property Name="vt_fech_venc" Type="datetime" Nullable="false" />
-          <Property Name="cr_fecha" Type="date" Nullable="false" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
           <Property Name="DiasAtraso" Type="int" />
           <Property Name="ValorPago" Type="float" Nullable="false" />
           <Property Name="BaseComision" Type="float" />
@@ -1195,7 +1195,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXC_007_Cobros' no ti
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="cr_fecha" Type="date" Nullable="false" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
         </EntityType>
@@ -5010,7 +5010,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
         <Function Name="SPCONTA_012" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdPeriodo" Type="int" Mode="In" />
-          <Parameter Name="IdGrupoCble" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SPCXC_004" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -8869,7 +8868,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="cr_TotalCobro" Type="Double" Nullable="false" />
           <Property Name="cr_observacion" Type="String" MaxLength="700" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -8930,7 +8929,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
           <Property Name="Valor" Type="Double" Nullable="false" />
           <Property Name="IdCobro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cr_observacion" Type="String" MaxLength="700" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -12215,11 +12214,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
             <Parameter Name="idProveedorIni" Mode="In" Type="Decimal" />
             <Parameter Name="idProveedorFIn" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="SPCONTA_012" ReturnType="Collection(Model_reportes.SPCONTA_012_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
-            <Parameter Name="IdGrupoCble" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SPCONTA_011" ReturnType="Collection(Model_reportes.SPCONTA_011_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
@@ -12235,6 +12229,10 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="MostrarAnulados" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPCONTA_012" ReturnType="Collection(Model_reportes.SPCONTA_012_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdPeriodo" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
@@ -13638,7 +13636,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Name="vt_NumFactura" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="cr_fecha" Type="DateTime" Precision="0" />
+          <Property Name="cr_fecha" Type="DateTime" Precision="3" />
           <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IdMotivo_tipo_cobro" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -14116,7 +14114,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Name="IdVendedor" Type="Int32" Nullable="false" />
           <Property Name="vt_NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DiasAtraso" Type="Int32" />
           <Property Name="ValorPago" Type="Double" Nullable="false" />
           <Property Name="BaseComision" Type="Double" />
@@ -14750,21 +14748,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Type="String" Name="descripcion_clas_prove" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="EsRelacionado" Nullable="false" MaxLength="14" />
         </ComplexType>
-        <ComplexType Name="SPCONTA_012_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="nivel" Nullable="true" />
-          <Property Type="Int32" Name="orden" Nullable="true" />
-          <Property Type="Int32" Name="IdTipo_Gasto" Nullable="false" />
-          <Property Type="Int32" Name="orden_tipo_gasto" Nullable="true" />
-          <Property Type="String" Name="nom_tipo_Gasto" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="nom_tipo_Gasto_padre" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="dc_Valor" Nullable="false" />
-          <Property Type="String" Name="IdCta" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="nom_cuenta" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="nom_grupo_CC" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
-        </ComplexType>
         <ComplexType Name="SPCONTA_011_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="200" />
@@ -14813,6 +14796,21 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="vt_Observacion" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Tarifa" Nullable="true" MaxLength="24" />
+        </ComplexType>
+        <ComplexType Name="SPCONTA_012_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="nivel" Nullable="true" />
+          <Property Type="Int32" Name="orden" Nullable="true" />
+          <Property Type="Int32" Name="IdTipo_Gasto" Nullable="false" />
+          <Property Type="Int32" Name="orden_tipo_gasto" Nullable="true" />
+          <Property Type="String" Name="nom_tipo_Gasto" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nom_tipo_Gasto_padre" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="dc_Valor" Nullable="false" />
+          <Property Type="String" Name="IdCta" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="nom_cuenta" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nom_grupo_CC" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -19287,25 +19285,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_012" FunctionName="Model_reportes.Store.SPCONTA_012">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_012_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="nivel" ColumnName="nivel" />
-                <ScalarProperty Name="orden" ColumnName="orden" />
-                <ScalarProperty Name="IdTipo_Gasto" ColumnName="IdTipo_Gasto" />
-                <ScalarProperty Name="orden_tipo_gasto" ColumnName="orden_tipo_gasto" />
-                <ScalarProperty Name="nom_tipo_Gasto" ColumnName="nom_tipo_Gasto" />
-                <ScalarProperty Name="nom_tipo_Gasto_padre" ColumnName="nom_tipo_Gasto_padre" />
-                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
-                <ScalarProperty Name="IdCta" ColumnName="IdCta" />
-                <ScalarProperty Name="nom_cuenta" ColumnName="nom_cuenta" />
-                <ScalarProperty Name="nom_grupo_CC" ColumnName="nom_grupo_CC" />
-                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
-                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPCONTA_011" FunctionName="Model_reportes.Store.SPCONTA_011">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_011_Result">
@@ -19360,6 +19339,25 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
                 <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
                 <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
                 <ScalarProperty Name="Tarifa" ColumnName="Tarifa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_012" FunctionName="Model_reportes.Store.SPCONTA_012">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_012_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="IdTipo_Gasto" ColumnName="IdTipo_Gasto" />
+                <ScalarProperty Name="orden_tipo_gasto" ColumnName="orden_tipo_gasto" />
+                <ScalarProperty Name="nom_tipo_Gasto" ColumnName="nom_tipo_Gasto" />
+                <ScalarProperty Name="nom_tipo_Gasto_padre" ColumnName="nom_tipo_Gasto_padre" />
+                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
+                <ScalarProperty Name="IdCta" ColumnName="IdCta" />
+                <ScalarProperty Name="nom_cuenta" ColumnName="nom_cuenta" />
+                <ScalarProperty Name="nom_grupo_CC" ColumnName="nom_grupo_CC" />
+                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

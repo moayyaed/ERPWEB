@@ -2018,23 +2018,6 @@ namespace Core.Erp.Data.Reportes.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_008_Result>("SPCXP_008", idempresaParameter, fechaParameter, idSucursalIniParameter, idSucursalFinParameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter, idProveedorIniParameter, idProveedorFInParameter);
         }
     
-        public virtual ObjectResult<SPCONTA_012_Result> SPCONTA_012(Nullable<int> idEmpresa, Nullable<int> idPeriodo, string idGrupoCble)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idPeriodoParameter = idPeriodo.HasValue ?
-                new ObjectParameter("IdPeriodo", idPeriodo) :
-                new ObjectParameter("IdPeriodo", typeof(int));
-    
-            var idGrupoCbleParameter = idGrupoCble != null ?
-                new ObjectParameter("IdGrupoCble", idGrupoCble) :
-                new ObjectParameter("IdGrupoCble", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_012_Result>("SPCONTA_012", idEmpresaParameter, idPeriodoParameter, idGrupoCbleParameter);
-        }
-    
         public virtual ObjectResult<SPCONTA_011_Result> SPCONTA_011(Nullable<int> idEmpresa, string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -2091,6 +2074,19 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("MostrarAnulados", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPFAC_010_Result>("SPFAC_010", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idClienteIniParameter, idClienteFinParameter, fechaIniParameter, fechaFinParameter, mostrarAnuladosParameter);
+        }
+    
+        public virtual ObjectResult<SPCONTA_012_Result> SPCONTA_012(Nullable<int> idEmpresa, Nullable<int> idPeriodo)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idPeriodoParameter = idPeriodo.HasValue ?
+                new ObjectParameter("IdPeriodo", idPeriodo) :
+                new ObjectParameter("IdPeriodo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_012_Result>("SPCONTA_012", idEmpresaParameter, idPeriodoParameter);
         }
     }
 }

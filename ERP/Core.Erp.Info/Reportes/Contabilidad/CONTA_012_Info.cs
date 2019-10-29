@@ -19,5 +19,33 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public string IdCta { get; set; }
         public string nom_cuenta { get; set; }
         public string nom_grupo_CC { get; set; }
+
+        #region Campos que no existen en la tabla
+        public string Nom1 { get; set; }
+        public string Nom2 { get; set; }
+        public string Nom3 { get; set; }
+        public string Nom4 { get; set; }
+        public string Nom5 { get; set; }
+        public string Nom6 { get; set; }
+        public string Nom7 { get; set; }
+        public string Nom8 { get; set; }
+        public string Nom9 { get; set; }
+        public string Nom10 { get; set; }
+        public string Nom11 { get; set; }
+        public string Nom12 { get; set; }
+        public float? Col1 { get; set; }
+        public float? Col2 { get; set; }
+        public float? Col3 { get; set; }
+        public float? Col4 { get; set; }
+        public float? Col5 { get; set; }
+        public float? Col6 { get; set; }
+        public float? Col7 { get; set; }
+        public float? Col8 { get; set; }
+        public float? Col9 { get; set; }
+        public float? Col10 { get; set; }
+        public float? Col11 { get; set; }
+        public float? Col12 { get; set; }
+
+        #endregion
     }
 }
