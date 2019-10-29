@@ -312,11 +312,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         private bool validar(cp_orden_giro_Info i_validar, ref string msg)
         {
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.co_FechaFactura, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.co_FechaContabilizacion ?? DateTime.Now.Date, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.co_FechaFactura, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.co_FechaContabilizacion ?? DateTime.Now.Date, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
             {
                 return false;
             }

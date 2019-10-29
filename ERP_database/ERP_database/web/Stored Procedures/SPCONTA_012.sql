@@ -2,8 +2,7 @@
 CREATE procedure [web].[SPCONTA_012]
 (
 @IdEmpresa int,
-@IdPeriodo int,
-@IdGrupoCble varchar(10)
+@IdPeriodo int
 )AS
 BEGIN
 --set @IdPeriodo = 201608
@@ -29,7 +28,7 @@ FROM            ct_cbtecble INNER JOIN
                          ct_grupo_x_Tipo_Gasto AS ct_grupo_x_Tipo_Gasto_2 ON ct_grupo_x_Tipo_Gasto_1.IdEmpresa = ct_grupo_x_Tipo_Gasto_2.IdEmpresa AND 
                          ct_grupo_x_Tipo_Gasto_1.IdTipo_Gasto_Padre = ct_grupo_x_Tipo_Gasto_2.IdTipo_Gasto ON ct_plancta.IdEmpresa = ct_grupo_x_Tipo_Gasto.IdEmpresa AND 
                          ct_plancta.IdTipo_Gasto = ct_grupo_x_Tipo_Gasto.IdTipo_Gasto INNER JOIN ct_grupocble on ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble
-where ct_cbtecble.cb_Fecha between @Fecha_ini and @Fecha_fin and ct_cbtecble.IdEmpresa = @IdEmpresa  and ct_plancta.IdGrupoCble = @IdGrupoCble
+where ct_cbtecble.cb_Fecha between @Fecha_ini and @Fecha_fin and ct_cbtecble.IdEmpresa = @IdEmpresa  
 and not exists(
 select * from ct_cbtecble_Reversado R 
 where R.IdEmpresa = ct_cbtecble.IdEmpresa and r.IdTipoCbte = ct_cbtecble.IdTipoCbte and r.IdCbteCble = ct_cbtecble.IdCbteCble
