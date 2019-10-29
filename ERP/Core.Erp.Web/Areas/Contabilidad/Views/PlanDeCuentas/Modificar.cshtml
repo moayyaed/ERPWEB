@@ -83,7 +83,17 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pc_Cuenta">Tipo gasto*</label>
+                    @Html.DropDownListFor(q => q.IdTipo_Gasto, new SelectList(ViewBag.lst_tipo_gasto, "IdTipo_Gasto", "nom_tipo_Gasto"), new { @class = "form-control", @id = "IdTipo_Gasto" })
+                    @Html.ValidationMessageFor(q => q.IdTipo_Gasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">

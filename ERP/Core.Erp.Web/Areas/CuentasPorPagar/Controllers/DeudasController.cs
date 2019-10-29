@@ -1338,8 +1338,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 }
             }
             List<cp_orden_giro_det_ing_x_os_Info> lista = ListaDetalleOS.get_list(IdTransaccionSession);
+            var info = lista.FirstOrDefault();
+            var info_os = bus_ordencompra.get_info(info.IdEmpresa, Convert.ToInt32(info.oc_IdSucursal), Convert.ToDecimal(info.oc_IdOrdenCompra));
+            if (info_os == null)
+            {
+                info_os = new com_ordencompra_local_Info();
+            }
+
             var model = ListaDetalleOS.get_list(IdTransaccionSession);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(new { model = model, info_os = info_os }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost, ValidateInput(false)]

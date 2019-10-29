@@ -1,0 +1,99 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_grupo_x_Tipo_Gasto_Info
+@{
+    ViewBag.Title = "Modificar grupo por tipo de gasto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "GrupoPorTipoGasto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTipo_Gasto)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Tipo gasto padre</label>
+                    @Html.Partial("_CmbCuenta_TipoGastoPadre", Model)
+                    @Html.ValidationMessageFor(q => q.IdTipo_Gasto_Padre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="gc_GrupoCble">Tipo gasto*</label>
+                    @Html.TextBoxFor(q => q.nom_tipo_Gasto, new { @class = "form-control", @id = "nom_tipo_Gasto" })
+                    @Html.ValidationMessageFor(q => q.nom_tipo_Gasto, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="gc_Orden">Orden*</label>
+                    @Html.TextBoxFor(q => q.orden, new { @class = "form-control", @id = "orden" })
+                    @Html.ValidationMessageFor(q => q.orden, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="gc_Orden">Nivel*</label>
+                    @Html.TextBoxFor(q => q.nivel, new { @class = "form-control", @id= "nivel", @readonly= "readonly" })
+                    @Html.ValidationMessageFor(q => q.nivel, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","GrupoPorTipoGasto",new { Area = "Contabilidad" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    function get_info_nuevo()
+    {
+        var IdTipoGasto_padre = IdTipo_Gasto_Padre.GetValue();
+        if (IdTipoGasto_padre != "") {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdTipoGasto_padre: IdTipoGasto_padre
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_nuevo", "GrupoPorTipoGasto", new { Area = "Contabilidad"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == '') {
+                        //No hago nada
+                    } else {
+                        if (data.nivel == 0) {
+                            $("#nivel").val(1);
+                        }
+                        else {
+                            $("#nivel").val(data.nivel);
+                        }
+                    }
+                },
+                error: function (error) {
+
+                }
+            });
+        }
+    }
+</script>

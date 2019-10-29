@@ -212,6 +212,19 @@
           <Property Name="AplicaEBIT" Type="bit" Nullable="false" />
           <Property Name="AplicaEBITDA" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ct_grupo_x_Tipo_Gasto">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipo_Gasto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTipo_Gasto" Type="int" Nullable="false" />
+          <Property Name="IdTipo_Gasto_Padre" Type="int" />
+          <Property Name="nom_tipo_Gasto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="nivel" Type="int" />
+          <Property Name="orden" Type="int" />
+        </EntityType>
         <EntityType Name="ct_grupocble">
           <Key>
             <PropertyRef Name="IdGrupoCble" />
@@ -287,6 +300,7 @@
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="50" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="150" />
+          <Property Name="IdTipo_Gasto" Type="int" />
         </EntityType>
         <EntityType Name="ct_plancta_nivel">
           <Key>
@@ -1087,6 +1101,20 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto">
+          <End Role="ct_grupo_x_Tipo_Gasto" Type="Self.ct_grupo_x_Tipo_Gasto" Multiplicity="0..1" />
+          <End Role="ct_grupo_x_Tipo_Gasto1" Type="Self.ct_grupo_x_Tipo_Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_grupo_x_Tipo_Gasto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto" />
+            </Principal>
+            <Dependent Role="ct_grupo_x_Tipo_Gasto1">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto_Padre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ct_parametro_ct_cbtecble_tipo">
           <End Role="ct_cbtecble_tipo" Type="Self.ct_cbtecble_tipo" Multiplicity="1" />
           <End Role="ct_parametro" Type="Self.ct_parametro" Multiplicity="*" />
@@ -1150,6 +1178,20 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             </Principal>
             <Dependent Role="ct_plancta">
               <PropertyRef Name="IdClasificacionEBIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_plancta_ct_grupo_x_Tipo_Gasto">
+          <End Role="ct_grupo_x_Tipo_Gasto" Type="Self.ct_grupo_x_Tipo_Gasto" Multiplicity="0..1" />
+          <End Role="ct_plancta" Type="Self.ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_grupo_x_Tipo_Gasto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1240,6 +1282,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
           <EntitySet Name="ct_CentroCostoNivel" EntityType="Self.ct_CentroCostoNivel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_CierrePorModuloPorSucursal" EntityType="Self.ct_CierrePorModuloPorSucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_ClasificacionEBIT" EntityType="Self.ct_ClasificacionEBIT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ct_grupo_x_Tipo_Gasto" EntityType="Self.ct_grupo_x_Tipo_Gasto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_grupocble" EntityType="Self.ct_grupocble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_parametro" EntityType="Self.ct_parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_periodo" EntityType="Self.ct_periodo" Schema="dbo" store:Type="Tables" />
@@ -1491,6 +1534,10 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             <End Role="ct_CentroCostoNivel" EntitySet="ct_CentroCostoNivel" />
             <End Role="ct_CentroCosto" EntitySet="ct_CentroCosto" />
           </AssociationSet>
+          <AssociationSet Name="FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto" Association="Self.FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto">
+            <End Role="ct_grupo_x_Tipo_Gasto" EntitySet="ct_grupo_x_Tipo_Gasto" />
+            <End Role="ct_grupo_x_Tipo_Gasto1" EntitySet="ct_grupo_x_Tipo_Gasto" />
+          </AssociationSet>
           <AssociationSet Name="FK_ct_parametro_ct_cbtecble_tipo" Association="Self.FK_ct_parametro_ct_cbtecble_tipo">
             <End Role="ct_cbtecble_tipo" EntitySet="ct_cbtecble_tipo" />
             <End Role="ct_parametro" EntitySet="ct_parametro" />
@@ -1509,6 +1556,10 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
           </AssociationSet>
           <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Self.FK_ct_plancta_ct_ClasificacionEBIT">
             <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_grupo_x_Tipo_Gasto" Association="Self.FK_ct_plancta_ct_grupo_x_Tipo_Gasto">
+            <End Role="ct_grupo_x_Tipo_Gasto" EntitySet="ct_grupo_x_Tipo_Gasto" />
             <End Role="ct_plancta" EntitySet="ct_plancta" />
           </AssociationSet>
           <AssociationSet Name="FK_ct_plancta_ct_grupocble" Association="Self.FK_ct_plancta_ct_grupocble">
@@ -1786,39 +1837,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             <End Role="ct_punto_cargo_grupo" EntitySet="ct_punto_cargo_grupo" />
             <End Role="ct_punto_cargo" EntitySet="ct_punto_cargo" />
           </AssociationSet>
-          <EntitySet Name="ct_plancta" EntityType="Model_contabilidad.ct_plancta" />
-          <AssociationSet Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2">
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-            <End Role="ct_anio_fiscal_x_cuenta_utilidad" EntitySet="ct_anio_fiscal_x_cuenta_utilidad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3">
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-            <End Role="ct_anio_fiscal_x_cuenta_utilidad" EntitySet="ct_anio_fiscal_x_cuenta_utilidad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_cbtecble_det_ct_plancta" Association="Model_contabilidad.FK_ct_cbtecble_det_ct_plancta">
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-            <End Role="ct_cbtecble_det" EntitySet="ct_cbtecble_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_cbtecble_Plantilla_det_ct_plancta" Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta">
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-            <End Role="ct_cbtecble_Plantilla_det" EntitySet="ct_cbtecble_Plantilla_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT">
-            <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_plancta_ct_grupocble" Association="Model_contabilidad.FK_ct_plancta_ct_grupocble">
-            <End Role="ct_grupocble" EntitySet="ct_grupocble" />
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_plancta_ct_plancta" Association="Model_contabilidad.FK_ct_plancta_ct_plancta">
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-            <End Role="ct_plancta1" EntitySet="ct_plancta" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ct_plancta_ct_plancta_nivel" Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel">
-            <End Role="ct_plancta_nivel" EntitySet="ct_plancta_nivel" />
-            <End Role="ct_plancta" EntitySet="ct_plancta" />
-          </AssociationSet>
           <EntitySet Name="ct_periodo_x_tb_modulo" EntityType="Model_contabilidad.ct_periodo_x_tb_modulo" />
           <AssociationSet Name="FK_ct_periodo_x_tb_modulo_ct_periodo" Association="Model_contabilidad.FK_ct_periodo_x_tb_modulo_ct_periodo">
             <End Role="ct_periodo" EntitySet="ct_periodo" />
@@ -1841,6 +1859,48 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             <End Role="ct_parametro" EntitySet="ct_parametro" />
           </AssociationSet>
           <EntitySet Name="vwct_cbtecble_Plantilla_det" EntityType="Model_contabilidad.vwct_cbtecble_Plantilla_det" />
+          <EntitySet Name="ct_grupo_x_Tipo_Gasto" EntityType="Model_contabilidad.ct_grupo_x_Tipo_Gasto" />
+          <AssociationSet Name="FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto" Association="Model_contabilidad.FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto">
+            <End Role="ct_grupo_x_Tipo_Gasto" EntitySet="ct_grupo_x_Tipo_Gasto" />
+            <End Role="ct_grupo_x_Tipo_Gasto1" EntitySet="ct_grupo_x_Tipo_Gasto" />
+          </AssociationSet>
+          <EntitySet Name="ct_plancta" EntityType="Model_contabilidad.ct_plancta" />
+          <AssociationSet Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2">
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+            <End Role="ct_anio_fiscal_x_cuenta_utilidad" EntitySet="ct_anio_fiscal_x_cuenta_utilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" Association="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3">
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+            <End Role="ct_anio_fiscal_x_cuenta_utilidad" EntitySet="ct_anio_fiscal_x_cuenta_utilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_cbtecble_det_ct_plancta" Association="Model_contabilidad.FK_ct_cbtecble_det_ct_plancta">
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+            <End Role="ct_cbtecble_det" EntitySet="ct_cbtecble_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_cbtecble_Plantilla_det_ct_plancta" Association="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta">
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+            <End Role="ct_cbtecble_Plantilla_det" EntitySet="ct_cbtecble_Plantilla_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_ClasificacionEBIT" Association="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT">
+            <End Role="ct_ClasificacionEBIT" EntitySet="ct_ClasificacionEBIT" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_grupo_x_Tipo_Gasto" Association="Model_contabilidad.FK_ct_plancta_ct_grupo_x_Tipo_Gasto">
+            <End Role="ct_grupo_x_Tipo_Gasto" EntitySet="ct_grupo_x_Tipo_Gasto" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_grupocble" Association="Model_contabilidad.FK_ct_plancta_ct_grupocble">
+            <End Role="ct_grupocble" EntitySet="ct_grupocble" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_plancta" Association="Model_contabilidad.FK_ct_plancta_ct_plancta">
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+            <End Role="ct_plancta1" EntitySet="ct_plancta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ct_plancta_ct_plancta_nivel" Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel">
+            <End Role="ct_plancta_nivel" EntitySet="ct_plancta_nivel" />
+            <End Role="ct_plancta" EntitySet="ct_plancta" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ct_cbtecble">
           <Key>
@@ -2586,7 +2646,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
           <NavigationProperty Name="ct_anio_fiscal_x_tb_sucursal" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_tb_sucursal_ct_anio_fiscal_x_cuenta_utilidad" FromRole="ct_anio_fiscal_x_cuenta_utilidad" ToRole="ct_anio_fiscal_x_tb_sucursal" />
           <NavigationProperty Name="ct_plancta" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" FromRole="ct_anio_fiscal_x_cuenta_utilidad" ToRole="ct_plancta" />
           <NavigationProperty Name="ct_plancta1" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" FromRole="ct_anio_fiscal_x_cuenta_utilidad" ToRole="ct_plancta" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="ct_punto_cargo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2737,147 +2797,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ct_plancta">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdCtaCble" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCblePadre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Naturaleza" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IdNivelCta" Type="Int32" Nullable="false" />
-          <Property Name="IdGrupoCble" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="pc_EsMovimiento" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="pc_clave_corta" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IdClasificacionEBIT" Type="Int32" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ct_anio_fiscal_x_cuenta_utilidad" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" FromRole="ct_plancta" ToRole="ct_anio_fiscal_x_cuenta_utilidad" />
-          <NavigationProperty Name="ct_anio_fiscal_x_cuenta_utilidad1" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" FromRole="ct_plancta" ToRole="ct_anio_fiscal_x_cuenta_utilidad" />
-          <NavigationProperty Name="ct_cbtecble_det" Relationship="Model_contabilidad.FK_ct_cbtecble_det_ct_plancta" FromRole="ct_plancta" ToRole="ct_cbtecble_det" />
-          <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta" FromRole="ct_plancta" ToRole="ct_cbtecble_Plantilla_det" />
-          <NavigationProperty Name="ct_ClasificacionEBIT" Relationship="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" FromRole="ct_plancta" ToRole="ct_ClasificacionEBIT" />
-          <NavigationProperty Name="ct_grupocble" Relationship="Model_contabilidad.FK_ct_plancta_ct_grupocble" FromRole="ct_plancta" ToRole="ct_grupocble" />
-          <NavigationProperty Name="ct_plancta1" Relationship="Model_contabilidad.FK_ct_plancta_ct_plancta" FromRole="ct_plancta" ToRole="ct_plancta1" />
-          <NavigationProperty Name="ct_plancta2" Relationship="Model_contabilidad.FK_ct_plancta_ct_plancta" FromRole="ct_plancta1" ToRole="ct_plancta" />
-          <NavigationProperty Name="ct_plancta_nivel" Relationship="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel" FromRole="ct_plancta" ToRole="ct_plancta_nivel" />
-        </EntityType>
-        <Association Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2">
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="0..1" />
-          <End Type="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Role="ct_anio_fiscal_x_cuenta_utilidad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_plancta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Principal>
-            <Dependent Role="ct_anio_fiscal_x_cuenta_utilidad">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3">
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="0..1" />
-          <End Type="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Role="ct_anio_fiscal_x_cuenta_utilidad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_plancta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Principal>
-            <Dependent Role="ct_anio_fiscal_x_cuenta_utilidad">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCbleCierre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_cbtecble_det_ct_plancta">
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="1" />
-          <End Type="Model_contabilidad.ct_cbtecble_det" Role="ct_cbtecble_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_plancta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Principal>
-            <Dependent Role="ct_cbtecble_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_cbtecble_Plantilla_det_ct_plancta">
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="1" />
-          <End Type="Model_contabilidad.ct_cbtecble_Plantilla_det" Role="ct_cbtecble_Plantilla_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_plancta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Principal>
-            <Dependent Role="ct_cbtecble_Plantilla_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
-          <End Type="Model_contabilidad.ct_ClasificacionEBIT" Role="ct_ClasificacionEBIT" Multiplicity="0..1" />
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_ClasificacionEBIT">
-              <PropertyRef Name="IdClasificacionEBIT" />
-            </Principal>
-            <Dependent Role="ct_plancta">
-              <PropertyRef Name="IdClasificacionEBIT" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_plancta_ct_grupocble">
-          <End Type="Model_contabilidad.ct_grupocble" Role="ct_grupocble" Multiplicity="1" />
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_grupocble">
-              <PropertyRef Name="IdGrupoCble" />
-            </Principal>
-            <Dependent Role="ct_plancta">
-              <PropertyRef Name="IdGrupoCble" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_plancta_ct_plancta">
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="0..1" />
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_plancta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCble" />
-            </Principal>
-            <Dependent Role="ct_plancta1">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdCtaCblePadre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ct_plancta_ct_plancta_nivel">
-          <End Type="Model_contabilidad.ct_plancta_nivel" Role="ct_plancta_nivel" Multiplicity="1" />
-          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ct_plancta_nivel">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdNivelCta" />
-            </Principal>
-            <Dependent Role="ct_plancta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdNivelCta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ct_periodo_x_tb_modulo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3019,6 +2938,193 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
           <Property Name="cc_Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="nom_punto_cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ct_grupo_x_Tipo_Gasto">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipo_Gasto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipo_Gasto" Type="Int32" Nullable="false" />
+          <Property Name="IdTipo_Gasto_Padre" Type="Int32" />
+          <Property Name="nom_tipo_Gasto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="nivel" Type="Int32" />
+          <Property Name="orden" Type="Int32" />
+          <NavigationProperty Name="ct_grupo_x_Tipo_Gasto1" Relationship="Model_contabilidad.FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto" FromRole="ct_grupo_x_Tipo_Gasto" ToRole="ct_grupo_x_Tipo_Gasto1" />
+          <NavigationProperty Name="ct_grupo_x_Tipo_Gasto2" Relationship="Model_contabilidad.FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto" FromRole="ct_grupo_x_Tipo_Gasto1" ToRole="ct_grupo_x_Tipo_Gasto" />
+          <NavigationProperty Name="ct_plancta" Relationship="Model_contabilidad.FK_ct_plancta_ct_grupo_x_Tipo_Gasto" FromRole="ct_grupo_x_Tipo_Gasto" ToRole="ct_plancta" />
+        </EntityType>
+        <Association Name="FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto">
+          <End Type="Model_contabilidad.ct_grupo_x_Tipo_Gasto" Role="ct_grupo_x_Tipo_Gasto" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_grupo_x_Tipo_Gasto" Role="ct_grupo_x_Tipo_Gasto1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_grupo_x_Tipo_Gasto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto" />
+            </Principal>
+            <Dependent Role="ct_grupo_x_Tipo_Gasto1">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto_Padre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ct_plancta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCtaCble" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCblePadre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Naturaleza" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdNivelCta" Type="Int32" Nullable="false" />
+          <Property Name="IdGrupoCble" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="pc_EsMovimiento" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="pc_clave_corta" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdClasificacionEBIT" Type="Int32" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_Gasto" Type="Int32" />
+          <NavigationProperty Name="ct_anio_fiscal_x_cuenta_utilidad" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2" FromRole="ct_plancta" ToRole="ct_anio_fiscal_x_cuenta_utilidad" />
+          <NavigationProperty Name="ct_anio_fiscal_x_cuenta_utilidad1" Relationship="Model_contabilidad.FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3" FromRole="ct_plancta" ToRole="ct_anio_fiscal_x_cuenta_utilidad" />
+          <NavigationProperty Name="ct_cbtecble_det" Relationship="Model_contabilidad.FK_ct_cbtecble_det_ct_plancta" FromRole="ct_plancta" ToRole="ct_cbtecble_det" />
+          <NavigationProperty Name="ct_cbtecble_Plantilla_det" Relationship="Model_contabilidad.FK_ct_cbtecble_Plantilla_det_ct_plancta" FromRole="ct_plancta" ToRole="ct_cbtecble_Plantilla_det" />
+          <NavigationProperty Name="ct_ClasificacionEBIT" Relationship="Model_contabilidad.FK_ct_plancta_ct_ClasificacionEBIT" FromRole="ct_plancta" ToRole="ct_ClasificacionEBIT" />
+          <NavigationProperty Name="ct_grupo_x_Tipo_Gasto" Relationship="Model_contabilidad.FK_ct_plancta_ct_grupo_x_Tipo_Gasto" FromRole="ct_plancta" ToRole="ct_grupo_x_Tipo_Gasto" />
+          <NavigationProperty Name="ct_grupocble" Relationship="Model_contabilidad.FK_ct_plancta_ct_grupocble" FromRole="ct_plancta" ToRole="ct_grupocble" />
+          <NavigationProperty Name="ct_plancta1" Relationship="Model_contabilidad.FK_ct_plancta_ct_plancta" FromRole="ct_plancta" ToRole="ct_plancta1" />
+          <NavigationProperty Name="ct_plancta2" Relationship="Model_contabilidad.FK_ct_plancta_ct_plancta" FromRole="ct_plancta1" ToRole="ct_plancta" />
+          <NavigationProperty Name="ct_plancta_nivel" Relationship="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel" FromRole="ct_plancta" ToRole="ct_plancta_nivel" />
+        </EntityType>
+        <Association Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta2">
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Role="ct_anio_fiscal_x_cuenta_utilidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Principal>
+            <Dependent Role="ct_anio_fiscal_x_cuenta_utilidad">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_anio_fiscal_x_cuenta_utilidad_ct_plancta3">
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_anio_fiscal_x_cuenta_utilidad" Role="ct_anio_fiscal_x_cuenta_utilidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Principal>
+            <Dependent Role="ct_anio_fiscal_x_cuenta_utilidad">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCbleCierre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_cbtecble_det_ct_plancta">
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="1" />
+          <End Type="Model_contabilidad.ct_cbtecble_det" Role="ct_cbtecble_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Principal>
+            <Dependent Role="ct_cbtecble_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_cbtecble_Plantilla_det_ct_plancta">
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="1" />
+          <End Type="Model_contabilidad.ct_cbtecble_Plantilla_det" Role="ct_cbtecble_Plantilla_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Principal>
+            <Dependent Role="ct_cbtecble_Plantilla_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_plancta_ct_ClasificacionEBIT">
+          <End Type="Model_contabilidad.ct_ClasificacionEBIT" Role="ct_ClasificacionEBIT" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_ClasificacionEBIT">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdClasificacionEBIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_plancta_ct_grupo_x_Tipo_Gasto">
+          <End Type="Model_contabilidad.ct_grupo_x_Tipo_Gasto" Role="ct_grupo_x_Tipo_Gasto" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_grupo_x_Tipo_Gasto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTipo_Gasto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_plancta_ct_grupocble">
+          <End Type="Model_contabilidad.ct_grupocble" Role="ct_grupocble" Multiplicity="1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_grupocble">
+              <PropertyRef Name="IdGrupoCble" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdGrupoCble" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_plancta_ct_plancta">
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="0..1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCble" />
+            </Principal>
+            <Dependent Role="ct_plancta1">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCtaCblePadre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ct_plancta_ct_plancta_nivel">
+          <End Type="Model_contabilidad.ct_plancta_nivel" Role="ct_plancta_nivel" Multiplicity="1" />
+          <End Type="Model_contabilidad.ct_plancta" Role="ct_plancta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ct_plancta_nivel">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivelCta" />
+            </Principal>
+            <Dependent Role="ct_plancta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdNivelCta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3655,30 +3761,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ct_plancta">
-            <EntityTypeMapping TypeName="Model_contabilidad.ct_plancta">
-              <MappingFragment StoreEntitySet="ct_plancta">
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdClasificacionEBIT" ColumnName="IdClasificacionEBIT" />
-                <ScalarProperty Name="pc_clave_corta" ColumnName="pc_clave_corta" />
-                <ScalarProperty Name="pc_EsMovimiento" ColumnName="pc_EsMovimiento" />
-                <ScalarProperty Name="pc_Estado" ColumnName="pc_Estado" />
-                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
-                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
-                <ScalarProperty Name="pc_Naturaleza" ColumnName="pc_Naturaleza" />
-                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ct_periodo_x_tb_modulo">
             <EntityTypeMapping TypeName="Model_contabilidad.ct_periodo_x_tb_modulo">
               <MappingFragment StoreEntitySet="ct_periodo_x_tb_modulo">
@@ -3770,6 +3852,44 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
                 <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
                 <ScalarProperty Name="secuencia" ColumnName="secuencia" />
                 <ScalarProperty Name="IdPlantilla" ColumnName="IdPlantilla" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ct_grupo_x_Tipo_Gasto">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_grupo_x_Tipo_Gasto">
+              <MappingFragment StoreEntitySet="ct_grupo_x_Tipo_Gasto">
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nom_tipo_Gasto" ColumnName="nom_tipo_Gasto" />
+                <ScalarProperty Name="IdTipo_Gasto_Padre" ColumnName="IdTipo_Gasto_Padre" />
+                <ScalarProperty Name="IdTipo_Gasto" ColumnName="IdTipo_Gasto" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ct_plancta">
+            <EntityTypeMapping TypeName="Model_contabilidad.ct_plancta">
+              <MappingFragment StoreEntitySet="ct_plancta">
+                <ScalarProperty Name="IdTipo_Gasto" ColumnName="IdTipo_Gasto" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdClasificacionEBIT" ColumnName="IdClasificacionEBIT" />
+                <ScalarProperty Name="pc_clave_corta" ColumnName="pc_clave_corta" />
+                <ScalarProperty Name="pc_EsMovimiento" ColumnName="pc_EsMovimiento" />
+                <ScalarProperty Name="pc_Estado" ColumnName="pc_Estado" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
+                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
+                <ScalarProperty Name="pc_Naturaleza" ColumnName="pc_Naturaleza" />
+                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

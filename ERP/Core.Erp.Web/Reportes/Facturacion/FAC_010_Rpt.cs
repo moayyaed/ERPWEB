@@ -29,12 +29,13 @@ namespace Core.Erp.Web.Reportes.Facturacion
 
             int IdEmpresa = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
             int IdSucursal = p_IdSucursal.Value == null ? 0 : Convert.ToInt32(p_IdSucursal.Value);
+            int IdCliente = (p_IdCliente.Value == null ) ? 0 : Convert.ToInt32(p_IdCliente.Value);
             DateTime fecha_ini = p_fecha_ini.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_ini.Value);
             DateTime fech_fin = p_fecha_fin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_fin.Value);
             bool MostrarAnulados = string.IsNullOrEmpty(p_MostrarAnulados.Value.ToString()) ? false : Convert.ToBoolean(p_MostrarAnulados.Value);
 
             FAC_010_Bus bus_rpt = new FAC_010_Bus();
-            List<FAC_010_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, fecha_ini, fech_fin, MostrarAnulados);
+            List<FAC_010_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdSucursal, IdCliente, fecha_ini, fech_fin, MostrarAnulados);
             #region Grupo
 
             Lista = (from q in lst_rpt

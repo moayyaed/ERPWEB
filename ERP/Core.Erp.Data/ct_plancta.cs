@@ -41,12 +41,14 @@ namespace Core.Erp.Data
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnulacion { get; set; }
+        public Nullable<int> IdTipo_Gasto { get; set; }
     
         public virtual ICollection<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad { get; set; }
         public virtual ICollection<ct_anio_fiscal_x_cuenta_utilidad> ct_anio_fiscal_x_cuenta_utilidad1 { get; set; }
         public virtual ICollection<ct_cbtecble_det> ct_cbtecble_det { get; set; }
         public virtual ICollection<ct_cbtecble_Plantilla_det> ct_cbtecble_Plantilla_det { get; set; }
         public virtual ct_ClasificacionEBIT ct_ClasificacionEBIT { get; set; }
+        public virtual ct_grupo_x_Tipo_Gasto ct_grupo_x_Tipo_Gasto { get; set; }
         public virtual ct_grupocble ct_grupocble { get; set; }
         public virtual ICollection<ct_plancta> ct_plancta1 { get; set; }
         public virtual ct_plancta ct_plancta2 { get; set; }

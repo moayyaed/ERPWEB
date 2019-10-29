@@ -61,10 +61,11 @@ namespace Core.Erp.Data
         public DbSet<ct_punto_cargo> ct_punto_cargo { get; set; }
         public DbSet<ct_ClasificacionEBIT> ct_ClasificacionEBIT { get; set; }
         public DbSet<ct_punto_cargo_grupo> ct_punto_cargo_grupo { get; set; }
-        public DbSet<ct_plancta> ct_plancta { get; set; }
         public DbSet<ct_periodo_x_tb_modulo> ct_periodo_x_tb_modulo { get; set; }
         public DbSet<ct_parametro> ct_parametro { get; set; }
         public DbSet<vwct_cbtecble_Plantilla_det> vwct_cbtecble_Plantilla_det { get; set; }
+        public DbSet<ct_grupo_x_Tipo_Gasto> ct_grupo_x_Tipo_Gasto { get; set; }
+        public DbSet<ct_plancta> ct_plancta { get; set; }
     
         public virtual int generarATS(Nullable<int> idempresa, Nullable<int> idPeriodo, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {

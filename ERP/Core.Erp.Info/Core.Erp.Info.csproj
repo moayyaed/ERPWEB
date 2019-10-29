@@ -140,6 +140,7 @@
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Info.cs" />
     <Compile Include="Contabilidad\ct_ClasificacionEBIT_Info.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Info.cs" />
+    <Compile Include="Contabilidad\ct_grupo_x_Tipo_Gasto_Info.cs" />
     <Compile Include="Contabilidad\ct_parametro_Info.cs" />
     <Compile Include="Contabilidad\ct_periodo_Info.cs" />
     <Compile Include="Contabilidad\ct_periodo_x_tb_modulo_Info.cs" />

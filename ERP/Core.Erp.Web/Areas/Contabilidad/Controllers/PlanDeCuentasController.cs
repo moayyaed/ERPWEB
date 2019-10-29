@@ -57,6 +57,16 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 ebit_Descripcion =""
             });
             ViewBag.lst_clasificacion_EBIT = lst_clasificacion_EBIT;
+
+            ct_grupo_x_Tipo_Gasto_Bus bus_tipo_gasto = new ct_grupo_x_Tipo_Gasto_Bus();
+            var lst_tipo_gasto = bus_tipo_gasto.get_list(IdEmpresa,false);
+            lst_tipo_gasto.Add(new ct_grupo_x_Tipo_Gasto_Info
+            {
+                IdTipo_Gasto = 0,
+                nom_tipo_Gasto = ""
+            });
+            ViewBag.lst_tipo_gasto = lst_tipo_gasto;
+            
         }
         #endregion
 
@@ -82,7 +92,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             ct_plancta_Info model = new ct_plancta_Info
             {
-                IdEmpresa = IdEmpresa
+                IdEmpresa = IdEmpresa,
+                IdTipo_Gasto = 0
             };
             model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
             cargar_combos(model.IdEmpresa);
@@ -108,6 +119,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {   
             ct_plancta_Info model = bus_plancta.get_info(IdEmpresa, IdCtaCble);
             model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
+            model.IdTipo_Gasto = (model.IdTipo_Gasto == null ? 0 : model.IdTipo_Gasto);
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos(model.IdEmpresa);
@@ -127,6 +139,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             ct_plancta_Info model = bus_plancta.get_info(IdEmpresa, IdCtaCble);
             model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
+            model.IdTipo_Gasto = (model.IdTipo_Gasto == null ? 0 : model.IdTipo_Gasto);
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos(model.IdEmpresa);

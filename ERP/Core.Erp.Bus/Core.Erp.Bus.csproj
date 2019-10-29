@@ -115,6 +115,7 @@
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Bus.cs" />
     <Compile Include="Contabilidad\ct_ClasificacionEBIT_Bus.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Bus.cs" />
+    <Compile Include="Contabilidad\ct_grupo_x_Tipo_Gasto_Bus.cs" />
     <Compile Include="Contabilidad\ct_parametro_Bus.cs" />
     <Compile Include="Contabilidad\ct_periodo_Bus.cs" />
     <Compile Include="Contabilidad\ct_periodo_x_tb_modulo_Bus.cs" />

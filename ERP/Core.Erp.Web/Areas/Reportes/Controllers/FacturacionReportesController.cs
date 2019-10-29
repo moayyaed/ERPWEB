@@ -544,6 +544,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdCliente = 0,
                 IdCatalogo_FormaPago = ""
             };
 
@@ -559,8 +560,10 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.LoadLayout(RootReporte);
             }
             #endregion
+            
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_MostrarAnulados.Value = model.mostrarAnulados;
@@ -585,6 +588,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdCliente.Value = model.IdCliente;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_MostrarAnulados.Value = model.mostrarAnulados;

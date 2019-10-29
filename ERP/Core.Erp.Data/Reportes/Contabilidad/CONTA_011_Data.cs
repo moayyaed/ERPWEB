@@ -30,11 +30,15 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                                  Columna3 = q.Columna3,
                                  Columna4 = q.Columna4,
                                  Columna5 = q.Columna5,
+                                 Columna6 = q.Columna6,
+                                 Columna7 = q.Columna7,
                                  NombreC1 = q.NombreC1,
                                  NombreC2 = q.NombreC2,
                                  NombreC3 = q.NombreC3,
                                  NombreC4 = q.NombreC4,
                                  NombreC5 = q.NombreC5,
+                                 NombreC6 = q.NombreC6,
+                                 NombreC7 = q.NombreC7
                              }).ToList();
                 }
                 return Lista;

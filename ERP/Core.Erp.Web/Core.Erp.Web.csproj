@@ -302,6 +302,7 @@
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\DinardapController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\GrupoPorTipoGastoController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ParametroContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PeriodoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasController.cs" />
@@ -10433,6 +10434,12 @@
     <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_012.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_011.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_012.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\_GridViewPartial_GrupoPorTipoGasto.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\_CmbCuenta_TipoGastoPadre.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

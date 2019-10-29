@@ -232,7 +232,8 @@ namespace Core.Erp.Data.Contabilidad
                         pc_EsMovimiento = Entity.pc_EsMovimiento,
                         pc_clave_corta = Entity.pc_clave_corta,
                         IdClasificacionEBIT = Entity.IdClasificacionEBIT,
-                        pc_EsMovimiento_bool = Entity.pc_EsMovimiento == "S" ? true : false
+                        pc_EsMovimiento_bool = Entity.pc_EsMovimiento == "S" ? true : false,
+                        IdTipo_Gasto = Entity.IdTipo_Gasto
                     };
                 }
 
@@ -266,7 +267,8 @@ namespace Core.Erp.Data.Contabilidad
                         pc_Estado = info.pc_Estado = "A",
                         pc_Naturaleza = info.pc_Naturaleza,
                         pc_EsMovimiento = info.pc_EsMovimiento_bool == true ? "S" : "N",
-                        IdClasificacionEBIT = (info.IdClasificacionEBIT== 0 ? null : info.IdClasificacionEBIT)
+                        IdClasificacionEBIT = (info.IdClasificacionEBIT== 0 ? null : info.IdClasificacionEBIT),
+                        IdTipo_Gasto = (info.IdTipo_Gasto == 0  ? null : info.IdTipo_Gasto )
                     };
                     Context.ct_plancta.Add(Entity);
                     Context.SaveChanges();
@@ -293,7 +295,7 @@ namespace Core.Erp.Data.Contabilidad
                     Entity.pc_clave_corta = info.pc_clave_corta;
                     Entity.pc_EsMovimiento = info.pc_EsMovimiento_bool == true ? "S" : "N";
                     Entity.IdClasificacionEBIT = (info.IdClasificacionEBIT == 0 ? null : info.IdClasificacionEBIT);
-
+                    Entity.IdTipo_Gasto = (info.IdTipo_Gasto == 0 ? null : info.IdTipo_Gasto);
                     Context.SaveChanges();
                 }
 

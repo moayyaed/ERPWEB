@@ -22,7 +22,7 @@ namespace Core.Erp.Info.Contabilidad
         public string pc_EsMovimiento { get; set; }
         public string pc_clave_corta { get; set; }
         public Nullable<int> IdClasificacionEBIT { get; set; }
-
+        public Nullable<int> IdTipo_Gasto { get; set; }
 
 
         #region Campos de auditoria
