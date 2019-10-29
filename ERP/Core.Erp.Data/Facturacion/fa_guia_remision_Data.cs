@@ -319,6 +319,7 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.vt_fecha = info.gi_fecha.Date;
                         info_fact.vt_fech_venc = info.vt_fech_venc; /*depende de la termino de pago*/
                         info_fact.IdCliente = info.IdCliente;
+                        info_fact.IdContacto = info.IdContacto;
                         info_fact.IdVendedor = info.IdVendedor;
                         info_fact.vt_plazo = termino_pago.Dias_Vct; /**depende de la termino de pago*/
                         info_fact.vt_Observacion = string.IsNullOrEmpty(info.ObservacionFactura) ? "" : info.ObservacionFactura;
@@ -574,6 +575,7 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.vt_fecha = info.gi_fecha.Date;
                         info_fact.vt_fech_venc = info.vt_fech_venc; /*depende de la termino de pago*/
                         info_fact.IdCliente = info.IdCliente;
+                        info_fact.IdContacto = info.IdContacto;
                         info_fact.IdVendedor = info.IdVendedor;
                         info_fact.vt_plazo = termino_pago.Dias_Vct; /**depende de la termino de pago*/
                         info_fact.vt_Observacion = string.IsNullOrEmpty(info.ObservacionFactura) ? "" : info.ObservacionFactura;
