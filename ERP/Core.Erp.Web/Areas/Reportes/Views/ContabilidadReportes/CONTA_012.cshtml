@@ -61,7 +61,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="IdPeriodo">Periodo</label>
                             @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
@@ -105,13 +105,6 @@
                            settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
                            settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
                        }).GetHtml()
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="IdPeriodo">Grupo contable</label>
-                            @Html.DropDownListFor(q => q.IdGrupoCble, new SelectList(ViewBag.lst_grupo, "IdGrupoCble", "gc_GrupoCble"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(q => q.IdGrupoCble, "", new { @class = "form", @role = "text-danger" })
                         </div>
                     </div>
                 </div>

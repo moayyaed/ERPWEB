@@ -112,7 +112,7 @@ namespace Core.Erp.Data.Contabilidad
 
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
-                    ct_periodo Entity = Context.ct_periodo.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdPeriodo == IdPeriodo);
+                    var Entity = Context.vwct_periodo.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdPeriodo == IdPeriodo);
                     if (Entity == null) return null;
                     info = new ct_periodo_Info
                     {
@@ -123,7 +123,8 @@ namespace Core.Erp.Data.Contabilidad
                         pe_FechaFin = Entity.pe_FechaFin,
                         pe_mes = Entity.pe_mes,
                         pe_cerrado_bool = Entity.pe_cerrado == "S" ? true : false,
-                        pe_estado = Entity.pe_estado
+                        pe_estado = Entity.pe_estado,
+                        AnioMes = Entity.AnioMes
                     };
                 }
                 return info;

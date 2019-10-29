@@ -909,11 +909,13 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
         public ActionResult CONTA_012()
         {
+            int anio = DateTime.Now.Date.Year;
             cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IntArray = new int[] { },
-                IdGrupoCble =""
+                IntArray = new int[] { Convert.ToInt32(anio.ToString()+"01"), Convert.ToInt32(anio.ToString() + "02"), Convert.ToInt32(anio.ToString() + "03"), Convert.ToInt32(anio.ToString() + "04"),
+                Convert.ToInt32(anio.ToString()+"05"),Convert.ToInt32(anio.ToString()+"06"),Convert.ToInt32(anio.ToString()+"07"),Convert.ToInt32(anio.ToString()+"08"),
+                Convert.ToInt32(anio.ToString()+"09"),Convert.ToInt32(anio.ToString()+"10"),Convert.ToInt32(anio.ToString()+"11"),Convert.ToInt32(anio.ToString()+"12")},
             };
 
             CONTA_012_Rpt report = new CONTA_012_Rpt();
@@ -921,10 +923,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            report.p_IdGrupoCble.Value = model.IdGrupoCble;
             report.RequestParameters = false;
             ViewBag.Report = report;
-            cargar_grupo_cble();
             cargar_periodo_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }
@@ -934,12 +934,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             CONTA_012_Rpt report = new CONTA_012_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_IdGrupoCble.Value = model.IdGrupoCble;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
-            cargar_grupo_cble();
+
             cargar_periodo_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }
