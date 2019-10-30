@@ -55,7 +55,9 @@ namespace Core.Erp.Bus.Contabilidad
                 
                 ats.TipoIDInformante = ivaTypeTipoIDInformante.R;
                 ats.codigoOperativo = codigoOperativoType.IVA;
-                ats.totalVentas = info_ats.lst_ventas.Sum(v=>v.ventasEstab);
+                decimal TotalFact = info_ats.lst_ventas.Where(q => q.tipoComprobante == "18").Sum(v => v.ventasEstab);
+                decimal TotalNC = info_ats.lst_ventas.Where(q => q.tipoComprobante == "04").Sum(v => v.ventasEstab);
+                ats.totalVentas = Math.Round(TotalFact - TotalNC, 2, MidpointRounding.AwayFromZero);
                 #endregion
 
                 #region listado de compras
@@ -219,38 +221,33 @@ namespace Core.Erp.Bus.Contabilidad
 
 
                     #region Agrupando clintes
+                    var lst_ventas_x_cliente = (from q in info_ats.lst_ventas
 
-
-                        
-
-
-                        var lst_ventas_x_cliente = (from q in info_ats.lst_ventas
-                                   
-                                   group q by new
-                                   {
-                                       q.idCliente,
-                                       q.DenoCli,
-                                       q.tipoCliente,
-                                       q.tipoComprobante,
-                                       q.tpIdCliente
-                                   }
-                                  into g
-                                   select new ventas_Info
-                                   {
-                                       idCliente = g.Key.idCliente,
-                                       DenoCli = g.Key.DenoCli,
-                                       tipoCliente = g.Key.tipoCliente,
-                                       tpIdCliente=g.Key.tpIdCliente,
-                                       tipoComprobante = g.Key.tipoComprobante,
-                                       baseNoGraIva = g.Sum(y => y.baseNoGraIva),
-                                       baseImponible = g.Sum(y => y.baseImponible),
-                                       baseImpGrav = g.Sum(y => y.baseImpGrav),
-                                       montoIva = g.Sum(y => y.montoIva),
-                                       montoIce = g.Sum(y => y.montoIce),
-                                       valorRetIva = g.Sum(y => y.valorRetIva),
-                                       valorRetRenta = g.Sum(y => y.valorRetRenta),
-                                       numeroComprobantes = info_ats.lst_ventas.Count()
-                                   }).ToList();
+                                                group q by new
+                                                {
+                                                    q.idCliente,
+                                                    q.DenoCli,
+                                                    q.tipoCliente,
+                                                    q.tipoComprobante,
+                                                    q.tpIdCliente
+                                                }
+                              into g
+                                                select new ventas_Info
+                                                {
+                                                    idCliente = g.Key.idCliente,
+                                                    DenoCli = g.Key.DenoCli,
+                                                    tipoCliente = g.Key.tipoCliente,
+                                                    tpIdCliente = g.Key.tpIdCliente,
+                                                    tipoComprobante = g.Key.tipoComprobante,
+                                                    baseNoGraIva = g.Sum(y => y.baseNoGraIva),
+                                                    baseImponible = g.Sum(y => y.baseImponible),
+                                                    baseImpGrav = g.Sum(y => y.baseImpGrav),
+                                                    montoIva = g.Sum(y => y.montoIva),
+                                                    montoIce = g.Sum(y => y.montoIce),
+                                                    valorRetIva = g.Sum(y => y.valorRetIva),
+                                                    valorRetRenta = g.Sum(y => y.valorRetRenta),
+                                                    numeroComprobantes = info_ats.lst_ventas.Count()
+                                                }).ToList();
 
 
                     if (lst_ventas_x_cliente.Count > 0)
@@ -284,7 +281,7 @@ namespace Core.Erp.Bus.Contabilidad
                              }
 
                              vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
-                             det_ventas.tipoComprobante = "18";
+                             det_ventas.tipoComprobante = vent.tipoComprobante;
                              det_ventas.tipoEmision = tipoEmisionType.F;
                              det_ventas.numeroComprobantes = vent.numeroComprobantes.ToString();
                              det_ventas.baseNoGraIva = vent.baseNoGraIva;
@@ -296,14 +293,16 @@ namespace Core.Erp.Bus.Contabilidad
                              det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
                              det_ventas.montoIceSpecified = true;
                              det_ventas.formasDePago = null;
-                             string[] AFormaPago = { "20" };
-                             det_ventas.formasDePago = AFormaPago;
-
+                             if (det_ventas.tipoComprobante == "18")
+                             {
+                                 string[] AFormaPago = { "20" };
+                                 det_ventas.formasDePago = AFormaPago;
+                             }
                              ats.ventas.Add(det_ventas);
                          }
                         );
                     }
-                    }
+                }
                     
 
 
@@ -322,7 +321,6 @@ namespace Core.Erp.Bus.Contabilidad
                 {
                     if (info_ats.lst_ventas.Count() > 0)
                     {
-                       
                         ats.ventasEstablecimiento = new List<ventaEst>();
 
                          var vtas = info_ats.lst_ventas.GroupBy(x => x.codEstab)
@@ -337,11 +335,11 @@ namespace Core.Erp.Bus.Contabilidad
                             ventaEst vtas_esta = new ventaEst();
                             vtas_esta.codEstab = item.codEstab;
                             vtas_esta.ventasEstab = item.ventasEstab;
+                            vtas_esta.ventasEstab = (info_ats.lst_ventas.Where(y => y.tipoComprobante == "18").Sum(v => v.ventasEstab)) - info_ats.lst_ventas.Where(y => y.tipoComprobante == "04").Sum(v => v.ventasEstab);
+
                             vtas_esta.ivaComp = Convert.ToDecimal("0.00");
                             ats.ventasEstablecimiento.Add(vtas_esta);
                         }
-
-
                     }
                 }
                 #endregion

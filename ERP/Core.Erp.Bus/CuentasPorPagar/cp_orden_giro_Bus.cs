@@ -366,12 +366,12 @@ namespace Core.Erp.Bus.CuentasPorPagar
             try
             {
                 string mensaje = "";
-                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.co_FechaFactura, cl_enumeradores.eModulo.CONTA, info.IdSucursal, ref mensaje))
+                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.co_FechaContabilizacion ?? DateTime.Now.Date, cl_enumeradores.eModulo.CONTA, info.IdSucursal, ref mensaje))
                 {
                     return mensaje;
                 }
 
-                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.co_FechaFactura, cl_enumeradores.eModulo.CXP, info.IdSucursal, ref mensaje))
+                if (!bus_periodo.ValidarFechaTransaccion(info.IdEmpresa, info.co_FechaContabilizacion ?? DateTime.Now.Date, cl_enumeradores.eModulo.CXP, info.IdSucursal, ref mensaje))
                 {
                     return mensaje;
                 }
