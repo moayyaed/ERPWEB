@@ -108,10 +108,16 @@ namespace Core.Erp.Bus.Contabilidad
                            item_pago.aplicConvDobTrib = aplicConvDobTribType.NA;
                            item_pago.pagExtSujRetNorLeg = aplicConvDobTribType.NA;
                            comp_det.pagoExterior = item_pago;
-                           if (comp_det.idProv == "0601895618001")
+                           if (!string.IsNullOrEmpty(comp.docModificado))
                            {
-
+                               comp_det.docModificado = comp.docModificado;
+                               comp_det.estabModificado = comp.estabModificado;
+                               comp_det.ptoEmiModificado = comp.ptoEmiModificado;
+                               comp_det.secModificado = comp.secModificado;
+                               comp_det.autModificado = comp.autModificado;
                            }
+                           
+
                            if ((Convert.ToDecimal(comp.baseImponible) + Convert.ToDecimal(comp.baseImpGrav) + Convert.ToDecimal(comp.montoIva)) >= 1000)
                            {
                                comp_det.formasDePago = null;
