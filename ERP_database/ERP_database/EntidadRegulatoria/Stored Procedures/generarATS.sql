@@ -1,4 +1,5 @@
-﻿--exec [EntidadRegulatoria].[generarATS] 2,201905,1,8
+﻿
+--exec [EntidadRegulatoria].[generarATS] 1,201908,1,1
 CREATE  PROCEDURE [EntidadRegulatoria].[generarATS]
 @idempresa int,
 @idPeriodo int,
@@ -49,7 +50,12 @@ baseImpGrav,																				baseImpExe,
 montoIce,																					montoIva,			
 pagoLocExt,																					denopago,			
 paisEfecPago,																				formaPago,
-IdSucursal
+IdSucursal,														
+docModificado,
+estabModificado,
+ptoEmiModificado,
+secModificado,
+autModificado
 )
 SELECT 
 
@@ -64,20 +70,60 @@ CASe when perso.pe_Naturaleza='NATU' THEN '01' else '02' end AS tipoProv,					pe
  isnull(fac.BseImpNoObjDeIva,0.00),															fac.co_subtotal_siniva, 
  fac.co_subtotal_iva,																		isnull(fac.BseImpNoObjDeIva,0.00),
  0 co_Ice_valor,																			fac.co_valoriva,																					
- fac.PagoLocExt,																			f_pago.formas_pago_sri,  
- f_pago.codigo_pago_sri,																	f_pago.codigo_pago_sri, fac.IdSucursal
+ ISNULL(fac.PagoLocExt,'LOC'),																			f_pago.formas_pago_sri,  
+ f_pago.codigo_pago_sri,																	f_pago.codigo_pago_sri, fac.IdSucursal,
+ NULL docModificado,
+NULL estabModificado,
+NULL ptoEmiModificado,
+NULL secModificado,
+NULL autModificado
 FROM            dbo.cp_orden_giro AS fac INNER JOIN
                          dbo.cp_proveedor AS prov ON fac.IdEmpresa = prov.IdEmpresa AND fac.IdProveedor = prov.IdProveedor INNER JOIN
                          dbo.tb_persona AS perso ON prov.IdPersona = perso.IdPersona LEFT OUTER JOIN
                          dbo.cp_orden_giro_pagos_sri AS f_pago ON fac.IdEmpresa = f_pago.IdEmpresa AND fac.IdCbteCble_Ogiro = f_pago.IdCbteCble_Ogiro AND fac.IdTipoCbte_Ogiro = f_pago.IdTipoCbte_Ogiro
 						 
 						 where fac.IdEmpresa=@idempresa
-						 and fac.co_fechaOg between @fecha_inicio and @fecha_fin
+						 and fac.co_FechaFactura between @fecha_inicio and @fecha_fin
 						 and fac.Estado='A'
 						 and fac.IdSucursal>=@IdSucursalInicio
 						 and fac.IdSucursal<=@IdSucursalFin
-						 
+						 and fac.IdOrden_giro_Tipo <> 15
+UNION ALL
+SELECT 
 
+ @idempresa,																				@idPeriodo,				
+ 1000+ISNULL(ROW_NUMBER()OVER (ORDER BY fac.IdEmpresa), 0)AS Secuencia,							'04',
+ CASe when perso.IdTipoDocumento='CED' THEN '02' when perso.IdTipoDocumento='PAS' THEN '03'  else '01' end  tpIdProv,					perso.pe_cedulaRuc,
+ '04' tipoComprobante,																		'NO' AS ParteRelacionada,
+CASe when perso.pe_Naturaleza='NATU' THEN '01' else '02' end AS tipoProv,					perso.pe_nombreCompleto,			 
+ cast(fac.cn_fecha as date),																fac.cn_serie1 AS establecimiento, 
+ fac.cn_serie2 AS puntoEmision,																fac.cn_Nota, 
+ fac.cn_fecha,																		        fac.cn_Autorizacion,																				 
+ --isnull(fac.BseImpNoObjDeIva,0.00)
+ 0,																							fac.cn_subtotal_siniva, 
+ fac.cn_subtotal_iva,																		0,--isnull(fac.BseImpNoObjDeIva,0.00),
+ 0 co_Ice_valor,																			fac.cn_valoriva,																					
+ ISNULL(fac.PagoLocExt,'LOC'),																			'',--f_pago.formas_pago_sri,  
+ '',																						'',--f_pago.codigo_pago_sri, 
+ fac.IdSucursal,
+ og.IdOrden_giro_Tipo docModificado,
+ SUBSTRING(OG.co_serie, 0, 4) estabModificado,
+ SUBSTRING(OG.co_serie, 5, 4) ptoEmiModificado,
+ OG.co_factura secModificado,
+ OG.Num_Autorizacion autModificado
+FROM            dbo.cp_nota_DebCre AS fac INNER JOIN
+                         dbo.cp_proveedor AS prov ON fac.IdEmpresa = prov.IdEmpresa AND fac.IdProveedor = prov.IdProveedor INNER JOIN
+                         dbo.tb_persona AS perso ON prov.IdPersona = perso.IdPersona INNER JOIN
+						 cp_orden_pago_cancelaciones AS CAN ON CAN.IdEmpresa_pago = FAC.IdEmpresa AND CAN.IdTipoCbte_pago = FAC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = FAC.IdCbteCble_Nota LEFT JOIN
+						 cp_orden_giro AS OG ON CAN.IdEmpresa_cxp = OG.IdEmpresa AND CAN.IdTipoCbte_cxp = OG.IdTipoCbte_Ogiro AND CAN.IdCbteCble_cxp = OG.IdCbteCble_Ogiro
+						 
+						 where fac.IdEmpresa=@idempresa
+						 and fac.cn_fecha between @fecha_inicio and @fecha_fin
+						 and fac.Estado='A'
+						 and fac.IdSucursal>=@IdSucursalInicio
+						 and fac.IdSucursal<=@IdSucursalFin
+						 AND FAC.DebCre = 'C'
+						 AND fac.IdTipoNota = 'T_TIP_NOTA_SRI'
 
 
 --*****************************************************************************************************************************************************************++
@@ -92,7 +138,7 @@ valorRetIva,								valorRetRenta,										formaPago,															codEstab,
 ventasEstab,								ivaComp,IdSucursal)
 select 
 
-@idempresa,									@idPeriodo,											ROW_NUMBER()OVER (ORDER BY ventas.IdEmpresa),						ventas.tpIdCliente,
+@idempresa,									@idPeriodo,											1000 + ROW_NUMBER()OVER (ORDER BY ventas.IdEmpresa),						ventas.tpIdCliente,
 ventas.pe_cedulaRuc,						ventas.parteRel,									ventas.tipoCliente,													ventas.pe_nombreCompleto,
 ventas.tipoEmtipoComprobante,				ventas.tipoEm,										count(ventas.IdCbteVta),											sum(ventas.baseNoGraIva),
 sum(ventas.baseImponible),					sum(ventas.baseImpGrav),							SUM(ventas.montoIva),												sum(ventas.montoIce),
@@ -116,9 +162,22 @@ fac.IdCliente,
  '18' AS tipoEmtipoComprobante, 
  'F' AS tipoEm,
  0.00 as baseNoGraIva,
-CASe when fac_det.IdCod_Impuesto_Iva='IVA0' then SUM( fac_det.vt_Subtotal) else 0.00 end baseImponible,
-CASe when fac_det.IdCod_Impuesto_Iva='IVA12' then SUM( fac_det.vt_Subtotal) else 0.00 end baseImpGrav,
-sum(fac_det.vt_iva)montoIva,
+case when t.es_Documento_Electronico = 0 then
+CASe when fac_det.IdCod_Impuesto_Iva='IVA0' then SUM( fac_det.vt_Subtotal) else 0.00 end
+else 0
+end baseImponible,
+
+case when t.es_Documento_Electronico = 0 then
+CASe when fac_det.IdCod_Impuesto_Iva='IVA12' then SUM( fac_det.vt_Subtotal) else 0.00 end
+else 0 end
+baseImpGrav,
+
+case when t.es_Documento_Electronico = 0 then
+sum(fac_det.vt_iva)
+else 0 
+end montoIva,
+
+
 0.00 montoIce,
 fac.vt_serie1,
 fac.vt_serie2,
@@ -131,7 +190,8 @@ FROM            dbo.fa_factura AS fac INNER JOIN
                          dbo.fa_factura_det AS fac_det ON fac.IdEmpresa = fac_det.IdEmpresa AND fac.IdSucursal = fac_det.IdSucursal AND fac.IdBodega = fac_det.IdBodega AND fac.IdCbteVta = fac_det.IdCbteVta INNER JOIN
                          dbo.fa_cliente AS cli ON fac.IdEmpresa = cli.IdEmpresa AND fac.IdCliente = cli.IdCliente INNER JOIN
                          dbo.tb_persona AS per ON cli.IdPersona = per.IdPersona INNER JOIN
-                         dbo.fa_formaPago AS f_pago ON cli.FormaPago = f_pago.IdFormaPago
+                         dbo.fa_formaPago AS f_pago ON cli.FormaPago = f_pago.IdFormaPago inner join
+						 tb_sis_Documento_Tipo_Talonario as T on fac.IdEmpresa = t.IdEmpresa and fac.vt_tipoDoc = t.CodDocumentoTipo and fac.vt_serie1 = t.Establecimiento and fac.vt_serie2 = t.PuntoEmision and fac.vt_NumFactura = t.NumDocumento
 						  where  fac.vt_fecha between @fecha_inicio and @fecha_fin
 						 and  fac.Estado='A' 
 						 and fac.vt_fecha between @fecha_inicio and @fecha_fin
@@ -139,6 +199,7 @@ FROM            dbo.fa_factura AS fac INNER JOIN
 						 and fac.IdEmpresa = @idempresa
 						 and fac.IdSucursal>=@IdSucursalInicio
 						 and fac.IdSucursal<=@IdSucursalFin
+						 
 GROUP BY per.pe_cedulaRuc, per.pe_nombreCompleto,per.IdTipoDocumento, fac_det.vt_por_iva, fac.IdEmpresa,fac.IdCliente,
 fac.IdSucursal,
 fac.IdBodega,
@@ -147,7 +208,7 @@ fac.vt_serie1,
 fac.vt_serie2,
 fac.vt_NumFactura,
 f_pago.IdFormaPago,
-IdCod_Impuesto_Iva, pe_Naturaleza
+IdCod_Impuesto_Iva, pe_Naturaleza,t.es_Documento_Electronico
 ) ventas
 left join
 ((
@@ -164,6 +225,7 @@ isnull(case when SUBSTRING( cxc_cobro_det.IdCobro_tipo,0,5)= 'RTIV'then sum(dc_V
  and cxc_cobro_det.IdCobro=cxc_cobro.IdCobro
  and cxc_cobro_tipo.IdMotivo_tipo_cobro='RET'
  and cxc_cobro_det.IdEmpresa=@idempresa
+ and isnull(cxc_cobro.cr_EsElectronico,0) = 0
  GROUP by cxc_cobro.idempresa,cxc_cobro.IdSucursal, IdBodega_Cbte,IdCbte_vta_nota,cxc_cobro.IdCliente, cxc_cobro_det.IdCobro_tipo
  ) as 
  cobro_x_retencion
@@ -221,9 +283,13 @@ fac.IdCliente,
  '04' AS tipoEmtipoComprobante, 
  'F' AS tipoEm,
  0.00 as baseNoGraIva,
-CASe when fac_det.IdCod_Impuesto_Iva='IVA0' then SUM( fac_det.sc_subtotal) else 0.00 end baseImponible,
-CASe when fac_det.IdCod_Impuesto_Iva='IVA12' then SUM( fac_det.sc_subtotal) else 0.00 end baseImpGrav,
-sum(fac_det.sc_iva)montoIva,
+
+ case when t.es_Documento_Electronico = 0 then
+CASe when fac_det.IdCod_Impuesto_Iva='IVA0' then SUM( fac_det.sc_subtotal) else 0.00  end else 0 end baseImponible,
+case when t.es_Documento_Electronico = 0 then
+CASe when fac_det.IdCod_Impuesto_Iva='IVA12' then SUM( fac_det.sc_subtotal) else 0.00 end else 0 end baseImpGrav,
+case when t.es_Documento_Electronico = 0 then
+sum(fac_det.sc_iva) else 0 end montoIva,
 0.00 montoIce,
 fac.Serie1,
 fac.Serie2,
@@ -235,7 +301,8 @@ FROM            dbo.fa_notaCreDeb AS fac INNER JOIN
                          dbo.fa_notaCreDeb_det AS fac_det ON fac.IdEmpresa = fac_det.IdEmpresa AND fac.IdSucursal = fac_det.IdSucursal AND fac.IdBodega = fac_det.IdBodega AND fac.IdNota = fac_det.IdNota INNER JOIN
                          dbo.fa_cliente AS cli ON fac.IdEmpresa = cli.IdEmpresa AND fac.IdCliente = cli.IdCliente INNER JOIN
                          dbo.tb_persona AS per ON cli.IdPersona = per.IdPersona INNER JOIN
-                         dbo.fa_formaPago AS f_pago ON cli.FormaPago = f_pago.IdFormaPago
+                         dbo.fa_formaPago AS f_pago ON cli.FormaPago = f_pago.IdFormaPago inner join
+						 tb_sis_Documento_Tipo_Talonario as T on fac.IdEmpresa = t.IdEmpresa and fac.CodDocumentoTipo = t.CodDocumentoTipo and fac.Serie1 = t.Establecimiento and fac.Serie2 = t.PuntoEmision and fac.NumNota_Impresa = t.NumDocumento
 						  where  fac.no_fecha between @fecha_inicio and @fecha_fin
 						 and  fac.Estado='A' 
 						 AND FAC.NaturalezaNota = 'SRI'
@@ -245,6 +312,7 @@ FROM            dbo.fa_notaCreDeb AS fac INNER JOIN
 						  and fac.IdSucursal>=@IdSucursalInicio
 						 and fac.IdSucursal<=@IdSucursalFin
 						 AND fac.CreDeb='C'
+						 --and t.es_Documento_Electronico = 0
 GROUP BY per.pe_cedulaRuc, per.pe_nombreCompleto,per.IdTipoDocumento, fac_det.vt_por_iva, fac.IdEmpresa,fac.IdCliente,
 fac.IdSucursal,
 fac.IdBodega,
@@ -253,7 +321,7 @@ fac.Serie1,
 fac.Serie2,
 fac.NumNota_Impresa,
 f_pago.IdFormaPago,
-IdCod_Impuesto_Iva, fac.IdSucursal
+IdCod_Impuesto_Iva, fac.IdSucursal, t.es_Documento_Electronico
 ) ventas
 left join
 ((
@@ -270,7 +338,7 @@ isnull(case when SUBSTRING( cxc_cobro_det.IdCobro_tipo,0,5)= 'RTIV'then sum(dc_V
  and cxc_cobro_det.IdCobro=cxc_cobro.IdCobro
  and cxc_cobro_tipo.IdMotivo_tipo_cobro='RET'
  and cxc_cobro_det.IdEmpresa=@idempresa
-
+ and isnull(cxc_cobro.cr_EsElectronico,0) = 0
  GROUP by cxc_cobro.idempresa,cxc_cobro.IdSucursal, IdBodega_Cbte,IdCbte_vta_nota,cxc_cobro.IdCliente, cxc_cobro_det.IdCobro_tipo
  ) as 
  cobro_x_retencion
@@ -342,6 +410,7 @@ FROM            dbo.cp_orden_giro AS fac left JOIN
 						 and fac.Estado='A'
 						 and ret.Estado='A'
 						 AND FAC.IdEmpresa = @idempresa
+						 AND T.es_Documento_Electronico = 0
 
 /*
 

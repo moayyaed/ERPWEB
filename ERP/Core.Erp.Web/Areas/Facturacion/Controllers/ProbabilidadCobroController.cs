@@ -320,7 +320,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cont = 0;
                 foreach (var item2 in detalle_probabilidad)
                 {
-                    if (item1.IdEmpresa == item2.IdEmpresa && item1.IdCbteVta == item2.IdCbteVta)
+                    if (item1.IdEmpresa == item2.IdEmpresa && item1.IdSucursal == item2.IdSucursal && item1.IdBodega == item2.IdBodega && item1.vt_tipoDoc == item2.vt_tipoDoc && item1.IdCbteVta == item2.IdCbteVta)
                     {
                         cont++;
                     }

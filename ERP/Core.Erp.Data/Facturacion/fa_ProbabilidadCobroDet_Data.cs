@@ -71,8 +71,7 @@ namespace Core.Erp.Data.Facturacion
                         vt_Observacion =q.vt_Observacion,
                         pe_nombreCompleto = q.pe_nombreCompleto
                     }).ToList();
-                    Lista.ForEach(q => q.IdString = q.vt_tipoDoc.ToString() + q.IdEmpresa.ToString("0000") + q.IdSucursal.ToString("0000") + q.IdBodega.ToString("0000") + q.IdCbteVta.ToString("0000000000"));
-                    Lista.ForEach(q => q.Secuencia = Secuencia++);
+                    Lista.ForEach(q => { q.IdString = q.vt_tipoDoc.ToString() + q.IdEmpresa.ToString("0000") + q.IdSucursal.ToString("0000") + q.IdBodega.ToString("0000") + q.IdCbteVta.ToString("0000000000"); q.Secuencia = Secuencia++; });
                 }
 
                 return Lista;

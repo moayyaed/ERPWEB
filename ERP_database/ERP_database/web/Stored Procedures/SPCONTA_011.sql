@@ -1,4 +1,4 @@
-﻿-- exec web.SPCONTA_011 1,'admin','2019/10/01','2019/10/31'
+﻿-- exec web.SPCONTA_011 1,'admin','2019/10/21','2019/10/27'
 CREATE PROCEDURE [web].[SPCONTA_011]
 (
 @IdEmpresa int,
@@ -8,7 +8,8 @@ CREATE PROCEDURE [web].[SPCONTA_011]
 )
 AS
 delete [web].[ct_CONTA_011] where IdUsuario = @IdUsuario
-
+SET @FechaIni = CAST(@FechaIni AS DATE)
+SET @FechaFin = CAST(@FechaFin AS DATE)
 INSERT INTO [web].[ct_CONTA_011]
            ([IdEmpresa]
            ,[IdUsuario]
@@ -103,7 +104,7 @@ END
 BEGIN --CUENTAS POR COBRAR CLIENTES
 	UPDATE [web].[ct_CONTA_011] SET Columna1 = ROUND(isnull(A.Valor,0),2)
 	FROM(
-		select SUM(G.Valor) Valor 
+		/*select SUM(G.Valor) Valor 
 		from(
 		SELECT F.IdEmpresa, F.IdSucursal, F.IdBodega, F.IdCbteVta, ROUND(FR.Total - isnull(CXC.dc_ValorPago,0),2) Valor
 		FROM fa_factura AS F INNER JOIN 
@@ -128,7 +129,11 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 			GROUP BY D.IdEmpresa, D.IdSucursal, D.IdBodega_Cbte, D.IdCbte_vta_nota, D.dc_TipoDocumento
 		) CXC ON F.IdEmpresa = CXC.IdEmpresa AND F.IdSucursal = CXC.IdSucursal AND F.IdBodega = CXC.IdBodega_Cbte AND F.IdNota = CXC.IdCbte_vta_nota AND F.CodDocumentoTipo = CXC.dc_TipoDocumento
 		WHERE F.IdEmpresa = @IdEmpresa AND F.no_fecha < @FechaIni AND F.Estado = 'A'  AND F.CreDeb = 'D'
-		)G
+		
+		)G*/
+		SELECT SUM(D.dc_Valor) Valor FROM ct_cbtecble AS C INNER JOIN ct_cbtecble_det AS D
+	ON C.IdEmpresa = D.IdEmpresa AND C.IdTipoCbte = D.IdTipoCbte AND C.IdCbteCble = D.IdCbteCble
+	WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha < @FechaIni AND D.IdCtaCble = '11401'
 	)A
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
@@ -141,7 +146,13 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 			SELECT SUM(FR.Total)Valor
 			FROM fa_factura AS F INNER JOIN 
 			fa_factura_resumen AS FR ON F.IdEmpresa = FR.IdEmpresa AND F.IdSucursal = FR.IdSucursal AND F.IdBodega = FR.IdBodega AND F.IdCbteVta = FR.IdCbteVta
-			WHERE F.IdEmpresa = @IdEmpresa AND F.Estado = 'A' AND F.vt_fecha BETWEEN @FechaIni AND @FechaFin
+			WHERE F.IdEmpresa = @IdEmpresa AND F.vt_fecha BETWEEN @FechaIni AND @FechaFin AND NOT EXISTS(
+			SELECT rel.ct_IdEmpresa FROM fa_factura_x_ct_cbtecble AS rel inner join ct_cbtecble_Reversado as r on rel.vt_IdEmpresa = r.IdEmpresa
+			and rel.ct_IdTipoCbte = r.IdTipoCbte and rel.ct_IdCbteCble = r.IdCbteCble inner join ct_cbtecble as ct on
+			ct.IdEmpresa = r.IdEmpresa_Anu and ct.IdTipoCbte = r.IdTipoCbte_Anu and ct.IdCbteCble = r.IdCbteCble_Anu
+			where ct.IdEmpresa = @IdEmpresa and ct.cb_Fecha <= @FechaFin
+			and rel.vt_IdEmpresa = f.IdEmpresa and rel.vt_IdSucursal = f.IdSucursal and rel.vt_IdBodega = f.IdBodega and rel.vt_IdCbteVta = f.IdCbteVta
+			) 
 			UNION ALL
 			SELECT SUM(FR.Total)
 			FROM fa_notaCreDeb AS F INNER JOIN 
@@ -167,7 +178,9 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 	and [web].[ct_CONTA_011].Secuencia = 2
 
 	UPDATE [web].[ct_CONTA_011] SET Columna4 = round(isnull(A.Valor,0),2)
+	
 	from(
+	  SELECT SUM(G.Valor)Valor FROM(
 			select ROUND(SUM(CD.cr_Valor),2) Valor
 			from caj_Caja_Movimiento CM INNER JOIN
 			caj_Caja_Movimiento_det AS CD ON CM.IdEmpresa = CD.IdEmpresa AND CM.IdTipocbte = CD.IdTipocbte AND CM.IdCbteCble = CD.IdCbteCble
@@ -176,8 +189,13 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 			WHERE CM.IdEmpresa = F.ct_IdEmpresa
 			AND CM.IdTipocbte = F.ct_IdTipoCbte
 			AND CM.IdCbteCble = F.ct_IdCbteCble
+			
 	)
 	AND CM.IdEmpresa = @IdEmpresa AND CM.cm_fecha BETWEEN @FechaIni AND @FechaFin AND CM.Estado = 'A'
+	UNION ALL
+			SELECT SUM(ISNULL(C.cr_Excedente,0)) FROM cxc_cobro AS C
+			WHERE C.IdEmpresa = @IdEmpresa AND C.cr_fecha BETWEEN @FechaIni AND @FechaFin AND C.cr_estado = 'A' AND ISNULL(C.cr_Excedente,0) > 0
+			)G
 	)A
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
@@ -200,11 +218,33 @@ BEGIN --CUENTAS POR COBRAR CLIENTES
 
 	UPDATE [web].[ct_CONTA_011] SET Columna6 = round(isnull(A.Valor,0),2)
 	from(
+	SELECT SUM(G.Valor) Valor FROM(
 		select SUM(D.dc_ValorPago) Valor
 		from cxc_cobro as c inner join 
 		cxc_cobro_det as d on c.IdEmpresa = d.IdEmpresa and c.IdSucursal = d.IdSucursal and c.IdCobro = d.IdCobro
 		where c.IdEmpresa = @IdEmpresa and c.cr_fecha between @FechaIni and @FechaFin and c.cr_estado = 'A' AND D.estado = 'A'
 		AND D.IdCobro_tipo = 'NTCR'
+		UNION ALL
+		SELECT sum(fa_factura_resumen.Total) 
+		FROM     fa_factura INNER JOIN
+				fa_factura_x_ct_cbtecble ON fa_factura.IdEmpresa = fa_factura_x_ct_cbtecble.vt_IdEmpresa AND fa_factura.IdSucursal = fa_factura_x_ct_cbtecble.vt_IdSucursal AND fa_factura.IdBodega = fa_factura_x_ct_cbtecble.vt_IdBodega AND 
+				fa_factura.IdCbteVta = fa_factura_x_ct_cbtecble.vt_IdCbteVta INNER JOIN
+				ct_cbtecble_Reversado ON fa_factura_x_ct_cbtecble.ct_IdEmpresa = ct_cbtecble_Reversado.IdEmpresa AND fa_factura_x_ct_cbtecble.ct_IdTipoCbte = ct_cbtecble_Reversado.IdTipoCbte AND 
+				fa_factura_x_ct_cbtecble.ct_IdCbteCble = ct_cbtecble_Reversado.IdCbteCble INNER JOIN
+				ct_cbtecble ON ct_cbtecble_Reversado.IdEmpresa_Anu = ct_cbtecble.IdEmpresa AND ct_cbtecble_Reversado.IdTipoCbte_Anu = ct_cbtecble.IdTipoCbte AND ct_cbtecble_Reversado.IdCbteCble_Anu = ct_cbtecble.IdCbteCble INNER JOIN
+				fa_factura_resumen ON fa_factura.IdEmpresa = fa_factura_resumen.IdEmpresa AND fa_factura.IdSucursal = fa_factura_resumen.IdSucursal AND fa_factura.IdBodega = fa_factura_resumen.IdBodega AND 
+				fa_factura.IdCbteVta = fa_factura_resumen.IdCbteVta
+		where fa_factura.vt_fecha < @FechaIni and ct_cbtecble.cb_Fecha between @FechaIni and @FechaFin
+		UNION ALL
+		SELECT sum(cxc_cobro.cr_TotalCobro)*-1
+		FROM     cxc_cobro_x_ct_cbtecble INNER JOIN
+		cxc_cobro ON cxc_cobro_x_ct_cbtecble.cbr_IdEmpresa = cxc_cobro.IdEmpresa AND cxc_cobro_x_ct_cbtecble.cbr_IdSucursal = cxc_cobro.IdSucursal AND cxc_cobro_x_ct_cbtecble.cbr_IdCobro = cxc_cobro.IdCobro INNER JOIN
+		ct_cbtecble INNER JOIN
+		ct_cbtecble_Reversado ON ct_cbtecble.IdEmpresa = ct_cbtecble_Reversado.IdEmpresa_Anu AND ct_cbtecble.IdTipoCbte = ct_cbtecble_Reversado.IdTipoCbte_Anu AND 
+		ct_cbtecble.IdCbteCble = ct_cbtecble_Reversado.IdCbteCble_Anu ON cxc_cobro_x_ct_cbtecble.ct_IdEmpresa = ct_cbtecble_Reversado.IdEmpresa AND cxc_cobro_x_ct_cbtecble.ct_IdTipoCbte = ct_cbtecble_Reversado.IdTipoCbte AND 
+		cxc_cobro_x_ct_cbtecble.ct_IdCbteCble = ct_cbtecble_Reversado.IdCbteCble
+		where cxc_cobro.cr_fecha < @FechaIni and ct_cbtecble.cb_Fecha between @FechaIni and @FechaFin
+		) G
 	)A
 	WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
@@ -297,9 +337,15 @@ BEGIN --CUENTAS POR PAGAR
 			cp_orden_pago as op on can.IdEmpresa_op = op.IdEmpresa and can.IdOrdenPago_op = op.IdOrdenPago
 			WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha BETWEEN @FechaIni AND @FechaFin and op.IdTipo_Persona = 'PROVEE' AND
 			EXISTS(
-			SELECT * FROM cp_nota_DebCre AS NC
-			WHERE CAN.IdEmpresa_pago = NC.IdEmpresa AND CAN.IdTipoCbte_pago = NC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = NC.IdCbteCble_Nota
-			AND NC.cn_fecha <= @FechaFin
+				SELECT * FROM cp_nota_DebCre AS NC 
+				WHERE CAN.IdEmpresa_pago = NC.IdEmpresa AND CAN.IdTipoCbte_pago = NC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = NC.IdCbteCble_Nota
+				AND NC.cn_fecha <= @FechaFin 
+			)
+			and exists(
+				select d.IdEmpresa 
+				from cp_conciliacion_Caja_det as d 
+				where d.IdEmpresa_OP = can.IdEmpresa_op
+				and d.IdOrdenPago_OP = can.IdOrdenPago_op
 			)
 			UNION ALL
 			SELECT SUM(OG.cn_total) Valor FROM cp_nota_DebCre AS OG
@@ -340,6 +386,25 @@ BEGIN --CUENTAS POR PAGAR
 			WHERE CAN.IdEmpresa_pago = NC.IdEmpresa AND CAN.IdTipoCbte_pago = NC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = NC.IdCbteCble_Nota
 			AND NC.cn_fecha <= @FechaFin
 		)
+		UNION ALL
+		SELECT SUM(CAN.MontoAplicado) 
+			FROM cp_orden_pago_cancelaciones AS CAN INNER JOIN 
+			ct_cbtecble AS C ON C.IdEmpresa = CAN.IdEmpresa_pago AND C.IdTipoCbte = CAN.IdTipoCbte_pago AND C.IdCbteCble = CAN.IdCbteCble_pago inner join
+			cp_orden_pago as op on can.IdEmpresa_op = op.IdEmpresa and can.IdOrdenPago_op = op.IdOrdenPago
+			WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha BETWEEN @FechaIni AND @FechaFin and op.IdTipo_Persona = 'PROVEE' AND
+			EXISTS(
+				SELECT * FROM cp_nota_DebCre AS NC 
+				WHERE CAN.IdEmpresa_pago = NC.IdEmpresa AND CAN.IdTipoCbte_pago = NC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = NC.IdCbteCble_Nota
+				AND NC.cn_fecha <= @FechaFin 
+			)
+			and NOT exists(
+				select d.IdEmpresa 
+				from cp_conciliacion_Caja_det as d 
+				where d.IdEmpresa_OP = can.IdEmpresa_op
+				and d.IdOrdenPago_OP = can.IdOrdenPago_op
+			)
+		
+
 	)G
 	)A WHERE [web].[ct_CONTA_011].IdEmpresa = @IdEmpresa
 	and [web].[ct_CONTA_011].IdUsuario = @IdUsuario
