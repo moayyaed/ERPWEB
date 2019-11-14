@@ -1004,7 +1004,6 @@
     <Build Include="web\Stored Procedures\SPCXP_015.sql" />
     <Build Include="EntidadRegulatoria\Stored Procedures\GenerarRDEP.sql" />
     <Build Include="dbo\Stored Procedures\SPCAJ_AbrirConciliacionCaja.sql" />
-    <Build Include="dbo\Stored Procedures\SPATS_MigrarEventos.sql" />
     <Build Include="Security\Migraciones.sql" />
     <Build Include="web\Tables\tb_FiltroReportes.sql" />
     <Build Include="web\Tables\cp_SPCXP_016.sql" />

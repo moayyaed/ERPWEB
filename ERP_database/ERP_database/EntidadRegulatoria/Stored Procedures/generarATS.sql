@@ -1,5 +1,5 @@
 ﻿
---exec [EntidadRegulatoria].[generarATS] 1,201908,1,1
+--exec [EntidadRegulatoria].[generarATS] 1,201909,1,1
 CREATE  PROCEDURE [EntidadRegulatoria].[generarATS]
 @idempresa int,
 @idPeriodo int,
@@ -106,17 +106,17 @@ CASe when perso.pe_Naturaleza='NATU' THEN '01' else '02' end AS tipoProv,					pe
  ISNULL(fac.PagoLocExt,'LOC'),																			'',--f_pago.formas_pago_sri,  
  '',																						'',--f_pago.codigo_pago_sri, 
  fac.IdSucursal,
- og.IdOrden_giro_Tipo docModificado,
- SUBSTRING(OG.co_serie, 0, 4) estabModificado,
- SUBSTRING(OG.co_serie, 5, 4) ptoEmiModificado,
- OG.co_factura secModificado,
- OG.Num_Autorizacion autModificado
+ CASE WHEN OG.IdCbteCble_Ogiro IS NOT NULL THEN og.IdOrden_giro_Tipo ELSE '01'END docModificado,
+ CASE WHEN OG.IdCbteCble_Ogiro IS NOT NULL THEN SUBSTRING(OG.co_serie, 0, 4) ELSE ND.cn_serie1 END estabModificado,
+ CASE WHEN OG.IdCbteCble_Ogiro IS NOT NULL THEN SUBSTRING(OG.co_serie, 5, 4) ELSE ND.cn_serie2 END ptoEmiModificado,
+ CASE WHEN OG.IdCbteCble_Ogiro IS NOT NULL THEN OG.co_factura ELSE ND.cn_Nota END secModificado,
+ CASE WHEN OG.IdCbteCble_Ogiro IS NOT NULL THEN OG.Num_Autorizacion ELSE ND.cn_Autorizacion END autModificado
 FROM            dbo.cp_nota_DebCre AS fac INNER JOIN
                          dbo.cp_proveedor AS prov ON fac.IdEmpresa = prov.IdEmpresa AND fac.IdProveedor = prov.IdProveedor INNER JOIN
                          dbo.tb_persona AS perso ON prov.IdPersona = perso.IdPersona INNER JOIN
 						 cp_orden_pago_cancelaciones AS CAN ON CAN.IdEmpresa_pago = FAC.IdEmpresa AND CAN.IdTipoCbte_pago = FAC.IdTipoCbte_Nota AND CAN.IdCbteCble_pago = FAC.IdCbteCble_Nota LEFT JOIN
-						 cp_orden_giro AS OG ON CAN.IdEmpresa_cxp = OG.IdEmpresa AND CAN.IdTipoCbte_cxp = OG.IdTipoCbte_Ogiro AND CAN.IdCbteCble_cxp = OG.IdCbteCble_Ogiro
-						 
+						 cp_orden_giro AS OG ON CAN.IdEmpresa_cxp = OG.IdEmpresa AND CAN.IdTipoCbte_cxp = OG.IdTipoCbte_Ogiro AND CAN.IdCbteCble_cxp = OG.IdCbteCble_Ogiro left join
+						 cp_nota_DebCre as nd on CAN.IdEmpresa_cxp = ND.IdEmpresa AND CAN.IdTipoCbte_cxp = ND.IdTipoCbte_Nota AND CAN.IdCbteCble_cxp = ND.IdCbteCble_Nota 
 						 where fac.IdEmpresa=@idempresa
 						 and fac.cn_fecha between @fecha_inicio and @fecha_fin
 						 and fac.Estado='A'
@@ -138,7 +138,7 @@ valorRetIva,								valorRetRenta,										formaPago,															codEstab,
 ventasEstab,								ivaComp,IdSucursal)
 select 
 
-@idempresa,									@idPeriodo,											1000 + ROW_NUMBER()OVER (ORDER BY ventas.IdEmpresa),						ventas.tpIdCliente,
+@idempresa,									@idPeriodo,											100 + ROW_NUMBER()OVER (ORDER BY ventas.IdEmpresa),						ventas.tpIdCliente,
 ventas.pe_cedulaRuc,						ventas.parteRel,									ventas.tipoCliente,													ventas.pe_nombreCompleto,
 ventas.tipoEmtipoComprobante,				ventas.tipoEm,										count(ventas.IdCbteVta),											sum(ventas.baseNoGraIva),
 sum(ventas.baseImponible),					sum(ventas.baseImpGrav),							SUM(ventas.montoIva),												sum(ventas.montoIce),
