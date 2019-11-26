@@ -93,7 +93,7 @@ namespace Core.Erp.Data.Facturacion
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdProbabilidad = info.IdProbabilidad,
-                        Secuencia = info.Secuencia,
+                        Secuencia = info.Secuencia = GetID(info.IdEmpresa,info.IdProbabilidad),
                         IdSucursal = info.IdSucursal,
                         IdBodega = info.IdBodega,
                         IdCbteVta = info.IdCbteVta,
@@ -106,6 +106,28 @@ namespace Core.Erp.Data.Facturacion
                 return true;
             }
             catch (Exception EX)
+            {
+
+                throw;
+            }
+        }
+
+        private int GetID(int IdEmpresa, int IdProbabilidad)
+        {
+            try
+            {
+                int ID = 1;
+
+                using (Entities_facturacion db = new Entities_facturacion())
+                {
+                    int Cont = db.fa_ProbabilidadCobroDet.Where(q => q.IdEmpresa == IdEmpresa && q.IdProbabilidad == IdProbabilidad).Count();
+                    if (Cont > 0)
+                        ID = db.fa_ProbabilidadCobroDet.Where(q => q.IdEmpresa == IdEmpresa && q.IdProbabilidad == IdProbabilidad).Max(q => q.Secuencia) + 1;
+                }
+
+                return ID;
+            }
+            catch (Exception)
             {
 
                 throw;

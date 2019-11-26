@@ -8,7 +8,10 @@
     [SaldoAnterior]  FLOAT (53)    NOT NULL,
     [Ingreso]        FLOAT (53)    NOT NULL,
     [Egreso]         FLOAT (53)    NOT NULL,
+    [Reversos]       FLOAT (53)    NULL,
     [SaldoFinal]     FLOAT (53)    NOT NULL,
     CONSTRAINT [PK_ba_SPBAN_011] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdBanco] ASC, [IdUsuario] ASC)
 );
+
+
 

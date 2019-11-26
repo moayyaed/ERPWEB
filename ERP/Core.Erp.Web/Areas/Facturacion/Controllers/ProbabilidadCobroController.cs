@@ -279,8 +279,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                             info.Secuencia = lst_det_probabilidad.Count == 0 ? 1 : lst_det_probabilidad.Max(q => q.Secuencia) + 1;
                             info.IdEmpresa = IdEmpresa;
                             info.IdProbabilidad = IdProbabilidad;
-                            lst_det_probabilidad.Add(info);
-                            bus_probabilidad_det.GuardarDB(info);
+                            if(bus_probabilidad_det.GuardarDB(info))
+                                lst_det_probabilidad.Add(info);                            
                         }
                     }                    
                 }

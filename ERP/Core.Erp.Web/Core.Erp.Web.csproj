@@ -9754,11 +9754,7 @@
     <Content Include="Areas\Caja\Views\TipoMovimientoCaja\_CmbCuenta_Tipo_movimiento.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ParametroAF\_CmbCuenta_Param2.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ParametroAF\_CmbCuenta_Param3.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param1.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param2.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param5.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param4.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param3.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param1.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param2.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param3.cshtml" />

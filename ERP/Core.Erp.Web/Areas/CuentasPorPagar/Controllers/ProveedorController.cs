@@ -34,7 +34,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_proveedor_List ListaProveedor = new cp_proveedor_List();
         cp_proveedor_clase_List ListaClaseProveedor = new cp_proveedor_clase_List();
         tb_persona_List ListaPersona = new tb_persona_List();
-        
+        cp_parametros_Bus bus_param = new cp_parametros_Bus();
+        string mensaje = string.Empty;
         #endregion
 
         #region Metodos ComboBox bajo demanda banco
@@ -167,6 +168,24 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
 
         }
+
+        private bool Validar(cp_proveedor_Info i_validar, ref string msg)
+        {
+            var param = bus_param.get_info(i_validar.IdEmpresa);
+            if (param == null)
+            {
+                msg = "No existen parámetros para el módulo de cuentas por pagar";
+                return false;
+            }
+
+            if ((param.SeValidaCtaGasto ?? false) && string.IsNullOrEmpty(i_validar.IdCtaCble_Gasto))
+            {
+                msg = "Debe seleccionar la cuenta de gasto del proveedor";
+                return false;
+            }
+
+            return true;
+        }
         #endregion
 
         #region Acciones
@@ -192,7 +211,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult Nuevo(cp_proveedor_Info model)
         {
             var return_naturaleza = "";
-            model.IdUsuario = Session["IdUsuario"].ToString();
+            model.IdUsuario = SessionFixed.IdUsuario;
+            if (!Validar(model,ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
+
             if ((cl_funciones.ValidaIdentificacion(model.info_persona.IdTipoDocumento, model.info_persona.pe_Naturaleza, model.info_persona.pe_cedulaRuc, ref return_naturaleza)))
             {
                 model.info_persona.pe_Naturaleza = return_naturaleza;
@@ -225,8 +251,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult Modificar(cp_proveedor_Info model)
         {
             var return_naturaleza = "";
-            model.IdUsuarioUltMod = SessionFixed.IdUsuario.ToString();
-
+            model.IdUsuarioUltMod = SessionFixed.IdUsuario;
+            if (!Validar(model, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                cargar_combos(model.IdEmpresa);
+                return View(model);
+            }
             if ((cl_funciones.ValidaIdentificacion(model.info_persona.IdTipoDocumento, model.info_persona.pe_Naturaleza, model.info_persona.pe_cedulaRuc, ref return_naturaleza)))
             {
                 model.info_persona.pe_Naturaleza = return_naturaleza;

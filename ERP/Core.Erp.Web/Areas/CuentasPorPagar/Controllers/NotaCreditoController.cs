@@ -507,7 +507,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cbtecble_det_sub_Info.secuencia = 1;
                 cbtecble_det_sub_Info.IdEmpresa = 0;
                 cbtecble_det_sub_Info.IdTipoCbte = 1;
-                cbtecble_det_sub_Info.IdCtaCble = info_parametro.pa_ctacble_deudora;
+                cbtecble_det_sub_Info.IdCtaCble = null;
                 cbtecble_det_sub_Info.dc_Valor_haber = cn_subtotal_iva + cn_subtotal_siniva;
                 cbtecble_det_sub_Info.dc_Valor = cn_subtotal_iva + cn_subtotal_siniva;
                 cbtecble_det_sub_Info.dc_Observacion = observacion;

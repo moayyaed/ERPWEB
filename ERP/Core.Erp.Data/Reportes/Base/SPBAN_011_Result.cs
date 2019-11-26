@@ -22,6 +22,7 @@ namespace Core.Erp.Data.Reportes.Base
         public double SaldoAnterior { get; set; }
         public double Ingreso { get; set; }
         public double Egreso { get; set; }
+        public Nullable<double> Reversos { get; set; }
         public double SaldoFinal { get; set; }
     }
 }

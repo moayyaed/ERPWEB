@@ -442,15 +442,17 @@
             this.xrTableCell41.Name = "xrTableCell41";
             this.xrTableCell41.StylePriority.UseBorders = false;
             this.xrTableCell41.StylePriority.UseFont = false;
-            this.xrTableCell41.Text = "Guía de remisión:";
-            this.xrTableCell41.Weight = 0.63914791232004331D;
+            this.xrTableCell41.Text = "Plazo:";
+            this.xrTableCell41.Weight = 0.53262342372728022D;
             // 
             // xrTableCell42
             // 
             this.xrTableCell42.Borders = DevExpress.XtraPrinting.BorderSide.Right;
+            this.xrTableCell42.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[vt_plazo]")});
             this.xrTableCell42.Name = "xrTableCell42";
             this.xrTableCell42.StylePriority.UseBorders = false;
-            this.xrTableCell42.Weight = 0.83089179631967458D;
+            this.xrTableCell42.Weight = 0.93741628491243767D;
             // 
             // xrTableRow34
             // 
@@ -1468,7 +1470,7 @@
             this.p_IdSucursal,
             this.p_IdBodega,
             this.p_IdCbteVta});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_007_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();

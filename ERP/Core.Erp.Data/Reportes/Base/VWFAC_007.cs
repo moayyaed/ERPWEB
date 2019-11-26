@@ -60,5 +60,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string vt_detallexItems { get; set; }
         public string FormaPago { get; set; }
         public string nom_FormaPago { get; set; }
+        public decimal vt_plazo { get; set; }
     }
 }

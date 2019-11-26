@@ -86,37 +86,9 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdCtaCblePadre">Cuenta contable deudora</label>
-                    @Html.Partial("_CmbCuenta_Param1", Model)
-                    @Html.ValidationMessageFor(q => q.pa_ctacble_deudora, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="col-md-12">
-                <div class="form-group">
                     <label for="pa_ctacble_iva">Cuenta contable iva</label>
                     @Html.Partial("_CmbCuenta_Param2", Model)
                     @Html.ValidationMessageFor(q => q.pa_ctacble_iva, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="pa_ctacble_Proveedores_default">Cuenta contable por default a proveedores</label>
-                    @Html.Partial("_CmbCuenta_Param3", Model)
-                    @Html.ValidationMessageFor(q => q.pa_ctacble_Proveedores_default, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -211,37 +183,22 @@
 
     <div class="row">
         <div class="col-md-12">
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="pa_ctacble_Proveedores_default">Cuenta contable por default retención a la fuente</label>
-                    @Html.Partial("_CmbCuenta_Param5", Model)
-                    @Html.ValidationMessageFor(q => q.pa_ctacble_x_RetFte_default, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="pa_ctacble_x_RetIva_default">Cuenta contable por default retención iva</label>
-                    @Html.Partial("_CmbCuenta_Param4", Model)
-                    @Html.ValidationMessageFor(q => q.pa_ctacble_x_RetIva_default, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
                     @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
                     @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="SeValidaCtaGasto">     </label>
+                    @Html.DevExpress().CheckBoxFor(q => q.SeValidaCtaGasto, settings =>
+                            {
+                                settings.Name = "SeValidaCtaGasto";
+                                settings.Text = "Validar cuenta de gasto";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.SeValidaCtaGasto, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

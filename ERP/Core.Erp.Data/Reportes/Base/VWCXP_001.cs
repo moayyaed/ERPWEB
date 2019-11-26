@@ -53,5 +53,7 @@ namespace Core.Erp.Data.Reportes.Base
         public string nom_punto_cargo { get; set; }
         public string nom_punto_cargo_grupo { get; set; }
         public Nullable<System.DateTime> co_FechaContabilizacion { get; set; }
+        public int co_plazo { get; set; }
+        public string pr_correo { get; set; }
     }
 }

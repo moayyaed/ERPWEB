@@ -44,7 +44,6 @@ namespace Core.Erp.Data
         public DbSet<vwcp_proveedor_consulta> vwcp_proveedor_consulta { get; set; }
         public DbSet<cp_proveedor_clase> cp_proveedor_clase { get; set; }
         public DbSet<cp_orden_giro_x_in_Ing_Egr_Inven> cp_orden_giro_x_in_Ing_Egr_Inven { get; set; }
-        public DbSet<cp_parametros> cp_parametros { get; set; }
         public DbSet<vwcp_retencion_det> vwcp_retencion_det { get; set; }
         public DbSet<cp_orden_giro_det> cp_orden_giro_det { get; set; }
         public DbSet<vwcp_orden_giro_det> vwcp_orden_giro_det { get; set; }
@@ -79,6 +78,7 @@ namespace Core.Erp.Data
         public DbSet<cp_TipoDocumento> cp_TipoDocumento { get; set; }
         public DbSet<vwcp_orden_giro_det_ing_x_oc_x_cruzar> vwcp_orden_giro_det_ing_x_oc_x_cruzar { get; set; }
         public DbSet<cp_codigo_SRI> cp_codigo_SRI { get; set; }
+        public DbSet<cp_parametros> cp_parametros { get; set; }
     
         public virtual ObjectResult<spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result> spcp_Get_Data_orden_pago_con_cancelacion_x_pago(Nullable<int> idEmpresa_pago, Nullable<int> idTipoCbte_pago, Nullable<decimal> idCbteCble_pago, string idUsuario)
         {

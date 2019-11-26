@@ -23,19 +23,14 @@ namespace Core.Erp.Data.CuentasPorPagar
                         cp_parametros addressG = new cp_parametros();
                         addressG.IdEmpresa = info.IdEmpresa;
                         addressG.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
-                        addressG.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
                         addressG.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
-                        addressG.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
                         addressG.IdUsuario = info.IdUsuario;
-                        addressG.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
                         addressG.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
                         addressG.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
                         addressG.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
                         addressG.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
-                        addressG.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
-                        addressG.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
                         addressG.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
-
+                        addressG.SeValidaCtaGasto = info.SeValidaCtaGasto;
                         context.cp_parametros.Add(addressG);
                         context.SaveChanges();
                     }
@@ -46,19 +41,15 @@ namespace Core.Erp.Data.CuentasPorPagar
                         {
                             contact.IdEmpresa = info.IdEmpresa;
                             contact.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
-                            contact.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
                             contact.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
-                            contact.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
-                            contact.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
                             contact.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
                             contact.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
                             contact.FechaUltMod = DateTime.Now;
                             contact.IdUsuarioUltMod = info.IdUsuario;
                             contact.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
                             contact.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
-                            contact.pa_ctacble_x_RetFte_default = info.pa_ctacble_x_RetFte_default;
-                            contact.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
                             contact.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                            contact.SeValidaCtaGasto = info.SeValidaCtaGasto;
                             context.SaveChanges();
                         }
                     }
@@ -86,20 +77,14 @@ namespace Core.Erp.Data.CuentasPorPagar
                     {
 
                         Cbt.pa_TipoCbte_OG = Convert.ToInt32(item.pa_TipoCbte_OG);
-                        Cbt.pa_ctacble_deudora = item.pa_ctacble_deudora;
                         Cbt.pa_ctacble_iva = item.pa_ctacble_iva;
-                        Cbt.pa_TipoEgrMoviCaja_Conciliacion = item.pa_TipoEgrMoviCaja_Conciliacion;
-                        Cbt.pa_ctacble_Proveedores_default = item.pa_ctacble_Proveedores_default;
-                        Cbt.pa_TipoEgrMoviCaja_Conciliacion = item.pa_TipoEgrMoviCaja_Conciliacion;
                         Cbt.pa_TipoCbte_NC = item.pa_TipoCbte_NC;
                         Cbt.pa_TipoCbte_ND = item.pa_TipoCbte_ND;
                         Cbt.pa_IdTipoCbte_x_Retencion = item.pa_IdTipoCbte_x_Retencion;
                         Cbt.pa_TipoCbte_para_conci_x_antcipo = Convert.ToInt32(item.pa_TipoCbte_para_conci_x_antcipo);
-                        Cbt.pa_ctacble_x_RetFte_default = item.pa_ctacble_x_RetFte_default;
-                        Cbt.pa_ctacble_x_RetIva_default = item.pa_ctacble_x_RetIva_default;
                         Cbt.DiasTransaccionesAFuturo = item.DiasTransaccionesAFuturo;
                         Cbt.IdEmpresa = IdEmpresa;
-
+                        Cbt.SeValidaCtaGasto = item.SeValidaCtaGasto ?? false;
                     }
 
                     if (selectBaParam.Count() == 0)
@@ -126,17 +111,13 @@ namespace Core.Erp.Data.CuentasPorPagar
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  pa_TipoCbte_OG = q.pa_TipoCbte_OG,
-                                 pa_ctacble_deudora = q.pa_ctacble_deudora,
                                  pa_ctacble_iva = q.pa_ctacble_iva,
-                                 pa_TipoEgrMoviCaja_Conciliacion = q.pa_TipoEgrMoviCaja_Conciliacion,
-                                 pa_ctacble_Proveedores_default = q.pa_ctacble_Proveedores_default,
                                  pa_TipoCbte_NC = q.pa_TipoCbte_NC,
                                  pa_TipoCbte_ND = q.pa_TipoCbte_ND,
                                  pa_IdTipoCbte_x_Retencion = q.pa_IdTipoCbte_x_Retencion,
                                  pa_TipoCbte_para_conci_x_antcipo = q.pa_TipoCbte_para_conci_x_antcipo,
-                                 pa_ctacble_x_RetFte_default = q.pa_ctacble_x_RetFte_default,
-                                 pa_ctacble_x_RetIva_default = q.pa_ctacble_x_RetIva_default,
-                                 DiasTransaccionesAFuturo = q.DiasTransaccionesAFuturo
+                                 DiasTransaccionesAFuturo = q.DiasTransaccionesAFuturo,
+                                 SeValidaCtaGasto = q.SeValidaCtaGasto ?? false
                                  
                              }).ToList();
                          }

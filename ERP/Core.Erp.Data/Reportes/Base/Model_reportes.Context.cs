@@ -21,7 +21,10 @@ namespace Core.Erp.Data.Reportes.Base
             : base("name=Entities_reportes")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -106,9 +109,7 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWROL_024> VWROL_024 { get; set; }
         public virtual DbSet<VWROL_026> VWROL_026 { get; set; }
         public virtual DbSet<VWROL_028> VWROL_028 { get; set; }
-        public virtual DbSet<VWCXP_001> VWCXP_001 { get; set; }
         public virtual DbSet<VWFAC_002> VWFAC_002 { get; set; }
-        public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
         public virtual DbSet<VWFAC_020> VWFAC_020 { get; set; }
         public virtual DbSet<VWBAN_013> VWBAN_013 { get; set; }
         public virtual DbSet<VWBAN_006> VWBAN_006 { get; set; }
@@ -134,6 +135,8 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWBAN_001> VWBAN_001 { get; set; }
         public virtual DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
         public virtual DbSet<VWBAN_003> VWBAN_003 { get; set; }
+        public virtual DbSet<VWCXP_001> VWCXP_001 { get; set; }
+        public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
@@ -257,31 +260,6 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("FechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_009_Result>("SPBAN_009", idEmpresaParameter, idBancoParameter, fechaFinParameter);
-        }
-    
-        public virtual ObjectResult<SPBAN_011_Result> SPBAN_011(Nullable<int> idEmpresa, string idUsuario, Nullable<int> idSucursal, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var idSucursalParameter = idSucursal.HasValue ?
-                new ObjectParameter("IdSucursal", idSucursal) :
-                new ObjectParameter("IdSucursal", typeof(int));
-    
-            var fechaIniParameter = fechaIni.HasValue ?
-                new ObjectParameter("FechaIni", fechaIni) :
-                new ObjectParameter("FechaIni", typeof(System.DateTime));
-    
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_011_Result>("SPBAN_011", idEmpresaParameter, idUsuarioParameter, idSucursalParameter, fechaIniParameter, fechaFinParameter);
         }
     
         public virtual ObjectResult<SPBAN_012_Result> SPBAN_012(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarSaldo0, string idUsuario)
@@ -2087,6 +2065,31 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("IdPeriodo", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_012_Result>("SPCONTA_012", idEmpresaParameter, idPeriodoParameter);
+        }
+    
+        public virtual ObjectResult<SPBAN_011_Result> SPBAN_011(Nullable<int> idEmpresa, string idUsuario, Nullable<int> idSucursal, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_011_Result>("SPBAN_011", idEmpresaParameter, idUsuarioParameter, idSucursalParameter, fechaIniParameter, fechaFinParameter);
         }
     }
 }

@@ -26,7 +26,8 @@ namespace Core.Erp.Data.Reportes.Banco
                         Ingreso = q.Ingreso,
                         SaldoAnterior = q.SaldoAnterior,
                         SaldoFinal = q.SaldoFinal,
-                        Su_Descripcion = q.Su_Descripcion 
+                        Su_Descripcion = q.Su_Descripcion ,
+                        Reversos = q.Reversos
                     }).ToList();
 
                 }

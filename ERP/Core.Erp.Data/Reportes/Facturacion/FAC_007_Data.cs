@@ -70,7 +70,8 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  ValorIVA = q.ValorIVA,
                                  vt_total = q.vt_total,
 
-                                 vt_detallexItems = q.vt_detallexItems
+                                 vt_detallexItems = q.vt_detallexItems,
+                                 vt_plazo = q.vt_plazo
                              }).ToList();
                 }
                 return Lista;

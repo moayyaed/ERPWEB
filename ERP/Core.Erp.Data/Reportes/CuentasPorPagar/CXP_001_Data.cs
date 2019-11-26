@@ -60,7 +60,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
                                  nom_punto_cargo = q.nom_punto_cargo,
                                  nom_punto_cargo_grupo = q.nom_punto_cargo_grupo,
-                                 co_FechaContabilizacion = q.co_FechaContabilizacion
+                                 co_FechaContabilizacion = q.co_FechaContabilizacion,
+                                 co_plazo = q.co_plazo,
+                                 pr_correo = q.pr_correo
                              }).ToList();
                 }
                 return Lista;

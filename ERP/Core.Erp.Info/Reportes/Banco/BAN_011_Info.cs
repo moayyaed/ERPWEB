@@ -17,5 +17,6 @@ namespace Core.Erp.Info.Reportes.Banco
         public double Ingreso { get; set; }
         public double Egreso { get; set; }
         public double SaldoFinal { get; set; }
+        public double? Reversos { get; set; }
     }
 }
