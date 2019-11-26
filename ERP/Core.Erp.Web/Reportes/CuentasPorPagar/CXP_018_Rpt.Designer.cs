@@ -130,6 +130,9 @@
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.GroupHeader4 = new DevExpress.XtraReports.UI.GroupHeaderBand();
             this.GroupFooter4 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.p_FiltrarFechaContable = new DevExpress.XtraReports.Parameters.Parameter();
+            this.xrTableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -179,6 +182,7 @@
             this.xrTableCell7,
             this.xrTableCell8,
             this.xrTableCell12,
+            this.xrTableCell13,
             this.CeldaObservacion,
             this.xrTableCell24,
             this.xrTableCell18});
@@ -241,7 +245,7 @@
             this.xrTableCell12.Text = "xrTableCell12";
             this.xrTableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             this.xrTableCell12.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell12.Weight = 0.33250539141002761D;
+            this.xrTableCell12.Weight = 0.3325055797122054D;
             // 
             // CeldaObservacion
             // 
@@ -255,7 +259,7 @@
             this.CeldaObservacion.StylePriority.UseTextAlignment = false;
             this.CeldaObservacion.Text = "Observación";
             this.CeldaObservacion.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
-            this.CeldaObservacion.Weight = 2.305371643075588D;
+            this.CeldaObservacion.Weight = 1.9728658750612047D;
             // 
             // xrTableCell24
             // 
@@ -359,6 +363,7 @@
             this.xrTableCell15,
             this.xrTableCell17,
             this.xrTableCell3,
+            this.xrTableCell10,
             this.xrTableCell4,
             this.xrTableCell9,
             this.xrTableCell11});
@@ -402,7 +407,7 @@
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.StylePriority.UseBorders = false;
             this.xrTableCell3.Text = "Fecha";
-            this.xrTableCell3.Weight = 0.30264704151328875D;
+            this.xrTableCell3.Weight = 0.30264706692410293D;
             // 
             // xrTableCell4
             // 
@@ -412,7 +417,7 @@
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.StylePriority.UseBorders = false;
             this.xrTableCell4.Text = "Observación";
-            this.xrTableCell4.Weight = 2.098352719873362D;
+            this.xrTableCell4.Weight = 1.7957056429318705D;
             // 
             // xrTableCell9
             // 
@@ -1219,6 +1224,38 @@
             this.GroupFooter4.Level = 1;
             this.GroupFooter4.Name = "GroupFooter4";
             // 
+            // p_FiltrarFechaContable
+            // 
+            this.p_FiltrarFechaContable.Name = "p_FiltrarFechaContable";
+            this.p_FiltrarFechaContable.Visible = false;
+            // 
+            // xrTableCell10
+            // 
+            this.xrTableCell10.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
+            | DevExpress.XtraPrinting.BorderSide.Right) 
+            | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.xrTableCell10.Multiline = true;
+            this.xrTableCell10.Name = "xrTableCell10";
+            this.xrTableCell10.StylePriority.UseBorders = false;
+            this.xrTableCell10.Text = "Contable";
+            this.xrTableCell10.Weight = 0.30264705153067728D;
+            // 
+            // xrTableCell13
+            // 
+            this.xrTableCell13.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell13.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[co_FechaContabilizacion]")});
+            this.xrTableCell13.Multiline = true;
+            this.xrTableCell13.Name = "xrTableCell13";
+            this.xrTableCell13.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 5, 0, 100F);
+            this.xrTableCell13.StylePriority.UseBorders = false;
+            this.xrTableCell13.StylePriority.UsePadding = false;
+            this.xrTableCell13.StylePriority.UseTextAlignment = false;
+            this.xrTableCell13.Text = "xrTableCell13";
+            this.xrTableCell13.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            this.xrTableCell13.TextFormatString = "{0:dd/MM/yyyy}";
+            this.xrTableCell13.Weight = 0.3325055797122054D;
+            // 
             // CXP_018_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1251,8 +1288,9 @@
             this.p_IdProveedor,
             this.p_fecha_corte,
             this.p_IdClaseProveedor,
-            this.p_mostrarSaldo0});
-            this.Version = "17.2";
+            this.p_mostrarSaldo0,
+            this.p_FiltrarFechaContable});
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXP_018_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
@@ -1370,5 +1408,8 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell22;
         private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader4;
         private DevExpress.XtraReports.UI.GroupFooterBand GroupFooter4;
+        public DevExpress.XtraReports.Parameters.Parameter p_FiltrarFechaContable;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell13;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell10;
     }
 }

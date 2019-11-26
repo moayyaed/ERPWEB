@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
   public class CXP_018_Data
     {
-        public List<CXP_018_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0, int IdClaseProveedor)
+        public List<CXP_018_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0, int IdClaseProveedor, bool FiltrarFechaContable)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                 List<CXP_018_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    var lst = Context.SPCXP_018(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin).Select(q => new CXP_018_Info
+                    var lst = Context.SPCXP_018(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin, FiltrarFechaContable).Select(q => new CXP_018_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
@@ -51,7 +51,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         IdClaseProveedor = q.IdClaseProveedor,
                         DiasVcto = q.DiasVcto,
                         Orden = (q.DiasVcto < 0 ? 1 : 2),
-                        Grupo = (q.DiasVcto < 0 ? "VENCIDO" : "POR VENCER")
+                        Grupo = (q.DiasVcto < 0 ? "VENCIDO" : "POR VENCER"),
+                        co_FechaContabilizacion = q.co_FechaContabilizacion
                     }).ToList();
 
                     var lstA = lst.GroupBy(q => new { q.Orden, q.IdProveedor }).Select(q => new
@@ -60,9 +61,6 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         IdProveedor = q.Key.IdProveedor,
                         TotalDias = q.Min(g => g.DiasVcto)
                     }).ToList();
-
-                    var Lista_Agrupada = lstA.Where(q=> q.IdProveedor==786).ToList();
-                    var Lista_Rpte = lst.Where(q => q.IdProveedor == 786).ToList();
 
                     Lista = (from g in lstA
                              join q in lst
@@ -94,7 +92,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  DiasVcto = q.DiasVcto,
                                  Orden = q.Orden,
                                  Grupo = q.Grupo,
-                                 TotalDias = g.TotalDias
+                                 TotalDias = g.TotalDias,
+                                 co_FechaContabilizacion = q.co_FechaContabilizacion
                              }).ToList();
                 }
                 

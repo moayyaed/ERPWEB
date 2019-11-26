@@ -102,7 +102,6 @@
             this.p_IdSucursal = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdProveedor = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_corte = new DevExpress.XtraReports.Parameters.Parameter();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
             this.xrTable5 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow5 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -152,18 +151,22 @@
             this.p_MostrarObservacion = new DevExpress.XtraReports.Parameters.Parameter();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.p_QuitarGrupo = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_FiltrarFechaCorte = new DevExpress.XtraReports.Parameters.Parameter();
+            this.xrTableCell63 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell64 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
@@ -209,6 +212,7 @@
             this.xrTableCell6,
             this.xrTableCell7,
             this.xrTableCell12,
+            this.xrTableCell64,
             this.CeldaObservacion,
             this.xrTableCell13,
             this.xrTableCell24,
@@ -288,7 +292,7 @@
             this.xrTableCell12.Text = "xrTableCell12";
             this.xrTableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             this.xrTableCell12.TextFormatString = "{0:dd/MM/yyyy}";
-            this.xrTableCell12.Weight = 0.339816613551467D;
+            this.xrTableCell12.Weight = 0.33981673664705359D;
             // 
             // CeldaObservacion
             // 
@@ -303,7 +307,7 @@
             this.CeldaObservacion.StylePriority.UseTextAlignment = false;
             this.CeldaObservacion.Text = "Observación";
             this.CeldaObservacion.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
-            this.CeldaObservacion.Weight = 1.81688721696254D;
+            this.CeldaObservacion.Weight = 1.4770705646276934D;
             // 
             // xrTableCell13
             // 
@@ -493,6 +497,7 @@
             this.xrTableCell15,
             this.xrTableCell17,
             this.xrTableCell3,
+            this.xrTableCell63,
             this.xrTableCell4,
             this.xrTableCell10,
             this.xrTableCell9,
@@ -549,7 +554,7 @@
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.StylePriority.UseBorders = false;
             this.xrTableCell3.Text = "Fecha";
-            this.xrTableCell3.Weight = 0.33981686100652D;
+            this.xrTableCell3.Weight = 0.33981689318361663D;
             // 
             // xrTableCell4
             // 
@@ -559,7 +564,7 @@
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.StylePriority.UseBorders = false;
             this.xrTableCell4.Text = "Observación";
-            this.xrTableCell4.Weight = 1.81688747471383D;
+            this.xrTableCell4.Weight = 1.4770705493531167D;
             // 
             // xrTableCell10
             // 
@@ -883,11 +888,6 @@
             // 
             this.p_fecha_corte.Name = "p_fecha_corte";
             this.p_fecha_corte.Visible = false;
-            // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.CuentasPorPagar.CXP_015_Info);
-            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // ReportFooter
             // 
@@ -1516,6 +1516,43 @@
             this.p_QuitarGrupo.Name = "p_QuitarGrupo";
             this.p_QuitarGrupo.Visible = false;
             // 
+            // p_FiltrarFechaCorte
+            // 
+            this.p_FiltrarFechaCorte.Name = "p_FiltrarFechaCorte";
+            this.p_FiltrarFechaCorte.Visible = false;
+            // 
+            // xrTableCell63
+            // 
+            this.xrTableCell63.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
+            | DevExpress.XtraPrinting.BorderSide.Right) 
+            | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.xrTableCell63.Multiline = true;
+            this.xrTableCell63.Name = "xrTableCell63";
+            this.xrTableCell63.StylePriority.UseBorders = false;
+            this.xrTableCell63.Text = "Contable";
+            this.xrTableCell63.Weight = 0.33981689318361663D;
+            // 
+            // xrTableCell64
+            // 
+            this.xrTableCell64.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell64.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[co_FechaContabilizacion]")});
+            this.xrTableCell64.Multiline = true;
+            this.xrTableCell64.Name = "xrTableCell64";
+            this.xrTableCell64.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 5, 0, 100F);
+            this.xrTableCell64.StylePriority.UseBorders = false;
+            this.xrTableCell64.StylePriority.UsePadding = false;
+            this.xrTableCell64.StylePriority.UseTextAlignment = false;
+            this.xrTableCell64.Text = "xrTableCell64";
+            this.xrTableCell64.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            this.xrTableCell64.TextFormatString = "{0:dd/MM/yyyy}";
+            this.xrTableCell64.Weight = 0.33981652923926003D;
+            // 
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.CuentasPorPagar.CXP_015_Info);
+            this.objectDataSource1.Name = "objectDataSource1";
+            // 
             // CXP_015_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1546,7 +1583,8 @@
             this.p_mostrarSaldo0,
             this.p_IdClaseProveedor,
             this.p_MostrarObservacion,
-            this.p_QuitarGrupo});
+            this.p_QuitarGrupo,
+            this.p_FiltrarFechaCorte});
             this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXP_015_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
@@ -1555,12 +1593,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }
@@ -1684,5 +1722,8 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell61;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell54;
         public DevExpress.XtraReports.Parameters.Parameter p_QuitarGrupo;
+        public DevExpress.XtraReports.Parameters.Parameter p_FiltrarFechaCorte;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell64;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell63;
     }
 }

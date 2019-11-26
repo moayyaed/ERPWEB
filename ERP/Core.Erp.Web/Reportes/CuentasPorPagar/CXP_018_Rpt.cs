@@ -31,9 +31,10 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
             DateTime fecha_corte = p_fecha_corte.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha_corte.Value);
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             int IdClaseProveedor = string.IsNullOrEmpty(p_IdClaseProveedor.Value.ToString()) ? 0 : Convert.ToInt32(p_IdClaseProveedor.Value);
+            bool FiltrarFechaContable = string.IsNullOrEmpty(p_FiltrarFechaContable.Value.ToString()) ? false : Convert.ToBoolean(p_FiltrarFechaContable.Value);
 
             CXP_018_Bus bus_rpt = new CXP_018_Bus();
-            List<CXP_018_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0, IdClaseProveedor);
+            List<CXP_018_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdProveedor, fecha_corte, mostrarSaldo0, IdClaseProveedor, FiltrarFechaContable);
             this.DataSource = lst_rpt;
 
 

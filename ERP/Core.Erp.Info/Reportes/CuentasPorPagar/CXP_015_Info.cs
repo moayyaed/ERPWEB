@@ -31,5 +31,6 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public Nullable<int> IdClaseProveedor { get; set; }
         public string descripcion_clas_prove { get; set; }
         public int? DiasVcto { get; set; }
+        public DateTime? co_FechaContabilizacion { get; set; }
     }
 }

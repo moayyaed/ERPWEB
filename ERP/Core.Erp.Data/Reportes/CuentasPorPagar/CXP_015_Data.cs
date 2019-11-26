@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
   public class CXP_015_Data
     {
-        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0, int IdClaseProveedor)
+        public List<CXP_015_Info> GetList(int IdEmpresa, int IdSucursal, decimal IdProveedor, DateTime fecha_corte, bool mostrarSaldo0, int IdClaseProveedor, bool FiltrarFechaContable)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                 List<CXP_015_Info> Lista;
                 using (Entities_reportes Context = new Entities_reportes())
                 {
-                    Lista = Context.SPCXP_015(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin).Select(q => new CXP_015_Info
+                    Lista = Context.SPCXP_015(IdEmpresa, IdSucursalIni, IdSucursalFin, IdProveedorIni, IdProveedorFin, fecha_corte, mostrarSaldo0, IdClaseProveedorIni, IdClaseProveedorFin, FiltrarFechaContable).Select(q => new CXP_015_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
@@ -49,7 +49,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         ValorRetencion = q.ValorRetencion,
                         descripcion_clas_prove = q.descripcion_clas_prove,
                         IdClaseProveedor = q.IdClaseProveedor,
-                        DiasVcto = q.DiasVcto
+                        DiasVcto = q.DiasVcto,
+                        co_FechaContabilizacion = q.co_FechaContabilizacion
                     }).ToList();
                 }
                 return Lista;
