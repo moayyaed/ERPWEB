@@ -20,7 +20,6 @@ namespace Core.Erp.Info.Banco
         [Required(ErrorMessage = "El campo proceso bancario es obligatorio")]
         public int IdProceso_bancario { get; set; }
         public string Cod_Empresa { get; set; }
-        [Required(ErrorMessage = "El campo descripción es obligatorio")]
         public string Nom_Archivo { get; set; }
         [Required(ErrorMessage = "El campo fecha es obligatorio")]
         public System.DateTime Fecha { get; set; }
@@ -46,5 +45,6 @@ namespace Core.Erp.Info.Banco
         public List<ct_cbtecble_det_Info> Lst_diario { get; set; }
         public int? IdTipoCbte { get; set; }
         public decimal? IdCbteCble { get; set; }
+        public string Extension { get; set; }
     }
 }

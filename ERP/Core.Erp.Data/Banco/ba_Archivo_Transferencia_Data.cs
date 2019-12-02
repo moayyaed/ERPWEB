@@ -152,7 +152,7 @@ namespace Core.Erp.Data.Banco
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdArchivo = info.IdArchivo=GetId(info.IdEmpresa),
-                        cod_archivo = info.cod_archivo,
+                        cod_archivo = info.cod_archivo ?? " ",
                         Cod_Empresa = info.Cod_Empresa = "",
                         Contabilizado = info.Contabilizado,
                         Estado = true,
@@ -228,7 +228,7 @@ namespace Core.Erp.Data.Banco
                     ba_Archivo_Transferencia Entity = Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault();
                     if (Entity == null) return false;
 
-                    Entity.Nom_Archivo = info.Nom_Archivo;
+                    Entity.Nom_Archivo = info.Nom_Archivo ?? " ";
                     Entity.Observacion = info.Observacion;
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;

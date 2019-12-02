@@ -276,7 +276,9 @@
         {
             NCR,
             ROL_ELECTRONICO,
-            NCR_TRASN
+            NCR_TRASN,
+            MULTI_CASH,
+            PAGOPROVBB
         }
         
     }

@@ -45,6 +45,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_TipoFlujo_Bus bus_flujo = new ba_TipoFlujo_Bus();
         ct_cbtecble_det_List List_Cbte = new ct_cbtecble_det_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -138,6 +139,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                     return false;
                 }
             }
+
+            if (pro.IdProceso_bancario_tipo == "PAGOPROVBB")
+            {
+                var empresa = bus_empresa.get_info(i_validar.IdEmpresa);
+                i_validar.Nom_Archivo = empresa.NombreComercial + i_validar.Fecha.ToString("yyyyMMdd") + "01";
+            }
             return true;
         }
         private void cargar_combos()
@@ -209,6 +216,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos();
                 return View(model);
             }
+
             if (!bus_archivo.GuardarDB(model))
             {
                 cargar_combos();
@@ -522,20 +530,20 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             var info_archivo = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
             info_archivo.Lst_det = bus_archivo_det.GetList(IdEmpresa, IdArchivo);
-
-            archivo = GetArchivo(info_archivo, info_archivo.Nom_Archivo);
-            return File(archivo, "application/xml", info_archivo.Nom_Archivo + ".txt");
+            string Nom_Archivo = info_archivo.Nom_Archivo;
+            archivo = GetArchivo(info_archivo, ref Nom_Archivo);
+            return File(archivo, "application/xml", Nom_Archivo + info_archivo.Extension);
         }
 
-        private byte[] GetMulticash(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+        private byte[] GetMulticash(ba_Archivo_Transferencia_Info info, string NombreArchivo, ba_Banco_Cuenta_Info banco)
         {
             try
             {
-                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");                
+                info.Extension = ".txt";
+                System.IO.File.Delete(rutafile + NombreArchivo + info.Extension);                
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
                 {
-                    /*
-                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario }).Select(q => new
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo }).Select(q => new
                     {
                         num_cta_acreditacion = q.Key.num_cta_acreditacion,
                         Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
@@ -544,11 +552,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
                         IdTipoDocumento = q.Key.IdTipoDocumento,
                         Nom_Beneficiario = q.Key.Nom_Beneficiario,
-                        Valor = q.Sum(g=> g.Valor)
+                        pr_correo = q.Key.pr_correo,
+                        Valor = q.Sum(g => g.Valor)
                     }).ToList();
-                    */
-                    var banco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
-                    foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
+                    
+                    //foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
+                    foreach (var item in ListaA)
                     {
                         string linea = "";
                         double valor = Convert.ToDouble(item.Valor);
@@ -574,21 +583,102 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         linea += "\t";//Telefono
                         linea += "\t";//Localidad
                         var Referencia = string.Empty;
-                        /*
                         foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
                         {
-                            if(!string.IsNullOrEmpty(refe.Referencia))
+                            if (!string.IsNullOrEmpty(refe.Referencia))
                                 Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
                         }
                         linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 200 ? Referencia.Substring(0, 200) : Referencia.Trim())) + "\t";
-                        */
-                        linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
-                        linea += "\t";//Ref adicional
+                        //linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
+                        linea += "|" + (string.IsNullOrEmpty(item.pr_correo) ? "" : (item.pr_correo.Trim().Length > 100 ? item.pr_correo.Trim().Substring(0, 100) : item.pr_correo.Trim())) + "\t";//Ref adicional
 
                         file.WriteLine(linea);
                     }
                 }
-                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + ".txt");
+                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + info.Extension);
+                return filebyte;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private byte[] GetPagoProvBB(ba_Archivo_Transferencia_Info info, ref string NombreArchivo, ba_Banco_Cuenta_Info banco, tb_banco_procesos_bancarios_x_empresa_Info proceso)
+        {
+            try
+            {
+                info.Extension = ".BIZ";
+                var empresa = bus_empresa.get_info(info.IdEmpresa);
+                NombreArchivo = empresa.NombreComercial+info.Fecha.ToString("yyyyMMdd")+"01";
+                System.IO.File.Delete(rutafile + NombreArchivo + info.Extension);
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + info.Extension, true))
+                {
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo, q.IdPersona, q.IdBanco_acreditacion, q.pr_direccion }).Select(q => new
+                    {
+                        num_cta_acreditacion = q.Key.num_cta_acreditacion,
+                        Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
+                        pe_cedulaRuc = q.Key.pe_cedulaRuc,
+                        CodigoLegalBanco = q.Key.CodigoLegalBanco,
+                        IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
+                        IdTipoDocumento = q.Key.IdTipoDocumento,
+                        Nom_Beneficiario = q.Key.Nom_Beneficiario,
+                        pr_correo = q.Key.pr_correo,
+                        IdPersona = q.Key.IdPersona,
+                        IdBanco_acreditacion = q.Key.IdBanco_acreditacion,
+                        pr_direccion = q.Key.pr_direccion,
+                        Valor = q.Sum(g => g.Valor)
+                    }).ToList();
+                    int Secuencia = 1;
+                    //foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
+                    foreach (var item in ListaA)
+                    {
+                        string linea = "";
+                        double valor = Convert.ToDouble(item.Valor);
+                        double valorEntero = Math.Floor(valor);
+                        double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
+
+                        linea += "BZDET";
+                        linea += Secuencia.ToString("000000");
+                        linea += item.IdPersona.ToString().PadRight(18,' ');
+                        linea += (item.IdTipoDocumento == "CED" ? "C" : (item.IdTipoDocumento == "RUC" ? "R" : "P"));
+                        linea += item.pe_cedulaRuc.Trim().Length > 14 ? item.pe_cedulaRuc.Trim().Substring(0,14) : item.pe_cedulaRuc.Trim().PadRight(14,' ');
+                        linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Trim().Length > 60 ? item.Nom_Beneficiario.Trim().Substring(0, 60) : item.Nom_Beneficiario.Trim())).PadRight(60,' ');
+                        linea += (!string.IsNullOrEmpty(item.num_cta_acreditacion) ? (proceso.IdBanco == item.IdBanco_acreditacion ? "CUE" : "COB") : "PEF");
+                        linea += "001";
+                        linea += (!string.IsNullOrEmpty(item.num_cta_acreditacion) ? (proceso.IdBanco == item.IdBanco_acreditacion ? "34" : item.CodigoLegalBanco) : "  ");
+                        linea += (!string.IsNullOrEmpty(item.num_cta_acreditacion) ? (proceso.IdBanco == item.IdBanco_acreditacion ? (item.IdTipoCta_acreditacion_cat == "COR" ? "03" : "04") : item.CodigoLegalBanco) : "  ");
+                        linea += (!string.IsNullOrEmpty(item.num_cta_acreditacion) ? item.num_cta_acreditacion.Trim() : "").PadRight(20,' ');
+                        linea += "1";
+                        linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2, '0')).PadLeft(15, '0');
+                        var Referencia = string.Empty;
+                        foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
+                        {
+                            if (!string.IsNullOrEmpty(refe.Referencia))
+                                Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
+                        }
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 60 ? Referencia.Substring(0, 60) : Referencia.Trim())).PadRight(60,' ');
+                        linea += item.Secuencial_reg_x_proceso.ToString().PadLeft(15,'0');
+                        linea += ("").PadRight(15, '0'); //Numero de comprobante de retencion
+                        linea += ("").PadRight(15, '0'); //Numero de comprobante de IVA
+                        linea += ("").PadRight(20, '0'); //Numero de factura SRI
+                        linea += ("").PadRight(10, ' '); //Codigo de grupo
+                        linea += ("").PadRight(50, ' '); //Descripcion del grupo
+                        linea += (!string.IsNullOrEmpty(item.pr_direccion) ? (item.pr_direccion.Trim().Length > 50 ? item.pr_direccion.Trim().Substring(0, 50) : item.pr_direccion.Trim().PadRight(50, ' ')) : "").PadRight(50,' ');
+                        linea += ("").PadRight(20, ' '); //Telefono
+                        linea += "PRO";
+                        linea += ("").PadRight(10, ' '); //Numero de autorizacion SRI
+                        linea += ("").PadRight(10, ' '); //Fecha de validez
+                        linea += ("").PadRight(10, ' '); //REFERENCIA
+                        linea += ("").PadRight(1, ' '); //Seña de control de horario de atención
+                        linea += (proceso.Codigo_Empresa ?? "").PadRight(5, ' '); //Codigo de la empresa asignado por el banco
+                        linea += ("").PadRight(6, ' '); //Codigo de sub-empresa quien ordena el pago
+                        linea += "RPA";
+                        file.WriteLine(linea);
+                    }
+                }
+                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + info.Extension);
                 return filebyte;
 
             }
@@ -599,12 +689,27 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
         }
 
-        public byte[] GetArchivo(ba_Archivo_Transferencia_Info info, string nombre_file)
+        public byte[] GetArchivo(ba_Archivo_Transferencia_Info info, ref string nombre_file)
         {
             try
             {
-                return GetMulticash(info, nombre_file);
+                var Cuentabanco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
 
+                var proceso = bus_procesos_bancarios.get_info(info.IdEmpresa, info.IdProceso_bancario);
+
+                if (proceso == null)
+                    return null;
+
+                switch (proceso.IdProceso_bancario_tipo)
+                {
+                    case "MULTI_CASH":
+                        return GetMulticash(info, nombre_file, Cuentabanco);
+                    case "PAGOPROVBB":
+                        return GetPagoProvBB(info, ref nombre_file, Cuentabanco, proceso);
+                    default:
+                        return null;
+                        break;
+                }
             }
             catch (Exception)
             {

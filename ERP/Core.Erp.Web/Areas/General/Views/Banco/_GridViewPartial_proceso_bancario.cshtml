@@ -43,7 +43,7 @@
         };
         settings.Columns.Add(column =>
         {
-           column.Width = Unit.Percentage(20);
+           column.Width = Unit.Percentage(10);
             column.FieldName = "IdProceso_bancario_tipo";
             column.Caption = "Código proceso";
         });
@@ -55,10 +55,16 @@
         });
         settings.Columns.Add(column =>
         {
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "Codigo_Empresa";
+            column.Caption = "Código único para empresa";
+        });
+        settings.Columns.Add(column =>
+        {
             column.Name = "IdTipoNota";
             column.FieldName = "IdTipoNota";
             column.Caption = "Tipo nota";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(100);

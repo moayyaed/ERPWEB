@@ -249,6 +249,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         [HttpPost]
         public ActionResult INV_002(in_Ing_Egr_Inven_Info model)
         {
+            model = bus_ing_egr.get_info(model.IdEmpresa, model.IdSucursal, model.IdMovi_inven_tipo, model.IdNumMovi);
+            model.IdUsuarioAR = SessionFixed.IdUsuario;
             bus_ing_egr.aprobarDB(model);
 
             return RedirectToAction("Index", "AprobacionMovimientoInventario",new { Area = "Inventario", IdSucursal = model.IdSucursal, IdBodega = model.IdBodega});
@@ -1487,7 +1489,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_IdBodega.Value = model.IdBodega;
             report.p_IdProducto.Value = model.IdProducto ?? 0;
-            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdCategoria.Value = model.IdCategoria ?? "";
             report.p_IdLinea.Value = model.IdLinea;
             report.p_IdGrupo.Value = model.IdGrupo;
             report.p_IdSubgrupo.Value = model.IdSubGrupo;

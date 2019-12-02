@@ -449,7 +449,7 @@
             // 
             this.xrTableCell42.Borders = DevExpress.XtraPrinting.BorderSide.Right;
             this.xrTableCell42.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[vt_plazo]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Concat(ToStr([vt_plazo]),\' dias\' )")});
             this.xrTableCell42.Name = "xrTableCell42";
             this.xrTableCell42.StylePriority.UseBorders = false;
             this.xrTableCell42.Weight = 0.93741628491243767D;
