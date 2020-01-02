@@ -305,12 +305,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
             #region Validacion Periodo
+            
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            /*if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;
-            }
+            }*/
             #endregion
             return View(model);
         }
@@ -377,11 +378,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             cargar_combos(model);
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            /*if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;
-            }
+            }*/
             #endregion
             return View(model);
         }
