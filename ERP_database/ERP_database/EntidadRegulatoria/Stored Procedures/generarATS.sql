@@ -1,5 +1,4 @@
-﻿
---exec [EntidadRegulatoria].[generarATS] 1,201909,1,1
+﻿--exec [EntidadRegulatoria].[generarATS] 1,201909,1,1
 CREATE  PROCEDURE [EntidadRegulatoria].[generarATS]
 @idempresa int,
 @idPeriodo int,
@@ -88,11 +87,12 @@ FROM            dbo.cp_orden_giro AS fac INNER JOIN
 						 and fac.IdSucursal>=@IdSucursalInicio
 						 and fac.IdSucursal<=@IdSucursalFin
 						 and fac.IdOrden_giro_Tipo <> 15
+						 AND FAC.IdIden_credito <> 1021
 UNION ALL
 SELECT 
 
  @idempresa,																				@idPeriodo,				
- 1000+ISNULL(ROW_NUMBER()OVER (ORDER BY fac.IdEmpresa), 0)AS Secuencia,							'04',
+ 1000+ISNULL(ROW_NUMBER()OVER (ORDER BY fac.IdEmpresa), 0)AS Secuencia,							'01',
  CASe when perso.IdTipoDocumento='CED' THEN '02' when perso.IdTipoDocumento='PAS' THEN '03'  else '01' end  tpIdProv,					perso.pe_cedulaRuc,
  '04' tipoComprobante,																		'NO' AS ParteRelacionada,
 CASe when perso.pe_Naturaleza='NATU' THEN '01' else '02' end AS tipoProv,					perso.pe_nombreCompleto,			 

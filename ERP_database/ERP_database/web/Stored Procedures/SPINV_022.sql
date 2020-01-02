@@ -1,4 +1,6 @@
-﻿--EXEC web.SPINV_022 1,1,1,2,2,0,99999,'',0,0,0,'2019/10/31',0,0,9999,0
+﻿
+
+---EXEC web.SPINV_022 1,1,1,2,2,0,99999,'',0,0,0,'31/10/2019',0,0,9999,0
 CREATE PROCEDURE [web].[SPINV_022]
 (
 @IdEmpresa int,
@@ -101,7 +103,7 @@ ELSE
 	and cab.IdBodega = det.IdBodega
 	and cab.IdMovi_inven_tipo = det.IdMovi_inven_tipo
 	and cab.IdNumMovi = det.IdNumMovi
-	inner join web.in_SPINV_003 sp
+	inner join web.in_SPINV_022 sp
 	on sp.IdEmpresa = det.IdEmpresa
 	and sp.IdSucursal = det.IdSucursal
 	and sp.IdBodega = det.IdBodega

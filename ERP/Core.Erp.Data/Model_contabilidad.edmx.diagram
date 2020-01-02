@@ -61,9 +61,6 @@
         <AssociationConnector Association="Model_contabilidad.FK_ct_punto_cargo_ct_punto_cargo_grupo" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_periodo_x_tb_modulo" Width="1.5" PointX="5.25" PointY="22.375" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_periodo_x_tb_modulo_ct_periodo" />
-        <EntityTypeShape EntityType="Model_contabilidad.ct_parametro" Width="1.5" PointX="5.25" PointY="18.375" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo" />
-        <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo1" />
         <EntityTypeShape EntityType="Model_contabilidad.vwct_cbtecble_Plantilla_det" Width="1.5" PointX="18.375" PointY="4.75" />
         <EntityTypeShape EntityType="Model_contabilidad.ct_grupo_x_Tipo_Gasto" Width="1.5" PointX="10.375" PointY="21" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_grupo_x_Tipo_Gasto_ct_grupo_x_Tipo_Gasto" />
@@ -77,6 +74,9 @@
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_grupocble" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta" />
         <AssociationConnector Association="Model_contabilidad.FK_ct_plancta_ct_plancta_nivel" />
+        <EntityTypeShape EntityType="Model_contabilidad.ct_parametro" Width="1.5" PointX="5.25" PointY="18.375" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo" />
+        <AssociationConnector Association="Model_contabilidad.FK_ct_parametro_ct_cbtecble_tipo1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

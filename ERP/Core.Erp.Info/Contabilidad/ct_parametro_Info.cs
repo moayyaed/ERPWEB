@@ -10,6 +10,6 @@ namespace Core.Erp.Info.Contabilidad
         public bool P_Se_Muestra_Todas_las_ctas_en_combos { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
         public Nullable<bool> EsCentroCostoObligatorio { get; set; }
-
+        public bool AnularConFechaDeDocumento { get; set; }
     }
 }

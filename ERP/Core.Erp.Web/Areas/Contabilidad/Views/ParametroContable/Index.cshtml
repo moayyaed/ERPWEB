@@ -70,7 +70,7 @@
                     @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="P_Se_Muestra_Todas_las_ctas_en_combos"></label>
                     @Html.DevExpress().CheckBoxFor(q => q.P_Se_Muestra_Todas_las_ctas_en_combos, settings =>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </div>*@
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="EsCentroCostoObligatorio"></label>
                     @Html.DevExpress().CheckBoxFor(q => q.EsCentroCostoObligatorio, settings =>
@@ -97,6 +97,17 @@
                                 settings.Text = "Es Centro Costo Obligatorio";
                             }).GetHtml()
                     @Html.ValidationMessageFor(q => q.EsCentroCostoObligatorio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="P_Se_Muestra_Todas_las_ctas_en_combos"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AnularConFechaDeDocumento, settings =>
+                            {
+                                settings.Name = "AnularConFechaDeDocumento";
+                                settings.Text = "Anular diarios con fecha del documento anulado";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.P_Se_Muestra_Todas_las_ctas_en_combos, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
